@@ -4,6 +4,7 @@
      */
     import { _ } from "svelte-i18n";
     import GameBoard from "$lib/components/game/GameBoard.svelte";
+    import GameStats from "$lib/components/game/GameStats.svelte";
     import TopBar from "$lib/components/navigation/TopBar.svelte";
     import BottomBar from "$lib/components/navigation/BottomBar.svelte";
 </script>
@@ -17,6 +18,7 @@
     <TopBar />
 
     <main>
+        <GameStats />
         <GameBoard />
     </main>
 
@@ -34,8 +36,10 @@
     main {
         flex: 1;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         padding: 80px 1rem 100px;
+        gap: 1rem;
     }
 </style>

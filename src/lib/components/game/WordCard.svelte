@@ -28,6 +28,7 @@
     class:selected={card.status === "selected"}
     class:correct={card.status === "correct"}
     class:wrong={card.status === "wrong"}
+    class:hint={card.status === "hint"}
     onclick={handleClick}
     disabled={card.status === "correct"}
     data-testid="word-card-{card.id}"
@@ -120,6 +121,25 @@
         animation: shake 0.4s ease-in-out;
         background: var(--wrong-bg);
         border-color: var(--wrong-border);
+    }
+
+    /* Підказка — плавне блимання */
+    .word-card.hint {
+        animation: hintPulse 1s ease-in-out;
+        background: rgba(255, 255, 0, 0.15); /* Light yellow tint */
+        border-color: rgba(255, 255, 0, 0.5);
+    }
+
+    @keyframes hintPulse {
+        0%,
+        100% {
+            transform: scale(1);
+            filter: brightness(1);
+        }
+        50% {
+            transform: scale(1.05);
+            filter: brightness(1.3);
+        }
     }
 
     @keyframes shake {

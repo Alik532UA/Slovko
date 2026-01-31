@@ -64,7 +64,7 @@ export type TranscriptionDictionary = Record<string, string>;
 export type GameMode = 'levels' | 'topics';
 
 /** Статус картки в грі */
-export type CardStatus = 'idle' | 'selected' | 'correct' | 'wrong';
+export type CardStatus = 'idle' | 'selected' | 'correct' | 'wrong' | 'hint';
 
 /** Активна картка на ігровому полі */
 export interface ActiveCard {

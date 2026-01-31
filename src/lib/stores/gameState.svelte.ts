@@ -52,6 +52,37 @@ function createGameState() {
     let isLoading = $state(true);
     let currentWords = $state<string[]>([]);
 
+    let streak = $state(0);
+    let correctAnswersHistory = $state<number[]>([]);
+
+    // Для відстеження пауз
+    let lastInteractionTime = $state(0);
+    let ignoredTime = $state(0);
+
+    // Derived state for words per minute
+    let wordsPerMinute = $derived.by(() => {
+        const history = correctAnswersHistory;
+        if (history.length === 0) return 0;
+
+        // Щоб зчитувати реактивно, звертаємось до ignoredTime тут
+        const currentIgnored = ignoredTime;
+
+        const now = Date.now();
+        const startTime = history[0];
+
+        // Час, який ми "ігноруємо" (паузи)
+        // Важливо: ми не можемо тут динамічно додавати "поточну" паузу без таймера,
+        // але оскільки перерахунок стається при діях, то візуально WPM "заморозиться",
+        // а при наступному кліку ми додамо паузу в ignoredTime, і WPM залишиться коректним.
+
+        let adjustedElapsed = (now - startTime) - currentIgnored;
+
+        // Захист від ділення на нуль або від'ємного часу (якщо паузи "з'їли" все)
+        if (adjustedElapsed < 1000) adjustedElapsed = 1000;
+
+        return Math.round((history.length / adjustedElapsed) * 60000);
+    });
+
     /**
      * Завантажити переклади для поточних мов та активного режиму
      */
@@ -161,6 +192,10 @@ function createGameState() {
     async function initGame(): Promise<void> {
         isLoading = true;
         usedWordKeys.clear();
+        streak = 0;
+        correctAnswersHistory = [];
+        ignoredTime = 0;
+        lastInteractionTime = Date.now();
 
         try {
             await loadTranslationsForLanguages();
@@ -187,6 +222,19 @@ function createGameState() {
      * Обробка натискання на картку (UDF: Action)
      */
     function selectCard(card: ActiveCard): void {
+        const now = Date.now();
+
+        // Логіка пауз: якщо пройшло більше 5с з останньої дії
+        if (lastInteractionTime > 0) {
+            const diff = now - lastInteractionTime;
+            // Враховуємо паузу тільки якщо гра вже йде (є відповіді)
+            if (diff > 5000 && correctAnswersHistory.length > 0) {
+                // Віднімаємо 5с, які вважаємо "часом на роздуми"
+                ignoredTime += (diff - 5000);
+            }
+        }
+        lastInteractionTime = now;
+
         if (isProcessing) return;
         if (card.status !== 'idle' || !card.isVisible) return;
 
@@ -232,6 +280,10 @@ function createGameState() {
         updateCardStatus(card1.id, 'correct');
         updateCardStatus(card2.id, 'correct');
 
+        // Оновлюємо лічильники
+        streak += 1;
+        correctAnswersHistory = [...correctAnswersHistory, Date.now()];
+
         // Записуємо прогрес
         progressStore.recordCorrect(card1.wordKey);
 
@@ -252,6 +304,9 @@ function createGameState() {
     function handleWrongMatch(card1: ActiveCard, card2: ActiveCard): void {
         updateCardStatus(card1.id, 'wrong');
         updateCardStatus(card2.id, 'wrong');
+
+        // Скидаємо стрік
+        streak = 0;
 
         // Записуємо помилку
         progressStore.recordWrong();
@@ -346,6 +401,51 @@ function createGameState() {
         }
     }
 
+    /**
+     * Використати підказку
+     */
+    function useHint(): void {
+        if (isProcessing) return;
+
+        // Знаходимо всі доступні (idle) пари
+        const visibleSources = sourceCards.filter(c => c.status === 'idle' && c.isVisible);
+        const visibleTargets = targetCards.filter(c => c.status === 'idle' && c.isVisible);
+
+        if (visibleSources.length === 0 || visibleTargets.length === 0) return;
+
+        // Шукаємо пару, яка є в обох списках (за wordKey)
+        const availablePairs: string[] = [];
+        visibleSources.forEach(src => {
+            if (visibleTargets.some(tgt => tgt.wordKey === src.wordKey)) {
+                availablePairs.push(src.wordKey);
+            }
+        });
+
+        if (availablePairs.length === 0) return;
+
+        // Вибираємо випадкову пару
+        const randomKey = availablePairs[Math.floor(Math.random() * availablePairs.length)];
+
+        // Знаходимо ID карток
+        const srcCard = visibleSources.find(c => c.wordKey === randomKey);
+        const tgtCard = visibleTargets.find(c => c.wordKey === randomKey);
+
+        if (srcCard && tgtCard) {
+            isProcessing = true; // Блокуємо інтерфейс на час підказки
+
+            updateCardStatus(srcCard.id, 'hint');
+            updateCardStatus(tgtCard.id, 'hint');
+
+            setTimeout(() => {
+                // Повертаємо назад в idle, тільки якщо вони все ще 'hint'
+                // (хоча через isProcessing нічого іншого статись не могло)
+                sourceCards = sourceCards.map(c => c.id === srcCard.id && c.status === 'hint' ? { ...c, status: 'idle' } : c);
+                targetCards = targetCards.map(c => c.id === tgtCard.id && c.status === 'hint' ? { ...c, status: 'idle' } : c);
+                isProcessing = false;
+            }, 1000); // Час анімації підказки
+        }
+    }
+
     return {
         get sourceCards() {
             return sourceCards;
@@ -362,8 +462,15 @@ function createGameState() {
         get isLoading() {
             return isLoading;
         },
+        get streak() {
+            return streak;
+        },
+        get wordsPerMinute() {
+            return wordsPerMinute;
+        },
         initGame,
-        selectCard
+        selectCard,
+        useHint
     };
 }
 
