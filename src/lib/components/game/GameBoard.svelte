@@ -8,6 +8,7 @@
     import { settingsStore } from "$lib/stores/settingsStore.svelte";
     import WordCard from "./WordCard.svelte";
     import { onMount } from "svelte";
+    import { fade } from "svelte/transition";
 
     // Реініціалізація при зміні рівня/теми/мов
     let lastLevel = $state(settingsStore.value.currentLevel);
@@ -45,27 +46,39 @@
 {:else}
     <div class="game-board">
         <div class="column source">
-            {#each gameState.sourceCards as card (card.id)}
+            {#each gameState.sourceCards as card, i (i)}
                 <div class="card-slot">
-                    {#if card.isVisible}
-                        <WordCard
-                            {card}
-                            onclick={() => gameState.selectCard(card)}
-                        />
-                    {/if}
+                    {#key card.id}
+                        <div
+                            class="card-wrapper"
+                            in:fade={{ duration: 400, delay: 200 }}
+                            out:fade={{ duration: 300 }}
+                        >
+                            <WordCard
+                                {card}
+                                onclick={() => gameState.selectCard(card)}
+                            />
+                        </div>
+                    {/key}
                 </div>
             {/each}
         </div>
 
         <div class="column target">
-            {#each gameState.targetCards as card (card.id)}
+            {#each gameState.targetCards as card, i (i)}
                 <div class="card-slot">
-                    {#if card.isVisible}
-                        <WordCard
-                            {card}
-                            onclick={() => gameState.selectCard(card)}
-                        />
-                    {/if}
+                    {#key card.id}
+                        <div
+                            class="card-wrapper"
+                            in:fade={{ duration: 400, delay: 200 }}
+                            out:fade={{ duration: 300 }}
+                        >
+                            <WordCard
+                                {card}
+                                onclick={() => gameState.selectCard(card)}
+                            />
+                        </div>
+                    {/key}
                 </div>
             {/each}
         </div>
@@ -94,7 +107,15 @@
 
     .card-slot {
         flex: 1;
-        min-height: 0; /* Дозволяємо стискатися менше за контент */
+        min-height: 0;
+        display: grid; /* Використовуємо grid для стабільності розміру */
+        place-items: stretch;
+    }
+
+    .card-wrapper {
+        grid-area: 1 / 1; /* Обидві картки (стара і нова) будуть в одній комірці під час анімації */
+        width: 100%;
+        height: 100%;
         display: flex;
     }
 

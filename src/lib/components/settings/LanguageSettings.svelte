@@ -8,6 +8,7 @@
     import { settingsStore } from "$lib/stores/settingsStore.svelte";
     import { setInterfaceLanguage } from "$lib/i18n/init";
     import { LANGUAGE_NAMES, type Language } from "$lib/types";
+    import { base } from "$app/paths";
 
     interface Props {
         onclose: () => void;
@@ -51,7 +52,12 @@
 >
     <div class="modal">
         <!-- Тільки кнопка закриття -->
-        <button class="close-btn" onclick={onclose} aria-label="Close">
+        <button
+            class="close-btn"
+            onclick={onclose}
+            aria-label="Close"
+            data-testid="close-language-modal-btn"
+        >
             <X size={28} />
         </button>
 
@@ -67,9 +73,10 @@
                                 .interfaceLanguage === lang}
                             onclick={() => handleInterfaceLanguage(lang)}
                             title={LANGUAGE_NAMES[lang]}
+                            data-testid="interface-lang-{lang}"
                         >
                             <img
-                                src="/flags/{lang}.svg"
+                                src="{base}/flags/{lang}.svg"
                                 alt={LANGUAGE_NAMES[lang]}
                                 class="flag-img"
                             />
@@ -107,9 +114,10 @@
                                     title={LANGUAGE_NAMES[lang]}
                                     disabled={lang ===
                                         settingsStore.value.targetLanguage}
+                                    data-testid="source-lang-{lang}"
                                 >
                                     <img
-                                        src="/flags/{lang}.svg"
+                                        src="{base}/flags/{lang}.svg"
                                         alt={LANGUAGE_NAMES[lang]}
                                         class="flag-img"
                                     />
@@ -143,9 +151,10 @@
                                     title={LANGUAGE_NAMES[lang]}
                                     disabled={lang ===
                                         settingsStore.value.sourceLanguage}
+                                    data-testid="target-lang-{lang}"
                                 >
                                     <img
-                                        src="/flags/{lang}.svg"
+                                        src="{base}/flags/{lang}.svg"
                                         alt={LANGUAGE_NAMES[lang]}
                                         class="flag-img"
                                     />
@@ -164,12 +173,13 @@
                             type="checkbox"
                             checked={settingsStore.value.showTranscription}
                             onchange={() => settingsStore.toggleTranscription()}
+                            data-testid="transcription-toggle"
                         />
                         <span class="slider"></span>
                         <span class="toggle-label">
                             {$_("settings.transcription")}
                             <img
-                                src="/flags/en.svg"
+                                src="{base}/flags/en.svg"
                                 alt="English"
                                 class="flag-mini"
                             />
@@ -181,12 +191,13 @@
                             type="checkbox"
                             checked={settingsStore.value.enablePronunciation}
                             onchange={() => settingsStore.togglePronunciation()}
+                            data-testid="pronunciation-toggle"
                         />
                         <span class="slider"></span>
                         <span class="toggle-label">
                             {$_("settings.pronunciation")}
                             <img
-                                src="/flags/en.svg"
+                                src="{base}/flags/en.svg"
                                 alt="English"
                                 class="flag-mini"
                             />

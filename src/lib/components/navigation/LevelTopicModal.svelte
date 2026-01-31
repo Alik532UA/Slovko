@@ -1,18 +1,30 @@
 <script lang="ts">
     /**
      * LevelTopicModal — Вибір рівня або теми
-     * Дві вкладки: Рівні / Теми
+     * Scalable architecture: Tabs defined as config
      */
     import { _ } from "svelte-i18n";
     import { settingsStore } from "$lib/stores/settingsStore.svelte";
-    import { ALL_LEVELS, ALL_TOPICS, type CEFRLevel } from "$lib/types";
+    import {
+        ALL_LEVELS,
+        ALL_TOPICS,
+        type CEFRLevel,
+        type GameMode,
+    } from "$lib/types";
 
     interface Props {
         onclose: () => void;
     }
     let { onclose }: Props = $props();
 
-    let activeTab = $state<"levels" | "topics">("levels");
+    // Configuration for Tabs
+    const TABS: { id: GameMode; label: string; testId: string }[] = [
+        { id: "levels", label: "levels.title", testId: "tab-levels" },
+        { id: "topics", label: "topics.title", testId: "tab-topics" },
+    ];
+
+    // Initialize directly from store (SSoT)
+    let activeTab = $state<GameMode>(settingsStore.value.mode);
 
     function selectLevel(level: CEFRLevel) {
         settingsStore.setLevel(level);
@@ -40,20 +52,16 @@
     <div class="modal">
         <!-- Tabs -->
         <div class="tabs">
-            <button
-                class="tab"
-                class:active={activeTab === "levels"}
-                onclick={() => (activeTab = "levels")}
-            >
-                {$_("levels.title")}
-            </button>
-            <button
-                class="tab"
-                class:active={activeTab === "topics"}
-                onclick={() => (activeTab = "topics")}
-            >
-                {$_("topics.title")}
-            </button>
+            {#each TABS as tab}
+                <button
+                    class="tab"
+                    class:active={activeTab === tab.id}
+                    onclick={() => (activeTab = tab.id)}
+                    data-testid={tab.testId}
+                >
+                    {$_(tab.label)}
+                </button>
+            {/each}
         </div>
 
         <!-- Content -->
@@ -66,6 +74,7 @@
                             class:selected={settingsStore.value.currentLevel ===
                                 level}
                             onclick={() => selectLevel(level)}
+                            data-testid="level-item-{level}"
                         >
                             <span class="item-title">{level}</span>
                             <span class="item-desc"
@@ -82,6 +91,7 @@
                             class:selected={settingsStore.value.currentTopic ===
                                 topic.id}
                             onclick={() => selectTopic(topic.id)}
+                            data-testid="topic-item-{topic.id}"
                         >
                             <span class="item-icon">{topic.icon}</span>
                             <span class="item-title"

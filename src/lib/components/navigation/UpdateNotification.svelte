@@ -15,7 +15,11 @@
         <span class="text">{$_("updateNotification.message")}</span>
         <span class="version">v{version}</span>
     </div>
-    <button class="update-btn" onclick={applyUpdate}>
+    <button
+        class="update-btn"
+        onclick={applyUpdate}
+        data-testid="apply-update-btn"
+    >
         <RefreshCw size={18} />
         {$_("updateNotification.button")}
     </button>

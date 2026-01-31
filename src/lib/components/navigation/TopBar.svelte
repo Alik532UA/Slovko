@@ -10,24 +10,30 @@
     let showLanguageModal = $state(false);
     let showAboutModal = $state(false);
 
-    function openDonate() {
-        window.open("https://send.monobank.ua/jar/7sCsydhJnR/", "_blank");
-    }
+    const donateUrl = "https://send.monobank.ua/jar/7sCsydhJnR";
 </script>
 
 <div class="top-icons-bar">
     <!-- Донат -->
-    <button class="icon-btn" onclick={openDonate} title="Donate">
+    <a
+        href={donateUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="icon-btn"
+        title="Donate"
+        data-testid="donate-btn"
+    >
         <div class="icon-inner">
             <Coins size={24} />
         </div>
-    </button>
+    </a>
 
     <!-- Мови -->
     <button
         class="icon-btn"
         onclick={() => (showLanguageModal = true)}
         title="Languages"
+        data-testid="language-settings-btn"
     >
         <div class="icon-inner">
             <Languages size={24} />
@@ -39,6 +45,7 @@
         class="icon-btn"
         onclick={() => (showAboutModal = true)}
         title="About"
+        data-testid="about-btn"
     >
         <div class="icon-inner">
             <Info size={24} />
@@ -83,6 +90,7 @@
             background 0.2s;
         padding: 0;
         color: var(--text-primary);
+        text-decoration: none;
     }
 
     .icon-btn:hover {

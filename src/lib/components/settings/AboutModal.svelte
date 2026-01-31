@@ -4,6 +4,7 @@
      */
     import { _ } from "svelte-i18n";
     import { X } from "lucide-svelte";
+    import { versionStore } from "$lib/stores/versionStore.svelte";
 
     interface Props {
         onclose: () => void;
@@ -33,7 +34,12 @@
     tabindex="-1"
 >
     <div class="modal">
-        <button class="close-btn" onclick={onclose} aria-label="Close">
+        <button
+            class="close-btn"
+            onclick={onclose}
+            aria-label="Close"
+            data-testid="close-about-modal-btn"
+        >
             <X size={28} />
         </button>
 
@@ -42,10 +48,11 @@
 
             <div class="links">
                 <a
-                    href="https://send.monobank.ua/jar/7sCsydhJnR/"
+                    href="https://send.monobank.ua/jar/7sCsydhJnR"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="link-btn donate"
+                    data-testid="about-donate-link"
                 >
                     {$_("about.support")}
                 </a>
@@ -55,12 +62,15 @@
                     target="_blank"
                     rel="noopener noreferrer"
                     class="link-btn cv"
+                    data-testid="about-cv-link"
                 >
                     {$_("about.developer")}
                 </a>
             </div>
 
-            <p class="version">{$_("about.version")}: 0.1</p>
+            <p class="version">
+                {$_("about.version")}: {versionStore.currentVersion || "0.1"}.
+            </p>
         </div>
     </div>
 </div>

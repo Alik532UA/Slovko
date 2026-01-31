@@ -30,6 +30,7 @@
     class:wrong={card.status === "wrong"}
     onclick={handleClick}
     disabled={card.status === "correct"}
+    data-testid="word-card-{card.id}"
 >
     <span class="word-text">{card.text}</span>
     {#if card.transcription}
@@ -91,11 +92,27 @@
         border-color: var(--selected-border);
     }
 
-    /* Правильна відповідь — зелений + зникнення */
+    /* Правильна відповідь — зелений спалах + 25% прозорість */
     .word-card.correct {
         background: var(--correct-bg);
         border-color: var(--correct-border);
-        animation: fadeOut 0.5s ease-out forwards;
+        animation: correctFade 0.8s ease-out forwards;
+        cursor: default;
+    }
+
+    @keyframes correctFade {
+        0% {
+            opacity: 1;
+            transform: scale(1);
+        }
+        20% {
+            opacity: 1;
+            transform: scale(1.08);
+        }
+        100% {
+            opacity: 0.25;
+            transform: scale(0.95);
+        }
     }
 
     /* Неправильна відповідь — червоне блимання */
@@ -103,17 +120,6 @@
         animation: shake 0.4s ease-in-out;
         background: var(--wrong-bg);
         border-color: var(--wrong-border);
-    }
-
-    @keyframes fadeOut {
-        0% {
-            opacity: 1;
-            scale: 1;
-        }
-        100% {
-            opacity: 0;
-            scale: 0.8;
-        }
     }
 
     @keyframes shake {

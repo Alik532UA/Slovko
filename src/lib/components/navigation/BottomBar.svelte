@@ -34,11 +34,16 @@
         class="nav-btn"
         onclick={() => settingsStore.prevLevel()}
         disabled={!canGoPrev}
+        data-testid="prev-level-btn"
     >
         <ChevronLeft size={32} />
     </button>
 
-    <button class="level-btn" onclick={() => (showModal = true)}>
+    <button
+        class="level-btn"
+        onclick={() => (showModal = true)}
+        data-testid="level-topic-selector-btn"
+    >
         {currentLabel}
     </button>
 
@@ -46,6 +51,7 @@
         class="nav-btn"
         onclick={() => settingsStore.nextLevel()}
         disabled={!canGoNext}
+        data-testid="next-level-btn"
     >
         <ChevronRight size={32} />
     </button>
