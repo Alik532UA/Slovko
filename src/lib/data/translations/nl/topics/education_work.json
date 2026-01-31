@@ -28,5 +28,13 @@
     "exam": "examen",
     "class": "klas",
     "salary": "salaris",
-    "profession": "beroep"
+    "profession": "beroep",
+    "blackboard": "schoolbord",
+    "classroom": "klaslokaal",
+    "degree_academic": "graad",
+    "diploma": "diploma",
+    "geography": "aardrijkskunde",
+    "notebook_paper": "schrift",
+    "physics": "natuurkunde",
+    "printer_device": "printer"
 }

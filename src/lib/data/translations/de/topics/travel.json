@@ -61,5 +61,6 @@
     "emergency": "Notfall",
     "police": "Polizei",
     "hospital": "Krankenhaus",
-    "departure_leave": "Abfahrt"
+    "departure_leave": "Abfahrt",
+    "camp_verb": "zelten"
 }

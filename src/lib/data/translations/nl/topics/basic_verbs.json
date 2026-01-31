@@ -41,5 +41,8 @@
     "write": "schrijven",
     "sit": "zitten",
     "stand": "staan",
-    "lose": "verliezen"
+    "lose": "verliezen",
+    "pick_choose": "kiezen",
+    "beat_win": "verslaan",
+    "chat_talk": "kletsen"
 }

@@ -41,5 +41,8 @@
     "write": "yazmaq",
     "sit": "oturmaq",
     "stand": "turmaq",
-    "lose": "coytmaq"
+    "lose": "coytmaq",
+    "pick_choose": "saylamaq",
+    "beat_win": "yeñmek",
+    "chat_talk": "laflamaq"
 }

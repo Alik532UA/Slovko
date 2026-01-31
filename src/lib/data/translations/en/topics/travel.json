@@ -61,5 +61,6 @@
     "emergency": "emergency",
     "police": "police",
     "hospital": "hospital",
-    "departure_leave": "departure"
+    "departure_leave": "departure",
+    "camp_verb": "camp"
 }

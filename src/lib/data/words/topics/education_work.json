@@ -29,6 +29,14 @@
         "employer",
         "profession",
         "skill",
-        "training_course"
+        "training_course",
+        "blackboard",
+        "classroom",
+        "degree_academic",
+        "diploma",
+        "geography",
+        "notebook_paper",
+        "physics",
+        "printer_device"
     ]
 }

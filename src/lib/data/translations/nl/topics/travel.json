@@ -61,5 +61,6 @@
     "emergency": "noodgeval",
     "police": "politie",
     "hospital": "ziekenhuis",
-    "departure_leave": "vertrek"
+    "departure_leave": "vertrek",
+    "camp_verb": "kamperen"
 }

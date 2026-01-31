@@ -41,5 +41,8 @@
     "write": "write",
     "sit": "sit",
     "stand": "stand",
-    "lose": "lose"
+    "lose": "lose",
+    "pick_choose": "pick",
+    "beat_win": "beat",
+    "chat_talk": "chat"
 }

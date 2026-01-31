@@ -28,5 +28,13 @@
     "exam": "Prüfung",
     "class": "Klasse",
     "salary": "Gehalt",
-    "profession": "Beruf"
+    "profession": "Beruf",
+    "blackboard": "Tafel",
+    "classroom": "Klassenzimmer",
+    "degree_academic": "akademischer Grad",
+    "diploma": "Diplom",
+    "geography": "Geografie",
+    "notebook_paper": "Notizbuch",
+    "physics": "Physik",
+    "printer_device": "Drucker"
 }

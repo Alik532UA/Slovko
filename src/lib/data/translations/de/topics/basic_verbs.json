@@ -41,5 +41,8 @@
     "write": "schreiben",
     "sit": "sitzen",
     "stand": "stehen",
-    "lose": "verlieren"
+    "lose": "verlieren",
+    "pick_choose": "wählen",
+    "beat_win": "besiegen",
+    "chat_talk": "chatten"
 }

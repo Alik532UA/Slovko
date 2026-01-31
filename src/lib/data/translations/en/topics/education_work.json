@@ -28,5 +28,13 @@
     "exam": "exam",
     "class": "class",
     "salary": "salary",
-    "profession": "profession"
+    "profession": "profession",
+    "blackboard": "blackboard",
+    "classroom": "classroom",
+    "degree_academic": "degree",
+    "diploma": "diploma",
+    "geography": "geography",
+    "notebook_paper": "notebook",
+    "physics": "physics",
+    "printer_device": "printer"
 }

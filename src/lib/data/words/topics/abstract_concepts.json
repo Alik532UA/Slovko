@@ -26,6 +26,14 @@
         "consequence",
         "courage",
         "patience",
-        "priority"
+        "priority",
+        "damage_harm",
+        "age_years",
+        "beginning_start",
+        "danger_risk",
+        "detail_info",
+        "difference_variation",
+        "art_culture",
+        "level_rank"
     ]
 }

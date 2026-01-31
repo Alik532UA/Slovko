@@ -56,6 +56,9 @@
         "run_out_of",
         "set_off_journey",
         "take_after_relative",
-        "take_up_hobby"
+        "take_up_hobby",
+        "come_on",
+        "look_forward_to",
+        "turn_down_volume"
     ]
 }

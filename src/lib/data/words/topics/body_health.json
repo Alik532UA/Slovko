@@ -28,6 +28,8 @@
         "health",
         "medicine_1",
         "hospital",
-        "accident"
+        "accident",
+        "clap_hands",
+        "comb_hair"
     ]
 }

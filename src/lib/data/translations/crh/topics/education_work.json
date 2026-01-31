@@ -28,5 +28,13 @@
     "exam": "sınav",
     "class": "sınıf",
     "salary": "maaş",
-    "profession": "zenaat"
+    "profession": "zenaat",
+    "blackboard": "yazı tabağı",
+    "classroom": "sınıf",
+    "degree_academic": "derece",
+    "diploma": "diplom",
+    "geography": "coğrafiya",
+    "notebook_paper": "defter",
+    "physics": "fizika",
+    "printer_device": "printer"
 }
