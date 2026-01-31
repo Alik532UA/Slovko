@@ -1,0 +1,18 @@
+{
+    "id": "colors",
+    "name": "Colors",
+    "description": "Learn basic and complex colors",
+    "red": "red",
+    "blue": "blue",
+    "green": "green",
+    "yellow": "yellow",
+    "black": "black",
+    "white": "white",
+    "orange_color": "orange",
+    "brown": "brown",
+    "pink": "pink",
+    "purple": "purple",
+    "color": "color",
+    "gold": "gold",
+    "silver": "silver"
+}

@@ -7,7 +7,7 @@
     "train": "tren",
     "plane": "uçaq",
     "boat": "qayıq",
-    "ship": "gemi",
+    "ship": "gemı",
     "taxi": "taksi",
     "engine_1": "dvigatel",
     "engine_2": "motor",
@@ -16,7 +16,7 @@
     "brake": "tormoz",
     "gear": "vites",
     "pedal": "pedal",
-    "seat": "oturğıç",
+    "seat": "yer",
     "belt": "qayış",
     "mirror": "küzgü",
     "window": "pencere",
@@ -60,5 +60,10 @@
     "piston": "piston",
     "cylinder": "silindir",
     "suspension": "süspansiyon",
-    "shock_absorber": "amortizator"
+    "shock_absorber": "amortizator",
+    "light_brightness": "yarıq",
+    "battery_life": "batareya",
+    "signal_phone": "işaret",
+    "exhaust_options": "bitirmek",
+    "fuel_energy": "yaqıt"
 }

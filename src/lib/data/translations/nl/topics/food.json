@@ -32,7 +32,7 @@
     "bread": "brood",
     "soup": "soep",
     "salad": "salade",
-    "sandwich": "boterham",
+    "sandwich": "broodje",
     "pizza": "pizza",
     "burger": "burger",
     "ice_cream": "ijs",
@@ -62,5 +62,6 @@
     "sausage_2": "worst",
     "ham": "ham",
     "bacon": "spek",
-    "toast": "toast"
+    "toast": "toast",
+    "orange_color": "oranje"
 }

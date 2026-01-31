@@ -47,6 +47,7 @@
     "i_know": "ik weet het",
     "i_think": "ik denk",
     "right": "juist",
-    "wrong": "fout",
-    "problem": "probleem"
+    "wrong": "verkeerd",
+    "problem": "probleem",
+    "right_correct": "juist"
 }

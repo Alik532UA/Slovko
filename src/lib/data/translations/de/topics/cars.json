@@ -17,7 +17,7 @@
     "gear": "Gang",
     "pedal": "Pedal",
     "seat": "Sitz",
-    "belt": "Gurt",
+    "belt": "Gürtel",
     "mirror": "Spiegel",
     "window": "Fenster",
     "door": "Tür",
@@ -38,7 +38,7 @@
     "street": "Straße",
     "highway": "Autobahn",
     "traffic": "Verkehr",
-    "sign": "Schild",
+    "sign": "Zeichen",
     "signal": "Signal",
     "steering_wheel": "Lenkrad",
     "dashboard": "Armaturenbrett",
@@ -60,5 +60,10 @@
     "piston": "Kolben",
     "cylinder": "Zylinder",
     "suspension": "Aufhängung",
-    "shock_absorber": "Stoßdämpfer"
+    "shock_absorber": "Stoßdämpfer",
+    "light_brightness": "Licht",
+    "battery_life": "Batterie",
+    "signal_phone": "Signal",
+    "exhaust_options": "erschöpfen",
+    "fuel_energy": "Kraftstoff"
 }

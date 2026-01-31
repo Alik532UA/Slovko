@@ -38,7 +38,7 @@
     "street": "straat",
     "highway": "snelweg",
     "traffic": "verkeer",
-    "sign": "bord",
+    "sign": "teken",
     "signal": "signaal",
     "steering_wheel": "stuur",
     "dashboard": "dashboard",
@@ -60,5 +60,10 @@
     "piston": "zuiger",
     "cylinder": "cilinder",
     "suspension": "ophanging",
-    "shock_absorber": "schokdemper"
+    "shock_absorber": "schokdemper",
+    "light_brightness": "licht",
+    "battery_life": "batterij",
+    "signal_phone": "signaal",
+    "exhaust_options": "uitputten",
+    "fuel_energy": "brandstof"
 }

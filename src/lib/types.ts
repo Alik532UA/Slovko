@@ -93,7 +93,21 @@ export const ALL_TOPICS = [
     { id: 'home', icon: '🏠' },
     { id: 'cars', icon: '🚗' },
     { id: 'it', icon: '💻' },
-    { id: 'questions', icon: '❓' }
+    { id: 'questions', icon: '❓' },
+    { id: 'numbers', icon: '🔢' },
+    { id: 'colors', icon: '🎨' },
+    { id: 'time', icon: '🕒' },
+    { id: 'family_relationships', icon: '👨‍👩‍👧' },
+    { id: 'body_health', icon: '🦴' },
+    { id: 'clothes_fashion', icon: '👕' },
+    { id: 'pronouns_people', icon: '👤' },
+    { id: 'basic_verbs', icon: '🏃' },
+    { id: 'adjectives', icon: '✨' },
+    { id: 'education_work', icon: '🎓' },
+    { id: 'abstract_concepts', icon: '💭' },
+    { id: 'society_law', icon: '⚖️' },
+    { id: 'phrasal_verbs', icon: '🧩' },
+    { id: 'adverbs_prepositions', icon: '🔗' }
 ] as const;
 
 export type TopicId = (typeof ALL_TOPICS)[number]['id'];

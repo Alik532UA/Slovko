@@ -7,7 +7,7 @@
     "how": "nasıl",
     "which": "qaysı",
     "whose": "kimniñ",
-    "whom": "kimge",
+    "whom": "kimni",
     "how_much": "ne qadar",
     "how_many": "qaç dane",
     "how_long": "ne qadar vaqıt",
@@ -26,8 +26,8 @@
     "who_is": "kim bu",
     "why_not": "neden olmaz",
     "maybe": "belki",
-    "really": "kerçekten",
-    "sure": "eminim",
+    "really": "gerçekten",
+    "sure": "emin",
     "of_course": "elbette",
     "what_for": "ne içün",
     "what_about": "ne aqqında",
@@ -40,7 +40,7 @@
     "excuse_me": "bağışlañız",
     "understand": "añlamaq",
     "mean": "ne demek",
-    "explain": "izaat etmek",
+    "explain": "añlatmaq",
     "repeat": "tekrarlamaq",
     "speak_slowly": "yavaş aytıñız",
     "i_see": "añladım",
@@ -48,5 +48,6 @@
     "i_think": "belli",
     "right": "doğru",
     "wrong": "yañlış",
-    "problem": "mesele"
+    "problem": "mesele",
+    "right_correct": "doğru"
 }

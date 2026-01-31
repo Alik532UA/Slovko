@@ -4,7 +4,7 @@
     "bedroom": "slaapkamer",
     "bathroom": "badkamer",
     "living_room": "woonkamer",
-    "hall": "gang",
+    "hall": "hal",
     "door": "deur",
     "window": "raam",
     "wall": "muur",
@@ -55,7 +55,7 @@
     "fork": "vork",
     "spoon": "lepel",
     "knife": "mes",
-    "furniture": "meubels",
+    "furniture": "meubilair",
     "armchair": "fauteuil",
     "carpet": "tapijt",
     "fireplace_1": "open haard",
@@ -64,5 +64,6 @@
     "vase": "vaas",
     "balcony": "balkon",
     "stairs": "trap",
-    "basement": "kelder"
+    "basement": "kelder",
+    "glass_material": "glas"
 }

@@ -5,8 +5,8 @@
     "when": "wann",
     "why": "warum",
     "how": "wie",
-    "which": "welcher",
-    "whose": "wessen",
+    "which": "welche",
+    "whose": "dessen",
     "whom": "wem",
     "how_much": "wie viel",
     "how_many": "wie viele",
@@ -48,5 +48,6 @@
     "i_think": "ich denke",
     "right": "richtig",
     "wrong": "falsch",
-    "problem": "Problem"
+    "problem": "Problem",
+    "right_correct": "richtig"
 }

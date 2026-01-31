@@ -20,7 +20,21 @@
         "home": "Thuis",
         "cars": "Auto's",
         "it": "IT",
-        "questions": "Vraagwoorden"
+        "questions": "Vraagwoorden",
+        "numbers": "Getallen",
+        "colors": "Kleuren",
+        "time": "Tijd",
+        "family_relationships": "Familie & Relaties",
+        "body_health": "Lichaam & Gezondheid",
+        "clothes_fashion": "Kleding & Mode",
+        "pronouns_people": "Voornaamwoorden & Mensen",
+        "basic_verbs": "Basiswerkwoorden",
+        "adjectives": "Bijvoeglijke naamwoorden",
+        "education_work": "Onderwijs & Werk",
+        "abstract_concepts": "Abstracte Concepten",
+        "society_law": "Samenleving & Recht",
+        "phrasal_verbs": "Frasale Werkwoorden",
+        "adverbs_prepositions": "Bijwoorden & Voorzetsels"
     },
     "settings": {
         "interfaceLanguage": "Interface taal",

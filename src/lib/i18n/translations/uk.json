@@ -20,7 +20,21 @@
         "home": "Дім",
         "cars": "Автомобілі",
         "it": "IT",
-        "questions": "Питальні слова"
+        "questions": "Питальні слова",
+        "numbers": "Числа",
+        "colors": "Кольори",
+        "time": "Час",
+        "family_relationships": "Сім'я та Відносини",
+        "body_health": "Тіло та Здоров'я",
+        "clothes_fashion": "Одяг та Мода",
+        "pronouns_people": "Займенники та Люди",
+        "basic_verbs": "Базові дієслова",
+        "adjectives": "Прикметники",
+        "education_work": "Освіта та Робота",
+        "abstract_concepts": "Абстрактні поняття",
+        "society_law": "Суспільство та Закон",
+        "phrasal_verbs": "Фразові дієслова",
+        "adverbs_prepositions": "Прислівники та Прийменники"
     },
     "settings": {
         "interfaceLanguage": "Мова інтерфейсу",

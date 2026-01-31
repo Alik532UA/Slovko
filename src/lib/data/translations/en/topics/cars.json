@@ -60,5 +60,10 @@
     "piston": "piston",
     "cylinder": "cylinder",
     "suspension": "suspension",
-    "shock_absorber": "shock absorber"
+    "shock_absorber": "shock absorber",
+    "light_brightness": "light",
+    "battery_life": "battery",
+    "signal_phone": "signal",
+    "exhaust_options": "exhaust",
+    "fuel_energy": "fuel"
 }

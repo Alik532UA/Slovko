@@ -60,5 +60,8 @@
     "spring": "lente",
     "summer": "zomer",
     "autumn": "herfst",
-    "winter": "winter"
+    "winter": "winter",
+    "spring_season": "lente",
+    "rock_stone": "rots",
+    "branch_1": "tak"
 }

@@ -60,5 +60,8 @@
     "spring": "spring",
     "summer": "summer",
     "autumn": "autumn",
-    "winter": "winter"
+    "winter": "winter",
+    "spring_season": "spring",
+    "rock_stone": "rock",
+    "branch_1": "branch"
 }

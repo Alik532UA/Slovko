@@ -1,0 +1,1128 @@
+// ДІЄСЛОВА - ДІЇ ТА ВЗАЄМОДІЯ (Verbs - Action & Interaction)
+abandon;покидати / відмовлятися
+absorb;поглинати
+accuse;звинувачувати
+adapt;адаптуватися
+adjust;регулювати / пристосовуватися
+admire;захоплюватися
+admit;визнавати (провину/факт)
+affect;впливати
+afford;дозволити собі (фінансово)
+aim;цілитися / мати на меті
+announce;оголошувати
+annoy;дратувати
+apologize;вибачатися
+appeal;звертатися / приваблювати
+appear;з'являтися / здаватися
+apply;застосовувати / подавати заяву
+appreciate;цінувати
+approach;наближатися
+approve;схвалювати
+argue;сперечатися / аргументувати
+arrange;влаштовувати / домовлятися
+arrest;заарештовувати
+assist;допомагати
+attach;прикріплювати
+attack;атакувати
+attempt;намагатися
+attract;приваблювати
+avoid;уникати
+base;базувати
+behave;поводитися
+benefit;отримувати вигоду
+blame;звинувачувати
+blow;дути
+book;бронювати
+bother;турбувати
+breath;дихати
+broadcast;транслювати
+bury;ховати (хоронити)
+calculate;обчислювати
+cancel;скасовувати
+capture;захоплювати
+cause;спричиняти
+celebrate;святкувати
+challenge;кидати виклик
+charge;стягувати плату / заряджати
+cheat;обманювати / списувати
+claim;стверджувати / вимагати
+combine;поєднувати
+communicate;спілкуватися
+compare;порівнювати
+compete;змагатися
+complain;скаржитися
+concentrate;зосереджуватися
+conclude;робити висновок
+confirm;підтверджувати
+confuse;плутати
+connect;з'єднувати
+consider;розглядати / вважати
+consist;складатися
+consume;споживати
+contain;містити
+control;контролювати
+convince;переконувати
+create;створювати
+criticize;критикувати
+cure;лікувати
+deal;мати справу
+debate;дискутувати
+declare;оголошувати / декларувати
+decrease;зменшувати
+defend;захищати
+define;визначати
+delay;затримувати
+deliver;доставляти
+demand;вимагати
+deny;заперечувати
+depend;залежати
+describe;описувати
+deserve;заслуговувати
+destroy;знищувати
+determine;визначати / встановлювати
+develop;розвивати
+disappear;зникати
+disappoint;розчаровувати
+discover;відкривати (щось нове)
+discuss;обговорювати
+display;відображати / показувати
+disturb;турбувати / заважати
+divide;ділити
+doubt;сумніватися
+drop;впускати / падати
+educate;навчати / давати освіту
+elect;обирати (на виборах)
+embarrass;бентежити
+employ;наймати на роботу
+encourage;заохочувати
+entertain;розважати
+establish;засновувати / встановлювати
+estimate;оцінювати
+examine;оглядати / екзаменувати
+exchange;обмінюватися
+exist;існувати
+expand;розширювати
+expect;очікувати
+experience;переживати (досвід)
+explain;пояснювати
+explore;досліджувати
+express;виражати
+face;стикатися (з проблемою)
+fail;зазнати невдачі
+fancy;уявляти / хотіти (розм.)
+fasten;застібати / пристібати
+feature;містити як особливість
+fetch;піти і принести
+fix;лагодити / фіксувати
+float;плавати (на поверхні)
+focus;фокусуватися
+force;змушувати
+forgive;пробачати
+frighten;лякати
+gain;здобувати / набирати
+gather;збирати(ся)
+generate;генерувати
+guess;вгадувати
+handle;впоратися / керувати
+hang;висіти / вішати
+hire;наймати
+identify;ідентифікувати
+ignore;ігнорувати
+imagine;уявляти
+impress;вражати
+improve;покращувати
+include;включати
+increase;збільшувати
+indicate;вказувати
+influence;впливати
+inform;інформувати
+injure;травмувати
+insist;наполягати
+install;встановлювати
+intend;мати намір
+interrupt;перебивати
+introduce;представляти / запроваджувати
+invent;винаходити
+invest;інвестувати
+investigate;розслідувати
+involve;залучати
+judge;судити
+justify;виправдовувати
+keep;зберігати / продовжувати
+knock;стукати
+land;приземлятися
+last;тривати
+lead;вести / очолювати
+lean;нахилятися / спиратися
+limit;обмежувати
+link;зв'язувати
+locate;розміщувати
+lock;замикати
+maintain;підтримувати (стан)
+manage;керувати / спромогтися
+measure;вимірювати
+mention;згадувати
+mind;заперечувати / звертати увагу
+miss;пропускати / сумувати
+mix;змішувати
+murder;вбивати (навмисно)
+notice;помічати
+obtain;отримувати
+occupy;займати (місце/час)
+offer;пропонувати
+operate;керувати / оперувати
+organize;організовувати
+overcome;долати
+owe;бути винним (борг)
+own;володіти
+participate;брати участь
+perform;виконувати / виступати
+persuade;переконувати
+place;розміщувати
+plant;саджати
+predict;передбачати
+prefer;віддавати перевагу
+prepare;готувати
+prevent;запобігати
+produce;виробляти
+promise;обіцяти
+promote;просувати / підвищувати
+protect;захищати
+prove;доводити
+provide;забезпечувати
+publish;публікувати
+pull;тягнути
+punish;карати
+purchase;купувати
+quit;кидати (звичку/роботу)
+raise;піднімати / виховувати
+reach;досягати
+react;реагувати
+realize;усвідомлювати
+receive;отримувати
+recognize;впізнавати / визнавати
+recommend;рекомендувати
+record;записувати
+recover;одужувати / відновлювати
+reduce;зменшувати
+refer;посилатися
+reflect;відображати / розмірковувати
+refuse;відмовлятися
+regret;шкодувати
+relate;стосуватися
+relax;розслаблятися
+release;випускати / звільняти
+rely;покладатися
+remain;залишатися
+remind;нагадувати
+remove;видаляти / усувати
+rent;орендувати
+repair;ремонтувати
+replace;замінювати
+report;звітувати
+represent;представляти
+request;робити запит
+require;вимагати / потребувати
+rescue;рятувати
+research;досліджувати
+reserve;резервувати
+respect;поважати
+respond;відповідати
+retire;виходити на пенсію
+reveal;розкривати
+review;оглядати / переглядати
+risk;ризикувати
+ruin;руйнувати
+satisfy;задовольняти
+save;рятувати / економити
+scare;лякати
+scream;кричати
+search;шукати
+select;вибирати
+separate;відокремлювати
+serve;слугувати / обслуговувати
+share;ділитися
+shoot;стріляти / знімати
+shout;кричати
+sign;підписувати
+solve;вирішувати (проблему)
+spread;поширювати
+stare;витріщатися
+state;стверджувати
+stick;приклеювати / дотримуватися
+stress;наголошувати
+stretch;розтягувати
+struggle;боротися / докладати зусиль
+succeed;досягати успіху
+suffer;страждати
+suggest;пропонувати (ідею)
+supply;постачати
+support;підтримувати
+suppose;припускати
+survive;виживати
+suspect;підозрювати
+swallow;ковтати
+swear;клястися / лаятися
+switch;перемикати
+target;націлюватися
+tear;рвати
+tend;мати схильність
+threaten;погрожувати
+throw;кидати
+tie;зв'язувати
+touch;торкатися
+trade;торгувати
+train;тренувати(ся)
+transfer;передавати / переводити
+translate;перекладати
+transport;перевозити
+treat;лікувати / ставитися
+trust;довіряти
+unite;об'єднувати
+update;оновлювати
+upset;засмучувати
+urge;спонукати / закликати
+value;цінувати
+vary;змінюватися / відрізнятися
+view;розглядати
+vote;голосувати
+warn;попереджати
+waste;марнувати
+wave;махати
+weigh;важити
+whisper;шепотіти
+whistle;свистіти
+wonder;цікавитися / дивуватися
+worry;хвилюватися
+
+// СУСПІЛЬСТВО, ЗАКОН ТА ПОЛІТИКА (Society, Law & Politics)
+achievement;досягнення
+agreement;угода
+army;армія
+authority;влада / повноваження
+background;походження / фон
+battle;битва
+belief;віра / переконання
+border;кордон
+candidate;кандидат
+captain;капітан
+ceremony;церемонія
+citizen;громадянин
+community;спільнота / громада
+conflict;конфлікт
+court;суд
+crime;злочин
+criminal;злочинець
+culture;культура
+currency;валюта
+customs;митниця / звичаї
+debt;борг
+defense;оборона / захист
+democracy;демократія
+development;розвиток
+economy;економіка
+education;освіта
+election;вибори
+enemy;ворог
+environment;навколишнє середовище
+event;подія
+evidence;доказ
+government;уряд
+guard;охоронець
+gun;зброя (вогнепальна)
+identity;ідентичність / особистість
+industry;промисловість
+law;закон
+lawyer;юрист / адвокат
+leader;лідер
+license;ліцензія
+majority;більшість
+mayor;мер
+media;ЗМІ
+minority;меншість
+nation;нація
+opinion;думка
+parliament;парламент
+peace;мир
+permission;дозвіл
+politics;політика
+population;населення
+president;президент
+prison;в'язниця
+prisoner;в'язень
+protection;захист
+protest;протест
+public;громадськість
+punishment;покарання
+purpose;мета
+relation;відношення
+relationship;стосунки
+religion;релігія
+reputation;репутація
+right;право
+rule;правило / правління
+safety;безпека
+security;охорона / безпека
+society;суспільство
+soldier;солдат
+solution;рішення
+speech;промова
+system;система
+tax;податок
+threat;загроза
+tradition;традиція
+union;союз
+victim;жертва
+violence;насильство
+vote;голос (на виборах)
+war;війна
+weapon;зброя
+witness;свідок
+
+// ПРИКМЕТНИКИ: ХАРАКТЕР ТА ПОЧУТТЯ (Personality & Feelings)
+aggressive;агресивний
+ambitious;амбітний
+annoyed;роздратований
+anxious;тривожний / стурбований
+ashamed;соромно (йому/їй)
+brave;сміливий
+calm;спокійний
+cheerful;життєрадісний
+confident;впевнений
+confused;розгублений / заплутаний
+creative;творчий
+cruel;жорстокий
+curious;допитливий
+delighted;у захваті
+depressed;пригнічений
+disappointed;розчарований
+embarrassed;збентежений (соромно)
+emotional;емоційний
+energetic;енергійний
+excited;схвильований (радісно)
+exhausted;виснажений
+frightened;наляканий
+generous;щедрий
+grateful;вдячний
+guilty;винний
+honest;чесний
+impatient;нетерплячий
+independent;незалежний
+jealous;ревнивий / заздрісний
+keen;зацікавлений / палкий
+lonely;самотній
+mad;шалений / злий
+miserable;нещасний / жалюгідний
+nervous;знервований
+patient;терплячий
+peaceful;мирний
+positive;позитивний
+proud;гордий
+relaxed;розслаблений
+reliable;надійний
+rude;грубий
+satisfied;задоволений
+scared;наляканий
+selfish;егоїстичний
+sensible;розсудливий
+sensitive;чутливий
+serious;серйозний
+shocked;шокований
+shy;сором'язливий
+smart;кмітливий / розумний
+sociable;товариський
+stressed;напружений
+strict;суворий
+stubborn;впертий
+surprised;здивований
+suspicious;підозрілий
+talented;талановитий
+terrified;дуже наляканий
+tired;втомлений
+upset;засмучений
+
+// ПРИКМЕТНИКИ: ЗАГАЛЬНІ ТА АБСТРАКТНІ (General & Abstract)
+accurate;точний
+ancient;стародавній
+annual;щорічний
+artificial;штучний
+automatic;автоматичний
+available;доступний
+average;середній
+basic;базовий
+bright;яскравий / здібний
+central;центральний
+chemical;хімічний
+civil;цивільний
+classic;класичний
+common;спільний / поширений
+complicated;складний / заплутаний
+conscious;свідомий
+convenient;зручний
+critical;критичний
+cultural;культурний
+dangerous;небезпечний
+digital;цифровий
+direct;прямий
+due;належний / очікуваний
+effective;ефективний
+efficient;продуктивний / дієвий
+electric;електричний
+electronic;електронний
+empty;порожній
+environmental;екологічний
+equal;рівний
+essential;суттєвий / необхідний
+extreme;екстремальний
+familiar;знайомий
+financial;фінансовий
+flat;плаский
+foreign;іноземний
+frequent;частий
+general;загальний
+global;глобальний
+guilty;винний
+heavy;важкий
+historical;історичний
+huge;величезний
+illegal;незаконний
+immediate;негайний
+impossible;неможливий
+individual;індивідуальний
+industrial;промисловий
+innocent;невинний
+internal;внутрішній
+international;міжнародний
+legal;законний
+local;місцевий
+logical;логічний
+loose;вільний (одяг) / незакріплений
+main;головний
+medical;медичний
+mental;розумовий / психічний
+military;військовий
+modern;сучасний
+narrow;вузький
+national;національний
+natural;природний
+necessary;необхідний
+negative;негативний
+normal;нормальний
+nuclear;ядерний
+obvious;очевидний
+official;офіційний
+ordinary;звичайний
+original;оригінальний
+perfect;ідеальний
+permanent;постійний
+personal;особистий
+physical;фізичний
+pleasant;приємний
+political;політичний
+popular;популярний
+positive;позитивний
+potential;потенційний
+practical;практичний
+previous;попередній
+private;приватний
+professional;професійний
+psychological;психологічний
+public;публічний / громадський
+pure;чистий (без домішок)
+rare;рідкісний
+real;справжній
+reasonable;розумний / обґрунтований
+recent;нещодавній
+regular;регулярний
+relevant;доречний / актуальний
+responsible;відповідальний
+rough;грубий (на дотик) / приблизний
+safe;безпечний
+scientific;науковий
+separate;окремий
+sexual;сексуальний
+sharp;гострий
+significant;значний
+silent;тихий / мовчазний
+similar;схожий
+simple;простий
+single;одиночний / єдиний
+smooth;гладкий
+social;соціальний
+soft;м'який
+solid;твердий / суцільний
+special;спеціальний
+specific;конкретний
+spiritual;духовний
+steady;стійкий / стабільний
+strange;дивний
+successful;успішний
+suitable;підходящий
+technical;технічний
+temporary;тимчасовий
+terrible;жахливий
+thick;товстий
+thin;тонкий
+tight;тісний / тугий
+tiny;крихітний
+traditional;традиційний
+typical;типовий
+unable;неспроможний
+unfair;несправедливий
+unique;унікальний
+unknown;невідомий
+unlikely;малоймовірний
+urgent;терміновий
+useful;корисний
+useless;марний
+usual;звичайний
+valuable;цінний
+various;різноманітний
+visible;видимий
+weak;слабкий
+wet;мокрий
+wide;широкий
+wild;дикий
+willing;готовий (щось зробити)
+wonderful;чудовий
+wooden;дерев'яний
+wrong;неправильний
+
+// БІЗНЕС ТА РОБОТА (Business & Work)
+account;рахунок / звіт
+advertisement;реклама
+agency;агентство
+application;заява / додаток
+brand;бренд
+budget;бюджет
+campaign;кампанія
+career;кар'єра
+client;клієнт
+colleague;колега
+competition;конкуренція / змагання
+contract;контракт
+customer;покупець
+department;відділ
+disadvantage;недолік
+document;документ
+earnings;заробіток
+employee;працівник
+employer;роботодавець
+experience;досвід
+goal;мета
+income;дохід
+industry;індустрія
+insurance;страхування
+interview;співбесіда / інтерв'ю
+management;менеджмент / управління
+marketing;маркетинг
+meeting;зустріч / нарада
+negotiation;переговори
+opportunity;можливість
+organization;організація
+owner;власник
+partnership;партнерство
+position;посада
+presentation;презентація
+production;виробництво
+profit;прибуток
+project;проект
+promotion;підвищення / реклама
+qualification;кваліфікація
+reception;приймальня
+reference;рекомендація / посилання
+resignation;відставка
+responsibility;відповідальність
+retirement;вихід на пенсію
+salary;зарплата (місячна)
+sales;продажі
+schedule;розклад / графік
+selection;відбір
+shift;зміна (робоча)
+skill;навичка
+staff;персонал
+strategy;стратегія
+success;успіх
+target;ціль / мішень
+trade;торгівля
+training;тренінг / навчання
+unemployment;безробіття
+wage;зарплата (погодинна/тижнева)
+workplace;робоче місце
+
+// ТЕХНОЛОГІЇ ТА НАУКА (Technology & Science)
+access;доступ
+app;додаток
+battery;батарея
+blog;блог
+cable;кабель
+charge;заряд
+chip;чіп
+connection;з'єднання
+data;дані
+database;база даних
+device;пристрій
+display;дисплей / показ
+download;завантаження
+electricity;електрика
+energy;енергія
+engine;двигун
+equipment;обладнання
+experiment;експеримент
+file;файл
+folder;папка
+fuel;паливо
+gadget;гаджет
+hardware;апаратне забезпечення ("залізо")
+invention;винахід
+laboratory;лабораторія
+link;посилання
+memory;пам'ять
+network;мережа
+password;пароль
+planet;планета
+process;процес
+program;програма
+research;дослідження
+satellite;супутник
+screen;екран
+server;сервер
+signal;сигнал
+software;програмне забезпечення ("софт")
+source;джерело
+space;космос
+species;вид (біологічний)
+surface;поверхня
+technology;технологія
+tube;труба / метро (Лондон)
+unit;блок / одиниця
+universe;всесвіт
+user;користувач
+version;версія
+video;відео
+virus;вірус
+volume;гучність / об'єм
+web;павутина / мережа
+wifi;вай-фай
+
+// ПОДОРОЖІ ТА ТРАНСПОРТ (Travel & Transport)
+accommodation;житло / розміщення
+airline;авіакомпанія
+arrival;прибуття
+backpack;рюкзак
+baggage;багаж
+border;кордон
+brochure;брошура
+cabin;каюта / салон літака
+canal;канал
+check-in;реєстрація
+coast;узбережжя
+continent;континент
+crew;екіпаж
+cruise;круїз
+currency;валюта
+customs;митниця
+departure;відправлення
+destination;місце призначення
+distance;відстань
+document;документ
+embassy;посольство
+entrance;вхід
+expedition;експедиція
+fare;вартість проїзду
+ferry;пором
+flight;рейс / політ
+guide;гід / путівник
+harbor;гавань
+hostel;хостел
+immigration;імміграція
+journey;подорож (процес)
+jungle;джунглі
+landscape;пейзаж
+luggage;багаж
+monument;пам'ятник
+passenger;пасажир
+passport;паспорт
+pollution;забруднення
+port;порт
+resort;курорт
+route;маршрут
+scenery;краєвид
+sightseeing;огляд визначних пам'яток
+souvenir;сувенір
+stadium;стадіон
+statue;статуя
+suitcase;валіза
+terminal;термінал
+tourism;туризм
+tower;вежа
+traffic;дорожній рух
+transport;транспорт
+valley;долина
+vehicle;транспортний засіб
+view;вид
+visa;віза
+voyage;морська подорож
+
+// АБСТРАКТНІ ІМЕННИКИ (Abstract Nouns) - Ідеї та концепції
+ability;здатність / вміння
+access;доступ
+advantage;перевага
+adventure;пригода
+aim;ціль / мета
+amount;кількість
+anger;гнів
+answer;відповідь
+appearance;зовнішність / поява
+attention;увага
+attitude;ставлення
+beauty;краса
+behavior;поведінка
+benefit;користь / вигода
+cause;причина
+challenge;виклик / складна задача
+character;характер / персонаж
+choice;вибір
+comfort;комфорт
+communication;спілкування
+conclusion;висновок
+confidence;впевненість
+connection;зв'язок
+consequence;наслідок
+courage;сміливість
+damage;шкода
+danger;небезпека
+demand;попит / вимога
+description;опис
+difference;різниця
+difficulty;труднощі
+direction;напрямок
+disadvantage;недолік
+discussion;обговорення
+doubt;сумнів
+effect;ефект / вплив
+effort;зусилля
+emotion;емоція
+error;помилка
+event;подія
+evidence;доказ
+explanation;пояснення
+failure;невдача / провал
+faith;віра
+fashion;мода
+fault;провина / недолік
+fear;страх
+feeling;почуття
+force;сила
+freedom;свобода
+friendship;дружба
+fun;веселощі
+future;майбутнє
+growth;зріст / розвиток
+habit;звичка
+happiness;щастя
+harm;шкода
+help;допомога
+history;історія
+honor;честь
+hope;надія
+horror;жах
+humor;гумор
+idea;ідея
+imagination;уява
+importance;важливість
+impression;враження
+improvement;покращення
+increase;збільшення
+influence;вплив
+intelligence;інтелект
+interest;інтерес
+joy;радість
+justice;справедливість
+knowledge;знання
+lack;нестача
+laughter;сміх
+limit;межа / ліміт
+loss;втрата
+love;любов
+luck;удача
+luxury;розкіш
+magic;магія
+marriage;шлюб
+memory;пам'ять
+mess;безлад
+mind;розум / думка
+mistake;помилка
+mood;настрій
+movement;рух
+mystery;таємниця
+need;потреба
+noise;шум
+nonsense;нісенітниця
+opinion;думка
+opportunity;можливість
+option;варіант / опція
+pain;біль
+patience;терпіння
+peace;мир
+permission;дозвіл
+pleasure;задоволення
+possibility;можливість
+power;сила / влада
+pressure;тиск
+pride;гордість
+priority;пріоритет
+problem;проблема
+process;процес
+production;виробництво
+progress;прогрес
+promise;обіцянка
+proof;доказ
+protection;захист
+purpose;мета
+quality;якість
+question;питання
+reality;реальність
+reason;причина
+record;запис / рекорд
+relief;полегшення
+request;запит / прохання
+respect;повага
+result;результат
+risk;ризик
+role;роль
+safety;безпека
+scene;сцена (місце події)
+secret;секрет
+sense;чуття / сенс
+service;послуга / сервіс
+shadow;тінь
+shame;сором
+shock;шок
+sight;зір / вид
+silence;тиша
+situation;ситуація
+skill;навичка
+smell;запах
+solution;рішення
+sorrow;смуток
+soul;душа
+sound;звук
+space;простір
+speed;швидкість
+spirit;дух
+strength;сила
+stress;стрес
+style;стиль
+success;успіх
+support;підтримка
+surprise;сюрприз
+symbol;символ
+talent;талант
+taste;смак
+thought;думка
+time;час
+touch;дотик
+tradition;традиція
+trouble;біда / проблема
+trust;довіра
+truth;правда
+use;використання
+value;цінність
+variety;різноманітність
+victory;перемога
+view;погляд / вид
+violence;насильство
+voice;голос
+waste;відходи / марнування
+way;шлях / спосіб
+weakness;слабкість
+wealth;багатство
+weight;вага
+wish;бажання
+wonder;диво
+worry;хвилювання
+youth;молодість
+
+// ФРАЗОВІ ДІЄСЛОВА (Phrasal Verbs) - Must-have для B1
+break down;зламатися / зірватися
+break into;вдиратися
+break up;розійтися (про пару) / розбити
+bring up;виховувати / піднімати тему
+call for;вимагати / закликати
+call off;скасувати
+calm down;заспокоїтися
+carry on;продовжувати
+carry out;виконувати (план/наказ)
+catch up;наздогнати
+check in;зареєструватися
+check out;виселитися / перевірити
+cheer up;підбадьорити
+come across;випадково зустріти/знайти
+come up with;придумати (ідею)
+count on;розраховувати на
+cut down;зменшити споживання / зрубати
+cut off;відрізати / роз'єднати
+deal with;мати справу з / вирішувати
+depend on;залежати від
+dress up;наряджатися
+drop off;підвезти / висадити
+eat out;їсти не вдома (в ресторані)
+end up;опинитися (в результаті)
+fall out;посваритися
+figure out;з'ясувати / зрозуміти
+fill in;заповнити (форму)
+find out;дізнатися
+get along;ладнати (з кимось)
+get away;втекти / вирватися
+get by;зводити кінці з кінцями
+get over;пережити / одужати
+get rid of;позбутися
+give away;роздавати / видати (секрет)
+give back;повернути
+give in;поступитися / здатися
+give up;здатися / кинути (звичку)
+go on;продовжувати
+grow up;виростати
+hang out;тусуватися / проводити час
+hold on;зачекати
+keep on;продовжувати
+keep up;встигати / підтримувати рівень
+let down;підвести (когось)
+look after;доглядати
+look for;шукати
+look forward to;з нетерпінням чекати
+look out;бути обережним
+look up;шукати (в словнику) / подивитися вгору
+make up;вигадати / помиритися / нафарбуватися
+pay back;повернути борг
+pick up;підібрати / заїхати за кимось
+point out;вказати / зауважити
+put away;прибрати на місце
+put off;відкласти (на потім)
+put on;одягнути
+put out;загасити (вогонь)
+put up with;миритися з (чимось неприємним)
+run out of;закінчитися (про запаси)
+set off;вирушити в дорогу
+set up;заснувати / налаштувати
+show off;хизуватися
+slow down;сповільнитися
+sort out;розібратися / впорядкувати
+take after;бути схожим (на родича)
+take off;злетіти / зняти одяг
+take up;почати займатися (хобі)
+throw away;викинути
+try on;приміряти
+turn down;відхилити / зменшити гучність
+turn into;перетворитися на
+turn off;вимкнути
+turn on;увімкнути
+turn up;з'явитися / зробити гучніше
+work out;тренуватися / вирішити проблему
+write down;записати
+
+// СКЛАДНІ ПРИСЛІВНИКИ ТА СПОЛУЧНИКИ (Adverbs & Connectors)
+absolutely;абсолютно
+afterwards;згодом
+although;хоча
+anyway;в будь-якому разі
+apart from;крім
+as a result;в результаті
+barely;ледве
+besides;крім того
+consequently;отже / як наслідок
+definitely;безумовно
+despite;незважаючи на
+due to;через (щось)
+entirely;цілком
+even if;навіть якщо
+even though;незважаючи на те, що
+eventually;врешті-решт
+extremely;надзвичайно
+fairly;досить / чесно
+formerly;раніше / колись
+frequently;часто
+gradually;поступово
+hardly;ледве / навряд чи
+highly;високо / дуже
+however;проте / однак
+in case;у випадку
+in order to;для того, щоб
+in spite of;незважаючи на
+indeed;дійсно
+instead of;замість
+meanwhile;тим часом
+moreover;більше того
+mostly;переважно
+nevertheless;тим не менш
+occasionally;іноді / зрідка
+otherwise;інакше
+particularly;зокрема / особливо
+previously;раніше
+provided that;за умови, що
+quite;цілком / досить
+rarely;рідко
+rather;скоріше / досить
+recently;нещодавно
+since;оскільки / з того часу як
+slightly;трохи / злегка
+so that;так щоб
+therefore;тому / отже
+totally;повністю
+truly;справді
+unfortunately;на жаль
+unless;якщо не / хіба що
+whereas;тоді як
+whether;чи
+while;поки / хоча
+
+// ЗДОРОВ'Я ТА НАВКОЛИШНЄ СЕРЕДОВИЩЕ (Health & Environment)
+ambulance;швидка допомога
+atmosphere;атмосфера
+bandage;бинт
+bleed;кровоточити
+cancer;рак (хвороба)
+climate;клімат
+cough;кашель
+creature;істота
+cure;ліки / лікування
+diet;дієта
+disaster;катастрофа
+disease;хвороба
+dose;доза
+drug;ліки / наркотик
+dust;пил
+earth;земля
+fever;лихоманка / жар
+flood;повінь
+flu;грип
+fuel;паливо
+garbage;сміття
+global warming;глобальне потепління
+headache;головний біль
+heat;спека
+infection;інфекція
+injury;травма
+insect;комаха
+litter;сміття (на вулиці)
+operation;операція
+patient;пацієнт
+pill;пігулка
+pollution;забруднення
+prescription;рецепт (лікарський)
+recycle;переробляти
+resource;ресурс
+rubbish;сміття
+species;вид (тварин/рослин)
+storm;шторм / буря
+surgery;хірургія
+surroundings;оточення
+symptom;симптом
+temperature;температура
+trash;сміття
+treatment;лікування
+virus;вірус
+waste;відходи
+wildlife;дику природу
+wound;рана

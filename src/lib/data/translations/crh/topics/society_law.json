@@ -1,0 +1,20 @@
+{
+    "id": "society_law",
+    "name": "Cemiyet ve Qanun",
+    "description": "Siyaset, ükümet ve uquq sisteması",
+    "society": "cemiyet",
+    "nation": "millet",
+    "politics": "siyaset",
+    "president": "prezident",
+    "law": "qanun",
+    "court": "mahkeme",
+    "police": "polis",
+    "criminal": "cinayetçi",
+    "crime": "cinayet",
+    "security": "emniyet",
+    "vote": "rey bermek",
+    "citizen": "vatandaş",
+    "army": "ordu",
+    "soldier": "asker",
+    "government": "ükümet"
+}

@@ -20,7 +20,21 @@
         "home": "Ev",
         "cars": "Arabalar",
         "it": "IT",
-        "questions": "Sual sözleri"
+        "questions": "Sual sözleri",
+        "numbers": "Sayılar",
+        "colors": "Renkler",
+        "time": "Vaqıt",
+        "family_relationships": "Aile ve Munasebetler",
+        "body_health": "Beden ve Sağlıq",
+        "clothes_fashion": "Urba ve Moda",
+        "pronouns_people": "Zamirler ve İnsanlar",
+        "basic_verbs": "Esas Fiiller",
+        "adjectives": "Sıfatlar",
+        "education_work": "Tahsil ve İş",
+        "abstract_concepts": "Mucerret Mevhumlar",
+        "society_law": "Cemiyet ve Qanun",
+        "phrasal_verbs": "İbareli Fiiller",
+        "adverbs_prepositions": "Zarflar ve Edatlar"
     },
     "settings": {
         "interfaceLanguage": "Arayüz tili",

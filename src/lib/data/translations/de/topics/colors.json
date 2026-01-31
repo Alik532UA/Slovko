@@ -1,0 +1,18 @@
+{
+    "id": "colors",
+    "name": "Farben",
+    "description": "Lernen Sie Grund- und Mischfarben",
+    "red": "rot",
+    "blue": "blau",
+    "green": "grün",
+    "yellow": "gelb",
+    "black": "schwarz",
+    "white": "weiß",
+    "orange_color": "orange",
+    "brown": "braun",
+    "pink": "rosa",
+    "purple": "lila",
+    "color": "Farbe",
+    "gold": "Gold",
+    "silver": "Silber"
+}

@@ -1,0 +1,20 @@
+{
+    "id": "society_law",
+    "name": "Samenleving & Recht",
+    "description": "Politiek, overheid en rechtssysteem",
+    "society": "maatschappij",
+    "nation": "natie",
+    "politics": "politiek",
+    "president": "president",
+    "law": "wet",
+    "court": "rechtbank",
+    "police": "politie",
+    "criminal": "crimineel",
+    "crime": "misdaad",
+    "security": "veiligheid",
+    "vote": "stemmen",
+    "citizen": "burger",
+    "army": "leger",
+    "soldier": "soldaat",
+    "government": "overheid"
+}

@@ -1,0 +1,28 @@
+{
+    "id": "clothes_fashion",
+    "name": "Clothes & Fashion",
+    "description": "Everything you can wear",
+    "words": [
+        "clothes",
+        "shirt",
+        "pants",
+        "dress",
+        "skirt",
+        "boot",
+        "coat",
+        "hat",
+        "sunglasses",
+        "watch",
+        "belt",
+        "cap",
+        "jacket",
+        "jeans",
+        "sock",
+        "suit",
+        "sweater",
+        "tie_clothes",
+        "umbrella",
+        "uniform",
+        "glove"
+    ]
+}

@@ -1,0 +1,476 @@
+// ЗАЙМЕННИКИ ТА ЛЮДИ (Pronouns & People)
+I;я
+you;ти / ви
+he;він
+she;вона
+it;воно (це)
+we;ми
+they;вони
+me;мене / мені
+him;його / йому
+her;її / їй
+us;нас / нам
+them;їх / їм
+my;мій
+your;твій / ваш
+his;його
+her;її
+its;його (неживого)
+our;наш
+their;їхній
+this;цей
+that;той
+these;ці
+those;ті
+boy;хлопчик
+girl;дівчинка
+man;чоловік
+woman;жінка
+child;дитина
+children;діти
+friend;друг
+family;сім'я
+father;батько
+dad;тато
+mother;мати
+mom;мама
+brother;брат
+sister;сестра
+son;син
+daughter;дочка
+husband;чоловік (у шлюбі)
+wife;дружина
+parents;батьки
+person;людина
+people;люди
+name;ім'я
+mr;містер
+mrs;місіс
+
+// БАЗОВІ ДІЄСЛОВА (Basic Verbs)
+be;бути
+have;мати
+do;робити
+say;казати
+get;отримувати / ставати
+make;робити (створювати)
+go;йти / їхати
+know;знати
+take;брати
+see;бачити
+come;приходити
+think;думати
+look;дивитися
+want;хотіти
+give;давати
+use;використовувати
+find;знаходити
+tell;розповідати
+ask;запитувати
+work;працювати
+seem;здаватися
+feel;відчувати
+try;намагатися
+leave;залишати / йти
+call;дзвонити / називати
+live;жити
+mean;означати
+need;потребувати
+talk;розмовляти
+help;допомагати
+play;грати
+move;рухатися
+like;подобатися
+hear;чути
+start;починати
+run;бігти
+bring;приносити
+write;писати
+sit;сидіти
+stand;стояти
+lose;губити
+pay;платити
+meet;зустрічати
+learn;вчити
+change;змінювати
+understand;розуміти
+watch;дивитися
+follow;слідувати
+stop;зупинятися
+create;створювати
+speak;говорити
+read;читати
+spend;витрачати
+grow;рости
+open;відкривати
+walk;гуляти / йти
+win;перемагати
+offer;пропонувати
+remember;пам'ятати
+love;любити
+buy;купувати
+wait;чекати
+die;помирати
+send;надсилати
+build;будувати
+stay;залишатися
+fall;падати
+cut;різати
+kill;вбивати
+raise;піднімати
+pass;проходити
+sell;продавати
+decide;вирішувати
+return;повертатися
+explain;пояснювати
+hope;сподіватися
+break;ламати
+thank;дякувати
+eat;їсти
+drink;пити
+sleep;спати
+cook;готувати (їжу)
+swim;плавати
+fly;літати
+drive;водити (машину)
+wash;мити
+clean;чистити
+dance;танцювати
+sing;співати
+listen;слухати
+study;вивчати
+travel;подорожувати
+put;класти
+close;закривати
+finish;закінчувати
+
+// ПРИКМЕТНИКИ (Adjectives)
+good;хороший
+bad;поганий
+big;великий
+small;маленький
+long;довгий
+short;короткий
+new;новий
+old;старий
+young;молодий
+hot;гарячий
+cold;холодний
+warm;теплий
+right;правий / правильний
+left;лівий
+happy;щасливий
+sad;сумний
+beautiful;красивий
+ugly;некрасивий
+easy;легкий (простий)
+hard;важкий (складний)
+fast;швидкий
+slow;повільний
+high;високий
+low;низький
+expensive;дорогий
+cheap;дешевий
+rich;багатий
+poor;бідний
+clean;чистий
+dirty;брудний
+strong;сильний
+weak;слабкий
+full;повний
+empty;порожній
+safe;безпечний
+dangerous;небезпечний
+same;такий самий
+different;інший / різний
+ready;готовий
+tired;втомлений
+hungry;голодний
+thirsty;спраглий
+sick;хворий
+nice;милий / приємний
+kind;добрий
+angry;злий
+funny;смішний
+important;важливий
+possible;можливий
+real;справжній
+true;правдивий
+false;неправдивий
+free;вільний / безкоштовний
+open;відкритий
+closed;закритий
+busy;зайнятий
+late;пізній
+early;ранній
+special;спеціальний
+fine;чудовий / в порядку
+wrong;неправильний
+
+// КОЛЬОРИ (Colors)
+black;чорний
+white;білий
+red;червоний
+blue;синій
+green;зелений
+yellow;жовтий
+orange;помаранчевий
+brown;коричневий
+pink;рожевий
+grey;сірий
+purple;фіолетовий
+color;колір
+light;світлий
+dark;темний
+
+// ЧИСЛА (Numbers)
+one;один
+two;два
+three;три
+four;чотири
+five;п'ять
+six;шість
+seven;сім
+eight;вісім
+nine;дев'ять
+ten;десять
+eleven;одинадцять
+twelve;дванадцять
+thirteen;тринадцять
+fourteen;чотирнадцять
+fifteen;п'ятнадцять
+sixteen;шістнадцять
+seventeen;сімнадцять
+eighteen;вісімнадцять
+nineteen;дев'ятнадцять
+twenty;двадцять
+thirty;тридцять
+forty;сорок
+fifty;п'ятдесят
+sixty;шістдесят
+seventy;сімдесят
+eighty;вісімдесят
+ninety;дев'яносто
+hundred;сто
+thousand;тисяча
+million;мільйон
+first;перший
+second;другий
+third;третій
+number;номер / число
+
+// ЧАС (Time)
+time;час
+day;день
+night;ніч
+morning;ранок
+afternoon;день (після обіду)
+evening;вечір
+today;сьогодні
+tomorrow;завтра
+yesterday;вчора
+week;тиждень
+month;місяць
+year;рік
+hour;година
+minute;хвилина
+second;секунда
+now;зараз
+never;ніколи
+always;завжди
+often;часто
+sometimes;іноді
+usually;зазвичай
+later;пізніше
+soon;скоро
+monday;понеділок
+tuesday;вівторок
+wednesday;середа
+thursday;четвер
+friday;п'ятниця
+saturday;субота
+sunday;неділя
+weekend;вихідні
+
+// ЇЖА ТА НАПОЇ (Food & Drink)
+food;їжа
+water;вода
+bread;хліб
+milk;молоко
+tea;чай
+coffee;кава
+apple;яблуко
+banana;банан
+orange;апельсин
+fruit;фрукт
+vegetable;овоч
+meat;м'ясо
+fish;риба
+egg;яйце
+sugar;цукор
+salt;сіль
+cheese;сир
+chicken;курка
+breakfast;сніданок
+lunch;обід
+dinner;вечеря
+meal;прийом їжі
+drink;напій
+juice;сік
+cake;торт
+chocolate;шоколад
+sandwich;сендвіч
+restaurant;ресторан
+cafe;кафе
+menu;меню
+
+// ДІМ ТА РЕЧІ (Home & Objects)
+house;будинок
+home;дім
+apartment;квартира
+room;кімната
+kitchen;кухня
+bathroom;ванна кімната
+bedroom;спальня
+living room;вітальня
+door;двері
+window;вікно
+floor;підлога
+wall;стіна
+table;стіл
+chair;стілець
+bed;ліжко
+bag;сумка
+box;коробка
+key;ключ
+phone;телефон
+computer;комп'ютер
+picture;картина / фото
+paper;папір
+pen;ручка
+book;книга
+cup;чашка
+glass;склянка
+plate;тарілка
+knife;ніж
+fork;виделка
+spoon;ложка
+clock;годинник
+television;телевізор
+radio;радіо
+light;світло
+thing;річ
+
+// МІСТО ТА ТРАНСПОРТ (City & Transport)
+city;місто
+street;вулиця
+road;дорога
+park;парк
+school;школа
+shop;магазин
+hospital;лікарня
+bank;банк
+hotel;готель
+car;машина
+bus;автобус
+train;потяг
+plane;літак
+taxi;таксі
+bike;велосипед
+ticket;квиток
+station;станція
+airport;аеропорт
+map;карта
+world;світ
+country;країна
+
+// ТІЛО ТА ОДЯГ (Body & Clothes)
+body;тіло
+head;голова
+face;обличчя
+eye;око
+ear;вухо
+nose;ніс
+mouth;рот
+hand;рука (кисть)
+arm;рука
+leg;нога
+foot;стопа
+hair;волосся
+clothes;одяг
+shirt;сорочка
+t-shirt;футболка
+pants;штани
+dress;сукня
+skirt;спідниця
+shoe;черевик
+coat;пальто
+hat;капелюх
+glasses;окуляри
+watch;годинник (наручний)
+
+// ПРИРОДА ТА ТВАРИНИ (Nature & Animals)
+animal;тварина
+dog;собака
+cat;кіт
+bird;птах
+fish;риба
+horse;кінь
+cow;корова
+pig;свиня
+tree;дерево
+flower;квітка
+sun;сонце
+moon;місяць
+star;зірка
+sky;небо
+rain;дощ
+snow;сніг
+wind;вітер
+sea;море
+river;річка
+fire;вогонь
+water;вода
+
+// СЛУЖБОВІ СЛОВА (Function Words)
+and;і
+but;але
+or;або
+because;тому що
+if;якщо
+so;тому / так
+not;не
+no;ні
+yes;так
+please;будь ласка
+thanks;дякую
+hello;привіт
+goodbye;до побачення
+sorry;вибачте
+excuse me;перепрошую
+here;тут
+there;там
+where;де
+what;що
+who;хто
+when;коли
+why;чому
+how;як
+in;в
+on;на
+at;в / на (про час/місце)
+to;до
+from;з
+with;з
+without;без
+for;для
+of;з (кого/чого)
+about;про
+under;під
+up;вгору
+down;вниз
+very;дуже
+too;також / занадто
+really;дійсно
+maybe;можливо
+ok;гаразд

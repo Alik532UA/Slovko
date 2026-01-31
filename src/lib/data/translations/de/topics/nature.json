@@ -60,5 +60,8 @@
     "spring": "Frühling",
     "summer": "Sommer",
     "autumn": "Herbst",
-    "winter": "Winter"
+    "winter": "Winter",
+    "spring_season": "Frühling",
+    "rock_stone": "Stein",
+    "branch_1": "Zweig"
 }

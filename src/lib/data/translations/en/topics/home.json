@@ -20,7 +20,7 @@
     "sofa": "sofa",
     "bed": "bed",
     "lamp": "lamp",
-    "tv": "TV",
+    "tv": "tv",
     "computer": "computer",
     "fridge": "fridge",
     "stove": "stove",
@@ -64,5 +64,6 @@
     "vase": "vase",
     "balcony": "balcony",
     "stairs": "stairs",
-    "basement": "basement"
+    "basement": "basement",
+    "glass_material": "glass"
 }

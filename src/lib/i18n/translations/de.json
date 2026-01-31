@@ -20,7 +20,21 @@
         "home": "Zuhause",
         "cars": "Autos",
         "it": "IT",
-        "questions": "Fragewörter"
+        "questions": "Fragewörter",
+        "numbers": "Zahlen",
+        "colors": "Farben",
+        "time": "Zeit",
+        "family_relationships": "Familie & Beziehungen",
+        "body_health": "Körper & Gesundheit",
+        "clothes_fashion": "Kleidung & Mode",
+        "pronouns_people": "Pronomen & Menschen",
+        "basic_verbs": "Grundverben",
+        "adjectives": "Adjektive",
+        "education_work": "Bildung & Arbeit",
+        "abstract_concepts": "Abstrakte Konzepte",
+        "society_law": "Gesellschaft & Recht",
+        "phrasal_verbs": "Phrasal Verbs",
+        "adverbs_prepositions": "Adverbien & Präpositionen"
     },
     "settings": {
         "interfaceLanguage": "Sprache der Benutzeroberfläche",

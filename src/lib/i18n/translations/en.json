@@ -20,7 +20,21 @@
         "home": "Home",
         "cars": "Cars",
         "it": "IT",
-        "questions": "Question words"
+        "questions": "Questions",
+        "numbers": "Numbers",
+        "colors": "Colors",
+        "time": "Time",
+        "family_relationships": "Family & Relationships",
+        "body_health": "Body & Health",
+        "clothes_fashion": "Clothes & Fashion",
+        "pronouns_people": "Pronouns & People",
+        "basic_verbs": "Basic Verbs",
+        "adjectives": "Adjectives",
+        "education_work": "Education & Work",
+        "abstract_concepts": "Abstract Concepts",
+        "society_law": "Society & Law",
+        "phrasal_verbs": "Phrasal Verbs",
+        "adverbs_prepositions": "Adverbs & Prepositions"
     },
     "settings": {
         "interfaceLanguage": "Interface language",

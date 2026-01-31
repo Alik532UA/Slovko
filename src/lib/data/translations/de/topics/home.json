@@ -4,7 +4,7 @@
     "bedroom": "Schlafzimmer",
     "bathroom": "Badezimmer",
     "living_room": "Wohnzimmer",
-    "hall": "Flur",
+    "hall": "Halle",
     "door": "Tür",
     "window": "Fenster",
     "wall": "Wand",
@@ -28,7 +28,7 @@
     "sink": "Spüle",
     "toilet": "Toilette",
     "shower": "Dusche",
-    "bath": "Badewanne",
+    "bath": "Bad",
     "towel_1": "Handtuch",
     "towel_2": "Handtuch",
     "soap": "Seife",
@@ -57,12 +57,13 @@
     "knife": "Messer",
     "furniture": "Möbel",
     "armchair": "Sessel",
-    "carpet": "Teppichboden",
+    "carpet": "Teppich",
     "fireplace_1": "Kamin",
     "fireplace_2": "Kamin",
     "painting": "Gemälde",
     "vase": "Vase",
     "balcony": "Balkon",
     "stairs": "Treppe",
-    "basement": "Keller"
+    "basement": "Keller",
+    "glass_material": "Glas"
 }

@@ -20,7 +20,7 @@
     "sofa": "ˈsəʊfə",
     "bed": "bed",
     "lamp": "læmp",
-    "tv": "ˌtiː ˈviː",
+    "tv": "ˌtiːˈviː",
     "computer": "kəmˈpjuːtər",
     "fridge": "frɪdʒ",
     "stove": "stəʊv",
@@ -41,7 +41,7 @@
     "pillow": "ˈpɪləʊ",
     "blanket": "ˈblæŋkɪt",
     "sheet": "ʃiːt",
-    "cupboard": "ˈkʌbəd",
+    "cupboard": "ˈkʌbərd",
     "shelf": "ʃelf",
     "drawer": "drɔːr",
     "clock": "klɒk",
@@ -55,7 +55,7 @@
     "fork": "fɔːk",
     "spoon": "spuːn",
     "knife": "naɪf",
-    "furniture": "ˈfɜːnɪtʃər",
+    "furniture": "ˈfɜːrnɪtʃər",
     "armchair": "ˈɑːmtʃeər",
     "carpet": "ˈkɑːpɪt",
     "fireplace_1": "ˈfaɪəpleɪs",
@@ -63,6 +63,7 @@
     "painting": "ˈpeɪntɪŋ",
     "vase": "vɑːz",
     "balcony": "ˈbælkəni",
-    "stairs": "steəz",
-    "basement": "ˈbeɪsmənt"
+    "stairs": "sterz",
+    "basement": "ˈbeɪsmənt",
+    "glass_material": "ɡlɑːs"
 }

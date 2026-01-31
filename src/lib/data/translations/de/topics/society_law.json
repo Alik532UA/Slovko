@@ -1,0 +1,20 @@
+{
+    "id": "society_law",
+    "name": "Gesellschaft & Recht",
+    "description": "Politik, Regierung und Rechtssystem",
+    "society": "Gesellschaft",
+    "nation": "Nation",
+    "politics": "Politik",
+    "president": "Präsident",
+    "law": "Gesetz",
+    "court": "Gericht",
+    "police": "Polizei",
+    "criminal": "Verbrecher",
+    "crime": "Verbrechen",
+    "security": "Sicherheit",
+    "vote": "wählen",
+    "citizen": "Bürger",
+    "army": "Armee",
+    "soldier": "Soldat",
+    "government": "Regierung"
+}

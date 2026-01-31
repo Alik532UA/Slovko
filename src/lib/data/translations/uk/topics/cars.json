@@ -16,7 +16,7 @@
     "brake": "гальмо",
     "gear": "передача",
     "pedal": "педаль",
-    "seat": "сидіння",
+    "seat": "місце (сидіння)",
     "belt": "ремінь",
     "mirror": "дзеркало",
     "window": "вікно",
@@ -24,7 +24,7 @@
     "hood": "капот",
     "trunk": "багажник",
     "light": "світло",
-    "oil": "масло",
+    "oil": "олія",
     "gas_1": "бензин",
     "gas_2": "газ",
     "battery": "акумулятор",
@@ -37,7 +37,7 @@
     "road": "дорога",
     "street": "вулиця",
     "highway": "шосе",
-    "traffic": "рух",
+    "traffic": "рух (транспорту)",
     "sign": "знак",
     "signal": "сигнал",
     "steering_wheel": "кермо",
@@ -60,5 +60,10 @@
     "piston": "поршень",
     "cylinder": "циліндр",
     "suspension": "підвіска",
-    "shock_absorber": "амортизатор"
+    "shock_absorber": "амортизатор",
+    "light_brightness": "світло",
+    "battery_life": "батарея",
+    "signal_phone": "сигнал",
+    "exhaust_options": "виснажувати",
+    "fuel_energy": "паливо"
 }

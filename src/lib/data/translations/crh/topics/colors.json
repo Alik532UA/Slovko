@@ -1,0 +1,18 @@
+{
+    "id": "colors",
+    "name": "Renkler",
+    "description": "Esas ve murekkep renklerni ögreniñiz",
+    "red": "qırmızı",
+    "blue": "mavı",
+    "green": "yaşıl",
+    "yellow": "sarı",
+    "black": "qara",
+    "white": "beyaz",
+    "orange_color": "sarı-qırmızı",
+    "brown": "qonur",
+    "pink": "pempe",
+    "purple": "erğuvan",
+    "color": "renk",
+    "gold": "altın",
+    "silver": "kümüş"
+}
