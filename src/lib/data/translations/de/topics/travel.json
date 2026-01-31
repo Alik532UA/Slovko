@@ -1,0 +1,17 @@
+{
+    "airport": "Flughafen",
+    "hotel": "Hotel",
+    "ticket": "Ticket",
+    "passport": "Reisepass",
+    "luggage": "Gepäck",
+    "train": "Zug",
+    "bus": "Bus",
+    "taxi": "Taxi",
+    "map": "Karte",
+    "tourist": "Tourist",
+    "journey": "Reise",
+    "vacation": "Urlaub",
+    "beach": "Strand",
+    "museum": "Museum",
+    "guide": "Reiseführer"
+}

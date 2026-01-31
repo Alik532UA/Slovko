@@ -1,0 +1,17 @@
+{
+    "car": "Auto",
+    "truck": "Lastwagen",
+    "bus": "Bus",
+    "wheel": "Rad",
+    "engine": "Motor",
+    "fuel": "Kraftstoff",
+    "driver": "Fahrer",
+    "road": "Straße",
+    "highway": "Autobahn",
+    "traffic": "Verkehr",
+    "parking": "Parkplatz",
+    "speed": "Geschwindigkeit",
+    "brake": "Bremse",
+    "mirror": "Spiegel",
+    "seat": "Sitz"
+}

@@ -15,7 +15,7 @@
     }
     let { onclose }: Props = $props();
 
-    const LANGUAGES: Language[] = ["uk", "en", "crh", "nl"];
+    const LANGUAGES: Language[] = ["uk", "en", "crh", "nl", "de"];
 
     // Чи показувати опцію транскрипції (тільки якщо одна з мов карток — англійська)
     const showTranscriptionOption = $derived(
@@ -274,6 +274,7 @@
         display: flex;
         gap: 0.75rem;
         justify-content: center;
+        flex-wrap: wrap; /* Дозволити перенос прапорів */
     }
 
     .flags-column {

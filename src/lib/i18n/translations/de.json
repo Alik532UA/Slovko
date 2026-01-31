@@ -1,0 +1,49 @@
+{
+    "app": {
+        "title": "Slovko"
+    },
+    "levels": {
+        "title": "Niveaus",
+        "A1": "Anfänger",
+        "A2": "Grundlagen",
+        "B1": "Mittelstufe",
+        "B2": "Obere Mittelstufe",
+        "C1": "Fortgeschritten",
+        "C2": "Kompetent"
+    },
+    "topics": {
+        "title": "Themen",
+        "nature": "Natur",
+        "animals": "Tiere",
+        "travel": "Reisen",
+        "food": "Essen",
+        "home": "Zuhause",
+        "cars": "Autos",
+        "it": "IT",
+        "questions": "Fragewörter"
+    },
+    "settings": {
+        "interfaceLanguage": "Sprache der Benutzeroberfläche",
+        "cardLanguages": "Kartensprachen",
+        "from": "Von",
+        "to": "Nach",
+        "transcription": "Transkription anzeigen",
+        "pronunciation": "Wörter aussprechen"
+    },
+    "menu": {
+        "donate": "Projekt unterstützen",
+        "languages": "Sprachen",
+        "about": "Über"
+    },
+    "about": {
+        "title": "Über",
+        "description": "Slovko entstand, weil ähnliche Apps aufdringliche Werbung haben. Deshalb kam die Idee auf, eine eigene, komplett werbefreie App zu entwickeln. Lerne Sprachen durch das Zuordnen von Wortpaaren ohne Ablenkungen.",
+        "support": "Projekt unterstützen",
+        "developer": "Entwickler",
+        "version": "Version"
+    },
+    "updateNotification": {
+        "message": "Update verfügbar!",
+        "button": "Aktualisieren"
+    }
+}

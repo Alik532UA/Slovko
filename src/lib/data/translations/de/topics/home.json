@@ -1,0 +1,17 @@
+{
+    "house": "Haus",
+    "room": "Zimmer",
+    "door": "Tür",
+    "window": "Fenster",
+    "floor": "Boden",
+    "wall": "Wand",
+    "roof": "Dach",
+    "kitchen": "Küche",
+    "bathroom": "Badezimmer",
+    "bedroom": "Schlafzimmer",
+    "furniture": "Möbel",
+    "table": "Tisch",
+    "chair": "Stuhl",
+    "bed": "Bett",
+    "lamp": "Lampe"
+}

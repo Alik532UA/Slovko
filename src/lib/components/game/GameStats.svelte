@@ -58,6 +58,14 @@
         color: var(--text-secondary);
         transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         border: 1px solid rgba(255, 255, 255, 0.05);
+        white-space: nowrap; /* Забороняємо перенос тексту */
+    }
+
+    /* Ховаємо текст "слів/хв" на вузьких екранах */
+    @media (max-width: 400px) {
+        .stat-item .unit {
+            display: none;
+        }
     }
 
     .stat-item.active {
