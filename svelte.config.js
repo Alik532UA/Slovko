@@ -13,6 +13,15 @@ const config = {
 		paths: {
 			// Для GitHub Pages: https://username.github.io/Slovko/
 			base: process.env.NODE_ENV === 'production' ? '/Slovko' : ''
+		},
+		prerender: {
+			handleHttpError: ({ path, referrer, message }) => {
+				if (path.endsWith('manifest.json')) {
+					return;
+				}
+
+				throw new Error(message);
+			}
 		}
 	}
 };
