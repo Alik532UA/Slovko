@@ -1,0 +1,17 @@
+{
+    "airport": "airport",
+    "hotel": "hotel",
+    "ticket": "ticket",
+    "passport": "passport",
+    "luggage": "luggage",
+    "train": "train",
+    "bus": "bus",
+    "taxi": "taxi",
+    "map": "map",
+    "tourist": "tourist",
+    "journey": "journey",
+    "vacation": "vacation",
+    "beach": "beach",
+    "museum": "museum",
+    "guide": "guide"
+}

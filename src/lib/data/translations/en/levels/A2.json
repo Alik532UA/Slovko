@@ -1,0 +1,22 @@
+{
+    "morning": "morning",
+    "evening": "evening",
+    "work": "work",
+    "school": "school",
+    "city": "city",
+    "country": "country",
+    "food": "food",
+    "money": "money",
+    "family": "family",
+    "mother": "mother",
+    "father": "father",
+    "child": "child",
+    "love": "love",
+    "life": "life",
+    "world": "world",
+    "year": "year",
+    "today": "today",
+    "tomorrow": "tomorrow",
+    "yesterday": "yesterday",
+    "week": "week"
+}

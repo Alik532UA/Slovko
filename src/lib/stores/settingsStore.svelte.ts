@@ -4,7 +4,7 @@
  */
 
 import { browser } from '$app/environment';
-import type { Language, CEFRLevel } from '../types';
+import type { Language, CEFRLevel, GameMode } from '../types';
 
 const STORAGE_KEY = 'wordApp_settings';
 
@@ -24,7 +24,7 @@ export interface AppSettings {
     enablePronunciation: boolean;
 
     // Поточний режим
-    mode: 'levels' | 'topics';
+    mode: GameMode;
 
     // Поточний вибір
     currentLevel: CEFRLevel;

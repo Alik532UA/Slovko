@@ -1,0 +1,17 @@
+{
+    "house": "ev",
+    "room": "oda",
+    "door": "qapı",
+    "window": "pencere",
+    "floor": "döşeme",
+    "wall": "duvar",
+    "roof": "dam",
+    "kitchen": "aşhane",
+    "bathroom": "banyo",
+    "bedroom": "yatuv odası",
+    "furniture": "möbel",
+    "table": "masa",
+    "chair": "stul",
+    "bed": "yataq",
+    "lamp": "lamba"
+}

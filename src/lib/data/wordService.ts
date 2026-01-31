@@ -47,16 +47,30 @@ export async function loadTopic(topicId: string): Promise<WordTopic> {
 }
 
 /**
- * Завантажити переклади для мови
+ * Завантажити переклади для мови та конкретної категорії (рівень або тема)
  */
-export async function loadTranslations(lang: Language): Promise<TranslationDictionary> {
-    if (translationCache.has(lang)) {
-        return translationCache.get(lang)!;
+export async function loadTranslations(
+    lang: Language,
+    category: 'levels' | 'topics',
+    id: string
+): Promise<TranslationDictionary> {
+    const cacheKey = `${lang}:${category}:${id}`;
+
+    if (translationCache.has(cacheKey)) {
+        return translationCache.get(cacheKey)!;
     }
 
-    const module = await import(`./translations/${lang}.json`);
+    // Динамічний імпорт специфічного файлу
+    // Vite потребує, щоб шлях був відносно статичним для аналізу глобів
+    let module;
+    if (category === 'levels') {
+        module = await import(`./translations/${lang}/levels/${id}.json`);
+    } else {
+        module = await import(`./translations/${lang}/topics/${id}.json`);
+    }
+
     const translations = module.default as TranslationDictionary;
-    translationCache.set(lang, translations);
+    translationCache.set(cacheKey, translations);
     return translations;
 }
 

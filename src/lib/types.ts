@@ -60,6 +60,9 @@ export type TranscriptionDictionary = Record<string, string>;
 // СТАН ГРИ
 // ========================================
 
+/** Режим гри */
+export type GameMode = 'levels' | 'topics';
+
 /** Статус картки в грі */
 export type CardStatus = 'idle' | 'selected' | 'correct' | 'wrong';
 

@@ -1,0 +1,17 @@
+{
+    "car": "car",
+    "truck": "truck",
+    "bus": "bus",
+    "wheel": "wheel",
+    "engine": "engine",
+    "fuel": "fuel",
+    "driver": "driver",
+    "road": "road",
+    "highway": "highway",
+    "traffic": "traffic",
+    "parking": "parking",
+    "speed": "speed",
+    "brake": "brake",
+    "mirror": "mirror",
+    "seat": "seat"
+}

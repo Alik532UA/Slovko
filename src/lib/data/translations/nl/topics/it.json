@@ -1,0 +1,17 @@
+{
+    "computer": "computer",
+    "keyboard": "toetsenbord",
+    "mouse": "muis",
+    "screen": "scherm",
+    "software": "software",
+    "hardware": "hardware",
+    "network": "netwerk",
+    "internet": "internet",
+    "website": "website",
+    "database": "database",
+    "server": "server",
+    "code": "code",
+    "program": "programma",
+    "file": "bestand",
+    "folder": "map"
+}

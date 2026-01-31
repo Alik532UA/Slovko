@@ -1,0 +1,17 @@
+{
+    "car": "araba",
+    "truck": "yük arabası",
+    "bus": "avtobus",
+    "wheel": "tekerlek",
+    "engine": "motor",
+    "fuel": "yaqıt",
+    "driver": "şoför",
+    "road": "yol",
+    "highway": "otoban",
+    "traffic": "trafik",
+    "parking": "park",
+    "speed": "surat",
+    "brake": "tormoz",
+    "mirror": "ayna",
+    "seat": "oturğıç"
+}

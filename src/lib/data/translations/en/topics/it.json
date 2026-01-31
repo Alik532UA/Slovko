@@ -1,0 +1,17 @@
+{
+    "computer": "computer",
+    "keyboard": "keyboard",
+    "mouse": "mouse",
+    "screen": "screen",
+    "software": "software",
+    "hardware": "hardware",
+    "network": "network",
+    "internet": "internet",
+    "website": "website",
+    "database": "database",
+    "server": "server",
+    "code": "code",
+    "program": "program",
+    "file": "file",
+    "folder": "folder"
+}

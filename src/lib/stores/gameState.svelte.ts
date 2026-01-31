@@ -53,17 +53,35 @@ function createGameState() {
     let currentWords = $state<string[]>([]);
 
     /**
-     * Завантажити переклади для поточних мов
+     * Завантажити переклади для поточних мов та активного режиму
      */
     async function loadTranslationsForLanguages(): Promise<void> {
-        const { sourceLanguage, targetLanguage } = settingsStore.value;
+        const { sourceLanguage, targetLanguage, mode, currentLevel, currentTopic } = settingsStore.value;
 
-        sourceTranslations = await loadTranslations(sourceLanguage);
-        targetTranslations = await loadTranslations(targetLanguage);
+        // Визначаємо категорію та ID залежно від режиму
+        const category = mode === 'levels' ? 'levels' : 'topics';
+        const id = mode === 'levels' ? currentLevel : currentTopic;
 
-        // Завантажуємо транскрипції якщо одна з мов — англійська
-        if (sourceLanguage === 'en' || targetLanguage === 'en') {
-            transcriptions = await loadTranscriptions();
+        if (!id) {
+            console.error('No ID available for translation loading');
+            return;
+        }
+
+        try {
+            sourceTranslations = await loadTranslations(sourceLanguage, category, id);
+            targetTranslations = await loadTranslations(targetLanguage, category, id);
+
+            // Завантажуємо транскрипції якщо одна з мов — англійська
+            // (Тут можна оптимізувати і завантажувати транскрипції теж по частинах, 
+            // але поки вони в одному файлі)
+            if (sourceLanguage === 'en' || targetLanguage === 'en') {
+                transcriptions = await loadTranscriptions();
+            }
+        } catch (e) {
+            console.error(`Failed to load translations for ${category}/${id}`, e);
+            // Fallback або порожній об'єкт, щоб не крашити гру
+            sourceTranslations = {};
+            targetTranslations = {};
         }
     }
 
@@ -222,12 +240,10 @@ function createGameState() {
         isProcessing = false;
 
         setTimeout(() => {
-            // Ховаємо картки замість видалення (фіксовані позиції!)
-            hideCard(card1.id);
-            hideCard(card2.id);
-
+            // Тепер ми не ховаємо картки, вони стають 10% прозорі у WordCard.svelte
+            // Але нам все одно треба викликати дозаповнення
             checkAndRefill();
-        }, 500);
+        }, 1000); // Збільшуємо таймаут, щоб дати гравцю побачити результат
     }
 
     /**
@@ -268,7 +284,8 @@ function createGameState() {
      * Підрахунок видимих пар
      */
     function getVisiblePairCount(): number {
-        return sourceCards.filter((c) => c.isVisible).length;
+        // Рахуємо тільки ті картки, які ще не знайдені (стан idle або selected)
+        return sourceCards.filter((c) => c.status !== 'correct').length;
     }
 
     /**
@@ -301,7 +318,7 @@ function createGameState() {
                 let targetIndex = 0;
 
                 sourceCards = sourceCards.map((card) => {
-                    if (!card.isVisible && sourceIndex < source.length) {
+                    if (card.status === 'correct' && sourceIndex < source.length) {
                         const newCard = { ...source[sourceIndex], slot: card.slot };
                         sourceIndex++;
                         return newCard;
@@ -310,7 +327,7 @@ function createGameState() {
                 });
 
                 targetCards = targetCards.map((card) => {
-                    if (!card.isVisible && targetIndex < target.length) {
+                    if (card.status === 'correct' && targetIndex < target.length) {
                         const newCard = { ...target[targetIndex], slot: card.slot };
                         targetIndex++;
                         return newCard;

@@ -1,0 +1,17 @@
+{
+    "airport": "aeroport",
+    "hotel": "otel",
+    "ticket": "bilet",
+    "passport": "pasport",
+    "luggage": "yük",
+    "train": "tren",
+    "bus": "avtobus",
+    "taxi": "taksi",
+    "map": "harita",
+    "tourist": "turist",
+    "journey": "sayahat",
+    "vacation": "tatil",
+    "beach": "plaj",
+    "museum": "müze",
+    "guide": "rehber"
+}

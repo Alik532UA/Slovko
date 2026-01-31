@@ -1,0 +1,17 @@
+{
+    "house": "huis",
+    "room": "kamer",
+    "door": "deur",
+    "window": "raam",
+    "floor": "vloer",
+    "wall": "muur",
+    "roof": "dak",
+    "kitchen": "keuken",
+    "bathroom": "badkamer",
+    "bedroom": "slaapkamer",
+    "furniture": "meubels",
+    "table": "tafel",
+    "chair": "stoel",
+    "bed": "bed",
+    "lamp": "lamp"
+}

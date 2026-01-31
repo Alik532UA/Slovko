@@ -1,0 +1,17 @@
+{
+    "house": "house",
+    "room": "room",
+    "door": "door",
+    "window": "window",
+    "floor": "floor",
+    "wall": "wall",
+    "roof": "roof",
+    "kitchen": "kitchen",
+    "bathroom": "bathroom",
+    "bedroom": "bedroom",
+    "furniture": "furniture",
+    "table": "table",
+    "chair": "chair",
+    "bed": "bed",
+    "lamp": "lamp"
+}

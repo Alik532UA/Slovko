@@ -1,0 +1,17 @@
+{
+    "car": "auto",
+    "truck": "vrachtwagen",
+    "bus": "bus",
+    "wheel": "wiel",
+    "engine": "motor",
+    "fuel": "brandstof",
+    "driver": "bestuurder",
+    "road": "weg",
+    "highway": "snelweg",
+    "traffic": "verkeer",
+    "parking": "parkeren",
+    "speed": "snelheid",
+    "brake": "rem",
+    "mirror": "spiegel",
+    "seat": "stoel"
+}
