@@ -37,5 +37,21 @@
     "kid": "kid",
     "lady": "lady",
     "mr": "Mr.",
-    "mrs": "Mrs."
+    "mrs": "Mrs.",
+    "anybody": "anybody",
+    "anyone": "anyone",
+    "anything": "anything",
+    "anywhere": "anywhere",
+    "everybody": "everybody",
+    "everyone": "everyone",
+    "everything": "everything",
+    "herself": "herself",
+    "himself": "himself",
+    "itself": "itself",
+    "myself": "myself",
+    "nobody": "nobody",
+    "no_one": "no one",
+    "ourselves": "ourselves",
+    "somebody": "somebody",
+    "yourselves": "yourselves"
 }

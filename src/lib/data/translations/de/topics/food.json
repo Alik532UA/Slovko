@@ -63,5 +63,8 @@
     "ham": "Schinken",
     "bacon": "Speck",
     "toast": "Toast",
-    "orange_color": "orange"
+    "orange_color": "orange",
+    "orange_fruit": "Orange",
+    "drink_noun": "Getränk",
+    "fry": "braten"
 }

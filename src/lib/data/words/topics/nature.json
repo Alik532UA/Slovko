@@ -42,6 +42,8 @@
         "spring_season",
         "summer",
         "autumn",
-        "winter"
+        "winter",
+        "landscape",
+        "scenery"
     ]
 }

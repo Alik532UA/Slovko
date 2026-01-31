@@ -22,5 +22,9 @@
     "tie_clothes": "das",
     "umbrella": "paraplu",
     "uniform": "uniform",
-    "glove": "handschoen"
+    "glove": "handschoen",
+    "cotton": "katoen",
+    "leather": "leer",
+    "wool": "wol",
+    "purse": "handtas"
 }

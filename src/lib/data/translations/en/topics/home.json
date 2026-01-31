@@ -65,5 +65,7 @@
     "balcony": "balcony",
     "stairs": "stairs",
     "basement": "basement",
-    "glass_material": "glass"
+    "glass_material": "glass",
+    "plastic": "plastic",
+    "iron_verb": "iron"
 }

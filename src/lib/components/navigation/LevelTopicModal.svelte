@@ -48,6 +48,10 @@
     onclick={handleBackdropClick}
     role="dialog"
     aria-modal="true"
+    tabindex="-1"
+    onkeydown={(e) => {
+        if (e.key === "Escape") onclose();
+    }}
 >
     <div class="modal">
         <!-- Tabs -->

@@ -40,6 +40,8 @@
         "furniture",
         "carpet",
         "painting",
-        "stairs"
+        "stairs",
+        "plastic",
+        "iron_verb"
     ]
 }

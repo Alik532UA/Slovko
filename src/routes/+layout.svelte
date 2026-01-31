@@ -13,12 +13,18 @@
 	let { children } = $props();
 	let ready = $state(false);
 
+	import { dev } from '$app/environment';
+
 	onMount(async () => {
 		await initializeI18n();
 		ready = true;
 
 		// Перевірка оновлень після ініціалізації
 		checkForUpdates();
+
+		if (!dev && 'serviceWorker' in navigator) {
+			navigator.serviceWorker.register('/service-worker.js');
+		}
 	});
 </script>
 

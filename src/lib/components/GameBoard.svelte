@@ -3,9 +3,9 @@
 	 * GameBoard.svelte — Ігрове поле
 	 * Композиція: рендерить WordCard компоненти
 	 */
-	import { gameState } from '$lib/stores/gameState.svelte';
-	import WordCard from './WordCard.svelte';
-	import { onMount } from 'svelte';
+	import { gameState } from "$lib/stores/gameState.svelte";
+	import WordCard from "./WordCard.svelte";
+	import { onMount } from "svelte";
 
 	onMount(() => {
 		gameState.initGame();
@@ -13,16 +13,16 @@
 </script>
 
 <div class="game-board">
-	<div class="column ukrainian">
-		{#each gameState.ukrainianCards as card (card.id)}
+	<div class="column source">
+		{#each gameState.sourceCards as card (card.id)}
 			<div class="card-slot">
 				<WordCard {card} onclick={() => gameState.selectCard(card)} />
 			</div>
 		{/each}
 	</div>
 
-	<div class="column english">
-		{#each gameState.englishCards as card (card.id)}
+	<div class="column target">
+		{#each gameState.targetCards as card (card.id)}
 			<div class="card-slot">
 				<WordCard {card} onclick={() => gameState.selectCard(card)} />
 			</div>

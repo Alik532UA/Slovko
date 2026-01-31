@@ -16,5 +16,13 @@
     "citizen": "Bürger",
     "army": "Armee",
     "soldier": "Soldat",
-    "government": "Regierung"
+    "government": "Regierung",
+    "discount": "Rabatt",
+    "headline": "Schlagzeile",
+    "identification": "Identifikation",
+    "instruction": "Anweisung",
+    "queue": "Warteschlange",
+    "receipt": "Quittung",
+    "sale": "Ausverkauf",
+    "signature": "Unterschrift"
 }

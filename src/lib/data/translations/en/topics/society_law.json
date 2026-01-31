@@ -16,5 +16,13 @@
     "citizen": "citizen",
     "army": "army",
     "soldier": "soldier",
-    "government": "government"
+    "government": "government",
+    "discount": "discount",
+    "headline": "headline",
+    "identification": "identification",
+    "instruction": "instruction",
+    "queue": "queue",
+    "receipt": "receipt",
+    "sale": "sale",
+    "signature": "signature"
 }

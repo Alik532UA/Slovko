@@ -6,6 +6,7 @@
      */
     import type { ActiveCard } from "$lib/types";
     import { speakEnglish } from "$lib/services/speechService";
+    import { settingsStore } from "$lib/stores/settingsStore.svelte";
 
     interface Props {
         card: ActiveCard;
@@ -34,7 +35,7 @@
     data-testid="word-card-{card.id}"
 >
     <span class="word-text">{card.text}</span>
-    {#if card.transcription}
+    {#if card.transcription && settingsStore.value.showTranscription}
         <span class="transcription">{card.transcription}</span>
     {/if}
 </button>
@@ -63,19 +64,22 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 0.15rem;
+        gap: 0.2rem;
+        overflow: hidden; /* Запобігаємо виходу за межі */
     }
 
     .word-text {
         text-align: center;
         word-break: break-word;
-        line-height: 1.2;
+        line-height: 1.15;
+        max-width: 100%;
     }
 
     .transcription {
         font-size: clamp(0.6rem, 1.5vh, 0.8rem);
         color: var(--text-secondary);
         font-weight: 400;
+        line-height: 1;
     }
 
     .word-card:hover:not(:disabled) {
@@ -161,10 +165,35 @@
         }
     }
 
+    /* Адаптивність для малих екранів */
     @media (max-width: 480px) {
         .word-card {
-            border-radius: 10px;
-            padding: 0.25rem;
+            border-radius: 8px;
+            padding: 0.2rem; /* Мінімальні відступи */
+            gap: 0.1rem;
+        }
+        
+        .word-text {
+            font-size: clamp(0.8rem, 4vw, 1rem); /* Трохи менший шрифт */
+        }
+    }
+
+    /* Адаптивність для екранів з малою висотою (ландшафт на мобільному) */
+    @media (max-height: 600px) {
+        .word-card {
+            padding: 0.15rem; /* Ще менші відступи */
+            gap: 0; /* Прибираємо gap, якщо місця мало */
+            min-height: auto;
+        }
+
+        .word-text {
+            line-height: 1.1;
+            font-size: clamp(0.75rem, 3.5vh, 1rem);
+        }
+        
+        .transcription {
+            font-size: 0.7em;
+            margin-top: 1px;
         }
     }
 </style>

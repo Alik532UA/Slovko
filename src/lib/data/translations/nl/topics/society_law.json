@@ -16,5 +16,13 @@
     "citizen": "burger",
     "army": "leger",
     "soldier": "soldaat",
-    "government": "overheid"
+    "government": "overheid",
+    "discount": "korting",
+    "headline": "kop",
+    "identification": "identificatie",
+    "instruction": "instructie",
+    "queue": "wachtrij",
+    "receipt": "bonnetje",
+    "sale": "uitverkoop",
+    "signature": "handtekening"
 }

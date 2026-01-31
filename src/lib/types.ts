@@ -38,6 +38,12 @@ export const ALL_LEVELS: CEFRLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 // СТРУКТУРА ДАНИХ СЛІВ
 // ========================================
 
+export interface WordPair {
+    id: string;
+    ukrainian: string;
+    english: string;
+}
+
 /** Рівень слів */
 export interface WordLevel {
     id: CEFRLevel;

@@ -65,5 +65,7 @@
     "balcony": "балкон",
     "stairs": "сходи",
     "basement": "підвал",
-    "glass_material": "скло"
+    "glass_material": "скло",
+    "plastic": "пластик",
+    "iron_verb": "прасувати"
 }

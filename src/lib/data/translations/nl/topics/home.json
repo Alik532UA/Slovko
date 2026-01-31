@@ -65,5 +65,7 @@
     "balcony": "balkon",
     "stairs": "trap",
     "basement": "kelder",
-    "glass_material": "glas"
+    "glass_material": "glas",
+    "plastic": "plastic",
+    "iron_verb": "strijken"
 }

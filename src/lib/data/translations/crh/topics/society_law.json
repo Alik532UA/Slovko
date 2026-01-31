@@ -16,5 +16,13 @@
     "citizen": "vatandaş",
     "army": "ordu",
     "soldier": "asker",
-    "government": "ükümet"
+    "government": "ükümet",
+    "discount": "endirim",
+    "headline": "başlıq",
+    "identification": "tanıq",
+    "instruction": "talimat",
+    "queue": "sıra",
+    "receipt": "çek",
+    "sale": "satuv",
+    "signature": "imza"
 }

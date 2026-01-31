@@ -22,5 +22,9 @@
     "tie_clothes": "Krawatte",
     "umbrella": "Regenschirm",
     "uniform": "Uniform",
-    "glove": "Handschuh"
+    "glove": "Handschuh",
+    "cotton": "Baumwolle",
+    "leather": "Leder",
+    "wool": "Wolle",
+    "purse": "Handtasche"
 }

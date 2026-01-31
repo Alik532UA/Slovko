@@ -37,5 +37,21 @@
     "kid": "kind",
     "lady": "dame",
     "mr": "meneer",
-    "mrs": "mevrouw"
+    "mrs": "mevrouw",
+    "anybody": "iemand",
+    "anyone": "iemand",
+    "anything": "iets",
+    "anywhere": "ergens",
+    "everybody": "iedereen",
+    "everyone": "iedereen",
+    "everything": "alles",
+    "herself": "haarzelf",
+    "himself": "hemzelf",
+    "itself": "zichzelf",
+    "myself": "mezelf",
+    "nobody": "niemand",
+    "no_one": "niemand",
+    "ourselves": "onszelf",
+    "somebody": "iemand",
+    "yourselves": "jezelf"
 }

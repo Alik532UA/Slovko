@@ -36,5 +36,7 @@
     "geography": "aardrijkskunde",
     "notebook_paper": "schrift",
     "physics": "natuurkunde",
-    "printer_device": "printer"
+    "printer_device": "printer",
+    "rubber": "gum",
+    "ruler": "liniaal"
 }

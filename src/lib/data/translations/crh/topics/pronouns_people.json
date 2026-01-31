@@ -37,5 +37,21 @@
     "kid": "bala",
     "lady": "hanım",
     "mr": "bay",
-    "mrs": "hanım"
+    "mrs": "hanım",
+    "anybody": "kimse",
+    "anyone": "kimse",
+    "anything": "bir şey",
+    "anywhere": "bir yerde",
+    "everybody": "er kes",
+    "everyone": "er kes",
+    "everything": "er şey",
+    "herself": "özü",
+    "himself": "özü",
+    "itself": "özü",
+    "myself": "özüm",
+    "nobody": "iç kimse",
+    "no_one": "iç kimse",
+    "ourselves": "özümüz",
+    "somebody": "kimse",
+    "yourselves": "özüñiz"
 }

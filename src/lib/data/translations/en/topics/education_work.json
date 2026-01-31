@@ -36,5 +36,7 @@
     "geography": "geography",
     "notebook_paper": "notebook",
     "physics": "physics",
-    "printer_device": "printer"
+    "printer_device": "printer",
+    "rubber": "rubber",
+    "ruler": "ruler"
 }

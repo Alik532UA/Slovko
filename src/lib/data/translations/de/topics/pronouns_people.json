@@ -37,5 +37,21 @@
     "kid": "Kind",
     "lady": "Dame",
     "mr": "Herr",
-    "mrs": "Frau"
+    "mrs": "Frau",
+    "anybody": "irgendjemand",
+    "anyone": "jemand",
+    "anything": "irgendetwas",
+    "anywhere": "irgendwo",
+    "everybody": "jeder",
+    "everyone": "jeder",
+    "everything": "alles",
+    "herself": "sie selbst",
+    "himself": "er selbst",
+    "itself": "es selbst",
+    "myself": "ich selbst",
+    "nobody": "niemand",
+    "no_one": "niemand",
+    "ourselves": "wir selbst",
+    "somebody": "jemand",
+    "yourselves": "ihr selbst"
 }

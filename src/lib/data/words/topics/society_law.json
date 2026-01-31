@@ -16,6 +16,14 @@
         "vote",
         "citizen",
         "army",
-        "soldier"
+        "soldier",
+        "discount",
+        "headline",
+        "identification",
+        "instruction",
+        "queue",
+        "receipt",
+        "sale",
+        "signature"
     ]
 }

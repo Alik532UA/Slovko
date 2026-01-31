@@ -65,5 +65,7 @@
     "balcony": "Balkon",
     "stairs": "Treppe",
     "basement": "Keller",
-    "glass_material": "Glas"
+    "glass_material": "Glas",
+    "plastic": "Plastik",
+    "iron_verb": "bügeln"
 }

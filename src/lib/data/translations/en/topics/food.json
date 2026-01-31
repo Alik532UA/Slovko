@@ -63,5 +63,8 @@
     "ham": "ham",
     "bacon": "bacon",
     "toast": "toast",
-    "orange_color": "orange"
+    "orange_color": "orange",
+    "orange_fruit": "orange",
+    "drink_noun": "drink",
+    "fry": "fry"
 }

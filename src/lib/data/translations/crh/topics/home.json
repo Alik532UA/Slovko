@@ -65,5 +65,7 @@
     "balcony": "balkon",
     "stairs": "merdiven",
     "basement": "zemin qat",
-    "glass_material": "cam"
+    "glass_material": "cam",
+    "plastic": "plastik",
+    "iron_verb": "ütilemek"
 }

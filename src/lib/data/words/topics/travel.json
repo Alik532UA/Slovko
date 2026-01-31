@@ -37,6 +37,24 @@
         "help",
         "police",
         "hospital",
-        "camp_verb"
+        "camp_verb",
+        "airline",
+        "baggage",
+        "brochure",
+        "cabin",
+        "canal",
+        "continent",
+        "cruise",
+        "destination",
+        "distance",
+        "embassy",
+        "expedition",
+        "fare",
+        "ferry",
+        "harbor",
+        "immigration",
+        "resort",
+        "tourism",
+        "voyage"
     ]
 }
