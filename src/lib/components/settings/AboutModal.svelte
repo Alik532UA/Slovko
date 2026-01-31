@@ -69,7 +69,7 @@
             </div>
 
             <p class="version">
-                {$_("about.version")}: {versionStore.currentVersion || "0.1"}.
+                {$_("about.version")}: {versionStore.currentVersion || "0.1"}
             </p>
         </div>
     </div>
