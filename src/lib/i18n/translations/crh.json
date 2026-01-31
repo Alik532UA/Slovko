@@ -1,0 +1,49 @@
+{
+    "app": {
+        "title": "Slovko"
+    },
+    "levels": {
+        "title": "Seviyeler",
+        "A1": "Başlanğıç",
+        "A2": "Elementar",
+        "B1": "Orta",
+        "B2": "Orta üstü",
+        "C1": "İleri",
+        "C2": "Serbest"
+    },
+    "topics": {
+        "title": "Temalar",
+        "nature": "Tabiat",
+        "animals": "Ayvanlar",
+        "travel": "Sayahat",
+        "food": "Aş",
+        "home": "Ev",
+        "cars": "Arabalar",
+        "it": "IT",
+        "questions": "Sual sözleri"
+    },
+    "settings": {
+        "interfaceLanguage": "Arayüz tili",
+        "cardLanguages": "Kartaların tilleri",
+        "from": "...-den",
+        "to": "...-ge",
+        "transcription": "Transkriptsiya köster",
+        "pronunciation": "Sözlerni oqumaq"
+    },
+    "menu": {
+        "donate": "Proyektni destekle",
+        "languages": "Tiller",
+        "about": "Aqqında"
+    },
+    "about": {
+        "title": "Aqqında",
+        "description": "Slovko — başqa oşasa programmalarda reklamalar çoq bolğanı içün, reklamasız öz programmamıznı yapmağa qarar berdik. Heç bir keder bolmadan sözlerni juftlaştıruv şeklinde tilleri ögreniñiz.",
+        "support": "Proyektni destekle",
+        "developer": "Yaratıcı",
+        "version": "Versiya"
+    },
+    "updateNotification": {
+        "message": "Yañı versiya bar!",
+        "button": "Yañart"
+    }
+}

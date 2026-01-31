@@ -1,0 +1,49 @@
+{
+    "app": {
+        "title": "Slovko"
+    },
+    "levels": {
+        "title": "Levels",
+        "A1": "Beginner",
+        "A2": "Elementary",
+        "B1": "Intermediate",
+        "B2": "Upper-Intermediate",
+        "C1": "Advanced",
+        "C2": "Proficient"
+    },
+    "topics": {
+        "title": "Topics",
+        "nature": "Nature",
+        "animals": "Animals",
+        "travel": "Travel",
+        "food": "Food",
+        "home": "Home",
+        "cars": "Cars",
+        "it": "IT",
+        "questions": "Question words"
+    },
+    "settings": {
+        "interfaceLanguage": "Interface language",
+        "cardLanguages": "Card languages",
+        "from": "From",
+        "to": "To",
+        "transcription": "Show transcription",
+        "pronunciation": "Pronounce words"
+    },
+    "menu": {
+        "donate": "Support the project",
+        "languages": "Languages",
+        "about": "About"
+    },
+    "about": {
+        "title": "About",
+        "description": "Slovko is the result of existing similar apps having intrusive ads. That's why the idea arose to make our own, completely ad-free. Learn languages by matching word pairs without distractions.",
+        "support": "Support the project",
+        "developer": "Developer",
+        "version": "Version"
+    },
+    "updateNotification": {
+        "message": "Update available!",
+        "button": "Update"
+    }
+}

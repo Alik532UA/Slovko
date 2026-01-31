@@ -1,0 +1,21 @@
+{
+    "id": "cars",
+    "icon": "🚗",
+    "words": [
+        "car",
+        "truck",
+        "bus",
+        "wheel",
+        "engine",
+        "fuel",
+        "driver",
+        "road",
+        "highway",
+        "traffic",
+        "parking",
+        "speed",
+        "brake",
+        "mirror",
+        "seat"
+    ]
+}

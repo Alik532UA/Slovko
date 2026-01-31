@@ -1,0 +1,21 @@
+{
+    "id": "animals",
+    "icon": "🐾",
+    "words": [
+        "cat",
+        "dog",
+        "bird",
+        "fish",
+        "horse",
+        "cow",
+        "pig",
+        "sheep",
+        "chicken",
+        "rabbit",
+        "mouse",
+        "elephant",
+        "lion",
+        "tiger",
+        "bear"
+    ]
+}

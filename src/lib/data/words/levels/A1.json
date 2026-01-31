@@ -1,0 +1,26 @@
+{
+    "id": "A1",
+    "name": "Beginner",
+    "words": [
+        "hello",
+        "goodbye",
+        "yes",
+        "no",
+        "please",
+        "thank_you",
+        "water",
+        "bread",
+        "milk",
+        "apple",
+        "house",
+        "cat",
+        "dog",
+        "sun",
+        "moon",
+        "day",
+        "night",
+        "friend",
+        "book",
+        "time"
+    ]
+}

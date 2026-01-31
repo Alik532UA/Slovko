@@ -1,0 +1,21 @@
+{
+    "id": "food",
+    "icon": "🍕",
+    "words": [
+        "bread",
+        "butter",
+        "cheese",
+        "milk",
+        "egg",
+        "meat",
+        "fish",
+        "rice",
+        "pasta",
+        "soup",
+        "salad",
+        "fruit",
+        "vegetable",
+        "sugar",
+        "salt"
+    ]
+}

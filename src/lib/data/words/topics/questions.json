@@ -1,0 +1,16 @@
+{
+    "id": "questions",
+    "icon": "❓",
+    "words": [
+        "what",
+        "where",
+        "when",
+        "why",
+        "who",
+        "how",
+        "which",
+        "whose",
+        "whom",
+        "whether"
+    ]
+}

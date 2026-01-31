@@ -1,0 +1,21 @@
+{
+    "id": "home",
+    "icon": "🏠",
+    "words": [
+        "house",
+        "room",
+        "door",
+        "window",
+        "floor",
+        "wall",
+        "roof",
+        "kitchen",
+        "bathroom",
+        "bedroom",
+        "furniture",
+        "table",
+        "chair",
+        "bed",
+        "lamp"
+    ]
+}

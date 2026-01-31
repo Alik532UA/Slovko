@@ -1,0 +1,49 @@
+{
+    "app": {
+        "title": "Slovko"
+    },
+    "levels": {
+        "title": "Niveaus",
+        "A1": "Beginner",
+        "A2": "Elementair",
+        "B1": "Gemiddeld",
+        "B2": "Boven gemiddeld",
+        "C1": "Gevorderd",
+        "C2": "Vloeiend"
+    },
+    "topics": {
+        "title": "Onderwerpen",
+        "nature": "Natuur",
+        "animals": "Dieren",
+        "travel": "Reizen",
+        "food": "Eten",
+        "home": "Thuis",
+        "cars": "Auto's",
+        "it": "IT",
+        "questions": "Vraagwoorden"
+    },
+    "settings": {
+        "interfaceLanguage": "Interface taal",
+        "cardLanguages": "Kaart talen",
+        "from": "Van",
+        "to": "Naar",
+        "transcription": "Toon transcriptie",
+        "pronunciation": "Spreek woorden uit"
+    },
+    "menu": {
+        "donate": "Ondersteun het project",
+        "languages": "Talen",
+        "about": "Over"
+    },
+    "about": {
+        "title": "Over",
+        "description": "Slovko is ontstaan omdat vergelijkbare apps vaak storende advertenties hebben. Daarom besloten we onze eigen app te maken, volledig advertentievrij. Leer talen door woordparen te matchen zonder afleiding.",
+        "support": "Ondersteun het project",
+        "developer": "Ontwikkelaar",
+        "version": "Versie"
+    },
+    "updateNotification": {
+        "message": "Update beschikbaar!",
+        "button": "Bijwerken"
+    }
+}
