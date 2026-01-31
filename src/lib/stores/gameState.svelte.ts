@@ -106,7 +106,7 @@ function createGameState() {
             // (Тут можна оптимізувати і завантажувати транскрипції теж по частинах, 
             // але поки вони в одному файлі)
             if (sourceLanguage === 'en' || targetLanguage === 'en') {
-                transcriptions = await loadTranscriptions();
+                transcriptions = await loadTranscriptions(category, id);
             }
         } catch (e) {
             console.error(`Failed to load translations for ${category}/${id}`, e);
@@ -200,10 +200,11 @@ function createGameState() {
         try {
             await loadTranslationsForLanguages();
             const words = await loadWords();
-            currentWords = words;
+            // Перемішуємо всі слова, щоб порядок появи був випадковим
+            currentWords = shuffle(words);
 
             // Вибрати перші N слів
-            const selectedWords = words.slice(0, PAIRS_ON_SCREEN);
+            const selectedWords = currentWords.slice(0, PAIRS_ON_SCREEN);
             selectedWords.forEach((w) => usedWordKeys.add(w));
 
             const { source, target } = createCardsFromWordKeys(selectedWords);
@@ -351,17 +352,23 @@ function createGameState() {
 
         if (visibleCount <= REFILL_THRESHOLD) {
             // Знаходимо невикористані слова
-            const availableWords = currentWords.filter((w) => !usedWordKeys.has(w));
+            let availableWords = currentWords.filter((w) => !usedWordKeys.has(w));
 
-            // Якщо слова закінчились — скидаємо використані
+            // Якщо слова закінчились — скидаємо використані та перемішуємо знову
             if (availableWords.length === 0) {
                 usedWordKeys.clear();
                 // Залишаємо тільки ті, що ще видимі
                 sourceCards.filter((c) => c.isVisible).forEach((c) => usedWordKeys.add(c.wordKey));
+
+                // Знову беремо всі доступні (крім тих, що на екрані)
+                availableWords = currentWords.filter((w) => !usedWordKeys.has(w));
+                // Перемішуємо знову для різноманітності при другого проходженні
+                availableWords = shuffle(availableWords);
             }
 
             const neededPairs = PAIRS_ON_SCREEN - visibleCount;
-            const newWords = currentWords.filter((w) => !usedWordKeys.has(w)).slice(0, neededPairs);
+            // Беремо слова з вже перемішаного списку (або перемішаного при ресеті)
+            const newWords = availableWords.slice(0, neededPairs);
 
             if (newWords.length > 0) {
                 newWords.forEach((w) => usedWordKeys.add(w));

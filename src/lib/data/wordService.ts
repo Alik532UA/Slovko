@@ -75,16 +75,27 @@ export async function loadTranslations(
 }
 
 /**
- * Завантажити транскрипції (тільки для англійської)
+ * Завантажити транскрипції для конкретної категорії (рівень або тема)
  */
-export async function loadTranscriptions(): Promise<TranscriptionDictionary> {
-    if (transcriptionCache) {
-        return transcriptionCache;
+export async function loadTranscriptions(
+    category: 'levels' | 'topics',
+    id: string
+): Promise<TranscriptionDictionary> {
+    const cacheKey = `transcriptions:${category}:${id}`;
+
+    // Перевіряємо, чи є вже завантажені транскрипції в кеші (потрібно змінити тип кешу або логіку зберігання)
+    // Для простоти, поки що не використовуємо глобальний кеш для транскрипцій так само, як для перекладів,
+    // але якщо потрібно - можна додати.
+    // Тут ми просто повертаємо проміс імпорту.
+
+    let module;
+    if (category === 'levels') {
+        module = await import(`./transcriptions/levels/${id}.json`);
+    } else {
+        module = await import(`./transcriptions/topics/${id}.json`);
     }
 
-    const module = await import('./transcriptions.json');
-    transcriptionCache = module.default as TranscriptionDictionary;
-    return transcriptionCache;
+    return module.default as TranscriptionDictionary;
 }
 
 /**
