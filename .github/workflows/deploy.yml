@@ -9,8 +9,13 @@ permissions:
   pages: write
   id-token: write
 
+# Дозволяє запускати один деплой одночасно
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
-  build_site:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,5 +38,13 @@ jobs:
         with:
           path: 'build/'
 
-      - name: Deploy
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
