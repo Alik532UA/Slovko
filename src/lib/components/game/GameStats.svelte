@@ -3,7 +3,7 @@
      * GameStats.svelte - Відображення статистики (стрік, швидкість)
      */
     import { gameState } from "$lib/stores/gameState.svelte";
-    import { Flame, Zap, Lightbulb } from "lucide-svelte";
+    import { Flame, Target, Lightbulb } from "lucide-svelte";
 </script>
 
 <div class="stats-bar">
@@ -14,12 +14,12 @@
         <span class="value">{gameState.streak}</span>
     </div>
 
-    <div class="stat-item rate">
+    <div class="stat-item accuracy">
         <div class="icon-wrapper">
-            <Zap size={20} />
+            <Target size={20} />
         </div>
         <span class="value"
-            >{gameState.wordsPerMinute} <span class="unit">слів/хв</span></span
+            >{gameState.accuracy}<span class="unit">%</span></span
         >
     </div>
 

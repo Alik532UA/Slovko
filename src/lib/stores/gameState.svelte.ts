@@ -53,11 +53,20 @@ function createGameState() {
     let currentWords = $state<string[]>([]);
 
     let streak = $state(0);
+    let mistakesCount = $state(0);
     let correctAnswersHistory = $state<number[]>([]);
 
     // Для відстеження пауз
     let lastInteractionTime = $state(0);
     let ignoredTime = $state(0);
+
+    // Derived state for accuracy percentage
+    let accuracy = $derived.by(() => {
+        const matches = correctAnswersHistory.length;
+        const total = matches + mistakesCount;
+        if (total === 0) return 100;
+        return Math.round((matches / total) * 100);
+    });
 
     // Derived state for words per minute
     let wordsPerMinute = $derived.by(() => {
@@ -193,6 +202,7 @@ function createGameState() {
         isLoading = true;
         usedWordKeys.clear();
         streak = 0;
+        mistakesCount = 0;
         correctAnswersHistory = [];
         ignoredTime = 0;
         lastInteractionTime = Date.now();
@@ -308,6 +318,7 @@ function createGameState() {
 
         // Скидаємо стрік
         streak = 0;
+        mistakesCount += 1;
 
         // Записуємо помилку
         progressStore.recordWrong();
@@ -471,6 +482,9 @@ function createGameState() {
         },
         get streak() {
             return streak;
+        },
+        get accuracy() {
+            return accuracy;
         },
         get wordsPerMinute() {
             return wordsPerMinute;
