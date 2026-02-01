@@ -9,7 +9,25 @@
         "B1": "Orta",
         "B2": "Orta üstü",
         "C1": "İleri",
-        "C2": "Serbest"
+        "C2": "Serbest",
+        "underConstruction": "Bu seviye işlenmekte, lütfen başqa bir seviye saylañız"
+    },
+    "tabs": {
+        "levels": "Seviyeler",
+        "topics": "Temalar",
+        "phrases": "İbareler",
+        "playlists": "Listeler"
+    },
+    "playlists": {
+        "favorites": "Saylanğanlar",
+        "mistakes": "Hatalar",
+        "extra": "İlaveten",
+        "addToFavorites": "Saylanğanlarğa ekle",
+        "removeFromFavorites": "Saylanğanlardan sil",
+        "addToExtra": "İlaveten ekle",
+        "removeFromExtra": "İlaveten sil",
+        "empty": "Bu liste boş, lâkin oña kartlar ekleybilirsiñiz. Bunuñ içün kartqa bir qaç saniye basıp tutıñız ve listelerge ekleme menüsini açıñız.",
+        "emptyMistakes": "Bu liste boş ve hata yapqan sözleriñiznen toldurılacaq."
     },
     "topics": {
         "title": "Temalar",
@@ -41,6 +59,8 @@
         "cardLanguages": "Kartaların tilleri",
         "from": "...-den",
         "to": "...-ge",
+        "sourceLanguage": "Sol sutun",
+        "targetLanguage": "Oñ sutun",
         "transcription": "Transkriptsiya köster",
         "pronunciation": "Sözlerni oqumaq",
         "theme": "Tema"

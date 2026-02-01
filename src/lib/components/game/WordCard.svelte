@@ -11,13 +11,68 @@
     interface Props {
         card: ActiveCard;
         onclick: () => void;
+        onlongpress?: (e: PointerEvent) => void;
     }
 
-    let { card, onclick }: Props = $props();
+    let { card, onclick, onlongpress }: Props = $props();
+
+    let showTranscription = $derived.by(() => {
+        if (card.language === settingsStore.value.sourceLanguage) {
+            return settingsStore.value.showTranscriptionSource;
+        }
+        if (card.language === settingsStore.value.targetLanguage) {
+            return settingsStore.value.showTranscriptionTarget;
+        }
+        return false;
+    });
+
+    let longPressTimer: ReturnType<typeof setTimeout> | null = null;
+    let isLongPress = false;
+
+    function handlePointerDown(e: PointerEvent) {
+        // Дозволяємо лонг-прес на будь-якій картці (навіть правильній, щоб наприклад видалити з обраного)
+        // Але якщо disabled (статус correct), події миші можуть не спрацьовувати?
+        // Button with disabled=true blocks events.
+        // We disabled it in markup: disabled={card.status === "correct"}
+        // If we want context menu on correct cards, we must NOT disable it, or wrap it.
+        // Or remove `disabled` attribute and handle logic in click.
+        // Current code has disabled={card.status === "correct"}.
+        // This blocks onclick. It also blocks onpointerdown usually.
+        // I will remove `disabled` attribute and check status in handlers.
+
+        longPressTimer = setTimeout(() => {
+            isLongPress = true;
+            if (onlongpress) onlongpress(e);
+        }, 500);
+    }
+
+    // ... existing handlers ... same as before ...
+
+    function handlePointerUp() {
+        if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+        }
+    }
+
+    function handlePointerLeave() {
+        if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+        }
+    }
 
     function handleClick(e: MouseEvent) {
-        // Запобігаємо спливанню події, щоб не спрацював клік по фону (зняття виділення)
+        // Запобігаємо спливанню події
         e.stopPropagation();
+
+        if (isLongPress) {
+            isLongPress = false;
+            return;
+        }
+
+        // Якщо картка вже "правильна", ігноруємо клік (емулюємо disabled)
+        if (card.status === "correct") return;
 
         // Check which side this card belongs to and if pronunciation is enabled for it
         const isSource = card.language === settingsStore.value.sourceLanguage;
@@ -31,7 +86,8 @@
             shouldSpeak = true;
         }
 
-        if (shouldSpeak) {
+        // Speak only if selecting (not deselecting)
+        if (shouldSpeak && card.status !== "selected") {
             speakText(card.text, card.language);
         }
 
@@ -46,21 +102,15 @@
     class:wrong={card.status === "wrong"}
     class:hint={card.status === "hint"}
     class:hint-slow={card.status === "hint-slow"}
+    onpointerdown={handlePointerDown}
+    onpointerup={handlePointerUp}
+    onpointerleave={handlePointerLeave}
     onclick={handleClick}
-    disabled={card.status === "correct"}
     data-testid="word-card-{card.id}"
 >
     <span class="word-text">{card.text}</span>
-    {#if card.transcription}
-        {@const isSource = card.language === settingsStore.value.sourceLanguage}
-        {@const isTarget = card.language === settingsStore.value.targetLanguage}
-        {@const show =
-            (isSource && settingsStore.value.showTranscriptionSource) ||
-            (isTarget && settingsStore.value.showTranscriptionTarget)}
-
-        {#if show}
-            <span class="transcription">{card.transcription}</span>
-        {/if}
+    {#if card.transcription && showTranscription}
+        <span class="transcription">{card.transcription}</span>
     {/if}
 </button>
 
@@ -90,6 +140,7 @@
         justify-content: center;
         gap: 0.2rem;
         overflow: hidden; /* Запобігаємо виходу за межі */
+        touch-action: none; /* Prevent browser zoom/scroll on long press? Maybe manipulation. */
     }
 
     .word-text {
@@ -106,13 +157,27 @@
         line-height: 1;
     }
 
-    .word-card:hover:not(:disabled) {
+    .word-card:hover {
         transform: translateY(-2px);
         border-color: var(--card-hover-border);
     }
 
-    .word-card:active:not(:disabled) {
+    .word-card:active {
         transform: translateY(0);
+    }
+
+    /* Remove specific disabled styling or keep it if needed for visual indication that it's matched */
+    .word-card.correct {
+        background: var(--correct-bg);
+        border-color: var(--correct-border);
+        animation: correctFade 0.8s ease-out forwards;
+        cursor: default; /* Show it's not clickable */
+    }
+
+    /* Ensure hover doesn't trigger on correct cards */
+    .word-card.correct:hover {
+        transform: none; /* override hover lift */
+        border-color: var(--correct-border);
     }
 
     /* Вибрана картка */
@@ -122,13 +187,7 @@
     }
 
     /* Правильна відповідь — зелений спалах + 25% прозорість */
-    .word-card.correct {
-        background: var(--correct-bg);
-        border-color: var(--correct-border);
-        animation: correctFade 0.8s ease-out forwards;
-        cursor: default;
-    }
-
+    /* ... rest of animations same ... */
     @keyframes correctFade {
         0% {
             opacity: 1;

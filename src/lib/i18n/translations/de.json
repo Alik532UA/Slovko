@@ -9,7 +9,25 @@
         "B1": "Mittelstufe",
         "B2": "Obere Mittelstufe",
         "C1": "Fortgeschritten",
-        "C2": "Kompetent"
+        "C2": "Kompetent",
+        "underConstruction": "Diese Stufe ist in Entwicklung, bitte wählen Sie eine andere Stufe"
+    },
+    "tabs": {
+        "levels": "Niveaus",
+        "topics": "Themen",
+        "phrases": "Sätze",
+        "playlists": "Listen"
+    },
+    "playlists": {
+        "favorites": "Favoriten",
+        "mistakes": "Fehlerkorrektur",
+        "extra": "Extra-Studium",
+        "addToFavorites": "Zu Favoriten hinzufügen",
+        "removeFromFavorites": "Aus Favoriten entfernen",
+        "addToExtra": "Zu Extra hinzufügen",
+        "removeFromExtra": "Aus Extra entfernen",
+        "empty": "Diese Playlist ist leer, aber Sie können Karten hinzufügen. Drücken und halten Sie dazu eine Karte einige Sekunden lang, um das Kontextmenü zu öffnen.",
+        "emptyMistakes": "Diese Liste ist leer und wird mit Wörtern gefüllt, bei denen Sie Fehler machen."
     },
     "topics": {
         "title": "Themen",
@@ -41,6 +59,8 @@
         "cardLanguages": "Kartensprachen",
         "from": "Von",
         "to": "Nach",
+        "sourceLanguage": "Linke Spalte",
+        "targetLanguage": "Rechte Spalte",
         "transcription": "Transkription anzeigen",
         "pronunciation": "Wörter aussprechen",
         "theme": "Thema"

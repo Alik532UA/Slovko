@@ -9,7 +9,25 @@
         "B1": "Intermediate",
         "B2": "Upper-Intermediate",
         "C1": "Advanced",
-        "C2": "Proficient"
+        "C2": "Proficient",
+        "underConstruction": "This level is under development, please choose another level"
+    },
+    "tabs": {
+        "levels": "Levels",
+        "topics": "Topics",
+        "phrases": "Phrases",
+        "playlists": "Playlists"
+    },
+    "playlists": {
+        "favorites": "Favorites",
+        "mistakes": "Mistakes",
+        "extra": "Extra Study",
+        "addToFavorites": "Add to Favorites",
+        "removeFromFavorites": "Remove from Favorites",
+        "addToExtra": "Add to Extra",
+        "removeFromExtra": "Remove from Extra",
+        "empty": "This playlist is empty, but you can add cards to it. To do this, press and hold on a card for a few seconds to open the playlist menu.",
+        "emptyMistakes": "This list is empty and will be populated with words you make mistakes in."
     },
     "topics": {
         "title": "Topics",

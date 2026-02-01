@@ -28,6 +28,10 @@
         Scale,
         Puzzle,
         ArrowLeftRight,
+        MessageSquare,
+        List,
+        RotateCcw,
+        Bookmark,
     } from "lucide-svelte";
     import { settingsStore } from "$lib/stores/settingsStore.svelte";
     import {
@@ -35,6 +39,7 @@
         ALL_TOPICS,
         type CEFRLevel,
         type GameMode,
+        type PlaylistId,
     } from "$lib/types";
 
     // Map string names to components
@@ -70,8 +75,10 @@
 
     // Configuration for Tabs
     const TABS: { id: GameMode; label: string; testId: string }[] = [
-        { id: "levels", label: "levels.title", testId: "tab-levels" },
-        { id: "topics", label: "topics.title", testId: "tab-topics" },
+        { id: "levels", label: "tabs.levels", testId: "tab-levels" },
+        { id: "topics", label: "tabs.topics", testId: "tab-topics" },
+        { id: "phrases", label: "tabs.phrases", testId: "tab-phrases" },
+        { id: "playlists", label: "tabs.playlists", testId: "tab-playlists" },
     ];
 
     // Initialize directly from store (SSoT)
@@ -82,8 +89,18 @@
         onclose();
     }
 
+    function selectPhrasesLevel(level: CEFRLevel) {
+        settingsStore.setPhrasesLevel(level);
+        onclose();
+    }
+
     function selectTopic(topicId: string) {
         settingsStore.setTopic(topicId);
+        onclose();
+    }
+
+    function selectPlaylist(playlistId: PlaylistId) {
+        settingsStore.setPlaylist(playlistId);
         onclose();
     }
 
@@ -94,7 +111,6 @@
     }
 </script>
 
-<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <div
     class="modal-backdrop"
     onclick={handleBackdropClick}
@@ -105,6 +121,8 @@
         if (e.key === "Escape") onclose();
     }}
 >
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
     <div
         class="modal"
         data-testid="level-topic-modal"
@@ -112,7 +130,6 @@
         aria-modal="true"
         tabindex="-1"
         onclick={(e) => e.stopPropagation()}
-        onkeydown={(e) => e.stopPropagation()}
     >
         <button
             class="close-btn"
@@ -144,8 +161,9 @@
                     {#each ALL_LEVELS as level}
                         <button
                             class="item"
-                            class:selected={settingsStore.value.currentLevel ===
-                                level}
+                            class:selected={settingsStore.value.mode ===
+                                "levels" &&
+                                settingsStore.value.currentLevel === level}
                             onclick={() => selectLevel(level)}
                             data-testid="level-item-{level}"
                         >
@@ -156,7 +174,7 @@
                         </button>
                     {/each}
                 </div>
-            {:else}
+            {:else if activeTab === "topics"}
                 <div class="grid topics-grid">
                     {#each ALL_TOPICS as topic}
                         {@const Icon = ICON_MAP[topic.icon]}
@@ -179,6 +197,69 @@
                             >
                         </button>
                     {/each}
+                </div>
+            {:else if activeTab === "phrases"}
+                <div class="grid">
+                    {#each ALL_LEVELS as level}
+                        <button
+                            class="item"
+                            class:selected={settingsStore.value.mode ===
+                                "phrases" &&
+                                settingsStore.value.currentLevel === level}
+                            onclick={() => selectPhrasesLevel(level)}
+                            data-testid="phrase-level-item-{level}"
+                        >
+                            <div class="item-icon">
+                                <MessageSquare size={24} />
+                            </div>
+                            <span class="item-title">{level}</span>
+                            <span class="item-desc"
+                                >{$_(`levels.${level}`)}</span
+                            >
+                        </button>
+                    {/each}
+                </div>
+            {:else if activeTab === "playlists"}
+                <div class="grid topics-grid">
+                    <!-- Favorites -->
+                    <button
+                        class="item topic-item"
+                        class:selected={settingsStore.value.currentPlaylist ===
+                            "favorites"}
+                        onclick={() => selectPlaylist("favorites")}
+                        data-testid="playlist-favorites"
+                    >
+                        <span class="item-icon"><Heart size={24} /></span>
+                        <span class="item-title"
+                            >{$_("playlists.favorites")}</span
+                        >
+                    </button>
+
+                    <!-- Mistakes -->
+                    <button
+                        class="item topic-item"
+                        class:selected={settingsStore.value.currentPlaylist ===
+                            "mistakes"}
+                        onclick={() => selectPlaylist("mistakes")}
+                        data-testid="playlist-mistakes"
+                    >
+                        <span class="item-icon"><RotateCcw size={24} /></span>
+                        <span class="item-title"
+                            >{$_("playlists.mistakes")}</span
+                        >
+                    </button>
+
+                    <!-- Extra -->
+                    <button
+                        class="item topic-item"
+                        class:selected={settingsStore.value.currentPlaylist ===
+                            "extra"}
+                        onclick={() => selectPlaylist("extra")}
+                        data-testid="playlist-extra"
+                    >
+                        <span class="item-icon"><Bookmark size={24} /></span>
+                        <span class="item-title">{$_("playlists.extra")}</span>
+                    </button>
                 </div>
             {/if}
         </div>
@@ -240,8 +321,9 @@
         display: flex;
         /* border-bottom: 1px solid var(--border); - Remove rigid border */
         margin-bottom: 1rem;
-        gap: 1rem;
+        gap: 0.5rem;
         justify-content: center;
+        flex-wrap: wrap; /* Allow wrapping on small screens */
     }
 
     .tab {
@@ -249,7 +331,7 @@
         background: transparent;
         border: none;
         color: var(--text-secondary);
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 500;
         cursor: pointer;
         transition: all 0.2s;
@@ -342,6 +424,7 @@
         align-items: center;
         justify-content: center;
         flex-shrink: 0; /* Prevent icon shrinking */
+        color: var(--text-primary);
     }
 
     .topic-item .item-icon {

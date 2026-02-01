@@ -9,7 +9,25 @@
         "B1": "Gemiddeld",
         "B2": "Boven gemiddeld",
         "C1": "Gevorderd",
-        "C2": "Vloeiend"
+        "C2": "Vloeiend",
+        "underConstruction": "Dit niveau is in ontwikkeling, kies een ander niveau"
+    },
+    "tabs": {
+        "levels": "Niveaus",
+        "topics": "Onderwerpen",
+        "phrases": "Zinnen",
+        "playlists": "Lijsten"
+    },
+    "playlists": {
+        "favorites": "Favorieten",
+        "mistakes": "Fouten verbeteren",
+        "extra": "Extra studie",
+        "addToFavorites": "Toevoegen aan favorieten",
+        "removeFromFavorites": "Verwijderen uit favorieten",
+        "addToExtra": "Toevoegen aan extra",
+        "removeFromExtra": "Verwijderen uit extra",
+        "empty": "Deze afspeellijst is leeg, maar je kunt er kaarten aan toevoegen. Houd hiervoor een kaart een paar seconden ingedrukt om het contextmenu te openen.",
+        "emptyMistakes": "Deze lijst is leeg en wordt gevuld met woorden waarin je fouten maakt."
     },
     "topics": {
         "title": "Onderwerpen",
@@ -41,6 +59,8 @@
         "cardLanguages": "Kaart talen",
         "from": "Van",
         "to": "Naar",
+        "sourceLanguage": "Linker kolom",
+        "targetLanguage": "Rechter kolom",
         "transcription": "Toon transcriptie",
         "pronunciation": "Spreek woorden uit",
         "theme": "Thema"

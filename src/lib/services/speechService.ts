@@ -1,12 +1,18 @@
 /**
- * Speech Service — озвучування англійських слів через Web Speech API
+ * Speech Service — озвучування слів через Web Speech API
  */
 
 import { browser } from '$app/environment';
 import { settingsStore } from '../stores/settingsStore.svelte';
 
-
-
+// Маппінг мов до пріоритетних голосів
+const LANGUAGE_VOICE_PRIORITIES: Record<string, string[]> = {
+    'uk': ['uk-UA', 'uk'],
+    'en': ['en-US', 'en-GB', 'en'],
+    'nl': ['nl-NL', 'nl'], // nl-NL пріоритетніше ніж nl-BE
+    'de': ['de-DE', 'de-AT', 'de'],
+    'crh': ['tr-TR', 'tr', 'az-AZ', 'az'], // Кримськотатарська: fallback на турецьку або азербайджанську
+};
 
 /**
  * Ініціалізація голосу
@@ -14,19 +20,42 @@ import { settingsStore } from '../stores/settingsStore.svelte';
 function initVoice(): void {
     if (!browser || !window.speechSynthesis) return;
 
-    // Отримуємо список голосів
     const loadVoices = () => {
-        // У цьому варіанті ми не кешуємо конкретний голос наперед,
-        // бо мова може змінюватись. Просто переконуємось що вони завантажені.
         window.speechSynthesis.getVoices();
     };
 
-    // Голоси можуть завантажуватись асинхронно
     if (window.speechSynthesis.getVoices().length > 0) {
         loadVoices();
     } else {
         window.speechSynthesis.addEventListener('voiceschanged', loadVoices);
     }
+}
+
+/**
+ * Знаходить найкращий голос для мови
+ */
+function findBestVoice(voices: SpeechSynthesisVoice[], lang: string): SpeechSynthesisVoice | undefined {
+    const priorities = LANGUAGE_VOICE_PRIORITIES[lang];
+
+    if (priorities) {
+        // Шукаємо по пріоритетному списку
+        for (const priority of priorities) {
+            // Точний збіг
+            let voice = voices.find((v) => v.lang === priority);
+            if (voice) return voice;
+
+            // Частковий збіг (prefix)
+            voice = voices.find((v) => v.lang.startsWith(priority));
+            if (voice) return voice;
+        }
+    }
+
+    // Стандартний пошук
+    let voice = voices.find((v) => v.lang === lang);
+    if (voice) return voice;
+
+    voice = voices.find((v) => v.lang.startsWith(lang));
+    return voice;
 }
 
 /**
@@ -39,21 +68,28 @@ export function speakText(text: string, lang: string): void {
     window.speechSynthesis.cancel();
 
     const utterance = new SpeechSynthesisUtterance(text);
-
-    // Спробуємо знайти відповідний голос
     const voices = window.speechSynthesis.getVoices();
+    let voice: SpeechSynthesisVoice | undefined;
 
-    // 1. Точний збіг (наприклад 'uk-UA')
-    let voice = voices.find(v => v.lang === lang);
+    // 0. Перевіряємо збережені налаштування користувача
+    const prefs = settingsStore.value.voicePreferences;
+    const preferredURI = prefs ? prefs[lang] : undefined;
 
-    // 2. Частковий збіг (наприклад 'uk' -> 'uk-UA')
-    if (!voice) {
-        voice = voices.find(v => v.lang.startsWith(lang));
+    if (preferredURI) {
+        voice = voices.find((v) => v.voiceURI === preferredURI);
     }
 
-    // 3. Fallback: використовуємо дефолтний голос браузера для цієї мови (якщо utterance.lang підтримується)
-    // Встановлюємо lang в utterance, навіть якщо голос не знайдено явно
-    utterance.lang = lang;
+    // 1. Якщо немає збереженого - шукаємо найкращий за пріоритетами
+    if (!voice) {
+        voice = findBestVoice(voices, lang);
+    }
+
+    // Встановлюємо мову utterance (для CRH використовуємо турецьку)
+    if (lang === 'crh') {
+        utterance.lang = voice?.lang || 'tr';
+    } else {
+        utterance.lang = voice?.lang || lang;
+    }
 
     if (voice) {
         utterance.voice = voice;
@@ -67,7 +103,7 @@ export function speakText(text: string, lang: string): void {
 }
 
 /**
- * Legacy support / Alias (optional, or just remove)
+ * Legacy support
  */
 export function speakEnglish(text: string): void {
     speakText(text, 'en');

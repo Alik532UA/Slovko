@@ -18,7 +18,7 @@
 
     const LANGUAGES: Language[] = ["uk", "en", "crh", "nl", "de"];
 
-    let pressTimer: number;
+    let pressTimer: ReturnType<typeof setTimeout> | null = null;
     let isLongPress = false;
     let showVoiceSelection = $state(false);
 
@@ -29,7 +29,7 @@
 
     let currentSide = $state<"source" | "target" | null>(null);
 
-    function handlePronunciationPress(side: "source" | "target") {
+    function handlePointerDown(e: PointerEvent, side: "source" | "target") {
         isLongPress = false;
         currentSide = side;
         pressTimer = setTimeout(() => {
@@ -38,8 +38,13 @@
         }, 800); // 0.8s long press for better UX
     }
 
-    function handlePronunciationRelease() {
-        clearTimeout(pressTimer);
+    function handlePointerUp() {
+        if (pressTimer) {
+            clearTimeout(pressTimer);
+            pressTimer = null;
+        }
+
+        // Toggle only if it wasn't a long press and modal didn't open
         if (!isLongPress && !showVoiceSelection && currentSide) {
             if (currentSide === "source") {
                 settingsStore.togglePronunciationSource();
@@ -47,7 +52,20 @@
                 settingsStore.togglePronunciationTarget();
             }
         }
-        if (!isLongPress) {
+
+        // Reset state
+        if (!showVoiceSelection) {
+            currentSide = null;
+        }
+        isLongPress = false;
+    }
+
+    function handlePointerLeave() {
+        if (pressTimer) {
+            clearTimeout(pressTimer);
+            pressTimer = null;
+        }
+        if (!showVoiceSelection) {
             currentSide = null;
         }
     }
@@ -193,13 +211,11 @@
                                 class="icon-btn small"
                                 class:active={settingsStore.value
                                     .enablePronunciationSource}
-                                onmousedown={() =>
-                                    handlePronunciationPress("source")}
-                                onmouseup={handlePronunciationRelease}
-                                onmouseleave={handlePronunciationRelease}
-                                ontouchstart={() =>
-                                    handlePronunciationPress("source")}
-                                ontouchend={handlePronunciationRelease}
+                                onpointerdown={(e) =>
+                                    handlePointerDown(e, "source")}
+                                onpointerup={handlePointerUp}
+                                onpointerleave={handlePointerLeave}
+                                oncontextmenu={(e) => e.preventDefault()}
                                 title={$_("settings.pronunciation")}
                                 data-testid="pronunciation-left-btn"
                             >
@@ -271,13 +287,11 @@
                                 class="icon-btn small"
                                 class:active={settingsStore.value
                                     .enablePronunciationTarget}
-                                onmousedown={() =>
-                                    handlePronunciationPress("target")}
-                                onmouseup={handlePronunciationRelease}
-                                onmouseleave={handlePronunciationRelease}
-                                ontouchstart={() =>
-                                    handlePronunciationPress("target")}
-                                ontouchend={handlePronunciationRelease}
+                                onpointerdown={(e) =>
+                                    handlePointerDown(e, "target")}
+                                onpointerup={handlePointerUp}
+                                onpointerleave={handlePointerLeave}
+                                oncontextmenu={(e) => e.preventDefault()}
                                 title={$_("settings.pronunciation")}
                                 data-testid="pronunciation-right-btn"
                             >

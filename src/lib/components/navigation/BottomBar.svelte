@@ -12,26 +12,47 @@
     let showModal = $state(false);
 
     // Отримати поточний лейбл
-    const currentLabel = $derived(
-        settingsStore.value.mode === "levels"
-            ? $_(`levels.${settingsStore.value.currentLevel}`)
-            : $_(`topics.${settingsStore.value.currentTopic}`),
-    );
+    const currentLabel = $derived.by(() => {
+        const { mode, currentLevel, currentTopic, currentPlaylist } =
+            settingsStore.value;
+
+        if (mode === "levels") {
+            return $_(`levels.${currentLevel}`);
+        } else if (mode === "topics") {
+            return $_(`topics.${currentTopic}`);
+        } else if (mode === "phrases") {
+            // Phrases use levels too (A1, A2...)
+            // Optional: add prefix like "Phrases: A1"? User didn't request it.
+            return $_(`levels.${currentLevel}`);
+        } else if (mode === "playlists") {
+            return $_(`playlists.${currentPlaylist}`);
+        }
+        return "";
+    });
 
     // Перевірка чи можна перемикати (залежить від режиму)
-    const canGoPrev = $derived(
-        settingsStore.value.mode === "levels"
-            ? settingsStore.value.currentLevel !== ALL_LEVELS[0]
-            : settingsStore.value.currentTopic !== ALL_TOPICS[0].id,
-    );
+    const canGoPrev = $derived.by(() => {
+        const { mode, currentLevel, currentTopic } = settingsStore.value;
 
-    const canGoNext = $derived(
-        settingsStore.value.mode === "levels"
-            ? settingsStore.value.currentLevel !==
-                  ALL_LEVELS[ALL_LEVELS.length - 1]
-            : settingsStore.value.currentTopic !==
-                  ALL_TOPICS[ALL_TOPICS.length - 1].id,
-    );
+        if (mode === "levels" || mode === "phrases") {
+            return currentLevel !== ALL_LEVELS[0];
+        } else if (mode === "topics") {
+            return currentTopic !== ALL_TOPICS[0].id;
+        }
+        // Playlists: disable navigation for now
+        return false;
+    });
+
+    const canGoNext = $derived.by(() => {
+        const { mode, currentLevel, currentTopic } = settingsStore.value;
+
+        if (mode === "levels" || mode === "phrases") {
+            return currentLevel !== ALL_LEVELS[ALL_LEVELS.length - 1];
+        } else if (mode === "topics") {
+            return currentTopic !== ALL_TOPICS[ALL_TOPICS.length - 1].id;
+        }
+        return false;
+    });
 </script>
 
 <div class="bottom-bar">

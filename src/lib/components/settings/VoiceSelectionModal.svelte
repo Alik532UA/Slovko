@@ -15,7 +15,11 @@
     let { onclose, language }: Props = $props();
 
     let voices: SpeechSynthesisVoice[] = $state([]);
-    let selectedVoiceURI = $state(""); // Store selected voice URI
+    // Initialize with stored preference
+    // svelte-ignore state_referenced_locally
+    let selectedVoiceURI = $state(
+        settingsStore.value.voicePreferences[language] || "",
+    );
     let primaryVoices: SpeechSynthesisVoice[] = $state([]);
     let secondaryVoices: SpeechSynthesisVoice[] = $state([]);
 
@@ -108,11 +112,9 @@
     }
 
     function handleConfirm() {
-        // Here we would save the specific voice preference to settingsStore
-        // For now, we assume the system picks best match, but ideally we should store `preferredVoiceURI` in settings
-        // Since the current settingsStore doesn't support specific voice selection persistence per language yet,
-        // we will implement the UI behavior and "pretend" save (or just close since the user sees the preview).
-        // TODO: Extend settingsStore to save `preferredVoiceURI_${language}`
+        if (selectedVoiceURI) {
+            settingsStore.setVoicePreference(language, selectedVoiceURI);
+        }
         onclose();
     }
 
