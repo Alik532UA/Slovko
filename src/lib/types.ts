@@ -41,52 +41,84 @@ export const ALL_LEVELS: CEFRLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 // СТРУКТУРА ДАНИХ СЛІВ
 // ========================================
 
+/**
+ * Represents a pair of words for the game logic (runtime only).
+ * Not used for storage on disk.
+ */
 export interface WordPair {
     id: string;
     ukrainian: string;
     english: string;
 }
 
-/** Рівень слів */
+/**
+ * Structure of a Level JSON file (e.g., A1.json).
+ * Contains only the list of English word keys.
+ * Translations are stored separately in `data/translations`.
+ */
 export interface WordLevel {
     id: CEFRLevel;
     name: string;
     words: string[];
 }
 
-/** Тема слів */
+/**
+ * Structure of a Topic JSON file (e.g., food.json).
+ * Contains metadata (icon) and the list of word keys.
+ */
 export interface WordTopic {
     id: string;
     icon: string;
     words: string[];
 }
 
-/** Словник перекладів */
+/**
+ * Key-Value map for translations.
+ * Key: English word (e.g., "apple")
+ * Value: Translated text (e.g., "яблуко")
+ */
 export type TranslationDictionary = Record<string, string>;
 
-/** Словник транскрипцій */
+/**
+ * Key-Value map for IPA transcriptions.
+ * Key: English word (e.g., "apple")
+ * Value: IPA string (e.g., "ˈæp.l")
+ */
 export type TranscriptionDictionary = Record<string, string>;
 
 // ========================================
 // СТАН ГРИ
 // ========================================
 
-/** Режим гри */
+/**
+ * Game Modes:
+ * - 'levels': Sequential progression (A1 -> A2 -> ...)
+ * - 'topics': Thematic learning (Food, Travel, etc.)
+ */
 export type GameMode = 'levels' | 'topics';
 
-/** Статус картки в грі */
+/**
+ * Card visual states:
+ * - 'idle': Default state
+ * - 'selected': Clicked by user (waiting for pair)
+ * - 'correct': Successfully matched (green)
+ * - 'wrong': Incorrect match (red shake)
+ * - 'hint': Highlighted as a hint
+ */
 export type CardStatus = 'idle' | 'selected' | 'correct' | 'wrong' | 'hint';
 
-/** Активна картка на ігровому полі */
+/**
+ * Runtime representation of a card on the game board.
+ */
 export interface ActiveCard {
     id: string;
-    wordKey: string; // Ключ слова (англійською)
-    text: string; // Відображуваний текст (переклад)
-    transcription?: string; // Транскрипція (для англійської)
+    wordKey: string; // Original key from JSON data
+    text: string; // Display text (Translation or Source word)
+    transcription?: string; // Only for Source language cards
     language: Language;
     status: CardStatus;
-    slot: number; // Фіксована позиція в сітці
-    isVisible: boolean; // Чи видима картка
+    slot: number; // Grid position index
+    isVisible: boolean; // False when matched and removed
 }
 
 // ========================================
