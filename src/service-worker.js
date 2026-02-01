@@ -5,7 +5,7 @@ const CACHE = `cache-${version}`;
 
 const ASSETS = [
     ...build, // the app itself
-    ...files.filter(file => file !== '/version.json')  // exclude version.json to allow updates
+    ...files.filter(file => !file.endsWith('/version.json'))  // exclude version.json to allow updates
 ];
 
 self.addEventListener('install', (event) => {

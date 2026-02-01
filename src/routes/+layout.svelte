@@ -14,6 +14,7 @@
 	let ready = $state(false);
 
 	import { dev } from '$app/environment';
+	import { base } from '$app/paths';
 
 	onMount(async () => {
 		await initializeI18n();
@@ -23,7 +24,7 @@
 		checkForUpdates();
 
 		if (!dev && 'serviceWorker' in navigator) {
-			navigator.serviceWorker.register('/service-worker.js');
+			navigator.serviceWorker.register(`${base}/service-worker.js`);
 		}
 	});
 </script>
