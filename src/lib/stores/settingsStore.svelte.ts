@@ -62,7 +62,12 @@ function createSettingsStore() {
         try {
             const stored = localStorage.getItem(STORAGE_KEY);
             if (stored) {
-                return { ...DEFAULT_SETTINGS, ...JSON.parse(stored) };
+                const parsed = JSON.parse(stored);
+                // Migration: purple -> orange
+                if (parsed.theme === 'purple') {
+                    parsed.theme = 'orange';
+                }
+                return { ...DEFAULT_SETTINGS, ...parsed };
             }
         } catch (e) {
             console.warn('Failed to load settings:', e);

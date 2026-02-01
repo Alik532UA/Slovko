@@ -29,7 +29,7 @@ export const LANGUAGE_FLAGS: Record<Language, string> = {
 };
 
 /** Теми оформлення */
-export type AppTheme = 'dark-gray' | 'light-gray' | 'purple' | 'green';
+export type AppTheme = 'dark-gray' | 'light-gray' | 'orange' | 'green';
 
 /** Мовний CEFR рівень */
 export type CEFRLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';

@@ -49,8 +49,8 @@
 	--selected-border: #e95420;
 }
 
-/* Purple (Ubuntu-like) */
-[data-theme="purple"] {
+/* Orange (Ubuntu-like) */
+[data-theme="orange"] {
 	--bg-primary: linear-gradient(135deg, #77216f, #e95420);
 	--bg-secondary: rgba(255, 255, 255, 0.1);
 	--text-primary: #ffffff;

@@ -16,7 +16,9 @@
 				var theme = 'dark-gray';
 				if (stored) {
 					var parsed = JSON.parse(stored);
-					if (parsed.theme) theme = parsed.theme;
+					if (parsed.theme) {
+						theme = parsed.theme === 'purple' ? 'orange' : parsed.theme;
+					}
 				}
 				document.documentElement.setAttribute('data-theme', theme);
 			} catch (e) { }

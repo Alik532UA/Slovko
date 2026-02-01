@@ -7,13 +7,10 @@
     let { onclose }: { onclose: () => void } = $props();
 
     const themes: { id: AppTheme; color: string }[] = [
-        { id: "dark-gray", color: "#23272f" },
-        { id: "light-gray", color: "#f5f6fa" },
-        {
-            id: "purple",
-            color: "linear-gradient(135deg, #77216f, #e95420)",
-        },
-        { id: "green", color: "#b2f7b8" },
+        { id: 'dark-gray', color: '#1a1a2e' },
+        { id: 'light-gray', color: '#f5f6fa' },
+        { id: 'orange', color: 'linear-gradient(135deg, #77216f, #e95420)' },
+        { id: 'green', color: '#b2f7b8' }
     ];
 
     function selectTheme(theme: AppTheme) {
