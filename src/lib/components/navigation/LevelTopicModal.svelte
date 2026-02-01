@@ -187,6 +187,13 @@
         transition: all 0.2s;
     }
 
+    .topic-item {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 0.75rem 1rem;
+        gap: 0.75rem;
+    }
+
     .item:hover {
         border-color: var(--card-hover-border);
         transform: translateY(-2px);
@@ -214,7 +221,13 @@
         margin-bottom: 0.5rem;
     }
 
+    .topic-item .item-icon {
+        font-size: 1.25rem;
+        margin-bottom: 0;
+    }
+
     .topic-item .item-title {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
+        text-align: left;
     }
 </style>
