@@ -77,6 +77,10 @@
 	--card-bg: #e6ffe6;
 	--card-border: #a7f3d0;
 	--card-hover-border: #34d399;
+
+	/* Selected states for green theme */
+	--selected-bg: #dcfce7;
+	--selected-border: #059669;
 }
 
 /* Альтернативні назви для зворотної сумісності */
