@@ -6,13 +6,12 @@ const config = {
 		adapter: adapter({
 			pages: 'build',
 			assets: 'build',
-			fallback: undefined,
+			fallback: '404.html',
 			precompress: false,
 			strict: true
 		}),
 		paths: {
-			// Для GitHub Pages: https://username.github.io/Slovko/
-			base: process.env.NODE_ENV === 'production' ? '/Slovko' : ''
+			base: process.env.NODE_ENV === 'production' ? '/Alik_study_languages' : ''
 		},
 		prerender: {
 			handleHttpError: ({ path, referrer, message }) => {
