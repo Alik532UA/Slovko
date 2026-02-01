@@ -1,81 +1,83 @@
 /// <reference types="@sveltejs/kit" />
-import { build, files, version } from '$service-worker';
+import { build, files, prerendered, version } from '$service-worker';
 
+// Назва кешу з версією для автоматичного оновлення
 const CACHE = `cache-${version}`;
 
+// Список всіх файлів для попереднього кешування
 const ASSETS = [
-    ...build, // the app itself
-    ...files.filter(file => !file.endsWith('/app-version.json'))
+	...build, // файли, згенеровані Vite (js, css)
+	...files, // статичні файли з папки static
+	...prerendered // пререндерені сторінки
 ];
 
 self.addEventListener('install', (event) => {
-    // Force this SW to become the active service worker immediately
-    self.skipWaiting();
+	// Одразу активуємо новий SW
+	self.skipWaiting();
 
-    // Create a new cache and add all files to it
-    async function addFilesToCache() {
-        const cache = await caches.open(CACHE);
-        await cache.addAll(ASSETS);
-    }
-
-    event.waitUntil(addFilesToCache());
+	event.waitUntil(
+		caches.open(CACHE).then((cache) => cache.addAll(ASSETS))
+	);
 });
 
 self.addEventListener('activate', (event) => {
-    // Remove previous caches
-    async function deleteOldCaches() {
-        for (const key of await caches.keys()) {
-            if (key !== CACHE) await caches.delete(key);
-        }
-        // Force the SW to claim all clients immediately
-        await self.clients.claim();
-    }
-
-    event.waitUntil(deleteOldCaches());
+	// Видаляємо старі кеші
+	event.waitUntil(
+		caches.keys().then(async (keys) => {
+			for (const key of keys) {
+				if (key !== CACHE) await caches.delete(key);
+			}
+			// Змушуємо SW одразу керувати всіма вкладками
+			await self.clients.claim();
+		})
+	);
 });
 
 self.addEventListener('fetch', (event) => {
-    // ignore POST requests etc
-    if (event.request.method !== 'GET') return;
+	if (event.request.method !== 'GET' || event.request.headers.has('range')) return;
 
-    async function respond() {
-        const url = new URL(event.request.url);
-        const cache = await caches.open(CACHE);
+	const url = new URL(event.request.url);
 
-        // `build`/`files` can always be served from the cache
-        if (ASSETS.includes(url.pathname)) {
-            // for built assets, we can reliably use the cache
-            // (but let's be careful with things that might change during dev, 
-            // though 'build' is versioned)
-            const response = await cache.match(url.pathname);
+	// Ігноруємо запити не по http (наприклад, розширення браузера)
+	if (!url.protocol.startsWith('http')) return;
 
-            if (response) return response;
-        }
+	event.respondWith(
+		(async () => {
+			const cache = await caches.open(CACHE);
+			const isAsset = ASSETS.includes(url.pathname);
+			
+			// Для файлів збірки використовуємо Cache First
+			if (isAsset) {
+				const cachedResponse = await cache.match(url.pathname);
+				if (cachedResponse) return cachedResponse;
+			}
 
-        // for everything else, try the network first, but
-        // fall back to the cache if we're offline
-        try {
-            const response = await fetch(event.request);
+			// Для всього іншого намагаємось отримати з мережі
+			try {
+				const response = await fetch(event.request);
 
-            // if we're offline, fetch can return a value that is not a Response
-            // instead of throwing - and we can't consume it;
-            // check for valid response
-            if (!(response instanceof Response)) {
-                throw new Error('invalid response from fetch');
-            }
+				if (response.status === 200) {
+					// Кешуємо успішні відповіді, яких ще немає в списку ASSETS
+					if (!isAsset) {
+						cache.put(event.request, response.clone());
+					}
+				}
 
-            if (response.status === 200) {
-                cache.put(event.request, response.clone());
-            }
+				return response;
+			} catch (err) {
+				// Якщо ми офлайн, шукаємо в кеші
+				const cachedResponse = await cache.match(event.request);
+				if (cachedResponse) return cachedResponse;
 
-            return response;
-        } catch (err) {
-            const response = await cache.match(event.request);
-            if (response) return response;
+				// Якщо це запит навігації (сторінка), повертаємо корінь додатка
+				if (event.request.mode === 'navigate') {
+					// Шукаємо index.html або 404.html (для статичного адаптера)
+					const fallback = await cache.match('/') || await cache.match('/Slovko/') || await cache.match('404.html');
+					if (fallback) return fallback;
+				}
 
-            throw err;
-        }
-    }
-
-    event.respondWith(respond());
+				throw err;
+			}
+		})()
+	);
 });
