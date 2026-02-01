@@ -7,10 +7,10 @@
     let { onclose }: { onclose: () => void } = $props();
 
     const themes: { id: AppTheme; color: string }[] = [
-        { id: 'dark-gray', color: '#1a1a2e' },
-        { id: 'light-gray', color: '#f5f6fa' },
-        { id: 'orange', color: 'linear-gradient(135deg, #77216f, #e95420)' },
-        { id: 'green', color: '#b2f7b8' }
+        { id: "dark-gray", color: "#1a1a2e" },
+        { id: "light-gray", color: "#f5f6fa" },
+        { id: "orange", color: "linear-gradient(135deg, #77216f, #e95420)" },
+        { id: "green", color: "#b2f7b8" },
     ];
 
     function selectTheme(theme: AppTheme) {
@@ -24,13 +24,20 @@
         data-testid="theme-modal"
         role="dialog"
         aria-modal="true"
+        tabindex="-1"
         onclick={(e) => e.stopPropagation()}
+        onkeydown={(e) => e.stopPropagation()}
     >
+        <button
+            class="close-btn"
+            onclick={onclose}
+            data-testid="close-theme-modal-btn"
+        >
+            <X size={24} />
+        </button>
+
         <div class="modal-header">
             <h2>{$_("settings.theme") || "Theme"}</h2>
-            <button class="close-btn" onclick={onclose}>
-                <X size={24} />
-            </button>
         </div>
 
         <div class="themes-grid">
@@ -83,12 +90,13 @@
         background: rgba(255, 255, 255, 0.9);
     }
 
-    .modal-content {
+    .modal {
         background: transparent;
-        width: 90%;
+        width: 100%;
         max-width: 500px;
         position: relative;
         color: var(--text-primary);
+        padding: 0 1rem;
     }
 
     .modal-header {
@@ -106,7 +114,7 @@
 
     .close-btn {
         position: absolute;
-        top: -60px;
+        top: -40px;
         right: 0;
         background: transparent;
         border: none;

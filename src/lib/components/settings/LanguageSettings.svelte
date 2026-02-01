@@ -55,7 +55,9 @@
         data-testid="language-settings-modal"
         role="dialog"
         aria-modal="true"
+        tabindex="-1"
         onclick={(e) => e.stopPropagation()}
+        onkeydown={(e) => e.stopPropagation()}
     >
         <!-- Тільки кнопка закриття -->
         <button

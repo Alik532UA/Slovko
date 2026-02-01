@@ -15,7 +15,10 @@
 
     let { card, onclick }: Props = $props();
 
-    function handleClick() {
+    function handleClick(e: MouseEvent) {
+        // Запобігаємо спливанню події, щоб не спрацював клік по фону (зняття виділення)
+        e.stopPropagation();
+
         // Озвучуємо англійські слова
         if (card.language === "en") {
             speakEnglish(card.text);
@@ -172,7 +175,7 @@
             padding: 0.2rem; /* Мінімальні відступи */
             gap: 0.1rem;
         }
-        
+
         .word-text {
             font-size: clamp(0.8rem, 4vw, 1rem); /* Трохи менший шрифт */
         }
@@ -190,7 +193,7 @@
             line-height: 1.1;
             font-size: clamp(0.75rem, 3.5vh, 1rem);
         }
-        
+
         .transcription {
             font-size: 0.7em;
             margin-top: 1px;

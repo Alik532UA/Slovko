@@ -110,7 +110,9 @@
         data-testid="level-topic-modal"
         role="dialog"
         aria-modal="true"
+        tabindex="-1"
         onclick={(e) => e.stopPropagation()}
+        onkeydown={(e) => e.stopPropagation()}
     >
         <button
             class="close-btn"
@@ -205,7 +207,7 @@
 
     .modal {
         background: transparent;
-        max-width: 500px;
+        max-width: 100%;
         width: 100%;
         position: relative;
         display: flex;

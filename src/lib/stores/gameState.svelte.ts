@@ -247,7 +247,7 @@ function createGameState() {
         lastInteractionTime = now;
 
         if (isProcessing) return;
-        if (card.status !== 'idle' || !card.isVisible) return;
+        if ((card.status !== 'idle' && card.status !== 'selected') || !card.isVisible) return;
 
         // Перший вибір
         if (!selectedCard) {
@@ -464,6 +464,16 @@ function createGameState() {
         }
     }
 
+    /**
+     * Скинути вибір (тап по фону)
+     */
+    function clearSelection(): void {
+        if (selectedCard) {
+            updateCardStatus(selectedCard.id, 'idle');
+            selectedCard = null;
+        }
+    }
+
     return {
         get sourceCards() {
             return sourceCards;
@@ -491,7 +501,8 @@ function createGameState() {
         },
         initGame,
         selectCard,
-        useHint
+        useHint,
+        clearSelection
     };
 }
 

@@ -44,7 +44,14 @@
         <div class="loading-spinner"></div>
     </div>
 {:else}
-    <div class="game-board">
+    <div 
+        class="game-board" 
+        onclick={() => gameState.clearSelection()}
+        onkeydown={(e) => e.key === 'Escape' && gameState.clearSelection()}
+        role="button"
+        tabindex="0"
+        aria-label="Clear selection"
+    >
         <div class="column source">
             {#each gameState.sourceCards as card, i (i)}
                 <div class="card-slot">

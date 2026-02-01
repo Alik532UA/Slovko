@@ -8,6 +8,13 @@
         version: string;
     }
     let { version }: Props = $props();
+    let isUpdating = $state(false);
+
+    async function handleUpdate() {
+        if (isUpdating) return;
+        isUpdating = true;
+        await applyUpdate();
+    }
 </script>
 
 <div class="update-notification" transition:fly={{ y: 50, duration: 400 }}>
@@ -17,10 +24,15 @@
     </div>
     <button
         class="update-btn"
-        onclick={applyUpdate}
+        onclick={handleUpdate}
+        disabled={isUpdating}
         data-testid="apply-update-btn"
     >
-        <RefreshCw size={18} />
+        {#if isUpdating}
+            <div class="spinner"></div>
+        {:else}
+            <RefreshCw size={18} />
+        {/if}
         {$_("updateNotification.button")}
     </button>
 </div>
@@ -96,6 +108,20 @@
         .update-btn {
             width: 100%;
             justify-content: center;
+        }
+    }
+    .spinner {
+        width: 18px;
+        height: 18px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
         }
     }
 </style>

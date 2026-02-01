@@ -6,10 +6,42 @@
     import { X } from "lucide-svelte";
     import { versionStore } from "$lib/stores/versionStore.svelte";
 
+    import { fade } from "svelte/transition";
+
     interface Props {
         onclose: () => void;
     }
     let { onclose }: Props = $props();
+
+    let showDevMenu = $state(false);
+
+    async function handleHardReset() {
+        if (confirm("Це видалить ВСІ локальні дані і кеш. Продовжити?")) {
+            // 1. Clear Service Worker
+            if ("serviceWorker" in navigator) {
+                const registrations =
+                    await navigator.serviceWorker.getRegistrations();
+                for (const registration of registrations) {
+                    await registration.unregister();
+                }
+            }
+
+            // 2. Clear Caches
+            if ("caches" in window) {
+                const keys = await caches.keys();
+                for (const key of keys) {
+                    await caches.delete(key);
+                }
+            }
+
+            // 3. Clear Local Storage & Session Storage
+            localStorage.clear();
+            sessionStorage.clear();
+
+            // 4. Force Reload
+            window.location.reload();
+        }
+    }
 
     function handleBackdropClick(e: MouseEvent) {
         if (e.target === e.currentTarget) {
@@ -38,7 +70,9 @@
         data-testid="about-modal"
         role="dialog"
         aria-modal="true"
+        tabindex="-1"
         onclick={(e) => e.stopPropagation()}
+        onkeydown={(e) => e.stopPropagation()}
     >
         <button
             class="close-btn"
@@ -74,9 +108,32 @@
                 </a>
             </div>
 
-            <p class="version">
-                {$_("about.version")}: {versionStore.currentVersion || "0.1"}
-            </p>
+            <div class="version-wrapper">
+                <button
+                    class="version-btn"
+                    onclick={() => (showDevMenu = !showDevMenu)}
+                >
+                    {$_("about.version")}: {versionStore.currentVersion ||
+                        "0.1"}
+                </button>
+
+                {#if showDevMenu}
+                    <div class="dev-menu" transition:fade>
+                        <button
+                            class="dev-item danger"
+                            onclick={handleHardReset}
+                        >
+                            Clear Cache & Reset
+                        </button>
+                        <button
+                            class="dev-item"
+                            onclick={() => (showDevMenu = false)}
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                {/if}
+            </div>
         </div>
     </div>
 </div>
@@ -186,11 +243,72 @@
         border-color: var(--text-secondary);
     }
 
-    .version {
+    .version-wrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .version-btn {
+        background: transparent;
+        border: 1px solid transparent;
         color: var(--text-secondary);
         font-size: 0.85rem;
-        margin: 0;
+        cursor: pointer;
+        padding: 0.25rem 0.5rem;
+        border-radius: 6px;
+        transition: all 0.2s;
         opacity: 0.8;
+    }
+
+    .version-btn:hover {
+        background: var(--bg-secondary);
+        opacity: 1;
+    }
+
+    .dev-menu {
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        white-space: nowrap;
+        margin-bottom: 0.5rem;
+        z-index: 10;
+    }
+
+    .dev-item {
+        background: transparent;
+        border: none;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        border-radius: 8px;
+        transition: background 0.2s;
+        text-align: center;
+    }
+
+    .dev-item:hover {
+        background: rgba(128, 128, 128, 0.1);
+    }
+
+    .dev-item.danger {
+        color: #ef4444;
+        font-weight: 500;
+        background: rgba(239, 68, 68, 0.1);
+    }
+
+    .dev-item.danger:hover {
+        background: rgba(239, 68, 68, 0.2);
     }
 
     @media (max-width: 480px) {
