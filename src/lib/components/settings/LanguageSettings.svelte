@@ -38,6 +38,12 @@
         }, 800); // 0.8s long press for better UX
     }
 
+    function handleContextMenu(e: MouseEvent, side: "source" | "target") {
+        e.preventDefault();
+        currentSide = side;
+        showVoiceSelection = true;
+    }
+
     function handlePointerUp() {
         if (pressTimer) {
             clearTimeout(pressTimer);
@@ -215,7 +221,8 @@
                                     handlePointerDown(e, "source")}
                                 onpointerup={handlePointerUp}
                                 onpointerleave={handlePointerLeave}
-                                oncontextmenu={(e) => e.preventDefault()}
+                                oncontextmenu={(e) =>
+                                    handleContextMenu(e, "source")}
                                 title={$_("settings.pronunciation")}
                                 data-testid="pronunciation-left-btn"
                             >
@@ -291,7 +298,8 @@
                                     handlePointerDown(e, "target")}
                                 onpointerup={handlePointerUp}
                                 onpointerleave={handlePointerLeave}
-                                oncontextmenu={(e) => e.preventDefault()}
+                                oncontextmenu={(e) =>
+                                    handleContextMenu(e, "target")}
                                 title={$_("settings.pronunciation")}
                                 data-testid="pronunciation-right-btn"
                             >

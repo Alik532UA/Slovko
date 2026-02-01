@@ -62,6 +62,19 @@
         }
     }
 
+    function handleContextMenu(e: MouseEvent) {
+        // Запобігаємо відкриттю стандартного меню браузера
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Викликаємо меню (використовуємо той самий колбек, що і для лонг-пресу)
+        if (onlongpress) {
+            // Конвертуємо MouseEvent у PointerEvent для сумісності з існуючим типом, 
+            // або просто передаємо подію, оскільки координати там однакові.
+            onlongpress(e as unknown as PointerEvent);
+        }
+    }
+
     function handleClick(e: MouseEvent) {
         // Запобігаємо спливанню події
         e.stopPropagation();
@@ -105,6 +118,7 @@
     onpointerdown={handlePointerDown}
     onpointerup={handlePointerUp}
     onpointerleave={handlePointerLeave}
+    oncontextmenu={handleContextMenu}
     onclick={handleClick}
     data-testid="word-card-{card.id}"
 >
