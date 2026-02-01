@@ -4,6 +4,7 @@
      * Scalable architecture: Tabs defined as config
      */
     import { _ } from "svelte-i18n";
+    import { X } from "lucide-svelte";
     import { settingsStore } from "$lib/stores/settingsStore.svelte";
     import {
         ALL_LEVELS,
@@ -43,6 +44,7 @@
     }
 </script>
 
+<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <div
     class="modal-backdrop"
     onclick={handleBackdropClick}
@@ -58,8 +60,17 @@
         data-testid="level-topic-modal"
         role="dialog"
         aria-modal="true"
-        aria-labelledby="modal-title"
+        onclick={(e) => e.stopPropagation()}
     >
+        <button
+            class="close-btn"
+            onclick={onclose}
+            aria-label="Close"
+            data-testid="close-level-topic-modal-btn"
+        >
+            <X size={28} />
+        </button>
+
         <!-- Tabs -->
         <div class="tabs">
             {#each TABS as tab}
@@ -120,64 +131,100 @@
         position: fixed;
         inset: 0;
         z-index: 10001;
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(4px);
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(8px);
         display: flex;
         justify-content: center;
         align-items: center;
         padding: 1rem;
+        transition: background 0.3s;
+    }
+
+    /* Light/Green theme override for backdrop */
+    :global([data-theme="light-gray"]) .modal-backdrop,
+    :global([data-theme="green"]) .modal-backdrop {
+        background: rgba(255, 255, 255, 0.85);
     }
 
     .modal {
-        background: var(--bg-secondary);
-        border-radius: 16px;
+        background: transparent;
         max-width: 500px;
         width: 100%;
-        max-height: 80vh;
-        overflow: hidden;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        max-height: 85vh;
+        /* Ensure text color inherits correctly */
+        color: var(--text-primary);
+    }
+
+    .close-btn {
+        position: absolute;
+        top: -40px;
+        right: 0;
+        background: transparent;
+        border: none;
+        color: var(--text-primary);
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 8px;
+        display: flex;
+        transition: all 0.2s;
+    }
+
+    .close-btn:hover {
+        transform: scale(1.1);
+        color: var(--accent);
     }
 
     .tabs {
         display: flex;
-        border-bottom: 1px solid var(--border);
+        /* border-bottom: 1px solid var(--border); - Remove rigid border */
+        margin-bottom: 1rem;
+        gap: 1rem;
+        justify-content: center;
     }
 
     .tab {
-        flex: 1;
-        padding: 1rem;
+        padding: 0.5rem 1rem;
         background: transparent;
         border: none;
         color: var(--text-secondary);
-        font-size: 1rem;
+        font-size: 1.1rem;
         font-weight: 500;
         cursor: pointer;
         transition: all 0.2s;
+        border-radius: 8px;
     }
 
     .tab:hover {
         color: var(--text-primary);
+        background: var(--bg-secondary); /* Soft hover bg */
     }
 
     .tab.active {
         color: var(--text-primary);
-        border-bottom: 2px solid var(--accent);
+        font-weight: 700;
+        background: var(--bg-secondary);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     .content {
-        padding: 1rem;
+        padding: 0.5rem; /* Add some padding for scrollbar space */
         overflow-y: auto;
-        max-height: calc(80vh - 60px);
+        /* Custom scrollbar for webkit */
+        scrollbar-width: thin;
+        scrollbar-color: var(--border) transparent;
     }
 
     .grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
         gap: 0.75rem;
     }
 
     .topics-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     }
 
     .item {
@@ -186,11 +233,12 @@
         align-items: center;
         justify-content: center;
         padding: 1rem 0.5rem;
-        background: var(--card-bg);
+        background: var(--card-bg); /* Cards keep their background */
         border: 2px solid var(--card-border);
         border-radius: 12px;
         cursor: pointer;
         transition: all 0.2s;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
     }
 
     .topic-item {
@@ -203,11 +251,13 @@
     .item:hover {
         border-color: var(--card-hover-border);
         transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
 
     .item.selected {
         background: var(--selected-bg);
         border-color: var(--selected-border);
+        box-shadow: 0 0 0 2px var(--selected-border); /* Highlight selected */
     }
 
     .item-title {
