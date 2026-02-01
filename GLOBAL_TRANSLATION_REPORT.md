@@ -1,46 +1,73 @@
 # Загальний звіт про стан локалізації
 
 ## Статистика
-- **Загальна кількість проблем:** 14860
+- **Загальна кількість проблем:** 746
 - **За мовами:**
-  - UK: 110
-  - CRH: 3439
-  - NL: 6086
-  - DE: 5225
+  - UK: 89
+  - CRH: 159
+  - NL: 361
+  - DE: 137
 
 - **За типами:**
-  - Non-semantic key (numeric suffix): 408
-  - English text in uk localization: 8
-  - English text in crh localization: 3331
-  - Potential missing translation (value equals key): 389
-  - English text in nl localization: 5791
-  - English text in de localization: 5178
+  - Non-semantic key (numeric suffix): 356
+  - Potential missing translation (value equals key): 92
+  - Missing translation (matches English value): 303
 
 ## Критичні помилки (Відсутній переклад)
-Нижче наведено приклади файлів, де значення залишилися англійською мовою (перші 20 прикладів):
+Нижче наведено список місць, де переклад ймовірно відсутній (перші 50 прикладів):
 
-| Мова | Файл | Ключ | Значення |
-| :--- | :--- | :--- | :--- |
-| UK | B1.json | `wifi_connection` | `Wi-Fi` |
-| UK | B1.json | `wifi` | `Wi-Fi` |
-| UK | adjectives.json | `id` | `adjectives` |
-| UK | colors.json | `id` | `colors` |
-| UK | it.json | `wifi` | `Wi-Fi` |
-| UK | it.json | `wifi_connection` | `Wi-Fi` |
-| UK | numbers.json | `id` | `numbers` |
-| UK | time.json | `id` | `time` |
-| CRH | A1.json | `yes` | `e` |
-| CRH | A1.json | `no` | `yoq` |
-| CRH | A1.json | `water` | `suv` |
-| CRH | A1.json | `apple` | `alma` |
-| CRH | A1.json | `house` | `ev` |
-| CRH | A1.json | `cat` | `pisik` |
-| CRH | A1.json | `moon` | `ay` |
-| CRH | A1.json | `night` | `gece` |
-| CRH | A1.json | `friend` | `dost` |
-| CRH | A1.json | `book` | `kitap` |
-| CRH | A1.json | `mother` | `ana` |
-| CRH | A1.json | `father` | `baba` |
+| Мова | Файл | Ключ | Значення | EN Оригінал |
+| :--- | :--- | :--- | :--- | :--- |
+| CRH | A1.json | `million` | `million` | `million` |
+| CRH | A1.json | `t_shirt` | `t-shirt` | `t-shirt` |
+| CRH | A1.json | `radio` | `radio` | `radio` |
+| CRH | A1.json | `park` | `park` | `park` |
+| CRH | A2.json | `bank` | `bank` | `bank` |
+| CRH | A2.json | `park` | `park` | `park` |
+| CRH | A2.json | `internet` | `internet` | `internet` |
+| CRH | A2.json | `festival` | `festival` | `festival` |
+| CRH | A2.json | `metal` | `metal` | `metal` |
+| CRH | A2.json | `million` | `million` | `million` |
+| CRH | A2.json | `model` | `model` | `model` |
+| CRH | A2.json | `opera` | `opera` | `opera` |
+| CRH | A2.json | `pilot` | `pilot` | `pilot` |
+| CRH | A2.json | `pizza` | `pizza` | `pizza` |
+| CRH | A2.json | `plan` | `plan` | `plan` |
+| CRH | A2.json | `radio` | `radio` | `radio` |
+| CRH | A2.json | `set` | `set` | `set` |
+| CRH | A2.json | `sport` | `sport` | `sport` |
+| CRH | A2.json | `supermarket` | `supermarket` | `supermarket` |
+| CRH | A2.json | `tennis` | `tennis` | `tennis` |
+| CRH | A2.json | `sofa` | `sofa` | `sofa` |
+| CRH | A2.json | `normal` | `normal` | `normal` |
+| CRH | A2.json | `t_shirt` | `t-shirt` | `t-shirt` |
+| CRH | A2.json | `printer_device` | `printer` | `printer` |
+| CRH | B1.json | `bet` | `bet` | `bet` |
+| CRH | B1.json | `model` | `model` | `model` |
+| CRH | B1.json | `normal` | `normal` | `normal` |
+| CRH | B1.json | `park` | `park` | `park` |
+| CRH | B1.json | `plan` | `plan` | `plan` |
+| CRH | B1.json | `professor` | `professor` | `professor` |
+| CRH | B1.json | `radio` | `radio` | `radio` |
+| CRH | B1.json | `set_collection` | `set` | `set` |
+| CRH | B1.json | `sport` | `sport` | `sport` |
+| CRH | B1.json | `wifi_connection` | `wifi` | `wifi` |
+| CRH | B1.json | `protest_event` | `protest` | `protest` |
+| CRH | B1.json | `video` | `video` | `video` |
+| CRH | B1.json | `terminal` | `terminal` | `terminal` |
+| CRH | B2.json | `agent` | `agent` | `agent` |
+| CRH | B2.json | `equivalent_thing` | `equivalent` | `equivalent` |
+| CRH | B2.json | `support_help` | `support` | `support` |
+| CRH | B2.json | `update_info` | `update` | `update` |
+| CRH | B2.json | `approach_method` | `approach` | `approach` |
+| CRH | B2.json | `normal` | `normal` | `normal` |
+| CRH | B2.json | `terminal` | `terminal` | `terminal` |
+| CRH | C2.json | `alibi` | `alibi` | `alibi` |
+| CRH | animals.json | `zebra` | `zebra` | `zebra` |
+| CRH | animals.json | `panda` | `panda` | `panda` |
+| CRH | animals.json | `koala` | `koala` | `koala` |
+| CRH | cars.json | `pedal` | `pedal` | `pedal` |
+| CRH | cars.json | `signal` | `signal` | `signal` |
 
 
-*Примітка: Повний список критичних помилок налічує 14697 записів.*
+*Примітка: Повний список критичних помилок налічує 395 записів.*

@@ -251,5 +251,18 @@
     "ph_c2_17": "phrase_the_serendipitous_discovery_revolutionized",
     "ph_c2_18": "phrase_the_policy_was_designed",
     "ph_c2_19": "phrase_the_poignant_account_of",
-    "ph_c2_20": "phrase_the_transition_to_sustainable"
+    "ph_c2_20": "phrase_the_transition_to_sustainable",
+    "the_1": "the_definite",
+    "the_2": "the_definite_alt",
+    "the_3": "the_definite_alt2",
+    "to_1": "to_preposition",
+    "to_2": "to_infinitive",
+    "well_1": "well_adverb",
+    "well_2": "well_water",
+    "without_1": "without_preposition",
+    "without_2": "without_preposition_alt",
+    "would_1": "would_auxiliary",
+    "would_2": "would_auxiliary_alt",
+    "allowance_2": "allowance__",
+    "amiss_1": "amiss__"
 }
