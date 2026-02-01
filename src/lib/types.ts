@@ -68,7 +68,7 @@ export interface WordLevel {
  */
 export interface WordTopic {
     id: string;
-    icon: string;
+    icon: string; // Lucide icon name
     words: string[];
 }
 
@@ -125,30 +125,30 @@ export interface ActiveCard {
 // ТЕМИ
 // ========================================
 
-/** Всі теми з іконками */
+/** Всі теми з іконками (Lucide names) */
 export const ALL_TOPICS = [
-    { id: 'nature', icon: '🌿' },
-    { id: 'animals', icon: '🐾' },
-    { id: 'travel', icon: '✈️' },
-    { id: 'food', icon: '🍕' },
-    { id: 'home', icon: '🏠' },
-    { id: 'cars', icon: '🚗' },
-    { id: 'it', icon: '💻' },
-    { id: 'questions', icon: '❓' },
-    { id: 'numbers', icon: '🔢' },
-    { id: 'colors', icon: '🎨' },
-    { id: 'time', icon: '🕒' },
-    { id: 'family_relationships', icon: '👨‍👩‍👧' },
-    { id: 'body_health', icon: '🦴' },
-    { id: 'clothes_fashion', icon: '👕' },
-    { id: 'pronouns_people', icon: '👤' },
-    { id: 'basic_verbs', icon: '🏃' },
-    { id: 'adjectives', icon: '✨' },
-    { id: 'education_work', icon: '🎓' },
-    { id: 'abstract_concepts', icon: '💭' },
-    { id: 'society_law', icon: '⚖️' },
-    { id: 'phrasal_verbs', icon: '🧩' },
-    { id: 'adverbs_prepositions', icon: '🔗' }
+    { id: 'nature', icon: 'Leaf' },
+    { id: 'animals', icon: 'PawPrint' },
+    { id: 'travel', icon: 'Plane' },
+    { id: 'food', icon: 'Utensils' },
+    { id: 'home', icon: 'Home' },
+    { id: 'cars', icon: 'Car' },
+    { id: 'it', icon: 'Laptop' },
+    { id: 'questions', icon: 'HelpCircle' },
+    { id: 'numbers', icon: 'Hash' },
+    { id: 'colors', icon: 'Palette' },
+    { id: 'time', icon: 'Clock' },
+    { id: 'family_relationships', icon: 'Users' },
+    { id: 'body_health', icon: 'Heart' },
+    { id: 'clothes_fashion', icon: 'Shirt' },
+    { id: 'pronouns_people', icon: 'User' },
+    { id: 'basic_verbs', icon: 'Footprints' },
+    { id: 'adjectives', icon: 'Sparkles' },
+    { id: 'education_work', icon: 'GraduationCap' },
+    { id: 'abstract_concepts', icon: 'Brain' },
+    { id: 'society_law', icon: 'Scale' },
+    { id: 'phrasal_verbs', icon: 'Puzzle' },
+    { id: 'adverbs_prepositions', icon: 'ArrowLeftRight' }
 ] as const;
 
 export type TopicId = (typeof ALL_TOPICS)[number]['id'];

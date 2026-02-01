@@ -4,7 +4,31 @@
      * Scalable architecture: Tabs defined as config
      */
     import { _ } from "svelte-i18n";
-    import { X } from "lucide-svelte";
+    import {
+        X,
+        Leaf,
+        PawPrint,
+        Plane,
+        Utensils,
+        Home,
+        Car,
+        Laptop,
+        HelpCircle,
+        Hash,
+        Palette,
+        Clock,
+        Users,
+        Heart,
+        Shirt,
+        User,
+        Footprints,
+        Sparkles,
+        GraduationCap,
+        Brain,
+        Scale,
+        Puzzle,
+        ArrowLeftRight,
+    } from "lucide-svelte";
     import { settingsStore } from "$lib/stores/settingsStore.svelte";
     import {
         ALL_LEVELS,
@@ -13,100 +37,40 @@
         type GameMode,
     } from "$lib/types";
 
+    // Map string names to components
+    const ICON_MAP: Record<string, any> = {
+        Leaf,
+        PawPrint,
+        Plane,
+        Utensils,
+        Home,
+        Car,
+        Laptop,
+        HelpCircle,
+        Hash,
+        Palette,
+        Clock,
+        Users,
+        Heart,
+        Shirt,
+        User,
+        Footprints,
+        Sparkles,
+        GraduationCap,
+        Brain,
+        Scale,
+        Puzzle,
+        ArrowLeftRight,
+    };
+
     interface Props {
         onclose: () => void;
     }
     let { onclose }: Props = $props();
-
-    // Configuration for Tabs
-    const TABS: { id: GameMode; label: string; testId: string }[] = [
-        { id: "levels", label: "levels.title", testId: "tab-levels" },
-        { id: "topics", label: "topics.title", testId: "tab-topics" },
-    ];
-
-    // Initialize directly from store (SSoT)
-    let activeTab = $state<GameMode>(settingsStore.value.mode);
-
-    function selectLevel(level: CEFRLevel) {
-        settingsStore.setLevel(level);
-        onclose();
-    }
-
-    function selectTopic(topicId: string) {
-        settingsStore.setTopic(topicId);
-        onclose();
-    }
-
-    function handleBackdropClick(e: MouseEvent) {
-        if (e.target === e.currentTarget) {
-            onclose();
-        }
-    }
-</script>
-
-<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-<div
-    class="modal-backdrop"
-    onclick={handleBackdropClick}
-    role="dialog"
-    aria-modal="true"
-    tabindex="-1"
-    onkeydown={(e) => {
-        if (e.key === "Escape") onclose();
-    }}
->
-    <div
-        class="modal"
-        data-testid="level-topic-modal"
-        role="dialog"
-        aria-modal="true"
-        onclick={(e) => e.stopPropagation()}
-    >
-        <button
-            class="close-btn"
-            onclick={onclose}
-            aria-label="Close"
-            data-testid="close-level-topic-modal-btn"
-        >
-            <X size={28} />
-        </button>
-
-        <!-- Tabs -->
-        <div class="tabs">
-            {#each TABS as tab}
-                <button
-                    class="tab"
-                    class:active={activeTab === tab.id}
-                    onclick={() => (activeTab = tab.id)}
-                    data-testid={tab.testId}
-                >
-                    {$_(tab.label)}
-                </button>
-            {/each}
-        </div>
-
-        <!-- Content -->
-        <div class="content">
-            {#if activeTab === "levels"}
-                <div class="grid">
-                    {#each ALL_LEVELS as level}
-                        <button
-                            class="item"
-                            class:selected={settingsStore.value.currentLevel ===
-                                level}
-                            onclick={() => selectLevel(level)}
-                            data-testid="level-item-{level}"
-                        >
-                            <span class="item-title">{level}</span>
-                            <span class="item-desc"
-                                >{$_(`levels.${level}`)}</span
-                            >
-                        </button>
-                    {/each}
-                </div>
-            {:else}
+// ...
                 <div class="grid topics-grid">
                     {#each ALL_TOPICS as topic}
+                        {@const Icon = ICON_MAP[topic.icon]}
                         <button
                             class="item topic-item"
                             class:selected={settingsStore.value.currentTopic ===
@@ -114,7 +78,13 @@
                             onclick={() => selectTopic(topic.id)}
                             data-testid="topic-item-{topic.id}"
                         >
-                            <span class="item-icon">{topic.icon}</span>
+                            <span class="item-icon">
+                                {#if Icon}
+                                    <Icon size={24} />
+                                {:else}
+                                    ?
+                                {/if}
+                            </span>
                             <span class="item-title"
                                 >{$_(`topics.${topic.id}`)}</span
                             >
