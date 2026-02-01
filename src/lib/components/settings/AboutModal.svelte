@@ -33,7 +33,10 @@
     aria-modal="true"
     tabindex="-1"
 >
-    <div class="modal">
+    <div
+        class="modal"
+        id="about-modal"
+    >
         <button
             class="close-btn"
             onclick={onclose}

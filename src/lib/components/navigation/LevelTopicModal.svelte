@@ -53,7 +53,13 @@
         if (e.key === "Escape") onclose();
     }}
 >
-    <div class="modal">
+    <div
+        class="modal"
+        id="level-topic-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+    >
         <!-- Tabs -->
         <div class="tabs">
             {#each TABS as tab}

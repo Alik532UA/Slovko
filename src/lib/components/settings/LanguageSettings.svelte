@@ -50,7 +50,13 @@
     aria-modal="true"
     tabindex="-1"
 >
-    <div class="modal">
+    <div
+        class="modal"
+        id="language-settings-modal"
+        role="dialog"
+        aria-modal="true"
+        onclick={(e) => e.stopPropagation()}
+    >
         <!-- Тільки кнопка закриття -->
         <button
             class="close-btn"

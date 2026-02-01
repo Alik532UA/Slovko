@@ -20,9 +20,11 @@
 
 <div class="modal-backdrop" onclick={onclose} role="presentation">
     <div
-        class="modal-content"
-        onclick={(e) => e.stopPropagation()}
+        class="modal"
+        id="theme-modal"
         role="dialog"
+        aria-modal="true"
+        onclick={(e) => e.stopPropagation()}
     >
         <div class="modal-header">
             <h2>{$_("settings.theme") || "Theme"}</h2>
