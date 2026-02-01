@@ -48,38 +48,42 @@ export async function loadTopic(topicId: string): Promise<WordTopic> {
 }
 
 /**
- * Завантажити переклади для мови та конкретної категорії (рівень або тема)
+ * Завантажити переклади для конкретної мови та категорії
  */
 export async function loadTranslations(
-    lang: Language,
-    category: 'levels' | 'topics',
+    language: Language,
+    category: 'levels' | 'topics' | 'phrases',
     id: string
 ): Promise<TranslationDictionary> {
-    const cacheKey = `${lang}:${category}:${id}`;
-
+    const cacheKey = `${language}:${category}:${id}`;
     if (translationCache.has(cacheKey)) {
         return translationCache.get(cacheKey)!;
     }
 
-    // Динамічний імпорт специфічного файлу
-    // Vite потребує, щоб шлях був відносно статичним для аналізу глобів
-    let module;
-    if (category === 'levels') {
-        module = await import(`./translations/${lang}/levels/${id}.json`);
-    } else {
-        module = await import(`./translations/${lang}/topics/${id}.json`);
-    }
+    try {
+        let module;
+        if (category === 'levels') {
+            module = await import(`./translations/${language}/levels/${id}.json`);
+        } else if (category === 'topics') {
+            module = await import(`./translations/${language}/topics/${id}.json`);
+        } else {
+            module = await import(`./translations/${language}/phrases/${id}.json`);
+        }
 
-    const translations = module.default as TranslationDictionary;
-    translationCache.set(cacheKey, translations);
-    return translations;
+        const data = module.default as TranslationDictionary;
+        translationCache.set(cacheKey, data);
+        return data;
+    } catch (e) {
+        console.warn(`Translations not found for ${language}/${category}/${id}`, e);
+        return {};
+    }
 }
 
 /**
- * Завантажити транскрипції для конкретної категорії (рівень або тема)
+ * Завантажити транскрипції для конкретної категорії
  */
 export async function loadTranscriptions(
-    category: 'levels' | 'topics',
+    category: 'levels' | 'topics' | 'phrases',
     id: string,
     language: Language = 'en'
 ): Promise<TranscriptionDictionary> {
@@ -87,13 +91,16 @@ export async function loadTranscriptions(
         let module;
         if (category === 'levels') {
             module = await import(`./transcriptions/${language}/levels/${id}.json`);
-        } else {
+        } else if (category === 'topics') {
             module = await import(`./transcriptions/${language}/topics/${id}.json`);
+        } else {
+            // Phrases currently don't have static transcriptions (mostly generative)
+            return {};
         }
 
         return module.default as TranscriptionDictionary;
     } catch (e) {
-        console.warn(`Transcriptions not found for ${language}/${category}/${id}`, e);
+        // Normal if some languages/levels don't have static transcriptions
         return {};
     }
 }
@@ -101,20 +108,20 @@ export async function loadTranscriptions(
 /**
  * Завантажити фрази за рівнем
  */
-export async function loadPhrasesLevel(levelId: CEFRLevel): Promise<any[]> {
-    if (phrasesCache.has(levelId)) {
-        return phrasesCache.get(levelId)!;
+export async function loadPhrasesLevel(levelId: CEFRLevel): Promise<WordLevel> {
+    const cacheKey = `phrases:${levelId}`;
+    if (levelCache.has(cacheKey)) {
+        return levelCache.get(cacheKey)!;
     }
 
     try {
-        const module = await import(`./phrases/${levelId.toLowerCase()}.json`);
-        // Force TypeScript/Vite to include this glob
-        const phrases = module.default;
-        phrasesCache.set(levelId, phrases);
-        return phrases;
+        const module = await import(`./phrases/levels/${levelId}.json`);
+        const data = module.default as WordLevel;
+        levelCache.set(cacheKey, data);
+        return data;
     } catch (e) {
-        console.warn(`Phrases for ${levelId} not found`, e);
-        return [];
+        console.error(`Phrases for level ${levelId} not found`, e);
+        return { id: levelId, words: [] };
     }
 }
 

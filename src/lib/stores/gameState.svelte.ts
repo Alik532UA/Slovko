@@ -109,7 +109,11 @@ function createGameState() {
      */
     async function loadTranslationsForLanguages(): Promise<void> {
         const { sourceLanguage, targetLanguage, mode, currentLevel, currentTopic, currentPlaylist } = settingsStore.value;
-        const category = mode === 'levels' ? 'levels' : 'topics';
+        
+        // Визначаємо категорію
+        let category: 'levels' | 'topics' | 'phrases' = 'levels';
+        if (mode === 'topics') category = 'topics';
+        else if (mode === 'phrases') category = 'phrases';
 
         // Clear previous
         sourceTranslations = {};
@@ -118,23 +122,7 @@ function createGameState() {
         targetTranscriptions = {};
 
         try {
-            if (mode === 'phrases') {
-                const phrases = await loadPhrasesLevel(currentLevel);
-                phrases.forEach((p: any) => {
-                    const getVal = (lang: string) => {
-                        if (lang === 'en') return p.english;
-                        if (lang === 'uk') return p.ukrainian;
-                        if (lang === 'nl') return p.nl;
-                        if (lang === 'de') return p.de;
-                        if (lang === 'crh') return p.crh;
-                        return p.id;
-                    };
-
-                    sourceTranslations[p.id] = getVal(sourceLanguage);
-                    targetTranslations[p.id] = getVal(targetLanguage);
-                });
-                return;
-            } else if (mode === 'playlists' && currentPlaylist) {
+            if (mode === 'playlists' && currentPlaylist) {
                 const mistakes = playlistStore.mistakes;
                 const pairs = currentPlaylist === 'mistakes'
                     ? mistakes.map(m => m.pair)
@@ -150,8 +138,8 @@ function createGameState() {
                 return;
             }
 
-            const id = mode === 'levels' ? currentLevel : currentTopic;
-            if (!id) return; // Should not happen
+            const id = mode === 'topics' ? currentTopic : currentLevel;
+            if (!id) return;
 
             sourceTranslations = await loadTranslations(sourceLanguage, category, id);
             targetTranslations = await loadTranslations(targetLanguage, category, id);
@@ -180,7 +168,7 @@ function createGameState() {
             return topic.words;
         } else if (mode === 'phrases') {
             const phrases = await loadPhrasesLevel(currentLevel);
-            return phrases.map((p: any) => p.id);
+            return phrases.words;
         } else if (mode === 'playlists' && currentPlaylist) {
             if (currentPlaylist === 'mistakes') return playlistStore.mistakes.map(m => m.pair.id);
             if (currentPlaylist === 'favorites') return playlistStore.favorites.map(p => p.id);
