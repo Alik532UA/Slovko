@@ -51,6 +51,11 @@ function createSettingsStore() {
     // Завантажити з localStorage або використати default
     let settings = $state<AppSettings>(loadSettings());
 
+    // Застосувати тему при ініціалізації
+    if (browser) {
+        document.documentElement.setAttribute('data-theme', settings.theme);
+    }
+
     function loadSettings(): AppSettings {
         if (!browser) return DEFAULT_SETTINGS;
 

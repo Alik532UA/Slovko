@@ -12,9 +12,13 @@
 	<script>
 		(function () {
 			try {
-				var theme = localStorage.getItem('theme') || 'dark';
+				var stored = localStorage.getItem('wordApp_settings');
+				var theme = 'dark-gray';
+				if (stored) {
+					var parsed = JSON.parse(stored);
+					if (parsed.theme) theme = parsed.theme;
+				}
 				document.documentElement.setAttribute('data-theme', theme);
-				document.documentElement.style.colorScheme = 'dark';
 			} catch (e) { }
 		})();
 	</script>
