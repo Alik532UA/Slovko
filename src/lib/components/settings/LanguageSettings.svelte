@@ -226,7 +226,8 @@
     }
 
     /* Light theme override for backdrop */
-    :global([data-theme="light-gray"]) .modal-backdrop {
+    :global([data-theme="light-gray"]) .modal-backdrop,
+    :global([data-theme="green"]) .modal-backdrop {
         background: rgba(255, 255, 255, 0.85);
     }
 

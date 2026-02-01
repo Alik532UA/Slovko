@@ -90,7 +90,8 @@
     }
 
     /* Light theme override for backdrop */
-    :global([data-theme="light-gray"]) .modal-backdrop {
+    :global([data-theme="light-gray"]) .modal-backdrop,
+    :global([data-theme="green"]) .modal-backdrop {
         background: rgba(255, 255, 255, 0.9);
     }
 
@@ -169,14 +170,14 @@
     }
 
     .cv {
-        background: rgba(255, 255, 255, 0.05);
+        background: transparent;
         color: var(--text-primary);
-        border-color: rgba(255, 255, 255, 0.1);
+        border-color: var(--border);
     }
 
     .cv:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.2);
+        background: var(--bg-secondary);
+        border-color: var(--text-secondary);
     }
 
     .version {
