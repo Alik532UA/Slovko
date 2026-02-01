@@ -15,13 +15,13 @@ try {
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
     const newVersion = packageJson.version;
 
-    // 3. Update static/version.json
-    const staticVersionPath = path.resolve('static/version.json');
+    // 3. Update static/app-version.json
+    const staticVersionPath = path.resolve('static/app-version.json');
     const staticVersionData = { version: newVersion };
     fs.writeFileSync(staticVersionPath, JSON.stringify(staticVersionData, null, 4));
 
     // 4. Stage the changed files so they are included in the current commit
-    execSync('git add package.json package-lock.json static/version.json', { stdio: 'inherit' });
+    execSync('git add package.json package-lock.json static/app-version.json', { stdio: 'inherit' });
 
     console.log(`✅ Version bumped to ${newVersion}`);
 } catch (error) {
