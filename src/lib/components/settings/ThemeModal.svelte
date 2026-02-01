@@ -21,7 +21,7 @@
 <div class="modal-backdrop" onclick={onclose} role="presentation">
     <div
         class="modal"
-        id="theme-modal"
+        data-testid="theme-modal"
         role="dialog"
         aria-modal="true"
         onclick={(e) => e.stopPropagation()}

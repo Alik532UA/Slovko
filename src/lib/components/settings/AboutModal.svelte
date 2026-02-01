@@ -35,7 +35,10 @@
 >
     <div
         class="modal"
-        id="about-modal"
+        data-testid="about-modal"
+        role="dialog"
+        aria-modal="true"
+        onclick={(e) => e.stopPropagation()}
     >
         <button
             class="close-btn"

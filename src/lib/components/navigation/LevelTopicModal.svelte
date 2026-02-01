@@ -55,7 +55,7 @@
 >
     <div
         class="modal"
-        id="level-topic-modal"
+        data-testid="level-topic-modal"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"

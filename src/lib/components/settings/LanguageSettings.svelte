@@ -52,7 +52,7 @@
 >
     <div
         class="modal"
-        id="language-settings-modal"
+        data-testid="language-settings-modal"
         role="dialog"
         aria-modal="true"
         onclick={(e) => e.stopPropagation()}
