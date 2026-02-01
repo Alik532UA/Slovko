@@ -4,8 +4,8 @@
     "grass": "gras",
     "plant": "plant",
     "forest": "bos",
-    "wood_1": "hout",
-    "wood_2": "bos",
+    "wood_holz": "hout",
+    "wood_bos": "bos",
     "jungle": "oerwoud",
     "mountain": "berg",
     "hill": "heuvel",
@@ -33,7 +33,7 @@
     "ice": "ijs",
     "fire": "vuur",
     "earth_planet": "aarde",
-    "earth_2": "aarde",
+    "earth_yer": "aarde",
     "rock": "rots",
     "stone": "steen",
     "sand": "zand",
@@ -63,7 +63,7 @@
     "winter": "winter",
     "spring_season": "lente",
     "rock_stone": "rots",
-    "branch_1": "tak",
+    "branch_tak": "tak",
     "landscape": "landschap",
     "scenery": "landschap"
 }

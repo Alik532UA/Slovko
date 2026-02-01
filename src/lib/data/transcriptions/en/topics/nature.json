@@ -4,8 +4,8 @@
     "grass": "ɡrɑːs",
     "plant": "plɑːnt",
     "forest": "ˈfɒrɪst",
-    "wood_1": "wʊd",
-    "wood_2": "wʊd",
+    "wood_holz": "wʊd",
+    "wood_bos": "wʊd",
     "jungle": "ˈdʒʌŋɡl",
     "mountain": "ˈmaʊntɪn",
     "hill": "hɪl",
@@ -33,7 +33,7 @@
     "ice": "aɪs",
     "fire": "ˈfaɪər",
     "earth_planet": "ɜːθ",
-    "earth_2": "ɜːθ",
+    "earth_yer": "ɜːθ",
     "rock": "rɒk",
     "stone": "stəʊn",
     "sand": "sænd",
@@ -63,7 +63,7 @@
     "winter": "ˈwɪntər",
     "spring_season": "sprɪŋ",
     "rock_stone": "rɒk",
-    "branch_1": "brɑːntʃ",
+    "branch_tak": "brɑːntʃ",
     "landscape": "ˈlændskeɪp",
     "scenery": "ˈsiːnəri"
 }

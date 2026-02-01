@@ -4,8 +4,8 @@
     "grass": "grass",
     "plant": "plant",
     "forest": "forest",
-    "wood_1": "wood",
-    "wood_2": "wood",
+    "wood_holz": "wood",
+    "wood_bos": "wood",
     "jungle": "jungle",
     "mountain": "mountain",
     "hill": "hill",
@@ -33,7 +33,7 @@
     "ice": "ice",
     "fire": "fire",
     "earth_planet": "earth",
-    "earth_2": "earth",
+    "earth_yer": "earth",
     "rock": "rock",
     "stone": "stone",
     "sand": "sand",
@@ -63,7 +63,7 @@
     "winter": "winter",
     "spring_season": "spring",
     "rock_stone": "rock",
-    "branch_1": "branch",
+    "branch_tak": "branch",
     "landscape": "landscape",
     "scenery": "scenery"
 }

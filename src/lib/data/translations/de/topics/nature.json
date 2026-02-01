@@ -4,8 +4,8 @@
     "grass": "Gras",
     "plant": "Pflanze",
     "forest": "Wald",
-    "wood_1": "Holz",
-    "wood_2": "Wald",
+    "wood_holz": "Holz",
+    "wood_bos": "Wald",
     "jungle": "Dschungel",
     "mountain": "Berg",
     "hill": "Hügel",
@@ -33,7 +33,7 @@
     "ice": "Eis",
     "fire": "Feuer",
     "earth_planet": "Erde",
-    "earth_2": "Erde",
+    "earth_yer": "Erde",
     "rock": "Fels",
     "stone": "Stein",
     "sand": "Sand",
@@ -63,7 +63,7 @@
     "winter": "Winter",
     "spring_season": "Frühling",
     "rock_stone": "Stein",
-    "branch_1": "Zweig",
+    "branch_tak": "Zweig",
     "landscape": "Landschaft",
     "scenery": "Landschaft"
 }

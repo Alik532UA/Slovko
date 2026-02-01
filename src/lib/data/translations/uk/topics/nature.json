@@ -4,8 +4,8 @@
     "grass": "трава",
     "plant": "рослина",
     "forest": "ліс",
-    "wood_1": "деревина",
-    "wood_2": "ліс",
+    "wood_holz": "деревина",
+    "wood_bos": "ліс",
     "jungle": "джунглі",
     "mountain": "гора",
     "hill": "пагорб",
@@ -33,7 +33,7 @@
     "ice": "лід",
     "fire": "вогонь",
     "earth_planet": "земля",
-    "earth_2": "земля",
+    "earth_yer": "земля",
     "rock": "скеля",
     "stone": "камінь",
     "sand": "пісок",
@@ -63,7 +63,7 @@
     "winter": "зима",
     "spring_season": "весна",
     "rock_stone": "камінь",
-    "branch_1": "гілка",
+    "branch_tak": "гілка",
     "landscape": "пейзаж",
     "scenery": "краєвид"
 }

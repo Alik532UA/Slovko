@@ -2,56 +2,6 @@
   {
     "file": "src\\lib\\data\\translations\\uk\\levels\\C1.json",
     "lang": "uk",
-    "key": "accommodation_2",
-    "value": "розміщення",
-    "enValue": "accommodation",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C1.json",
-    "lang": "uk",
-    "key": "admission_1",
-    "value": "вступ",
-    "enValue": "admission",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C1.json",
-    "lang": "uk",
-    "key": "admission_2",
-    "value": "визнання",
-    "enValue": "admission",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C1.json",
-    "lang": "uk",
-    "key": "adoption_1",
-    "value": "усиновлення",
-    "enValue": "adoption",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C1.json",
-    "lang": "uk",
-    "key": "adoption_2",
-    "value": "прийняття",
-    "enValue": "adoption",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C1.json",
-    "lang": "uk",
     "key": "adversity_1",
     "value": "незгода",
     "enValue": "adversity",
@@ -65,16 +15,6 @@
     "key": "adversity_2",
     "value": "лихо",
     "enValue": "adversity",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C1.json",
-    "lang": "uk",
-    "key": "advocacy_1",
-    "value": "адвокатура",
-    "enValue": "advocacy",
     "issues": [
       "Non-semantic key (numeric suffix)"
     ]
@@ -100,366 +40,6 @@
     ]
   },
   {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C1.json",
-    "lang": "uk",
-    "key": "advocate_2",
-    "value": "захисник",
-    "enValue": "advocate",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C1.json",
-    "lang": "uk",
-    "key": "affair_1",
-    "value": "справа",
-    "enValue": "affair",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C1.json",
-    "lang": "uk",
-    "key": "affair_2",
-    "value": "роман",
-    "enValue": "affair",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C1.json",
-    "lang": "uk",
-    "key": "affinity_1",
-    "value": "спорідненість",
-    "enValue": "affinity",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C1.json",
-    "lang": "uk",
-    "key": "affinity_2",
-    "value": "спорідненість",
-    "enValue": "affinity",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C1.json",
-    "lang": "uk",
-    "key": "aggregate_1",
-    "value": "сукупність",
-    "enValue": "aggregate",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C1.json",
-    "lang": "uk",
-    "key": "aggregate_2",
-    "value": "сукупність",
-    "enValue": "aggregate",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C1.json",
-    "lang": "uk",
-    "key": "allegation_1",
-    "value": "твердження",
-    "enValue": "allegation",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C1.json",
-    "lang": "uk",
-    "key": "allegation_2",
-    "value": "звинувачення",
-    "enValue": "allegation",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C1.json",
-    "lang": "uk",
-    "key": "allowance_1",
-    "value": "допомога",
-    "enValue": "allowance",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C1.json",
-    "lang": "uk",
-    "key": "allusion_1",
-    "value": "алюзія",
-    "enValue": "allusion",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C1.json",
-    "lang": "uk",
-    "key": "allusion_2",
-    "value": "натяк",
-    "enValue": "allusion",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "aberration_1",
-    "value": "відхилення",
-    "enValue": "aberration",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "aberration_2",
-    "value": "відхилення",
-    "enValue": "aberration",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "accede_1",
-    "value": "погоджуватися",
-    "enValue": "accede",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "accede_2",
-    "value": "погоджуватися",
-    "enValue": "accede",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "accolade_1",
-    "value": "нагорода",
-    "enValue": "accolade",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "accolade_2",
-    "value": "похвала",
-    "enValue": "accolade",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "accretion_1",
-    "value": "наростання",
-    "enValue": "accretion",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "accretion_2",
-    "value": "наростання",
-    "enValue": "accretion",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "acerbic_1",
-    "value": "їдкий",
-    "enValue": "acerbic",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "acerbic_2",
-    "value": "їдкий",
-    "enValue": "acerbic",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "acrimony_1",
-    "value": "жовчність",
-    "enValue": "acrimony",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "acrimony_2",
-    "value": "злостивість",
-    "enValue": "acrimony",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "adamant_1",
-    "value": "непохитний",
-    "enValue": "adamant",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "adamant_2",
-    "value": "непохитний",
-    "enValue": "adamant",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "alacrity_1",
-    "value": "готовність",
-    "enValue": "alacrity",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "alacrity_2",
-    "value": "жвавість",
-    "enValue": "alacrity",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "amiss_2",
-    "value": "погано",
-    "enValue": "amiss",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "annex_1",
-    "value": "анексувати",
-    "enValue": "annex",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "annex_2",
-    "value": "додавати",
-    "enValue": "annex",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "apocryphal_1",
-    "value": "апокрифічний",
-    "enValue": "apocryphal",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "apocryphal_2",
-    "value": "сумнівний",
-    "enValue": "apocryphal",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "apoplexy_1",
-    "value": "інсульт",
-    "enValue": "apoplexy",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "apoplexy_2",
-    "value": "удар",
-    "enValue": "apoplexy",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "apotheosis_1",
-    "value": "обожнювання",
-    "enValue": "apotheosis",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
     "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
     "lang": "uk",
     "key": "apotheosis_2",
@@ -470,221 +50,11 @@
     ]
   },
   {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "apposite_1",
-    "value": "доречний",
-    "enValue": "apposite",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "apposite_2",
-    "value": "влучний",
-    "enValue": "apposite",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "apprehend_1",
-    "value": "затримувати",
-    "enValue": "apprehend",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\levels\\C2.json",
-    "lang": "uk",
-    "key": "apprehend_2",
-    "value": "розуміти",
-    "enValue": "apprehend",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\animals.json",
-    "lang": "uk",
-    "key": "bear_1",
-    "value": "терпіти",
-    "enValue": "bear",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\cars.json",
-    "lang": "uk",
-    "key": "engine_2",
-    "value": "двигун",
-    "enValue": "engine",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\cars.json",
-    "lang": "uk",
-    "key": "gas_1",
-    "value": "бензин",
-    "enValue": "gas",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\cars.json",
-    "lang": "uk",
-    "key": "gas_2",
-    "value": "газ",
-    "enValue": "gas",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\family_relationships.json",
-    "lang": "uk",
-    "key": "brother_1",
-    "value": "брат",
-    "enValue": "brother",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
     "file": "src\\lib\\data\\translations\\uk\\topics\\family_relationships.json",
     "lang": "uk",
     "key": "brother_2",
     "value": "брат",
     "enValue": "brother",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\food.json",
-    "lang": "uk",
-    "key": "pasta_1",
-    "value": "паста",
-    "enValue": "pasta",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\food.json",
-    "lang": "uk",
-    "key": "pasta_2",
-    "value": "макарони",
-    "enValue": "pasta",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\food.json",
-    "lang": "uk",
-    "key": "jam_1",
-    "value": "джем",
-    "enValue": "jam",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\food.json",
-    "lang": "uk",
-    "key": "jam_2",
-    "value": "варення",
-    "enValue": "jam",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\food.json",
-    "lang": "uk",
-    "key": "pie_1",
-    "value": "пиріг",
-    "enValue": "pie",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\food.json",
-    "lang": "uk",
-    "key": "pie_2",
-    "value": "пиріг",
-    "enValue": "pie",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\food.json",
-    "lang": "uk",
-    "key": "sausage_1",
-    "value": "ковбаса",
-    "enValue": "sausage",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\food.json",
-    "lang": "uk",
-    "key": "sausage_2",
-    "value": "сосиска",
-    "enValue": "sausage",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\home.json",
-    "lang": "uk",
-    "key": "kitchen_1",
-    "value": "кухня",
-    "enValue": "kitchen",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\home.json",
-    "lang": "uk",
-    "key": "kitchen_2",
-    "value": "кухня",
-    "enValue": "kitchen",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\home.json",
-    "lang": "uk",
-    "key": "floor_1",
-    "value": "підлога",
-    "enValue": "floor",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\home.json",
-    "lang": "uk",
-    "key": "floor_2",
-    "value": "підлога",
-    "enValue": "floor",
     "issues": [
       "Non-semantic key (numeric suffix)"
     ]
@@ -710,171 +80,11 @@
     ]
   },
   {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\home.json",
-    "lang": "uk",
-    "key": "towel_1",
-    "value": "рушник",
-    "enValue": "towel",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\home.json",
-    "lang": "uk",
-    "key": "towel_2",
-    "value": "рушник",
-    "enValue": "towel",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\home.json",
-    "lang": "uk",
-    "key": "pot_1",
-    "value": "каструля",
-    "enValue": "pot",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\home.json",
-    "lang": "uk",
-    "key": "pot_2",
-    "value": "горщик",
-    "enValue": "pot",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\home.json",
-    "lang": "uk",
-    "key": "fireplace_1",
-    "value": "камін",
-    "enValue": "fireplace",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\home.json",
-    "lang": "uk",
-    "key": "fireplace_2",
-    "value": "камін",
-    "enValue": "fireplace",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\it.json",
-    "lang": "uk",
-    "key": "bug_1",
-    "value": "баг",
-    "enValue": "bug",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\it.json",
-    "lang": "uk",
-    "key": "bug_2",
-    "value": "помилка",
-    "enValue": "bug",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\it.json",
-    "lang": "uk",
-    "key": "drive_1",
-    "value": "драйв",
-    "enValue": "drive",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\it.json",
-    "lang": "uk",
-    "key": "drive_2",
-    "value": "привід",
-    "enValue": "drive",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\nature.json",
-    "lang": "uk",
-    "key": "wood_1",
-    "value": "деревина",
-    "enValue": "wood",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\nature.json",
-    "lang": "uk",
-    "key": "wood_2",
-    "value": "ліс",
-    "enValue": "wood",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\nature.json",
-    "lang": "uk",
-    "key": "earth_2",
-    "value": "земля",
-    "enValue": "earth",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\nature.json",
-    "lang": "uk",
-    "key": "branch_1",
-    "value": "гілка",
-    "enValue": "branch",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
     "file": "src\\lib\\data\\translations\\uk\\topics\\travel.json",
     "lang": "uk",
     "key": "holiday_1",
     "value": "свято",
     "enValue": "holiday",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\travel.json",
-    "lang": "uk",
-    "key": "holiday_2",
-    "value": "відпустка",
-    "enValue": "holiday",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\uk\\topics\\travel.json",
-    "lang": "uk",
-    "key": "station_1",
-    "value": "станція",
-    "enValue": "station",
     "issues": [
       "Non-semantic key (numeric suffix)"
     ]
@@ -1332,56 +542,6 @@
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\C1.json",
     "lang": "crh",
-    "key": "accommodation_2",
-    "value": "yerleşme",
-    "enValue": "accommodation",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C1.json",
-    "lang": "crh",
-    "key": "admission_1",
-    "value": "kiriş",
-    "enValue": "admission",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C1.json",
-    "lang": "crh",
-    "key": "admission_2",
-    "value": "kiriş",
-    "enValue": "admission",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C1.json",
-    "lang": "crh",
-    "key": "adoption_1",
-    "value": "evlâtlıqqa aluv",
-    "enValue": "adoption",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C1.json",
-    "lang": "crh",
-    "key": "adoption_2",
-    "value": "evlâtlıqqa aluv",
-    "enValue": "adoption",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C1.json",
-    "lang": "crh",
     "key": "adversity_1",
     "value": "bahtsızlıq",
     "enValue": "adversity",
@@ -1395,16 +555,6 @@
     "key": "adversity_2",
     "value": "bahtsızlıq",
     "enValue": "adversity",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C1.json",
-    "lang": "crh",
-    "key": "advocacy_1",
-    "value": "qorçalav",
-    "enValue": "advocacy",
     "issues": [
       "Non-semantic key (numeric suffix)"
     ]
@@ -1430,286 +580,6 @@
     ]
   },
   {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C1.json",
-    "lang": "crh",
-    "key": "advocate_2",
-    "value": "qorçalayıcı",
-    "enValue": "advocate",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C1.json",
-    "lang": "crh",
-    "key": "affair_1",
-    "value": "iş",
-    "enValue": "affair",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C1.json",
-    "lang": "crh",
-    "key": "affair_2",
-    "value": "iş",
-    "enValue": "affair",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C1.json",
-    "lang": "crh",
-    "key": "affinity_1",
-    "value": "aqrabalıq",
-    "enValue": "affinity",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C1.json",
-    "lang": "crh",
-    "key": "affinity_2",
-    "value": "yaqınlıq",
-    "enValue": "affinity",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C1.json",
-    "lang": "crh",
-    "key": "aggregate_1",
-    "value": "toplam",
-    "enValue": "aggregate",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C1.json",
-    "lang": "crh",
-    "key": "aggregate_2",
-    "value": "toplam",
-    "enValue": "aggregate",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C1.json",
-    "lang": "crh",
-    "key": "allegation_1",
-    "value": "iddia",
-    "enValue": "allegation",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C1.json",
-    "lang": "crh",
-    "key": "allegation_2",
-    "value": "iddia",
-    "enValue": "allegation",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C1.json",
-    "lang": "crh",
-    "key": "allowance_1",
-    "value": "maaş",
-    "enValue": "allowance",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C1.json",
-    "lang": "crh",
-    "key": "allusion_1",
-    "value": "ima",
-    "enValue": "allusion",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C1.json",
-    "lang": "crh",
-    "key": "allusion_2",
-    "value": "ima",
-    "enValue": "allusion",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "aberration_1",
-    "value": "sapuv",
-    "enValue": "aberration",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "aberration_2",
-    "value": "aberratsiya",
-    "enValue": "aberration",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "accede_1",
-    "value": "razı olmaq",
-    "enValue": "accede",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "accede_2",
-    "value": "razı olmaq",
-    "enValue": "accede",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "accolade_1",
-    "value": "mükâfat",
-    "enValue": "accolade",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "accolade_2",
-    "value": "mükâfat",
-    "enValue": "accolade",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "accretion_1",
-    "value": "artuv",
-    "enValue": "accretion",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "accretion_2",
-    "value": "buyüv",
-    "enValue": "accretion",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "acerbic_1",
-    "value": "keskin",
-    "enValue": "acerbic",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "acerbic_2",
-    "value": "acı",
-    "enValue": "acerbic",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "acrimony_1",
-    "value": "açuv",
-    "enValue": "acrimony",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "acrimony_2",
-    "value": "yamanlıq",
-    "enValue": "acrimony",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "adamant_1",
-    "value": "inat",
-    "enValue": "adamant",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "adamant_2",
-    "value": "qattı",
-    "enValue": "adamant",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "alacrity_1",
-    "value": "canlılıq",
-    "enValue": "alacrity",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "alacrity_2",
-    "value": "canlılıq",
-    "enValue": "alacrity",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
     "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
     "lang": "crh",
     "key": "alibi",
@@ -1722,129 +592,9 @@
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
     "lang": "crh",
-    "key": "amiss_2",
-    "value": "yañlış",
-    "enValue": "amiss",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "annex_1",
-    "value": "qoşmaq",
-    "enValue": "annex",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "annex_2",
-    "value": "qoşmaq",
-    "enValue": "annex",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "apocryphal_1",
-    "value": "uydurma",
-    "enValue": "apocryphal",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "apocryphal_2",
-    "value": "uydurma",
-    "enValue": "apocryphal",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "apoplexy_1",
-    "value": "inme",
-    "enValue": "apoplexy",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "apoplexy_2",
-    "value": "inme",
-    "enValue": "apoplexy",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "apotheosis_1",
-    "value": "ilahlaştıruv",
-    "enValue": "apotheosis",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
     "key": "apotheosis_2",
     "value": "ilahlaştıruv",
     "enValue": "apotheosis",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "apposite_1",
-    "value": "yerinde",
-    "enValue": "apposite",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "apposite_2",
-    "value": "yerinde",
-    "enValue": "apposite",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "apprehend_1",
-    "value": "yaqalamaq",
-    "enValue": "apprehend",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\C2.json",
-    "lang": "crh",
-    "key": "apprehend_2",
-    "value": "añlamaq",
-    "enValue": "apprehend",
     "issues": [
       "Non-semantic key (numeric suffix)"
     ]
@@ -1880,26 +630,6 @@
     ]
   },
   {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\animals.json",
-    "lang": "crh",
-    "key": "bear_1",
-    "value": "tazamaq",
-    "enValue": "bear",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\cars.json",
-    "lang": "crh",
-    "key": "engine_2",
-    "value": "motor",
-    "enValue": "engine",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
     "file": "src\\lib\\data\\translations\\crh\\topics\\cars.json",
     "lang": "crh",
     "key": "pedal",
@@ -1907,26 +637,6 @@
     "enValue": "pedal",
     "issues": [
       "Missing translation (matches English value)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\cars.json",
-    "lang": "crh",
-    "key": "gas_1",
-    "value": "benzin",
-    "enValue": "gas",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\cars.json",
-    "lang": "crh",
-    "key": "gas_2",
-    "value": "gaz",
-    "enValue": "gas",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
     ]
   },
   {
@@ -1982,39 +692,9 @@
   {
     "file": "src\\lib\\data\\translations\\crh\\topics\\family_relationships.json",
     "lang": "crh",
-    "key": "brother_1",
-    "value": "ağa",
-    "enValue": "brother",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\family_relationships.json",
-    "lang": "crh",
     "key": "brother_2",
     "value": "qardaş",
     "enValue": "brother",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\food.json",
-    "lang": "crh",
-    "key": "pasta_1",
-    "value": "makarna",
-    "enValue": "pasta",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\food.json",
-    "lang": "crh",
-    "key": "pasta_2",
-    "value": "makarna",
-    "enValue": "pasta",
     "issues": [
       "Non-semantic key (numeric suffix)"
     ]
@@ -2037,106 +717,6 @@
     "enValue": "burger",
     "issues": [
       "Missing translation (matches English value)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\food.json",
-    "lang": "crh",
-    "key": "jam_1",
-    "value": "tatlı",
-    "enValue": "jam",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\food.json",
-    "lang": "crh",
-    "key": "jam_2",
-    "value": "tatlı",
-    "enValue": "jam",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\food.json",
-    "lang": "crh",
-    "key": "pie_1",
-    "value": "börek",
-    "enValue": "pie",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\food.json",
-    "lang": "crh",
-    "key": "pie_2",
-    "value": "börek",
-    "enValue": "pie",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\food.json",
-    "lang": "crh",
-    "key": "sausage_1",
-    "value": "sosiska",
-    "enValue": "sausage",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\food.json",
-    "lang": "crh",
-    "key": "sausage_2",
-    "value": "sosiska",
-    "enValue": "sausage",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\home.json",
-    "lang": "crh",
-    "key": "kitchen_1",
-    "value": "aşhane",
-    "enValue": "kitchen",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\home.json",
-    "lang": "crh",
-    "key": "kitchen_2",
-    "value": "mutfaq",
-    "enValue": "kitchen",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\home.json",
-    "lang": "crh",
-    "key": "floor_1",
-    "value": "yer",
-    "enValue": "floor",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\home.json",
-    "lang": "crh",
-    "key": "floor_2",
-    "value": "döşeme",
-    "enValue": "floor",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
     ]
   },
   {
@@ -2167,66 +747,6 @@
     "enValue": "sofa",
     "issues": [
       "Missing translation (matches English value)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\home.json",
-    "lang": "crh",
-    "key": "towel_1",
-    "value": "peskir",
-    "enValue": "towel",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\home.json",
-    "lang": "crh",
-    "key": "towel_2",
-    "value": "havlı",
-    "enValue": "towel",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\home.json",
-    "lang": "crh",
-    "key": "pot_1",
-    "value": "tencere",
-    "enValue": "pot",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\home.json",
-    "lang": "crh",
-    "key": "pot_2",
-    "value": "tencere",
-    "enValue": "pot",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\home.json",
-    "lang": "crh",
-    "key": "fireplace_1",
-    "value": "kamin",
-    "enValue": "fireplace",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\home.json",
-    "lang": "crh",
-    "key": "fireplace_2",
-    "value": "ocaq",
-    "enValue": "fireplace",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
     ]
   },
   {
@@ -2267,26 +787,6 @@
     "enValue": "audio",
     "issues": [
       "Missing translation (matches English value)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\it.json",
-    "lang": "crh",
-    "key": "bug_1",
-    "value": "hata",
-    "enValue": "bug",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\it.json",
-    "lang": "crh",
-    "key": "bug_2",
-    "value": "hata",
-    "enValue": "bug",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
     ]
   },
   {
@@ -2342,71 +842,11 @@
   {
     "file": "src\\lib\\data\\translations\\crh\\topics\\it.json",
     "lang": "crh",
-    "key": "drive_1",
-    "value": "sürücü",
-    "enValue": "drive",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\it.json",
-    "lang": "crh",
-    "key": "drive_2",
-    "value": "sürücü",
-    "enValue": "drive",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\it.json",
-    "lang": "crh",
     "key": "wifi_connection",
     "value": "wifi",
     "enValue": "wifi",
     "issues": [
       "Missing translation (matches English value)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\nature.json",
-    "lang": "crh",
-    "key": "wood_1",
-    "value": "tahta",
-    "enValue": "wood",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\nature.json",
-    "lang": "crh",
-    "key": "wood_2",
-    "value": "orman",
-    "enValue": "wood",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\nature.json",
-    "lang": "crh",
-    "key": "earth_2",
-    "value": "yer",
-    "enValue": "earth",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\nature.json",
-    "lang": "crh",
-    "key": "branch_1",
-    "value": "pıtaq",
-    "enValue": "branch",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
     ]
   },
   {
@@ -2425,26 +865,6 @@
     "key": "holiday_1",
     "value": "bayram",
     "enValue": "holiday",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\travel.json",
-    "lang": "crh",
-    "key": "holiday_2",
-    "value": "tatil",
-    "enValue": "holiday",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\topics\\travel.json",
-    "lang": "crh",
-    "key": "station_1",
-    "value": "stantsiya",
-    "enValue": "station",
     "issues": [
       "Non-semantic key (numeric suffix)"
     ]
@@ -2635,6 +1055,16 @@
     "key": "sorry",
     "value": "sorry",
     "enValue": "sorry",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1.json",
+    "lang": "nl",
+    "key": "hard",
+    "value": "hard",
+    "enValue": "hard",
     "issues": [
       "Missing translation (matches English value)"
     ]
@@ -3752,6 +2182,16 @@
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
     "lang": "nl",
+    "key": "database_management",
+    "value": "database",
+    "enValue": "database",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
+    "lang": "nl",
     "key": "experiment_science",
     "value": "experiment",
     "enValue": "experiment",
@@ -3862,9 +2302,29 @@
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
     "lang": "nl",
+    "key": "drug",
+    "value": "drug",
+    "enValue": "drug",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
+    "lang": "nl",
     "key": "chip",
     "value": "chip",
     "enValue": "chip",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
+    "lang": "nl",
+    "key": "database",
+    "value": "database",
+    "enValue": "database",
     "issues": [
       "Missing translation (matches English value)"
     ]
@@ -3907,6 +2367,16 @@
     "enValue": "virus",
     "issues": [
       "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
+    "lang": "nl",
+    "key": "hostel",
+    "value": "hostel",
+    "enValue": "hostel",
+    "issues": [
+      "Missing translation (matches English value)"
     ]
   },
   {
@@ -4045,6 +2515,16 @@
     "key": "talent",
     "value": "talent",
     "enValue": "talent",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
+    "lang": "nl",
+    "key": "alarm",
+    "value": "alarm",
+    "enValue": "alarm",
     "issues": [
       "Missing translation (matches English value)"
     ]
@@ -4262,6 +2742,16 @@
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
+    "key": "database",
+    "value": "database",
+    "enValue": "database",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
+    "lang": "nl",
     "key": "hardware",
     "value": "hardware",
     "enValue": "hardware",
@@ -4302,6 +2792,16 @@
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
+    "key": "drug",
+    "value": "drug",
+    "enValue": "drug",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
+    "lang": "nl",
     "key": "virus",
     "value": "virus",
     "enValue": "virus",
@@ -4332,56 +2832,6 @@
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
     "lang": "nl",
-    "key": "accommodation_2",
-    "value": "accommodatie",
-    "enValue": "accommodation",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
-    "lang": "nl",
-    "key": "admission_1",
-    "value": "toelating",
-    "enValue": "admission",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
-    "lang": "nl",
-    "key": "admission_2",
-    "value": "toelating",
-    "enValue": "admission",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
-    "lang": "nl",
-    "key": "adoption_1",
-    "value": "adoptie",
-    "enValue": "adoption",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
-    "lang": "nl",
-    "key": "adoption_2",
-    "value": "adoptie",
-    "enValue": "adoption",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
-    "lang": "nl",
     "key": "adversity_1",
     "value": "tegenspoed",
     "enValue": "adversity",
@@ -4395,16 +2845,6 @@
     "key": "adversity_2",
     "value": "tegenspoed",
     "enValue": "adversity",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
-    "lang": "nl",
-    "key": "advocacy_1",
-    "value": "pleidooi",
-    "enValue": "advocacy",
     "issues": [
       "Non-semantic key (numeric suffix)"
     ]
@@ -4430,286 +2870,6 @@
     ]
   },
   {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
-    "lang": "nl",
-    "key": "advocate_2",
-    "value": "voorstander",
-    "enValue": "advocate",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
-    "lang": "nl",
-    "key": "affair_1",
-    "value": "zaak",
-    "enValue": "affair",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
-    "lang": "nl",
-    "key": "affair_2",
-    "value": "affaire",
-    "enValue": "affair",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
-    "lang": "nl",
-    "key": "affinity_1",
-    "value": "affiniteit",
-    "enValue": "affinity",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
-    "lang": "nl",
-    "key": "affinity_2",
-    "value": "affiniteit",
-    "enValue": "affinity",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
-    "lang": "nl",
-    "key": "aggregate_1",
-    "value": "totaal",
-    "enValue": "aggregate",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
-    "lang": "nl",
-    "key": "aggregate_2",
-    "value": "totaal",
-    "enValue": "aggregate",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
-    "lang": "nl",
-    "key": "allegation_1",
-    "value": "bewering",
-    "enValue": "allegation",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
-    "lang": "nl",
-    "key": "allegation_2",
-    "value": "bewering",
-    "enValue": "allegation",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
-    "lang": "nl",
-    "key": "allowance_1",
-    "value": "toelage",
-    "enValue": "allowance",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
-    "lang": "nl",
-    "key": "allusion_1",
-    "value": "toespeling",
-    "enValue": "allusion",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
-    "lang": "nl",
-    "key": "allusion_2",
-    "value": "toespeling",
-    "enValue": "allusion",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "aberration_1",
-    "value": "afwijking",
-    "enValue": "aberration",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "aberration_2",
-    "value": "afwijking",
-    "enValue": "aberration",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "accede_1",
-    "value": "toetreden",
-    "enValue": "accede",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "accede_2",
-    "value": "instemmen",
-    "enValue": "accede",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "accolade_1",
-    "value": "eerbetoon",
-    "enValue": "accolade",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "accolade_2",
-    "value": "eerbetoon",
-    "enValue": "accolade",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "accretion_1",
-    "value": "aangroei",
-    "enValue": "accretion",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "accretion_2",
-    "value": "aangroei",
-    "enValue": "accretion",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "acerbic_1",
-    "value": "bitter",
-    "enValue": "acerbic",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "acerbic_2",
-    "value": "bitter",
-    "enValue": "acerbic",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "acrimony_1",
-    "value": "bitterheid",
-    "enValue": "acrimony",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "acrimony_2",
-    "value": "bitterheid",
-    "enValue": "acrimony",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "adamant_1",
-    "value": "onverzettelijk",
-    "enValue": "adamant",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "adamant_2",
-    "value": "onverzettelijk",
-    "enValue": "adamant",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "alacrity_1",
-    "value": "gretigheid",
-    "enValue": "alacrity",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "alacrity_2",
-    "value": "gretigheid",
-    "enValue": "alacrity",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
     "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
     "lang": "nl",
     "key": "alibi",
@@ -4717,36 +2877,6 @@
     "enValue": "alibi",
     "issues": [
       "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "amiss_2",
-    "value": "verkeerd",
-    "enValue": "amiss",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "annex_1",
-    "value": "annexeren",
-    "enValue": "annex",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "annex_2",
-    "value": "annexeren",
-    "enValue": "annex",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
     ]
   },
   {
@@ -4772,99 +2902,9 @@
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
     "lang": "nl",
-    "key": "apocryphal_1",
-    "value": "twijfelachtig",
-    "enValue": "apocryphal",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "apocryphal_2",
-    "value": "twijfelachtig",
-    "enValue": "apocryphal",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "apoplexy_1",
-    "value": "beroerte",
-    "enValue": "apoplexy",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "apoplexy_2",
-    "value": "beroerte",
-    "enValue": "apoplexy",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "apotheosis_1",
-    "value": "vergoddelijking",
-    "enValue": "apotheosis",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
     "key": "apotheosis_2",
     "value": "vergoddelijking",
     "enValue": "apotheosis",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "apposite_1",
-    "value": "passend",
-    "enValue": "apposite",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "apposite_2",
-    "value": "passend",
-    "enValue": "apposite",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "apprehend_1",
-    "value": "aanhouden",
-    "enValue": "apprehend",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
-    "lang": "nl",
-    "key": "apprehend_2",
-    "value": "begrijpen",
-    "enValue": "apprehend",
     "issues": [
       "Non-semantic key (numeric suffix)"
     ]
@@ -5020,16 +3060,6 @@
     ]
   },
   {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\animals.json",
-    "lang": "nl",
-    "key": "bear_1",
-    "value": "dragen",
-    "enValue": "bear",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
     "file": "src\\lib\\data\\translations\\nl\\topics\\body_health.json",
     "lang": "nl",
     "key": "hand",
@@ -5072,31 +3102,10 @@
   {
     "file": "src\\lib\\data\\translations\\nl\\topics\\cars.json",
     "lang": "nl",
-    "key": "engine_2",
-    "value": "motor",
-    "enValue": "engine",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\cars.json",
-    "lang": "nl",
-    "key": "gas_1",
-    "value": "benzine",
-    "enValue": "gas",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\cars.json",
-    "lang": "nl",
-    "key": "gas_2",
+    "key": "gas_gaz",
     "value": "gas",
     "enValue": "gas",
     "issues": [
-      "Non-semantic key (numeric suffix)",
       "Missing translation (matches English value)"
     ]
   },
@@ -5183,16 +3192,6 @@
   {
     "file": "src\\lib\\data\\translations\\nl\\topics\\family_relationships.json",
     "lang": "nl",
-    "key": "brother_1",
-    "value": "broer",
-    "enValue": "brother",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\family_relationships.json",
-    "lang": "nl",
     "key": "brother_2",
     "value": "broer",
     "enValue": "brother",
@@ -5208,26 +3207,6 @@
     "enValue": "partner",
     "issues": [
       "Missing translation (matches English value)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\food.json",
-    "lang": "nl",
-    "key": "pasta_1",
-    "value": "pasta",
-    "enValue": "pasta",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\food.json",
-    "lang": "nl",
-    "key": "pasta_2",
-    "value": "pasta",
-    "enValue": "pasta",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
     ]
   },
   {
@@ -5263,66 +3242,6 @@
   {
     "file": "src\\lib\\data\\translations\\nl\\topics\\food.json",
     "lang": "nl",
-    "key": "jam_1",
-    "value": "vastlopen",
-    "enValue": "jam",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\food.json",
-    "lang": "nl",
-    "key": "jam_2",
-    "value": "vastlopen",
-    "enValue": "jam",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\food.json",
-    "lang": "nl",
-    "key": "pie_1",
-    "value": "taart",
-    "enValue": "pie",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\food.json",
-    "lang": "nl",
-    "key": "pie_2",
-    "value": "taart",
-    "enValue": "pie",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\food.json",
-    "lang": "nl",
-    "key": "sausage_1",
-    "value": "worst",
-    "enValue": "sausage",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\food.json",
-    "lang": "nl",
-    "key": "sausage_2",
-    "value": "worst",
-    "enValue": "sausage",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\food.json",
-    "lang": "nl",
     "key": "ham",
     "value": "ham",
     "enValue": "ham",
@@ -5338,46 +3257,6 @@
     "enValue": "toast",
     "issues": [
       "Missing translation (matches English value)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\home.json",
-    "lang": "nl",
-    "key": "kitchen_1",
-    "value": "keuken",
-    "enValue": "kitchen",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\home.json",
-    "lang": "nl",
-    "key": "kitchen_2",
-    "value": "keuken",
-    "enValue": "kitchen",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\home.json",
-    "lang": "nl",
-    "key": "floor_1",
-    "value": "vloer",
-    "enValue": "floor",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\home.json",
-    "lang": "nl",
-    "key": "floor_2",
-    "value": "vloer",
-    "enValue": "floor",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
     ]
   },
   {
@@ -5453,26 +3332,6 @@
   {
     "file": "src\\lib\\data\\translations\\nl\\topics\\home.json",
     "lang": "nl",
-    "key": "towel_1",
-    "value": "handdoek",
-    "enValue": "towel",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\home.json",
-    "lang": "nl",
-    "key": "towel_2",
-    "value": "handdoek",
-    "enValue": "towel",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\home.json",
-    "lang": "nl",
     "key": "plant",
     "value": "plant",
     "enValue": "plant",
@@ -5483,43 +3342,11 @@
   {
     "file": "src\\lib\\data\\translations\\nl\\topics\\home.json",
     "lang": "nl",
-    "key": "pot_1",
+    "key": "pot_pot",
     "value": "pot",
     "enValue": "pot",
     "issues": [
-      "Non-semantic key (numeric suffix)",
       "Missing translation (matches English value)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\home.json",
-    "lang": "nl",
-    "key": "pot_2",
-    "value": "pot",
-    "enValue": "pot",
-    "issues": [
-      "Non-semantic key (numeric suffix)",
-      "Missing translation (matches English value)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\home.json",
-    "lang": "nl",
-    "key": "fireplace_1",
-    "value": "open haard",
-    "enValue": "fireplace",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\home.json",
-    "lang": "nl",
-    "key": "fireplace_2",
-    "value": "open haard",
-    "enValue": "fireplace",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
     ]
   },
   {
@@ -5595,6 +3422,16 @@
   {
     "file": "src\\lib\\data\\translations\\nl\\topics\\it.json",
     "lang": "nl",
+    "key": "database",
+    "value": "database",
+    "enValue": "database",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\topics\\it.json",
+    "lang": "nl",
     "key": "website",
     "value": "website",
     "enValue": "website",
@@ -5665,26 +3502,6 @@
   {
     "file": "src\\lib\\data\\translations\\nl\\topics\\it.json",
     "lang": "nl",
-    "key": "bug_1",
-    "value": "fout",
-    "enValue": "bug",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\it.json",
-    "lang": "nl",
-    "key": "bug_2",
-    "value": "fout",
-    "enValue": "bug",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\it.json",
-    "lang": "nl",
     "key": "virus",
     "value": "virus",
     "enValue": "virus",
@@ -5720,26 +3537,6 @@
     "enValue": "usb",
     "issues": [
       "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\it.json",
-    "lang": "nl",
-    "key": "drive_1",
-    "value": "station",
-    "enValue": "drive",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\it.json",
-    "lang": "nl",
-    "key": "drive_2",
-    "value": "station",
-    "enValue": "drive",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
     ]
   },
   {
@@ -5795,6 +3592,16 @@
   {
     "file": "src\\lib\\data\\translations\\nl\\topics\\it.json",
     "lang": "nl",
+    "key": "database_management",
+    "value": "database",
+    "enValue": "database",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\topics\\it.json",
+    "lang": "nl",
     "key": "chip_computer",
     "value": "chip",
     "enValue": "chip",
@@ -5815,41 +3622,11 @@
   {
     "file": "src\\lib\\data\\translations\\nl\\topics\\nature.json",
     "lang": "nl",
-    "key": "wood_1",
-    "value": "hout",
-    "enValue": "wood",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\nature.json",
-    "lang": "nl",
-    "key": "wood_2",
-    "value": "bos",
-    "enValue": "wood",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\nature.json",
-    "lang": "nl",
     "key": "storm",
     "value": "storm",
     "enValue": "storm",
     "issues": [
       "Missing translation (matches English value)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\nature.json",
-    "lang": "nl",
-    "key": "earth_2",
-    "value": "aarde",
-    "enValue": "earth",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
     ]
   },
   {
@@ -5883,21 +3660,21 @@
     ]
   },
   {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\nature.json",
-    "lang": "nl",
-    "key": "branch_1",
-    "value": "tak",
-    "enValue": "branch",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
     "file": "src\\lib\\data\\translations\\nl\\topics\\pronouns_people.json",
     "lang": "nl",
     "key": "man",
     "value": "man",
     "enValue": "man",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\topics\\questions.json",
+    "lang": "nl",
+    "key": "pardon",
+    "value": "pardon",
+    "enValue": "pardon",
     "issues": [
       "Missing translation (matches English value)"
     ]
@@ -5965,21 +3742,10 @@
   {
     "file": "src\\lib\\data\\translations\\nl\\topics\\travel.json",
     "lang": "nl",
-    "key": "holiday_2",
-    "value": "vakantie",
-    "enValue": "holiday",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\topics\\travel.json",
-    "lang": "nl",
-    "key": "station_1",
+    "key": "station_bahnhof",
     "value": "station",
     "enValue": "station",
     "issues": [
-      "Non-semantic key (numeric suffix)",
       "Missing translation (matches English value)"
     ]
   },
@@ -6032,6 +3798,16 @@
     "enValue": "hotel",
     "issues": [
       "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\topics\\travel.json",
+    "lang": "nl",
+    "key": "hostel",
+    "value": "hostel",
+    "enValue": "hostel",
+    "issues": [
+      "Missing translation (matches English value)"
     ]
   },
   {
@@ -6507,56 +4283,6 @@
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
     "lang": "de",
-    "key": "accommodation_2",
-    "value": "Unterkunft",
-    "enValue": "accommodation",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
-    "lang": "de",
-    "key": "admission_1",
-    "value": "Zulassung",
-    "enValue": "admission",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
-    "lang": "de",
-    "key": "admission_2",
-    "value": "Eintritt",
-    "enValue": "admission",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
-    "lang": "de",
-    "key": "adoption_1",
-    "value": "Annahme an Kindes Statt",
-    "enValue": "adoption",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
-    "lang": "de",
-    "key": "adoption_2",
-    "value": "Annahme an Kindes Statt",
-    "enValue": "adoption",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
-    "lang": "de",
     "key": "adversity_1",
     "value": "Widrigkeit",
     "enValue": "adversity",
@@ -6577,16 +4303,6 @@
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
     "lang": "de",
-    "key": "advocacy_1",
-    "value": "Fürsprache",
-    "enValue": "advocacy",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
-    "lang": "de",
     "key": "advocacy_2",
     "value": "Fürsprache",
     "enValue": "advocacy",
@@ -6600,286 +4316,6 @@
     "key": "advocate_1",
     "value": "Befürworter",
     "enValue": "advocate",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
-    "lang": "de",
-    "key": "advocate_2",
-    "value": "Befürworter",
-    "enValue": "advocate",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
-    "lang": "de",
-    "key": "affair_1",
-    "value": "Affäre",
-    "enValue": "affair",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
-    "lang": "de",
-    "key": "affair_2",
-    "value": "Angelegenheit",
-    "enValue": "affair",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
-    "lang": "de",
-    "key": "affinity_1",
-    "value": "Affinität",
-    "enValue": "affinity",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
-    "lang": "de",
-    "key": "affinity_2",
-    "value": "Affinität",
-    "enValue": "affinity",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
-    "lang": "de",
-    "key": "aggregate_1",
-    "value": "Aggregat",
-    "enValue": "aggregate",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
-    "lang": "de",
-    "key": "aggregate_2",
-    "value": "Gesamt",
-    "enValue": "aggregate",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
-    "lang": "de",
-    "key": "allegation_1",
-    "value": "Behauptung",
-    "enValue": "allegation",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
-    "lang": "de",
-    "key": "allegation_2",
-    "value": "Behauptung",
-    "enValue": "allegation",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
-    "lang": "de",
-    "key": "allowance_1",
-    "value": "Taschengeld",
-    "enValue": "allowance",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
-    "lang": "de",
-    "key": "allusion_1",
-    "value": "Anspielung",
-    "enValue": "allusion",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
-    "lang": "de",
-    "key": "allusion_2",
-    "value": "Anspielung",
-    "enValue": "allusion",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "aberration_1",
-    "value": "Verirrung",
-    "enValue": "aberration",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "aberration_2",
-    "value": "Verirrung",
-    "enValue": "aberration",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "accede_1",
-    "value": "beitreten",
-    "enValue": "accede",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "accede_2",
-    "value": "beitreten",
-    "enValue": "accede",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "accolade_1",
-    "value": "Auszeichnung",
-    "enValue": "accolade",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "accolade_2",
-    "value": "Auszeichnung",
-    "enValue": "accolade",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "accretion_1",
-    "value": "Zuwachs",
-    "enValue": "accretion",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "accretion_2",
-    "value": "Zuwachs",
-    "enValue": "accretion",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "acerbic_1",
-    "value": "herb",
-    "enValue": "acerbic",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "acerbic_2",
-    "value": "herb",
-    "enValue": "acerbic",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "acrimony_1",
-    "value": "Bitterkeit",
-    "enValue": "acrimony",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "acrimony_2",
-    "value": "Bitterkeit",
-    "enValue": "acrimony",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "adamant_1",
-    "value": "unnachgiebig",
-    "enValue": "adamant",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "adamant_2",
-    "value": "unnachgiebig",
-    "enValue": "adamant",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "alacrity_1",
-    "value": "Bereitschaft",
-    "enValue": "alacrity",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "alacrity_2",
-    "value": "Bereitschaft",
-    "enValue": "alacrity",
     "issues": [
       "Non-semantic key (numeric suffix)"
     ]
@@ -6907,129 +4343,9 @@
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
     "lang": "de",
-    "key": "amiss_2",
-    "value": "falsch",
-    "enValue": "amiss",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "annex_1",
-    "value": "annektieren",
-    "enValue": "annex",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "annex_2",
-    "value": "annektieren",
-    "enValue": "annex",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "apocryphal_1",
-    "value": "apokryph",
-    "enValue": "apocryphal",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "apocryphal_2",
-    "value": "apokryph",
-    "enValue": "apocryphal",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "apoplexy_1",
-    "value": "Schlaganfall",
-    "enValue": "apoplexy",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "apoplexy_2",
-    "value": "Schlaganfall",
-    "enValue": "apoplexy",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "apotheosis_1",
-    "value": "Apotheose",
-    "enValue": "apotheosis",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
     "key": "apotheosis_2",
     "value": "Apotheose",
     "enValue": "apotheosis",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "apposite_1",
-    "value": "passend",
-    "enValue": "apposite",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "apposite_2",
-    "value": "passend",
-    "enValue": "apposite",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "apprehend_1",
-    "value": "festnehmen",
-    "enValue": "apprehend",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
-    "lang": "de",
-    "key": "apprehend_2",
-    "value": "begreifen",
-    "enValue": "apprehend",
     "issues": [
       "Non-semantic key (numeric suffix)"
     ]
@@ -7045,46 +4361,6 @@
     ]
   },
   {
-    "file": "src\\lib\\data\\translations\\de\\topics\\animals.json",
-    "lang": "de",
-    "key": "bear_1",
-    "value": "tragen",
-    "enValue": "bear",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\cars.json",
-    "lang": "de",
-    "key": "engine_2",
-    "value": "Motor",
-    "enValue": "engine",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\cars.json",
-    "lang": "de",
-    "key": "gas_1",
-    "value": "Benzin",
-    "enValue": "gas",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\cars.json",
-    "lang": "de",
-    "key": "gas_2",
-    "value": "Gas",
-    "enValue": "gas",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
     "file": "src\\lib\\data\\translations\\de\\topics\\colors.json",
     "lang": "de",
     "key": "orange_color",
@@ -7092,16 +4368,6 @@
     "enValue": "orange",
     "issues": [
       "Missing translation (matches English value)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\family_relationships.json",
-    "lang": "de",
-    "key": "brother_1",
-    "value": "Bruder",
-    "enValue": "brother",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
     ]
   },
   {
@@ -7117,131 +4383,11 @@
   {
     "file": "src\\lib\\data\\translations\\de\\topics\\food.json",
     "lang": "de",
-    "key": "pasta_1",
-    "value": "Nudeln",
-    "enValue": "pasta",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\food.json",
-    "lang": "de",
-    "key": "pasta_2",
-    "value": "Nudeln",
-    "enValue": "pasta",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\food.json",
-    "lang": "de",
-    "key": "jam_1",
-    "value": "Marmelade",
-    "enValue": "jam",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\food.json",
-    "lang": "de",
-    "key": "jam_2",
-    "value": "Marmelade",
-    "enValue": "jam",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\food.json",
-    "lang": "de",
-    "key": "pie_1",
-    "value": "Kuchen",
-    "enValue": "pie",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\food.json",
-    "lang": "de",
-    "key": "pie_2",
-    "value": "Pastete",
-    "enValue": "pie",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\food.json",
-    "lang": "de",
-    "key": "sausage_1",
-    "value": "Wurst",
-    "enValue": "sausage",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\food.json",
-    "lang": "de",
-    "key": "sausage_2",
-    "value": "Wurst",
-    "enValue": "sausage",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\food.json",
-    "lang": "de",
     "key": "orange_color",
     "value": "orange",
     "enValue": "orange",
     "issues": [
       "Missing translation (matches English value)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\home.json",
-    "lang": "de",
-    "key": "kitchen_1",
-    "value": "Küche",
-    "enValue": "kitchen",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\home.json",
-    "lang": "de",
-    "key": "kitchen_2",
-    "value": "Küche",
-    "enValue": "kitchen",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\home.json",
-    "lang": "de",
-    "key": "floor_1",
-    "value": "Boden",
-    "enValue": "floor",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\home.json",
-    "lang": "de",
-    "key": "floor_2",
-    "value": "Boden",
-    "enValue": "floor",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
     ]
   },
   {
@@ -7275,146 +4421,6 @@
     ]
   },
   {
-    "file": "src\\lib\\data\\translations\\de\\topics\\home.json",
-    "lang": "de",
-    "key": "towel_1",
-    "value": "Handtuch",
-    "enValue": "towel",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\home.json",
-    "lang": "de",
-    "key": "towel_2",
-    "value": "Handtuch",
-    "enValue": "towel",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\home.json",
-    "lang": "de",
-    "key": "pot_1",
-    "value": "Topf",
-    "enValue": "pot",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\home.json",
-    "lang": "de",
-    "key": "pot_2",
-    "value": "Topf",
-    "enValue": "pot",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\home.json",
-    "lang": "de",
-    "key": "fireplace_1",
-    "value": "Kamin",
-    "enValue": "fireplace",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\home.json",
-    "lang": "de",
-    "key": "fireplace_2",
-    "value": "Kamin",
-    "enValue": "fireplace",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\it.json",
-    "lang": "de",
-    "key": "bug_1",
-    "value": "Fehler",
-    "enValue": "bug",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\it.json",
-    "lang": "de",
-    "key": "bug_2",
-    "value": "Fehler",
-    "enValue": "bug",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\it.json",
-    "lang": "de",
-    "key": "drive_1",
-    "value": "Laufwerk",
-    "enValue": "drive",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\it.json",
-    "lang": "de",
-    "key": "drive_2",
-    "value": "Laufwerk",
-    "enValue": "drive",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\nature.json",
-    "lang": "de",
-    "key": "wood_1",
-    "value": "Holz",
-    "enValue": "wood",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\nature.json",
-    "lang": "de",
-    "key": "wood_2",
-    "value": "Wald",
-    "enValue": "wood",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\nature.json",
-    "lang": "de",
-    "key": "earth_2",
-    "value": "Erde",
-    "enValue": "earth",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\nature.json",
-    "lang": "de",
-    "key": "branch_1",
-    "value": "Zweig",
-    "enValue": "branch",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
     "file": "src\\lib\\data\\translations\\de\\topics\\pronouns_people.json",
     "lang": "de",
     "key": "me_pronoun",
@@ -7430,26 +4436,6 @@
     "key": "holiday_1",
     "value": "Ferien",
     "enValue": "holiday",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\travel.json",
-    "lang": "de",
-    "key": "holiday_2",
-    "value": "Ferien",
-    "enValue": "holiday",
-    "issues": [
-      "Non-semantic key (numeric suffix)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\topics\\travel.json",
-    "lang": "de",
-    "key": "station_1",
-    "value": "Bahnhof",
-    "enValue": "station",
     "issues": [
       "Non-semantic key (numeric suffix)"
     ]

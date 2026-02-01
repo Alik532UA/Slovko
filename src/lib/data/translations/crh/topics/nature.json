@@ -4,8 +4,8 @@
     "grass": "ot",
     "plant": "ösimlik",
     "forest": "orman",
-    "wood_1": "tahta",
-    "wood_2": "orman",
+    "wood_holz": "tahta",
+    "wood_bos": "orman",
     "jungle": "cungli",
     "mountain": "dağ",
     "hill": "töpe",
@@ -33,7 +33,7 @@
     "ice": "buz",
     "fire": "ateş",
     "earth_planet": "topraq",
-    "earth_2": "yer",
+    "earth_yer": "yer",
     "rock": "qaya",
     "stone": "taş",
     "sand": "qum",
@@ -63,7 +63,7 @@
     "winter": "qış",
     "spring_season": "baar",
     "rock_stone": "taş",
-    "branch_1": "pıtaq",
+    "branch_tak": "pıtaq",
     "landscape": "manzara",
     "scenery": "manzara"
 }
