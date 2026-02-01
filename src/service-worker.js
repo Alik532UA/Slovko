@@ -5,10 +5,13 @@ const CACHE = `cache-${version}`;
 
 const ASSETS = [
     ...build, // the app itself
-    ...files.filter(file => !file.endsWith('/version.json'))  // exclude version.json to allow updates
+    ...files.filter(file => !file.endsWith('/version.json') && !file.endsWith('/app-version.json'))
 ];
 
 self.addEventListener('install', (event) => {
+    // Force this SW to become the active service worker immediately
+    self.skipWaiting();
+
     // Create a new cache and add all files to it
     async function addFilesToCache() {
         const cache = await caches.open(CACHE);
@@ -24,6 +27,8 @@ self.addEventListener('activate', (event) => {
         for (const key of await caches.keys()) {
             if (key !== CACHE) await caches.delete(key);
         }
+        // Force the SW to claim all clients immediately
+        await self.clients.claim();
     }
 
     event.waitUntil(deleteOldCaches());

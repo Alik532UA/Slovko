@@ -1,7 +1,7 @@
 import { versionStore } from "../stores/versionStore.svelte";
 import { base } from "$app/paths";
 
-const VERSION_URL = `${base}/version.json`;
+const VERSION_URL = `${base}/app-version.json`;
 const STORAGE_KEY = "app_version";
 
 /**
