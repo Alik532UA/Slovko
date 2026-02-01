@@ -13,9 +13,10 @@ register('en', () => import('./translations/en.json'));
 register('crh', () => import('./translations/crh.json'));
 register('nl', () => import('./translations/nl.json'));
 register('de', () => import('./translations/de.json'));
+register('el', () => import('./translations/el.json'));
 
 const DEFAULT_LOCALE: Language = 'uk';
-const SUPPORTED_LOCALES: Language[] = ['uk', 'en', 'crh', 'nl', 'de'];
+const SUPPORTED_LOCALES: Language[] = ['uk', 'en', 'crh', 'nl', 'de', 'el'];
 const STORAGE_KEY = 'wordApp_interfaceLanguage';
 
 /**

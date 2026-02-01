@@ -8,7 +8,7 @@
 // ========================================
 
 /** Підтримувані мови */
-export type Language = 'uk' | 'en' | 'crh' | 'nl' | 'de';
+export type Language = 'uk' | 'en' | 'crh' | 'nl' | 'de' | 'el';
 
 /** Назви мов для відображення */
 export const LANGUAGE_NAMES: Record<Language, string> = {
@@ -16,7 +16,8 @@ export const LANGUAGE_NAMES: Record<Language, string> = {
     en: 'English',
     crh: 'Qırımtatarca',
     nl: 'Nederlands',
-    de: 'Deutsch'
+    de: 'Deutsch',
+    el: 'Ελληνικά'
 };
 
 /** Прапори мов (emoji) */
@@ -25,7 +26,8 @@ export const LANGUAGE_FLAGS: Record<Language, string> = {
     en: '🇬🇧',
     crh: '🔵', // Кримськотатарський прапор
     nl: '🇳🇱',
-    de: '🇩🇪'
+    de: '🇩🇪',
+    el: '🇬🇷'
 };
 
 /** Теми оформлення */

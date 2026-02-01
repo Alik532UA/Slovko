@@ -7,7 +7,7 @@
     import { X, Speech, Captions } from "lucide-svelte";
     import { settingsStore } from "$lib/stores/settingsStore.svelte";
     import VoiceSelectionModal from "./VoiceSelectionModal.svelte";
-    import { setInterfaceLanguage } from "$lib/i18n/init";
+    import { setInterfaceLanguage, LANGUAGES } from "$lib/i18n/init";
     import { LANGUAGE_NAMES, type Language } from "$lib/types";
     import { base } from "$app/paths";
 
@@ -15,8 +15,6 @@
         onclose: () => void;
     }
     let { onclose }: Props = $props();
-
-    const LANGUAGES: Language[] = ["uk", "en", "crh", "nl", "de"];
 
     let pressTimer: ReturnType<typeof setTimeout> | null = null;
     let isLongPress = false;

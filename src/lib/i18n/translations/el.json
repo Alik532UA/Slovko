@@ -1,0 +1,22 @@
+{
+    "app.title": "Slovko",
+    "app.tagline": "Μάθετε γλώσσες ταιριάζοντας λέξεις",
+    "nav.levels": "Επίπεδα",
+    "nav.topics": "Θέματα",
+    "nav.phrases": "Φράσεις",
+    "nav.playlists": "Λίστες",
+    "nav.settings": "Ρυθμίσεις",
+    "game.matches": "Αντιστοιχίες",
+    "game.mistakes": "Λάθη",
+    "game.time": "Χρόνος",
+    "game.hint": "Υπόδειξη",
+    "game.completed": "Επίπεδο ολοκληρώθηκε!",
+    "settings.interface_language": "Γλώσσα διεπαφής",
+    "settings.card_languages": "Γλώσσες καρτών",
+    "settings.source": "Πηγή",
+    "settings.target": "Στόχος",
+    "settings.theme": "Θέμα",
+    "settings.pronunciation": "Προφορά",
+    "settings.transcription": "Φωνητική",
+    "settings.about": "Σχετικά"
+}
