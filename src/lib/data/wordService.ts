@@ -15,6 +15,7 @@ import type {
 // Кеш для уникнення повторних завантажень
 const levelCache = new Map<string, WordLevel>();
 const topicCache = new Map<string, WordTopic>();
+const phrasesCache = new Map<string, any[]>();
 const translationCache = new Map<string, TranslationDictionary>();
 let transcriptionCache: TranscriptionDictionary | null = null;
 
@@ -79,24 +80,44 @@ export async function loadTranslations(
  */
 export async function loadTranscriptions(
     category: 'levels' | 'topics',
-    id: string
+    id: string,
+    language: Language = 'en'
 ): Promise<TranscriptionDictionary> {
-    const cacheKey = `transcriptions:${category}:${id}`;
+    try {
+        let module;
+        if (category === 'levels') {
+            module = await import(`./transcriptions/${language}/levels/${id}.json`);
+        } else {
+            module = await import(`./transcriptions/${language}/topics/${id}.json`);
+        }
 
-    // Перевіряємо, чи є вже завантажені транскрипції в кеші (потрібно змінити тип кешу або логіку зберігання)
-    // Для простоти, поки що не використовуємо глобальний кеш для транскрипцій так само, як для перекладів,
-    // але якщо потрібно - можна додати.
-    // Тут ми просто повертаємо проміс імпорту.
+        return module.default as TranscriptionDictionary;
+    } catch (e) {
+        console.warn(`Transcriptions not found for ${language}/${category}/${id}`, e);
+        return {};
+    }
+}
 
-    let module;
-    if (category === 'levels') {
-        module = await import(`./transcriptions/levels/${id}.json`);
-    } else {
-        module = await import(`./transcriptions/topics/${id}.json`);
+/**
+ * Завантажити фрази за рівнем
+ */
+export async function loadPhrasesLevel(levelId: CEFRLevel): Promise<any[]> {
+    if (phrasesCache.has(levelId)) {
+        return phrasesCache.get(levelId)!;
     }
 
-    return module.default as TranscriptionDictionary;
+    try {
+        const module = await import(`./phrases/${levelId.toLowerCase()}.json`);
+        // Force TypeScript/Vite to include this glob
+        const phrases = module.default;
+        phrasesCache.set(levelId, phrases);
+        return phrases;
+    } catch (e) {
+        console.warn(`Phrases for ${levelId} not found`, e);
+        return [];
+    }
 }
+
 
 /**
  * Отримати переклад слова
@@ -117,11 +138,14 @@ export function getTranslation(word: string, translations: TranslationDictionary
  */
 export function getTranscription(
     word: string,
-    transcriptions: TranscriptionDictionary
+    transcriptions: TranscriptionDictionary,
+    suppressWarning: boolean = false
 ): string | undefined {
     const transcription = transcriptions[word];
-    if (!transcription && import.meta.env.DEV) {
-        console.warn(`[Missing Transcription] Word: "${word}"`);
+    if (!transcription) {
+        if (import.meta.env.DEV && !suppressWarning) {
+            console.warn(`[Missing Transcription] Word: "${word}"`);
+        }
     }
     return transcription;
 }
@@ -133,5 +157,6 @@ export function clearCache(): void {
     levelCache.clear();
     topicCache.clear();
     translationCache.clear();
+    phrasesCache.clear();
     transcriptionCache = null;
 }

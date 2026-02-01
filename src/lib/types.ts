@@ -94,8 +94,12 @@ export type TranscriptionDictionary = Record<string, string>;
  * Game Modes:
  * - 'levels': Sequential progression (A1 -> A2 -> ...)
  * - 'topics': Thematic learning (Food, Travel, etc.)
+ * - 'phrases': Learning phrases by level
+ * - 'playlists': Custom collections (Favorites, Mistakes, etc.)
  */
-export type GameMode = 'levels' | 'topics';
+export type GameMode = 'levels' | 'topics' | 'phrases' | 'playlists';
+
+export type PlaylistId = 'favorites' | 'mistakes' | 'extra';
 
 /**
  * Card visual states:

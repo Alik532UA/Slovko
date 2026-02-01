@@ -5,19 +5,23 @@
  *
  * Оновлено для підтримки динамічних мов та фіксованих позицій карток
  */
-import type { ActiveCard, CardStatus, Language, TranslationDictionary, TranscriptionDictionary } from '../types';
+import type { ActiveCard, CardStatus, Language, TranslationDictionary, TranscriptionDictionary, WordPair } from '../types';
 import { settingsStore } from './settingsStore.svelte';
 import { progressStore } from './progressStore.svelte';
-import { loadLevel, loadTopic, loadTranslations, loadTranscriptions, getTranslation, getTranscription } from '../data/wordService';
-import { generateTranscription } from '../services/transcriptionService';
+import { playlistStore } from './playlistStore.svelte';
+import { loadLevel, loadTopic, loadTranslations, loadTranscriptions, getTranslation, getTranscription, loadPhrasesLevel } from '../data/wordService';
+import { generateRulesIPA } from '../services/transcriptionService';
+import { convertIPAToTarget } from '../services/phoneticsService';
 
-const PAIRS_ON_SCREEN = 6;
+const DEFAULT_PAIRS_ON_SCREEN = 6;
+const PHRASES_PAIRS_ON_SCREEN = 4;
 const REFILL_THRESHOLD = 2;
 
 // Кеш для перекладів та транскрипцій
 let sourceTranslations: TranslationDictionary = {};
 let targetTranslations: TranslationDictionary = {};
-let transcriptions: TranscriptionDictionary = {};
+let sourceTranscriptions: TranscriptionDictionary = {};
+let targetTranscriptions: TranscriptionDictionary = {};
 
 // Використані слова
 let usedWordKeys = new Set<string>();
@@ -81,46 +85,75 @@ function createGameState() {
         const startTime = history[0];
 
         // Час, який ми "ігноруємо" (паузи)
-        // Важливо: ми не можемо тут динамічно додавати "поточну" паузу без таймера,
-        // але оскільки перерахунок стається при діях, то візуально WPM "заморозиться",
-        // а при наступному кліку ми додамо паузу в ignoredTime, і WPM залишиться коректним.
-
         let adjustedElapsed = (now - startTime) - currentIgnored;
 
-        // Захист від ділення на нуль або від'ємного часу (якщо паузи "з'їли" все)
+        // Захист від ділення на нуль або від'ємного часу
         if (adjustedElapsed < 1000) adjustedElapsed = 1000;
 
         return Math.round((history.length / adjustedElapsed) * 60000);
     });
 
+    function getPairsLimit() {
+        return settingsStore.value.mode === 'phrases' ? PHRASES_PAIRS_ON_SCREEN : DEFAULT_PAIRS_ON_SCREEN;
+    }
+
     /**
      * Завантажити переклади для поточних мов та активного режиму
      */
     async function loadTranslationsForLanguages(): Promise<void> {
-        const { sourceLanguage, targetLanguage, mode, currentLevel, currentTopic } = settingsStore.value;
-
-        // Визначаємо категорію та ID залежно від режиму
+        const { sourceLanguage, targetLanguage, mode, currentLevel, currentTopic, currentPlaylist } = settingsStore.value;
         const category = mode === 'levels' ? 'levels' : 'topics';
-        const id = mode === 'levels' ? currentLevel : currentTopic;
 
-        if (!id) {
-            console.error('No ID available for translation loading');
-            return;
-        }
+        // Clear previous
+        sourceTranslations = {};
+        targetTranslations = {};
+        sourceTranscriptions = {};
+        targetTranscriptions = {};
 
         try {
+            if (mode === 'phrases') {
+                const phrases = await loadPhrasesLevel(currentLevel);
+                phrases.forEach((p: any) => {
+                    const getVal = (lang: string) => {
+                        if (lang === 'en') return p.english;
+                        if (lang === 'uk') return p.ukrainian;
+                        if (lang === 'nl') return p.nl;
+                        if (lang === 'de') return p.de;
+                        if (lang === 'crh') return p.crh;
+                        return p.id;
+                    };
+
+                    sourceTranslations[p.id] = getVal(sourceLanguage);
+                    targetTranslations[p.id] = getVal(targetLanguage);
+                });
+                return;
+            } else if (mode === 'playlists' && currentPlaylist) {
+                const mistakes = playlistStore.mistakes;
+                const pairs = currentPlaylist === 'mistakes'
+                    ? mistakes.map(m => m.pair)
+                    : (currentPlaylist === 'favorites' ? playlistStore.favorites : playlistStore.extra);
+
+                pairs.forEach(p => {
+                    if (sourceLanguage === 'en') sourceTranslations[p.id] = p.english;
+                    else if (sourceLanguage === 'uk') sourceTranslations[p.id] = p.ukrainian;
+
+                    if (targetLanguage === 'en') targetTranslations[p.id] = p.english;
+                    else if (targetLanguage === 'uk') targetTranslations[p.id] = p.ukrainian;
+                });
+                return;
+            }
+
+            const id = mode === 'levels' ? currentLevel : currentTopic;
+            if (!id) return; // Should not happen
+
             sourceTranslations = await loadTranslations(sourceLanguage, category, id);
             targetTranslations = await loadTranslations(targetLanguage, category, id);
 
-            // Завантажуємо транскрипції якщо одна з мов — англійська
-            // (Тут можна оптимізувати і завантажувати транскрипції теж по частинах, 
-            // але поки вони в одному файлі)
-            if (sourceLanguage === 'en' || targetLanguage === 'en') {
-                transcriptions = await loadTranscriptions(category, id);
-            }
+            // Load transcriptions for Source and Target
+            sourceTranscriptions = await loadTranscriptions(category, id, sourceLanguage);
+            targetTranscriptions = await loadTranscriptions(category, id, targetLanguage);
         } catch (e) {
-            console.error(`Failed to load translations for ${category}/${id}`, e);
-            // Fallback або порожній об'єкт, щоб не крашити гру
+            console.error(`Failed to load translations for ${mode}`, e);
             sourceTranslations = {};
             targetTranslations = {};
         }
@@ -130,14 +163,21 @@ function createGameState() {
      * Завантажити слова для поточного рівня/теми
      */
     async function loadWords(): Promise<string[]> {
-        const { mode, currentLevel, currentTopic } = settingsStore.value;
+        const { mode, currentLevel, currentTopic, currentPlaylist } = settingsStore.value;
 
         if (mode === 'levels') {
             const level = await loadLevel(currentLevel);
             return level.words;
-        } else if (currentTopic) {
+        } else if (mode === 'topics' && currentTopic) {
             const topic = await loadTopic(currentTopic);
             return topic.words;
+        } else if (mode === 'phrases') {
+            const phrases = await loadPhrasesLevel(currentLevel);
+            return phrases.map((p: any) => p.id);
+        } else if (mode === 'playlists' && currentPlaylist) {
+            if (currentPlaylist === 'mistakes') return playlistStore.mistakes.map(m => m.pair.id);
+            if (currentPlaylist === 'favorites') return playlistStore.favorites.map(p => p.id);
+            if (currentPlaylist === 'extra') return playlistStore.extra.map(p => p.id);
         }
 
         return [];
@@ -155,37 +195,38 @@ function createGameState() {
             const sourceText = getTranslation(wordKey, sourceTranslations);
             const targetText = getTranslation(wordKey, targetTranslations);
 
-            // Транскрипція для англійських слів
+            // Source Transcription (Word -> IPA -> Target Alphabet)
+            let sourceIPA = getTranscription(wordKey, sourceTranscriptions, true);
             let sourceTranscription: string | undefined;
-            let targetTranscription: string | undefined;
 
-
-
-            // ... (rest of imports are fine, inserting above gameState definition or keeping logically placed)
-
-            // ...
-
-            // Пріоритет: словникова транскрипція (для EN) -> генеративна
-
-
-            // Re-reading usage context:
-            // logic was: if (showTranscription) { ... set sourceTranscription ... set targetTranscription ... }
-
-            // New logic:
-            if (settingsStore.value.showTranscriptionSource) {
-                if (sourceLanguage === 'en') {
-                    sourceTranscription = getTranscription(wordKey, transcriptions);
-                } else {
-                    sourceTranscription = generateTranscription(sourceText, sourceLanguage, targetLanguage);
-                }
+            // If no dictionary IPA, generate on the fly
+            if (!sourceIPA) {
+                sourceIPA = generateRulesIPA(sourceText, sourceLanguage);
             }
 
-            if (settingsStore.value.showTranscriptionTarget) {
-                if (targetLanguage === 'en') {
-                    targetTranscription = getTranscription(wordKey, transcriptions);
-                } else {
-                    targetTranscription = generateTranscription(targetText, targetLanguage, sourceLanguage);
-                }
+            if (sourceLanguage === 'en' && sourceIPA) {
+                // English shows raw IPA
+                sourceTranscription = sourceIPA;
+            } else if (sourceIPA) {
+                // Convert IPA to Target language alphabet
+                sourceTranscription = convertIPAToTarget(sourceIPA, targetLanguage);
+            }
+
+            // Target Transcription (Word -> IPA -> Source Alphabet)
+            let targetIPA = getTranscription(wordKey, targetTranscriptions, true);
+            let targetTranscription: string | undefined;
+
+            // If no dictionary IPA, generate on the fly
+            if (!targetIPA) {
+                targetIPA = generateRulesIPA(targetText, targetLanguage);
+            }
+
+            if (targetLanguage === 'en' && targetIPA) {
+                // English shows raw IPA
+                targetTranscription = targetIPA;
+            } else if (targetIPA) {
+                // Convert IPA to Source language alphabet
+                targetTranscription = convertIPAToTarget(targetIPA, sourceLanguage);
             }
 
             // Source картка
@@ -234,8 +275,9 @@ function createGameState() {
             // Перемішуємо всі слова, щоб порядок появи був випадковим
             currentWords = shuffle(words);
 
+            const limit = getPairsLimit();
             // Вибрати перші N слів
-            const selectedWords = currentWords.slice(0, PAIRS_ON_SCREEN);
+            const selectedWords = currentWords.slice(0, limit);
             selectedWords.forEach((w) => usedWordKeys.add(w));
 
             const { source, target } = createCardsFromWordKeys(selectedWords);
@@ -248,6 +290,24 @@ function createGameState() {
         } finally {
             isLoading = false;
         }
+    }
+
+    /**
+     * Helper to construct WordPair from current state
+     */
+    function constructWordPair(wordKey: string): WordPair {
+        const { sourceLanguage, targetLanguage } = settingsStore.value;
+        // Attempt to find EN/UK values
+        let english = '';
+        let ukrainian = '';
+
+        if (sourceLanguage === 'en') english = sourceTranslations[wordKey];
+        else if (targetLanguage === 'en') english = targetTranslations[wordKey];
+
+        if (sourceLanguage === 'uk') ukrainian = sourceTranslations[wordKey];
+        else if (targetLanguage === 'uk') ukrainian = targetTranslations[wordKey];
+
+        return { id: wordKey, english, ukrainian };
     }
 
     /**
@@ -322,6 +382,11 @@ function createGameState() {
         // Записуємо прогрес
         progressStore.recordCorrect(card1.wordKey);
 
+        // Check if in mistakes playlist
+        if (settingsStore.value.currentPlaylist === 'mistakes') {
+            playlistStore.recordCorrect(card1.wordKey);
+        }
+
         // Відразу дозволяємо вибір наступної пари
         selectedCard = null;
         isProcessing = false;
@@ -346,6 +411,26 @@ function createGameState() {
 
         // Записуємо помилку
         progressStore.recordWrong();
+
+        // Add to mistakes playlist
+        // We need to construct WordPair. 
+        // We have keys card1.wordKey.
+        // We can map it using sourceTranslations and targetTranslations (if available)
+        // Note: card1.wordKey === card2.wordKey usually? No, wrong match means they DIFFER.
+        // Wait, handleWrongMatch is called when keys DIFFER.
+        // So we have TWO errors? `card1` is wrong and `card2` is wrong.
+        // Usually we record mistakes for the PAIR the user intended?
+        // Actually, user paired A with B. Neither A nor B is "correct" for each other.
+        // We should probably add BOTH to mistakes? Or just ignoring for now?
+        // User said "Mistakes playlist automatically adds words which were error pairs".
+        // If I pair "Apple" with "Cat", I don't know "Apple" AND I don't know "Cat".
+        // So I should add both to mistakes.
+
+        const pair1 = constructWordPair(card1.wordKey);
+        const pair2 = constructWordPair(card2.wordKey);
+
+        playlistStore.recordMistake(pair1);
+        playlistStore.recordMistake(pair2);
 
         setTimeout(() => {
             updateCardStatus(card1.id, 'idle');
@@ -384,25 +469,22 @@ function createGameState() {
      */
     function checkAndRefill(): void {
         const visibleCount = getVisiblePairCount();
+        const limit = getPairsLimit();
 
         if (visibleCount <= REFILL_THRESHOLD) {
             // Знаходимо невикористані слова
             let availableWords = currentWords.filter((w) => !usedWordKeys.has(w));
 
-            // Якщо слова закінчились — скидаємо використані та перемішуємо знову
+            // Якщо слова закінчились
             if (availableWords.length === 0) {
+                // For playlists or phrases, we just recycle
                 usedWordKeys.clear();
-                // Залишаємо тільки ті, що ще видимі
                 sourceCards.filter((c) => c.isVisible).forEach((c) => usedWordKeys.add(c.wordKey));
-
-                // Знову беремо всі доступні (крім тих, що на екрані)
                 availableWords = currentWords.filter((w) => !usedWordKeys.has(w));
-                // Перемішуємо знову для різноманітності при другого проходженні
                 availableWords = shuffle(availableWords);
             }
 
-            const neededPairs = PAIRS_ON_SCREEN - visibleCount;
-            // Беремо слова з вже перемішаного списку (або перемішаного при ресеті)
+            const neededPairs = limit - visibleCount;
             const newWords = availableWords.slice(0, neededPairs);
 
             if (newWords.length > 0) {
@@ -460,40 +542,31 @@ function createGameState() {
      */
     async function runLearningLoop() {
         if (!isLearningMode) return;
-
-        // Якщо вже щось відбувається (наприклад, ручний вибір), чекаємо трохи
         if (isProcessing) {
             setTimeout(runLearningLoop, 500);
             return;
         }
 
-        // Використовуємо підказку в повільному режимі
         const success = useHint(true);
 
         if (success) {
-            // Чекаємо завершення анімації (5с) + невелика пауза перед наступною
             setTimeout(runLearningLoop, 5500);
         } else {
-            // Якщо не вдалось (наприклад, немає пар), пробуємо пізніше
             setTimeout(runLearningLoop, 1000);
         }
     }
 
     /**
      * Використати підказку
-     * @param isSlow - чи використовувати повільну анімацію (для режиму навчання)
-     * @returns чи успішно застосовано підказку
      */
     function useHint(isSlow = false): boolean {
         if (isProcessing) return false;
 
-        // Знаходимо всі доступні (idle) пари
         const visibleSources = sourceCards.filter(c => c.status === 'idle' && c.isVisible);
         const visibleTargets = targetCards.filter(c => c.status === 'idle' && c.isVisible);
 
         if (visibleSources.length === 0 || visibleTargets.length === 0) return false;
 
-        // Шукаємо пару, яка є в обох списках (за wordKey)
         const availablePairs: string[] = [];
         visibleSources.forEach(src => {
             if (visibleTargets.some(tgt => tgt.wordKey === src.wordKey)) {
@@ -503,17 +576,12 @@ function createGameState() {
 
         if (availablePairs.length === 0) return false;
 
-        // Вибираємо випадкову пару
         const randomKey = availablePairs[Math.floor(Math.random() * availablePairs.length)];
 
-        // Знаходимо ID карток
         const srcCard = visibleSources.find(c => c.wordKey === randomKey);
         const tgtCard = visibleTargets.find(c => c.wordKey === randomKey);
 
         if (srcCard && tgtCard) {
-            // Не блокуємо інтерфейс, дозволяємо вибір
-            // isProcessing = true; 
-
             const status: CardStatus = isSlow ? 'hint-slow' : 'hint';
             const duration = isSlow ? 5000 : 1000;
 
@@ -521,10 +589,8 @@ function createGameState() {
             updateCardStatus(tgtCard.id, status);
 
             setTimeout(() => {
-                // Повертаємо назад в idle, тільки якщо вони все ще в стані підказки
                 sourceCards = sourceCards.map(c => c.id === srcCard.id && c.status === status ? { ...c, status: 'idle' } : c);
                 targetCards = targetCards.map(c => c.id === tgtCard.id && c.status === status ? { ...c, status: 'idle' } : c);
-                // isProcessing = false;
             }, duration);
 
             return true;
@@ -574,7 +640,8 @@ function createGameState() {
         selectCard,
         useHint,
         toggleLearningMode,
-        clearSelection
+        clearSelection,
+        constructWordPair // Added export for UI usage if needed (e.g. adding to favorites manually)
     };
 }
 
