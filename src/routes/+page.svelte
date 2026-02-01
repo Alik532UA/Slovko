@@ -29,8 +29,9 @@
     .app-container {
         display: flex;
         flex-direction: column;
-        min-height: 100vh;
+        height: 100dvh; /* Force dynamic viewport height */
         position: relative;
+        overflow: hidden;
     }
 
     main {
@@ -39,7 +40,9 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 80px 1rem 0px;
+        padding: 70px 1rem 0px;
         gap: 1rem;
+        overflow-y: auto; /* Allow scrolling within main if content overflows */
+        width: 100%;
     }
 </style>

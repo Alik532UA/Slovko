@@ -94,6 +94,7 @@
         align-items: center;
         gap: 1rem;
         padding: 1rem;
+        padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0));
         background: transparent;
         width: 100%;
     }
