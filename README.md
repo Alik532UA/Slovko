@@ -18,15 +18,24 @@ To recreate this project with the same configuration:
 npx sv create --template minimal --types ts --install npm ./
 ```
 
-## Developing
+## 🤖 For AI Agents & Developers
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+If you are an AI assistant or a developer working on this codebase, please refer to the following guides:
 
-```sh
+- **[Architecture Guide](AI_ARCHITECTURE.md)**: Detailed overview of data structures, state management, and project conventions.
+- **[Scripts Catalog](scripts/SCRIPTS_CATALOG.md)**: Complete list of maintenance and generation tools available in the `scripts/` directory.
+
+## 🛠️ Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start dev server
 npm run dev
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+# Run type checks
+npm run check
 ```
 
 ## Building
