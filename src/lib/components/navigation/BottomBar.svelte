@@ -63,18 +63,13 @@
 
 <style>
     .bottom-bar {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 1rem;
         padding: 1rem;
-        background: var(--bg-secondary);
-        border-top: 1px solid var(--border);
-        z-index: 100;
+        background: transparent;
+        width: 100%;
     }
 
     .nav-btn {

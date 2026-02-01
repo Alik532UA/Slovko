@@ -39,7 +39,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 80px 1rem 100px;
+        padding: 80px 1rem 0px;
         gap: 1rem;
     }
 </style>
