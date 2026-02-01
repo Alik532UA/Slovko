@@ -148,7 +148,14 @@ function createSettingsStore() {
             const levels: CEFRLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
             const idx = levels.indexOf(settings.currentLevel);
             if (idx < levels.length - 1) {
-                this.setLevel(levels[idx + 1]);
+                const nextLvl = levels[idx + 1];
+                if (settings.mode === 'topics' && settings.currentTopic) {
+                    // Зберігаємо тему, просто змінюємо рівень
+                    settings = { ...settings, currentLevel: nextLvl };
+                    saveSettings();
+                } else {
+                    this.setLevel(nextLvl);
+                }
             }
         },
 
@@ -157,7 +164,14 @@ function createSettingsStore() {
             const levels: CEFRLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
             const idx = levels.indexOf(settings.currentLevel);
             if (idx > 0) {
-                this.setLevel(levels[idx - 1]);
+                const prevLvl = levels[idx - 1];
+                if (settings.mode === 'topics' && settings.currentTopic) {
+                    // Зберігаємо тему, просто змінюємо рівень
+                    settings = { ...settings, currentLevel: prevLvl };
+                    saveSettings();
+                } else {
+                    this.setLevel(prevLvl);
+                }
             }
         },
 
