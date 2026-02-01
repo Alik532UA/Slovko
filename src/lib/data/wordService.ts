@@ -102,7 +102,14 @@ export async function loadTranscriptions(
  * Отримати переклад слова
  */
 export function getTranslation(word: string, translations: TranslationDictionary): string {
-    return translations[word] || word;
+    const translation = translations[word];
+    if (!translation) {
+        if (import.meta.env.DEV) {
+            console.warn(`[Missing Translation] Word: "${word}"`);
+        }
+        return word;
+    }
+    return translation;
 }
 
 /**
@@ -112,7 +119,11 @@ export function getTranscription(
     word: string,
     transcriptions: TranscriptionDictionary
 ): string | undefined {
-    return transcriptions[word];
+    const transcription = transcriptions[word];
+    if (!transcription && import.meta.env.DEV) {
+        console.warn(`[Missing Transcription] Word: "${word}"`);
+    }
+    return transcription;
 }
 
 /**
