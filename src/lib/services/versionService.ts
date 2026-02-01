@@ -35,9 +35,37 @@ export async function checkForUpdates() {
 /**
  * Виконує оновлення (застосовує нову версію)
  */
-export function applyUpdate() {
+export async function applyUpdate() {
     if (versionStore.currentVersion) {
-        localStorage.setItem(STORAGE_KEY, versionStore.currentVersion);
+        const nextVersion = versionStore.currentVersion;
+
+        try {
+            // 1. Очищення Service Workers
+            if ("serviceWorker" in navigator) {
+                const registrations =
+                    await navigator.serviceWorker.getRegistrations();
+                for (let registration of registrations) {
+                    await registration.unregister();
+                }
+            }
+
+            // 2. Очищення Cache API
+            if ("caches" in window) {
+                const keys = await caches.keys();
+                for (let key of keys) {
+                    await caches.delete(key);
+                }
+            }
+        } catch (e) {
+            console.error("Failed to clear caches:", e);
+        }
+
+        // 3. Очищення localStorage (зберігаємо лише нову версію)
+        // Це скине налаштування користувача, але гарантує чистоту
+        localStorage.clear();
+        localStorage.setItem(STORAGE_KEY, nextVersion);
+
+        // 4. Перезавантаження
         window.location.reload();
     }
 }
