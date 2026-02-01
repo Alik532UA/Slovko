@@ -1,0 +1,28 @@
+{
+  "name": "Slovko",
+  "short_name": "Slovko",
+  "description": "Learn languages by matching words without ads",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#23272f",
+  "theme_color": "#e95420",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "education",
+    "games"
+  ]
+}
