@@ -5,8 +5,8 @@
 import { browser } from '$app/environment';
 import { settingsStore } from '../stores/settingsStore.svelte';
 
-let speechSynthesis: SpeechSynthesis | null = null;
-let englishVoice: SpeechSynthesisVoice | null = null;
+
+
 
 /**
  * Ініціалізація голосу
@@ -14,56 +14,63 @@ let englishVoice: SpeechSynthesisVoice | null = null;
 function initVoice(): void {
     if (!browser || !window.speechSynthesis) return;
 
-    speechSynthesis = window.speechSynthesis;
-
     // Отримуємо список голосів
     const loadVoices = () => {
-        const voices = speechSynthesis!.getVoices();
-        // Шукаємо англійський голос (US або GB)
-        englishVoice =
-            voices.find((v) => v.lang === 'en-US') ||
-            voices.find((v) => v.lang === 'en-GB') ||
-            voices.find((v) => v.lang.startsWith('en')) ||
-            null;
+        // У цьому варіанті ми не кешуємо конкретний голос наперед,
+        // бо мова може змінюватись. Просто переконуємось що вони завантажені.
+        window.speechSynthesis.getVoices();
     };
 
     // Голоси можуть завантажуватись асинхронно
-    if (speechSynthesis.getVoices().length > 0) {
+    if (window.speechSynthesis.getVoices().length > 0) {
         loadVoices();
     } else {
-        speechSynthesis.addEventListener('voiceschanged', loadVoices);
+        window.speechSynthesis.addEventListener('voiceschanged', loadVoices);
     }
 }
 
 /**
- * Озвучити текст англійською
+ * Озвучити текст заданою мовою
  */
-export function speakEnglish(text: string): void {
+export function speakText(text: string, lang: string): void {
     if (!browser || !window.speechSynthesis) return;
 
-    // Перевіряємо чи увімкнено озвучування
-    if (!settingsStore.value.enablePronunciation) return;
-
-    // Ініціалізуємо якщо ще не було
-    if (!speechSynthesis) {
-        initVoice();
-        speechSynthesis = window.speechSynthesis;
-    }
-
     // Зупиняємо попереднє озвучування
-    speechSynthesis.cancel();
+    window.speechSynthesis.cancel();
 
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
-    utterance.rate = 0.9; // Трохи повільніше для кращого сприйняття
+
+    // Спробуємо знайти відповідний голос
+    const voices = window.speechSynthesis.getVoices();
+
+    // 1. Точний збіг (наприклад 'uk-UA')
+    let voice = voices.find(v => v.lang === lang);
+
+    // 2. Частковий збіг (наприклад 'uk' -> 'uk-UA')
+    if (!voice) {
+        voice = voices.find(v => v.lang.startsWith(lang));
+    }
+
+    // 3. Fallback: використовуємо дефолтний голос браузера для цієї мови (якщо utterance.lang підтримується)
+    // Встановлюємо lang в utterance, навіть якщо голос не знайдено явно
+    utterance.lang = lang;
+
+    if (voice) {
+        utterance.voice = voice;
+    }
+
+    utterance.rate = 0.9;
     utterance.pitch = 1;
     utterance.volume = 1;
 
-    if (englishVoice) {
-        utterance.voice = englishVoice;
-    }
+    window.speechSynthesis.speak(utterance);
+}
 
-    speechSynthesis.speak(utterance);
+/**
+ * Legacy support / Alias (optional, or just remove)
+ */
+export function speakEnglish(text: string): void {
+    speakText(text, 'en');
 }
 
 /**

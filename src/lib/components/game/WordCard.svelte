@@ -5,7 +5,7 @@
      * Підтримка транскрипції та озвучування
      */
     import type { ActiveCard } from "$lib/types";
-    import { speakEnglish } from "$lib/services/speechService";
+    import { speakText } from "$lib/services/speechService";
     import { settingsStore } from "$lib/stores/settingsStore.svelte";
 
     interface Props {
@@ -19,10 +19,22 @@
         // Запобігаємо спливанню події, щоб не спрацював клік по фону (зняття виділення)
         e.stopPropagation();
 
-        // Озвучуємо англійські слова
-        if (card.language === "en") {
-            speakEnglish(card.text);
+        // Check which side this card belongs to and if pronunciation is enabled for it
+        const isSource = card.language === settingsStore.value.sourceLanguage;
+        const isTarget = card.language === settingsStore.value.targetLanguage;
+
+        let shouldSpeak = false;
+
+        if (isSource && settingsStore.value.enablePronunciationSource) {
+            shouldSpeak = true;
+        } else if (isTarget && settingsStore.value.enablePronunciationTarget) {
+            shouldSpeak = true;
         }
+
+        if (shouldSpeak) {
+            speakText(card.text, card.language);
+        }
+
         onclick();
     }
 </script>
@@ -33,13 +45,22 @@
     class:correct={card.status === "correct"}
     class:wrong={card.status === "wrong"}
     class:hint={card.status === "hint"}
+    class:hint-slow={card.status === "hint-slow"}
     onclick={handleClick}
     disabled={card.status === "correct"}
     data-testid="word-card-{card.id}"
 >
     <span class="word-text">{card.text}</span>
-    {#if card.transcription && settingsStore.value.showTranscription}
-        <span class="transcription">{card.transcription}</span>
+    {#if card.transcription}
+        {@const isSource = card.language === settingsStore.value.sourceLanguage}
+        {@const isTarget = card.language === settingsStore.value.targetLanguage}
+        {@const show =
+            (isSource && settingsStore.value.showTranscriptionSource) ||
+            (isTarget && settingsStore.value.showTranscriptionTarget)}
+
+        {#if show}
+            <span class="transcription">{card.transcription}</span>
+        {/if}
     {/if}
 </button>
 
@@ -133,19 +154,31 @@
     /* Підказка — плавне блимання */
     .word-card.hint {
         animation: hintPulse 1s ease-in-out;
-        background: rgba(255, 255, 0, 0.15); /* Light yellow tint */
-        border-color: rgba(255, 255, 0, 0.5);
+    }
+
+    .word-card.hint-slow {
+        animation: hintPulse 5s ease-in-out;
     }
 
     @keyframes hintPulse {
-        0%,
+        0% {
+            transform: scale(1);
+            background-color: var(--card-bg);
+            border-color: var(--card-border);
+            box-shadow: 0 0 0 rgba(58, 143, 214, 0);
+        }
+        20%,
+        80% {
+            transform: scale(1.05);
+            background-color: rgba(58, 143, 214, 0.15); /* Blue tint */
+            border-color: var(--selected-border);
+            box-shadow: 0 0 20px rgba(58, 143, 214, 0.4);
+        }
         100% {
             transform: scale(1);
-            filter: brightness(1);
-        }
-        50% {
-            transform: scale(1.05);
-            filter: brightness(1.3);
+            background-color: var(--card-bg);
+            border-color: var(--card-border);
+            box-shadow: 0 0 0 rgba(58, 143, 214, 0);
         }
     }
 

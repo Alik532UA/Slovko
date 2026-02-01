@@ -105,7 +105,7 @@ export type GameMode = 'levels' | 'topics';
  * - 'wrong': Incorrect match (red shake)
  * - 'hint': Highlighted as a hint
  */
-export type CardStatus = 'idle' | 'selected' | 'correct' | 'wrong' | 'hint';
+export type CardStatus = 'idle' | 'selected' | 'correct' | 'wrong' | 'hint' | 'hint-slow';
 
 /**
  * Runtime representation of a card on the game board.

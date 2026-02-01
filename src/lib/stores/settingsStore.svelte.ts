@@ -27,11 +27,13 @@ export interface AppSettings {
     sourceLanguage: Language; // "з якої"
     targetLanguage: Language; // "на яку"
 
-    // Показувати транскрипцію (для англійської)
-    showTranscription: boolean;
+    // Показувати транскрипцію (окремо для кожної сторони)
+    showTranscriptionSource: boolean;
+    showTranscriptionTarget: boolean;
 
-    // Озвучувати англійські слова
-    enablePronunciation: boolean;
+    // Озвучувати слова (окремо для кожної сторони)
+    enablePronunciationSource: boolean;
+    enablePronunciationTarget: boolean;
 
     // Поточний режим
     mode: GameMode;
@@ -47,8 +49,10 @@ const DEFAULT_SETTINGS: AppSettings = {
     interfaceLanguage: 'uk',
     sourceLanguage: 'en',
     targetLanguage: 'uk',
-    showTranscription: true,
-    enablePronunciation: true,
+    showTranscriptionSource: true,
+    showTranscriptionTarget: false,
+    enablePronunciationSource: true,
+    enablePronunciationTarget: false, // За замовчуванням тільки джерело (usually EN)
     mode: 'levels',
     currentLevel: 'A1',
     currentTopic: null
@@ -58,11 +62,7 @@ function createSettingsStore() {
     // Завантажити з localStorage або використати default
     let settings = $state<AppSettings>(loadSettings());
 
-    // Застосувати тему при ініціалізації
-    if (browser) {
-        document.documentElement.setAttribute('data-theme', settings.theme);
-        document.documentElement.style.colorScheme = 'dark';
-    }
+    // ... (rest of init)
 
     function loadSettings(): AppSettings {
         if (!browser) return DEFAULT_SETTINGS;
@@ -75,7 +75,24 @@ function createSettingsStore() {
                 if (parsed.theme === 'purple') {
                     parsed.theme = 'orange';
                 }
-                return { ...DEFAULT_SETTINGS, ...parsed };
+
+                let migrated = { ...DEFAULT_SETTINGS, ...parsed };
+
+                // Migration: enablePronunciation -> enablePronunciationSource
+                if ('enablePronunciation' in parsed) {
+                    migrated.enablePronunciationSource = parsed.enablePronunciation;
+                    migrated.enablePronunciationTarget = false;
+                    delete migrated.enablePronunciation;
+                }
+
+                // Migration: showTranscription -> showTranscriptionSource
+                if ('showTranscription' in parsed) {
+                    migrated.showTranscriptionSource = parsed.showTranscription;
+                    migrated.showTranscriptionTarget = false;
+                    delete migrated.showTranscription;
+                }
+
+                return migrated;
             }
         } catch (e) {
             console.warn('Failed to load settings:', e);
@@ -126,17 +143,32 @@ function createSettingsStore() {
             saveSettings();
         },
 
-        /** Toggle транскрипції */
-        toggleTranscription() {
-            settings = { ...settings, showTranscription: !settings.showTranscription };
+        /** Toggle транскрипції джерела */
+        toggleTranscriptionSource() {
+            settings = { ...settings, showTranscriptionSource: !settings.showTranscriptionSource };
             saveSettings();
         },
 
-        /** Toggle озвучування */
-        togglePronunciation() {
-            settings = { ...settings, enablePronunciation: !settings.enablePronunciation };
+        /** Toggle транскрипції цілі */
+        toggleTranscriptionTarget() {
+            settings = { ...settings, showTranscriptionTarget: !settings.showTranscriptionTarget };
             saveSettings();
         },
+
+        /** Toggle озвучування джерела */
+        togglePronunciationSource() {
+            settings = { ...settings, enablePronunciationSource: !settings.enablePronunciationSource };
+            saveSettings();
+        },
+
+        /** Toggle озвучування цілі */
+        togglePronunciationTarget() {
+            settings = { ...settings, enablePronunciationTarget: !settings.enablePronunciationTarget };
+            saveSettings();
+        },
+
+        /** Перейти до рівня */
+        // ...
 
         /** Перейти до рівня */
         setLevel(level: CEFRLevel) {

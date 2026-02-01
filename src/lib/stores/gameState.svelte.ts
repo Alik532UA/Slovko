@@ -9,6 +9,7 @@ import type { ActiveCard, CardStatus, Language, TranslationDictionary, Transcrip
 import { settingsStore } from './settingsStore.svelte';
 import { progressStore } from './progressStore.svelte';
 import { loadLevel, loadTopic, loadTranslations, loadTranscriptions, getTranslation, getTranscription } from '../data/wordService';
+import { generateTranscription } from '../services/transcriptionService';
 
 const PAIRS_ON_SCREEN = 6;
 const REFILL_THRESHOLD = 2;
@@ -146,7 +147,7 @@ function createGameState() {
      * Створити картки з ключів слів
      */
     function createCardsFromWordKeys(wordKeys: string[], startSlot: number = 0): { source: ActiveCard[]; target: ActiveCard[] } {
-        const { sourceLanguage, targetLanguage, showTranscription } = settingsStore.value;
+        const { sourceLanguage, targetLanguage } = settingsStore.value;
         const sourceList: ActiveCard[] = [];
         const targetList: ActiveCard[] = [];
 
@@ -158,12 +159,32 @@ function createGameState() {
             let sourceTranscription: string | undefined;
             let targetTranscription: string | undefined;
 
-            if (showTranscription) {
+
+
+            // ... (rest of imports are fine, inserting above gameState definition or keeping logically placed)
+
+            // ...
+
+            // Пріоритет: словникова транскрипція (для EN) -> генеративна
+
+
+            // Re-reading usage context:
+            // logic was: if (showTranscription) { ... set sourceTranscription ... set targetTranscription ... }
+
+            // New logic:
+            if (settingsStore.value.showTranscriptionSource) {
                 if (sourceLanguage === 'en') {
                     sourceTranscription = getTranscription(wordKey, transcriptions);
+                } else {
+                    sourceTranscription = generateTranscription(sourceText, sourceLanguage, targetLanguage);
                 }
+            }
+
+            if (settingsStore.value.showTranscriptionTarget) {
                 if (targetLanguage === 'en') {
                     targetTranscription = getTranscription(wordKey, transcriptions);
+                } else {
+                    targetTranscription = generateTranscription(targetText, targetLanguage, sourceLanguage);
                 }
             }
 
@@ -247,7 +268,10 @@ function createGameState() {
         lastInteractionTime = now;
 
         if (isProcessing) return;
-        if ((card.status !== 'idle' && card.status !== 'selected') || !card.isVisible) return;
+
+        // Дозволяємо вибір навіть якщо картка підсвічена підказкою
+        const allowedStatuses = ['idle', 'selected', 'hint', 'hint-slow'];
+        if (!allowedStatuses.includes(card.status) || !card.isVisible) return;
 
         // Перший вибір
         if (!selectedCard) {
@@ -419,17 +443,55 @@ function createGameState() {
         }
     }
 
+    let isLearningMode = $state(false);
+
+    /**
+     * Перемикач режиму навчання
+     */
+    function toggleLearningMode(): void {
+        isLearningMode = !isLearningMode;
+        if (isLearningMode) {
+            runLearningLoop();
+        }
+    }
+
+    /**
+     * Цикл режиму навчання
+     */
+    async function runLearningLoop() {
+        if (!isLearningMode) return;
+
+        // Якщо вже щось відбувається (наприклад, ручний вибір), чекаємо трохи
+        if (isProcessing) {
+            setTimeout(runLearningLoop, 500);
+            return;
+        }
+
+        // Використовуємо підказку в повільному режимі
+        const success = useHint(true);
+
+        if (success) {
+            // Чекаємо завершення анімації (5с) + невелика пауза перед наступною
+            setTimeout(runLearningLoop, 5500);
+        } else {
+            // Якщо не вдалось (наприклад, немає пар), пробуємо пізніше
+            setTimeout(runLearningLoop, 1000);
+        }
+    }
+
     /**
      * Використати підказку
+     * @param isSlow - чи використовувати повільну анімацію (для режиму навчання)
+     * @returns чи успішно застосовано підказку
      */
-    function useHint(): void {
-        if (isProcessing) return;
+    function useHint(isSlow = false): boolean {
+        if (isProcessing) return false;
 
         // Знаходимо всі доступні (idle) пари
         const visibleSources = sourceCards.filter(c => c.status === 'idle' && c.isVisible);
         const visibleTargets = targetCards.filter(c => c.status === 'idle' && c.isVisible);
 
-        if (visibleSources.length === 0 || visibleTargets.length === 0) return;
+        if (visibleSources.length === 0 || visibleTargets.length === 0) return false;
 
         // Шукаємо пару, яка є в обох списках (за wordKey)
         const availablePairs: string[] = [];
@@ -439,7 +501,7 @@ function createGameState() {
             }
         });
 
-        if (availablePairs.length === 0) return;
+        if (availablePairs.length === 0) return false;
 
         // Вибираємо випадкову пару
         const randomKey = availablePairs[Math.floor(Math.random() * availablePairs.length)];
@@ -449,19 +511,25 @@ function createGameState() {
         const tgtCard = visibleTargets.find(c => c.wordKey === randomKey);
 
         if (srcCard && tgtCard) {
-            isProcessing = true; // Блокуємо інтерфейс на час підказки
+            // Не блокуємо інтерфейс, дозволяємо вибір
+            // isProcessing = true; 
 
-            updateCardStatus(srcCard.id, 'hint');
-            updateCardStatus(tgtCard.id, 'hint');
+            const status: CardStatus = isSlow ? 'hint-slow' : 'hint';
+            const duration = isSlow ? 5000 : 1000;
+
+            updateCardStatus(srcCard.id, status);
+            updateCardStatus(tgtCard.id, status);
 
             setTimeout(() => {
-                // Повертаємо назад в idle, тільки якщо вони все ще 'hint'
-                // (хоча через isProcessing нічого іншого статись не могло)
-                sourceCards = sourceCards.map(c => c.id === srcCard.id && c.status === 'hint' ? { ...c, status: 'idle' } : c);
-                targetCards = targetCards.map(c => c.id === tgtCard.id && c.status === 'hint' ? { ...c, status: 'idle' } : c);
-                isProcessing = false;
-            }, 1000); // Час анімації підказки
+                // Повертаємо назад в idle, тільки якщо вони все ще в стані підказки
+                sourceCards = sourceCards.map(c => c.id === srcCard.id && c.status === status ? { ...c, status: 'idle' } : c);
+                targetCards = targetCards.map(c => c.id === tgtCard.id && c.status === status ? { ...c, status: 'idle' } : c);
+                // isProcessing = false;
+            }, duration);
+
+            return true;
         }
+        return false;
     }
 
     /**
@@ -499,9 +567,13 @@ function createGameState() {
         get wordsPerMinute() {
             return wordsPerMinute;
         },
+        get isLearningMode() {
+            return isLearningMode;
+        },
         initGame,
         selectCard,
         useHint,
+        toggleLearningMode,
         clearSelection
     };
 }
