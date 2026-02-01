@@ -329,8 +329,8 @@ function createGameState() {
 
         if (isProcessing) return;
 
-        // Дозволяємо вибір навіть якщо картка підсвічена підказкою
-        const allowedStatuses = ['idle', 'selected', 'hint', 'hint-slow'];
+        // Дозволяємо вибір навіть якщо картка підсвічена підказкою або помилкою
+        const allowedStatuses = ['idle', 'selected', 'hint', 'hint-slow', 'wrong'];
         if (!allowedStatuses.includes(card.status) || !card.isVisible) return;
 
         // Перший вибір
@@ -356,14 +356,15 @@ function createGameState() {
         }
 
         // Другий вибір — перевіряємо пару
-        isProcessing = true;
         updateCardStatus(card.id, 'selected');
 
         const isMatch = selectedCard.wordKey === card.wordKey;
 
         if (isMatch) {
+            isProcessing = true; // Блокуємо тільки на мить для вірного збігу, щоб уникнути race conditions
             handleCorrectMatch(selectedCard, card);
         } else {
+            // При помилці НЕ блокуємо isProcessing, дозволяючи клікати далі
             handleWrongMatch(selectedCard, card);
         }
     }
@@ -402,8 +403,11 @@ function createGameState() {
      * Неправильне з'єднання: блимаємо червоним → скидаємо
      */
     function handleWrongMatch(card1: ActiveCard, card2: ActiveCard): void {
-        updateCardStatus(card1.id, 'wrong');
-        updateCardStatus(card2.id, 'wrong');
+        const c1Id = card1.id;
+        const c2Id = card2.id;
+
+        updateCardStatus(c1Id, 'wrong');
+        updateCardStatus(c2Id, 'wrong');
 
         // Скидаємо стрік
         streak = 0;
@@ -413,30 +417,22 @@ function createGameState() {
         progressStore.recordWrong();
 
         // Add to mistakes playlist
-        // We need to construct WordPair. 
-        // We have keys card1.wordKey.
-        // We can map it using sourceTranslations and targetTranslations (if available)
-        // Note: card1.wordKey === card2.wordKey usually? No, wrong match means they DIFFER.
-        // Wait, handleWrongMatch is called when keys DIFFER.
-        // So we have TWO errors? `card1` is wrong and `card2` is wrong.
-        // Usually we record mistakes for the PAIR the user intended?
-        // Actually, user paired A with B. Neither A nor B is "correct" for each other.
-        // We should probably add BOTH to mistakes? Or just ignoring for now?
-        // User said "Mistakes playlist automatically adds words which were error pairs".
-        // If I pair "Apple" with "Cat", I don't know "Apple" AND I don't know "Cat".
-        // So I should add both to mistakes.
-
         const pair1 = constructWordPair(card1.wordKey);
         const pair2 = constructWordPair(card2.wordKey);
 
         playlistStore.recordMistake(pair1);
         playlistStore.recordMistake(pair2);
 
+        // МИТТЄВО скидаємо selectedCard, щоб можна було вибирати далі
+        selectedCard = null;
+
         setTimeout(() => {
-            updateCardStatus(card1.id, 'idle');
-            updateCardStatus(card2.id, 'idle');
-            selectedCard = null;
-            isProcessing = false;
+            // Повертаємо в idle тільки якщо статус все ще 'wrong' 
+            // (користувач міг уже вибрати цю картку знову)
+            sourceCards = sourceCards.map(c => c.id === c1Id && c.status === 'wrong' ? { ...c, status: 'idle' } : c);
+            sourceCards = sourceCards.map(c => c.id === c2Id && c.status === 'wrong' ? { ...c, status: 'idle' } : c);
+            targetCards = targetCards.map(c => c.id === c1Id && c.status === 'wrong' ? { ...c, status: 'idle' } : c);
+            targetCards = targetCards.map(c => c.id === c2Id && c.status === 'wrong' ? { ...c, status: 'idle' } : c);
         }, 500);
     }
 
