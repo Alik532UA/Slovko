@@ -13,8 +13,8 @@
     // Отримати поточний лейбл
     const currentLabel = $derived(
         settingsStore.value.mode === "levels"
-            ? settingsStore.value.currentLevel
-            : settingsStore.value.currentTopic || "",
+            ? $_(`levels.${settingsStore.value.currentLevel}`)
+            : $_(`topics.${settingsStore.value.currentTopic}`),
     );
 
     // Перевірка чи можна перемикати рівні
@@ -79,11 +79,20 @@
     }
 
     /* Fix visual issue: keep color same on click/focus */
-    .nav-btn:active,
-    .nav-btn:focus,
-    .nav-btn:visited {
+    .nav-btn:active {
         color: var(--text-primary);
-        outline: none;
+        transform: scale(0.95);
+    }
+
+    .nav-btn:focus {
+        outline: none; /* Remove default browser outline */
+        color: var(--text-primary); /* Explicitly keep color active */
+    }
+
+    .nav-btn:focus-visible {
+        color: var(--text-primary);
+        outline: 2px solid var(--accent);
+        border-radius: 8px;
     }
 
     .nav-btn:disabled {
@@ -91,8 +100,11 @@
         cursor: not-allowed;
     }
 
-    .nav-btn:not(:disabled):hover {
-        color: var(--accent);
+    /* Only apply hover effect on devices that support hover (mouse) to avoid sticky hover on mobile */
+    @media (hover: hover) {
+        .nav-btn:not(:disabled):hover {
+            color: var(--accent);
+        }
     }
 
     .level-btn {
