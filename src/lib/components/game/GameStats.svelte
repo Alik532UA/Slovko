@@ -3,7 +3,7 @@
      * GameStats.svelte - Відображення статистики (стрік, швидкість)
      */
     import { gameState } from "$lib/stores/gameState.svelte";
-    import { Flame, Target, Lightbulb } from "lucide-svelte";
+    import { Flame, Target, Lightbulb, GraduationCap } from "lucide-svelte";
 </script>
 
 <div class="stats-bar">
@@ -23,17 +23,34 @@
         >
     </div>
 
-    <button
-        class="stat-item hint-btn"
-        onclick={() => gameState.useHint()}
-        disabled={gameState.isProcessing}
-        title="Підказка"
-        aria-label="Показати підказку"
-    >
-        <div class="icon-wrapper">
-            <Lightbulb size={20} />
-        </div>
-    </button>
+    <div class="buttons-group">
+        <button
+            class="stat-item hint-btn"
+            class:active-mode={gameState.isLearningMode}
+            onclick={() => gameState.toggleLearningMode()}
+            disabled={gameState.isProcessing && !gameState.isLearningMode}
+            title="Режим навчання"
+            aria-label="Увімкнути режим навчання"
+            data-testid="learning-mode-btn"
+        >
+            <div class="icon-wrapper">
+                <GraduationCap size={20} />
+            </div>
+        </button>
+
+        <button
+            class="stat-item hint-btn"
+            onclick={() => gameState.useHint()}
+            disabled={gameState.isProcessing || gameState.isLearningMode}
+            title="Підказка"
+            aria-label="Показати підказку"
+            data-testid="hint-btn"
+        >
+            <div class="icon-wrapper">
+                <Lightbulb size={20} />
+            </div>
+        </button>
+    </div>
 </div>
 
 <style>
@@ -86,11 +103,11 @@
     }
 
     .hint-btn:hover:not(:disabled) {
-        background: rgba(255, 255, 0, 0.15);
-        color: #ffee00;
-        border-color: rgba(255, 255, 0, 0.4);
+        background: rgba(58, 143, 214, 0.15);
+        color: #3a8fd6;
+        border-color: rgba(58, 143, 214, 0.4);
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(255, 255, 0, 0.2);
+        box-shadow: 0 4px 12px rgba(58, 143, 214, 0.2);
     }
 
     .hint-btn:active:not(:disabled) {
@@ -123,8 +140,29 @@
     }
 
     /* Анімація для вогню, коли великий стрік */
-    .stat-item.active .icon-wrapper {
-        animation: pulse-fire 1.5s infinite;
+    .buttons-group {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .active-mode {
+        background: rgba(0, 255, 128, 0.15) !important;
+        color: #00ff80 !important;
+        border-color: rgba(0, 255, 128, 0.4) !important;
+        box-shadow: 0 0 15px rgba(0, 255, 128, 0.2);
+        animation: pulse-learning 2s infinite;
+    }
+
+    @keyframes pulse-learning {
+        0% {
+            box-shadow: 0 0 0 0 rgba(0, 255, 128, 0.4);
+        }
+        70% {
+            box-shadow: 0 0 0 10px rgba(0, 255, 128, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(0, 255, 128, 0);
+        }
     }
 
     @keyframes pulse-fire {

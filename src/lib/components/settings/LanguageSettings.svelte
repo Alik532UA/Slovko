@@ -4,8 +4,9 @@
      * Красиве вікно з прапорами
      */
     import { _ } from "svelte-i18n";
-    import { X } from "lucide-svelte";
+    import { X, Speech, Captions } from "lucide-svelte";
     import { settingsStore } from "$lib/stores/settingsStore.svelte";
+    import VoiceSelectionModal from "./VoiceSelectionModal.svelte";
     import { setInterfaceLanguage } from "$lib/i18n/init";
     import { LANGUAGE_NAMES, type Language } from "$lib/types";
     import { base } from "$app/paths";
@@ -17,15 +18,38 @@
 
     const LANGUAGES: Language[] = ["uk", "en", "crh", "nl", "de"];
 
-    // Чи показувати опцію транскрипції (тільки якщо одна з мов карток — англійська)
-    const showTranscriptionOption = $derived(
-        settingsStore.value.sourceLanguage === "en" ||
-            settingsStore.value.targetLanguage === "en",
-    );
+    let pressTimer: number;
+    let isLongPress = false;
+    let showVoiceSelection = $state(false);
 
     function handleInterfaceLanguage(lang: Language) {
         settingsStore.setInterfaceLanguage(lang);
         setInterfaceLanguage(lang);
+    }
+
+    let currentSide = $state<"source" | "target" | null>(null);
+
+    function handlePronunciationPress(side: "source" | "target") {
+        isLongPress = false;
+        currentSide = side;
+        pressTimer = setTimeout(() => {
+            isLongPress = true;
+            showVoiceSelection = true;
+        }, 800); // 0.8s long press for better UX
+    }
+
+    function handlePronunciationRelease() {
+        clearTimeout(pressTimer);
+        if (!isLongPress && !showVoiceSelection && currentSide) {
+            if (currentSide === "source") {
+                settingsStore.togglePronunciationSource();
+            } else {
+                settingsStore.togglePronunciationTarget();
+            }
+        }
+        if (!isLongPress) {
+            currentSide = null;
+        }
     }
 
     function handleBackdropClick(e: MouseEvent) {
@@ -40,6 +64,15 @@
         }
     }
 </script>
+
+{#if showVoiceSelection}
+    <VoiceSelectionModal
+        onclose={() => (showVoiceSelection = false)}
+        language={currentSide === "source"
+            ? settingsStore.value.sourceLanguage
+            : settingsStore.value.targetLanguage}
+    />
+{/if}
 
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <div
@@ -93,25 +126,35 @@
                 </div>
             </section>
 
+            <div class="separator"></div>
+
             <!-- Мови карток -->
             <section>
-                <h3>{$_("settings.cardLanguages")}</h3>
                 <div class="card-langs">
-                    <!-- З мови -->
+                    <!-- З мови (Ліва колонка) -->
                     <div class="lang-column">
+                        <div class="column-header">
+                            <h4 class="column-title">
+                                {$_("settings.sourceLanguage")}
+                            </h4>
+                        </div>
                         <div class="flags-column">
                             {#each LANGUAGES as lang}
                                 <button
                                     class="flag-btn small"
                                     class:selected={settingsStore.value
                                         .sourceLanguage === lang}
-                                    class:disabled={settingsStore.value
-                                        .targetLanguage === lang}
                                     onclick={() => {
                                         if (
-                                            lang !==
+                                            lang ===
                                             settingsStore.value.targetLanguage
                                         ) {
+                                            settingsStore.setCardLanguages(
+                                                lang,
+                                                settingsStore.value
+                                                    .sourceLanguage,
+                                            );
+                                        } else {
                                             settingsStore.setCardLanguages(
                                                 lang,
                                                 settingsStore.value
@@ -120,8 +163,6 @@
                                         }
                                     }}
                                     title={LANGUAGE_NAMES[lang]}
-                                    disabled={lang ===
-                                        settingsStore.value.targetLanguage}
                                     data-testid="source-lang-{lang}"
                                 >
                                     <img
@@ -132,23 +173,66 @@
                                 </button>
                             {/each}
                         </div>
+
+                        <div class="controls-wrapper">
+                            <!-- Transcription Toggle -->
+                            <button
+                                class="icon-btn small"
+                                class:active={settingsStore.value
+                                    .showTranscriptionSource}
+                                onclick={() =>
+                                    settingsStore.toggleTranscriptionSource()}
+                                title={$_("settings.transcription")}
+                                data-testid="transcription-left-btn"
+                            >
+                                <Captions size={16} />
+                            </button>
+
+                            <!-- Pronunciation Toggle -->
+                            <button
+                                class="icon-btn small"
+                                class:active={settingsStore.value
+                                    .enablePronunciationSource}
+                                onmousedown={() =>
+                                    handlePronunciationPress("source")}
+                                onmouseup={handlePronunciationRelease}
+                                onmouseleave={handlePronunciationRelease}
+                                ontouchstart={() =>
+                                    handlePronunciationPress("source")}
+                                ontouchend={handlePronunciationRelease}
+                                title={$_("settings.pronunciation")}
+                                data-testid="pronunciation-left-btn"
+                            >
+                                <Speech size={16} />
+                            </button>
+                        </div>
                     </div>
 
-                    <!-- На мову -->
+                    <!-- На мову (Права колонка) -->
                     <div class="lang-column">
+                        <div class="column-header">
+                            <h4 class="column-title">
+                                {$_("settings.targetLanguage")}
+                            </h4>
+                        </div>
+
                         <div class="flags-column">
                             {#each LANGUAGES as lang}
                                 <button
                                     class="flag-btn small"
                                     class:selected={settingsStore.value
                                         .targetLanguage === lang}
-                                    class:disabled={settingsStore.value
-                                        .sourceLanguage === lang}
                                     onclick={() => {
                                         if (
-                                            lang !==
+                                            lang ===
                                             settingsStore.value.sourceLanguage
                                         ) {
+                                            settingsStore.setCardLanguages(
+                                                settingsStore.value
+                                                    .targetLanguage,
+                                                lang,
+                                            );
+                                        } else {
                                             settingsStore.setCardLanguages(
                                                 settingsStore.value
                                                     .sourceLanguage,
@@ -157,8 +241,6 @@
                                         }
                                     }}
                                     title={LANGUAGE_NAMES[lang]}
-                                    disabled={lang ===
-                                        settingsStore.value.sourceLanguage}
                                     data-testid="target-lang-{lang}"
                                 >
                                     <img
@@ -169,50 +251,42 @@
                                 </button>
                             {/each}
                         </div>
+
+                        <div class="controls-wrapper">
+                            <!-- Transcription Toggle -->
+                            <button
+                                class="icon-btn small"
+                                class:active={settingsStore.value
+                                    .showTranscriptionTarget}
+                                onclick={() =>
+                                    settingsStore.toggleTranscriptionTarget()}
+                                title={$_("settings.transcription")}
+                                data-testid="transcription-right-btn"
+                            >
+                                <Captions size={16} />
+                            </button>
+
+                            <!-- Pronunciation Toggle -->
+                            <button
+                                class="icon-btn small"
+                                class:active={settingsStore.value
+                                    .enablePronunciationTarget}
+                                onmousedown={() =>
+                                    handlePronunciationPress("target")}
+                                onmouseup={handlePronunciationRelease}
+                                onmouseleave={handlePronunciationRelease}
+                                ontouchstart={() =>
+                                    handlePronunciationPress("target")}
+                                ontouchend={handlePronunciationRelease}
+                                title={$_("settings.pronunciation")}
+                                data-testid="pronunciation-right-btn"
+                            >
+                                <Speech size={16} />
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
-
-            <!-- Транскрипція toggle — тільки якщо є англійська -->
-            {#if showTranscriptionOption}
-                <section class="toggle-section">
-                    <label class="toggle">
-                        <input
-                            type="checkbox"
-                            checked={settingsStore.value.showTranscription}
-                            onchange={() => settingsStore.toggleTranscription()}
-                            data-testid="transcription-toggle"
-                        />
-                        <span class="slider"></span>
-                        <span class="toggle-label">
-                            {$_("settings.transcription")}
-                            <img
-                                src="{base}/flags/en.svg"
-                                alt="English"
-                                class="flag-mini"
-                            />
-                        </span>
-                    </label>
-
-                    <label class="toggle">
-                        <input
-                            type="checkbox"
-                            checked={settingsStore.value.enablePronunciation}
-                            onchange={() => settingsStore.togglePronunciation()}
-                            data-testid="pronunciation-toggle"
-                        />
-                        <span class="slider"></span>
-                        <span class="toggle-label">
-                            {$_("settings.pronunciation")}
-                            <img
-                                src="{base}/flags/en.svg"
-                                alt="English"
-                                class="flag-mini"
-                            />
-                        </span>
-                    </label>
-                </section>
-            {/if}
         </div>
     </div>
 </div>
@@ -338,7 +412,6 @@
         border-width: 2px;
     }
 
-    .flag-btn.disabled,
     .flag-btn:disabled {
         opacity: 0.25;
         cursor: not-allowed;
@@ -367,70 +440,67 @@
         align-items: center;
     }
 
-    .toggle-section {
-        padding-top: 0.5rem;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .toggle {
+    .icon-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: var(--text-secondary);
+        padding: 0.5rem;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
         display: flex;
         align-items: center;
-        gap: 0.75rem;
-        cursor: pointer;
+        justify-content: center;
     }
 
-    .toggle input {
-        display: none;
+    .icon-btn:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-2px);
     }
 
-    .slider {
-        position: relative;
-        width: 48px;
-        height: 26px;
-        background: rgba(
-            128,
-            128,
-            128,
-            0.3
-        ); /* Neutral gray transparency works on both dark and light */
-        border-radius: 13px;
-        transition: background 0.2s;
+    .icon-btn:active {
+        transform: scale(0.95);
     }
 
-    .slider::before {
-        content: "";
-        position: absolute;
-        top: 3px;
-        left: 3px;
-        width: 20px;
-        height: 20px;
-        background: white;
-        border-radius: 50%;
-        transition: transform 0.2s;
-    }
-
-    .toggle input:checked + .slider {
+    .icon-btn.active {
         background: var(--selected-border);
+        color: white;
+        border-color: var(--selected-border);
+        box-shadow: 0 0 12px rgba(58, 143, 214, 0.4);
     }
 
-    .toggle input:checked + .slider::before {
-        transform: translateX(22px);
-    }
-
-    .toggle-label {
-        color: var(--text-primary);
-        font-size: 0.9rem;
+    .column-header {
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        margin-bottom: 0.5rem;
     }
 
-    .flag-mini {
-        width: 24px;
-        height: 16px;
-        border-radius: 5px;
-        object-fit: cover;
+    .column-title {
+        margin: 0;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        text-align: center;
+        white-space: nowrap;
+        line-height: 1.2;
+    }
+
+    .controls-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .icon-btn.small {
+        padding: 0.35rem;
+        border-radius: 8px;
+    }
+
+    .separator {
+        width: 100%;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.1);
     }
 </style>

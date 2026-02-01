@@ -66,5 +66,16 @@
     "updateNotification": {
         "message": "Update verfügbar!",
         "button": "Aktualisieren"
+    },
+    "language": {
+        "uk": "Ukrainisch",
+        "en": "Englisch",
+        "nl": "Niederländisch",
+        "de": "Deutsch",
+        "crh": "Krimtatarisch",
+        "voices": "Stimmen"
+    },
+    "common": {
+        "confirm": "Bestätigen"
     }
 }

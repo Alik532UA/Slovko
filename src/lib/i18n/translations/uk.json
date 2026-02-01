@@ -41,6 +41,8 @@
         "cardLanguages": "Мови карток",
         "from": "З",
         "to": "На",
+        "sourceLanguage": "Ліва колонка",
+        "targetLanguage": "Права колонка",
         "transcription": "Показувати транскрипцію",
         "pronunciation": "Озвучувати слова",
         "theme": "Тема"
@@ -66,5 +68,16 @@
     "updateNotification": {
         "message": "Доступне оновлення!",
         "button": "Оновити"
+    },
+    "language": {
+        "uk": "Українські",
+        "en": "Англійські",
+        "nl": "Нідерландські",
+        "de": "Німецькі",
+        "crh": "Кримськотатарські",
+        "voices": "голоси"
+    },
+    "common": {
+        "confirm": "Підтвердити"
     }
 }

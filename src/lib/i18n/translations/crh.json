@@ -66,5 +66,16 @@
     "updateNotification": {
         "message": "Yañı versiya bar!",
         "button": "Yañart"
+    },
+    "language": {
+        "uk": "Ukrain",
+        "en": "İngliz",
+        "nl": "Felemenk",
+        "de": "Alman",
+        "crh": "Qırımtatar",
+        "voices": "sesleri"
+    },
+    "common": {
+        "confirm": "Tasdıqla"
     }
 }

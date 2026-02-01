@@ -66,5 +66,16 @@
     "updateNotification": {
         "message": "Update beschikbaar!",
         "button": "Bijwerken"
+    },
+    "language": {
+        "uk": "Oekraïens",
+        "en": "Engels",
+        "nl": "Nederlands",
+        "de": "Duits",
+        "crh": "Krim-Tataars",
+        "voices": "stemmen"
+    },
+    "common": {
+        "confirm": "Bevestigen"
     }
 }

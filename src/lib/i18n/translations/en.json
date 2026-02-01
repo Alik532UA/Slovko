@@ -41,6 +41,8 @@
         "cardLanguages": "Card languages",
         "from": "From",
         "to": "To",
+        "sourceLanguage": "Left column",
+        "targetLanguage": "Right column",
         "transcription": "Show transcription",
         "pronunciation": "Pronounce words",
         "theme": "Theme"
@@ -66,5 +68,16 @@
     "updateNotification": {
         "message": "Update available!",
         "button": "Update"
+    },
+    "language": {
+        "uk": "Ukrainian",
+        "en": "English",
+        "nl": "Dutch",
+        "de": "German",
+        "crh": "Crimean Tatar",
+        "voices": "voices"
+    },
+    "common": {
+        "confirm": "Confirm"
     }
 }
