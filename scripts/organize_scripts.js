@@ -15,7 +15,6 @@ const categories = {
         'migrate_polysemy_a2.js',
         'run_global_migration.js',
         'sync_topic_translations.js',
-        'bump-version.js',
         'polysemy_migration.json',
         'polysemy_report.md'
     ],
