@@ -28,14 +28,6 @@
         onclick={(e) => e.stopPropagation()}
         onkeydown={(e) => e.stopPropagation()}
     >
-        <button
-            class="close-btn"
-            onclick={onclose}
-            data-testid="close-theme-modal-btn"
-        >
-            <X size={24} />
-        </button>
-
         <div class="modal-header">
             <h2>{$_("settings.theme") || "Theme"}</h2>
         </div>
@@ -65,10 +57,44 @@
                 </button>
             {/each}
         </div>
+
+        <div class="modal-footer">
+            <button class="confirm-btn" onclick={onclose} data-testid="confirm-theme-btn">
+                {$_("common.confirm")}
+            </button>
+        </div>
     </div>
 </div>
 
 <style>
+    .modal-footer {
+        display: flex;
+        justify-content: center;
+        margin-top: 1.5rem;
+    }
+
+    .confirm-btn {
+        padding: 0.8rem 2.5rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        background: var(--accent);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: transform 0.2s, background 0.2s;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .confirm-btn:hover {
+        background: var(--accent-hover);
+        transform: translateY(-2px);
+    }
+
+    .confirm-btn:active {
+        transform: scale(0.98);
+    }
+
     .modal-backdrop {
         position: fixed;
         top: 0;

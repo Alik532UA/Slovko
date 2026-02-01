@@ -97,6 +97,7 @@
     },
     "common": {
         "confirm": "Bevestigen",
-        "listen": "Luisteren"
+        "listen": "Luisteren",
+        "backToLearning": "Terug naar leren"
     }
 }

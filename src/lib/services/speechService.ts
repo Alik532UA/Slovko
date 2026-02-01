@@ -34,7 +34,7 @@ function initVoice(): void {
 /**
  * Знаходить найкращий голос для мови
  */
-function findBestVoice(voices: SpeechSynthesisVoice[], lang: string): SpeechSynthesisVoice | undefined {
+export function findBestVoice(voices: SpeechSynthesisVoice[], lang: string): SpeechSynthesisVoice | undefined {
     const priorities = LANGUAGE_VOICE_PRIORITIES[lang];
 
     if (priorities) {

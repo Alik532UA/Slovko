@@ -74,15 +74,6 @@
         onclick={(e) => e.stopPropagation()}
         onkeydown={(e) => e.stopPropagation()}
     >
-        <button
-            class="close-btn"
-            onclick={onclose}
-            aria-label="Close"
-            data-testid="close-about-modal-btn"
-        >
-            <X size={28} />
-        </button>
-
         <div class="content">
             <p class="description">{$_("about.description")}</p>
 
@@ -134,11 +125,41 @@
                     </div>
                 {/if}
             </div>
+
+            <button class="confirm-btn" onclick={onclose} data-testid="close-about-btn">
+                {$_("common.backToLearning")}
+            </button>
         </div>
     </div>
 </div>
 
 <style>
+    .confirm-btn {
+        margin-top: 1rem;
+        padding: 0.8rem 2.5rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        background: var(--accent);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: transform 0.2s, background 0.2s;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 320px;
+        align-self: center;
+    }
+
+    .confirm-btn:hover {
+        background: var(--accent-hover);
+        transform: translateY(-2px);
+    }
+
+    .confirm-btn:active {
+        transform: scale(0.98);
+    }
+
     .modal-backdrop {
         position: fixed;
         inset: 0;

@@ -116,16 +116,6 @@
         onclick={(e) => e.stopPropagation()}
         onkeydown={(e) => e.stopPropagation()}
     >
-        <!-- Тільки кнопка закриття -->
-        <button
-            class="close-btn"
-            onclick={onclose}
-            aria-label="Close"
-            data-testid="close-language-modal-btn"
-        >
-            <X size={28} />
-        </button>
-
         <div class="content">
             <!-- Мова інтерфейсу -->
             <section>
@@ -309,6 +299,10 @@
                     </div>
                 </div>
             </section>
+
+            <button class="confirm-btn" onclick={onclose} data-testid="confirm-language-settings-btn">
+                {$_("common.confirm")}
+            </button>
         </div>
     </div>
 </div>
@@ -344,24 +338,27 @@
         color: var(--text-primary);
     }
 
-    .close-btn {
-        position: absolute;
-        top: -40px;
-        right: 0;
-        background: transparent;
+    .confirm-btn {
+        margin-top: 1rem;
+        padding: 0.8rem 2.5rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        background: var(--accent);
+        color: white;
         border: none;
-        color: var(
-            --text-primary
-        ); /* Use primary text color for better visibility */
+        border-radius: 12px;
         cursor: pointer;
-        padding: 0.5rem;
-        border-radius: 8px;
-        display: flex;
-        transition: all 0.2s;
+        transition: transform 0.2s, background 0.2s;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
-    .close-btn:hover {
-        color: var(--text-primary);
+    .confirm-btn:hover {
+        background: var(--accent-hover);
+        transform: translateY(-2px);
+    }
+
+    .confirm-btn:active {
+        transform: scale(0.98);
     }
 
     .content {

@@ -7,6 +7,8 @@
     import { X, Check } from "lucide-svelte";
     import { settingsStore } from "$lib/stores/settingsStore.svelte";
     import type { Language } from "$lib/types";
+    import { findBestVoice } from "$lib/services/speechService";
+    import { onMount, tick } from "svelte";
 
     interface Props {
         onclose: () => void;
@@ -16,12 +18,34 @@
 
     let voices: SpeechSynthesisVoice[] = $state([]);
     // Initialize with stored preference
-    // svelte-ignore state_referenced_locally
     let selectedVoiceURI = $state(
         settingsStore.value.voicePreferences[language] || "",
     );
     let primaryVoices: SpeechSynthesisVoice[] = $state([]);
     let secondaryVoices: SpeechSynthesisVoice[] = $state([]);
+
+    let voiceListElement = $state<HTMLElement | null>(null);
+
+    async function scrollToSelected() {
+        await tick();
+        if (voiceListElement) {
+            const selected = voiceListElement.querySelector(".voice-item.selected");
+            if (selected) {
+                selected.scrollIntoView({ block: "center", behavior: "smooth" });
+            }
+        }
+    }
+
+    $effect(() => {
+        const loadVoices = () => {
+            const allVoices = window.speechSynthesis.getVoices();
+            if (allVoices.length === 0) return;
+            
+            voices = allVoices;
+
+            // ... (rest of filtering logic)
+        };
+    }); // This was a partial snippet, I'll provide the full replacement below
 
     // Greeting text map for preview
     const PREVIEW_TEXTS: Record<string, string> = {
@@ -50,7 +74,17 @@
     $effect(() => {
         const loadVoices = () => {
             const allVoices = window.speechSynthesis.getVoices();
+            if (allVoices.length === 0) return;
+
             voices = allVoices;
+
+            // 1. If no preference saved, find what speakText would use
+            if (!selectedVoiceURI) {
+                const best = findBestVoice(allVoices, language);
+                if (best) {
+                    selectedVoiceURI = best.voiceURI;
+                }
+            }
 
             // Filter logic
             let targetLangPrefix: string = language;
@@ -91,6 +125,9 @@
                     }
                     return a.name.localeCompare(b.name);
                 });
+            
+            // Scroll to selected after filtering is done
+            scrollToSelected();
         };
 
         loadVoices();
@@ -142,15 +179,11 @@
         tabindex="-1"
         data-testid="voice-selection-modal"
     >
-        <button class="close-btn" onclick={onclose}>
-            <X size={28} />
-        </button>
-
         <div class="header-content">
             <h3>{$_("settings.pronunciation")}</h3>
         </div>
 
-        <div class="voice-list">
+        <div class="voice-list" bind:this={voiceListElement}>
             {#if voices.length === 0}
                 <div class="empty-state">No voices found</div>
             {:else}
@@ -211,7 +244,7 @@
         </div>
 
         <div class="footer">
-            <button class="confirm-btn" onclick={handleConfirm}>
+            <button class="confirm-btn" onclick={handleConfirm} data-testid="confirm-voice-btn">
                 {$_("common.confirm") || "Confirm"}
             </button>
         </div>

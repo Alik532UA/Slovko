@@ -97,6 +97,7 @@
     },
     "common": {
         "confirm": "Confirm",
-        "listen": "Listen"
+        "listen": "Listen",
+        "backToLearning": "Back to learning"
     }
 }

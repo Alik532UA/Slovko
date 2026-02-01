@@ -97,6 +97,7 @@
     },
     "common": {
         "confirm": "Tasdıqla",
-        "listen": "Diñlemek"
+        "listen": "Diñlemek",
+        "backToLearning": "Ögrenmege qaytmaq"
     }
 }
