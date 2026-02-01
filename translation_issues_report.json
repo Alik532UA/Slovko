@@ -14290,9 +14290,9 @@
     "file": "src\\lib\\data\\translations\\crh\\levels\\B1.json",
     "lang": "crh",
     "key": "media",
-    "value": "media",
+    "value": "medya",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
@@ -19167,15 +19167,6 @@
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B1.json",
     "lang": "crh",
-    "key": "server_computer",
-    "value": "server",
-    "issues": [
-      "English text in crh localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B1.json",
-    "lang": "crh",
     "key": "source_code",
     "value": "menba",
     "issues": [
@@ -19187,15 +19178,6 @@
     "lang": "crh",
     "key": "version_software",
     "value": "versiya",
-    "issues": [
-      "English text in crh localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B1.json",
-    "lang": "crh",
-    "key": "virus_computer",
-    "value": "virus",
     "issues": [
       "English text in crh localization"
     ]
@@ -21330,37 +21312,10 @@
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B1.json",
     "lang": "crh",
-    "key": "server",
-    "value": "server",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B1.json",
-    "lang": "crh",
-    "key": "signal",
-    "value": "signal",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B1.json",
-    "lang": "crh",
     "key": "space_cosmos",
     "value": "kosmos",
     "issues": [
       "English text in crh localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B1.json",
-    "lang": "crh",
-    "key": "virus",
-    "value": "virus",
-    "issues": [
-      "Potential missing translation (value equals key)"
     ]
   },
   {
@@ -24500,15 +24455,6 @@
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
-    "key": "account for",
-    "value": "account for",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
     "key": "adapt",
     "value": "uymaq",
     "issues": [
@@ -24528,54 +24474,45 @@
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "administer",
-    "value": "administer",
+    "value": "idareci",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "advocate",
-    "value": "advocate",
+    "value": "advokat",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "alter",
-    "value": "alter",
+    "value": "altter",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "analyse",
-    "value": "analyse",
+    "value": "analiz",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "appeal",
-    "value": "appeal",
+    "value": "muracaat",
     "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "applaud",
-    "value": "applaud",
-    "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
@@ -24591,45 +24528,27 @@
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "assert",
-    "value": "assert",
+    "value": "iddia",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "assign",
-    "value": "assign",
+    "value": "tayin",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "attribute",
-    "value": "attribute",
+    "value": "atribut",
     "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "bear",
-    "value": "bear",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "boost",
-    "value": "boost",
-    "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
@@ -24639,60 +24558,6 @@
     "value": "meydan oquv",
     "issues": [
       "English text in crh localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "characterise",
-    "value": "characterise",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "circulate",
-    "value": "circulate",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "cite",
-    "value": "cite",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "clarify",
-    "value": "clarify",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "collaborate",
-    "value": "collaborate",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "commence",
-    "value": "commence",
-    "issues": [
-      "Potential missing translation (value equals key)"
     ]
   },
   {
@@ -24708,99 +24573,36 @@
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "compensate",
-    "value": "compensate",
+    "value": "tazminat",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "comply",
-    "value": "comply",
+    "value": "izle",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "compose",
-    "value": "compose",
+    "value": "kompozit",
     "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "comprehend",
-    "value": "comprehend",
-    "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "conceal",
-    "value": "conceal",
+    "value": "gizle",
     "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "condemn",
-    "value": "condemn",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "conduct",
-    "value": "conduct",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "confine",
-    "value": "confine",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "confirm",
-    "value": "confirm",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "conform",
-    "value": "conform",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "confront",
-    "value": "confront",
-    "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
@@ -24816,54 +24618,36 @@
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "conserve",
-    "value": "conserve",
+    "value": "saqla",
     "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "constitute",
-    "value": "constitute",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "construct",
-    "value": "construct",
-    "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "consult",
-    "value": "consult",
+    "value": "mesleat",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "consume",
-    "value": "consume",
+    "value": "istegen",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "contemplate",
-    "value": "contemplate",
+    "value": "thinkplate",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
@@ -24878,64 +24662,28 @@
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
-    "key": "contract",
-    "value": "contract",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "contribute",
-    "value": "contribute",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "convert",
-    "value": "convert",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
     "key": "convey",
-    "value": "convey",
+    "value": "teslim",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "convince",
-    "value": "convince",
+    "value": "ikna et",
     "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "cooperate",
-    "value": "cooperate",
-    "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "coordinate",
-    "value": "coordinate",
+    "value": "koordinat",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
@@ -24943,15 +24691,6 @@
     "lang": "crh",
     "key": "cope",
     "value": "cope",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
-    "lang": "crh",
-    "key": "correspond",
-    "value": "correspond",
     "issues": [
       "Potential missing translation (value equals key)"
     ]
@@ -24969,27 +24708,27 @@
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "criticise",
-    "value": "criticise",
+    "value": "tenqit",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "cultivate",
-    "value": "cultivate",
+    "value": "ekinler",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\crh\\levels\\B2.json",
     "lang": "crh",
     "key": "decline",
-    "value": "decline",
+    "value": "eksilmek",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in crh localization"
     ]
   },
   {
@@ -46987,9 +46726,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A1.json",
     "lang": "nl",
     "key": "bed",
-    "value": "bed",
+    "value": "slaapkamer",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -47005,9 +46744,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A1.json",
     "lang": "nl",
     "key": "school",
-    "value": "school",
+    "value": "opleidingen",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -47329,7 +47068,7 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A1.json",
     "lang": "nl",
     "key": "we_pronoun",
-    "value": "we",
+    "value": "weekend",
     "issues": [
       "English text in nl localization"
     ]
@@ -48016,15 +47755,6 @@
     "value": "nu",
     "issues": [
       "English text in nl localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\A1.json",
-    "lang": "nl",
-    "key": "later",
-    "value": "later",
-    "issues": [
-      "Potential missing translation (value equals key)"
     ]
   },
   {
@@ -49831,18 +49561,18 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A1.json",
     "lang": "nl",
     "key": "sandwich",
-    "value": "sandwich",
+    "value": "boterham",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\A1.json",
     "lang": "nl",
     "key": "restaurant",
-    "value": "restaurant",
+    "value": "zaal",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -49930,9 +49660,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A1.json",
     "lang": "nl",
     "key": "park",
-    "value": "park",
+    "value": "parkeren",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -50002,9 +49732,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A1.json",
     "lang": "nl",
     "key": "ticket",
-    "value": "ticket",
+    "value": "kaartje",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -50200,9 +49930,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A1.json",
     "lang": "nl",
     "key": "wind",
-    "value": "wind",
+    "value": "wikkelgetal",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -50551,9 +50281,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A2.json",
     "lang": "nl",
     "key": "ticket",
-    "value": "ticket",
+    "value": "kaartje",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -50830,9 +50560,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A2.json",
     "lang": "nl",
     "key": "restaurant",
-    "value": "restaurant",
+    "value": "zaal",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -50875,9 +50605,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A2.json",
     "lang": "nl",
     "key": "park",
-    "value": "park",
+    "value": "parkeren",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -51037,9 +50767,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A2.json",
     "lang": "nl",
     "key": "wind",
-    "value": "wind",
+    "value": "winden",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -51172,9 +50902,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A2.json",
     "lang": "nl",
     "key": "toilet",
-    "value": "toilet",
+    "value": "wc",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -51639,19 +51369,10 @@
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\A2.json",
     "lang": "nl",
-    "key": "concert",
-    "value": "concert",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\A2.json",
-    "lang": "nl",
     "key": "contact",
-    "value": "contact",
+    "value": "contactpersoon",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -52108,9 +51829,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A2.json",
     "lang": "nl",
     "key": "festival",
-    "value": "festival",
+    "value": "feest",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -52585,7 +52306,7 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A2.json",
     "lang": "nl",
     "key": "hard_tough",
-    "value": "hard",
+    "value": "moeilijk",
     "issues": [
       "English text in nl localization"
     ]
@@ -52693,9 +52414,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A2.json",
     "lang": "nl",
     "key": "hobby",
-    "value": "hobby",
+    "value": "boomvalk",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -52927,9 +52648,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A2.json",
     "lang": "nl",
     "key": "insect",
-    "value": "insect",
+    "value": "insekt",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -53566,9 +53287,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A2.json",
     "lang": "nl",
     "key": "manager",
-    "value": "manager",
+    "value": "verantwoordelijke",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -53818,18 +53539,18 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A2.json",
     "lang": "nl",
     "key": "modern",
-    "value": "modern",
+    "value": "hedendaags",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\A2.json",
     "lang": "nl",
     "key": "moment",
-    "value": "moment",
+    "value": "ogenblikje",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -54655,9 +54376,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A2.json",
     "lang": "nl",
     "key": "project",
-    "value": "project",
+    "value": "cursusproject",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -54934,7 +54655,7 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A2.json",
     "lang": "nl",
     "key": "rock_music",
-    "value": "rock",
+    "value": "steen",
     "issues": [
       "English text in nl localization"
     ]
@@ -55069,9 +54790,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\A2.json",
     "lang": "nl",
     "key": "school",
-    "value": "school",
+    "value": "opleidingen",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -63933,15 +63654,6 @@
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
     "lang": "nl",
-    "key": "apart",
-    "value": "apart",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
-    "lang": "nl",
     "key": "apologize",
     "value": "verontschuldigen",
     "issues": [
@@ -64288,9 +64000,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
     "lang": "nl",
     "key": "basis",
-    "value": "basis",
+    "value": "grondmetaal",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -65092,9 +64804,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
     "lang": "nl",
     "key": "chef",
-    "value": "chef",
+    "value": "Zelfstandig werkend kok",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -65304,9 +65016,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
     "lang": "nl",
     "key": "comfort",
-    "value": "comfort",
+    "value": "komfort",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -65600,9 +65312,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
     "lang": "nl",
     "key": "constant",
-    "value": "constant",
+    "value": "constante",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -65647,9 +65359,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
     "lang": "nl",
     "key": "contact",
-    "value": "contact",
+    "value": "contactpersoon",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -65916,9 +65628,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
     "lang": "nl",
     "key": "crisis",
-    "value": "crisis",
+    "value": "acme",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -66327,9 +66039,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
     "lang": "nl",
     "key": "minister",
-    "value": "minister",
+    "value": "dienaar",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -66374,18 +66086,18 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
     "lang": "nl",
     "key": "modern",
-    "value": "modern",
+    "value": "hedendaags",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
     "lang": "nl",
     "key": "moment",
-    "value": "moment",
+    "value": "ogenblikje",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -66401,20 +66113,20 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
     "lang": "nl",
     "key": "monitor_1",
-    "value": "monitor",
+    "value": "bewaken",
     "issues": [
       "Non-semantic key (numeric suffix)",
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
     "lang": "nl",
     "key": "monitor_2",
-    "value": "monitor",
+    "value": "bewaken",
     "issues": [
       "Non-semantic key (numeric suffix)",
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -66865,9 +66577,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
     "lang": "nl",
     "key": "park",
-    "value": "park",
+    "value": "parkeren",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -67410,9 +67122,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
     "lang": "nl",
     "key": "project",
-    "value": "project",
+    "value": "cursusproject",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -67666,9 +67378,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
     "lang": "nl",
     "key": "recent",
-    "value": "recent",
+    "value": "recentelijk",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -67693,10 +67405,10 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B1.json",
     "lang": "nl",
     "key": "record_1",
-    "value": "record",
+    "value": "plaat",
     "issues": [
       "Non-semantic key (numeric suffix)",
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -78481,9 +78193,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "agent",
-    "value": "agent",
+    "value": "Gevolmachtigde",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -78511,15 +78223,6 @@
     "value": "vliegtuig",
     "issues": [
       "English text in nl localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
-    "lang": "nl",
-    "key": "alarm",
-    "value": "alarm",
-    "issues": [
-      "Potential missing translation (value equals key)"
     ]
   },
   {
@@ -78664,15 +78367,6 @@
     "value": "hoe dan ook",
     "issues": [
       "English text in nl localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
-    "lang": "nl",
-    "key": "apart",
-    "value": "apart",
-    "issues": [
-      "Potential missing translation (value equals key)"
     ]
   },
   {
@@ -79399,9 +79093,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "consensus",
-    "value": "consensus",
+    "value": "wilsovereenstemming",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -81406,9 +81100,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "agenda",
-    "value": "agenda",
+    "value": "kalender",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -81685,7 +81379,7 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "consensus_agreement",
-    "value": "consensus",
+    "value": "wilsovereenstemming",
     "issues": [
       "English text in nl localization"
     ]
@@ -81982,9 +81676,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "dilemma",
-    "value": "dilemma",
+    "value": "DilemmaName",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -82828,9 +82522,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "constant",
-    "value": "constant",
+    "value": "constante",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -82936,9 +82630,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "account for",
-    "value": "account for",
+    "value": "Gebruikersaccount voor ",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -82963,27 +82657,27 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "administer",
-    "value": "administer",
+    "value": "toedienen",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "advocate",
-    "value": "advocate",
+    "value": "pleitbezorger",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "alter",
-    "value": "alter",
+    "value": "wijzig",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -82999,18 +82693,18 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "appeal",
-    "value": "appeal",
+    "value": "beroepsmogelijkheid",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "applaud",
-    "value": "applaud",
+    "value": "Applaus",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -83025,37 +82719,28 @@
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
-    "key": "assert",
-    "value": "assert",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
-    "lang": "nl",
     "key": "assign",
-    "value": "assign",
+    "value": "toewijzen",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "attribute",
-    "value": "attribute",
+    "value": "attribuut",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "bear",
-    "value": "bear",
+    "value": "beer",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -83080,54 +82765,54 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "characterise",
-    "value": "characterise",
+    "value": "karakteriseren",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "circulate",
-    "value": "circulate",
+    "value": "circuleren",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "cite",
-    "value": "cite",
+    "value": "Keuze",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "clarify",
-    "value": "clarify",
+    "value": "verduidelijken",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "collaborate",
-    "value": "collaborate",
+    "value": "samenwerken",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "commence",
-    "value": "commence",
+    "value": "beginnen",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -83143,99 +82828,99 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "compensate",
-    "value": "compensate",
+    "value": "compenseren",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "comply",
-    "value": "comply",
+    "value": "voldoen",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "compose",
-    "value": "compose",
+    "value": "opstellen",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "comprehend",
-    "value": "comprehend",
+    "value": "bevatten",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "conceal",
-    "value": "conceal",
+    "value": "Verbergen",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "condemn",
-    "value": "condemn",
+    "value": "veroordelen",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "conduct",
-    "value": "conduct",
+    "value": "manier van optreden",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "confine",
-    "value": "confine",
+    "value": "beperken",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "confirm",
-    "value": "confirm",
+    "value": "bevestigen",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "conform",
-    "value": "conform",
+    "value": "overeenstemmen",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "confront",
-    "value": "confront",
+    "value": "trotseren",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -83251,9 +82936,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "conquer",
-    "value": "conquer",
+    "value": "VEROVER",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -83269,9 +82954,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\B2.json",
     "lang": "nl",
     "key": "constitute",
-    "value": "constitute",
+    "value": "oprichten",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -98182,9 +97867,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
     "lang": "nl",
     "key": "accent",
-    "value": "accent",
+    "value": "accentteken",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -98301,9 +97986,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
     "lang": "nl",
     "key": "activist",
-    "value": "activist",
+    "value": "Politiek activisme",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -98576,9 +98261,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\C1.json",
     "lang": "nl",
     "key": "agenda",
-    "value": "agenda",
+    "value": "kalender",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -101878,9 +101563,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
     "lang": "nl",
     "key": "amulet",
-    "value": "amulet",
+    "value": "Talisman",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -102273,9 +101958,9 @@
     "file": "src\\lib\\data\\translations\\nl\\levels\\C2.json",
     "lang": "nl",
     "key": "appellant",
-    "value": "appellant",
+    "value": "verzoekende partij",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in nl localization"
     ]
   },
   {
@@ -113722,15 +113407,6 @@
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\A1.json",
     "lang": "de",
-    "key": "name",
-    "value": "Name",
-    "issues": [
-      "English text in de localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\A1.json",
-    "lang": "de",
     "key": "one",
     "value": "eins",
     "issues": [
@@ -114056,7 +113732,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\A1.json",
     "lang": "de",
     "key": "hand",
-    "value": "Hand",
+    "value": "anziehen",
     "issues": [
       "English text in de localization"
     ]
@@ -114677,9 +114353,9 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\A1.json",
     "lang": "de",
     "key": "warm",
-    "value": "warm",
+    "value": "Begeisternd",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
@@ -115569,15 +115245,6 @@
     "lang": "de",
     "key": "wife",
     "value": "Ehefrau",
-    "issues": [
-      "English text in de localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\A1.json",
-    "lang": "de",
-    "key": "person",
-    "value": "Person",
     "issues": [
       "English text in de localization"
     ]
@@ -116513,16 +116180,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\A1.json",
     "lang": "de",
     "key": "sandwich",
-    "value": "Sandwich",
-    "issues": [
-      "English text in de localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\A1.json",
-    "lang": "de",
-    "key": "restaurant",
-    "value": "Restaurant",
+    "value": "Sandwichboden",
     "issues": [
       "English text in de localization"
     ]
@@ -116639,7 +116297,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\A1.json",
     "lang": "de",
     "key": "hotel",
-    "value": "Hotel",
+    "value": "Hotelbetrieb",
     "issues": [
       "English text in de localization"
     ]
@@ -116720,7 +116378,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\A1.json",
     "lang": "de",
     "key": "arm",
-    "value": "Arm",
+    "value": "Schwenkarm",
     "issues": [
       "English text in de localization"
     ]
@@ -116891,7 +116549,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\A1.json",
     "lang": "de",
     "key": "so_conjunction",
-    "value": "so",
+    "value": "Also",
     "issues": [
       "English text in de localization"
     ]
@@ -117206,7 +116864,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\A2.json",
     "lang": "de",
     "key": "hotel",
-    "value": "Hotel",
+    "value": "Hotelbetrieb",
     "issues": [
       "English text in de localization"
     ]
@@ -117430,15 +117088,6 @@
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\A2.json",
     "lang": "de",
-    "key": "restaurant",
-    "value": "Restaurant",
-    "issues": [
-      "English text in de localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\A2.json",
-    "lang": "de",
     "key": "bank",
     "value": "Bank",
     "issues": [
@@ -117467,7 +117116,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\A2.json",
     "lang": "de",
     "key": "post_office",
-    "value": "Post",
+    "value": "Beitrag",
     "issues": [
       "English text in de localization"
     ]
@@ -117530,7 +117179,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\A2.json",
     "lang": "de",
     "key": "arm",
-    "value": "Arm",
+    "value": "Schwenkarm",
     "issues": [
       "English text in de localization"
     ]
@@ -117566,7 +117215,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\A2.json",
     "lang": "de",
     "key": "student",
-    "value": "Student",
+    "value": "Teilnehmer",
     "issues": [
       "English text in de localization"
     ]
@@ -118259,7 +117908,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\A2.json",
     "lang": "de",
     "key": "date_romantic",
-    "value": "Date",
+    "value": "Datum",
     "issues": [
       "English text in de localization"
     ]
@@ -118907,7 +118556,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\A2.json",
     "lang": "de",
     "key": "hand",
-    "value": "Hand",
+    "value": "anziehen",
     "issues": [
       "English text in de localization"
     ]
@@ -119231,7 +118880,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\A2.json",
     "lang": "de",
     "key": "information",
-    "value": "Information",
+    "value": "Informationen",
     "issues": [
       "English text in de localization"
     ]
@@ -119439,15 +119088,6 @@
     "lang": "de",
     "key": "lady",
     "value": "Dame",
-    "issues": [
-      "English text in de localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\A2.json",
-    "lang": "de",
-    "key": "land",
-    "value": "Land",
     "issues": [
       "English text in de localization"
     ]
@@ -120050,7 +119690,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\A2.json",
     "lang": "de",
     "key": "moment",
-    "value": "Moment",
+    "value": "Augenblick zu nutzen",
     "issues": [
       "English text in de localization"
     ]
@@ -120123,15 +119763,6 @@
     "lang": "de",
     "key": "museum",
     "value": "Museum",
-    "issues": [
-      "English text in de localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\A2.json",
-    "lang": "de",
-    "key": "name",
-    "value": "Name",
     "issues": [
       "English text in de localization"
     ]
@@ -120482,7 +120113,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\A2.json",
     "lang": "de",
     "key": "party",
-    "value": "Party",
+    "value": "Partei",
     "issues": [
       "English text in de localization"
     ]
@@ -120537,15 +120168,6 @@
     "lang": "de",
     "key": "perfect",
     "value": "perfekt",
-    "issues": [
-      "English text in de localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\A2.json",
-    "lang": "de",
-    "key": "person",
-    "value": "Person",
     "issues": [
       "English text in de localization"
     ]
@@ -121004,7 +120626,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\A2.json",
     "lang": "de",
     "key": "ring_jewel",
-    "value": "Ring",
+    "value": "Klingelton",
     "issues": [
       "English text in de localization"
     ]
@@ -121130,7 +120752,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\A2.json",
     "lang": "de",
     "key": "sandwich",
-    "value": "Sandwich",
+    "value": "Sandwichboden",
     "issues": [
       "English text in de localization"
     ]
@@ -121958,7 +121580,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\A2.json",
     "lang": "de",
     "key": "theater",
-    "value": "Theater",
+    "value": " Theater",
     "issues": [
       "English text in de localization"
     ]
@@ -128975,7 +128597,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
     "key": "ball",
-    "value": "Ball",
+    "value": "Kugel",
     "issues": [
       "English text in de localization"
     ]
@@ -129668,15 +129290,6 @@
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
-    "key": "chance",
-    "value": "Chance",
-    "issues": [
-      "English text in de localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
-    "lang": "de",
     "key": "character_1",
     "value": "Charakter",
     "issues": [
@@ -129893,7 +129506,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
     "key": "college",
-    "value": "College",
+    "value": "Hochschule",
     "issues": [
       "English text in de localization"
     ]
@@ -130696,15 +130309,6 @@
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
-    "key": "management",
-    "value": "Management",
-    "issues": [
-      "English text in de localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
-    "lang": "de",
     "key": "manner",
     "value": "Weise",
     "issues": [
@@ -130883,7 +130487,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
     "key": "mission",
-    "value": "Mission",
+    "value": "Aufgabe",
     "issues": [
       "English text in de localization"
     ]
@@ -130930,7 +130534,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
     "key": "moment",
-    "value": "Moment",
+    "value": "Augenblick zu nutzen",
     "issues": [
       "English text in de localization"
     ]
@@ -130948,20 +130552,18 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
     "key": "monitor_1",
-    "value": "Monitor",
+    "value": "Monitor.",
     "issues": [
-      "Non-semantic key (numeric suffix)",
-      "English text in de localization"
+      "Non-semantic key (numeric suffix)"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
     "key": "monitor_2",
-    "value": "Monitor",
+    "value": "Monitor.",
     "issues": [
-      "Non-semantic key (numeric suffix)",
-      "English text in de localization"
+      "Non-semantic key (numeric suffix)"
     ]
   },
   {
@@ -130978,15 +130580,6 @@
     "lang": "de",
     "key": "movement",
     "value": "Bewegung",
-    "issues": [
-      "English text in de localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
-    "lang": "de",
-    "key": "nation",
-    "value": "Nation",
     "issues": [
       "English text in de localization"
     ]
@@ -131224,7 +130817,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
     "key": "operation",
-    "value": "Operation",
+    "value": "Maschinenbetrieb",
     "issues": [
       "English text in de localization"
     ]
@@ -131283,15 +130876,6 @@
     "value": "Organisation",
     "issues": [
       "English text in de localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
-    "lang": "de",
-    "key": "original",
-    "value": "original",
-    "issues": [
-      "Potential missing translation (value equals key)"
     ]
   },
   {
@@ -131420,7 +131004,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
     "key": "party_2",
-    "value": "Party",
+    "value": "Partei",
     "issues": [
       "Non-semantic key (numeric suffix)",
       "English text in de localization"
@@ -131518,15 +131102,6 @@
     "lang": "de",
     "key": "period",
     "value": "Periode",
-    "issues": [
-      "English text in de localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
-    "lang": "de",
-    "key": "person",
-    "value": "Person",
     "issues": [
       "English text in de localization"
     ]
@@ -131675,15 +131250,6 @@
     "lang": "de",
     "key": "popular",
     "value": "beliebt",
-    "issues": [
-      "English text in de localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
-    "lang": "de",
-    "key": "position",
-    "value": "Position",
     "issues": [
       "English text in de localization"
     ]
@@ -131977,7 +131543,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
     "key": "rate_1",
-    "value": "Rate",
+    "value": "-Satz",
     "issues": [
       "Non-semantic key (numeric suffix)",
       "English text in de localization"
@@ -131987,7 +131553,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
     "key": "rate_2",
-    "value": "Rate",
+    "value": "-Satz",
     "issues": [
       "Non-semantic key (numeric suffix)",
       "English text in de localization"
@@ -132125,7 +131691,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
     "key": "region",
-    "value": "Region",
+    "value": "Bundesland",
     "issues": [
       "English text in de localization"
     ]
@@ -132262,7 +131828,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
     "key": "rest",
-    "value": "Rest",
+    "value": "sich ausruhen",
     "issues": [
       "English text in de localization"
     ]
@@ -132594,7 +132160,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
     "key": "senior",
-    "value": "Senior",
+    "value": "Senioren",
     "issues": [
       "English text in de localization"
     ]
@@ -132930,20 +132496,20 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
     "key": "so_1",
-    "value": "so",
+    "value": "Also",
     "issues": [
       "Non-semantic key (numeric suffix)",
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
     "key": "so_2",
-    "value": "so",
+    "value": "Also",
     "issues": [
       "Non-semantic key (numeric suffix)",
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
@@ -133167,15 +132733,6 @@
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
-    "key": "standard",
-    "value": "Standard",
-    "issues": [
-      "English text in de localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
-    "lang": "de",
     "key": "star",
     "value": "Stern",
     "issues": [
@@ -133186,7 +132743,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
     "key": "start_1",
-    "value": "Start",
+    "value": "nicht\t\t\t\t\t\t\t\t\t\t\t\t\tPosition drehen",
     "issues": [
       "Non-semantic key (numeric suffix)",
       "English text in de localization"
@@ -133196,7 +132753,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
     "key": "start_2",
-    "value": "Start",
+    "value": "nicht\t\t\t\t\t\t\t\t\t\t\t\t\tPosition drehen",
     "issues": [
       "Non-semantic key (numeric suffix)",
       "English text in de localization"
@@ -133365,7 +132922,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B1.json",
     "lang": "de",
     "key": "student",
-    "value": "Student",
+    "value": "Teilnehmer",
     "issues": [
       "English text in de localization"
     ]
@@ -141409,7 +140966,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "alarm",
-    "value": "Alarm",
+    "value": "Sicherheitsalarm",
     "issues": [
       "English text in de localization"
     ]
@@ -141436,7 +140993,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "alternative",
-    "value": "Alternative",
+    "value": "Alternativ",
     "issues": [
       "English text in de localization"
     ]
@@ -141706,7 +141263,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "argument_dispute",
-    "value": "Argument",
+    "value": "Kontroversen",
     "issues": [
       "English text in de localization"
     ]
@@ -141715,7 +141272,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "argument_logic",
-    "value": "Argument",
+    "value": "Kontroversen",
     "issues": [
       "English text in de localization"
     ]
@@ -141733,7 +141290,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "arm_body",
-    "value": "Arm",
+    "value": "Schwenkarm",
     "issues": [
       "English text in de localization"
     ]
@@ -143866,7 +143423,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "ambition",
-    "value": "Ambition",
+    "value": "der EU",
     "issues": [
       "English text in de localization"
     ]
@@ -144333,15 +143890,6 @@
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
-    "key": "dimension",
-    "value": "Dimension",
-    "issues": [
-      "English text in de localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
-    "lang": "de",
     "key": "disadvantage_con",
     "value": "Nachteil",
     "issues": [
@@ -144576,15 +144124,6 @@
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
-    "key": "demonstration_noun",
-    "value": "Demonstration",
-    "issues": [
-      "English text in de localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
-    "lang": "de",
     "key": "discrimination",
     "value": "Diskriminierung",
     "issues": [
@@ -144658,7 +144197,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "element_noun",
-    "value": "Element",
+    "value": "montierbar",
     "issues": [
       "English text in de localization"
     ]
@@ -145053,15 +144592,6 @@
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
-    "key": "legal",
-    "value": "legal",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
-    "lang": "de",
     "key": "mental",
     "value": "geistig",
     "issues": [
@@ -145117,9 +144647,9 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "account for",
-    "value": "account for",
+    "value": "nahmen auf",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
@@ -145144,18 +144674,18 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "administer",
-    "value": "administer",
+    "value": "ANWENDEN",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "advocate",
-    "value": "advocate",
+    "value": "ANWALT",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
@@ -145170,28 +144700,19 @@
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
-    "key": "analyse",
-    "value": "analyse",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
-    "lang": "de",
     "key": "appeal",
-    "value": "appeal",
+    "value": "Rechtsbehelf",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "applaud",
-    "value": "applaud",
+    "value": "Applaudieren",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
@@ -145215,37 +144736,19 @@
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
-    "key": "assign",
-    "value": "assign",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
-    "lang": "de",
     "key": "attribute",
-    "value": "attribute",
+    "value": "Attribut",
     "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
-    "lang": "de",
-    "key": "bear",
-    "value": "bear",
-    "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "boost",
-    "value": "boost",
+    "value": "Boosten",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
@@ -145261,54 +144764,45 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "characterise",
-    "value": "characterise",
+    "value": "charakterisieren",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "circulate",
-    "value": "circulate",
+    "value": "Verschicken",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "cite",
-    "value": "cite",
+    "value": "Zitat",
     "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
-    "lang": "de",
-    "key": "clarify",
-    "value": "clarify",
-    "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "collaborate",
-    "value": "collaborate",
+    "value": "zusammenarbeiten",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "commence",
-    "value": "commence",
+    "value": "Beginnen",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
@@ -145324,81 +144818,36 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "compensate",
-    "value": "compensate",
+    "value": "kompensieren",
     "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
-    "lang": "de",
-    "key": "comply",
-    "value": "comply",
-    "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "compose",
-    "value": "compose",
+    "value": "komponieren",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "comprehend",
-    "value": "comprehend",
+    "value": "VERSTEHEN",
     "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
-    "lang": "de",
-    "key": "conceal",
-    "value": "conceal",
-    "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "condemn",
-    "value": "condemn",
+    "value": "Verurteilen",
     "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
-    "lang": "de",
-    "key": "conduct",
-    "value": "conduct",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
-    "lang": "de",
-    "key": "confine",
-    "value": "confine",
-    "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
-    "lang": "de",
-    "key": "confirm",
-    "value": "confirm",
-    "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
@@ -145414,9 +144863,9 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "confront",
-    "value": "confront",
+    "value": "Herausforderungen annehmen",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
@@ -145432,54 +144881,45 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "conquer",
-    "value": "conquer",
+    "value": "Erobern",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "conserve",
-    "value": "conserve",
+    "value": "konservieren",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "constitute",
-    "value": "constitute",
+    "value": "konstituieren",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "construct",
-    "value": "construct",
+    "value": "Konstrukt",
     "issues": [
-      "Potential missing translation (value equals key)"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
-    "lang": "de",
-    "key": "consult",
-    "value": "consult",
-    "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
     "file": "src\\lib\\data\\translations\\de\\levels\\B2.json",
     "lang": "de",
     "key": "consume",
-    "value": "consume",
+    "value": "Verbrauch",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
@@ -159836,7 +159276,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
     "lang": "de",
     "key": "adoption_1",
-    "value": "Adoption",
+    "value": "Annahme an Kindes Statt",
     "issues": [
       "Non-semantic key (numeric suffix)",
       "English text in de localization"
@@ -159846,7 +159286,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
     "lang": "de",
     "key": "adoption_2",
-    "value": "Adoption",
+    "value": "Annahme an Kindes Statt",
     "issues": [
       "Non-semantic key (numeric suffix)",
       "English text in de localization"
@@ -160052,15 +159492,6 @@
     "value": "Gesamt",
     "issues": [
       "Non-semantic key (numeric suffix)",
-      "English text in de localization"
-    ]
-  },
-  {
-    "file": "src\\lib\\data\\translations\\de\\levels\\C1.json",
-    "lang": "de",
-    "key": "aggression",
-    "value": "Aggression",
-    "issues": [
       "English text in de localization"
     ]
   },
@@ -162173,9 +161604,9 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
     "lang": "de",
     "key": "abstruse",
-    "value": "abstruse",
+    "value": "abstrus",
     "issues": [
-      "Potential missing translation (value equals key)"
+      "English text in de localization"
     ]
   },
   {
@@ -162729,7 +162160,7 @@
     "file": "src\\lib\\data\\translations\\de\\levels\\C2.json",
     "lang": "de",
     "key": "amphitheater",
-    "value": "Amphitheater",
+    "value": "Amphitheater ",
     "issues": [
       "English text in de localization"
     ]
