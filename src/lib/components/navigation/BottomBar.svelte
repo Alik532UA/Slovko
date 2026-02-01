@@ -18,15 +18,8 @@
     );
 
     // Перевірка чи можна перемикати рівні
-    const canGoPrev = $derived(
-        settingsStore.value.mode === "levels" &&
-            settingsStore.value.currentLevel !== "A1",
-    );
-
-    const canGoNext = $derived(
-        settingsStore.value.mode === "levels" &&
-            settingsStore.value.currentLevel !== "C2",
-    );
+    const canGoPrev = $derived(settingsStore.value.currentLevel !== "A1");
+    const canGoNext = $derived(settingsStore.value.currentLevel !== "C2");
 </script>
 
 <div class="bottom-bar">
@@ -82,6 +75,15 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        -webkit-tap-highlight-color: transparent; /* Remove mobile highlight */
+    }
+
+    /* Fix visual issue: keep color same on click/focus */
+    .nav-btn:active,
+    .nav-btn:focus,
+    .nav-btn:visited {
+        color: var(--text-primary);
+        outline: none;
     }
 
     .nav-btn:disabled {
