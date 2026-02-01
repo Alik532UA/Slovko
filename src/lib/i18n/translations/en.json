@@ -42,7 +42,14 @@
         "from": "From",
         "to": "To",
         "transcription": "Show transcription",
-        "pronunciation": "Pronounce words"
+        "pronunciation": "Pronounce words",
+        "theme": "Theme"
+    },
+    "theme": {
+        "dark-gray": "Dark",
+        "light-gray": "Light",
+        "purple": "Orange",
+        "green": "Green"
     },
     "menu": {
         "donate": "Support the project",

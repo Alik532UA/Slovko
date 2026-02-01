@@ -3,12 +3,14 @@
      * TopBar — Верхня панель з іконками
      * Донат, Мови, Про проєкт
      */
-    import { Coins, Languages, Info } from "lucide-svelte";
+    import { Coins, Languages, Info, Palette } from "lucide-svelte";
     import LanguageSettings from "../settings/LanguageSettings.svelte";
     import AboutModal from "../settings/AboutModal.svelte";
+    import ThemeModal from "../settings/ThemeModal.svelte";
 
     let showLanguageModal = $state(false);
     let showAboutModal = $state(false);
+    let showThemeModal = $state(false);
 
     const donateUrl = "https://send.monobank.ua/jar/7sCsydhJnR";
 </script>
@@ -27,6 +29,18 @@
             <Coins size={24} />
         </div>
     </a>
+
+    <!-- Теми -->
+    <button
+        class="icon-btn"
+        onclick={() => (showThemeModal = true)}
+        title="Theme"
+        data-testid="theme-settings-btn"
+    >
+        <div class="icon-inner">
+            <Palette size={24} />
+        </div>
+    </button>
 
     <!-- Мови -->
     <button
@@ -59,6 +73,10 @@
 
 {#if showAboutModal}
     <AboutModal onclose={() => (showAboutModal = false)} />
+{/if}
+
+{#if showThemeModal}
+    <ThemeModal onclose={() => (showThemeModal = false)} />
 {/if}
 
 <style>

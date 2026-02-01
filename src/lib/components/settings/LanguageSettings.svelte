@@ -214,12 +214,20 @@
         position: fixed;
         inset: 0;
         z-index: 10002;
-        background: rgba(0, 0, 0, 0.6);
+        /* Default dark backdrop, overridden by light theme */
+        background: rgba(0, 0, 0, 0.8);
         backdrop-filter: blur(8px);
         display: flex;
         justify-content: center;
         align-items: center;
         padding: 1rem;
+        /* Smooth transition for theme switch */
+        transition: background 0.3s;
+    }
+
+    /* Light theme override for backdrop */
+    :global([data-theme="light-gray"]) .modal-backdrop {
+        background: rgba(255, 255, 255, 0.85);
     }
 
     .modal {
@@ -227,6 +235,8 @@
         max-width: 320px;
         width: 100%;
         position: relative;
+        /* Ensure text color inherits correctly from body/theme */
+        color: var(--text-primary);
     }
 
     .close-btn {
@@ -235,7 +245,9 @@
         right: 0;
         background: transparent;
         border: none;
-        color: var(--text-secondary);
+        color: var(
+            --text-primary
+        ); /* Use primary text color for better visibility */
         cursor: pointer;
         padding: 0.5rem;
         border-radius: 8px;
@@ -266,7 +278,9 @@
         margin: 0;
         font-size: 0.875rem;
         font-weight: 500;
-        color: var(--text-secondary);
+        color: var(
+            --text-primary
+        ); /* Changed to primary for better contrast on backdrop */
         text-align: center;
     }
 
@@ -366,7 +380,12 @@
         position: relative;
         width: 48px;
         height: 26px;
-        background: rgba(255, 255, 255, 0.2);
+        background: rgba(
+            128,
+            128,
+            128,
+            0.3
+        ); /* Neutral gray transparency works on both dark and light */
         border-radius: 13px;
         transition: background 0.2s;
     }

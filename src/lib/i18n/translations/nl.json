@@ -42,7 +42,14 @@
         "from": "Van",
         "to": "Naar",
         "transcription": "Toon transcriptie",
-        "pronunciation": "Spreek woorden uit"
+        "pronunciation": "Spreek woorden uit",
+        "theme": "Thema"
+    },
+    "theme": {
+        "dark-gray": "Donkergrijs",
+        "light-gray": "Lichtgrijs",
+        "purple": "Oranje",
+        "green": "Groen"
     },
     "menu": {
         "donate": "Ondersteun het project",

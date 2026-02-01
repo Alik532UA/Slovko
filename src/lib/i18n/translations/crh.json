@@ -42,7 +42,14 @@
         "from": "...-den",
         "to": "...-ge",
         "transcription": "Transkriptsiya köster",
-        "pronunciation": "Sözlerni oqumaq"
+        "pronunciation": "Sözlerni oqumaq",
+        "theme": "Tema"
+    },
+    "theme": {
+        "dark-gray": "Qaranlıq",
+        "light-gray": "Yarıq",
+        "purple": "Turuncu",
+        "green": "Yeşil"
     },
     "menu": {
         "donate": "Proyektni destekle",

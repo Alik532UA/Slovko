@@ -80,12 +80,18 @@
         position: fixed;
         inset: 0;
         z-index: 10002;
-        background: rgba(0, 0, 0, 0.6);
+        background: rgba(0, 0, 0, 0.8);
         backdrop-filter: blur(8px);
         display: flex;
         justify-content: center;
         align-items: center;
         padding: 1.5rem;
+        transition: background 0.3s;
+    }
+
+    /* Light theme override for backdrop */
+    :global([data-theme="light-gray"]) .modal-backdrop {
+        background: rgba(255, 255, 255, 0.9);
     }
 
     .modal {
@@ -102,7 +108,7 @@
         right: 0;
         background: transparent;
         border: none;
-        color: var(--text-secondary);
+        color: var(--text-primary); /* Use primary text color */
         cursor: pointer;
         padding: 0.5rem;
         border-radius: 8px;
@@ -111,7 +117,7 @@
     }
 
     .close-btn:hover {
-        color: var(--text-primary);
+        color: var(--accent);
         transform: scale(1.1);
     }
 

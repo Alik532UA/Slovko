@@ -3,31 +3,80 @@
  * Темна тема з CSS змінними
  */
 
-:root {
-	/* Основні кольори */
-	--bg-primary: #1a1a2e;
-	--bg-secondary: #16213e;
+/* Default (Dark Gray) */
+:root,
+[data-theme="dark-gray"] {
+	--bg-primary: #23272f;
+	--bg-secondary: #43464e;
 	--text-primary: #eaeaea;
 	--text-secondary: #a0a0a0;
-	--accent: #0f3460;
-	--accent-hover: #1a4980;
-	--border: #2a2a4a;
+	--accent: #e95420;
+	/* Orange */
+	--accent-hover: #c74316;
+	--border: #565a63;
+	/* Neutral gray border */
+	--card-bg: #43464e;
+	--card-border: #565a63;
+	--card-hover-border: #6b6f7a;
+	--font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-	/* Картки */
-	--card-bg: #16213e;
-	--card-border: #2a2a4a;
-	--card-hover-border: #4a4a7a;
-
-	/* Стани */
-	--selected-bg: #1a4980;
-	--selected-border: #3a8fd6;
+	/* Стани (Common) - Default Orange based */
+	--selected-bg: #5e3020;
+	/* Dark orange bg for selected */
+	--selected-border: #e95420;
 	--correct-bg: #1a5a3e;
 	--correct-border: #2ecc71;
 	--wrong-bg: #5a2a2a;
 	--wrong-border: #e74c3c;
+}
 
-	/* Типографіка */
-	--font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+/* Light Gray */
+[data-theme="light-gray"] {
+	--bg-primary: #f5f6fa;
+	--bg-secondary: #e0e1e6;
+	--text-primary: #1f2937;
+	--text-secondary: #4b5563;
+	--accent: #e95420;
+	/* Orange */
+	--accent-hover: #c74316;
+	--border: #d1d5db;
+	--card-bg: #ffffff;
+	--card-border: #e5e7eb;
+	--card-hover-border: #9ca3af;
+
+	/* Overrides for light theme states */
+	--selected-bg: #ffe0d0;
+	--selected-border: #e95420;
+}
+
+/* Purple (Ubuntu-like) */
+[data-theme="purple"] {
+	--bg-primary: linear-gradient(135deg, #77216f, #e95420);
+	--bg-secondary: rgba(255, 255, 255, 0.1);
+	--text-primary: #ffffff;
+	--text-secondary: #e2e8f0;
+	--accent: #e95420;
+	--accent-hover: #c74316;
+	--border: rgba(255, 255, 255, 0.2);
+	--card-bg: rgba(255, 255, 255, 0.15);
+	--card-border: rgba(255, 255, 255, 0.3);
+	--card-hover-border: rgba(255, 255, 255, 0.5);
+	background-attachment: fixed;
+	/* Fix gradient on scroll */
+}
+
+/* Green */
+[data-theme="green"] {
+	--bg-primary: #b2f7b8;
+	--bg-secondary: #e6ffe6;
+	--text-primary: #064e3b;
+	--text-secondary: #065f46;
+	--accent: #059669;
+	--accent-hover: #047857;
+	--border: #6ee7b7;
+	--card-bg: #e6ffe6;
+	--card-border: #a7f3d0;
+	--card-hover-border: #34d399;
 }
 
 /* Альтернативні назви для зворотної сумісності */
@@ -46,7 +95,7 @@ html,
 body {
 	height: 100%;
 	font-family: var(--font-family);
-	background-color: var(--bg-primary);
+	background: var(--bg-primary);
 	color: var(--text-primary);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;

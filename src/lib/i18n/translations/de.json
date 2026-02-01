@@ -42,7 +42,14 @@
         "from": "Von",
         "to": "Nach",
         "transcription": "Transkription anzeigen",
-        "pronunciation": "Wörter aussprechen"
+        "pronunciation": "Wörter aussprechen",
+        "theme": "Thema"
+    },
+    "theme": {
+        "dark-gray": "Dunkelgrau",
+        "light-gray": "Hellgrau",
+        "purple": "Orange",
+        "green": "Grün"
     },
     "menu": {
         "donate": "Projekt unterstützen",

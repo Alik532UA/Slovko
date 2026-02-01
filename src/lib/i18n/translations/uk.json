@@ -42,7 +42,14 @@
         "from": "З",
         "to": "На",
         "transcription": "Показувати транскрипцію",
-        "pronunciation": "Озвучувати слова"
+        "pronunciation": "Озвучувати слова",
+        "theme": "Тема"
+    },
+    "theme": {
+        "dark-gray": "Темна",
+        "light-gray": "Світла",
+        "purple": "Помаранчева",
+        "green": "Зелена"
     },
     "menu": {
         "donate": "Підтримати проєкт",

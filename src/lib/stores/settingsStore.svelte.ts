@@ -4,12 +4,15 @@
  */
 
 import { browser } from '$app/environment';
-import type { Language, CEFRLevel, GameMode } from '../types';
+import type { Language, CEFRLevel, GameMode, AppTheme } from '../types';
 
 const STORAGE_KEY = 'wordApp_settings';
 
 /** Типи налаштувань */
 export interface AppSettings {
+    // Тема оформлення
+    theme: AppTheme;
+
     // Мова інтерфейсу
     interfaceLanguage: Language;
 
@@ -33,6 +36,7 @@ export interface AppSettings {
 
 /** Значення за замовчуванням */
 const DEFAULT_SETTINGS: AppSettings = {
+    theme: 'dark-gray',
     interfaceLanguage: 'uk',
     sourceLanguage: 'en',
     targetLanguage: 'uk',
@@ -76,6 +80,15 @@ function createSettingsStore() {
         update(partial: Partial<AppSettings>) {
             settings = { ...settings, ...partial };
             saveSettings();
+        },
+
+        /** Встановити тему */
+        setTheme(theme: AppTheme) {
+            settings = { ...settings, theme };
+            saveSettings();
+            if (browser) {
+                document.documentElement.setAttribute('data-theme', theme);
+            }
         },
 
         /** Встановити мову інтерфейсу */
