@@ -54,6 +54,7 @@ function createSettingsStore() {
     // Застосувати тему при ініціалізації
     if (browser) {
         document.documentElement.setAttribute('data-theme', settings.theme);
+        document.documentElement.style.colorScheme = 'dark';
     }
 
     function loadSettings(): AppSettings {
@@ -98,6 +99,7 @@ function createSettingsStore() {
             saveSettings();
             if (browser) {
                 document.documentElement.setAttribute('data-theme', theme);
+                document.documentElement.style.colorScheme = 'dark';
             }
         },
 
