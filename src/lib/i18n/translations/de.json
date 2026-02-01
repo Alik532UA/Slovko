@@ -21,11 +21,11 @@
     "playlists": {
         "favorites": "Favoriten",
         "mistakes": "Fehlerkorrektur",
-        "extra": "Extra-Studium",
-        "addToFavorites": "Zu Favoriten hinzufügen",
-        "removeFromFavorites": "Aus Favoriten entfernen",
-        "addToExtra": "Zu Extra hinzufügen",
-        "removeFromExtra": "Aus Extra entfernen",
+        "extra": "Zusätzliches Lernen",
+        "addToFavorites": "Zu «Favoriten» hinzufügen",
+        "removeFromFavorites": "Aus «Favoriten» entfernen",
+        "addToExtra": "Zu «Zusätzlichem Lernen» hinzufügen",
+        "removeFromExtra": "Aus «Zusätzlichem Lernen» entfernen",
         "empty": "Diese Playlist ist leer, aber Sie können Karten hinzufügen. Drücken und halten Sie dazu eine Karte einige Sekunden lang, um das Kontextmenü zu öffnen.",
         "emptyMistakes": "Diese Liste ist leer und wird mit Wörtern gefüllt, bei denen Sie Fehler machen."
     },

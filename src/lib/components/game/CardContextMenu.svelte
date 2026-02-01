@@ -5,6 +5,7 @@
     import { Heart, Bookmark, Volume2 } from "lucide-svelte";
     import { speakText } from "$lib/services/speechService";
     import { settingsStore } from "$lib/stores/settingsStore.svelte";
+    import { scale, fade } from "svelte/transition";
 
     interface Props {
         x: number;
@@ -46,8 +47,13 @@
     role="button"
     tabindex="-1"
     onkeydown={(e) => e.key === "Escape" && onclose()}
+    in:fade={{ duration: 150 }}
 ></div>
-<div class="menu" style="top: {y}px; left: {x}px">
+<div
+    class="menu"
+    style="top: {y}px; left: {x}px"
+    in:scale={{ duration: 200, start: 0.9, opacity: 0 }}
+>
     <button onclick={playSound}>
         <span class="icon">
             <Volume2 size={20} />
