@@ -4,7 +4,14 @@
  */
 
 import { browser } from '$app/environment';
-import type { Language, CEFRLevel, GameMode, AppTheme } from '../types';
+import {
+    ALL_LEVELS,
+    ALL_TOPICS,
+    type Language,
+    type CEFRLevel,
+    type GameMode,
+    type AppTheme
+} from '../types';
 
 const STORAGE_KEY = 'wordApp_settings';
 
@@ -143,34 +150,36 @@ function createSettingsStore() {
             saveSettings();
         },
 
-        /** Наступний рівень */
+        /** Наступний елемент (рівень або тема) */
         nextLevel() {
-            const levels: CEFRLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
-            const idx = levels.indexOf(settings.currentLevel);
-            if (idx < levels.length - 1) {
-                const nextLvl = levels[idx + 1];
-                if (settings.mode === 'topics' && settings.currentTopic) {
-                    // Зберігаємо тему, просто змінюємо рівень
-                    settings = { ...settings, currentLevel: nextLvl };
-                    saveSettings();
-                } else {
-                    this.setLevel(nextLvl);
+            if (settings.mode === 'levels') {
+                const idx = ALL_LEVELS.indexOf(settings.currentLevel);
+                if (idx < ALL_LEVELS.length - 1) {
+                    this.setLevel(ALL_LEVELS[idx + 1]);
+                }
+            } else {
+                // Mode: topics
+                const currentTopicId = settings.currentTopic || ALL_TOPICS[0].id;
+                const idx = ALL_TOPICS.findIndex(t => t.id === currentTopicId);
+                if (idx < ALL_TOPICS.length - 1) {
+                    this.setTopic(ALL_TOPICS[idx + 1].id);
                 }
             }
         },
 
-        /** Попередній рівень */
+        /** Попередній елемент (рівень або тема) */
         prevLevel() {
-            const levels: CEFRLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
-            const idx = levels.indexOf(settings.currentLevel);
-            if (idx > 0) {
-                const prevLvl = levels[idx - 1];
-                if (settings.mode === 'topics' && settings.currentTopic) {
-                    // Зберігаємо тему, просто змінюємо рівень
-                    settings = { ...settings, currentLevel: prevLvl };
-                    saveSettings();
-                } else {
-                    this.setLevel(prevLvl);
+            if (settings.mode === 'levels') {
+                const idx = ALL_LEVELS.indexOf(settings.currentLevel);
+                if (idx > 0) {
+                    this.setLevel(ALL_LEVELS[idx - 1]);
+                }
+            } else {
+                // Mode: topics
+                const currentTopicId = settings.currentTopic || ALL_TOPICS[0].id;
+                const idx = ALL_TOPICS.findIndex(t => t.id === currentTopicId);
+                if (idx > 0) {
+                    this.setTopic(ALL_TOPICS[idx - 1].id);
                 }
             }
         },

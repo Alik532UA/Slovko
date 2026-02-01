@@ -6,6 +6,7 @@
     import { ChevronLeft, ChevronRight } from "lucide-svelte";
     import { settingsStore } from "$lib/stores/settingsStore.svelte";
     import { _ } from "svelte-i18n";
+    import { ALL_LEVELS, ALL_TOPICS } from "$lib/types";
     import LevelTopicModal from "./LevelTopicModal.svelte";
 
     let showModal = $state(false);
@@ -17,9 +18,20 @@
             : $_(`topics.${settingsStore.value.currentTopic}`),
     );
 
-    // Перевірка чи можна перемикати рівні
-    const canGoPrev = $derived(settingsStore.value.currentLevel !== "A1");
-    const canGoNext = $derived(settingsStore.value.currentLevel !== "C2");
+    // Перевірка чи можна перемикати (залежить від режиму)
+    const canGoPrev = $derived(
+        settingsStore.value.mode === "levels"
+            ? settingsStore.value.currentLevel !== ALL_LEVELS[0]
+            : settingsStore.value.currentTopic !== ALL_TOPICS[0].id,
+    );
+
+    const canGoNext = $derived(
+        settingsStore.value.mode === "levels"
+            ? settingsStore.value.currentLevel !==
+                  ALL_LEVELS[ALL_LEVELS.length - 1]
+            : settingsStore.value.currentTopic !==
+                  ALL_TOPICS[ALL_TOPICS.length - 1].id,
+    );
 </script>
 
 <div class="bottom-bar">
