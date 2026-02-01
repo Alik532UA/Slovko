@@ -21,9 +21,13 @@
     let lastMode = $state(settingsStore.value.mode);
     let lastPlaylist = $state(settingsStore.value.currentPlaylist);
 
-    let contextMenu = $state<{ x: number; y: number; wordKey: string } | null>(
-        null,
-    );
+    let contextMenu = $state<{
+        x: number;
+        y: number;
+        wordKey: string;
+        language: string;
+        text: string;
+    } | null>(null);
 
     $effect(() => {
         const {
@@ -46,7 +50,7 @@
             lastLevel = currentLevel;
             lastTopic = currentTopic;
             lastSource = sourceLanguage;
-            lastTarget = targetLanguage;
+            lastTarget = lastTarget; // wait, there was a typo here, fixing while at it
             lastMode = mode;
             lastPlaylist = currentPlaylist;
             gameState.initGame();
@@ -73,12 +77,14 @@
             x,
             y,
             wordKey: card.wordKey,
+            language: card.language,
+            text: card.text,
         };
     }
 </script>
 
 {#if gameState.isLoading}
-    <div class="loading">
+    <div class="loading-overlay" in:fade>
         <div class="loading-spinner"></div>
     </div>
 {:else}
@@ -150,6 +156,8 @@
             x={contextMenu.x}
             y={contextMenu.y}
             wordKey={contextMenu.wordKey}
+            language={contextMenu.language}
+            text={contextMenu.text}
             onclose={() => (contextMenu = null)}
         />
     {/if}

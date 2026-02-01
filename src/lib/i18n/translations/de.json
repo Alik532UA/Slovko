@@ -96,6 +96,7 @@
         "voices": "Stimmen"
     },
     "common": {
-        "confirm": "Bestätigen"
+        "confirm": "Bestätigen",
+        "listen": "Hören"
     }
 }

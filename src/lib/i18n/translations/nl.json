@@ -96,6 +96,7 @@
         "voices": "stemmen"
     },
     "common": {
-        "confirm": "Bevestigen"
+        "confirm": "Bevestigen",
+        "listen": "Luisteren"
     }
 }

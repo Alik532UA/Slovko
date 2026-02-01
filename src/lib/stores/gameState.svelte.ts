@@ -12,9 +12,15 @@ import { playlistStore } from './playlistStore.svelte';
 import { loadLevel, loadTopic, loadTranslations, loadTranscriptions, getTranslation, getTranscription, loadPhrasesLevel } from '../data/wordService';
 import { generateRulesIPA } from '../services/transcriptionService';
 import { convertIPAToTarget } from '../services/phoneticsService';
+import { speakText } from '../services/speechService';
 
-const DEFAULT_PAIRS_ON_SCREEN = 6;
-const PHRASES_PAIRS_ON_SCREEN = 4;
+const MODE_CONFIG: Record<GameMode, { pairsPerPage: number }> = {
+    'levels': { pairsPerPage: 6 },
+    'topics': { pairsPerPage: 6 },
+    'phrases': { pairsPerPage: 6 },
+    'playlists': { pairsPerPage: 6 }
+};
+
 const REFILL_THRESHOLD = 2;
 
 // Кеш для перекладів та транскрипцій
@@ -94,7 +100,8 @@ function createGameState() {
     });
 
     function getPairsLimit() {
-        return settingsStore.value.mode === 'phrases' ? PHRASES_PAIRS_ON_SCREEN : DEFAULT_PAIRS_ON_SCREEN;
+        const mode = settingsStore.value.mode;
+        return MODE_CONFIG[mode].pairsPerPage;
     }
 
     /**
@@ -375,6 +382,23 @@ function createGameState() {
     function handleCorrectMatch(card1: ActiveCard, card2: ActiveCard): void {
         updateCardStatus(card1.id, 'correct');
         updateCardStatus(card2.id, 'correct');
+
+        // Озвучування при збігу (якщо увімкнено хоча б одне)
+        const src = card1.language === settingsStore.value.sourceLanguage ? card1 : card2;
+        const tgt = card1.language === settingsStore.value.targetLanguage ? card1 : card2;
+
+        if (settingsStore.value.enablePronunciationSource) {
+            speakText(src.text, src.language);
+        }
+
+        if (settingsStore.value.enablePronunciationTarget) {
+            // Озвучуємо ціль трохи пізніше, якщо джерело теж озвучується
+            const delay = settingsStore.value.enablePronunciationSource ? 800 : 0;
+            setTimeout(() => {
+                // Тільки якщо гра все ще активна і не переключена
+                speakText(tgt.text, tgt.language);
+            }, delay);
+        }
 
         // Оновлюємо лічильники
         streak += 1;

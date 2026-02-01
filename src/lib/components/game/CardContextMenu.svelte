@@ -2,19 +2,28 @@
     import { playlistStore } from "$lib/stores/playlistStore.svelte";
     import { gameState } from "$lib/stores/gameState.svelte";
     import { _ } from "svelte-i18n";
-    import { Heart, Bookmark } from "lucide-svelte";
+    import { Heart, Bookmark, Volume2 } from "lucide-svelte";
+    import { speakText } from "$lib/services/speechService";
+    import { settingsStore } from "$lib/stores/settingsStore.svelte";
 
     interface Props {
         x: number;
         y: number;
         wordKey: string;
+        language: string; // New prop to know which language to speak
+        text: string; // New prop to know what to speak
         onclose: () => void;
     }
-    let { x, y, wordKey, onclose }: Props = $props();
+    let { x, y, wordKey, language, text, onclose }: Props = $props();
 
     let pair = $derived(gameState.constructWordPair(wordKey));
     let isFavorite = $derived(playlistStore.isFavorite(wordKey));
     let isExtra = $derived(playlistStore.isExtra(wordKey));
+
+    function playSound() {
+        speakText(text, language);
+        onclose();
+    }
 
     function toggleFav() {
         if (pair) {
@@ -39,6 +48,12 @@
     onkeydown={(e) => e.key === "Escape" && onclose()}
 ></div>
 <div class="menu" style="top: {y}px; left: {x}px">
+    <button onclick={playSound}>
+        <span class="icon">
+            <Volume2 size={20} />
+        </span>
+        <span>{$_("common.listen")}</span>
+    </button>
     <button onclick={toggleFav}>
         <span class="icon" class:filled={isFavorite}>
             <Heart size={20} fill={isFavorite ? "currentColor" : "none"} />

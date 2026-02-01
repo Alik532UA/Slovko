@@ -96,6 +96,7 @@
         "voices": "sesleri"
     },
     "common": {
-        "confirm": "Tasdıqla"
+        "confirm": "Tasdıqla",
+        "listen": "Diñlemek"
     }
 }

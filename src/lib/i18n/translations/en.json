@@ -96,6 +96,7 @@
         "voices": "voices"
     },
     "common": {
-        "confirm": "Confirm"
+        "confirm": "Confirm",
+        "listen": "Listen"
     }
 }
