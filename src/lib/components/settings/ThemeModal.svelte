@@ -39,6 +39,7 @@
                     class:selected={settingsStore.value.theme === theme.id}
                     onclick={() => selectTheme(theme.id)}
                     style="--theme-preview-bg: {theme.color}"
+                    data-testid="theme-card-{theme.id}"
                 >
                     <div class="theme-preview">
                         {#if settingsStore.value.theme === theme.id}

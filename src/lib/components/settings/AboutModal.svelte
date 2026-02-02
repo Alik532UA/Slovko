@@ -7,6 +7,7 @@
     import { versionStore } from "$lib/stores/versionStore.svelte";
 
     import { fade } from "svelte/transition";
+    import { hardReset } from "$lib/services/resetService";
 
     interface Props {
         onclose: () => void;
@@ -16,31 +17,7 @@
     let showDevMenu = $state(false);
 
     async function handleHardReset() {
-        if (confirm("Це видалить ВСІ локальні дані і кеш. Продовжити?")) {
-            // 1. Clear Service Worker
-            if ("serviceWorker" in navigator) {
-                const registrations =
-                    await navigator.serviceWorker.getRegistrations();
-                for (const registration of registrations) {
-                    await registration.unregister();
-                }
-            }
-
-            // 2. Clear Caches
-            if ("caches" in window) {
-                const keys = await caches.keys();
-                for (const key of keys) {
-                    await caches.delete(key);
-                }
-            }
-
-            // 3. Clear Local Storage & Session Storage
-            localStorage.clear();
-            sessionStorage.clear();
-
-            // 4. Force Reload
-            window.location.reload();
-        }
+        await hardReset(true);
     }
 
     function handleBackdropClick(e: MouseEvent) {
@@ -103,6 +80,7 @@
                 <button
                     class="version-btn"
                     onclick={() => (showDevMenu = !showDevMenu)}
+                    data-testid="about-version-btn"
                 >
                     {$_("about.version")}: {versionStore.currentVersion ||
                         "0.1"}
@@ -113,12 +91,14 @@
                         <button
                             class="dev-item danger"
                             onclick={handleHardReset}
+                            data-testid="about-hard-reset-btn"
                         >
                             Clear Cache & Reset
                         </button>
                         <button
                             class="dev-item"
                             onclick={() => (showDevMenu = false)}
+                            data-testid="about-cancel-reset-btn"
                         >
                             Cancel
                         </button>

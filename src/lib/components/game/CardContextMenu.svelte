@@ -54,13 +54,13 @@
     style="top: {y}px; left: {x}px"
     in:scale={{ duration: 200, start: 0.9, opacity: 0 }}
 >
-    <button onclick={playSound}>
+    <button onclick={playSound} data-testid="context-menu-listen">
         <span class="icon">
             <Volume2 size={20} />
         </span>
         <span>{$_("common.listen")}</span>
     </button>
-    <button onclick={toggleFav}>
+    <button onclick={toggleFav} data-testid="context-menu-favorite">
         <span class="icon" class:filled={isFavorite}>
             <Heart size={20} fill={isFavorite ? "currentColor" : "none"} />
         </span>
@@ -70,7 +70,7 @@
                 : $_("playlists.addToFavorites")}</span
         >
     </button>
-    <button onclick={toggleExt}>
+    <button onclick={toggleExt} data-testid="context-menu-extra">
         <span class="icon" class:filled={isExtra}>
             <Bookmark size={20} fill={isExtra ? "currentColor" : "none"} />
         </span>

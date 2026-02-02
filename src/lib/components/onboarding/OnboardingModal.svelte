@@ -37,12 +37,12 @@
         }
     });
 
-    function selectStep1(lang: Language) {
+    async function selectStep1(lang: Language) {
         settingsStore.update({
             interfaceLanguage: lang,
             targetLanguage: lang
         });
-        setInterfaceLanguage(lang);
+        await setInterfaceLanguage(lang);
         selectedFlags.push(lang);
         step = 2;
     }
@@ -128,6 +128,7 @@
                         data-lang={lang}
                         onclick={() => !isFinalizing && (step === 1 ? selectStep1(lang) : selectStep2(lang))}
                         disabled={isFinalizing || (step === 2 && lang === settingsStore.value.targetLanguage)}
+                        data-testid="onboarding-flag-{lang}"
                     >
                         <img src="{base}/flags/{lang}.svg" alt={LANGUAGE_NAMES[lang]} />
                         <span>{LANGUAGE_NAMES[lang]}</span>
