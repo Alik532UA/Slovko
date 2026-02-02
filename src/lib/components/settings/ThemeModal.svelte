@@ -138,28 +138,6 @@
         color: var(--text-primary);
     }
 
-    .close-btn {
-        position: absolute;
-        top: -40px;
-        right: 0;
-        background: transparent;
-        border: none;
-        color: var(--text-primary);
-        cursor: pointer;
-        padding: 0.5rem;
-        border-radius: 8px;
-        transition: all 0.2s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .close-btn:hover {
-        color: var(--accent);
-        background: transparent; /* Remove background hover */
-        transform: scale(1.1);
-    }
-
     .themes-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);

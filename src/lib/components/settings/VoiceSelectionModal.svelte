@@ -18,9 +18,13 @@
 
     let voices: SpeechSynthesisVoice[] = $state([]);
     // Initialize with stored preference
-    let selectedVoiceURI = $state(
-        settingsStore.value.voicePreferences[language] || "",
-    );
+    let selectedVoiceURI = $state("");
+    
+    $effect(() => {
+        // Оновлюємо вибраний голос при зміні мови або початковому завантаженні
+        selectedVoiceURI = settingsStore.value.voicePreferences[language] || "";
+    });
+
     let primaryVoices: SpeechSynthesisVoice[] = $state([]);
     let secondaryVoices: SpeechSynthesisVoice[] = $state([]);
 
@@ -160,20 +164,27 @@
             onclose();
         }
     }
+
+    function handleKeydown(e: KeyboardEvent) {
+        if (e.key === "Escape") {
+            onclose();
+        }
+    }
 </script>
 
 <div
     class="modal-backdrop"
     onclick={handleBackdropClick}
+    onkeydown={handleKeydown}
     role="dialog"
     aria-modal="true"
     tabindex="-1"
 >
-    <!-- svelte-ignore a11y_click_events_have_key_events -->
     <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
     <div
         class="modal"
         onclick={(e) => e.stopPropagation()}
+        onkeydown={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         tabindex="-1"
@@ -293,25 +304,6 @@
         font-size: 1.25rem;
         font-weight: 500;
         color: var(--text-primary);
-    }
-
-    .close-btn {
-        position: absolute;
-        top: -40px;
-        right: 0;
-        background: transparent;
-        border: none;
-        color: var(--text-primary);
-        cursor: pointer;
-        padding: 0.5rem;
-        border-radius: 8px;
-        display: flex;
-        transition: all 0.2s;
-    }
-
-    .close-btn:hover {
-        color: var(--accent);
-        transform: scale(1.1);
     }
 
     .voice-list {

@@ -187,23 +187,11 @@
         color: var(--text-primary);
     }
 
-    .close-btn {
-        position: absolute;
-        top: -60px;
-        right: 0;
-        background: transparent;
-        border: none;
-        color: var(--text-primary); /* Use primary text color */
-        cursor: pointer;
-        padding: 0.5rem;
-        border-radius: 8px;
-        display: flex;
-        transition: all 0.2s;
-    }
-
-    .close-btn:hover {
+    h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 700;
         color: var(--accent);
-        transform: scale(1.1);
     }
 
     .content {
@@ -333,12 +321,9 @@
     }
 
     @media (max-width: 480px) {
-        .description {
-            font-size: 1rem;
-        }
-
-        .close-btn {
-            top: -50px;
+        .modal {
+            max-height: 100vh;
+            border-radius: 0;
         }
     }
 </style>

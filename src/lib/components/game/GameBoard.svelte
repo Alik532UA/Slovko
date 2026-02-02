@@ -197,28 +197,6 @@
         display: flex;
     }
 
-    .loading {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 4rem;
-    }
-
-    .loading-spinner {
-        width: 48px;
-        height: 48px;
-        border: 4px solid var(--text-secondary);
-        border-top-color: var(--accent);
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-        to {
-            transform: rotate(360deg);
-        }
-    }
-
     .empty-state-message {
         width: 100%;
         height: 100%;
