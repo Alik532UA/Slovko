@@ -1,0 +1,25 @@
+{
+  "labels": {
+    "brother_older": "older",
+    "brother_younger": "younger",
+    "sister_older": "older",
+    "sister_younger": "younger",
+    "orange_color": "color",
+    "orange_fruit": "fruit",
+    "aunt_paternal": "paternal",
+    "aunt_maternal": "maternal",
+    "uncle_paternal": "paternal",
+    "uncle_maternal": "maternal",
+    "leg_full": "leg",
+    "foot": "foot",
+    "he_pronoun": "he",
+    "she_pronoun": "she",
+    "it_pronoun": "it",
+    "you_informal": "informal",
+    "you_formal": "formal",
+    "go_foot": "on foot",
+    "go_vehicle": "by vehicle",
+    "walk_action": "walk",
+    "walk_pleasure": "stroll"
+  }
+}

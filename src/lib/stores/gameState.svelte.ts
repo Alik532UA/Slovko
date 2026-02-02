@@ -187,8 +187,8 @@ function createGameState() {
         const targetList: ActiveCard[] = [];
 
         wordKeys.forEach((wordKey, index) => {
-            const sourceText = getTranslation(wordKey, sourceTranslations);
-            const targetText = getTranslation(wordKey, targetTranslations);
+            const sourceText = getTranslation(wordKey, sourceTranslations, sourceLanguage);
+            const targetText = getTranslation(wordKey, targetTranslations, targetLanguage);
 
             // Source Transcription (Word -> IPA -> Target Alphabet)
             let sourceIPA = getTranscription(wordKey, sourceTranscriptions, true);

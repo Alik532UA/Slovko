@@ -4,6 +4,7 @@
  */
 
 import { ALL_TOPICS } from '../types';
+import { getBaseKey } from './semantics';
 import type {
     WordLevel,
     WordTopic,
@@ -18,7 +19,25 @@ const levelCache = new Map<string, WordLevel>();
 const topicCache = new Map<string, WordTopic>();
 const phrasesCache = new Map<string, any[]>();
 const translationCache = new Map<string, TranslationDictionary>();
+const semanticsCache = new Map<string, Record<string, any>>();
 let transcriptionCache: TranscriptionDictionary | null = null;
+
+/**
+ * Завантажити локальну семантику для мови
+ */
+async function loadLocalSemantics(language: Language): Promise<Record<string, any>> {
+    if (semanticsCache.has(language)) {
+        return semanticsCache.get(language)!;
+    }
+    try {
+        const module = await import(`./translations/${language}/semantics.json`);
+        const data = module.default;
+        semanticsCache.set(language, data);
+        return data;
+    } catch (e) {
+        return { labels: {} };
+    }
+}
 
 /**
  * Завантажити рівень за ID
@@ -65,6 +84,9 @@ export async function loadTranslations(
     category: 'levels' | 'topics' | 'phrases',
     id: string
 ): Promise<TranslationDictionary> {
+    // Завантажуємо семантику паралельно
+    await loadLocalSemantics(language);
+    
     const cacheKey = `${language}:${category}:${id}`;
     if (translationCache.has(cacheKey)) {
         return translationCache.get(cacheKey)!;
@@ -188,8 +210,28 @@ export async function loadPhrasesLevel(levelId: CEFRLevel): Promise<WordLevel> {
 /**
  * Отримати переклад слова
  */
-export function getTranslation(word: string, translations: TranslationDictionary): string {
-    const translation = translations[word];
+export function getTranslation(word: string, translations: TranslationDictionary, language: Language = 'uk'): string {
+    let translation = translations[word];
+    
+    // Якщо прямого перекладу немає, перевіряємо семантичну ієрархію
+    if (!translation) {
+        const baseKey = getBaseKey(word);
+        if (baseKey && translations[baseKey]) {
+            const baseTranslation = translations[baseKey];
+            
+            // Беремо мітку з локальної семантики мови
+            const localSemantics = semanticsCache.get(language);
+            const label = localSemantics?.labels?.[word];
+            
+            // Якщо є мітка (напр. "старший"), додаємо її до базового перекладу
+            translation = label ? `${baseTranslation} (${label})` : baseTranslation;
+            
+            if (import.meta.env.DEV) {
+                console.log(`[Semantic Fallback] Using "${baseKey}" for "${word}" in ${language}`);
+            }
+        }
+    }
+
     if (!translation) {
         if (import.meta.env.DEV) {
             console.warn(`[Missing Translation] Word: "${word}"`);

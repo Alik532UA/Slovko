@@ -1,0 +1,16 @@
+{
+  "labels": {
+    "brother_older": "älterer",
+    "brother_younger": "jüngerer",
+    "sister_older": "ältere",
+    "sister_younger": "jüngere",
+    "orange_color": "Farbe",
+    "orange_fruit": "Frucht",
+    "you_informal": "du",
+    "you_formal": "Sie",
+    "go_foot": "zu Fuß",
+    "go_vehicle": "mit Fahrzeug",
+    "walk_action": "laufen",
+    "walk_pleasure": "spazieren"
+  }
+}
