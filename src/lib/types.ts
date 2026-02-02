@@ -65,8 +65,8 @@ export interface WordLevel {
 }
 
 /**
- * Structure of a Topic JSON file (e.g., food.json).
- * Contains metadata (icon) and the list of word keys.
+ * Structure of a Topic JSON file (on disk it is just string[]).
+ * In runtime, it is enriched with metadata from ALL_TOPICS.
  */
 export interface WordTopic {
     id: string;

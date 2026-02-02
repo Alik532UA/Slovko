@@ -3,6 +3,7 @@
  * Динамічний імпорт JSON файлів для code splitting
  */
 
+import { ALL_TOPICS } from '../types';
 import type {
     WordLevel,
     WordTopic,
@@ -42,7 +43,16 @@ export async function loadTopic(topicId: string): Promise<WordTopic> {
     }
 
     const module = await import(`./words/topics/${topicId}.json`);
-    const topic = module.default as WordTopic;
+    // On disk, topic is just string[]. In runtime, we enrich it.
+    const words = module.default as string[];
+    const meta = ALL_TOPICS.find(t => t.id === topicId);
+
+    const topic: WordTopic = {
+        id: topicId,
+        icon: meta ? meta.icon : 'HelpCircle',
+        words: words
+    };
+
     topicCache.set(topicId, topic);
     return topic;
 }
@@ -64,15 +74,50 @@ export async function loadTranslations(
         let module;
         if (category === 'levels') {
             module = await import(`./translations/${language}/levels/${id}.json`);
+            const data = module.default as TranslationDictionary;
+            translationCache.set(cacheKey, data);
+            return data;
         } else if (category === 'topics') {
-            module = await import(`./translations/${language}/topics/${id}.json`);
+            // SSoT Refactoring: Topics don't have own translation files.
+            // We assemble them from levels.
+            
+            // 1. Get keys
+            const topic = await loadTopic(id);
+            
+            // 2. Load all levels
+            // We load them all to ensure we find the word wherever it is.
+            // In a PWA this is acceptable (~100KB JSON total).
+            const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
+            const levelPromises = levels.map(l => 
+                import(`./translations/${language}/levels/${l}.json`)
+                    .then(m => m.default as TranslationDictionary)
+                    .catch(() => ({}))
+            );
+            
+            const allLevelsData = await Promise.all(levelPromises);
+            
+            // 3. Merge all dictionaries
+            const megaDict = Object.assign({}, ...allLevelsData);
+            
+            // 4. Filter for this topic
+            const topicDict: TranslationDictionary = {};
+            topic.words.forEach(key => {
+                if (megaDict[key]) {
+                    topicDict[key] = megaDict[key];
+                } else {
+                    if (import.meta.env.DEV) console.warn(`Missing translation for ${key} in ${language} (Topic: ${id})`);
+                    topicDict[key] = key; // Fallback
+                }
+            });
+            
+            translationCache.set(cacheKey, topicDict);
+            return topicDict;
         } else {
             module = await import(`./translations/${language}/phrases/${id}.json`);
+            const data = module.default as TranslationDictionary;
+            translationCache.set(cacheKey, data);
+            return data;
         }
-
-        const data = module.default as TranslationDictionary;
-        translationCache.set(cacheKey, data);
-        return data;
     } catch (e) {
         console.warn(`Translations not found for ${language}/${category}/${id}`, e);
         return {};
@@ -91,14 +136,28 @@ export async function loadTranscriptions(
         let module;
         if (category === 'levels') {
             module = await import(`./transcriptions/${language}/levels/${id}.json`);
+            return module.default as TranscriptionDictionary;
         } else if (category === 'topics') {
-            module = await import(`./transcriptions/${language}/topics/${id}.json`);
+             // SSoT for Transcriptions
+             const topic = await loadTopic(id);
+             const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
+             const promises = levels.map(l => 
+                import(`./transcriptions/${language}/levels/${l}.json`)
+                    .then(m => m.default as TranscriptionDictionary)
+                    .catch(() => ({}))
+             );
+             const allData = await Promise.all(promises);
+             const megaDict = Object.assign({}, ...allData);
+             
+             const topicDict: TranscriptionDictionary = {};
+             topic.words.forEach(key => {
+                 if (megaDict[key]) topicDict[key] = megaDict[key];
+             });
+             return topicDict;
         } else {
             // Phrases currently don't have static transcriptions (mostly generative)
             return {};
         }
-
-        return module.default as TranscriptionDictionary;
     } catch (e) {
         // Normal if some languages/levels don't have static transcriptions
         return {};

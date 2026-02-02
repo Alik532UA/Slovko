@@ -455,5 +455,18 @@
     "thank_verb": "дякувати",
     "orange_fruit": "апельсин",
     "drink_noun": "напій",
-    "help_verb": "допомагати"
+    "help_verb": "допомагати",
+    "tiger": "тигр",
+    "wolf": "вовк",
+    "fox": "лисиця",
+    "rabbit": "кролик",
+    "goat": "коза",
+    "duck": "качка",
+    "spider": "павук",
+    "elephant": "слон",
+    "monkey": "мавпа",
+    "beer": "пиво",
+    "stove": "плита",
+    "sink": "раковина",
+    "balcony": "балкон"
 }
