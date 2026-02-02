@@ -54,6 +54,9 @@
         "phrasal_verbs": "İbareli Fiiller",
         "adverbs_prepositions": "Zarflar ve Edatlar"
     },
+    "onboarding": {
+        "whatToLearn": "Qaysı tilni ögrenmege isteysiñiz?"
+    },
     "settings": {
         "interfaceLanguage": "Arayüz tili",
         "cardLanguages": "Kartaların tilleri",

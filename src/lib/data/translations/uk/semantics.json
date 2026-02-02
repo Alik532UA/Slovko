@@ -20,6 +20,8 @@
     "go_foot": "пішки",
     "go_vehicle": "транспортом",
     "walk_action": "йти",
-    "walk_pleasure": "гуляти"
+    "walk_pleasure": "гуляти",
+    "blue_dark": "синій",
+    "blue_light": "блакитний"
   }
 }

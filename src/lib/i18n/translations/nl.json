@@ -54,6 +54,9 @@
         "phrasal_verbs": "Frasale Werkwoorden",
         "adverbs_prepositions": "Bijwoorden & Voorzetsels"
     },
+    "onboarding": {
+        "whatToLearn": "Welke taal wil je leren?"
+    },
     "settings": {
         "interfaceLanguage": "Interface taal",
         "cardLanguages": "Kaart talen",

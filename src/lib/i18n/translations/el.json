@@ -1,5 +1,8 @@
 {
     "app.title": "Slovko",
+    "onboarding": {
+        "whatToLearn": "Ποια γλώσσα θέλετε να μάθετε;"
+    },
     "app.tagline": "Μάθετε γλώσσες ταιριάζοντας λέξεις",
     "nav.levels": "Επίπεδα",
     "nav.topics": "Θέματα",

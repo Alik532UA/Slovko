@@ -20,6 +20,8 @@
     "go_foot": "on foot",
     "go_vehicle": "by vehicle",
     "walk_action": "walk",
-    "walk_pleasure": "stroll"
+    "walk_pleasure": "stroll",
+    "blue_dark": "dark",
+    "blue_light": "light"
   }
 }

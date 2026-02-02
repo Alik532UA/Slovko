@@ -10,13 +10,35 @@
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import UpdateNotification from "$lib/components/navigation/UpdateNotification.svelte";
 	import OnboardingModal from "$lib/components/onboarding/OnboardingModal.svelte";
+	import { hardReset } from "$lib/services/resetService";
 	import "../app.css";
 
 	let { children } = $props();
 	let ready = $state(false);
 
-	import { dev } from '$app/environment';
-	import { base } from '$app/paths';
+	let kKeyPressCount = 0;
+	let kKeyPressTimer: ReturnType<typeof setTimeout>;
+
+	function handleGlobalKeydown(e: KeyboardEvent) {
+		if (e.key.toLowerCase() === "к") {
+			kKeyPressCount++;
+			clearTimeout(kKeyPressTimer);
+
+			if (kKeyPressCount >= 5) {
+				hardReset(true);
+				kKeyPressCount = 0;
+			} else {
+				kKeyPressTimer = setTimeout(() => {
+					kKeyPressCount = 0;
+				}, 2000); // Скидаємо лічильник через 2с бездіяльності
+			}
+		} else {
+			kKeyPressCount = 0;
+		}
+	}
+
+	import { dev } from "$app/environment";
+	import { base } from "$app/paths";
 
 	onMount(async () => {
 		await initializeI18n();
@@ -25,11 +47,13 @@
 		// Перевірка оновлень після ініціалізації
 		checkForUpdates();
 
-		if (!dev && 'serviceWorker' in navigator) {
+		if (!dev && "serviceWorker" in navigator) {
 			navigator.serviceWorker.register(`${base}/service-worker.js`);
 		}
 	});
 </script>
+
+<svelte:window onkeydown={handleGlobalKeydown} />
 
 {#if ready && !$isLoading}
 	{@render children()}

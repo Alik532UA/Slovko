@@ -54,6 +54,9 @@
         "phrasal_verbs": "Phrasal Verbs",
         "adverbs_prepositions": "Adverbien & Präpositionen"
     },
+    "onboarding": {
+        "whatToLearn": "Welche Sprache möchtest du lernen?"
+    },
     "settings": {
         "interfaceLanguage": "Sprache der Benutzeroberfläche",
         "cardLanguages": "Kartensprachen",
