@@ -88,7 +88,11 @@
     },
     "updateNotification": {
         "message": "Update verfügbar!",
-        "button": "Aktualisieren"
+        "button": "Vollständig aktualisieren (Cache leeren)",
+        "buttonSkip": "Alten Cache behalten und fortfahren",
+        "warning": "Für einen stabilen Betrieb wird empfohlen, die Version zu aktualisieren. Das Update setzt alle Einstellungen und Playlists zurück (da noch keine Autorisierung vorhanden ist). Bei Ablehnung können Fehler auftreten.",
+        "yourVersion": "Ihre Version",
+        "availableVersion": "Verfügbare Version"
     },
     "language": {
         "uk": "Ukrainisch",

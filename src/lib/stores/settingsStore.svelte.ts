@@ -58,11 +58,19 @@ function createSettingsStore() {
 
         try {
             const stored = localStorage.getItem(STORAGE_KEY);
+            const hasAppVersion = !!localStorage.getItem('app_cache_version');
+
             if (stored) {
                 const parsed = JSON.parse(stored);
                 if (parsed.theme === 'purple') parsed.theme = 'orange';
 
                 let migrated = { ...DEFAULT_SETTINGS, ...parsed };
+
+                // Якщо у користувача вже є маркер версії додатку, 
+                // значить він вже був у додатку раніше — пропускаємо онбординг.
+                if (hasAppVersion) {
+                    migrated.hasCompletedOnboarding = true;
+                }
 
                 if (!migrated.voicePreferences) migrated.voicePreferences = {};
 

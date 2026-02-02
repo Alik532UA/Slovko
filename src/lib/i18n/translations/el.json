@@ -1,25 +1,110 @@
 {
-    "app.title": "Slovko",
+    "app": {
+        "title": "Slovko"
+    },
+    "levels": {
+        "title": "Επίπεδα",
+        "A1": "Beginner",
+        "A2": "Elementary",
+        "B1": "Intermediate",
+        "B2": "Upper-Intermediate",
+        "C1": "Advanced",
+        "C2": "Proficient",
+        "underConstruction": "This level is under development, please choose another level"
+    },
+    "tabs": {
+        "levels": "Επίπεδα",
+        "topics": "Θέματα",
+        "phrases": "Φράσεις",
+        "playlists": "Λίστες"
+    },
+    "playlists": {
+        "favorites": "Favorites",
+        "mistakes": "Mistakes",
+        "extra": "Extra Study",
+        "addToFavorites": "Add to 'Favorites'",
+        "removeFromFavorites": "Remove from 'Favorites'",
+        "addToExtra": "Add to 'Extra Study'",
+        "removeFromExtra": "Remove from 'Extra Study'",
+        "empty": "This playlist is empty...",
+        "emptyMistakes": "This list is empty..."
+    },
+    "topics": {
+        "title": "Θέματα",
+        "nature": "Nature",
+        "animals": "Animals",
+        "travel": "Travel",
+        "food": "Food",
+        "home": "Home",
+        "cars": "Cars",
+        "it": "IT",
+        "questions": "Questions",
+        "numbers": "Numbers",
+        "colors": "Colors",
+        "time": "Time",
+        "family_relationships": "Family & Relationships",
+        "body_health": "Body & Health",
+        "clothes_fashion": "Clothes & Fashion",
+        "pronouns_people": "Pronouns & People",
+        "basic_verbs": "Basic Verbs",
+        "adjectives": "Adjectives",
+        "education_work": "Education & Work",
+        "abstract_concepts": "Abstract Concepts",
+        "society_law": "Society & Law",
+        "phrasal_verbs": "Phrasal Verbs",
+        "adverbs_prepositions": "Adverbs & Prepositions"
+    },
     "onboarding": {
         "whatToLearn": "Ποια γλώσσα θέλετε να μάθετε;"
     },
-    "app.tagline": "Μάθετε γλώσσες ταιριάζοντας λέξεις",
-    "nav.levels": "Επίπεδα",
-    "nav.topics": "Θέματα",
-    "nav.phrases": "Φράσεις",
-    "nav.playlists": "Λίστες",
-    "nav.settings": "Ρυθμίσεις",
-    "game.matches": "Αντιστοιχίες",
-    "game.mistakes": "Λάθη",
-    "game.time": "Χρόνος",
-    "game.hint": "Υπόδειξη",
-    "game.completed": "Επίπεδο ολοκληρώθηκε!",
-    "settings.interface_language": "Γλώσσα διεπαφής",
-    "settings.card_languages": "Γλώσσες καρτών",
-    "settings.source": "Πηγή",
-    "settings.target": "Στόχος",
-    "settings.theme": "Θέμα",
-    "settings.pronunciation": "Προφορά",
-    "settings.transcription": "Φωνητική",
-    "settings.about": "Σχετικά"
+    "settings": {
+        "interfaceLanguage": "Γλώσσα διεπαφής",
+        "cardLanguages": "Γλώσσες καρτών",
+        "from": "From",
+        "to": "To",
+        "sourceLanguage": "Πηγή",
+        "targetLanguage": "Στόχος",
+        "transcription": "Φωνητική",
+        "pronunciation": "Προφορά",
+        "theme": "Θέμα"
+    },
+    "theme": {
+        "dark-gray": "Dark",
+        "light-gray": "Light",
+        "orange": "Orange",
+        "green": "Green"
+    },
+    "menu": {
+        "donate": "Support the project",
+        "languages": "Languages",
+        "about": "Σχετικά"
+    },
+    "about": {
+        "title": "Σχετικά",
+        "description": "Slovko...",
+        "support": "Support the project",
+        "developer": "Developer",
+        "version": "Version"
+    },
+    "updateNotification": {
+        "message": "Διαθέσιμη ενημέρωση!",
+        "button": "Πλήρης ενημέρωση (εκκαθάριση προσωρινής μνήμης)",
+        "buttonSkip": "Διατήρηση παλιάς μνήμης και συνέχεια",
+        "warning": "Για σταθερή λειτουργία, συνιστάται η ενημέρωση της έκδοσης. Η ενημέρωση θα επαναφέρει όλες τις ρυθμίσεις και τις λίστες αναπαραγωγής (καθώς δεν υπάρχει ακόμη εξουσιοδότηση). Εάν παραλειφθεί, ενδέχεται να προκύψουν σφάλματα.",
+        "yourVersion": "Η έκδοσή σας",
+        "availableVersion": "Διαθέσιμη έκδοση"
+    },
+    "language": {
+        "uk": "Ukrainian",
+        "en": "English",
+        "nl": "Dutch",
+        "de": "German",
+        "crh": "Crimean Tatar",
+        "voices": "voices"
+    },
+    "common": {
+        "confirm": "Επιβεβαίωση",
+        "listen": "Listen",
+        "backToLearning": "Back to learning"
+    }
 }

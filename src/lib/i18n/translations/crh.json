@@ -87,8 +87,12 @@
         "version": "Versiya"
     },
     "updateNotification": {
-        "message": "Yañı versiya bar!",
-        "button": "Yañart"
+        "message": "Yañartuv bar!",
+        "button": "Tamamile yañartmaq (keşni temizlemek)",
+        "buttonSkip": "Eski keşni qaldırmaq ve devam etmek",
+        "warning": "Yaxşı çalışması içün programmanı yañartmaq kerek. Yañartuv bütün sazlamalarnı ve pley-listlerni yoq eter (şimdilik avtorizatsiya yoq). Red etseñiz, hatalar ola bile.",
+        "yourVersion": "Siziñ versiyañız",
+        "availableVersion": "Yañı versiya"
     },
     "language": {
         "uk": "Ukrain",

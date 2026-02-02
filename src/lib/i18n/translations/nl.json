@@ -88,7 +88,11 @@
     },
     "updateNotification": {
         "message": "Update beschikbaar!",
-        "button": "Bijwerken"
+        "button": "Volledig bijwerken (cache wissen)",
+        "buttonSkip": "Oude cache behouden en doorgaan",
+        "warning": "Voor een stabiele werking is het raadzaam om de versie bij te werken. De update herstelt alle instellingen en afspeellijsten (omdat er nog geen autorisatie is). Indien overgeslagen, kunnen er fouten optreden.",
+        "yourVersion": "Uw versie",
+        "availableVersion": "Beschikbare versie"
     },
     "language": {
         "uk": "Oekraïens",
