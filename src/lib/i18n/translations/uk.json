@@ -54,6 +54,9 @@
         "phrasal_verbs": "Фразові дієслова",
         "adverbs_prepositions": "Прислівники та Прийменники"
     },
+    "onboarding": {
+        "whatToLearn": "Яку мову ви плануєте вчити?"
+    },
     "settings": {
         "interfaceLanguage": "Мова інтерфейсу",
         "cardLanguages": "Мови карток",

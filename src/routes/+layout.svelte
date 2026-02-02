@@ -7,7 +7,9 @@
 	import { isLoading } from "svelte-i18n";
 	import { checkForUpdates } from "$lib/services/versionService";
 	import { versionStore } from "$lib/stores/versionStore.svelte";
+	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import UpdateNotification from "$lib/components/navigation/UpdateNotification.svelte";
+	import OnboardingModal from "$lib/components/onboarding/OnboardingModal.svelte";
 	import "../app.css";
 
 	let { children } = $props();
@@ -31,6 +33,10 @@
 
 {#if ready && !$isLoading}
 	{@render children()}
+
+	{#if !settingsStore.value.hasCompletedOnboarding}
+		<OnboardingModal />
+	{/if}
 
 	{#if versionStore.hasUpdate && versionStore.currentVersion}
 		<UpdateNotification version={versionStore.currentVersion} />

@@ -16,60 +16,42 @@ import {
 
 const STORAGE_KEY = 'wordApp_settings';
 
-/** Типи налаштувань */
 export interface AppSettings {
-    // Тема оформлення
-    theme: AppTheme;
-
-    // Мова інтерфейсу
     interfaceLanguage: Language;
-
-    // Мови для карток (пара)
-    sourceLanguage: Language; // "з якої"
-    targetLanguage: Language; // "на яку"
-
-    // Показувати транскрипцію (окремо для кожної сторони)
-    showTranscriptionSource: boolean;
-    showTranscriptionTarget: boolean;
-
-    // Озвучувати слова (окремо для кожної сторони)
+    sourceLanguage: Language;
+    targetLanguage: Language;
+    mode: GameMode;
+    currentLevel: CEFRLevel;
+    currentTopic: string;
+    currentPlaylist: PlaylistId | null;
+    hasCompletedOnboarding: boolean;
     enablePronunciationSource: boolean;
     enablePronunciationTarget: boolean;
-
-    // Поточний режим
-    mode: GameMode;
-
-    // Поточний вибір
-    currentLevel: CEFRLevel;
-    currentTopic: string | null;
-    currentPlaylist: PlaylistId | null;
-
-    // Збережені голоси для мов (Language code -> VoiceURI)
+    showTranscriptionSource: boolean;
+    showTranscriptionTarget: boolean;
     voicePreferences: Record<string, string>;
+    theme: AppTheme;
 }
 
-/** Значення за замовчуванням */
 const DEFAULT_SETTINGS: AppSettings = {
-    theme: 'dark-gray',
-    interfaceLanguage: 'uk',
+    interfaceLanguage: 'en',
     sourceLanguage: 'en',
     targetLanguage: 'uk',
-    showTranscriptionSource: true,
-    showTranscriptionTarget: false,
-    enablePronunciationSource: true,
-    enablePronunciationTarget: false, // За замовчуванням тільки джерело (usually EN)
     mode: 'levels',
     currentLevel: 'A1',
-    currentTopic: null,
+    currentTopic: 'basic_verbs',
     currentPlaylist: null,
-    voicePreferences: {}
+    hasCompletedOnboarding: false,
+    enablePronunciationSource: true,
+    enablePronunciationTarget: false,
+    showTranscriptionSource: true,
+    showTranscriptionTarget: false,
+    voicePreferences: {},
+    theme: 'dark-gray'
 };
 
 function createSettingsStore() {
-    // Завантажити з localStorage або використати default
     let settings = $state<AppSettings>(loadSettings());
-
-    // ... (rest of init)
 
     function loadSettings(): AppSettings {
         if (!browser) return DEFAULT_SETTINGS;
@@ -78,30 +60,22 @@ function createSettingsStore() {
             const stored = localStorage.getItem(STORAGE_KEY);
             if (stored) {
                 const parsed = JSON.parse(stored);
-                // Migration: purple -> orange
-                if (parsed.theme === 'purple') {
-                    parsed.theme = 'orange';
-                }
+                if (parsed.theme === 'purple') parsed.theme = 'orange';
 
                 let migrated = { ...DEFAULT_SETTINGS, ...parsed };
 
-                // Ensure voicePreferences exists (migration)
-                if (!migrated.voicePreferences) {
-                    migrated.voicePreferences = {};
-                }
+                if (!migrated.voicePreferences) migrated.voicePreferences = {};
 
-                // Migration: enablePronunciation -> enablePronunciationSource
                 if ('enablePronunciation' in parsed) {
                     migrated.enablePronunciationSource = parsed.enablePronunciation;
                     migrated.enablePronunciationTarget = false;
-                    delete migrated.enablePronunciation;
+                    delete (migrated as any).enablePronunciation;
                 }
 
-                // Migration: showTranscription -> showTranscriptionSource
                 if ('showTranscription' in parsed) {
                     migrated.showTranscriptionSource = parsed.showTranscription;
                     migrated.showTranscriptionTarget = false;
-                    delete migrated.showTranscription;
+                    delete (migrated as any).showTranscription;
                 }
 
                 return migrated;
@@ -119,19 +93,77 @@ function createSettingsStore() {
     }
 
     return {
-        get value() {
-            return settings;
-        },
+        get value() { return settings; },
 
-        /** Оновити налаштування */
         update(partial: Partial<AppSettings>) {
             settings = { ...settings, ...partial };
             saveSettings();
         },
 
-        // ... methods ...
+        setCardLanguages(source: Language, target: Language) {
+            settings = { ...settings, sourceLanguage: source, targetLanguage: target };
+            saveSettings();
+        },
 
-        /** Зберегти бажаний голос для мови */
+        setInterfaceLanguage(lang: Language) {
+            settings = { ...settings, interfaceLanguage: lang };
+            saveSettings();
+        },
+
+        setLevel(level: CEFRLevel) {
+            settings = { ...settings, currentLevel: level, mode: 'levels' };
+            saveSettings();
+        },
+
+        setPhrasesLevel(level: CEFRLevel) {
+            settings = { ...settings, currentLevel: level, mode: 'phrases' };
+            saveSettings();
+        },
+
+        setTopic(topicId: string) {
+            settings = { ...settings, currentTopic: topicId, mode: 'topics' };
+            saveSettings();
+        },
+
+        setPlaylist(playlistId: PlaylistId) {
+            settings = { ...settings, currentPlaylist: playlistId, mode: 'playlists' };
+            saveSettings();
+        },
+
+        nextLevel() {
+            const currentIndex = ALL_LEVELS.indexOf(settings.currentLevel);
+            if (currentIndex < ALL_LEVELS.length - 1) {
+                this.setLevel(ALL_LEVELS[currentIndex + 1]);
+            }
+        },
+
+        prevLevel() {
+            const currentIndex = ALL_LEVELS.indexOf(settings.currentLevel);
+            if (currentIndex > 0) {
+                this.setLevel(ALL_LEVELS[currentIndex - 1]);
+            }
+        },
+
+        togglePronunciationSource() {
+            settings = { ...settings, enablePronunciationSource: !settings.enablePronunciationSource };
+            saveSettings();
+        },
+
+        togglePronunciationTarget() {
+            settings = { ...settings, enablePronunciationTarget: !settings.enablePronunciationTarget };
+            saveSettings();
+        },
+
+        toggleTranscriptionSource() {
+            settings = { ...settings, showTranscriptionSource: !settings.showTranscriptionSource };
+            saveSettings();
+        },
+
+        toggleTranscriptionTarget() {
+            settings = { ...settings, showTranscriptionTarget: !settings.showTranscriptionTarget };
+            saveSettings();
+        },
+
         setVoicePreference(lang: string, voiceURI: string) {
             settings = {
                 ...settings,
@@ -140,124 +172,13 @@ function createSettingsStore() {
             saveSettings();
         },
 
-
-        /** Встановити тему */
         setTheme(theme: AppTheme) {
             settings = { ...settings, theme };
             saveSettings();
-            if (browser) {
-                document.documentElement.setAttribute('data-theme', theme);
-                document.documentElement.style.colorScheme = 'dark';
-            }
         },
 
-        /** Встановити мову інтерфейсу */
-        setInterfaceLanguage(lang: Language) {
-            settings = { ...settings, interfaceLanguage: lang };
-            saveSettings();
-        },
-
-        /** Встановити пару мов для карток */
-        setCardLanguages(source: Language, target: Language) {
-            if (source === target) {
-                console.warn('Source and target languages must be different');
-                return;
-            }
-            settings = { ...settings, sourceLanguage: source, targetLanguage: target };
-            saveSettings();
-        },
-
-        /** Toggle транскрипції джерела */
-        toggleTranscriptionSource() {
-            settings = { ...settings, showTranscriptionSource: !settings.showTranscriptionSource };
-            saveSettings();
-        },
-
-        /** Toggle транскрипції цілі */
-        toggleTranscriptionTarget() {
-            settings = { ...settings, showTranscriptionTarget: !settings.showTranscriptionTarget };
-            saveSettings();
-        },
-
-        /** Toggle озвучування джерела */
-        togglePronunciationSource() {
-            settings = { ...settings, enablePronunciationSource: !settings.enablePronunciationSource };
-            saveSettings();
-        },
-
-        /** Toggle озвучування цілі */
-        togglePronunciationTarget() {
-            settings = { ...settings, enablePronunciationTarget: !settings.enablePronunciationTarget };
-            saveSettings();
-        },
-
-        /** Перейти до рівня (Words) */
-        setLevel(level: CEFRLevel) {
-            settings = { ...settings, mode: 'levels', currentLevel: level, currentTopic: null, currentPlaylist: null };
-            saveSettings();
-        },
-
-        /** Перейти до рівня (Phrases) */
-        setPhrasesLevel(level: CEFRLevel) {
-            settings = { ...settings, mode: 'phrases', currentLevel: level, currentTopic: null, currentPlaylist: null };
-            saveSettings();
-        },
-
-        /** Перейти до теми */
-        setTopic(topic: string) {
-            settings = { ...settings, mode: 'topics', currentTopic: topic, currentPlaylist: null };
-            saveSettings();
-        },
-
-        /** Перейти до плейліста */
-        setPlaylist(playlist: PlaylistId) {
-            settings = { ...settings, mode: 'playlists', currentPlaylist: playlist, currentTopic: null };
-            saveSettings();
-        },
-
-        /** Наступний елемент (рівень або тема) */
-        nextLevel() {
-            if (settings.mode === 'levels' || settings.mode === 'phrases') {
-                const idx = ALL_LEVELS.indexOf(settings.currentLevel);
-                if (idx < ALL_LEVELS.length - 1) {
-                    if (settings.mode === 'phrases') {
-                        this.setPhrasesLevel(ALL_LEVELS[idx + 1]);
-                    } else {
-                        this.setLevel(ALL_LEVELS[idx + 1]);
-                    }
-                }
-            } else if (settings.mode === 'topics') {
-                const currentTopicId = settings.currentTopic || ALL_TOPICS[0].id;
-                const idx = ALL_TOPICS.findIndex(t => t.id === currentTopicId);
-                if (idx < ALL_TOPICS.length - 1) {
-                    this.setTopic(ALL_TOPICS[idx + 1].id);
-                }
-            }
-        },
-
-        /** Попередній елемент (рівень або тема) */
-        prevLevel() {
-            if (settings.mode === 'levels' || settings.mode === 'phrases') {
-                const idx = ALL_LEVELS.indexOf(settings.currentLevel);
-                if (idx > 0) {
-                    if (settings.mode === 'phrases') {
-                        this.setPhrasesLevel(ALL_LEVELS[idx - 1]);
-                    } else {
-                        this.setLevel(ALL_LEVELS[idx - 1]);
-                    }
-                }
-            } else if (settings.mode === 'topics') {
-                const currentTopicId = settings.currentTopic || ALL_TOPICS[0].id;
-                const idx = ALL_TOPICS.findIndex(t => t.id === currentTopicId);
-                if (idx > 0) {
-                    this.setTopic(ALL_TOPICS[idx - 1].id);
-                }
-            }
-        },
-
-        /** Скинути до default */
-        reset() {
-            settings = { ...DEFAULT_SETTINGS };
+        completeOnboarding() {
+            settings = { ...settings, hasCompletedOnboarding: true };
             saveSettings();
         }
     };

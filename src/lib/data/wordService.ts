@@ -202,7 +202,7 @@ export async function loadPhrasesLevel(levelId: CEFRLevel): Promise<WordLevel> {
         return data;
     } catch (e) {
         console.error(`Phrases for level ${levelId} not found`, e);
-        return { id: levelId, words: [] };
+        return { id: levelId, name: levelId, words: [] };
     }
 }
 

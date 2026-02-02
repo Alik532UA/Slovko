@@ -5,7 +5,7 @@
  *
  * Оновлено для підтримки динамічних мов та фіксованих позицій карток
  */
-import type { ActiveCard, CardStatus, Language, TranslationDictionary, TranscriptionDictionary, WordPair } from '../types';
+import type { ActiveCard, CardStatus, Language, TranslationDictionary, TranscriptionDictionary, WordPair, GameMode } from '../types';
 import { settingsStore } from './settingsStore.svelte';
 import { progressStore } from './progressStore.svelte';
 import { playlistStore } from './playlistStore.svelte';
