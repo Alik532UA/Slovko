@@ -44,12 +44,26 @@
 		await initializeI18n();
 		ready = true;
 
+		// Фікс для коректної висоти в PWA/мобільних браузерах
+		const updateVh = () => {
+			let vh = window.innerHeight * 0.01;
+			document.documentElement.style.setProperty('--vh', `${vh}px`);
+		};
+		updateVh();
+		window.addEventListener('resize', updateVh);
+		window.addEventListener('orientationchange', updateVh);
+
 		// Перевірка оновлень після ініціалізації
 		checkForUpdates();
 
 		if (!dev && "serviceWorker" in navigator) {
 			navigator.serviceWorker.register(`${base}/service-worker.js`);
 		}
+
+		return () => {
+			window.removeEventListener('resize', updateVh);
+			window.removeEventListener('orientationchange', updateVh);
+		};
 	});
 </script>
 
