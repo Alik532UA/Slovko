@@ -167,13 +167,6 @@
         color: var(--text-primary);
     }
 
-    h2 {
-        margin: 0;
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--accent);
-    }
-
     .content {
         text-align: center;
         display: flex;
