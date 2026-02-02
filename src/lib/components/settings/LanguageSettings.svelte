@@ -315,10 +315,22 @@
         backdrop-filter: blur(8px);
         display: flex;
         justify-content: center;
-        align-items: center;
-        padding: 1rem;
+        align-items: flex-start; /* Дозволяє скролити зверху вниз */
+        padding: 2rem 1rem;
+        overflow-y: auto;
         /* Smooth transition for theme switch */
         transition: background 0.3s;
+        scrollbar-width: thin;
+        scrollbar-color: var(--accent) transparent;
+    }
+
+    .modal-backdrop::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .modal-backdrop::-webkit-scrollbar-thumb {
+        background-color: var(--accent);
+        border-radius: 6px;
     }
 
     /* Light theme override for backdrop */
@@ -329,11 +341,21 @@
 
     .modal {
         background: transparent;
-        max-width: 320px;
+        max-width: 360px;
         width: 100%;
         position: relative;
         /* Ensure text color inherits correctly from body/theme */
         color: var(--text-primary);
+        margin: auto 0; /* Центрування, якщо контенту мало */
+    }
+
+    .modal::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .modal::-webkit-scrollbar-thumb {
+        background-color: var(--accent);
+        border-radius: 4px;
     }
 
     .confirm-btn {
@@ -386,16 +408,18 @@
 
     .flags-row {
         display: flex;
-        gap: 0.75rem;
+        gap: 1rem;
         justify-content: center;
         flex-wrap: wrap; /* Дозволити перенос прапорів */
+        padding: 0.5rem;
     }
 
     .flags-column {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0.85rem;
         align-items: center;
+        padding: 0.5rem;
     }
 
     .flag-btn {
@@ -420,6 +444,8 @@
         border-color: var(--selected-border);
         opacity: 1;
         box-shadow: 0 0 16px rgba(58, 143, 214, 0.5);
+        transform: scale(1.3);
+        z-index: 2;
     }
 
     .flag-btn.small {
