@@ -406,6 +406,7 @@
     "bank": "bank",
     "hotel": "hotel",
     "train": "train",
+    "bus": "bus",
     "plane": "plane",
     "taxi": "taxi",
     "bike": "bike",

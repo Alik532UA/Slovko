@@ -123,17 +123,33 @@ function createGameState() {
 
         try {
             if (mode === 'playlists' && currentPlaylist) {
+                // SSoT: For playlists, we load all levels to find translations for any word
+                const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
+                
+                const [sourceAll, targetAll] = await Promise.all([
+                    Promise.all(levels.map(l => 
+                        import(`../data/translations/${sourceLanguage}/levels/${l}.json`)
+                            .then(m => m.default)
+                            .catch(() => ({}))
+                    )),
+                    Promise.all(levels.map(l => 
+                        import(`../data/translations/${targetLanguage}/levels/${l}.json`)
+                            .then(m => m.default)
+                            .catch(() => ({}))
+                    ))
+                ]);
+
+                const sourceMegaDict = Object.assign({}, ...sourceAll);
+                const targetMegaDict = Object.assign({}, ...targetAll);
+
                 const mistakes = playlistStore.mistakes;
                 const pairs = currentPlaylist === 'mistakes'
                     ? mistakes.map(m => m.pair)
                     : (currentPlaylist === 'favorites' ? playlistStore.favorites : playlistStore.extra);
 
                 pairs.forEach(p => {
-                    if (sourceLanguage === 'en') sourceTranslations[p.id] = p.english;
-                    else if (sourceLanguage === 'uk') sourceTranslations[p.id] = p.ukrainian;
-
-                    if (targetLanguage === 'en') targetTranslations[p.id] = p.english;
-                    else if (targetLanguage === 'uk') targetTranslations[p.id] = p.ukrainian;
+                    sourceTranslations[p.id] = sourceMegaDict[p.id] || p.id;
+                    targetTranslations[p.id] = targetMegaDict[p.id] || p.id;
                 });
                 return;
             }
