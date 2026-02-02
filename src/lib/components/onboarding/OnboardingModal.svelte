@@ -25,20 +25,16 @@
         crh: "Seniñ tiliñ"
     };
 
-    onMount(async () => {
-        const navLang = navigator.language.split("-")[0];
-        if (LANGUAGES.includes(navLang as Language)) detectedLang = navLang;
-
-        try {
-            const res = await fetch("https://demo.ip-api.com/json/?fields=61439");
-            if (res.ok) {
-                const data = await res.json();
-                const countryToLang: Record<string, string> = {
-                    UA: "uk", DE: "de", NL: "nl", GR: "el", CY: "el"
-                };
-                if (countryToLang[data.countryCode]) detectedLang = countryToLang[data.countryCode];
+    onMount(() => {
+        // Миттєво встановлюємо мову за браузером
+        const browserLangs = navigator.languages || [navigator.language];
+        for (const lang of browserLangs) {
+            const shortLang = lang.split("-")[0];
+            if (LANGUAGES.includes(shortLang as Language)) {
+                detectedLang = shortLang;
+                break;
             }
-        } catch (e) {}
+        }
     });
 
     function selectStep1(lang: Language) {
