@@ -1,7 +1,7 @@
 {
 	"name": "slovko",
 	"private": true,
-	"version": "0.6.86",
+	"version": "0.6.87",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
@@ -12,7 +12,8 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"deploy": "npm run build && npx gh-pages -d build -t true",
 		"fix:b2": "node scripts/maintenance/fix_b2_gaps_from_other_levels.js",
-		"check:missing": "node scripts/analysis/find_missing_all.js"
+		"check:missing": "node scripts/analysis/find_missing_all.js",
+		"i18n:check": "node scripts/maintenance/check_translations.js"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^7.0.0",

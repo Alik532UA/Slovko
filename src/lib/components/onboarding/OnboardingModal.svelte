@@ -58,22 +58,24 @@
     }
 
     async function animateAndFinish() {
-        // 1. Починаємо фіналізацію (заголовок зникне через svelte-if, фон стане прозорим через клас)
+        // 1. Починаємо фіналізацію (фон стає прозорим)
         isFinalizing = true;
         
-        // Знаходимо ціль
+        // Знаходимо ціль миттєво
         const settingsBtn = document.querySelector('[data-testid="language-settings-btn"]');
         if (settingsBtn) {
             const targetRect = settingsBtn.getBoundingClientRect();
             const tx = targetRect.left + targetRect.width / 2;
             const ty = targetRect.top + targetRect.height / 2;
 
-            const flagElements = document.querySelectorAll('.flag-btn');
+            const flagImages = document.querySelectorAll('.flag-btn img');
             const newFlyingFlags: any[] = [];
             
-            flagElements.forEach((el, index) => {
-                const rect = el.getBoundingClientRect();
-                const lang = el.getAttribute('data-lang') as Language;
+            flagImages.forEach((img, index) => {
+                const rect = img.getBoundingClientRect();
+                const btn = img.closest('.flag-btn');
+                const lang = btn?.getAttribute('data-lang') as Language;
+                
                 newFlyingFlags.push({
                     lang,
                     x: rect.left + rect.width / 2,
@@ -83,28 +85,31 @@
                 });
             });
             
-            // 2. Включаємо літаючі прапори
+            // 2. Включаємо літаючі прапори одночасно зі зникненням фону
             flyingFlags = newFlyingFlags;
 
-            // 2.5. Блимаємо кнопкою, коли прапори долітають (через ~2с)
+            // 2.5. Блимаємо кнопкою через 1.5с (коли основна маса прапорів долітає)
             setTimeout(() => {
                 const btn = document.querySelector('[data-testid="language-settings-btn"]');
                 if (btn) {
                     btn.classList.add('settings-btn-blink');
-                    // Видаляємо клас після завершення анімації
                     setTimeout(() => btn.classList.remove('settings-btn-blink'), 2000);
                 }
-            }, 2000);
+            }, 1500);
         }
 
-        // 3. Завершуємо все через 3.5с (даємо час на блимання)
+        // 3. Завершуємо все через 3с
         setTimeout(() => {
             isVisible = false;
             settingsStore.completeOnboarding();
-        }, 3500);
+            
+            // Примусово викликаємо ресайз, щоб PWA перерахував висоту 
+            // та BottomBar не перекривався системними кнопками
+            window.dispatchEvent(new Event('resize'));
+        }, 3000);
     }
 
-    const firstTitle = $derived(`${titles[detectedLang] || titles.en} / ${titles.en}`);
+    const detectedTitle = $derived(detectedLang !== 'en' ? titles[detectedLang] : null);
 </script>
 
 {#if isVisible}
@@ -114,13 +119,22 @@
                 {#if !isFinalizing}
                     {#key step}
                         <h1 in:fade={{ duration: 400, delay: 200 }} out:fade={{ duration: 300 }}>
-                            {step === 1 ? firstTitle : $_("onboarding.whatToLearn")}
+                            {#if step === 1}
+                                <div class="title-stack">
+                                    {#if detectedTitle}
+                                        <div class="secondary">{detectedTitle}</div>
+                                    {/if}
+                                    <div class="primary">{titles.en}</div>
+                                </div>
+                            {:else}
+                                {$_("onboarding.whatToLearn")}
+                            {/if}
                         </h1>
                     {/key}
                 {/if}
             </div>
 
-            <div class="flags-grid" class:hidden={isFinalizing}>
+            <div class="flags-grid" class:hidden={flyingFlags.length > 0}>
                 {#each LANGUAGES as lang}
                     <button 
                         class="flag-btn" 
@@ -165,9 +179,11 @@
         backdrop-filter: blur(15px);
         display: flex;
         justify-content: center;
-        align-items: center;
-        padding: 1rem;
-        transition: background 1.6s ease, backdrop-filter 1.6s ease;
+        align-items: flex-start;
+        padding: 2rem 1rem;
+        overflow-y: auto;
+        transition: background 0.8s ease, backdrop-filter 0.8s ease;
+        scrollbar-width: none;
     }
 
     .onboarding-overlay.transparent {
@@ -176,14 +192,20 @@
         pointer-events: none;
     }
 
+    .onboarding-overlay::-webkit-scrollbar {
+        display: none;
+    }
+
     .container {
         max-width: 600px;
         width: 100%;
         text-align: center;
+        margin: auto 0;
     }
 
+
     .header-area {
-        height: 100px;
+        height: 120px;
         position: relative;
         width: 100%;
         margin-bottom: 2rem;
@@ -199,18 +221,35 @@
         margin: 0;
         color: white;
         font-weight: 700;
-        line-height: 1.2;
+        line-height: 1.1;
+    }
+
+    .title-stack {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .secondary {
+        font-size: 1.6rem;
+        opacity: 0.8;
+        font-weight: 500;
+    }
+
+    .primary {
+        font-size: 2.2rem;
     }
 
     .flags-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 1.5rem;
-        transition: opacity 0.2s;
     }
 
     .flags-grid.hidden {
-        opacity: 0; /* Миттєво ховаємо оригінали, коли з'являються літаючі копії */
+        opacity: 0;
+        pointer-events: none;
     }
 
     @media (max-width: 480px) {
@@ -237,8 +276,12 @@
         border-color: var(--accent);
     }
 
+    .flag-btn:disabled:not(.selected-step1) {
+        opacity: 1;
+        cursor: default;
+    }
+
     .flag-btn:disabled {
-        opacity: 0.3;
         cursor: default;
     }
 
@@ -277,9 +320,11 @@
         left: 0;
         width: 80px;
         height: 54px;
+        pointer-events: none;
         animation: fly-to-settings 2s forwards cubic-bezier(0.4, 0, 0.2, 1);
         animation-delay: var(--delay);
-        transform: translate(var(--start-x), var(--start-y)) translate(-50%, -50%);
+        /* Прибираємо статичний transform, він є в 0% анімації */
+        opacity: 0;
     }
 
     .flying-flag img {
