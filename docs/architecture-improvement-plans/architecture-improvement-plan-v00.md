@@ -56,7 +56,7 @@ Components are well-structured and focused.
         - User actions should call `goto(...)`.
         - Store updates should essentially just be optimistic updates or result of navigation.
 
-- [ ] **Strict Typed Contexts / Services** (Impact: **50**)
+- [x] **Strict Typed Contexts / Services** (Impact: **50**)
     - *Problem:* Services are imported as singletons (`import { gameController }`). This makes SSR (if ever needed) or testing harder (mocking singletons is hard).
     - *Solution:* Use `setContext` / `getContext` for services if dependency injection is needed, or keep singletons if the app is strictly SPA and simple. (Low priority as current singleton pattern works for this scale).
 

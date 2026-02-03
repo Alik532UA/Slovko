@@ -5,7 +5,7 @@
      * Фіксовані позиції карток через slots
      */
     import { gameState } from "$lib/stores/gameState.svelte";
-    import { gameController } from "$lib/services/gameController";
+    import { getGameController } from "$lib/context/gameContext";
     import { settingsStore } from "$lib/stores/settingsStore.svelte";
     import WordCard from "./WordCard.svelte";
     import CardContextMenu from "./CardContextMenu.svelte";
@@ -16,6 +16,7 @@
     import type { GameData } from "$lib/services/gameDataService";
 
     let { gameData }: { gameData?: GameData } = $props();
+    const gameController = getGameController();
 
     // Реініціалізація при зміні рівня/теми/мов
     let lastLevel = $state(settingsStore.value.currentLevel);

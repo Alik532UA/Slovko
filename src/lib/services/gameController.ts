@@ -12,7 +12,7 @@ import type { ActiveCard, CardStatus, WordPair } from '../types';
  * Відокремлює "як грати" від "що зберігати".
  * Використовує Dependency Injection для полегшення тестування.
  */
-class GameController {
+export class GameController {
     private lastInteractionTime = 0;
 
     constructor(

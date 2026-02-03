@@ -3,8 +3,10 @@
      * GameStats.svelte - Відображення статистики (стрік, швидкість)
      */
     import { gameState } from "$lib/stores/gameState.svelte";
-    import { gameController } from "$lib/services/gameController";
+    import { getGameController } from "$lib/context/gameContext";
     import { Flame, Target, Lightbulb, GraduationCap } from "lucide-svelte";
+
+    const gameController = getGameController();
 </script>
 
 <div class="stats-bar">

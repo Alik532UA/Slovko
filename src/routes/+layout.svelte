@@ -14,6 +14,11 @@
 	import DebugListener from "$lib/components/debug/DebugListener.svelte";
 	import "../app.css";
 
+	// Services Context Setup
+	import { gameController } from "$lib/services/gameController";
+	import { setGameController } from "$lib/context/gameContext";
+	setGameController(gameController);
+
 	let { children } = $props();
 	let ready = $state(false);
 
