@@ -3,6 +3,7 @@ import { logService } from './logService';
 import { SUPPORTED_LEVELS } from '../config';
 import type { AppSettings } from '../stores/settingsStore.svelte';
 import type { TranslationDictionary, TranscriptionDictionary, WordPair } from '../types';
+import { DictionarySchema } from '../data/schemas';
 
 export interface GameData {
     sourceTranslations: TranslationDictionary;
@@ -23,23 +24,6 @@ export interface PlaylistData {
  * Decouples data loading from game logic.
  */
 export class GameDataService {
-    private validateDictionary(dict: any, context: string): TranslationDictionary {
-        if (!dict || typeof dict !== 'object') {
-            console.warn(`Validation failed: ${context} is not an object`);
-            return {};
-        }
-        
-        const valid: TranslationDictionary = {};
-        for (const [key, value] of Object.entries(dict)) {
-            if (typeof value === 'string') {
-                valid[key] = value;
-            } else {
-                console.warn(`Validation failed: ${context} key "${key}" has non-string value`);
-            }
-        }
-        return valid;
-    }
-
     /**
      * Loads all necessary data (translations, transcriptions, word list) for the current game settings.
      */
@@ -59,7 +43,7 @@ export class GameDataService {
                 const [sourceAll, targetAll] = await Promise.all([
                     Promise.all(SUPPORTED_LEVELS.map(l =>
                         import(`../data/translations/${sourceLanguage}/levels/${l}.json`)
-                            .then(m => m.default)
+                            .then(m => DictionarySchema.parse(m.default))
                             .catch((e) => {
                                 logService.warn('game', `Failed to load ${sourceLanguage} level ${l}`, e);
                                 return {};
@@ -67,7 +51,7 @@ export class GameDataService {
                     )),
                     Promise.all(SUPPORTED_LEVELS.map(l =>
                         import(`../data/translations/${targetLanguage}/levels/${l}.json`)
-                            .then(m => m.default)
+                            .then(m => DictionarySchema.parse(m.default))
                             .catch((e) => {
                                 logService.warn('game', `Failed to load ${targetLanguage} level ${l}`, e);
                                 return {};
@@ -114,10 +98,10 @@ export class GameDataService {
                         loadTranscriptions(category, id, targetLanguage)
                     ]);
 
-                    sourceTranslations = this.validateDictionary(srcTrans, `translations-${sourceLanguage}`);
-                    targetTranslations = this.validateDictionary(tgtTrans, `translations-${targetLanguage}`);
-                    sourceTranscriptions = this.validateDictionary(srcTscr, `transcriptions-${sourceLanguage}`);
-                    targetTranscriptions = this.validateDictionary(tgtTscr, `transcriptions-${targetLanguage}`);
+                    sourceTranslations = srcTrans;
+                    targetTranslations = tgtTrans;
+                    sourceTranscriptions = srcTscr;
+                    targetTranscriptions = tgtTscr;
 
                     // Load words
                     if (mode === 'levels') {

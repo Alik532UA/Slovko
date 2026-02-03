@@ -14,6 +14,12 @@ import type {
     Language,
     LocalSemantics
 } from '../types';
+import {
+    DictionarySchema,
+    LevelFileSchema,
+    TopicFileSchema,
+    SemanticsSchema
+} from './schemas';
 
 // Кеш для уникнення повторних завантажень
 const levelCache = new Map<string, WordLevel>();
@@ -32,10 +38,12 @@ async function loadLocalSemantics(language: Language): Promise<LocalSemantics> {
     }
     try {
         const module = await import(`./translations/${language}/semantics.json`);
-        const data = module.default as LocalSemantics;
+        const parsed = SemanticsSchema.parse(module.default);
+        const data = parsed as LocalSemantics;
         semanticsCache.set(language, data);
         return data;
     } catch (e) {
+        if (import.meta.env.DEV) console.error(`Failed to load semantics for ${language}`, e);
         return { labels: {} };
     }
 }
@@ -49,7 +57,13 @@ export async function loadLevel(levelId: CEFRLevel): Promise<WordLevel> {
     }
 
     const module = await import(`./words/levels/${levelId}.json`);
-    const level = module.default as WordLevel;
+    const parsed = LevelFileSchema.parse(module.default);
+    // Ensure id/name are present (LevelFileSchema allows them to be optional for backward compat)
+    const level: WordLevel = {
+        id: parsed.id || levelId,
+        name: parsed.name || levelId,
+        words: parsed.words
+    };
     levelCache.set(levelId, level);
     return level;
 }
@@ -64,7 +78,8 @@ export async function loadTopic(topicId: string): Promise<WordTopic> {
 
     const module = await import(`./words/topics/${topicId}.json`);
     // On disk, topic is just string[]. In runtime, we enrich it.
-    const words = module.default as string[];
+    const parsed = TopicFileSchema.parse(module.default);
+    const words = parsed.words;
     const meta = ALL_TOPICS.find(t => t.id === topicId);
 
     const topic: WordTopic = {
@@ -103,8 +118,11 @@ export async function loadTranslations(
 
             const levelPromises = levelsToLoad.map(l =>
                 import(`./translations/${language}/levels/${l}.json`)
-                    .then(m => m.default as TranslationDictionary)
-                    .catch(() => ({}))
+                    .then(m => DictionarySchema.parse(m.default))
+                    .catch((e) => {
+                         if (import.meta.env.DEV) console.warn(`Failed validation/load ${language}/${l}`, e);
+                         return {};
+                    })
             );
 
             const allLevelsData = await Promise.all(levelPromises);
@@ -124,7 +142,7 @@ export async function loadTranslations(
             const levels: CEFRLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
             const levelPromises = levels.map(l =>
                 import(`./translations/${language}/levels/${l}.json`)
-                    .then(m => m.default as TranslationDictionary)
+                    .then(m => DictionarySchema.parse(m.default))
                     .catch(() => ({}))
             );
 
@@ -148,7 +166,7 @@ export async function loadTranslations(
             return topicDict;
         } else {
             const module = await import(`./translations/${language}/phrases/${id}.json`);
-            const data = module.default as TranslationDictionary;
+            const data = DictionarySchema.parse(module.default);
             translationCache.set(cacheKey, data);
             return data;
         }
@@ -170,14 +188,14 @@ export async function loadTranscriptions(
         let module;
         if (category === 'levels') {
             module = await import(`./transcriptions/${language}/levels/${id}.json`);
-            return module.default as TranscriptionDictionary;
+            return DictionarySchema.parse(module.default);
         } else if (category === 'topics') {
             // SSoT for Transcriptions
             const topic = await loadTopic(id);
             const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
             const promises = levels.map(l =>
                 import(`./transcriptions/${language}/levels/${l}.json`)
-                    .then(m => m.default as TranscriptionDictionary)
+                    .then(m => DictionarySchema.parse(m.default))
                     .catch(() => ({}))
             );
             const allData = await Promise.all(promises);
@@ -209,11 +227,17 @@ export async function loadPhrasesLevel(levelId: CEFRLevel): Promise<WordLevel> {
 
     try {
         const module = await import(`./phrases/levels/${levelId}.json`);
-        const data = module.default as WordLevel;
+        // Phrases usually follow same structure as Levels
+        const parsed = LevelFileSchema.parse(module.default);
+        const data: WordLevel = {
+            id: parsed.id || levelId,
+            name: parsed.name || levelId,
+            words: parsed.words
+        };
         levelCache.set(cacheKey, data);
         return data;
     } catch (e) {
-        console.error(`Phrases for level ${levelId} not found`, e);
+        console.error(`Phrases for level ${levelId} not found or invalid`, e);
         return { id: levelId, name: levelId, words: [] };
     }
 }
