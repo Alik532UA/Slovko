@@ -39,6 +39,18 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
   "blue_group": {
     base: "blue",
     specific: ["blue_dark", "blue_light"]
+  },
+  "walk": {
+    base: "walk",
+    specific: ["walk_action", "walk_pleasure"]
+  },
+  "go": {
+    base: "go",
+    specific: ["go_foot", "go_vehicle"]
+  },
+  "you": {
+    base: "you_pronoun",
+    specific: ["you_informal", "you_formal", "you"]
   }
 };
 

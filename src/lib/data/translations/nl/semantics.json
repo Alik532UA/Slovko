@@ -3,6 +3,8 @@
     "brother_older": "oudere",
     "brother_younger": "jongere",
     "sister_older": "oudere",
-    "sister_younger": "jongere"
+    "sister_younger": "jongere",
+    "walk_action": "lopen",
+    "walk_pleasure": "wandelen"
   }
 }

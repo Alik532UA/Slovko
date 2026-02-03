@@ -1,3 +1,6 @@
 {
-  "labels": {}
+  "labels": {
+    "walk_action": "yürmek",
+    "walk_pleasure": "qıdır-"
+  }
 }
