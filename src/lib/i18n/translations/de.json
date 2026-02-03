@@ -89,8 +89,21 @@
     },
     "about": {
         "title": "Über Slovko",
-        "description": "Slovko ist eine Wort-Matching-App, mit der du durch Assoziationsspiele neue Vokabeln lernen kannst. Verbinde Wörter und ihre Übersetzungen, um sie dir schneller zu merken!",
+        "description": "Slovko ist eine App zum Vokabellernen durch Assoziationsspiele. Verbinde Wörter und ihre Übersetzungen, um sie dir schneller zu merken!",
         "support": "Projekt unterstützen",
+        "feedback": {
+            "title": "Feedback",
+            "improvement": "Verbesserung",
+            "bug": "Fehlerbericht",
+            "contentError": "Inhaltsfehler",
+            "question": "Frage",
+            "messagePlaceholder": "Beschreibe deine Idee oder dein Problem...",
+            "expected": "Was hätte passieren sollen?",
+            "actual": "Was ist tatsächlich passiert?",
+            "send": "Feedback senden",
+            "successTitle": "Danke!",
+            "successMsg": "Dein Feedback hilft uns, Slovko besser zu machen."
+        },
         "developer": "Entwickler",
         "version": "Version"
     },

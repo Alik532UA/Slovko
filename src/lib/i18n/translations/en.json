@@ -94,6 +94,19 @@
         "title": "About",
         "description": "Slovko is the result of existing similar apps having intrusive ads. That's why the idea arose to make our own, completely ad-free. Learn languages by matching word pairs without distractions.",
         "support": "Support the project",
+        "feedback": {
+            "title": "Feedback",
+            "bug": "Report a Problem",
+            "improvement": "Suggest Improvement",
+            "contact": "Contact Developer",
+            "subjectLabel": "Subject / Title",
+            "messageLabel": "Description / Message",
+            "subjectPlaceholder": "Briefly describe the topic...",
+            "messagePlaceholder": "Provide more details...",
+            "send": "Send",
+            "successTitle": "Thank you!",
+            "successMsg": "Your feedback helps make Slovko better."
+        },
         "developer": "Developer",
         "version": "Version"
     },

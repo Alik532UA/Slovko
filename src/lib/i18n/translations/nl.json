@@ -91,6 +91,19 @@
         "title": "Over Slovko",
         "description": "Slovko is een app om woorden te leren via een associatiespel. Verbind woorden en hun vertalingen om ze sneller te onthouden!",
         "support": "Ondersteun het project",
+        "feedback": {
+            "title": "Feedback",
+            "improvement": "Verbetering",
+            "bug": "Foutmelding",
+            "contentError": "Inhoudsfout",
+            "question": "Vraag",
+            "messagePlaceholder": "Beschrijf je idee of probleem...",
+            "expected": "Wat had er moeten gebeuren?",
+            "actual": "Wat gebeurde er werkelijk?",
+            "send": "Verstuur feedback",
+            "successTitle": "Bedankt!",
+            "successMsg": "Jouw feedback helpt om Slovko beter te maken."
+        },
         "developer": "Ontwikkelaar",
         "version": "Versie"
     },
