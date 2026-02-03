@@ -12,6 +12,12 @@
 	import ToastContainer from "$lib/components/ui/ToastContainer.svelte";
 	import OnboardingModal from "$lib/components/onboarding/OnboardingModal.svelte";
 	import DebugListener from "$lib/components/debug/DebugListener.svelte";
+	import {
+		initGA,
+		trackPageView,
+		trackEvent,
+	} from "$lib/services/analyticsService";
+	import { page } from "$app/stores";
 	import "../app.css";
 
 	// Services Context Setup
@@ -25,6 +31,28 @@
 	import { dev } from "$app/environment";
 	import { base } from "$app/paths";
 
+	const trackableTestIds = [
+		"donate-btn",
+		"theme-settings-btn",
+		"language-settings-btn",
+		"about-btn",
+		"profile-btn",
+		"about-donate-link",
+		"about-cv-link",
+		"about-hard-reset-btn",
+	];
+
+	const handleGlobalClick = (event: MouseEvent) => {
+		const target = event.target as HTMLElement;
+		const closestTrackable = target.closest("[data-testid]");
+		if (closestTrackable) {
+			const testId = closestTrackable.getAttribute("data-testid");
+			if (testId && trackableTestIds.includes(testId)) {
+				trackEvent("click", "ui_interaction", testId);
+			}
+		}
+	};
+
 	onMount(() => {
 		const init = async () => {
 			await initializeI18n();
@@ -36,6 +64,9 @@
 			if (!dev && "serviceWorker" in navigator) {
 				navigator.serviceWorker.register(`${base}/service-worker.js`);
 			}
+
+			// Analytics
+			initGA();
 		};
 
 		init();
@@ -48,10 +79,12 @@
 		updateVh();
 		window.addEventListener("resize", updateVh);
 		window.addEventListener("orientationchange", updateVh);
+		window.addEventListener("click", handleGlobalClick);
 
 		return () => {
 			window.removeEventListener("resize", updateVh);
 			window.removeEventListener("orientationchange", updateVh);
+			window.removeEventListener("click", handleGlobalClick);
 		};
 	});
 
@@ -60,6 +93,11 @@
 			"data-theme",
 			settingsStore.value.theme,
 		);
+	});
+
+	// Відстеження зміни сторінок
+	$effect(() => {
+		trackPageView($page.url.pathname);
 	});
 </script>
 
