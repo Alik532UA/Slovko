@@ -49,7 +49,7 @@ Components are well-structured and focused.
 
 ### Medium Priority (Refactoring & Cleanliness)
 
-- [ ] **Refactor URL Sync Logic** (Impact: **60**)
+- [x] **Refactor URL Sync Logic** (Impact: **60**)
     - *Problem:* Bi-directional `$effect` in `+page.svelte` is complex and prone to edge cases.
     - *Solution:* Make URL the Single Source of Truth.
         - `Store` should be derived from `page.url` (or initialized from it).

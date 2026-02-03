@@ -5,6 +5,7 @@
      */
     import { ChevronLeft, ChevronRight } from "lucide-svelte";
     import { settingsStore } from "$lib/stores/settingsStore.svelte";
+    import { goto } from "$app/navigation";
     import { _ } from "svelte-i18n";
     import { ALL_LEVELS, ALL_TOPICS } from "$lib/types";
     import LevelTopicModal from "./LevelTopicModal.svelte";
@@ -54,6 +55,42 @@
         return false;
     });
 
+    function goNext() {
+        const { mode, currentLevel, currentTopic } = settingsStore.value;
+        
+        if (mode === "levels" || mode === "phrases") {
+            const idx = ALL_LEVELS.indexOf(currentLevel);
+            if (idx < ALL_LEVELS.length - 1) {
+                const next = ALL_LEVELS[idx + 1];
+                goto(`?mode=${mode}&level=${next}`);
+            }
+        } else if (mode === "topics") {
+            const idx = ALL_TOPICS.findIndex(t => t.id === currentTopic);
+            if (idx !== -1 && idx < ALL_TOPICS.length - 1) {
+                const next = ALL_TOPICS[idx + 1].id;
+                goto(`?mode=${mode}&topic=${next}`);
+            }
+        }
+    }
+
+    function goPrev() {
+        const { mode, currentLevel, currentTopic } = settingsStore.value;
+        
+        if (mode === "levels" || mode === "phrases") {
+            const idx = ALL_LEVELS.indexOf(currentLevel);
+            if (idx > 0) {
+                const prev = ALL_LEVELS[idx - 1];
+                goto(`?mode=${mode}&level=${prev}`);
+            }
+        } else if (mode === "topics") {
+            const idx = ALL_TOPICS.findIndex(t => t.id === currentTopic);
+            if (idx > 0) {
+                const prev = ALL_TOPICS[idx - 1].id;
+                goto(`?mode=${mode}&topic=${prev}`);
+            }
+        }
+    }
+
     function handleKeydown(event: KeyboardEvent) {
         // Prevent navigation if user is typing in an input
         const target = event.target as HTMLElement;
@@ -62,9 +99,9 @@
         }
 
         if (event.key === "ArrowLeft" && canGoPrev) {
-            settingsStore.prevLevel();
+            goPrev();
         } else if (event.key === "ArrowRight" && canGoNext) {
-            settingsStore.nextLevel();
+            goNext();
         }
     }
 </script>
@@ -74,7 +111,7 @@
 <div class="bottom-bar">
     <button
         class="nav-btn"
-        onclick={() => settingsStore.prevLevel()}
+        onclick={() => goPrev()}
         disabled={!canGoPrev}
         data-testid="prev-level-btn"
     >
@@ -91,7 +128,7 @@
 
     <button
         class="nav-btn"
-        onclick={() => settingsStore.nextLevel()}
+        onclick={() => goNext()}
         disabled={!canGoNext}
         data-testid="next-level-btn"
     >

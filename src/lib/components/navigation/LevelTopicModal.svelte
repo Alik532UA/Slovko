@@ -4,6 +4,7 @@
      * Scalable architecture: Tabs defined as config
      */
     import { _ } from "svelte-i18n";
+    import { goto } from "$app/navigation";
     import {
         X,
         Leaf,
@@ -85,22 +86,22 @@
     let activeTab = $state<GameMode>(settingsStore.value.mode);
 
     function selectLevel(level: CEFRLevel) {
-        settingsStore.setLevel(level);
+        goto(`?mode=levels&level=${level}`);
         onclose();
     }
 
     function selectPhrasesLevel(level: CEFRLevel) {
-        settingsStore.setPhrasesLevel(level);
+        goto(`?mode=phrases&level=${level}`);
         onclose();
     }
 
     function selectTopic(topicId: string) {
-        settingsStore.setTopic(topicId);
+        goto(`?mode=topics&topic=${topicId}`);
         onclose();
     }
 
     function selectPlaylist(playlistId: PlaylistId) {
-        settingsStore.setPlaylist(playlistId);
+        goto(`?mode=playlists&playlist=${playlistId}`);
         onclose();
     }
 
