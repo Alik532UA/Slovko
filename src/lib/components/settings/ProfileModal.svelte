@@ -805,6 +805,13 @@
         margin-bottom: 2rem;
     }
 
+    @media (max-width: 480px) {
+        .header {
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+    }
+
     .avatar {
         width: 80px;
         height: 80px;
@@ -815,6 +822,15 @@
         align-items: center;
         justify-content: center;
         border: 2px solid var(--border);
+        flex-shrink: 0;
+    }
+
+    @media (max-width: 480px) {
+        .avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+        }
     }
 
     .avatar.anonymous {
@@ -827,11 +843,22 @@
     .user-info h2 {
         margin: 0;
         font-size: 1.5rem;
+        line-height: 1.2;
     }
     .user-info p {
         margin: 0.2rem 0 0;
         color: var(--text-secondary);
         font-size: 0.9rem;
+        word-break: break-all;
+    }
+
+    @media (max-width: 480px) {
+        .user-info h2 {
+            font-size: 1.2rem;
+        }
+        .user-info p {
+            font-size: 0.8rem;
+        }
     }
 
     .social-counts {
@@ -899,12 +926,13 @@
 
     .tabs-nav {
         display: flex;
-        gap: 0.5rem;
+        gap: 0.35rem;
         margin-bottom: 1.5rem;
         background: rgba(255, 255, 255, 0.05);
         padding: 0.25rem;
         border-radius: 12px;
-        flex-wrap: wrap;
+        overflow-x: auto;
+        scrollbar-width: none;
     }
 
     .tabs-nav::-webkit-scrollbar {
@@ -915,15 +943,25 @@
         flex: 1 0 auto;
         background: none;
         border: none;
-        padding: 0.75rem 1rem;
+        padding: 0.7rem 0.8rem;
         color: var(--text-secondary);
         font-weight: 600;
-        border-radius: 8px;
+        border-radius: 9px;
         transition: all 0.2s;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 0.5rem;
+        gap: 0.4rem;
+        font-size: 0.9rem;
+        white-space: nowrap;
+    }
+
+    @media (max-width: 480px) {
+        .tabs-nav button {
+            padding: 0.6rem 0.75rem;
+            font-size: 0.85rem;
+            gap: 0.3rem;
+        }
     }
 
     .tabs-nav button.active {

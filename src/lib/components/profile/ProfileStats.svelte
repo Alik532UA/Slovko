@@ -44,7 +44,11 @@
 </script>
 
 <div class="stats-container" data-testid="profile-stats-container">
-    <div class="stats-grid" class:expanded={showMore} data-testid="profile-stats-grid">
+    <div
+        class="stats-grid"
+        class:expanded={showMore}
+        data-testid="profile-stats-grid"
+    >
         <button
             class="stat-card"
             data-testid="stat-card-days-streak"
@@ -77,7 +81,9 @@
                 <Medal size={20} class="stat-icon" />
                 <div class="stat-content">
                     <span class="value">{bestCorrectStreak}</span>
-                    <span class="label">{$_("profile.stats.bestCorrectStreak")}</span>
+                    <span class="label"
+                        >{$_("profile.stats.bestCorrectStreak")}</span
+                    >
                 </div>
             </button>
             <button
@@ -88,7 +94,8 @@
                 <CheckCircle size={20} class="stat-icon" />
                 <div class="stat-content">
                     <span class="value">{correctToday}</span>
-                    <span class="label">{$_("profile.stats.correctToday")}</span>
+                    <span class="label">{$_("profile.stats.correctToday")}</span
+                    >
                 </div>
             </button>
             <button
@@ -110,7 +117,8 @@
                 <TrendingUp size={20} class="stat-icon" />
                 <div class="stat-content">
                     <span class="value">{Math.round(dailyAverage)}</span>
-                    <span class="label">{$_("profile.stats.dailyAverage")}</span>
+                    <span class="label">{$_("profile.stats.dailyAverage")}</span
+                    >
                 </div>
             </button>
             <button
@@ -180,8 +188,8 @@
     .stats-grid.expanded .stat-card {
         flex-direction: row; /* Horizontal layout */
         justify-content: flex-start;
-        padding: 0.75rem 1rem;
-        gap: 1rem;
+        padding: 1rem 1.25rem;
+        gap: 1.25rem;
     }
 
     .stat-content {
@@ -192,9 +200,23 @@
 
     .stats-grid.expanded .stat-content {
         flex-direction: row;
-        align-items: baseline;
-        gap: 0.5rem;
+        align-items: center;
+        gap: 0.75rem;
         flex: 1;
+        flex-wrap: wrap;
+    }
+
+    @media (max-width: 420px) {
+        .stats-grid.expanded .stat-content {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.1rem;
+        }
+
+        .stats-grid.expanded .stat-card {
+            padding: 0.75rem 1rem;
+            gap: 1rem;
+        }
     }
 
     .stat-card:hover {
@@ -228,8 +250,8 @@
 
     .stat-card :global(.stat-icon) {
         color: var(--accent);
-        margin-bottom: 0.25rem;
-        transition: margin 0.3s ease;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
     }
 
     /* Remove margin in horizontal mode */
@@ -254,11 +276,25 @@
         text-align: center;
         white-space: pre-line;
         line-height: 1.2;
+        transition: all 0.3s ease;
     }
 
     .stats-grid.expanded .stat-card .label {
         text-align: left;
         white-space: normal;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
+        color: var(--text-primary);
+        opacity: 0.9;
+    }
+
+    @media (max-width: 420px) {
+        .stats-grid.expanded .stat-card .label {
+            font-size: 0.85rem;
+            line-height: 1.1;
+        }
+
+        .stats-grid.expanded .stat-card .value {
+            font-size: 1.15rem;
+        }
     }
 </style>
