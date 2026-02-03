@@ -69,7 +69,15 @@
         "targetLanguage": "Права колонка",
         "transcription": "Показувати транскрипцію",
         "pronunciation": "Озвучувати слова",
-        "theme": "Тема"
+        "theme": "Тема",
+        "privacyTitle": "Налаштування приватності",
+        "privacySubtitle": "Керуйте видимістю профілю та взаємодією",
+        "showInSearch": "Показувати в пошуку",
+        "showInSearchDesc": "Дозволити іншим знаходити вас за email або іменем",
+        "allowFriendRequests": "Дозволити запити в друзі",
+        "allowFriendRequestsDesc": "Дозволити іншим надсилати вам запити на дружбу",
+        "shareStats": "Ділитися статистикою",
+        "shareStatsDesc": "Дозволити друзям бачити ваш прогрес навчання"
     },
     "theme": {
         "dark-gray": "Темна",

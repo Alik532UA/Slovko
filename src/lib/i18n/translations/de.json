@@ -66,7 +66,15 @@
         "targetLanguage": "Rechte Spalte",
         "transcription": "Transkription anzeigen",
         "pronunciation": "Wörter aussprechen",
-        "theme": "Thema"
+        "theme": "Thema",
+        "privacyTitle": "Privacy Settings",
+        "privacySubtitle": "Manage who can see you and interact with you",
+        "showInSearch": "Show me in search",
+        "showInSearchDesc": "Allow other users to find you by email or name",
+        "allowFriendRequests": "Allow friend requests",
+        "allowFriendRequestsDesc": "Allow others to send you friend requests",
+        "shareStats": "Share statistics",
+        "shareStatsDesc": "Allow friends to see your learning progress"
     },
     "theme": {
         "dark-gray": "Dunkelgrau",

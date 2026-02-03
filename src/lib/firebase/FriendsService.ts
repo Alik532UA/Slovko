@@ -23,6 +23,7 @@ import {
 } from "firebase/firestore";
 import { db, auth } from "./config";
 import { logService } from "../services/logService";
+import type { UserPrivacySettings } from "../types";
 
 /** Інтерфейс публічного профілю */
 export interface UserProfile {
@@ -30,6 +31,7 @@ export interface UserProfile {
     displayName: string;
     photoURL: string | null;
     searchableEmail?: string; // Для пошуку (опціонально)
+    privacy?: UserPrivacySettings;
 }
 
 /** Інтерфейс підписки */
@@ -314,6 +316,27 @@ export const FriendsService = {
         } catch (error) {
             logService.error('sync', 'Error getting counts:', error);
             return { following: 0, followers: 0 };
+        }
+    },
+
+    /**
+     * Оновити налаштування приватності
+     */
+    async updatePrivacySettings(settings: UserPrivacySettings): Promise<boolean> {
+        if (!auth.currentUser) return false;
+
+        try {
+            const profileRef = doc(db, COLLECTIONS.PROFILES, auth.currentUser.uid);
+            await setDoc(profileRef, {
+                privacy: settings,
+                updatedAt: serverTimestamp()
+            }, { merge: true });
+
+            logService.log('sync', 'Privacy settings updated');
+            return true;
+        } catch (error) {
+            logService.error('sync', 'Error updating privacy settings:', error);
+            return false;
         }
     }
 };

@@ -69,7 +69,15 @@
                      "targetLanguage":  "Î”ÎµÎ¾Î¹Î¬ ÏƒÏ„Î®Î»Î·",
                      "transcription":  "Î•Î¼Ï†Î¬Î½Î¹ÏƒÎ· Ï†Ï‰Î½Î·Ï„Î¹ÎºÎ®Ï‚",
                      "pronunciation":  "Î ÏÎ¿Ï†Î¿ÏÎ¬ Î»Î­Î¾ÎµÏ‰Î½",
-                     "theme":  "Î˜Î­Î¼Î±"
+                     "theme":  "Î˜Î­Î¼Î±",
+                     "privacyTitle": "Privacy Settings",
+                     "privacySubtitle": "Manage who can see you and interact with you",
+                     "showInSearch": "Show me in search",
+                     "showInSearchDesc": "Allow other users to find you by email or name",
+                     "allowFriendRequests": "Allow friend requests",
+                     "allowFriendRequestsDesc": "Allow others to send you friend requests",
+                     "shareStats": "Share statistics",
+                     "shareStatsDesc": "Allow friends to see your learning progress"
                  },
     "theme":  {
                   "dark-gray":  "Î£ÎºÎ¿ÏÏÎ¿",

@@ -130,6 +130,16 @@ export interface ActiveCard {
 }
 
 // ========================================
+// СОЦІАЛЬНА ВЗАЄМОДІЯ
+// ========================================
+
+export interface UserPrivacySettings {
+    showInSearch: boolean;
+    allowFriendRequests: boolean;
+    shareStats: boolean;
+}
+
+// ========================================
 // ТЕМИ
 // ========================================
 

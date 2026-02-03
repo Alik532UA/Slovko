@@ -11,6 +11,7 @@
         Target,
         LayoutGrid,
         Users,
+        Settings,
     } from "lucide-svelte";
     import { logService } from "../../services/logService";
     import { authStore } from "../../firebase/authStore.svelte";
@@ -25,6 +26,7 @@
     import EmailAuthForm from "../profile/EmailAuthForm.svelte";
     import FriendsList from "../friends/FriendsList.svelte";
     import UserSearch from "../friends/UserSearch.svelte";
+    import FriendsSettingsModal from "../friends/FriendsSettingsModal.svelte";
 
     interface Props {
         onclose: () => void;
@@ -44,6 +46,7 @@
     let isLinking = $state(false);
     let isEditingAvatar = $state(false);
     let isEditingName = $state(false);
+    let showFriendsSettings = $state(false);
     let editedName = $state("");
     let errorMessage = $state("");
     let successMessage = $state("");
@@ -73,7 +76,9 @@
     const totalCorrect = $derived(progressStore.value.totalCorrect);
     const streak = $derived(progressStore.value.streak);
     const bestStreak = $derived(progressStore.value.bestStreak || 0);
-    const bestCorrectStreak = $derived(progressStore.value.bestCorrectStreak || 0);
+    const bestCorrectStreak = $derived(
+        progressStore.value.bestCorrectStreak || 0,
+    );
     const correctToday = $derived(progressStore.value.dailyCorrect || 0);
     const dailyAverage = $derived(progressStore.getDailyAverage());
     const accuracy = $derived(progressStore.getAccuracy());
@@ -529,40 +534,59 @@
                         {daysInApp}
                         {accuracy}
                         {bestStreak}
-                        bestCorrectStreak={bestCorrectStreak}
+                        {bestCorrectStreak}
                         {correctToday}
                         {dailyAverage}
                     />
                 {:else if activeTab === "friends" && !authStore.isAnonymous}
                     <div class="friends-layout" data-testid="friends-layout">
-                        <div class="sub-tabs" data-testid="friends-sub-tabs">
-                            <button
-                                class:active={friendsSubTab === "following"}
-                                onclick={() => (friendsSubTab = "following")}
-                                data-testid="subtab-following"
+                        <div class="sub-tabs-container">
+                            <div
+                                class="sub-tabs"
+                                data-testid="friends-sub-tabs"
                             >
-                                {$_("friends.tabs.following", {
-                                    default: "Підписки",
-                                })}
-                            </button>
-                            <button
-                                class:active={friendsSubTab === "followers"}
-                                onclick={() => (friendsSubTab = "followers")}
-                                data-testid="subtab-followers"
-                            >
-                                {$_("friends.tabs.followers", {
-                                    default: "Підписники",
-                                })}
-                            </button>
-                            <button
-                                class:active={friendsSubTab === "search"}
-                                onclick={() => (friendsSubTab = "search")}
-                                data-testid="subtab-search"
-                            >
-                                {$_("friends.tabs.search", {
-                                    default: "Пошук",
-                                })}
-                            </button>
+                                <button
+                                    class:active={friendsSubTab === "following"}
+                                    onclick={() =>
+                                        (friendsSubTab = "following")}
+                                    data-testid="subtab-following"
+                                >
+                                    {$_("friends.tabs.following", {
+                                        default: "Підписки",
+                                    })}
+                                </button>
+                                <button
+                                    class:active={friendsSubTab === "followers"}
+                                    onclick={() =>
+                                        (friendsSubTab = "followers")}
+                                    data-testid="subtab-followers"
+                                >
+                                    {$_("friends.tabs.followers", {
+                                        default: "Підписники",
+                                    })}
+                                </button>
+                                <button
+                                    class:active={friendsSubTab === "search"}
+                                    onclick={() => (friendsSubTab = "search")}
+                                    data-testid="subtab-search"
+                                >
+                                    {$_("friends.tabs.search", {
+                                        default: "Пошук",
+                                    })}
+                                </button>
+                            </div>
+                            <div class="friends-actions">
+                                <button
+                                    class="friends-settings-btn"
+                                    onclick={() => (showFriendsSettings = true)}
+                                    title={$_("settings.privacyTitle", {
+                                        default: "Privacy Settings",
+                                    })}
+                                    data-testid="friends-settings-btn"
+                                >
+                                    <Settings size={18} />
+                                </button>
+                            </div>
                         </div>
 
                         <div
@@ -579,6 +603,12 @@
                             {/if}
                         </div>
                     </div>
+
+                    {#if showFriendsSettings}
+                        <FriendsSettingsModal
+                            onclose={() => (showFriendsSettings = false)}
+                        />
+                    {/if}
                 {:else if activeTab === "account" && !authStore.isAnonymous}
                     <AccountActions
                         onchangePassword={() => {
@@ -1109,11 +1139,20 @@
         gap: 1rem;
     }
 
+    .sub-tabs-container {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid var(--border);
+        position: relative;
+        gap: 0.5rem;
+    }
+
     .sub-tabs {
         display: flex;
-        border-bottom: 1px solid var(--border);
-        padding-bottom: 0.5rem;
-        flex-wrap: wrap;
+        flex: 1;
+        overflow-x: auto;
+        scrollbar-width: none; /* Hide scrollbar for cleaner look */
+        gap: 0.5rem;
     }
 
     .sub-tabs::-webkit-scrollbar {
@@ -1124,15 +1163,16 @@
         background: transparent;
         border: none;
         color: var(--text-secondary);
-        padding: 0.5rem 1rem;
+        padding: 0.75rem 0.5rem;
         cursor: pointer;
         font-size: 0.9rem;
         font-weight: 600;
         border-bottom: 2px solid transparent;
         transition: all 0.2s;
-        margin-bottom: -0.5rem;
         white-space: nowrap;
         flex-shrink: 0;
+        position: relative;
+        top: 1px; /* Push border down to overlap container border */
     }
 
     .sub-tabs button:hover {
@@ -1142,6 +1182,32 @@
     .sub-tabs button.active {
         color: var(--accent);
         border-bottom-color: var(--accent);
+    }
+
+    .friends-actions {
+        display: flex;
+        align-items: center;
+        padding-left: 0.5rem;
+        border-left: 1px solid var(--border); /* Visual separator */
+        flex-shrink: 0;
+    }
+
+    .friends-settings-btn {
+        background: transparent;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 8px;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .friends-settings-btn:hover {
+        color: var(--text-primary);
+        background: var(--bg-primary);
     }
 
     .friends-content-area {
