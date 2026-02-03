@@ -13,6 +13,7 @@ interface AuthState {
     displayName: string | null;
     photoURL: string | null;
     isAnonymous: boolean;
+    isGuest: boolean;
 }
 
 /**
@@ -26,7 +27,8 @@ function serializeUser(user: User | null): AuthState {
             email: null,
             displayName: null,
             photoURL: null,
-            isAnonymous: true
+            isAnonymous: false,
+            isGuest: true
         };
     }
     return {
@@ -34,7 +36,8 @@ function serializeUser(user: User | null): AuthState {
         email: user.email,
         displayName: user.displayName,
         photoURL: user.photoURL,
-        isAnonymous: user.isAnonymous
+        isAnonymous: user.isAnonymous,
+        isGuest: false
     };
 }
 
@@ -91,6 +94,7 @@ function createAuthStore() {
         get user() { return state; },
         get isInitialized() { return isInitialized; },
         get isAnonymous() { return state.isAnonymous; },
+        get isGuest() { return state.isGuest; },
         get uid() { return state.uid; },
         get email() { return state.email; },
         get displayName() { return state.displayName; },
@@ -104,6 +108,8 @@ function createAuthStore() {
             if (result) {
                 console.log('[AuthStore] loginWithGoogle success, updating state');
                 updateState(result);
+                // Примусова синхронізація локальних даних у новий акаунт
+                await SyncService.performUpload();
             }
             return result;
         },
@@ -116,6 +122,8 @@ function createAuthStore() {
             if (result) {
                 console.log('[AuthStore] registerWithEmail success, updating state');
                 updateState(result);
+                // Примусова синхронізація
+                await SyncService.performUpload();
             }
             return result;
         },
@@ -124,8 +132,14 @@ function createAuthStore() {
          * Вхід в існуючий акаунт
          */
         async signInWithEmail(email: string, password: string) {
-            // signIn тригерить onAuthStateChanged, тому не потрібно вручну оновлювати
-            return await AuthService.signInWithEmail(email, password);
+            const result = await AuthService.signInWithEmail(email, password);
+            if (result) {
+                updateState(result);
+                // Після входу в існуючий акаунт, SyncService завантажить дані через onSnapshot.
+                // Ми можемо викликати performUpload якщо хочемо об'єднати локальні дані з хмарними.
+                await SyncService.performUpload();
+            }
+            return result;
         },
 
         async changePassword(currentPassword: string, newPassword: string) {
@@ -142,12 +156,18 @@ function createAuthStore() {
             return await AuthService.deleteAccount(password);
         },
 
-        async updateProfile(displayName: string, photoURL?: string) {
+        async updateProfile(displayName?: string, photoURL?: string) {
             if (!firebaseUser) return;
             try {
                 // @ts-ignore
                 const updatedUser = await AuthService.updateProfile(displayName, photoURL);
                 updateState(updatedUser as User);
+                
+                // Примусово оновлюємо публічний профіль для пошуку та лідерборду
+                const { FriendsService } = await import("./FriendsService");
+                await FriendsService.updatePublicProfile();
+                
+                console.log('[AuthStore] Profile and public profile updated');
             } catch (error) {
                 console.error('[AuthStore] Failed to update profile', error);
                 throw error;

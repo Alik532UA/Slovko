@@ -139,14 +139,15 @@
             "friends": "Friends"
         },
         "stats": {
-            "correct": "total correct \n answers",
-            "streak": "current daily \n streak",
-            "days": "total days \n in program",
-            "accuracy": "overall \n accuracy",
-            "bestStreak": "record daily \n streak",
-            "bestCorrectStreak": "record correct \n answers streak",
-            "correctToday": "correct answers \n today",
-            "dailyAverage": "average answers \n per day",
+            "correct": "total correct answers",
+            "streak": "current daily streak",
+            "days": "total days in program",
+            "accuracy": "answers accuracy",
+            "bestStreak": "record daily streak",
+            "bestCorrectStreak": "record correct answers streak",
+            "correctToday": "correct answers today",
+            "dailyAverage": "average answers per day",
+            "correctShort": "Correct",
             "showMore": "show more statistics",
             "showLess": "show less statistics"
         }
@@ -168,6 +169,7 @@
         "voices": "voices"
     },
     "common": {
+        "all": "All",
         "confirm": "Confirm",
         "listen": "Listen",
         "backToLearning": "Back to learning",

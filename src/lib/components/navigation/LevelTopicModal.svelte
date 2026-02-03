@@ -275,16 +275,11 @@
         background: rgba(0, 0, 0, 0.8);
         backdrop-filter: blur(8px);
         display: flex;
-        justify-content: center;
+        /* justify-content: center; REMOVED */
         align-items: center;
         padding: 1rem;
         transition: background 0.3s;
-    }
-
-    /* Light/Green theme override for backdrop */
-    :global([data-theme="light-gray"]) .modal-backdrop,
-    :global([data-theme="green"]) .modal-backdrop {
-        background: rgba(255, 255, 255, 0.85);
+        overflow-y: auto; /* Allow scroll if content is tall */
     }
 
     .modal {
@@ -294,9 +289,9 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        max-height: 85vh;
-        /* Ensure text color inherits correctly */
+        /* max-height: 85vh; - Remove rigid constraint if we want full scroll */
         color: var(--text-primary);
+        margin: auto; /* Center vertically if space exists */
     }
 
     .close-btn {

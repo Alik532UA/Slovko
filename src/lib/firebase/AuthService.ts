@@ -17,12 +17,7 @@ export const AuthService = {
      */
     init(onUserChanged: (user: User | null) => void) {
         return onAuthStateChanged(auth, (user) => {
-            if (!user) {
-                // Якщо користувача немає — створюємо анонімний вхід
-                this.loginAnonymously();
-            } else {
-                onUserChanged(user);
-            }
+            onUserChanged(user);
         });
     },
 
@@ -38,50 +33,51 @@ export const AuthService = {
     },
 
     /**
-     * Прив'язка Google-акаунта до поточного анонімного профілю
+     * Вхід або прив'язка Google-акаунта
      */
     async linkWithGoogle() {
-        if (!auth.currentUser) return;
-
+        const { signInWithPopup } = await import("firebase/auth");
+        
         try {
-            // Використовуємо linkWithPopup щоб зберегти той самий UID
-            const result = await linkWithPopup(auth.currentUser, googleProvider);
-            // Перезавантажити користувача щоб оновити isAnonymous
-            await result.user.reload();
-            return auth.currentUser;
+            if (!auth.currentUser) {
+                // Якщо користувач гість — просто логінимо через Popup
+                const result = await signInWithPopup(auth, googleProvider);
+                return result.user;
+            } else {
+                // Якщо вже є анонімний акаунт — прив'язуємо
+                const result = await linkWithPopup(auth.currentUser, googleProvider);
+                await result.user.reload();
+                return auth.currentUser;
+            }
         } catch (error: any) {
-            // Якщо акаунт вже існує, можна запропонувати signInWithPopup (але це змінить UID)
             if (error.code === 'auth/credential-already-in-use') {
-                console.warn("Account already exists. Need to handle merge.");
-                // Тут можна реалізувати логіку переключення акаунта
+                // Якщо акаунт вже існує, а ми намагалися прив'язати — просто логінимося
+                const result = await signInWithPopup(auth, googleProvider);
+                return result.user;
             }
             throw error;
         }
     },
 
     /**
-     * Прив'язка Email/Password до поточного анонімного профілю (реєстрація)
+     * Реєстрація або прив'язка Email/Password
      */
     async linkWithEmail(email: string, password: string) {
-        if (!auth.currentUser) return;
-
-        const { EmailAuthProvider, linkWithCredential } = await import("firebase/auth");
-        const credential = EmailAuthProvider.credential(email, password);
-
+        const { EmailAuthProvider, linkWithCredential, createUserWithEmailAndPassword } = await import("firebase/auth");
+        
         try {
-            console.log('[AuthService] linkWithEmail: before link, isAnonymous:', auth.currentUser.isAnonymous);
-            const result = await linkWithCredential(auth.currentUser, credential);
-            console.log('[AuthService] linkWithEmail: after link, result.user.isAnonymous:', result.user.isAnonymous);
-
-            // Перезавантажити користувача щоб оновити isAnonymous
-            await result.user.reload();
-            console.log('[AuthService] linkWithEmail: after reload, auth.currentUser.isAnonymous:', auth.currentUser?.isAnonymous);
-
-            return auth.currentUser;
-        } catch (error: any) {
-            if (error.code === 'auth/email-already-in-use') {
-                console.warn("Email already in use.");
+            if (!auth.currentUser) {
+                // Для гостя — створюємо новий акаунт
+                const result = await createUserWithEmailAndPassword(auth, email, password);
+                return result.user;
+            } else {
+                // Для аноніма — прив'язуємо
+                const credential = EmailAuthProvider.credential(email, password);
+                const result = await linkWithCredential(auth.currentUser, credential);
+                await result.user.reload();
+                return auth.currentUser;
             }
+        } catch (error: any) {
             throw error;
         }
     },
@@ -115,15 +111,15 @@ export const AuthService = {
     /**
      * Оновлення профілю користувача
      */
-    async updateProfile(displayName: string, photoURL?: string) {
-        if (!auth.currentUser) return;
+    async updateProfile(displayName?: string, photoURL?: string): Promise<User | null> {
+        if (!auth.currentUser) return null;
 
         const { updateProfile } = await import("firebase/auth");
 
         try {
             const updates: { displayName?: string, photoURL?: string } = {};
-            if (displayName !== undefined) updates.displayName = displayName;
-            if (photoURL !== undefined) updates.photoURL = photoURL;
+            if (displayName !== undefined && displayName !== null) updates.displayName = displayName;
+            if (photoURL !== undefined && photoURL !== null) updates.photoURL = photoURL;
 
             await updateProfile(auth.currentUser, updates);
             await auth.currentUser.reload();
@@ -171,10 +167,32 @@ export const AuthService = {
         if (!auth.currentUser || !auth.currentUser.email) return;
 
         const { EmailAuthProvider, reauthenticateWithCredential, deleteUser } = await import("firebase/auth");
+        const { doc, deleteDoc } = await import("firebase/firestore");
+        const { db } = await import("./config");
+        
         const credential = EmailAuthProvider.credential(auth.currentUser.email, password);
+        const uid = auth.currentUser.uid;
 
         try {
+            // 1. Повторна автентифікація (обов'язково для видалення)
             await reauthenticateWithCredential(auth.currentUser, credential);
+
+            // 2. Видалення даних з Firestore
+            const userDocRef = doc(db, "users", uid);
+            const profileDocRef = doc(db, "profiles", uid);
+            
+            try {
+                await Promise.all([
+                    deleteDoc(userDocRef),
+                    deleteDoc(profileDocRef)
+                ]);
+                console.log("[AuthService] Firestore data deleted for UID:", uid);
+            } catch (e) {
+                console.warn("[AuthService] Failed to delete some Firestore data:", e);
+                // Продовжуємо видалення акаунта навіть якщо дані не видалилися (напр. через правила)
+            }
+
+            // 3. Видалення самого користувача з Firebase Auth
             await deleteUser(auth.currentUser);
         } catch (error: any) {
             throw error;

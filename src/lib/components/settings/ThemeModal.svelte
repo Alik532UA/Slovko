@@ -104,11 +104,14 @@
         height: 100%;
         background: rgba(0, 0, 0, 0.8);
         display: flex;
-        justify-content: center;
+        flex-direction: column; /* Ensure vertical layout */
+        /* justify-content: center; - Removed to fix scroll clipping */
         align-items: center;
         z-index: 1000;
         backdrop-filter: blur(5px);
         transition: background 0.3s;
+        overflow-y: auto; /* Enable scroll */
+        padding: 1.5rem 0; /* Vertical padding */
     }
 
     /* Light theme override for backdrop */
@@ -124,6 +127,7 @@
         position: relative;
         color: var(--text-primary);
         padding: 0 1rem;
+        margin: auto; /* Center vertically if space exists */
     }
 
     .modal-header {

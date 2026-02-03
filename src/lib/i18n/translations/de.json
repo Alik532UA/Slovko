@@ -122,14 +122,15 @@
             "emailInUse": "Diese E-Mail wird bereits verwendet"
         },
         "stats": {
-            "correct": "richtige Antworten \n insgesamt",
+            "correct": "richtige Antworten insgesamt",
             "streak": "aktuelle Tages-Serie",
-            "days": "Tage im Programm \n insgesamt",
-            "accuracy": "allgemeine \n Genauigkeit",
-            "bestStreak": "Rekord-Serie \n von Tagen",
-            "bestCorrectStreak": "Rekord-Serie \n richtiger Antworten",
-            "correctToday": "richtige Antworten \n heute",
-            "dailyAverage": "Durchschnitt \n pro Tag",
+            "days": "Tage im Programm insgesamt",
+            "accuracy": "Antwortgenauigkeit",
+            "bestStreak": "Rekord-Serie von Tagen",
+            "bestCorrectStreak": "Rekord-Serie richtiger Antworten",
+            "correctToday": "richtige Antworten heute",
+            "dailyAverage": "Durchschnitt pro Tag",
+            "correctShort": "Richtig",
             "showMore": "mehr Statistiken anzeigen",
             "showLess": "weniger Statistiken anzeigen"
         }
@@ -151,6 +152,7 @@
         "voices": "Stimmen"
     },
     "common": {
+        "all": "Alle",
         "confirm": "Bestätigen",
         "listen": "Hören",
         "backToLearning": "Zurück zum Lernen"

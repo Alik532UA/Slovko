@@ -16,9 +16,17 @@ interface WordProgress {
     lastSeen: number; // timestamp
 }
 
+export interface LevelStats {
+    totalCorrect: number;
+    totalAttempts: number;
+    bestCorrectStreak: number;
+    currentCorrectStreak: number;
+}
+
 /** Загальний прогрес користувача */
 interface UserProgress {
     words: Record<string, WordProgress>;
+    levelStats: Record<string, LevelStats>; // Статистика по рівнях
     totalCorrect: number;
     totalAttempts: number;
     lastUpdated: number;
@@ -35,6 +43,7 @@ interface UserProgress {
 /** Значення за замовчуванням */
 const DEFAULT_PROGRESS: UserProgress = {
     words: {},
+    levelStats: {},
     totalCorrect: 0,
     totalAttempts: 0,
     lastUpdated: Date.now(),
@@ -56,7 +65,10 @@ function createProgressStore() {
         try {
             const stored = localStorage.getItem(STORAGE_KEY);
             if (stored) {
-                return { ...DEFAULT_PROGRESS, ...JSON.parse(stored) };
+                const parsed = JSON.parse(stored);
+                // Migration: ensure levelStats exists
+                if (!parsed.levelStats) parsed.levelStats = {};
+                return { ...DEFAULT_PROGRESS, ...parsed };
             }
         } catch (e) {
             console.warn('Failed to load progress:', e);
@@ -86,7 +98,7 @@ function createProgressStore() {
         },
 
         /** Записати правильну відповідь */
-        recordCorrect(wordKey: string): void {
+        recordCorrect(wordKey: string, levelId: string = 'unknown'): void {
             const wordProgress = progress.words[wordKey] || {
                 wordKey,
                 correctCount: 0,
@@ -104,14 +116,36 @@ function createProgressStore() {
                 progress.dailyCorrect
             );
 
-            // Логіка серії правильних відповідей (підряд)
+            // Логіка серії правильних відповідей (підряд) - Глобальна
             const newCurrentCorrectStreak = progress.currentCorrectStreak + 1;
             const newBestCorrectStreak = Math.max(progress.bestCorrectStreak, newCurrentCorrectStreak);
             const newBestDaysStreak = Math.max(progress.bestStreak, streakUpdate.streak);
 
+            // Логіка по рівнях
+            const currentLevelStats = progress.levelStats[levelId] || {
+                totalCorrect: 0,
+                totalAttempts: 0,
+                bestCorrectStreak: 0,
+                currentCorrectStreak: 0
+            };
+            
+            const lvlStreak = currentLevelStats.currentCorrectStreak + 1;
+            const lvlBest = Math.max(currentLevelStats.bestCorrectStreak, lvlStreak);
+
+            const newLevelStats = {
+                ...progress.levelStats,
+                [levelId]: {
+                    totalCorrect: currentLevelStats.totalCorrect + 1,
+                    totalAttempts: currentLevelStats.totalAttempts + 1,
+                    currentCorrectStreak: lvlStreak,
+                    bestCorrectStreak: lvlBest
+                }
+            };
+
             progress = {
                 ...progress,
                 words: { ...progress.words },
+                levelStats: newLevelStats,
                 totalCorrect: progress.totalCorrect + 1,
                 totalAttempts: progress.totalAttempts + 1,
                 bestStreak: newBestDaysStreak,
@@ -126,17 +160,46 @@ function createProgressStore() {
         /** Отримати середню кількість правильних відповідей за день */
         getDailyAverage(): number {
             const daysInApp = Math.max(1, Math.ceil((Date.now() - progress.firstSeenDate) / (1000 * 60 * 60 * 24)));
-            return Math.round((progress.totalCorrect / daysInApp) * 10); // Помножимо на 10 для одного знака після коми, або просто ціле
+            const avg = progress.totalCorrect / daysInApp;
+            return Math.round(avg * 10) / 10; // Повертаємо з одним знаком після коми
         },
 
         /** Записати неправильну відповідь */
-        recordWrong(): void {
+        recordWrong(levelId: string = 'unknown'): void {
+            // Логіка по рівнях
+            const currentLevelStats = progress.levelStats[levelId] || {
+                totalCorrect: 0,
+                totalAttempts: 0,
+                bestCorrectStreak: 0,
+                currentCorrectStreak: 0
+            };
+
+            const newLevelStats = {
+                ...progress.levelStats,
+                [levelId]: {
+                    ...currentLevelStats,
+                    totalAttempts: currentLevelStats.totalAttempts + 1,
+                    currentCorrectStreak: 0 // Reset level streak
+                }
+            };
+
             progress = {
                 ...progress,
+                levelStats: newLevelStats,
                 totalAttempts: progress.totalAttempts + 1,
                 currentCorrectStreak: 0 // Перериваємо серію при помилці
             };
             saveProgress();
+        },
+
+        /** Отримати статистику рівня */
+        getLevelStats(levelId: string): LevelStats {
+            return progress.levelStats[levelId] || {
+                totalCorrect: 0,
+                totalAttempts: 0,
+                bestCorrectStreak: 0,
+                currentCorrectStreak: 0
+            };
         },
 
         /** Отримати кількість вивчених слів (3+ правильних відповідей) */

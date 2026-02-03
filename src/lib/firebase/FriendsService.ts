@@ -19,6 +19,8 @@ import {
     orderBy,
     limit,
     serverTimestamp,
+    getCountFromServer,
+    writeBatch,
     type Timestamp
 } from "firebase/firestore";
 import { db, auth } from "./config";
@@ -55,33 +57,23 @@ const COLLECTIONS = {
  */
 export const FriendsService = {
     /**
-     * Підписатися на користувача
+     * Підписатися на користувача (Атомарно)
      * @param targetUid - UID користувача, на якого підписуємось
      */
     async follow(targetUid: string): Promise<boolean> {
-        if (!auth.currentUser) {
-            logService.warn('sync', 'Cannot follow: not authenticated');
-            return false;
-        }
-
+        if (!auth.currentUser) return false;
         const currentUid = auth.currentUser.uid;
-
-        if (currentUid === targetUid) {
-            logService.warn('sync', 'Cannot follow yourself');
-            return false;
-        }
+        if (currentUid === targetUid) return false;
 
         try {
-            // Отримуємо профіль цільового користувача
             const targetProfile = await this.getUserProfile(targetUid);
-            if (!targetProfile) {
-                logService.warn('sync', 'Target user profile not found');
-                return false;
-            }
+            if (!targetProfile) return false;
+
+            const batch = writeBatch(db);
 
             // Додаємо в "following" поточного користувача
             const followingRef = doc(db, COLLECTIONS.USERS, currentUid, COLLECTIONS.FOLLOWING, targetUid);
-            await setDoc(followingRef, {
+            batch.set(followingRef, {
                 uid: targetUid,
                 displayName: targetProfile.displayName,
                 photoURL: targetProfile.photoURL,
@@ -90,13 +82,14 @@ export const FriendsService = {
 
             // Додаємо в "followers" цільового користувача
             const followerRef = doc(db, COLLECTIONS.USERS, targetUid, COLLECTIONS.FOLLOWERS, currentUid);
-            await setDoc(followerRef, {
+            batch.set(followerRef, {
                 uid: currentUid,
                 displayName: auth.currentUser.displayName || 'User',
                 photoURL: auth.currentUser.photoURL,
                 followedAt: serverTimestamp()
             });
 
+            await batch.commit();
             logService.log('sync', `Followed user: ${targetUid}`);
             return true;
         } catch (error) {
@@ -106,26 +99,23 @@ export const FriendsService = {
     },
 
     /**
-     * Відписатися від користувача
+     * Відписатися від користувача (Атомарно)
      * @param targetUid - UID користувача, від якого відписуємось
      */
     async unfollow(targetUid: string): Promise<boolean> {
-        if (!auth.currentUser) {
-            logService.warn('sync', 'Cannot unfollow: not authenticated');
-            return false;
-        }
-
+        if (!auth.currentUser) return false;
         const currentUid = auth.currentUser.uid;
 
         try {
-            // Видаляємо з "following" поточного користувача
+            const batch = writeBatch(db);
+
             const followingRef = doc(db, COLLECTIONS.USERS, currentUid, COLLECTIONS.FOLLOWING, targetUid);
-            await deleteDoc(followingRef);
+            batch.delete(followingRef);
 
-            // Видаляємо з "followers" цільового користувача
             const followerRef = doc(db, COLLECTIONS.USERS, targetUid, COLLECTIONS.FOLLOWERS, currentUid);
-            await deleteDoc(followerRef);
+            batch.delete(followerRef);
 
+            await batch.commit();
             logService.log('sync', `Unfollowed user: ${targetUid}`);
             return true;
         } catch (error) {
@@ -210,30 +200,39 @@ export const FriendsService = {
     },
 
     /**
-     * Пошук користувачів за email або ім'ям
-     * @param searchQuery - Пошуковий запит
-     * @param maxResults - Максимальна кількість результатів
+     * Пошук користувачів за ім'ям або email (Без врахування регістру)
      */
     async searchUsers(searchQuery: string, maxResults = 10): Promise<UserProfile[]> {
         if (!searchQuery || searchQuery.length < 2) return [];
 
         try {
-            const normalizedQuery = searchQuery.toLowerCase().trim();
-
-            // Пошук за searchableEmail (якщо є)
+            const queryLower = searchQuery.toLowerCase().trim();
             const profilesRef = collection(db, COLLECTIONS.PROFILES);
-            const q = query(
+            
+            // 1. Спочатку спробуємо знайти точний збіг по email
+            const emailQuery = query(
                 profilesRef,
-                where('searchableEmail', '>=', normalizedQuery),
-                where('searchableEmail', '<=', normalizedQuery + '\uf8ff'),
+                where('searchableEmail', '==', queryLower),
+                limit(maxResults)
+            );
+            
+            const emailSnapshot = await getDocs(emailQuery);
+            if (!emailSnapshot.empty) {
+                return emailSnapshot.docs.map(doc => ({ ...doc.data(), uid: doc.id } as UserProfile));
+            }
+
+            // 2. Якщо не знайдено, шукаємо за displayNameLower (префіксний пошук)
+            const nameQuery = query(
+                profilesRef,
+                where('displayNameLower', '>=', queryLower),
+                where('displayNameLower', '<=', queryLower + '\uf8ff'),
                 limit(maxResults)
             );
 
-            const snapshot = await getDocs(q);
-
-            // Фільтруємо себе
+            const nameSnapshot = await getDocs(nameQuery);
             const currentUid = auth.currentUser?.uid;
-            return snapshot.docs
+            
+            return nameSnapshot.docs
                 .map(doc => ({ ...doc.data(), uid: doc.id } as UserProfile))
                 .filter(profile => profile.uid !== currentUid);
         } catch (error) {
@@ -244,7 +243,6 @@ export const FriendsService = {
 
     /**
      * Отримати публічний профіль користувача
-     * @param uid - UID користувача
      */
     async getUserProfile(uid: string): Promise<UserProfile | null> {
         try {
@@ -253,19 +251,6 @@ export const FriendsService = {
 
             if (snapshot.exists()) {
                 return { ...snapshot.data(), uid } as UserProfile;
-            }
-
-            // Fallback: спробувати отримати з основного документа users
-            const userRef = doc(db, COLLECTIONS.USERS, uid);
-            const userSnapshot = await getDoc(userRef);
-
-            if (userSnapshot.exists()) {
-                const data = userSnapshot.data();
-                return {
-                    uid,
-                    displayName: data.displayName || 'User',
-                    photoURL: data.avatar ? `internal:${data.avatar.icon}:${data.avatar.color}` : null
-                };
             }
 
             return null;
@@ -283,8 +268,15 @@ export const FriendsService = {
 
         try {
             const profileRef = doc(db, COLLECTIONS.PROFILES, auth.currentUser.uid);
+            
+            // Визначаємо найкраще ім'я для відображення
+            const displayName = auth.currentUser.displayName || 
+                              auth.currentUser.email?.split('@')[0] || 
+                              (auth.currentUser.isAnonymous ? 'Гість' : 'User');
+            
             await setDoc(profileRef, {
-                displayName: auth.currentUser.displayName || 'User',
+                displayName: displayName,
+                displayNameLower: displayName.toLowerCase(),
                 photoURL: auth.currentUser.photoURL,
                 searchableEmail: auth.currentUser.email?.toLowerCase() || null,
                 updatedAt: serverTimestamp()
@@ -297,25 +289,85 @@ export const FriendsService = {
     },
 
     /**
-     * Отримати кількість підписників та підписок
+     * Отримати кількість підписників та підписок (Оптимізовано)
      */
     async getCounts(uid?: string): Promise<{ following: number; followers: number }> {
         const targetUid = uid || auth.currentUser?.uid;
         if (!targetUid) return { following: 0, followers: 0 };
 
         try {
-            const [following, followers] = await Promise.all([
-                this.getFollowing(targetUid),
-                this.getFollowers(targetUid)
+            const followingRef = collection(db, COLLECTIONS.USERS, targetUid, COLLECTIONS.FOLLOWING);
+            const followersRef = collection(db, COLLECTIONS.USERS, targetUid, COLLECTIONS.FOLLOWERS);
+
+            const [followingSnap, followersSnap] = await Promise.all([
+                getCountFromServer(followingRef),
+                getCountFromServer(followersRef)
             ]);
 
             return {
-                following: following.length,
-                followers: followers.length
+                following: followingSnap.data().count,
+                followers: followersSnap.data().count
             };
         } catch (error) {
             logService.error('sync', 'Error getting counts:', error);
             return { following: 0, followers: 0 };
+        }
+    },
+
+    /**
+     * Отримати глобальний лідерборд
+     * @param metric - Метрика (totalCorrect, bestStreak, bestCorrectStreak, accuracy)
+     * @param cefrLevel - Рівень (optional)
+     * @param limitCount - Кількість результатів
+     */
+    async getLeaderboard(
+        metric: 'totalCorrect' | 'bestStreak' | 'bestCorrectStreak' | 'accuracy' = 'totalCorrect',
+        cefrLevel: string = 'all',
+        limitCount: number = 20
+    ): Promise<any[]> {
+        try {
+            const profilesRef = collection(db, COLLECTIONS.PROFILES);
+            let q;
+
+            // Для точності беремо більше записів, щоб відфільтрувати "читерів" (1 правильна відповідь = 100%)
+            const fetchLimit = metric === 'accuracy' ? 50 : limitCount;
+
+            // Firestore потребує окремі індекси для вкладених полів.
+            // Для простоти зараз беремо загальний топ по метриках, що є в корені профілю.
+            q = query(
+                profilesRef,
+                orderBy(metric, 'desc'),
+                limit(fetchLimit)
+            );
+
+            const snapshot = await getDocs(q);
+            let results = snapshot.docs.map((doc) => ({
+                uid: doc.id,
+                name: doc.data().displayName || 'User',
+                score: doc.data()[metric] || 0,
+                photoURL: doc.data().photoURL,
+                isMe: doc.id === auth.currentUser?.uid,
+                // Додаткові поля
+                totalAttempts: doc.data().totalAttempts || 0,
+                bestCorrectStreakLevel: doc.data().bestCorrectStreakLevel
+            }));
+
+            // Фільтрація для точності: прибираємо тих, хто має 100% але менше 100 спроб
+            if (metric === 'accuracy') {
+                results = results.filter(u => {
+                    if (u.score === 100 && u.totalAttempts < 100) return false;
+                    return true;
+                });
+            }
+
+            // Обрізаємо до запитаної кількості і додаємо ранг
+            return results.slice(0, limitCount).map((u, index) => ({
+                ...u,
+                rank: index + 1
+            }));
+        } catch (error) {
+            logService.error('sync', 'Error getting leaderboard:', error);
+            return [];
         }
     },
 

@@ -115,8 +115,9 @@ export class GameController {
         this.audioHandler.playMatch(card1, card2);
         this.gameState.recordMatch();
 
+        const levelId = this.getCurrentContextId();
         const isMistakesPlaylist = settingsStore.value.currentPlaylist === 'mistakes';
-        this.feedbackHandler.handleCorrect(card1.wordKey, isMistakesPlaylist);
+        this.feedbackHandler.handleCorrect(card1.wordKey, levelId, isMistakesPlaylist);
 
         this.gameState.setSelectedCard(null);
         this.gameState.setProcessing(false);
@@ -132,7 +133,8 @@ export class GameController {
         
         const pair1 = this.constructWordPair(card1.wordKey);
         const pair2 = this.constructWordPair(card2.wordKey);
-        this.feedbackHandler.handleWrong(pair1, pair2);
+        const levelId = this.getCurrentContextId();
+        this.feedbackHandler.handleWrong(pair1, pair2, levelId);
 
         this.gameState.setSelectedCard(null);
 
@@ -164,6 +166,13 @@ export class GameController {
             this.gameState.refillCards(source, target);
             newWords.forEach(w => this.gameState.markWordAsUsed(w));
         }
+    }
+
+    private getCurrentContextId(): string {
+        const { mode, currentLevel, currentTopic, currentPlaylist } = settingsStore.value;
+        if (mode === 'topics') return currentTopic;
+        if (mode === 'playlists') return currentPlaylist || 'mixed';
+        return currentLevel; // levels or phrases
     }
 
     private updateTimers() {

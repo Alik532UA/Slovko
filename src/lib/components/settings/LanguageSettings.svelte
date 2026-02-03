@@ -318,7 +318,7 @@
         backdrop-filter: blur(8px);
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        /* justify-content: center; - Removed to fix scroll clipping */
         align-items: center;
         padding: 1.5rem 0;
         overflow-y: auto;

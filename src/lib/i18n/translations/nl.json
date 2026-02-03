@@ -122,14 +122,15 @@
             "emailInUse": "Dit e-mailadres is al in gebruik"
         },
         "stats": {
-            "correct": "correcte antwoorden \n in totaal",
-            "streak": "dagelijkse reeks",
-            "days": "totaal aantal dagen \n in programma",
-            "accuracy": "algehele \n nauwkeurigheid",
-            "bestStreak": "record dagelijkse \n reeks",
-            "bestCorrectStreak": "recordreeks \n correcte antwoorden",
-            "correctToday": "correcte antwoorden \n vandaag",
-            "dailyAverage": "gemiddeld aantal \n per dag",
+            "correct": "correcte antwoorden in totaal",
+            "streak": "huidige dagelijkse reeks",
+            "days": "totaal aantal dagen in programma",
+            "accuracy": "antwoordnauwkeurigheid",
+            "bestStreak": "record dagelijkse reeks",
+            "bestCorrectStreak": "recordreeks correcte antwoorden",
+            "correctToday": "vandaag correct",
+            "dailyAverage": "gemiddeld per dag",
+            "correctShort": "Correct",
             "showMore": "toon meer statistieken",
             "showLess": "toon minder statistieken"
         }
@@ -151,6 +152,7 @@
         "voices": "stemmen"
     },
     "common": {
+        "all": "Alle",
         "confirm": "Bevestigen",
         "listen": "Luisteren",
         "backToLearning": "Terug naar leren"

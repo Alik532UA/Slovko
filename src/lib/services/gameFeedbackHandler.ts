@@ -12,15 +12,12 @@ export class GameFeedbackHandler {
      * Обробляє подію правильної відповіді.
      * 
      * @param wordKey Унікальний ключ слова
+     * @param levelId Поточний рівень (CEFR або ID теми)
      * @param fromMistakesPlaylist Чи була гра запущена з плейліста помилок
-     * 
-     * Дії:
-     * 1. Оновлює загальну статистику правильних відповідей у progressStore.
-     * 2. Якщо це плейліст помилок — повідомляє playlistStore про успішне повторення.
      */
-    handleCorrect(wordKey: string, fromMistakesPlaylist: boolean) {
+    handleCorrect(wordKey: string, levelId: string, fromMistakesPlaylist: boolean) {
         // Record general progress
-        progressStore.recordCorrect(wordKey);
+        progressStore.recordCorrect(wordKey, levelId);
 
         // Update specific playlist if active
         if (fromMistakesPlaylist) {
@@ -33,14 +30,11 @@ export class GameFeedbackHandler {
      * 
      * @param pair1 Перша пара слів (ID та тексти)
      * @param pair2 Друга пара слів (ID та тексти)
-     * 
-     * Дії:
-     * 1. Фіксує помилку в загальному progressStore для оновлення Streak та Accuracy.
-     * 2. Додає обидва слова в плейліст помилок для подальшого повторення.
+     * @param levelId Поточний рівень (CEFR або ID теми)
      */
-    handleWrong(pair1: WordPair, pair2: WordPair) {
+    handleWrong(pair1: WordPair, pair2: WordPair, levelId: string) {
         // Record general mistake
-        progressStore.recordWrong();
+        progressStore.recordWrong(levelId);
 
         // Add to mistakes playlist
         playlistStore.recordMistake(pair1);

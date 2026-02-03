@@ -12,6 +12,7 @@
         LayoutGrid,
         Users,
         Settings,
+        Trophy,
     } from "lucide-svelte";
     import { logService } from "../../services/logService";
     import { authStore } from "../../firebase/authStore.svelte";
@@ -20,6 +21,7 @@
 
     // Sub-components
     import ProfileStats from "../profile/ProfileStats.svelte";
+    import Leaderboard from "../profile/Leaderboard.svelte";
     import AvatarEditor from "../profile/AvatarEditor.svelte";
     import AccountActions from "../profile/AccountActions.svelte";
     import LoginMethods from "../profile/LoginMethods.svelte";
@@ -50,7 +52,9 @@
     let editedName = $state("");
     let errorMessage = $state("");
     let successMessage = $state("");
-    let activeTab = $state<"stats" | "account" | "friends">("stats");
+    let activeTab = $state<"stats" | "account" | "friends" | "leaderboard">(
+        "stats",
+    );
 
     // Friends state
     let friendsSubTab = $state<"following" | "followers" | "search">(
@@ -92,6 +96,7 @@
             ),
         ),
     );
+    const levelStats = $derived(progressStore.value.levelStats || {});
 
     // Avatar initial values
     const avatarInitialIcon = $derived(() => {
@@ -207,7 +212,7 @@
         const photoURL = `internal:${icon}:${color}`;
         try {
             await authStore.updateProfile(
-                authStore.displayName || "User",
+                undefined, // Не змінювати ім'я
                 photoURL,
             );
             logService.log("profile", "Avatar saved:", photoURL);
@@ -361,7 +366,7 @@
 
             <!-- Header -->
             <div class="header" data-testid="profile-header">
-                {#if authStore.uid && !authStore.isAnonymous}
+                {#if authStore.uid && !authStore.isAnonymous && !authStore.isGuest}
                     <button
                         class="avatar-wrapper-btn"
                         onclick={startEditingAvatar}
@@ -496,31 +501,55 @@
             </div>
 
             <!-- Tabs for logged in users -->
-            {#if authStore.uid && !authStore.isAnonymous}
+            {#if authStore.uid && !authStore.isGuest}
                 <div class="tabs-nav" data-testid="profile-tabs-nav">
                     <button
                         class:active={activeTab === "stats"}
                         onclick={() => (activeTab = "stats")}
                         data-testid="tab-stats"
                     >
-                        <Target size={16} />
-                        {$_("profile.tabs.stats", { default: "Статистика" })}
+                        <div class="tab-icon"><Target size={18} /></div>
+                        <span
+                            >{$_("profile.tabs.stats", {
+                                default: "Статистика",
+                            })}</span
+                        >
                     </button>
                     <button
                         class:active={activeTab === "friends"}
                         onclick={() => (activeTab = "friends")}
                         data-testid="tab-friends"
                     >
-                        <Users size={16} />
-                        {$_("profile.tabs.friends", { default: "Друзі" })}
+                        <div class="tab-icon"><Users size={18} /></div>
+                        <span
+                            >{$_("profile.tabs.friends", {
+                                default: "Друзі",
+                            })}</span
+                        >
+                    </button>
+                    <button
+                        class:active={activeTab === "leaderboard"}
+                        onclick={() => (activeTab = "leaderboard")}
+                        data-testid="tab-leaderboard"
+                    >
+                        <div class="tab-icon"><Trophy size={18} /></div>
+                        <span
+                            >{$_("profile.tabs.leaderboard", {
+                                default: "Топ",
+                            })}</span
+                        >
                     </button>
                     <button
                         class:active={activeTab === "account"}
                         onclick={() => (activeTab = "account")}
                         data-testid="tab-account"
                     >
-                        <LayoutGrid size={16} />
-                        {$_("profile.tabs.account", { default: "Акаунт" })}
+                        <div class="tab-icon"><LayoutGrid size={18} /></div>
+                        <span
+                            >{$_("profile.tabs.account", {
+                                default: "Акаунт",
+                            })}</span
+                        >
                     </button>
                 </div>
             {/if}
@@ -537,6 +566,7 @@
                         {bestCorrectStreak}
                         {correctToday}
                         {dailyAverage}
+                        {levelStats}
                     />
                 {:else if activeTab === "friends" && !authStore.isAnonymous}
                     <div class="friends-layout" data-testid="friends-layout">
@@ -609,6 +639,8 @@
                             onclose={() => (showFriendsSettings = false)}
                         />
                     {/if}
+                {:else if activeTab === "leaderboard" && !authStore.isAnonymous}
+                    <Leaderboard />
                 {:else if activeTab === "account" && !authStore.isAnonymous}
                     <AccountActions
                         onchangePassword={() => {
@@ -624,14 +656,14 @@
                 {/if}
             </div>
 
-            <!-- Anonymous user login prompt -->
-            {#if authStore.isAnonymous}
+            <!-- Anonymous or Guest user login prompt -->
+            {#if authStore.isAnonymous || authStore.isGuest}
                 <div class="warning-box">
                     <ShieldAlert size={24} />
                     <p>
-                        {$_("profile.syncWarning", {
-                            default: "Увійдіть, щоб зберегти прогрес у хмарі.",
-                        })}
+                        {authStore.isGuest 
+                            ? $_("profile.guestWarning", { default: "Ви граєте як гість. Увійдіть, щоб зберігати прогрес у хмарі та змагатися з іншими." })
+                            : $_("profile.syncWarning", { default: "Ви використовуєте тимчасовий акаунт. Прив'яжіть пошту, щоб не втратити прогрес." })}
                     </p>
                 </div>
                 <button
@@ -640,7 +672,9 @@
                     onclick={() => (loginMethod = "choose")}
                     disabled={isLinking}
                 >
-                    {$_("profile.login", { default: "Увійти" })}
+                    {authStore.isGuest 
+                        ? $_("profile.login", { default: "Увійти" }) 
+                        : $_("profile.connectAccount", { default: "Прив'язати акаунт" })}
                 </button>
             {/if}
         {:else if loginMethod === "choose"}
@@ -692,6 +726,7 @@
                         loginMethod = null;
                         resetForm();
                     }}
+                    data-testid="change-password-back-btn"
                 >
                     <ArrowLeft size={16} />
                     {$_("profile.back", { default: "Назад" })}
@@ -722,6 +757,7 @@
                         })}
                         class="input-field"
                         autocomplete="current-password"
+                        data-testid="delete-account-password-input"
                     />
                     {#if errorMessage}
                         <p class="error-msg">{errorMessage}</p>
@@ -730,6 +766,7 @@
                         type="submit"
                         class="delete-btn"
                         disabled={isLinking}
+                        data-testid="confirm-delete-account-btn"
                     >
                         {isLinking
                             ? "..."
@@ -744,6 +781,7 @@
                             loginMethod = null;
                             resetForm();
                         }}
+                        data-testid="delete-account-cancel-btn"
                     >
                         {$_("profile.cancel", { default: "Скасувати" })}
                     </button>
@@ -762,7 +800,7 @@
         backdrop-filter: blur(8px);
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        /* justify-content: center; - Removed to fix scroll clipping */
         align-items: center;
         padding: 1.5rem 0;
         overflow-y: auto;
@@ -926,11 +964,12 @@
 
     .tabs-nav {
         display: flex;
-        gap: 0.35rem;
+        gap: 0.25rem;
         margin-bottom: 1.5rem;
-        background: rgba(255, 255, 255, 0.05);
-        padding: 0.25rem;
-        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 0.4rem;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
         overflow-x: auto;
         scrollbar-width: none;
     }
@@ -940,33 +979,59 @@
     }
 
     .tabs-nav button {
-        flex: 1 0 auto;
+        flex: 1;
         background: none;
         border: none;
-        padding: 0.7rem 0.8rem;
+        padding: 0.6rem 0.5rem;
         color: var(--text-secondary);
         font-weight: 600;
-        border-radius: 9px;
-        transition: all 0.2s;
+        border-radius: 12px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+        font-size: 0.75rem;
+        white-space: nowrap;
+        min-width: 70px;
+    }
+
+    .tab-icon {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 0.4rem;
-        font-size: 0.9rem;
-        white-space: nowrap;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.03);
+        transition: all 0.3s;
+        color: var(--text-secondary);
+    }
+
+    .tabs-nav button.active {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--text-primary);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .tabs-nav button.active .tab-icon {
+        background: var(--accent);
+        color: white;
+        transform: scale(1.1);
     }
 
     @media (max-width: 480px) {
         .tabs-nav button {
-            padding: 0.6rem 0.75rem;
-            font-size: 0.85rem;
-            gap: 0.3rem;
+            padding: 0.5rem 0.4rem;
+            font-size: 0.7rem;
+            gap: 0.25rem;
+            min-width: 60px;
         }
-    }
-
-    .tabs-nav button.active {
-        background: var(--bg-secondary);
-        color: var(--text-primary);
+        .tab-icon {
+            width: 28px;
+            height: 28px;
+        }
     }
 
     .avatar-wrapper-btn {
