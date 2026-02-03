@@ -62,7 +62,7 @@ Components are well-structured and focused.
 
 ### Low Priority (Polish)
 
-- [ ] **Optimize `gameDataService` loading strategy** (Impact: **30**)
+- [x] **Optimize `gameDataService` loading strategy** (Impact: **30**)
     - *Problem:* It loads all levels for playlists to build a mega-dictionary. This might scale poorly.
     - *Solution:* Load only necessary files on demand or index data better.
 

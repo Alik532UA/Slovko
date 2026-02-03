@@ -59,8 +59,13 @@ export class GameDataService {
                     ))
                 ]);
 
-                const sourceMegaDict = Object.assign({}, ...sourceAll);
-                const targetMegaDict = Object.assign({}, ...targetAll);
+                // Helper to find translation in multiple dictionaries
+                const findInDicts = (key: string, dicts: TranslationDictionary[]) => {
+                    for (const dict of dicts) {
+                        if (dict[key]) return dict[key];
+                    }
+                    return null;
+                };
 
                 const playlistPairs = currentPlaylist === 'mistakes'
                     ? playlists.mistakes.map(m => m.pair)
@@ -68,14 +73,17 @@ export class GameDataService {
 
                 // Filter translations for only the words in the playlist to save memory/state size
                 playlistPairs.forEach(p => {
-                    if (!sourceMegaDict[p.id]) {
+                    const srcVal = findInDicts(p.id, sourceAll);
+                    const tgtVal = findInDicts(p.id, targetAll);
+
+                    if (!srcVal) {
                         logService.warn('game', `Missing source translation for ID: ${p.id} (${sourceLanguage})`);
                     }
-                    if (!targetMegaDict[p.id]) {
+                    if (!tgtVal) {
                         logService.warn('game', `Missing target translation for ID: ${p.id} (${targetLanguage})`);
                     }
-                    sourceTranslations[p.id] = sourceMegaDict[p.id] || p.id;
-                    targetTranslations[p.id] = targetMegaDict[p.id] || p.id;
+                    sourceTranslations[p.id] = srcVal || p.id;
+                    targetTranslations[p.id] = tgtVal || p.id;
                 });
 
                 // Set words
