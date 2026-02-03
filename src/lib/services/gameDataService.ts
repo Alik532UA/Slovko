@@ -23,6 +23,23 @@ export interface PlaylistData {
  * Decouples data loading from game logic.
  */
 export class GameDataService {
+    private validateDictionary(dict: any, context: string): TranslationDictionary {
+        if (!dict || typeof dict !== 'object') {
+            console.warn(`Validation failed: ${context} is not an object`);
+            return {};
+        }
+        
+        const valid: TranslationDictionary = {};
+        for (const [key, value] of Object.entries(dict)) {
+            if (typeof value === 'string') {
+                valid[key] = value;
+            } else {
+                console.warn(`Validation failed: ${context} key "${key}" has non-string value`);
+            }
+        }
+        return valid;
+    }
+
     /**
      * Loads all necessary data (translations, transcriptions, word list) for the current game settings.
      */
@@ -97,10 +114,10 @@ export class GameDataService {
                         loadTranscriptions(category, id, targetLanguage)
                     ]);
 
-                    sourceTranslations = srcTrans;
-                    targetTranslations = tgtTrans;
-                    sourceTranscriptions = srcTscr;
-                    targetTranscriptions = tgtTscr;
+                    sourceTranslations = this.validateDictionary(srcTrans, `translations-${sourceLanguage}`);
+                    targetTranslations = this.validateDictionary(tgtTrans, `translations-${targetLanguage}`);
+                    sourceTranscriptions = this.validateDictionary(srcTscr, `transcriptions-${sourceLanguage}`);
+                    targetTranscriptions = this.validateDictionary(tgtTscr, `transcriptions-${targetLanguage}`);
 
                     // Load words
                     if (mode === 'levels') {
@@ -117,7 +134,7 @@ export class GameDataService {
             }
         } catch (e) {
             console.error(`Failed to load game data for ${mode}`, e);
-            // Return empty data on error
+            throw e; // Re-throw to allow GameController to handle it
         }
 
         return {

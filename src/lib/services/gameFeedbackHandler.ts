@@ -3,14 +3,20 @@ import { playlistStore } from '../stores/playlistStore.svelte';
 import type { WordPair } from '../types';
 
 /**
- * Game Feedback Handler - Handles external side effects of game events.
- * Decouples the game engine from specific stores (progress, playlists).
+ * Сервіс для обробки побічних ефектів ігрових подій.
+ * Використовується як міст між ігровим двигуном та сховищами прогресу/плейлістів.
  */
 export class GameFeedbackHandler {
 
     /**
-     * Handle a correct match event.
-     * Records progress and updates playlists.
+     * Обробляє подію правильної відповіді.
+     * 
+     * @param wordKey Унікальний ключ слова
+     * @param fromMistakesPlaylist Чи була гра запущена з плейліста помилок
+     * 
+     * Дії:
+     * 1. Оновлює загальну статистику правильних відповідей у progressStore.
+     * 2. Якщо це плейліст помилок — повідомляє playlistStore про успішне повторення.
      */
     handleCorrect(wordKey: string, fromMistakesPlaylist: boolean) {
         // Record general progress
@@ -23,8 +29,14 @@ export class GameFeedbackHandler {
     }
 
     /**
-     * Handle a wrong match event.
-     * Records mistake and updates playlists.
+     * Обробляє подію неправильної відповіді.
+     * 
+     * @param pair1 Перша пара слів (ID та тексти)
+     * @param pair2 Друга пара слів (ID та тексти)
+     * 
+     * Дії:
+     * 1. Фіксує помилку в загальному progressStore для оновлення Streak та Accuracy.
+     * 2. Додає обидва слова в плейліст помилок для подальшого повторення.
      */
     handleWrong(pair1: WordPair, pair2: WordPair) {
         // Record general mistake

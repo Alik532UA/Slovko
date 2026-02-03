@@ -114,10 +114,16 @@
             "emailInUse": "Bu email endi qullanıla"
         },
         "stats": {
-            "correct": "Doğru",
-            "streak": "Arta-arta künler",
-            "days": "İlovada künler",
-            "accuracy": "Doğruluq"
+            "correct": "umumiy \n doğru cevaplar",
+            "streak": "küñlük seri",
+            "days": "programmada \n bütun künler",
+            "accuracy": "umumiy \n doğruluk",
+            "bestStreak": "rekord küñlük \n seri",
+            "bestCorrectStreak": "rekord doğru \n cevaplar serisi",
+            "correctToday": "bugünki \n doğru cevaplar",
+            "dailyAverage": "küñlük \n ortalama",
+            "showMore": "daa çoq statistika köster",
+            "showLess": "statistikani gizle"
         }
     },
     "updateNotification": {

@@ -114,10 +114,16 @@
             "emailInUse": "Dit e-mailadres is al in gebruik"
         },
         "stats": {
-            "correct": "Correct",
-            "streak": "Dagen op rij",
-            "days": "Dagen in app",
-            "accuracy": "Nauwkeurigheid"
+            "correct": "correcte antwoorden \n in totaal",
+            "streak": "dagelijkse reeks",
+            "days": "totaal aantal dagen \n in programma",
+            "accuracy": "algehele \n nauwkeurigheid",
+            "bestStreak": "record dagelijkse \n reeks",
+            "bestCorrectStreak": "recordreeks \n correcte antwoorden",
+            "correctToday": "correcte antwoorden \n vandaag",
+            "dailyAverage": "gemiddeld aantal \n per dag",
+            "showMore": "toon meer statistieken",
+            "showLess": "toon minder statistieken"
         }
     },
     "updateNotification": {

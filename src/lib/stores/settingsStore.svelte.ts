@@ -5,6 +5,7 @@
 
 import { browser } from '$app/environment';
 import { SyncService } from '../firebase/SyncService';
+import { localStorageProvider } from '../services/storage/storageProvider';
 import {
     ALL_LEVELS,
     ALL_TOPICS,
@@ -58,8 +59,8 @@ function createSettingsStore() {
         if (!browser) return DEFAULT_SETTINGS;
 
         try {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            const hasAppVersion = !!localStorage.getItem('app_cache_version');
+            const stored = localStorageProvider.getItem(STORAGE_KEY);
+            const hasAppVersion = !!localStorageProvider.getItem('app_cache_version');
 
             if (stored) {
                 const parsed = JSON.parse(stored);
@@ -97,7 +98,7 @@ function createSettingsStore() {
 
     function saveSettings() {
         if (browser) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+            localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(settings));
             SyncService.uploadAll();
         }
     }
@@ -109,7 +110,7 @@ function createSettingsStore() {
         _internalUpdate(newData: Partial<AppSettings>) {
             settings = { ...settings, ...newData };
             if (browser) {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+                localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(settings));
             }
         },
 

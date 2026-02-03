@@ -2,6 +2,9 @@
     "app": {
         "title": "Slovko"
     },
+    "errors": {
+        "loadFailed": "Failed to load data"
+    },
     "levels": {
         "title": "Levels",
         "A1": "Beginner",
@@ -128,10 +131,16 @@
             "friends": "Friends"
         },
         "stats": {
-            "correct": "Correct",
-            "streak": "Streak",
-            "days": "Days in app",
-            "accuracy": "Accuracy"
+            "correct": "total correct \n answers",
+            "streak": "current daily \n streak",
+            "days": "total days \n in program",
+            "accuracy": "overall \n accuracy",
+            "bestStreak": "record daily \n streak",
+            "bestCorrectStreak": "record correct \n answers streak",
+            "correctToday": "correct answers \n today",
+            "dailyAverage": "average answers \n per day",
+            "showMore": "show more statistics",
+            "showLess": "show less statistics"
         }
     },
     "updateNotification": {

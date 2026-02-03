@@ -29,6 +29,7 @@ function createGameState() {
     let selectedCard = $state<ActiveCard | null>(null);
     let isProcessing = $state(false);
     let isLoading = $state(true);
+    let error = $state<string | null>(null);
     let currentWords = $state<string[]>([]);
     let usedWordKeys = $state(new Set<string>());
 
@@ -70,6 +71,7 @@ function createGameState() {
         get selectedCard() { return selectedCard; },
         get isProcessing() { return isProcessing; },
         get isLoading() { return isLoading; },
+        get error() { return error; },
         get streak() { return streak; },
         get accuracy() { return accuracy; },
         get wordsPerMinute() { return wordsPerMinute; },
@@ -79,6 +81,7 @@ function createGameState() {
 
         // Методи оновлення (Setters/Actions)
         setLoading(val: boolean) { isLoading = val; },
+        setError(val: string | null) { error = val; },
         setProcessing(val: boolean) { isProcessing = val; },
         setLearningMode(val: boolean) { isLearningMode = val; },
         

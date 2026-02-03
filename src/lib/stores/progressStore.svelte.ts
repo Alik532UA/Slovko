@@ -24,6 +24,9 @@ interface UserProgress {
     lastUpdated: number;
     // Нові поля для Streak
     streak: number;
+    bestStreak: number; // Рекорд днів
+    currentCorrectStreak: number; // Поточна серія правильних (до помилки)
+    bestCorrectStreak: number; // Рекорд правильних відповідей за весь час
     lastCorrectDate: string | null; // Формат "YYYY-MM-DD"
     dailyCorrect: number;
     firstSeenDate: number; // Дата першого входу
@@ -36,6 +39,9 @@ const DEFAULT_PROGRESS: UserProgress = {
     totalAttempts: 0,
     lastUpdated: Date.now(),
     streak: 0,
+    bestStreak: 0,
+    currentCorrectStreak: 0,
+    bestCorrectStreak: 0,
     lastCorrectDate: null,
     dailyCorrect: 0,
     firstSeenDate: Date.now()
@@ -91,29 +97,44 @@ function createProgressStore() {
             wordProgress.lastSeen = Date.now();
             progress.words[wordKey] = wordProgress;
 
-            // Логіка Streak винесена в сервіс
+            // Логіка Streak (днів)
             const streakUpdate = streakService.calculateStreak(
                 progress.streak,
                 progress.lastCorrectDate,
                 progress.dailyCorrect
             );
 
+            // Логіка серії правильних відповідей (підряд)
+            const newCurrentCorrectStreak = progress.currentCorrectStreak + 1;
+            const newBestCorrectStreak = Math.max(progress.bestCorrectStreak, newCurrentCorrectStreak);
+            const newBestDaysStreak = Math.max(progress.bestStreak, streakUpdate.streak);
+
             progress = {
                 ...progress,
                 words: { ...progress.words },
                 totalCorrect: progress.totalCorrect + 1,
                 totalAttempts: progress.totalAttempts + 1,
+                bestStreak: newBestDaysStreak,
+                currentCorrectStreak: newCurrentCorrectStreak,
+                bestCorrectStreak: newBestCorrectStreak,
                 ...streakUpdate
             };
 
             saveProgress();
         },
 
+        /** Отримати середню кількість правильних відповідей за день */
+        getDailyAverage(): number {
+            const daysInApp = Math.max(1, Math.ceil((Date.now() - progress.firstSeenDate) / (1000 * 60 * 60 * 24)));
+            return Math.round((progress.totalCorrect / daysInApp) * 10); // Помножимо на 10 для одного знака після коми, або просто ціле
+        },
+
         /** Записати неправильну відповідь */
         recordWrong(): void {
             progress = {
                 ...progress,
-                totalAttempts: progress.totalAttempts + 1
+                totalAttempts: progress.totalAttempts + 1,
+                currentCorrectStreak: 0 // Перериваємо серію при помилці
             };
             saveProgress();
         },

@@ -88,6 +88,17 @@
     <div class="loading-overlay" in:fade>
         <div class="loading-spinner"></div>
     </div>
+{:else if gameState.error}
+    <div class="error-overlay" in:fade>
+        <div class="error-content">
+            <span class="error-icon">⚠️</span>
+            <h3>{$_("errors.loadFailed")}</h3>
+            <p>{gameState.error}</p>
+            <button class="retry-button" onclick={() => gameController.initGame()}>
+                {$_("common.retry")}
+            </button>
+        </div>
+    </div>
 {:else}
     <div
         class="game-board"
@@ -209,6 +220,54 @@
         color: var(--text-secondary);
         font-size: 1rem;
         line-height: 1.5;
+    }
+
+    .error-overlay {
+        position: absolute;
+        inset: 0;
+        background: var(--bg-primary);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+        padding: 2rem;
+    }
+
+    .error-content {
+        text-align: center;
+        max-width: 300px;
+    }
+
+    .error-icon {
+        font-size: 3rem;
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    .error-content h3 {
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+    }
+
+    .error-content p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .retry-button {
+        background: var(--accent-primary);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity 0.2s;
+    }
+
+    .retry-button:hover {
+        opacity: 0.9;
     }
 
     @media (max-width: 480px) {

@@ -3,13 +3,21 @@ import { settingsStore } from '../stores/settingsStore.svelte';
 import type { ActiveCard } from '../types';
 
 /**
- * Game Audio Handler - Handles all audio feedback for the game.
- * Decouples audio logic from the game state.
+ * Сервіс для керування аудіо-відгуками у грі.
+ * Відповідає за озвучення слів при успішному збігу карток,
+ * враховуючи налаштування мов та переваги користувача.
  */
 export class GameAudioHandler {
     /**
-     * Play audio for a correct match.
-     * Respects user settings for source/target pronunciation.
+     * Відтворює аудіо при успішному поєднанні пари карток.
+     * 
+     * @param card1 Перша вибрана картка
+     * @param card2 Друга вибрана картка (пара до першої)
+     * 
+     * Логіка враховує:
+     * - Яка з карток є мовою-джерелом (source), а яка — цільовою (target).
+     * - Чи увімкнено озвучення для відповідної сторони у налаштуваннях.
+     * - Додає затримку між озвученнями, якщо увімкнено обидва канали, для запобігання накладанню звуку.
      */
     playMatch(card1: ActiveCard, card2: ActiveCard) {
         // Access store value non-reactively (snapshot)

@@ -1,6 +1,6 @@
 /**
- * Game Card Factory - Factory Pattern for creating game cards
- * Isolates the logic of card creation, transcription generation, and shuffling.
+ * Фабрика ігрових карток — реалізація патерну Factory.
+ * Ізолює логіку створення карток, генерації транскрипції та перемішування.
  */
 import type { ActiveCard, Language, TranslationDictionary, TranscriptionDictionary } from '../types';
 import { getTranslation, getTranscription } from '../data/wordService';
@@ -8,14 +8,14 @@ import { generateRulesIPA } from './transcriptionService';
 import { convertIPAToTarget } from './phoneticsService';
 
 /**
- * Generates a unique ID for cards
+ * Генерує унікальний ID для картки.
  */
 export function generateId(): string {
     return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }
 
 /**
- * Fisher-Yates shuffle algorithm
+ * Алгоритм перемішування масиву Фішера-Єйтса.
  */
 export function shuffle<T>(array: T[]): T[] {
     const result = [...array];
@@ -27,8 +27,11 @@ export function shuffle<T>(array: T[]): T[] {
 }
 
 /**
- * Creates a pair of cards (Source and Target) for a given word key.
- * Handles IPA generation and alphabet conversion.
+ * Створює пару карток (Source та Target) для заданого ключа слова.
+ * Відповідає за:
+ * - Отримання перекладів.
+ * - Генерацію IPA (фонетичного запису) за правилами, якщо його немає в словнику.
+ * - Конвертацію IPA в алфавіт цільової мови (транслітерація звуків).
  */
 function createCardPair(
     wordKey: string,
@@ -95,8 +98,17 @@ function createCardPair(
 }
 
 /**
- * Creates cards from a list of word keys.
- * Returns shuffled source and target cards.
+ * Створює набір карток з масиву ключів слів.
+ * Повертає об'єкт з перемішаними списками вихідних та цільових карток.
+ * 
+ * @param wordKeys Масив унікальних ідентифікаторів слів
+ * @param sourceLanguage Вихідна мова
+ * @param targetLanguage Цільова мова
+ * @param sourceTranslations Словник перекладів для вихідної мови
+ * @param targetTranslations Словник перекладів для цільової мови
+ * @param sourceTranscriptions Словник транскрипцій для вихідної мови
+ * @param targetTranscriptions Словник транскрипцій для цільової мови
+ * @param startSlot Початковий номер слота для позиціонування
  */
 export function createCardsFromWordKeys(
     wordKeys: string[],

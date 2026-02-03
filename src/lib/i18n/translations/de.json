@@ -114,10 +114,16 @@
             "emailInUse": "Diese E-Mail wird bereits verwendet"
         },
         "stats": {
-            "correct": "Richtig",
-            "streak": "Tage in Folge",
-            "days": "Tage in der App",
-            "accuracy": "Genauigkeit"
+            "correct": "richtige Antworten \n insgesamt",
+            "streak": "aktuelle Tages-Serie",
+            "days": "Tage im Programm \n insgesamt",
+            "accuracy": "allgemeine \n Genauigkeit",
+            "bestStreak": "Rekord-Serie \n von Tagen",
+            "bestCorrectStreak": "Rekord-Serie \n richtiger Antworten",
+            "correctToday": "richtige Antworten \n heute",
+            "dailyAverage": "Durchschnitt \n pro Tag",
+            "showMore": "mehr Statistiken anzeigen",
+            "showLess": "weniger Statistiken anzeigen"
         }
     },
     "updateNotification": {
