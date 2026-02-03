@@ -3,17 +3,19 @@
  * Використовує Svelte 5 Runes для реактивності
  * UDF: UI → selectCard() → state update → UI
  *
- * Оновлено для підтримки динамічних мов та фіксованих позицій карток
+ * Refactored:
+ * - Card creation logic moved to GameCardFactory
+ * - Audio logic moved to GameAudioHandler
+ * - Data loading logic moved to GameDataService
+ * - Feedback/Side-effects moved to GameFeedbackHandler
  */
-import type { ActiveCard, CardStatus, Language, TranslationDictionary, TranscriptionDictionary, WordPair, GameMode } from '../types';
+import type { ActiveCard, CardStatus, TranslationDictionary, TranscriptionDictionary, WordPair, GameMode } from '../types';
 import { settingsStore } from './settingsStore.svelte';
-import { progressStore } from './progressStore.svelte';
 import { playlistStore } from './playlistStore.svelte';
-import { loadLevel, loadTopic, loadTranslations, loadTranscriptions, getTranslation, getTranscription, loadPhrasesLevel } from '../data/wordService';
-import { generateRulesIPA } from '../services/transcriptionService';
-import { convertIPAToTarget } from '../services/phoneticsService';
-import { speakText } from '../services/speechService';
-import { logService } from '../services/logService';
+import { createCardsFromWordKeys, shuffle } from '../services/gameCardFactory';
+import { gameAudioHandler } from '../services/gameAudioHandler';
+import { gameDataService } from '../services/gameDataService';
+import { gameFeedbackHandler } from '../services/gameFeedbackHandler';
 
 const MODE_CONFIG: Record<GameMode, { pairsPerPage: number }> = {
     'levels': { pairsPerPage: 6 },
@@ -24,7 +26,7 @@ const MODE_CONFIG: Record<GameMode, { pairsPerPage: number }> = {
 
 const REFILL_THRESHOLD = 2;
 
-// Кеш для перекладів та транскрипцій
+// Кеш для перекладів та транскрипцій (Internal State)
 let sourceTranslations: TranslationDictionary = {};
 let targetTranslations: TranslationDictionary = {};
 let sourceTranscriptions: TranscriptionDictionary = {};
@@ -32,25 +34,6 @@ let targetTranscriptions: TranscriptionDictionary = {};
 
 // Використані слова
 let usedWordKeys = new Set<string>();
-
-/**
- * Перемішує масив (Fisher-Yates shuffle)
- */
-function shuffle<T>(array: T[]): T[] {
-    const result = [...array];
-    for (let i = result.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [result[i], result[j]] = [result[j], result[i]];
-    }
-    return result;
-}
-
-/**
- * Генерує унікальний ID
- */
-function generateId(): string {
-    return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
-}
 
 /**
  * Створює стан гри з Svelte 5 Runes
@@ -106,182 +89,6 @@ function createGameState() {
     }
 
     /**
-     * Завантажити переклади для поточних мов та активного режиму
-     */
-    async function loadTranslationsForLanguages(): Promise<void> {
-        const { sourceLanguage, targetLanguage, mode, currentLevel, currentTopic, currentPlaylist } = settingsStore.value;
-
-        // Визначаємо категорію
-        let category: 'levels' | 'topics' | 'phrases' = 'levels';
-        if (mode === 'topics') category = 'topics';
-        else if (mode === 'phrases') category = 'phrases';
-
-        // Clear previous
-        sourceTranslations = {};
-        targetTranslations = {};
-        sourceTranscriptions = {};
-        targetTranscriptions = {};
-
-        try {
-            if (mode === 'playlists' && currentPlaylist) {
-                // SSoT: For playlists, we load all levels to find translations for any word
-                const { SUPPORTED_LEVELS } = await import('../config');
-
-                const [sourceAll, targetAll] = await Promise.all([
-                    Promise.all(SUPPORTED_LEVELS.map(l =>
-                        import(`../data/translations/${sourceLanguage}/levels/${l}.json`)
-                            .then(m => m.default)
-                            .catch((e) => {
-                                logService.warn('game', `Failed to load ${sourceLanguage} level ${l}`, e);
-                                return {};
-                            })
-                    )),
-                    Promise.all(SUPPORTED_LEVELS.map(l =>
-                        import(`../data/translations/${targetLanguage}/levels/${l}.json`)
-                            .then(m => m.default)
-                            .catch((e) => {
-                                logService.warn('game', `Failed to load ${targetLanguage} level ${l}`, e);
-                                return {};
-                            })
-                    ))
-                ]);
-
-                const sourceMegaDict = Object.assign({}, ...sourceAll);
-                const targetMegaDict = Object.assign({}, ...targetAll);
-
-                const mistakes = playlistStore.mistakes;
-                const pairs = currentPlaylist === 'mistakes'
-                    ? mistakes.map(m => m.pair)
-                    : (currentPlaylist === 'favorites' ? playlistStore.favorites : playlistStore.extra);
-
-                pairs.forEach(p => {
-                    if (!sourceMegaDict[p.id]) {
-                        logService.warn('game', `Missing source translation for ID: ${p.id} (${sourceLanguage})`);
-                    }
-                    if (!targetMegaDict[p.id]) {
-                        logService.warn('game', `Missing target translation for ID: ${p.id} (${targetLanguage})`);
-                    }
-                    sourceTranslations[p.id] = sourceMegaDict[p.id] || p.id;
-                    targetTranslations[p.id] = targetMegaDict[p.id] || p.id;
-                });
-                return;
-            }
-
-            const id = mode === 'topics' ? currentTopic : currentLevel;
-            if (!id) return;
-
-            sourceTranslations = await loadTranslations(sourceLanguage, category, id);
-            targetTranslations = await loadTranslations(targetLanguage, category, id);
-
-            // Load transcriptions for Source and Target
-            sourceTranscriptions = await loadTranscriptions(category, id, sourceLanguage);
-            targetTranscriptions = await loadTranscriptions(category, id, targetLanguage);
-        } catch (e) {
-            console.error(`Failed to load translations for ${mode}`, e);
-            sourceTranslations = {};
-            targetTranslations = {};
-        }
-    }
-
-    /**
-     * Завантажити слова для поточного рівня/теми
-     */
-    async function loadWords(): Promise<string[]> {
-        const { mode, currentLevel, currentTopic, currentPlaylist } = settingsStore.value;
-
-        if (mode === 'levels') {
-            const level = await loadLevel(currentLevel);
-            return level.words;
-        } else if (mode === 'topics' && currentTopic) {
-            const topic = await loadTopic(currentTopic);
-            return topic.words;
-        } else if (mode === 'phrases') {
-            const phrases = await loadPhrasesLevel(currentLevel);
-            return phrases.words;
-        } else if (mode === 'playlists' && currentPlaylist) {
-            if (currentPlaylist === 'mistakes') return playlistStore.mistakes.map(m => m.pair.id);
-            if (currentPlaylist === 'favorites') return playlistStore.favorites.map(p => p.id);
-            if (currentPlaylist === 'extra') return playlistStore.extra.map(p => p.id);
-        }
-
-        return [];
-    }
-
-    /**
-     * Створити картки з ключів слів
-     */
-    function createCardsFromWordKeys(wordKeys: string[], startSlot: number = 0): { source: ActiveCard[]; target: ActiveCard[] } {
-        const { sourceLanguage, targetLanguage } = settingsStore.value;
-        const sourceList: ActiveCard[] = [];
-        const targetList: ActiveCard[] = [];
-
-        wordKeys.forEach((wordKey, index) => {
-            const sourceText = getTranslation(wordKey, sourceTranslations, sourceLanguage);
-            const targetText = getTranslation(wordKey, targetTranslations, targetLanguage);
-
-            // Source Transcription (Word -> IPA -> Target Alphabet)
-            let sourceIPA = getTranscription(wordKey, sourceTranscriptions, true);
-            let sourceTranscription: string | undefined;
-
-            // If no dictionary IPA, generate on the fly
-            if (!sourceIPA) {
-                sourceIPA = generateRulesIPA(sourceText, sourceLanguage);
-            }
-
-            if (sourceLanguage === 'en' && sourceIPA) {
-                // English shows raw IPA
-                sourceTranscription = sourceIPA;
-            } else if (sourceIPA) {
-                // Convert IPA to Target language alphabet
-                sourceTranscription = convertIPAToTarget(sourceIPA, targetLanguage);
-            }
-
-            // Target Transcription (Word -> IPA -> Source Alphabet)
-            let targetIPA = getTranscription(wordKey, targetTranscriptions, true);
-            let targetTranscription: string | undefined;
-
-            // If no dictionary IPA, generate on the fly
-            if (!targetIPA) {
-                targetIPA = generateRulesIPA(targetText, targetLanguage);
-            }
-
-            if (targetLanguage === 'en' && targetIPA) {
-                // English shows raw IPA
-                targetTranscription = targetIPA;
-            } else if (targetIPA) {
-                // Convert IPA to Source language alphabet
-                targetTranscription = convertIPAToTarget(targetIPA, sourceLanguage);
-            }
-
-            // Source картка
-            sourceList.push({
-                id: `src-${generateId()}-${index}`,
-                wordKey,
-                text: sourceText,
-                transcription: sourceTranscription,
-                language: sourceLanguage,
-                status: 'idle',
-                slot: startSlot + index,
-                isVisible: true
-            });
-
-            // Target картка
-            targetList.push({
-                id: `tgt-${generateId()}-${index}`,
-                wordKey,
-                text: targetText,
-                transcription: targetTranscription,
-                language: targetLanguage,
-                status: 'idle',
-                slot: startSlot + index,
-                isVisible: true
-            });
-        });
-
-        return { source: shuffle(sourceList), target: shuffle(targetList) };
-    }
-
-    /**
      * Ініціалізація гри
      */
     async function initGame(): Promise<void> {
@@ -294,9 +101,16 @@ function createGameState() {
         lastInteractionTime = Date.now();
 
         try {
-            await loadTranslationsForLanguages();
-            const words = await loadWords();
-            // Перемішуємо всі слова, щоб порядок появи був випадковим
+            // Load all game data via service
+            const data = await gameDataService.loadGameData(settingsStore.value, playlistStore);
+
+            sourceTranslations = data.sourceTranslations;
+            targetTranslations = data.targetTranslations;
+            sourceTranscriptions = data.sourceTranscriptions;
+            targetTranscriptions = data.targetTranscriptions;
+
+            const words = data.words;
+            // Перемішуємо всі слова
             currentWords = shuffle(words);
 
             const limit = getPairsLimit();
@@ -304,7 +118,17 @@ function createGameState() {
             const selectedWords = currentWords.slice(0, limit);
             selectedWords.forEach((w) => usedWordKeys.add(w));
 
-            const { source, target } = createCardsFromWordKeys(selectedWords);
+            const { sourceLanguage, targetLanguage } = settingsStore.value;
+            const { source, target } = createCardsFromWordKeys(
+                selectedWords,
+                sourceLanguage,
+                targetLanguage,
+                sourceTranslations,
+                targetTranslations,
+                sourceTranscriptions,
+                targetTranscriptions
+            );
+
             sourceCards = source;
             targetCards = target;
             selectedCard = null;
@@ -340,12 +164,10 @@ function createGameState() {
     function selectCard(card: ActiveCard): void {
         const now = Date.now();
 
-        // Логіка пауз: якщо пройшло більше 5с з останньої дії
+        // Логіка пауз
         if (lastInteractionTime > 0) {
             const diff = now - lastInteractionTime;
-            // Враховуємо паузу тільки якщо гра вже йде (є відповіді)
             if (diff > 5000 && correctAnswersHistory.length > 0) {
-                // Віднімаємо 5с, які вважаємо "часом на роздуми"
                 ignoredTime += (diff - 5000);
             }
         }
@@ -353,7 +175,6 @@ function createGameState() {
 
         if (isProcessing) return;
 
-        // Дозволяємо вибір навіть якщо картка підсвічена підказкою або помилкою
         const allowedStatuses = ['idle', 'selected', 'hint', 'hint-slow', 'wrong'];
         if (!allowedStatuses.includes(card.status) || !card.isVisible) return;
 
@@ -364,14 +185,14 @@ function createGameState() {
             return;
         }
 
-        // Клік на ту саму картку — скасувати вибір
+        // Скасування вибору
         if (selectedCard.id === card.id) {
             updateCardStatus(card.id, 'idle');
             selectedCard = null;
             return;
         }
 
-        // Клік на картку тієї ж мови — перемикаємо вибір
+        // Перемикання вибору (та сама мова)
         if (selectedCard.language === card.language) {
             updateCardStatus(selectedCard.id, 'idle');
             updateCardStatus(card.id, 'selected');
@@ -379,16 +200,15 @@ function createGameState() {
             return;
         }
 
-        // Другий вибір — перевіряємо пару
+        // Другий вибір — перевірка
         updateCardStatus(card.id, 'selected');
 
         const isMatch = selectedCard.wordKey === card.wordKey;
 
         if (isMatch) {
-            isProcessing = true; // Блокуємо тільки на мить для вірного збігу, щоб уникнути race conditions
+            isProcessing = true;
             handleCorrectMatch(selectedCard, card);
         } else {
-            // При помилці НЕ блокуємо isProcessing, дозволяючи клікати далі
             handleWrongMatch(selectedCard, card);
         }
     }
@@ -400,44 +220,23 @@ function createGameState() {
         updateCardStatus(card1.id, 'correct');
         updateCardStatus(card2.id, 'correct');
 
-        // Озвучування при збігу (якщо увімкнено хоча б одне)
-        const src = card1.language === settingsStore.value.sourceLanguage ? card1 : card2;
-        const tgt = card1.language === settingsStore.value.targetLanguage ? card1 : card2;
-
-        if (settingsStore.value.enablePronunciationSource) {
-            speakText(src.text, src.language);
-        }
-
-        if (settingsStore.value.enablePronunciationTarget) {
-            // Озвучуємо ціль трохи пізніше, якщо джерело теж озвучується
-            const delay = settingsStore.value.enablePronunciationSource ? 800 : 0;
-            setTimeout(() => {
-                // Тільки якщо гра все ще активна і не переключена
-                speakText(tgt.text, tgt.language);
-            }, delay);
-        }
+        // Delegating audio to AudioHandler
+        gameAudioHandler.playMatch(card1, card2);
 
         // Оновлюємо лічильники
         streak += 1;
         correctAnswersHistory = [...correctAnswersHistory, Date.now()];
 
-        // Записуємо прогрес
-        progressStore.recordCorrect(card1.wordKey);
+        // Delegating progress/playlist updates to FeedbackHandler
+        const isMistakesPlaylist = settingsStore.value.currentPlaylist === 'mistakes';
+        gameFeedbackHandler.handleCorrect(card1.wordKey, isMistakesPlaylist);
 
-        // Check if in mistakes playlist
-        if (settingsStore.value.currentPlaylist === 'mistakes') {
-            playlistStore.recordCorrect(card1.wordKey);
-        }
-
-        // Відразу дозволяємо вибір наступної пари
         selectedCard = null;
         isProcessing = false;
 
         setTimeout(() => {
-            // Тепер ми не ховаємо картки, вони стають 10% прозорі у WordCard.svelte
-            // Але нам все одно треба викликати дозаповнення
             checkAndRefill();
-        }, 1000); // Збільшуємо таймаут, щоб дати гравцю побачити результат
+        }, 1000);
     }
 
     /**
@@ -450,26 +249,18 @@ function createGameState() {
         updateCardStatus(c1Id, 'wrong');
         updateCardStatus(c2Id, 'wrong');
 
-        // Скидаємо стрік
         streak = 0;
         mistakesCount += 1;
 
-        // Записуємо помилку
-        progressStore.recordWrong();
-
-        // Add to mistakes playlist
         const pair1 = constructWordPair(card1.wordKey);
         const pair2 = constructWordPair(card2.wordKey);
 
-        playlistStore.recordMistake(pair1);
-        playlistStore.recordMistake(pair2);
+        // Delegating progress/playlist updates to FeedbackHandler
+        gameFeedbackHandler.handleWrong(pair1, pair2);
 
-        // МИТТЄВО скидаємо selectedCard, щоб можна було вибирати далі
         selectedCard = null;
 
         setTimeout(() => {
-            // Повертаємо в idle тільки якщо статус все ще 'wrong' 
-            // (користувач міг уже вибрати цю картку знову)
             sourceCards = sourceCards.map(c => c.id === c1Id && c.status === 'wrong' ? { ...c, status: 'idle' } : c);
             sourceCards = sourceCards.map(c => c.id === c2Id && c.status === 'wrong' ? { ...c, status: 'idle' } : c);
             targetCards = targetCards.map(c => c.id === c1Id && c.status === 'wrong' ? { ...c, status: 'idle' } : c);
@@ -486,18 +277,9 @@ function createGameState() {
     }
 
     /**
-     * Ховаємо картку (isVisible = false)
-     */
-    function hideCard(cardId: string): void {
-        sourceCards = sourceCards.map((c) => (c.id === cardId ? { ...c, isVisible: false } : c));
-        targetCards = targetCards.map((c) => (c.id === cardId ? { ...c, isVisible: false } : c));
-    }
-
-    /**
      * Підрахунок видимих пар
      */
     function getVisiblePairCount(): number {
-        // Рахуємо тільки ті картки, які ще не знайдені (стан idle або selected)
         return sourceCards.filter((c) => c.status !== 'correct').length;
     }
 
@@ -509,12 +291,9 @@ function createGameState() {
         const limit = getPairsLimit();
 
         if (visibleCount <= REFILL_THRESHOLD) {
-            // Знаходимо невикористані слова
             let availableWords = currentWords.filter((w) => !usedWordKeys.has(w));
 
-            // Якщо слова закінчились
             if (availableWords.length === 0) {
-                // For playlists or phrases, we just recycle
                 usedWordKeys.clear();
                 sourceCards.filter((c) => c.isVisible).forEach((c) => usedWordKeys.add(c.wordKey));
                 availableWords = currentWords.filter((w) => !usedWordKeys.has(w));
@@ -527,9 +306,18 @@ function createGameState() {
             if (newWords.length > 0) {
                 newWords.forEach((w) => usedWordKeys.add(w));
 
-                const { source, target } = createCardsFromWordKeys(newWords, sourceCards.length);
+                const { sourceLanguage, targetLanguage } = settingsStore.value;
+                const { source, target } = createCardsFromWordKeys(
+                    newWords,
+                    sourceLanguage,
+                    targetLanguage,
+                    sourceTranslations,
+                    targetTranslations,
+                    sourceTranscriptions,
+                    targetTranscriptions,
+                    sourceCards.length
+                );
 
-                // Замінюємо приховані картки новими
                 let sourceIndex = 0;
                 let targetIndex = 0;
 
@@ -551,7 +339,6 @@ function createGameState() {
                     return card;
                 });
 
-                // Якщо ще є нові картки — додаємо в кінець
                 if (sourceIndex < source.length) {
                     sourceCards = [...sourceCards, ...source.slice(sourceIndex)];
                 }
@@ -678,7 +465,7 @@ function createGameState() {
         useHint,
         toggleLearningMode,
         clearSelection,
-        constructWordPair // Added export for UI usage if needed (e.g. adding to favorites manually)
+        constructWordPair
     };
 }
 
