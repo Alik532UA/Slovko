@@ -4,6 +4,7 @@
  */
 
 import { browser } from '$app/environment';
+import { SyncService } from '../firebase/SyncService';
 import {
     ALL_LEVELS,
     ALL_TOPICS,
@@ -97,11 +98,20 @@ function createSettingsStore() {
     function saveSettings() {
         if (browser) {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+            SyncService.uploadAll();
         }
     }
 
     return {
         get value() { return settings; },
+
+        /** Internal update for SyncService to avoid infinite loops */
+        _internalUpdate(newData: Partial<AppSettings>) {
+            settings = { ...settings, ...newData };
+            if (browser) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+            }
+        },
 
         update(partial: Partial<AppSettings>) {
             settings = { ...settings, ...partial };

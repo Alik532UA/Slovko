@@ -86,6 +86,40 @@
         "developer": "Developer",
         "version": "Version"
     },
+    "profile": {
+        "anonymousTitle": "Επισκέπτης",
+        "anonymousSub": "Η πρόοδος δεν έχει συγχρονιστεί",
+        "syncWarning": "Συνδεθείτε για να αποθηκεύσετε την πρόοδό σας στο cloud και να τη διατηρήσετε ασφαλή σε διαφορετικές συσκευές.",
+        "login": "Σύνδεση",
+        "logout": "Αποσύνδεση",
+        "back": "Πίσω",
+        "register": "Εγγραφή",
+        "signin": "Σύνδεση με email",
+        "googleAuth": "Σύνδεση με Google",
+        "emailRegister": "Εγγραφή με email",
+        "forgotPassword": "Ξεχάσατε τον κωδικό;",
+        "forgotPasswordTitle": "Επαναφορά κωδικού",
+        "forgotPasswordSubtitle": "Εισάγετε το email του λογαριασμού σας",
+        "spamWarning": "Το email μπορεί να καταλήξει στον φάκελο Ανεπιθύμητα καθώς η εφαρμογή είναι νέα.",
+        "sendResetEmail": "Αποστολή email επαναφοράς",
+        "backToSignin": "Πίσω στη σύνδεση",
+        "passwordResetSent": "Στάλθηκε email επαναφοράς",
+        "errors": {
+            "enterEmail": "Εισάγετε email",
+            "userNotFound": "Δε βρέθηκε χρήστης με αυτό το email",
+            "invalidEmail": "Μη έγκυρη μορφή email",
+            "fillFields": "Συμπληρώστε όλα τα πεδία",
+            "passwordMismatch": "Οι κωδικοί δεν ταιριάζουν",
+            "weakPassword": "Πολύ αδύναμος κωδικός (ελάχ. 6 χαρακτήρες)",
+            "emailInUse": "Αυτό το email χρησιμοποιείται ήδη"
+        },
+        "stats": {
+            "correct": "Σωστά",
+            "streak": "Σερί ημερών",
+            "days": "Ημέρες στην εφαρμογή",
+            "accuracy": "Ακρίβεια"
+        }
+    },
     "updateNotification": {
         "message": "Διαθέσιμη ενημέρωση!",
         "button": "Πλήρης ενημέρωση (εκκαθάριση προσωρινής μνήμης)",

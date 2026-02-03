@@ -86,6 +86,54 @@
         "developer": "Developer",
         "version": "Version"
     },
+    "profile": {
+        "anonymousTitle": "Guest",
+        "anonymousSub": "Progress not synced",
+        "syncWarning": "Sign in to save your progress in the cloud and keep it safe across devices.",
+        "login": "Sign In",
+        "logout": "Sign Out",
+        "back": "Back",
+        "register": "Register",
+        "signin": "Sign in with email",
+        "googleAuth": "Sign in with Google",
+        "emailRegister": "Sign up with email",
+        "forgotPassword": "Forgot password?",
+        "forgotPasswordTitle": "Reset Password",
+        "forgotPasswordSubtitle": "Enter the email associated with your account",
+        "spamWarning": "The email may end up in the Spam folder as the app is new.",
+        "sendResetEmail": "Send Reset Email",
+        "backToSignin": "Back to Sign In",
+        "passwordResetSent": "Password reset email sent",
+        "errors": {
+            "enterEmail": "Enter email",
+            "userNotFound": "User with this email not found",
+            "invalidEmail": "Invalid email format",
+            "fillFields": "Fill all fields",
+            "passwordMismatch": "Passwords do not match",
+            "weakPassword": "Password is too weak (min 6 chars)",
+            "emailInUse": "Email is already in use",
+            "enterPassword": "Enter password",
+            "invalidCredentials": "Invalid email or password"
+        },
+        "changePasswordTitle": "Change Password",
+        "changePasswordHint": "Feature in development",
+        "deleteWarning": "Warning! This action cannot be undone.",
+        "deleteAccount": "Delete Account",
+        "confirmDelete": "Confirm Deletion",
+        "cancel": "Cancel",
+        "passwordPlaceholderShort": "Password",
+        "tabs": {
+            "stats": "Stats",
+            "account": "Account",
+            "friends": "Friends"
+        },
+        "stats": {
+            "correct": "Correct",
+            "streak": "Streak",
+            "days": "Days in app",
+            "accuracy": "Accuracy"
+        }
+    },
     "updateNotification": {
         "message": "Update available!",
         "button": "Full update (reset cache)",
@@ -105,6 +153,25 @@
     "common": {
         "confirm": "Confirm",
         "listen": "Listen",
-        "backToLearning": "Back to learning"
+        "backToLearning": "Back to learning",
+        "retry": "Try again"
+    },
+    "friends": {
+        "searchPlaceholder": "Search users...",
+        "noResults": "No users found",
+        "loadError": "Failed to load list",
+        "confirmUnfollow": "Unfollow this user?",
+        "noFollowing": "You are not following anyone yet",
+        "noFollowers": "You don't have any followers yet",
+        "unfollow": "Unfollow",
+        "followBack": "Follow back",
+        "mutual": "Mutual",
+        "tabs": {
+            "following": "Following",
+            "followers": "Followers",
+            "search": "Search"
+        },
+        "following": "Following",
+        "followers": "Followers"
     }
 }

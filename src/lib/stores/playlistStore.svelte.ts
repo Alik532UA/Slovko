@@ -3,6 +3,7 @@
  * Persisted to localStorage
  */
 import { browser } from '$app/environment';
+import { SyncService } from '../firebase/SyncService';
 import type { WordPair } from '../types';
 
 const STORAGE_KEY = 'wordApp_playlists';
@@ -44,6 +45,7 @@ function createPlaylistStore() {
     function saveState() {
         if (browser) {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            SyncService.uploadAll();
         }
     }
 
@@ -51,6 +53,14 @@ function createPlaylistStore() {
         get favorites() { return state.favorites; },
         get extra() { return state.extra; },
         get mistakes() { return state.mistakes; },
+
+        /** Internal set for SyncService to avoid infinite loops */
+        _internalSet(newData: PlaylistState) {
+            state = newData;
+            if (browser) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            }
+        },
 
         // Favorites
         addToFavorites(pair: WordPair) {
@@ -132,6 +142,12 @@ function createPlaylistStore() {
                 return true; // Was in mistakes
             }
             return false;
+        },
+
+        /** Скинути плейлісти */
+        reset() {
+            state = { ...DEFAULT_STATE };
+            saveState();
         }
     };
 }

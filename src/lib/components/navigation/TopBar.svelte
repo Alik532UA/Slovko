@@ -3,16 +3,19 @@
      * TopBar — Верхня панель з іконками
      * Донат, Мови, Про проєкт
      */
-    import { Coins, Languages, Info, Palette } from "lucide-svelte";
+    import { Coins, Languages, Info, Palette, User } from "lucide-svelte";
     import LanguageSettings from "../settings/LanguageSettings.svelte";
     import AboutModal from "../settings/AboutModal.svelte";
     import ThemeModal from "../settings/ThemeModal.svelte";
+    import ProfileModal from "../settings/ProfileModal.svelte";
 
     let showLanguageModal = $state(false);
     let showAboutModal = $state(false);
     let showThemeModal = $state(false);
+    let showProfileModal = $state(false);
 
     const donateUrl = "https://send.monobank.ua/jar/7sCsydhJnR";
+    const ICON_SIZE = 24;
 </script>
 
 <div class="top-icons-bar">
@@ -26,7 +29,7 @@
         data-testid="donate-btn"
     >
         <div class="icon-inner">
-            <Coins size={24} />
+            <Coins size={ICON_SIZE} />
         </div>
     </a>
 
@@ -38,7 +41,7 @@
         data-testid="theme-settings-btn"
     >
         <div class="icon-inner">
-            <Palette size={24} />
+            <Palette size={ICON_SIZE} />
         </div>
     </button>
 
@@ -50,7 +53,7 @@
         data-testid="language-settings-btn"
     >
         <div class="icon-inner">
-            <Languages size={24} />
+            <Languages size={ICON_SIZE} />
         </div>
     </button>
 
@@ -62,7 +65,19 @@
         data-testid="about-btn"
     >
         <div class="icon-inner">
-            <Info size={24} />
+            <Info size={ICON_SIZE} />
+        </div>
+    </button>
+
+    <!-- Профіль -->
+    <button
+        class="icon-btn"
+        onclick={() => (showProfileModal = true)}
+        title="Profile"
+        data-testid="profile-btn"
+    >
+        <div class="icon-inner">
+            <User size={ICON_SIZE} />
         </div>
     </button>
 </div>
@@ -77,6 +92,10 @@
 
 {#if showThemeModal}
     <ThemeModal onclose={() => (showThemeModal = false)} />
+{/if}
+
+{#if showProfileModal}
+    <ProfileModal onclose={() => (showProfileModal = false)} />
 {/if}
 
 <style>

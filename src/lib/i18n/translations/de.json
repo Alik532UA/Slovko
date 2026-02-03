@@ -80,11 +80,45 @@
         "about": "Über"
     },
     "about": {
-        "title": "Über",
-        "description": "Slovko entstand, weil ähnliche Apps aufdringliche Werbung haben. Deshalb kam die Idee auf, eine eigene, komplett werbefreie App zu entwickeln. Lerne Sprachen durch das Zuordnen von Wortpaaren ohne Ablenkungen.",
+        "title": "Über Slovko",
+        "description": "Slovko ist eine Wort-Matching-App, mit der du durch Assoziationsspiele neue Vokabeln lernen kannst. Verbinde Wörter und ihre Übersetzungen, um sie dir schneller zu merken!",
         "support": "Projekt unterstützen",
         "developer": "Entwickler",
         "version": "Version"
+    },
+    "profile": {
+        "anonymousTitle": "Gast",
+        "anonymousSub": "Fortschritt nicht synchronisiert",
+        "syncWarning": "Melde dich an, um deinen Fortschritt in der Cloud zu speichern und ihn auf verschiedenen Geräten zu sichern.",
+        "login": "Anmelden",
+        "logout": "Abmelden",
+        "back": "Zurück",
+        "register": "Registrieren",
+        "signin": "Anmelden mit E-Mail",
+        "googleAuth": "Anmelden mit Google",
+        "emailRegister": "Registrieren mit E-Mail",
+        "forgotPassword": "Passwort vergessen?",
+        "forgotPasswordTitle": "Passwort zurücksetzen",
+        "forgotPasswordSubtitle": "Gib die mit deinem Konto verknüpfte E-Mail ein",
+        "spamWarning": "Die E-Mail könnte im Spam-Ordner landen, da die App neu ist.",
+        "sendResetEmail": "Wiederherstellungsmail senden",
+        "backToSignin": "Zurück zur Anmeldung",
+        "passwordResetSent": "Wiederherstellungsmail gesendet",
+        "errors": {
+            "enterEmail": "Gib E-Mail ein",
+            "userNotFound": "Benutzer mit dieser E-Mail nicht gefunden",
+            "invalidEmail": "Ungültiges E-Mail-Format",
+            "fillFields": "Fülle alle Felder aus",
+            "passwordMismatch": "Passwörter stimmen nicht überein",
+            "weakPassword": "Passwort ist zu schwach (min. 6 Zeichen)",
+            "emailInUse": "Diese E-Mail wird bereits verwendet"
+        },
+        "stats": {
+            "correct": "Richtig",
+            "streak": "Tage in Folge",
+            "days": "Tage in der App",
+            "accuracy": "Genauigkeit"
+        }
     },
     "updateNotification": {
         "message": "Update verfügbar!",

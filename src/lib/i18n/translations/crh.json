@@ -80,11 +80,45 @@
         "about": "Aqqında"
     },
     "about": {
-        "title": "Aqqında",
-        "description": "Slovko — başqa oşasa programmalarda reklamalar çoq bolğanı içün, reklamasız öz programmamıznı yapmağa qarar berdik. Heç bir keder bolmadan sözlerni juftlaştıruv şeklinde tilleri ögreniñiz.",
-        "support": "Proyektni destekle",
+        "title": "Slovko aqqında",
+        "description": "Slovko — assotsiatsiya oyunu vastasınen yañı sözlerni ögrenmek içün ilova. Sözlerni ve olarnıñ tercimelerini birleştirerek daa tez ezberleñiz!",
+        "support": "Leyhanı desteklemek",
         "developer": "Yaratıcı",
         "version": "Versiya"
+    },
+    "profile": {
+        "anonymousTitle": "Musafir",
+        "anonymousSub": "İlerleme sin hronizatsiya etilmedi",
+        "syncWarning": "İlerlemeñizni bulutqa saqlamaq ve farqlı cihazlarda qorumaq içün kiriñiz.",
+        "login": "Kirmege",
+        "logout": "Çıqmaq",
+        "back": "Artqa",
+        "register": "Qeydiyat",
+        "signin": "E-mail ilen kiriş",
+        "googleAuth": "Google ilen kiriş",
+        "emailRegister": "E-mail ilen qayd",
+        "forgotPassword": "Parolni unuttıñızmı?",
+        "forgotPasswordTitle": "Parolni yañartuv",
+        "forgotPasswordSubtitle": "Esa-bıñızğa bağlı emailni kirsetiñiz",
+        "spamWarning": "Mektüp \"Spam\" qutusına tüşebilir, çünki uyğulama yañıdır.",
+        "sendResetEmail": "Yañartuv mektübini yollamaq",
+        "backToSignin": "Kirişke qaytmaq",
+        "passwordResetSent": "Yañartuv mektübi yollandı",
+        "errors": {
+            "enterEmail": "Emailni kirsetiñiz",
+            "userNotFound": "Bu emailge sahip qullanıcı tapılmadı",
+            "invalidEmail": "Email formatı yañlış",
+            "fillFields": "Tüm meydanlarnı doldurıñız",
+            "passwordMismatch": "Parollar eşleşmey",
+            "weakPassword": "Parol çoq zayıf (eñ az 6 belgi)",
+            "emailInUse": "Bu email endi qullanıla"
+        },
+        "stats": {
+            "correct": "Doğru",
+            "streak": "Arta-arta künler",
+            "days": "İlovada künler",
+            "accuracy": "Doğruluq"
+        }
     },
     "updateNotification": {
         "message": "Yañartuv bar!",

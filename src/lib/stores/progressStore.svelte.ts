@@ -4,6 +4,8 @@
  */
 
 import { browser } from '$app/environment';
+import { SyncService } from '../firebase/SyncService';
+import { streakService } from '../services/streakService';
 
 const STORAGE_KEY = 'wordApp_progress';
 
@@ -20,6 +22,11 @@ interface UserProgress {
     totalCorrect: number;
     totalAttempts: number;
     lastUpdated: number;
+    // Нові поля для Streak
+    streak: number;
+    lastCorrectDate: string | null; // Формат "YYYY-MM-DD"
+    dailyCorrect: number;
+    firstSeenDate: number; // Дата першого входу
 }
 
 /** Значення за замовчуванням */
@@ -27,7 +34,11 @@ const DEFAULT_PROGRESS: UserProgress = {
     words: {},
     totalCorrect: 0,
     totalAttempts: 0,
-    lastUpdated: Date.now()
+    lastUpdated: Date.now(),
+    streak: 0,
+    lastCorrectDate: null,
+    dailyCorrect: 0,
+    firstSeenDate: Date.now()
 };
 
 function createProgressStore() {
@@ -51,12 +62,21 @@ function createProgressStore() {
         if (browser) {
             progress.lastUpdated = Date.now();
             localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+            SyncService.uploadAll();
         }
     }
 
     return {
         get value() {
             return progress;
+        },
+
+        /** Internal set for SyncService to avoid infinite loops */
+        _internalSet(newData: UserProgress) {
+            progress = newData;
+            if (browser) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+            }
         },
 
         /** Записати правильну відповідь */
@@ -71,12 +91,19 @@ function createProgressStore() {
             wordProgress.lastSeen = Date.now();
             progress.words[wordKey] = wordProgress;
 
+            // Логіка Streak винесена в сервіс
+            const streakUpdate = streakService.calculateStreak(
+                progress.streak,
+                progress.lastCorrectDate,
+                progress.dailyCorrect
+            );
 
             progress = {
                 ...progress,
                 words: { ...progress.words },
                 totalCorrect: progress.totalCorrect + 1,
-                totalAttempts: progress.totalAttempts + 1
+                totalAttempts: progress.totalAttempts + 1,
+                ...streakUpdate
             };
 
             saveProgress();

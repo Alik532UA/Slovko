@@ -80,11 +80,59 @@
         "about": "Про проєкт"
     },
     "about": {
-        "title": "Про проєкт",
-        "description": "Slovko — результат того, що існуючі програми схожого типу мають нав'язливу рекламу. Тому з'явилась ідея зробити свою, повністю без реклами. Вивчайте мови через з'єднування пар слів без перешкод.",
-        "support": "Підтримати проєкт",
+        "title": "Про Slovko",
+        "description": "Slovko — це додаток для вивчення слів через гру в асоціації. Просто з'єднуй слова та їх переклади, щоб запам'ятовувати швидше!",
+        "support": "Підтримати проект",
         "developer": "Розробник",
         "version": "Версія"
+    },
+    "profile": {
+        "anonymousTitle": "Гість",
+        "anonymousSub": "Прогрес не синхронізовано",
+        "syncWarning": "Увійдіть, щоб зберегти свій прогрес у хмарі та не втратити його при зміні пристрою.",
+        "login": "Увійти",
+        "logout": "Вийти",
+        "back": "Назад",
+        "register": "Зареєструватись",
+        "signin": "Вхід за допомогою email",
+        "googleAuth": "Авторизація через Google",
+        "emailRegister": "Реєстрація за допомогою email",
+        "forgotPassword": "Забули пароль?",
+        "forgotPasswordTitle": "Відновлення пароля",
+        "forgotPasswordSubtitle": "Введіть email, на який зареєстровано акаунт",
+        "spamWarning": "Лист може потрапити в папку «Спам», оскільки додаток новий.",
+        "sendResetEmail": "Надіслати лист",
+        "backToSignin": "Повернутись до входу",
+        "passwordResetSent": "Лист для відновлення пароля надіслано на вашу пошту",
+        "errors": {
+            "enterEmail": "Введіть email",
+            "userNotFound": "Користувача з таким email не знайдено",
+            "invalidEmail": "Невірний формат email",
+            "fillFields": "Заповніть всі поля",
+            "passwordMismatch": "Паролі не співпадають",
+            "weakPassword": "Пароль занадто слабкий (мін. 6 символів)",
+            "emailInUse": "Цей email вже використовується",
+            "enterPassword": "Введіть пароль",
+            "invalidCredentials": "Невірний email або пароль"
+        },
+        "changePasswordTitle": "Змінити пароль",
+        "changePasswordHint": "Функція в розробці",
+        "deleteWarning": "Увага! Цю дію неможливо скасувати.",
+        "deleteAccount": "Видалити акаунт",
+        "confirmDelete": "Підтвердити видалення",
+        "cancel": "Скасувати",
+        "passwordPlaceholderShort": "Пароль",
+        "tabs": {
+            "stats": "Статистика",
+            "account": "Акаунт",
+            "friends": "Друзі"
+        },
+        "stats": {
+            "correct": "Правильно",
+            "streak": "Днів підряд",
+            "days": "Днів у гри",
+            "accuracy": "Точність"
+        }
     },
     "updateNotification": {
         "message": "Доступне оновлення!",
@@ -105,6 +153,25 @@
     "common": {
         "confirm": "Підтвердити",
         "listen": "Прослухати",
-        "backToLearning": "Повернутися до навчання"
+        "backToLearning": "Повернутися до навчання",
+        "retry": "Спробувати ще"
+    },
+    "friends": {
+        "searchPlaceholder": "Пошук користувачів...",
+        "noResults": "Користувачів не знайдено",
+        "loadError": "Помилка завантаження списку",
+        "confirmUnfollow": "Відписатися від користувача?",
+        "noFollowing": "Ви поки ні на кого не підписані",
+        "noFollowers": "У вас поки немає підписників",
+        "unfollow": "Відписатися",
+        "followBack": "Підписатися теж",
+        "mutual": "Взаємно",
+        "tabs": {
+            "following": "Підписки",
+            "followers": "Підписники",
+            "search": "Пошук"
+        },
+        "following": "Підписки",
+        "followers": "Підписники"
     }
 }

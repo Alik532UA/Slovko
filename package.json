@@ -1,7 +1,7 @@
 {
 	"name": "slovko",
 	"private": true,
-	"version": "0.6.91",
+	"version": "0.6.92",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
@@ -27,6 +27,7 @@
 		"vite-plugin-pwa": "^1.2.0"
 	},
 	"dependencies": {
+		"firebase": "^12.8.0",
 		"glob": "^13.0.0",
 		"lucide-svelte": "^0.563.0",
 		"svelte-i18n": "^4.0.1"

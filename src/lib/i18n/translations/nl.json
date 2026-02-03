@@ -80,11 +80,45 @@
         "about": "Over"
     },
     "about": {
-        "title": "Over",
-        "description": "Slovko is ontstaan omdat vergelijkbare apps vaak storende advertenties hebben. Daarom besloten we onze eigen app te maken, volledig advertentievrij. Leer talen door woordparen te matchen zonder afleiding.",
+        "title": "Over Slovko",
+        "description": "Slovko is een app om woorden te leren via een associatiespel. Verbind woorden en hun vertalingen om ze sneller te onthouden!",
         "support": "Ondersteun het project",
         "developer": "Ontwikkelaar",
         "version": "Versie"
+    },
+    "profile": {
+        "anonymousTitle": "Gast",
+        "anonymousSub": "Voortgang niet gesynchroniseerd",
+        "syncWarning": "Log in om je voortgang in de cloud op te slaan en veilig te houden op verschillende apparaten.",
+        "login": "Inloggen",
+        "logout": "Uitloggen",
+        "back": "Terug",
+        "register": "Registreren",
+        "signin": "Inloggen met e-mail",
+        "googleAuth": "Inloggen met Google",
+        "emailRegister": "Registreren met e-mail",
+        "forgotPassword": "Wachtwoord vergeten?",
+        "forgotPasswordTitle": "Wachtwoord herstellen",
+        "forgotPasswordSubtitle": "Voer het e-mailadres in van je account",
+        "spamWarning": "De e-mail kan in de map Ongewenst terechtkomen omdat de app nieuw is.",
+        "sendResetEmail": "Herstelmail verzenden",
+        "backToSignin": "Terug naar inloggen",
+        "passwordResetSent": "Herstelmail verzonden",
+        "errors": {
+            "enterEmail": "Voer e-mail in",
+            "userNotFound": "Gebruiker met dit e-mailadres niet gevonden",
+            "invalidEmail": "Ongeldig e-mailadres",
+            "fillFields": "Vul alle velden in",
+            "passwordMismatch": "Wachtwoorden komen niet overeen",
+            "weakPassword": "Wachtwoord is te zwak (min. 6 tekens)",
+            "emailInUse": "Dit e-mailadres is al in gebruik"
+        },
+        "stats": {
+            "correct": "Correct",
+            "streak": "Dagen op rij",
+            "days": "Dagen in app",
+            "accuracy": "Nauwkeurigheid"
+        }
     },
     "updateNotification": {
         "message": "Update beschikbaar!",
