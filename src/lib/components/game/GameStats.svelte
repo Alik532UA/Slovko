@@ -7,22 +7,59 @@
     import { Flame, Target, Lightbulb, GraduationCap } from "lucide-svelte";
 
     const gameController = getGameController();
+
+    // Streak color interpolation (1 to 30)
+    // Gray: rgb(128, 128, 128) -> Orange: rgb(255, 165, 0)
+    const streakProgress = $derived(Math.min(1, Math.max(0, (gameState.streak - 1) / 29)));
+    const streakColor = $derived.by(() => {
+        if (gameState.streak === 0) return 'rgba(128, 128, 128, 0.5)';
+        const r = Math.round(128 + (255 - 128) * streakProgress);
+        const g = Math.round(128 + (165 - 128) * streakProgress);
+        const b = Math.round(128 + (0 - 128) * streakProgress);
+        return `rgb(${r}, ${g}, ${b})`;
+    });
+
+    // Streak animation intensity
+    const streakAnimationSpeed = $derived(gameState.streak > 0 ? `${Math.max(0.5, 2 - streakProgress * 1.5)}s` : '0s');
+    const streakScale = $derived(1 + (streakProgress * 0.15));
+
+    // Accuracy display logic
+    const accuracyDisplay = $derived(gameState.totalAttempts > 0 ? gameState.accuracy : "%");
+
+    // Accuracy background color interpolation (1% to 100%)
+    // Gray: rgba(255, 255, 255, 0.05) -> Green: rgba(34, 197, 94, 0.2)
+    const accProgress = $derived(gameState.totalAttempts > 0 ? gameState.accuracy / 100 : 0);
+    const accBgColor = $derived.by(() => {
+        if (gameState.totalAttempts === 0) return 'rgba(255, 255, 255, 0.05)';
+        // Simplified interpolation for performance, using green channel primarily
+        const alpha = 0.05 + (0.15 * accProgress);
+        return `rgba(34, 197, 94, ${alpha})`;
+    });
+    const accBorderColor = $derived(accProgress > 0.5 ? `rgba(34, 197, 94, ${accProgress * 0.4})` : 'rgba(255, 255, 255, 0.05)');
 </script>
 
 <div class="stats-bar">
-    <div class="stat-item streak" class:active={gameState.streak > 2}>
-        <div class="icon-wrapper">
-            <Flame size={20} />
+    <div 
+        class="stat-item streak" 
+        style="color: {streakColor}; border-color: {gameState.streak > 0 ? streakColor : ''}; transform: scale({streakScale});"
+        data-testid="stat-streak"
+    >
+        <div class="icon-wrapper" style="animation-duration: {streakAnimationSpeed}; animation-name: {gameState.streak > 5 ? 'pulse-fire' : 'none'}">
+            <Flame size={20} fill={gameState.streak > 10 ? streakColor : 'none'} />
         </div>
         <span class="value">{gameState.streak}</span>
     </div>
 
-    <div class="stat-item accuracy">
+    <div 
+        class="stat-item accuracy"
+        style="background: {accBgColor}; border-color: {accBorderColor}; color: {accProgress > 0.7 ? '#2ecc71' : ''}"
+        data-testid="stat-accuracy"
+    >
         <div class="icon-wrapper">
             <Target size={20} />
         </div>
         <span class="value"
-            >{gameState.accuracy}<span class="unit">%</span></span
+            >{accuracyDisplay}{#if gameState.totalAttempts > 0}<span class="unit">%</span>{/if}</span
         >
     </div>
 
@@ -76,7 +113,7 @@
         padding: 0.5rem 1rem;
         border-radius: 20px;
         color: var(--text-secondary);
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         border: 1px solid rgba(255, 255, 255, 0.05);
         white-space: nowrap; /* Забороняємо перенос тексту */
     }
@@ -89,11 +126,7 @@
     }
 
     .stat-item.active {
-        background: rgba(255, 165, 0, 0.15);
-        color: #ffaa00;
-        border-color: rgba(255, 165, 0, 0.3);
-        transform: scale(1.05);
-        box-shadow: 0 4px 12px rgba(255, 165, 0, 0.2);
+        /* Removed rigid active class in favor of dynamic styles */
     }
 
     .hint-btn {

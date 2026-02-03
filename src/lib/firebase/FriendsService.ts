@@ -330,16 +330,31 @@ export const FriendsService = {
             // Для точності беремо більше записів, щоб відфільтрувати "читерів" (1 правильна відповідь = 100%)
             const fetchLimit = metric === 'accuracy' ? 50 : limitCount;
 
-            // Створюємо базовий запит
-            let q = query(profilesRef);
-
-            // Додаємо фільтрацію за рівнем, якщо обрано конкретний рівень
+            // Визначаємо поле для сортування
+            // Якщо обрано 'all', використовуємо глобальну метрику (напр. 'totalCorrect')
+            // Якщо обрано рівень, використовуємо специфічне поле (напр. 'level_A1_totalCorrect')
+            let sortField: string = metric;
             if (cefrLevel !== 'all') {
-                q = query(q, where('bestCorrectStreakLevel', '==', cefrLevel));
+                if (metric === 'bestStreak') {
+                    // Рівневого 'bestStreak' (днів) немає, залишаємо глобальний
+                    sortField = metric;
+                } else {
+                    sortField = `level_${cefrLevel}_${metric}`;
+                }
             }
 
-            // Додаємо сортування та ліміт
-            q = query(q, orderBy(metric, 'desc'), limit(fetchLimit));
+            // Створюємо базовий запит
+            // Примітка: для кожного такого запиту Firestore потребуватиме окремий індекс
+            let q = query(
+                profilesRef, 
+                orderBy(sortField, 'desc'), 
+                limit(fetchLimit)
+            );
+
+            // Якщо обрано рівень, ми також можемо додати фільтр, щоб прибрати тих, хто ще не грав на ньому
+            if (cefrLevel !== 'all') {
+                q = query(q, where(sortField, '>', 0));
+            }
 
             const snapshot = await getDocs(q);
             let results = snapshot.docs.map((doc) => {
@@ -347,7 +362,7 @@ export const FriendsService = {
                 return {
                     uid: doc.id,
                     name: data.displayName || 'User',
-                    score: data[metric] || 0,
+                    score: data[sortField] || 0,
                     photoURL: data.photoURL,
                     isMe: doc.id === auth.currentUser?.uid,
                     // Додаткові поля

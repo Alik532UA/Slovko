@@ -74,6 +74,7 @@ function createGameState() {
         get error() { return error; },
         get streak() { return streak; },
         get accuracy() { return accuracy; },
+        get totalAttempts() { return correctAnswersHistory.length + mistakesCount; },
         get wordsPerMinute() { return wordsPerMinute; },
         get hasHistory() { return correctAnswersHistory.length > 0; },
         get totalCardsCount() { return sourceCards.length; },

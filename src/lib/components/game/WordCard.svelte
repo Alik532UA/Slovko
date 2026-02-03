@@ -27,16 +27,20 @@
     let isLongPress = false;
 
     function handlePointerDown(e: PointerEvent) {
+        isLongPress = false;
         longPressTimer = setTimeout(() => {
             isLongPress = true;
             if (onlongpress) onlongpress(e);
         }, 500);
     }
 
-    function handlePointerUp() {
+    function handlePointerUp(e: PointerEvent) {
         if (longPressTimer) {
             clearTimeout(longPressTimer);
             longPressTimer = null;
+        }
+        if (isLongPress) {
+            e.preventDefault();
         }
     }
 
@@ -63,7 +67,10 @@
         e.stopPropagation();
 
         if (isLongPress) {
-            isLongPress = false;
+            // Delay clearing the flag to catch trailing events on iOS
+            setTimeout(() => {
+                isLongPress = false;
+            }, 50);
             return;
         }
 

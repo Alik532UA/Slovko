@@ -229,21 +229,35 @@ export const SyncService = {
             }
 
             // Одночасне оновлення документа користувача та його публічного профілю
+            const profileUpdate: any = {
+                displayName: displayName,
+                displayNameLower: displayName.toLowerCase(),
+                photoURL: auth.currentUser.photoURL || null,
+                totalCorrect: localProgress.totalCorrect,
+                totalAttempts: localProgress.totalAttempts,
+                bestStreak: localProgress.bestStreak,
+                bestCorrectStreak: localProgress.bestCorrectStreak,
+                bestCorrectStreakLevel: bestCorrectStreakLevel,
+                accuracy: Math.round((localProgress.totalCorrect / (localProgress.totalAttempts || 1)) * 100),
+                updatedAt: serverTimestamp()
+            };
+
+            // Додаємо розгорнуту статистику рівнів для фільтрації в лідерборді
+            if (localProgress.levelStats) {
+                for (const [lvl, stats] of Object.entries(localProgress.levelStats)) {
+                    const s = stats as any;
+                    profileUpdate[`level_${lvl}_totalCorrect`] = s.totalCorrect || 0;
+                    profileUpdate[`level_${lvl}_bestCorrectStreak`] = s.bestCorrectStreak || 0;
+                    profileUpdate[`level_${lvl}_accuracy`] = s.totalAttempts > 0 
+                        ? Math.round((s.totalCorrect / s.totalAttempts) * 100) 
+                        : 0;
+                }
+            }
+
             await Promise.all([
                 setDoc(userDocRef, mergedData, { merge: true }),
                 // Публікуємо статистику для лідерборду
-                setDoc(profileRef, {
-                    displayName: displayName,
-                    displayNameLower: displayName.toLowerCase(),
-                    photoURL: auth.currentUser.photoURL || null,
-                    totalCorrect: localProgress.totalCorrect,
-                    totalAttempts: localProgress.totalAttempts, // Додаємо для фільтрації точності
-                    bestStreak: localProgress.bestStreak,
-                    bestCorrectStreak: localProgress.bestCorrectStreak,
-                    bestCorrectStreakLevel: bestCorrectStreakLevel, // Рівень рекорду
-                    accuracy: Math.round((localProgress.totalCorrect / (localProgress.totalAttempts || 1)) * 100),
-                    updatedAt: serverTimestamp()
-                }, { merge: true })
+                setDoc(profileRef, profileUpdate, { merge: true })
             ]);
 
             this.private.retryCount = 0;
