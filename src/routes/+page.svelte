@@ -57,7 +57,14 @@
         </svelte:boundary>
 
         <svelte:boundary>
-            <GameBoard gameData={data.gameData} />
+            {#if data.error}
+                <ErrorFallback error={data.error} reset={() => window.location.reload()} />
+            {:else if data.gameData}
+                <GameBoard gameData={data.gameData} />
+            {:else}
+                 <!-- Loading state handled by SvelteKit usually, but strictly speaking we shouldn't get here without error or data -->
+                 <div class="loading">Loading...</div>
+            {/if}
             {#snippet failed(error, reset)}
                 <ErrorFallback {error} {reset} />
             {/snippet}

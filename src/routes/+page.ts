@@ -1,6 +1,7 @@
 import { gameDataService } from '$lib/services/gameDataService';
 import { settingsStore } from '$lib/stores/settingsStore.svelte';
 import { playlistStore } from '$lib/stores/playlistStore.svelte';
+import { errorHandler } from '$lib/services/errorHandler';
 import type { PageLoad } from './$types';
 import type { AppSettings } from '$lib/stores/settingsStore.svelte';
 
@@ -36,11 +37,15 @@ export const load: PageLoad = async ({ url }) => {
         const gameData = await gameDataService.loadGameData(requestSettings, playlists);
         return {
             gameData,
-            gameSettings: requestSettings
+            gameSettings: requestSettings,
+            error: null
         };
     } catch (e) {
-        console.error('Failed to load game data inside load function', e);
-        // Повертаємо пусті дані або кидаємо помилку, яку обробить error boundary
-        throw e;
+        errorHandler.handle(e, 'PageLoad', { category: 'game' });
+        return {
+            gameData: null,
+            gameSettings: requestSettings,
+            error: e instanceof Error ? e.message : 'Unknown error'
+        };
     }
 };

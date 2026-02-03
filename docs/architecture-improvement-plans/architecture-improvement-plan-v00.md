@@ -66,6 +66,6 @@ Components are well-structured and focused.
     - *Problem:* It loads all levels for playlists to build a mega-dictionary. This might scale poorly.
     - *Solution:* Load only necessary files on demand or index data better.
 
-- [ ] **Standardize Error Handling** (Impact: **40**)
+- [x] **Standardize Error Handling** (Impact: **40**)
     - *Problem:* Some errors are logged to console, others set `error` state.
     - *Solution:* Create a unified `ErrorHandler` service that can report to UI (Toast/Banner) and Logger.

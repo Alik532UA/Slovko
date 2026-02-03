@@ -25,7 +25,7 @@
     let lastMode = $state(settingsStore.value.mode);
     let lastPlaylist = $state(settingsStore.value.currentPlaylist);
     // Додаємо відстеження зміни gameData
-    let lastGameData = $state(gameData);
+    let lastGameData = gameData;
 
     let contextMenu = $state<{
         x: number;
