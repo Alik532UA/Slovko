@@ -6,47 +6,32 @@
      */
     import type { ActiveCard } from "$lib/types";
     import { speakText } from "$lib/services/speechService";
-    import { settingsStore } from "$lib/stores/settingsStore.svelte";
 
     interface Props {
         card: ActiveCard;
+        showTranscription?: boolean;
+        enablePronunciation?: boolean;
         onclick: () => void;
         onlongpress?: (e: PointerEvent) => void;
     }
 
-    let { card, onclick, onlongpress }: Props = $props();
-
-    let showTranscription = $derived.by(() => {
-        if (card.language === settingsStore.value.sourceLanguage) {
-            return settingsStore.value.showTranscriptionSource;
-        }
-        if (card.language === settingsStore.value.targetLanguage) {
-            return settingsStore.value.showTranscriptionTarget;
-        }
-        return false;
-    });
+    let { 
+        card, 
+        showTranscription = false, 
+        enablePronunciation = false, 
+        onclick, 
+        onlongpress 
+    }: Props = $props();
 
     let longPressTimer: ReturnType<typeof setTimeout> | null = null;
     let isLongPress = false;
 
     function handlePointerDown(e: PointerEvent) {
-        // Дозволяємо лонг-прес на будь-якій картці (навіть правильній, щоб наприклад видалити з обраного)
-        // Але якщо disabled (статус correct), події миші можуть не спрацьовувати?
-        // Button with disabled=true blocks events.
-        // We disabled it in markup: disabled={card.status === "correct"}
-        // If we want context menu on correct cards, we must NOT disable it, or wrap it.
-        // Or remove `disabled` attribute and handle logic in click.
-        // Current code has disabled={card.status === "correct"}.
-        // This blocks onclick. It also blocks onpointerdown usually.
-        // I will remove `disabled` attribute and check status in handlers.
-
         longPressTimer = setTimeout(() => {
             isLongPress = true;
             if (onlongpress) onlongpress(e);
         }, 500);
     }
-
-    // ... existing handlers ... same as before ...
 
     function handlePointerUp() {
         if (longPressTimer) {
@@ -69,8 +54,6 @@
         
         // Викликаємо меню (використовуємо той самий колбек, що і для лонг-пресу)
         if (onlongpress) {
-            // Конвертуємо MouseEvent у PointerEvent для сумісності з існуючим типом, 
-            // або просто передаємо подію, оскільки координати там однакові.
             onlongpress(e as unknown as PointerEvent);
         }
     }
@@ -87,20 +70,8 @@
         // Якщо картка вже "правильна", ігноруємо клік (емулюємо disabled)
         if (card.status === "correct") return;
 
-        // Check which side this card belongs to and if pronunciation is enabled for it
-        const isSource = card.language === settingsStore.value.sourceLanguage;
-        const isTarget = card.language === settingsStore.value.targetLanguage;
-
-        let shouldSpeak = false;
-
-        if (isSource && settingsStore.value.enablePronunciationSource) {
-            shouldSpeak = true;
-        } else if (isTarget && settingsStore.value.enablePronunciationTarget) {
-            shouldSpeak = true;
-        }
-
         // Speak only if selecting (not deselecting)
-        if (shouldSpeak && card.status !== "selected") {
+        if (enablePronunciation && card.status !== "selected") {
             speakText(card.text, card.language);
         }
 

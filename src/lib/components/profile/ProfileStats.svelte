@@ -1,6 +1,15 @@
 <script lang="ts">
     import { _ } from "svelte-i18n";
-    import { Target, Zap, Calendar, Award } from "lucide-svelte";
+    import {
+        Target,
+        Flame,
+        Calendar,
+        Trophy,
+        Medal,
+        CheckCircle,
+        TrendingUp,
+        Percent,
+    } from "lucide-svelte";
     import { speakText } from "$lib/services/speechService";
     import { settingsStore } from "$lib/stores/settingsStore.svelte";
 
@@ -35,24 +44,28 @@
 </script>
 
 <div class="stats-container" data-testid="profile-stats-container">
-    <div class="stats-grid" data-testid="profile-stats-grid">
+    <div class="stats-grid" class:expanded={showMore} data-testid="profile-stats-grid">
         <button
             class="stat-card"
             data-testid="stat-card-days-streak"
             onclick={() => playLabel("streak")}
         >
-            <Zap size={20} class="stat-icon" />
-            <span class="value">{streak}</span>
-            <span class="label">{$_("profile.stats.streak")}</span>
+            <Flame size={20} class="stat-icon" />
+            <div class="stat-content">
+                <span class="value">{streak}</span>
+                <span class="label">{$_("profile.stats.streak")}</span>
+            </div>
         </button>
         <button
             class="stat-card"
             data-testid="stat-card-days-streak-best"
             onclick={() => playLabel("bestStreak")}
         >
-            <Zap size={20} class="stat-icon" />
-            <span class="value">{bestStreak}</span>
-            <span class="label">{$_("profile.stats.bestStreak")}</span>
+            <Trophy size={20} class="stat-icon" />
+            <div class="stat-content">
+                <span class="value">{bestStreak}</span>
+                <span class="label">{$_("profile.stats.bestStreak")}</span>
+            </div>
         </button>
 
         {#if showMore}
@@ -61,18 +74,22 @@
                 data-testid="stat-card-correct-streak"
                 onclick={() => playLabel("bestCorrectStreak")}
             >
-                <Award size={20} class="stat-icon" />
-                <span class="value">{bestCorrectStreak}</span>
-                <span class="label">{$_("profile.stats.bestCorrectStreak")}</span>
+                <Medal size={20} class="stat-icon" />
+                <div class="stat-content">
+                    <span class="value">{bestCorrectStreak}</span>
+                    <span class="label">{$_("profile.stats.bestCorrectStreak")}</span>
+                </div>
             </button>
             <button
                 class="stat-card"
                 data-testid="stat-card-correct-today"
                 onclick={() => playLabel("correctToday")}
             >
-                <Target size={20} class="stat-icon" />
-                <span class="value">{correctToday}</span>
-                <span class="label">{$_("profile.stats.correctToday")}</span>
+                <CheckCircle size={20} class="stat-icon" />
+                <div class="stat-content">
+                    <span class="value">{correctToday}</span>
+                    <span class="label">{$_("profile.stats.correctToday")}</span>
+                </div>
             </button>
             <button
                 class="stat-card"
@@ -80,17 +97,21 @@
                 onclick={() => playLabel("correct")}
             >
                 <Target size={20} class="stat-icon" />
-                <span class="value">{totalCorrect}</span>
-                <span class="label">{$_("profile.stats.correct")}</span>
+                <div class="stat-content">
+                    <span class="value">{totalCorrect}</span>
+                    <span class="label">{$_("profile.stats.correct")}</span>
+                </div>
             </button>
             <button
                 class="stat-card"
                 data-testid="stat-card-correct-daily-avg"
                 onclick={() => playLabel("dailyAverage")}
             >
-                <Zap size={20} class="stat-icon" />
-                <span class="value">{dailyAverage / 10}</span>
-                <span class="label">{$_("profile.stats.dailyAverage")}</span>
+                <TrendingUp size={20} class="stat-icon" />
+                <div class="stat-content">
+                    <span class="value">{Math.round(dailyAverage)}</span>
+                    <span class="label">{$_("profile.stats.dailyAverage")}</span>
+                </div>
             </button>
             <button
                 class="stat-card"
@@ -98,17 +119,21 @@
                 onclick={() => playLabel("days")}
             >
                 <Calendar size={20} class="stat-icon" />
-                <span class="value">{daysInApp}</span>
-                <span class="label">{$_("profile.stats.days")}</span>
+                <div class="stat-content">
+                    <span class="value">{daysInApp}</span>
+                    <span class="label">{$_("profile.stats.days")}</span>
+                </div>
             </button>
             <button
                 class="stat-card"
                 data-testid="stat-card-accuracy-general"
                 onclick={() => playLabel("accuracy")}
             >
-                <Award size={20} class="stat-icon" />
-                <span class="value">{accuracy}%</span>
-                <span class="label">{$_("profile.stats.accuracy")}</span>
+                <Percent size={20} class="stat-icon" />
+                <div class="stat-content">
+                    <span class="value">{accuracy}%</span>
+                    <span class="label">{$_("profile.stats.accuracy")}</span>
+                </div>
             </button>
         {/if}
     </div>
@@ -126,8 +151,9 @@
     .stats-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
+        gap: 0.75rem;
         margin-bottom: 1rem;
+        transition: all 0.3s ease;
     }
 
     .stat-card {
@@ -137,11 +163,38 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
         gap: 0.25rem;
         border: 1px solid var(--border);
         cursor: pointer;
         transition: all 0.2s;
         width: 100%;
+    }
+
+    /* Expanded View Styles */
+    .stats-grid.expanded {
+        grid-template-columns: 1fr; /* Switch to 1 column list */
+        gap: 0.5rem;
+    }
+
+    .stats-grid.expanded .stat-card {
+        flex-direction: row; /* Horizontal layout */
+        justify-content: flex-start;
+        padding: 0.75rem 1rem;
+        gap: 1rem;
+    }
+
+    .stat-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .stats-grid.expanded .stat-content {
+        flex-direction: row;
+        align-items: baseline;
+        gap: 0.5rem;
+        flex: 1;
     }
 
     .stat-card:hover {
@@ -176,12 +229,23 @@
     .stat-card :global(.stat-icon) {
         color: var(--accent);
         margin-bottom: 0.25rem;
+        transition: margin 0.3s ease;
+    }
+
+    /* Remove margin in horizontal mode */
+    .stats-grid.expanded .stat-card :global(.stat-icon) {
+        margin-bottom: 0;
     }
 
     .stat-card .value {
         font-size: 1.75rem;
         font-weight: bold;
         color: var(--text-primary);
+        line-height: 1;
+    }
+
+    .stats-grid.expanded .stat-card .value {
+        font-size: 1.25rem; /* Smaller font in list view */
     }
 
     .stat-card .label {
@@ -189,5 +253,12 @@
         color: var(--text-secondary);
         text-align: center;
         white-space: pre-line;
+        line-height: 1.2;
+    }
+
+    .stats-grid.expanded .stat-card .label {
+        text-align: left;
+        white-space: normal;
+        font-size: 0.9rem;
     }
 </style>
