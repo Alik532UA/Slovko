@@ -113,7 +113,7 @@
 </script>
 
 {#if isVisible}
-    <div class="onboarding-overlay" class:transparent={isFinalizing} transition:fade>
+    <div class="onboarding-overlay" class:transparent={isFinalizing} transition:fade data-testid="onboarding-modal">
         <div class="container">
             <div class="header-area">
                 {#if !isFinalizing}

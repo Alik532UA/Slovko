@@ -3,11 +3,11 @@
      * AboutModal — Про проєкт
      */
     import { _ } from "svelte-i18n";
-    import { X } from "lucide-svelte";
     import { versionStore } from "$lib/stores/versionStore.svelte";
-
     import { fade } from "svelte/transition";
     import { hardReset } from "$lib/services/resetService";
+    import FeedbackModal from "./FeedbackModal.svelte";
+    import BaseModal from "../ui/BaseModal.svelte";
 
     interface Props {
         onclose: () => void;
@@ -15,178 +15,97 @@
     let { onclose }: Props = $props();
 
     let showDevMenu = $state(false);
+    let showFeedback = $state(false);
 
     async function handleHardReset() {
         await hardReset(true);
     }
-
-    function handleBackdropClick(e: MouseEvent) {
-        if (e.target === e.currentTarget) {
-            onclose();
-        }
-    }
-
-    function handleKeydown(e: KeyboardEvent) {
-        if (e.key === "Escape") {
-            onclose();
-        }
-    }
 </script>
 
-<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-<div
-    class="modal-backdrop"
-    onclick={handleBackdropClick}
-    onkeydown={handleKeydown}
-    role="dialog"
-    aria-modal="true"
-    tabindex="-1"
->
-    <div
-        class="modal"
-        data-testid="about-modal"
-        role="dialog"
-        aria-modal="true"
-        tabindex="-1"
-        onclick={(e) => e.stopPropagation()}
-        onkeydown={(e) => e.stopPropagation()}
-    >
-        <div class="content">
-            <p class="description">{$_("about.description")}</p>
+<BaseModal {onclose} testid="about-modal">
+    <div class="content">
+        <p class="description">{$_("about.description")}</p>
 
-            <div class="links">
-                <a
-                    href="https://send.monobank.ua/jar/7sCsydhJnR"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="link-btn donate"
-                    data-testid="about-donate-link"
-                >
-                    {$_("about.support")}
-                </a>
-
-                <a
-                    href="https://alik532ua.github.io/CV/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="link-btn cv"
-                    data-testid="about-cv-link"
-                >
-                    {$_("about.developer")}
-                </a>
-            </div>
-
-            <div class="version-wrapper">
-                <button
-                    class="version-btn"
-                    onclick={() => (showDevMenu = !showDevMenu)}
-                    data-testid="about-version-btn"
-                >
-                    {$_("about.version")}: {versionStore.currentVersion ||
-                        "0.1"}
-                </button>
-
-                {#if showDevMenu}
-                    <div class="dev-menu" transition:fade>
-                        <button
-                            class="dev-item danger"
-                            onclick={handleHardReset}
-                            data-testid="about-hard-reset-btn"
-                        >
-                            Clear Cache & Reset
-                        </button>
-                        <button
-                            class="dev-item"
-                            onclick={() => (showDevMenu = false)}
-                            data-testid="about-cancel-reset-btn"
-                        >
-                            Cancel
-                        </button>
-                    </div>
-                {/if}
-            </div>
+        <div class="links">
+            <a
+                href="https://send.monobank.ua/jar/7sCsydhJnR"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="link-btn donate"
+                data-testid="about-donate-link"
+            >
+                {$_("about.support")}
+            </a>
 
             <button
-                class="confirm-btn"
-                onclick={onclose}
-                data-testid="close-about-btn"
+                class="link-btn feedback"
+                data-testid="about-feedback-link"
+                onclick={() => (showFeedback = true)}
             >
-                {$_("common.backToLearning")}
+                {$_("about.feedback.title")}
             </button>
+
+            <a
+                href="https://alik532ua.github.io/CV/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="link-btn cv"
+                data-testid="about-cv-link"
+            >
+                {$_("about.developer")}
+            </a>
         </div>
+
+        <div class="version-wrapper">
+            <button
+                class="version-btn"
+                onclick={() => (showDevMenu = !showDevMenu)}
+                data-testid="about-version-btn"
+            >
+                {$_("about.version")}: {versionStore.currentVersion || "0.1"}
+            </button>
+
+            {#if showDevMenu}
+                <div class="dev-menu" transition:fade>
+                    <button
+                        class="dev-item danger"
+                        onclick={handleHardReset}
+                        data-testid="about-hard-reset-btn"
+                    >
+                        Clear Cache & Reset
+                    </button>
+                    <button
+                        class="dev-item"
+                        onclick={() => (showDevMenu = false)}
+                        data-testid="about-cancel-reset-btn"
+                    >
+                        Cancel
+                    </button>
+                </div>
+            {/if}
+        </div>
+
+        <button
+            class="confirm-btn primary-action-btn"
+            onclick={onclose}
+            data-testid="close-about-btn"
+        >
+            {$_("common.backToLearning")}
+        </button>
     </div>
-</div>
+</BaseModal>
+
+{#if showFeedback}
+    <FeedbackModal onclose={() => (showFeedback = false)} />
+{/if}
 
 <style>
-    .confirm-btn {
-        margin-top: 1rem;
-        padding: 0.8rem 2.5rem;
-        font-size: 1.1rem;
-        font-weight: 600;
-        background: var(--accent);
-        color: white;
-        border: none;
-        border-radius: 12px;
-        cursor: pointer;
-        transition:
-            transform 0.2s,
-            background 0.2s;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        width: 100%;
-        max-width: 320px;
-        align-self: center;
-    }
-
-    .confirm-btn:hover {
-        background: var(--accent-hover);
-        transform: translateY(-2px);
-    }
-
-    .confirm-btn:active {
-        transform: scale(0.98);
-    }
-
-    .modal-backdrop {
-        position: fixed;
-        inset: 0;
-        z-index: 10002;
-        background: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(8px);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 1.5rem 0;
-        overflow-y: auto;
-        transition: background 0.3s;
-    }
-
-    /* Light theme override for backdrop */
-    :global([data-theme="light-gray"]) .modal-backdrop,
-    :global([data-theme="green"]) .modal-backdrop {
-        background: rgba(255, 255, 255, 0.9);
-    }
-
-    .modal {
-        background: transparent;
-        max-width: 480px;
-        width: 100%;
-        position: relative;
-        color: var(--text-primary);
-        margin: auto;
-        padding: 0 1.5rem;
-    }
-
-    .modal::-webkit-scrollbar {
-        display: none;
-    }
-
     .content {
         text-align: center;
         display: flex;
         flex-direction: column;
         gap: 2rem;
-        padding: 1rem;
+        padding: 0.5rem;
     }
 
     .description {
@@ -215,6 +134,9 @@
         width: 100%;
         max-width: 280px;
         border: 2px solid transparent;
+        cursor: pointer;
+        font-size: 1rem;
+        font-family: inherit;
     }
 
     .donate {
@@ -228,13 +150,15 @@
         box-shadow: 0 6px 16px rgba(58, 143, 214, 0.4);
     }
 
-    .cv {
+    .cv,
+    .feedback {
         background: transparent;
         color: var(--text-primary);
         border-color: var(--border);
     }
 
-    .cv:hover {
+    .cv:hover,
+    .feedback:hover {
         background: var(--bg-secondary);
         border-color: var(--text-secondary);
     }
@@ -307,10 +231,9 @@
         background: rgba(239, 68, 68, 0.2);
     }
 
-    @media (max-width: 480px) {
-        .modal {
-            max-height: 100vh;
-            border-radius: 0;
-        }
+    .confirm-btn {
+        width: 100%;
+        max-width: 320px;
+        align-self: center;
     }
 </style>

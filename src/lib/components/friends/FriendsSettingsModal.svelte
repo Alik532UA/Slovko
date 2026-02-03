@@ -67,6 +67,7 @@
         onclick={(e) => e.stopPropagation()} 
         role="dialog"
         aria-modal="true"
+        data-testid="friends-settings-modal"
     >
         <div class="modal-header">
             <h2>

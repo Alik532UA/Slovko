@@ -82,64 +82,66 @@
     );
 </script>
 
-<div class="header" data-testid="avatar-editor-header">
-    <h2 style="text-align: center; width: 100%; margin: 0;">
-        {$_("profile.editAvatarTitle", { default: "Редагування аватара" })}
-    </h2>
-</div>
-
-<div class="avatar-editor" data-testid="avatar-editor-container">
-    <div
-        class="avatar email-user preview-avatar"
-        style="background-color: {selectedColor}"
-        data-testid="profile-preview-avatar"
-    >
-        <Icon size={86} color="white" />
+<div class="avatar-editor-modal" data-testid="avatar-editor-modal">
+    <div class="header" data-testid="avatar-editor-header">
+        <h2 style="text-align: center; width: 100%; margin: 0;">
+            {$_("profile.editAvatarTitle", { default: "Редагування аватара" })}
+        </h2>
     </div>
 
-    <div class="color-picker-grid" data-testid="color-picker-grid">
-        {#each AVATAR_COLORS as color}
-            <button
-                class="color-btn"
-                style="background-color: {color === 'transparent'
-                    ? 'rgba(255,255,255,0.1)'
-                    : color}"
-                class:selected={selectedColor === color}
-                onclick={() => (selectedColor = color)}
-                aria-label={color}
-                data-testid="color-btn-{color}"
-            ></button>
-        {/each}
-    </div>
+    <div class="avatar-editor" data-testid="avatar-editor-container">
+        <div
+            class="avatar email-user preview-avatar"
+            style="background-color: {selectedColor}"
+            data-testid="profile-preview-avatar"
+        >
+            <Icon size={86} color="white" />
+        </div>
 
-    <div class="icon-picker-grid" data-testid="icon-picker-grid">
-        {#each AVATAR_ICONS as { id, component: IconComp }}
+        <div class="color-picker-grid" data-testid="color-picker-grid">
+            {#each AVATAR_COLORS as color}
+                <button
+                    class="color-btn"
+                    style="background-color: {color === 'transparent'
+                        ? 'rgba(255,255,255,0.1)'
+                        : color}"
+                    class:selected={selectedColor === color}
+                    onclick={() => (selectedColor = color)}
+                    aria-label={color}
+                    data-testid="color-btn-{color}"
+                ></button>
+            {/each}
+        </div>
+
+        <div class="icon-picker-grid" data-testid="icon-picker-grid">
+            {#each AVATAR_ICONS as { id, component: IconComp }}
+                <button
+                    class="icon-btn"
+                    class:selected={selectedIcon === id}
+                    onclick={() => (selectedIcon = id)}
+                    data-testid="icon-btn-{id}"
+                >
+                    <IconComp size={36} />
+                </button>
+            {/each}
+        </div>
+
+        <div class="edit-actions" style="margin-top: 1rem;">
             <button
-                class="icon-btn"
-                class:selected={selectedIcon === id}
-                onclick={() => (selectedIcon = id)}
-                data-testid="icon-btn-{id}"
+                class="icon-action-btn save"
+                onclick={handleSave}
+                data-testid="avatar-editor-save-btn"
             >
-                <IconComp size={36} />
+                <Check size={20} />
             </button>
-        {/each}
-    </div>
-
-    <div class="edit-actions" style="margin-top: 1rem;">
-        <button
-            class="icon-action-btn save"
-            onclick={handleSave}
-            data-testid="avatar-editor-save-btn"
-        >
-            <Check size={20} />
-        </button>
-        <button
-            class="icon-action-btn cancel"
-            onclick={oncancel}
-            data-testid="avatar-editor-cancel-btn"
-        >
-            <X size={20} />
-        </button>
+            <button
+                class="icon-action-btn cancel"
+                onclick={oncancel}
+                data-testid="avatar-editor-cancel-btn"
+            >
+                <X size={20} />
+            </button>
+        </div>
     </div>
 </div>
 
