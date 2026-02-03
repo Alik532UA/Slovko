@@ -86,41 +86,53 @@ export async function loadTranslations(
 ): Promise<TranslationDictionary> {
     // Завантажуємо семантику паралельно
     await loadLocalSemantics(language);
-    
+
     const cacheKey = `${language}:${category}:${id}`;
     if (translationCache.has(cacheKey)) {
         return translationCache.get(cacheKey)!;
     }
 
     try {
-        let module;
         if (category === 'levels') {
-            module = await import(`./translations/${language}/levels/${id}.json`);
-            const data = module.default as TranslationDictionary;
-            translationCache.set(cacheKey, data);
-            return data;
-        } else if (category === 'topics') {
-            // SSoT Refactoring: Topics don't have own translation files.
-            // We assemble them from levels.
-            
-            // 1. Get keys
-            const topic = await loadTopic(id);
-            
-            // 2. Load all levels
-            // We load them all to ensure we find the word wherever it is.
-            // In a PWA this is acceptable (~100KB JSON total).
+            // SSoT: Load all levels up to the current one and merge them.
+            // This ensures words from A1/A2 are available in B1/B2.
             const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
-            const levelPromises = levels.map(l => 
+            const currentIdx = levels.indexOf(id as any);
+            const levelsToLoad = currentIdx !== -1 ? levels.slice(0, currentIdx + 1) : [id];
+
+            const levelPromises = levelsToLoad.map(l =>
                 import(`./translations/${language}/levels/${l}.json`)
                     .then(m => m.default as TranslationDictionary)
                     .catch(() => ({}))
             );
-            
+
             const allLevelsData = await Promise.all(levelPromises);
-            
+            const mergedDict = Object.assign({}, ...allLevelsData);
+
+            translationCache.set(cacheKey, mergedDict);
+            return mergedDict;
+        } else if (category === 'topics') {
+            // SSoT Refactoring: Topics don't have own translation files.
+            // We assemble them from levels.
+
+            // 1. Get keys
+            const topic = await loadTopic(id);
+
+            // 2. Load all levels
+            // We load them all to ensure we find the word wherever it is.
+            // In a PWA this is acceptable (~100KB JSON total).
+            const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
+            const levelPromises = levels.map(l =>
+                import(`./translations/${language}/levels/${l}.json`)
+                    .then(m => m.default as TranslationDictionary)
+                    .catch(() => ({}))
+            );
+
+            const allLevelsData = await Promise.all(levelPromises);
+
             // 3. Merge all dictionaries
             const megaDict = Object.assign({}, ...allLevelsData);
-            
+
             // 4. Filter for this topic
             const topicDict: TranslationDictionary = {};
             topic.words.forEach(key => {
@@ -131,11 +143,11 @@ export async function loadTranslations(
                     topicDict[key] = key; // Fallback
                 }
             });
-            
+
             translationCache.set(cacheKey, topicDict);
             return topicDict;
         } else {
-            module = await import(`./translations/${language}/phrases/${id}.json`);
+            const module = await import(`./translations/${language}/phrases/${id}.json`);
             const data = module.default as TranslationDictionary;
             translationCache.set(cacheKey, data);
             return data;
@@ -160,22 +172,22 @@ export async function loadTranscriptions(
             module = await import(`./transcriptions/${language}/levels/${id}.json`);
             return module.default as TranscriptionDictionary;
         } else if (category === 'topics') {
-             // SSoT for Transcriptions
-             const topic = await loadTopic(id);
-             const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
-             const promises = levels.map(l => 
+            // SSoT for Transcriptions
+            const topic = await loadTopic(id);
+            const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
+            const promises = levels.map(l =>
                 import(`./transcriptions/${language}/levels/${l}.json`)
                     .then(m => m.default as TranscriptionDictionary)
                     .catch(() => ({}))
-             );
-             const allData = await Promise.all(promises);
-             const megaDict = Object.assign({}, ...allData);
-             
-             const topicDict: TranscriptionDictionary = {};
-             topic.words.forEach(key => {
-                 if (megaDict[key]) topicDict[key] = megaDict[key];
-             });
-             return topicDict;
+            );
+            const allData = await Promise.all(promises);
+            const megaDict = Object.assign({}, ...allData);
+
+            const topicDict: TranscriptionDictionary = {};
+            topic.words.forEach(key => {
+                if (megaDict[key]) topicDict[key] = megaDict[key];
+            });
+            return topicDict;
         } else {
             // Phrases currently don't have static transcriptions (mostly generative)
             return {};
@@ -212,20 +224,20 @@ export async function loadPhrasesLevel(levelId: CEFRLevel): Promise<WordLevel> {
  */
 export function getTranslation(word: string, translations: TranslationDictionary, language: Language = 'uk'): string {
     let translation = translations[word];
-    
+
     // Якщо прямого перекладу немає, перевіряємо семантичну ієрархію
     if (!translation) {
         const baseKey = getBaseKey(word);
         if (baseKey && translations[baseKey]) {
             const baseTranslation = translations[baseKey];
-            
+
             // Беремо мітку з локальної семантики мови
             const localSemantics = semanticsCache.get(language);
             const label = localSemantics?.labels?.[word];
-            
+
             // Якщо є мітка (напр. "старший"), додаємо її до базового перекладу
             translation = label ? `${baseTranslation} (${label})` : baseTranslation;
-            
+
             if (import.meta.env.DEV) {
                 console.log(`[Semantic Fallback] Using "${baseKey}" for "${word}" in ${language}`);
             }

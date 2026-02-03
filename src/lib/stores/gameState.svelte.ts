@@ -13,6 +13,7 @@ import { loadLevel, loadTopic, loadTranslations, loadTranscriptions, getTranslat
 import { generateRulesIPA } from '../services/transcriptionService';
 import { convertIPAToTarget } from '../services/phoneticsService';
 import { speakText } from '../services/speechService';
+import { logService } from '../services/logService';
 
 const MODE_CONFIG: Record<GameMode, { pairsPerPage: number }> = {
     'levels': { pairsPerPage: 6 },
@@ -109,7 +110,7 @@ function createGameState() {
      */
     async function loadTranslationsForLanguages(): Promise<void> {
         const { sourceLanguage, targetLanguage, mode, currentLevel, currentTopic, currentPlaylist } = settingsStore.value;
-        
+
         // Визначаємо категорію
         let category: 'levels' | 'topics' | 'phrases' = 'levels';
         if (mode === 'topics') category = 'topics';
@@ -124,18 +125,24 @@ function createGameState() {
         try {
             if (mode === 'playlists' && currentPlaylist) {
                 // SSoT: For playlists, we load all levels to find translations for any word
-                const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
-                
+                const { SUPPORTED_LEVELS } = await import('../config');
+
                 const [sourceAll, targetAll] = await Promise.all([
-                    Promise.all(levels.map(l => 
+                    Promise.all(SUPPORTED_LEVELS.map(l =>
                         import(`../data/translations/${sourceLanguage}/levels/${l}.json`)
                             .then(m => m.default)
-                            .catch(() => ({}))
+                            .catch((e) => {
+                                logService.warn('game', `Failed to load ${sourceLanguage} level ${l}`, e);
+                                return {};
+                            })
                     )),
-                    Promise.all(levels.map(l => 
+                    Promise.all(SUPPORTED_LEVELS.map(l =>
                         import(`../data/translations/${targetLanguage}/levels/${l}.json`)
                             .then(m => m.default)
-                            .catch(() => ({}))
+                            .catch((e) => {
+                                logService.warn('game', `Failed to load ${targetLanguage} level ${l}`, e);
+                                return {};
+                            })
                     ))
                 ]);
 
@@ -148,6 +155,12 @@ function createGameState() {
                     : (currentPlaylist === 'favorites' ? playlistStore.favorites : playlistStore.extra);
 
                 pairs.forEach(p => {
+                    if (!sourceMegaDict[p.id]) {
+                        logService.warn('game', `Missing source translation for ID: ${p.id} (${sourceLanguage})`);
+                    }
+                    if (!targetMegaDict[p.id]) {
+                        logService.warn('game', `Missing target translation for ID: ${p.id} (${targetLanguage})`);
+                    }
                     sourceTranslations[p.id] = sourceMegaDict[p.id] || p.id;
                     targetTranslations[p.id] = targetMegaDict[p.id] || p.id;
                 });
