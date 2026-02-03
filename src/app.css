@@ -28,6 +28,12 @@
 	--correct-border: #2ecc71;
 	--wrong-bg: #5a2a2a;
 	--wrong-border: #e74c3c;
+
+	/* Toast notification colors */
+	--toast-info: #3b82f6;
+	--toast-success: #22c55e;
+	--toast-warning: #f59e0b;
+	--toast-error: #ef4444;
 }
 
 /* Light Gray */

@@ -53,7 +53,23 @@
         }
         return false;
     });
+
+    function handleKeydown(event: KeyboardEvent) {
+        // Prevent navigation if user is typing in an input
+        const target = event.target as HTMLElement;
+        if (target?.tagName === "INPUT" || target?.tagName === "TEXTAREA") {
+            return;
+        }
+
+        if (event.key === "ArrowLeft" && canGoPrev) {
+            settingsStore.prevLevel();
+        } else if (event.key === "ArrowRight" && canGoNext) {
+            settingsStore.nextLevel();
+        }
+    }
 </script>
+
+<svelte:window onkeydown={handleKeydown} />
 
 <div class="bottom-bar">
     <button

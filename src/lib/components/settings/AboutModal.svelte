@@ -106,7 +106,11 @@
                 {/if}
             </div>
 
-            <button class="confirm-btn" onclick={onclose} data-testid="close-about-btn">
+            <button
+                class="confirm-btn"
+                onclick={onclose}
+                data-testid="close-about-btn"
+            >
                 {$_("common.backToLearning")}
             </button>
         </div>
@@ -124,7 +128,9 @@
         border: none;
         border-radius: 12px;
         cursor: pointer;
-        transition: transform 0.2s, background 0.2s;
+        transition:
+            transform 0.2s,
+            background 0.2s;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         width: 100%;
         max-width: 320px;
@@ -147,9 +153,11 @@
         background: rgba(0, 0, 0, 0.8);
         backdrop-filter: blur(8px);
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 1.5rem;
+        padding: 1.5rem 0;
+        overflow-y: auto;
         transition: background 0.3s;
     }
 
@@ -165,6 +173,12 @@
         width: 100%;
         position: relative;
         color: var(--text-primary);
+        margin: auto;
+        padding: 0 1.5rem;
+    }
+
+    .modal::-webkit-scrollbar {
+        display: none;
     }
 
     .content {

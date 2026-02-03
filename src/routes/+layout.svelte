@@ -9,65 +9,56 @@
 	import { versionStore } from "$lib/stores/versionStore.svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import UpdateNotification from "$lib/components/navigation/UpdateNotification.svelte";
+	import ToastContainer from "$lib/components/ui/ToastContainer.svelte";
 	import OnboardingModal from "$lib/components/onboarding/OnboardingModal.svelte";
-	import { hardReset } from "$lib/services/resetService";
+	import DebugListener from "$lib/components/debug/DebugListener.svelte";
 	import "../app.css";
 
 	let { children } = $props();
 	let ready = $state(false);
 
-	let kKeyPressCount = 0;
-	let kKeyPressTimer: ReturnType<typeof setTimeout>;
-
-	function handleGlobalKeydown(e: KeyboardEvent) {
-		if (e.key.toLowerCase() === "к") {
-			kKeyPressCount++;
-			clearTimeout(kKeyPressTimer);
-
-			if (kKeyPressCount >= 5) {
-				hardReset(true);
-				kKeyPressCount = 0;
-			} else {
-				kKeyPressTimer = setTimeout(() => {
-					kKeyPressCount = 0;
-				}, 2000); // Скидаємо лічильник через 2с бездіяльності
-			}
-		} else {
-			kKeyPressCount = 0;
-		}
-	}
-
 	import { dev } from "$app/environment";
 	import { base } from "$app/paths";
 
-	onMount(async () => {
-		await initializeI18n();
-		ready = true;
+	onMount(() => {
+		const init = async () => {
+			await initializeI18n();
+			ready = true;
+
+			// Перевірка оновлень після ініціалізації
+			checkForUpdates();
+
+			if (!dev && "serviceWorker" in navigator) {
+				navigator.serviceWorker.register(`${base}/service-worker.js`);
+			}
+		};
+
+		init();
 
 		// Фікс для коректної висоти в PWA/мобільних браузерах
 		const updateVh = () => {
 			let vh = window.innerHeight * 0.01;
-			document.documentElement.style.setProperty('--vh', `${vh}px`);
+			document.documentElement.style.setProperty("--vh", `${vh}px`);
 		};
 		updateVh();
-		window.addEventListener('resize', updateVh);
-		window.addEventListener('orientationchange', updateVh);
-
-		// Перевірка оновлень після ініціалізації
-		checkForUpdates();
-
-		if (!dev && "serviceWorker" in navigator) {
-			navigator.serviceWorker.register(`${base}/service-worker.js`);
-		}
+		window.addEventListener("resize", updateVh);
+		window.addEventListener("orientationchange", updateVh);
 
 		return () => {
-			window.removeEventListener('resize', updateVh);
-			window.removeEventListener('orientationchange', updateVh);
+			window.removeEventListener("resize", updateVh);
+			window.removeEventListener("orientationchange", updateVh);
 		};
+	});
+
+	$effect(() => {
+		document.documentElement.setAttribute(
+			"data-theme",
+			settingsStore.value.theme,
+		);
 	});
 </script>
 
-<svelte:window onkeydown={handleGlobalKeydown} />
+<DebugListener />
 
 {#if ready && !$isLoading}
 	{@render children()}
@@ -79,6 +70,7 @@
 	{#if versionStore.hasUpdate && versionStore.currentVersion}
 		<UpdateNotification version={versionStore.currentVersion} />
 	{/if}
+	<ToastContainer />
 {:else}
 	<div class="loading">
 		<div class="loading-spinner"></div>

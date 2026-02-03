@@ -52,16 +52,16 @@
     }
 
     .toast.info {
-        border-left-color: #3b82f6;
+        border-left-color: var(--toast-info, #3b82f6);
     }
     .toast.success {
-        border-left-color: #22c55e;
+        border-left-color: var(--toast-success, #22c55e);
     }
     .toast.warning {
-        border-left-color: #f59e0b;
+        border-left-color: var(--toast-warning, #f59e0b);
     }
     .toast.error {
-        border-left-color: #ef4444;
+        border-left-color: var(--toast-error, #ef4444);
     }
 
     .close-btn {

@@ -298,7 +298,11 @@
                 </div>
             </section>
 
-            <button class="confirm-btn" onclick={onclose} data-testid="confirm-language-settings-btn">
+            <button
+                class="confirm-btn"
+                onclick={onclose}
+                data-testid="confirm-language-settings-btn"
+            >
                 {$_("common.confirm")}
             </button>
         </div>
@@ -310,52 +314,33 @@
         position: fixed;
         inset: 0;
         z-index: 10002;
-        /* Default dark backdrop, overridden by light theme */
         background: rgba(0, 0, 0, 0.8);
         backdrop-filter: blur(8px);
         display: flex;
+        flex-direction: column;
         justify-content: center;
-        align-items: flex-start; /* Дозволяє скролити зверху вниз */
-        padding: 2rem 1rem;
+        align-items: center;
+        padding: 1.5rem 0;
         overflow-y: auto;
         /* Smooth transition for theme switch */
         transition: background 0.3s;
-        scrollbar-width: thin;
-        scrollbar-color: var(--accent) transparent;
-    }
-
-    .modal-backdrop::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    .modal-backdrop::-webkit-scrollbar-thumb {
-        background-color: var(--accent);
-        border-radius: 6px;
     }
 
     /* Light theme override for backdrop */
     :global([data-theme="light-gray"]) .modal-backdrop,
     :global([data-theme="green"]) .modal-backdrop {
-        background: rgba(255, 255, 255, 0.85);
+        background: rgba(255, 255, 255, 0.9);
     }
 
     .modal {
         background: transparent;
-        max-width: 360px;
+        max-width: 480px;
         width: 100%;
         position: relative;
         /* Ensure text color inherits correctly from body/theme */
         color: var(--text-primary);
-        margin: auto 0; /* Центрування, якщо контенту мало */
-    }
-
-    .modal::-webkit-scrollbar {
-        width: 4px;
-    }
-
-    .modal::-webkit-scrollbar-thumb {
-        background-color: var(--accent);
-        border-radius: 4px;
+        margin: auto;
+        padding: 0 1.5rem;
     }
 
     .confirm-btn {
@@ -368,7 +353,9 @@
         border: none;
         border-radius: 12px;
         cursor: pointer;
-        transition: transform 0.2s, background 0.2s;
+        transition:
+            transform 0.2s,
+            background 0.2s;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
