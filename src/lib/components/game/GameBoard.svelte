@@ -13,6 +13,9 @@
     import { fade } from "svelte/transition";
     import { _ } from "svelte-i18n";
     import type { ActiveCard } from "$lib/types";
+    import type { GameData } from "$lib/services/gameDataService";
+
+    let { gameData }: { gameData?: GameData } = $props();
 
     // Реініціалізація при зміні рівня/теми/мов
     let lastLevel = $state(settingsStore.value.currentLevel);
@@ -21,6 +24,8 @@
     let lastTarget = $state(settingsStore.value.targetLanguage);
     let lastMode = $state(settingsStore.value.mode);
     let lastPlaylist = $state(settingsStore.value.currentPlaylist);
+    // Додаємо відстеження зміни gameData
+    let lastGameData = $state(gameData);
 
     let contextMenu = $state<{
         x: number;
@@ -40,6 +45,20 @@
             currentPlaylist,
         } = settingsStore.value;
 
+        // Якщо gameData змінився (нова навігація), ініціалізуємо з ним
+        if (gameData !== lastGameData) {
+            lastGameData = gameData;
+            // Оновлюємо також трекери налаштувань, щоб не тригерити подвійний апдейт
+            lastLevel = currentLevel;
+            lastTopic = currentTopic;
+            lastSource = sourceLanguage;
+            lastTarget = targetLanguage;
+            lastMode = mode;
+            lastPlaylist = currentPlaylist;
+            gameController.initGame(gameData);
+            return;
+        }
+
         if (
             currentLevel !== lastLevel ||
             currentTopic !== lastTopic ||
@@ -54,12 +73,18 @@
             lastTarget = targetLanguage;
             lastMode = mode;
             lastPlaylist = currentPlaylist;
+            
+            // Тут ми не передаємо gameData, бо налаштування змінились "всередині" компонента (наприклад, зміна мови),
+            // і треба перезавантажити дані. АЛЕ: якщо зміна рівня/теми йде через URL, то спрацює блок вище (gameData !== lastGameData).
+            // Якщо зміна мови (яка не в URL load function поки що? А, load function бере settingsStore),
+            // то load function не перезапуститься, якщо URL не змінився.
+            // Тому для зміни мови (яка не в URL) залишаємо старий механізм.
             gameController.initGame();
         }
     });
 
     onMount(() => {
-        gameController.initGame();
+        gameController.initGame(gameData);
     });
 
     function handleLongPress(e: PointerEvent, card: ActiveCard) {

@@ -7,6 +7,7 @@
     import { goto } from "$app/navigation";
     import { settingsStore } from "$lib/stores/settingsStore.svelte";
     import { ALL_LEVELS, ALL_TOPICS, type CEFRLevel, type GameMode, type PlaylistId } from "$lib/types";
+    import type { PageData } from './$types';
     
     import GameBoard from "$lib/components/game/GameBoard.svelte";
     import GameStats from "$lib/components/game/GameStats.svelte";
@@ -14,7 +15,34 @@
     import BottomBar from "$lib/components/navigation/BottomBar.svelte";
     import ErrorFallback from "$lib/components/ui/ErrorFallback.svelte";
 
-    // --- URL SYNC LOGIC ---
+    let { data }: { data: PageData } = $props();
+
+    // Синхронізація налаштувань при зміні даних (навігація)
+    $effect(() => {
+        if (data.gameSettings) {
+             // Використовуємо internalUpdate або просто оновлюємо store, 
+             // але обережно, щоб не викликати нову навігацію
+             // В ідеалі, store повинен просто прийняти нові значення.
+             
+             // Оскільки settingsStore зберігає в localStorage, це нормально.
+             const s = settingsStore.value;
+             const ds = data.gameSettings;
+             
+             if (s.mode !== ds.mode || 
+                 s.currentLevel !== ds.currentLevel || 
+                 s.currentTopic !== ds.currentTopic ||
+                 s.currentPlaylist !== ds.currentPlaylist) {
+                 
+                 // Update store to match URL/Data source of truth
+                 if (ds.mode === 'levels') settingsStore.setLevel(ds.currentLevel);
+                 else if (ds.mode === 'phrases') settingsStore.setPhrasesLevel(ds.currentLevel);
+                 else if (ds.mode === 'topics') settingsStore.setTopic(ds.currentTopic);
+                 else if (ds.mode === 'playlists' && ds.currentPlaylist) settingsStore.setPlaylist(ds.currentPlaylist);
+             }
+        }
+    });
+
+    // --- URL SYNC LOGIC (Зворотна сумісність / Клієнтська навігація) ---
 
     // 1. Sync URL -> Store
     $effect(() => {
@@ -95,7 +123,7 @@
         </svelte:boundary>
 
         <svelte:boundary>
-            <GameBoard />
+            <GameBoard gameData={data.gameData} />
             {#snippet failed(error, reset)}
                 <ErrorFallback {error} {reset} />
             {/snippet}

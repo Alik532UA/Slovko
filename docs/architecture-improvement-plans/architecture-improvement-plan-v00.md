@@ -43,7 +43,7 @@ Components are well-structured and focused.
     - *Problem:* `gameDataService` uses manual `typeof` checks. Malformed JSON files could cause runtime errors downstream.
     - *Solution:* Define schemas for Translation/Transcription dictionaries. Parse data with `Schema.parse()`.
 
-- [ ] **Migrate Data Loading to SvelteKit `load` functions** (Impact: **80**)
+- [x] **Migrate Data Loading to SvelteKit `load` functions** (Impact: **80**)
     - *Problem:* Data loading is triggered manually in `gameController` / `initGame`. This reinvents the wheel (handling loading states, errors) that SvelteKit does natively.
     - *Solution:* Move `gameDataService.loadGameData` calls to `src/routes/+page.ts`. Pass data as `data` prop to components. Use `gameState.setData(data)` inside an effect or init logic.
 

@@ -1,7 +1,7 @@
 import type { gameState as GameStateType } from '../stores/gameState.svelte';
 import { settingsStore, type AppSettings } from '../stores/settingsStore.svelte';
 import { playlistStore } from '../stores/playlistStore.svelte';
-import { gameDataService, type GameDataService } from './gameDataService';
+import { gameDataService, type GameDataService, type GameData } from './gameDataService';
 import { gameAudioHandler, type GameAudioHandler } from './gameAudioHandler';
 import { gameFeedbackHandler, type GameFeedbackHandler } from './gameFeedbackHandler';
 import { createCardsFromWordKeys, shuffle } from './gameCardFactory';
@@ -24,15 +24,22 @@ class GameController {
 
     /**
      * Ініціалізація нової гри
+     * @param preloadedData - Опціонально: попередньо завантажені дані (наприклад, з SSR/load function)
      */
-    async initGame(): Promise<void> {
+    async initGame(preloadedData?: GameData): Promise<void> {
         this.gameState.setLoading(true);
         this.gameState.setError(null);
         this.gameState.setProcessing(false);
         this.lastInteractionTime = Date.now();
 
         try {
-            const data = await this.dataService.loadGameData(settingsStore.value, playlistStore);
+            let data = preloadedData;
+            
+            // Якщо даних немає, завантажуємо їх (fallback)
+            if (!data) {
+                data = await this.dataService.loadGameData(settingsStore.value, playlistStore);
+            }
+            
             this.gameState.setData(data);
 
             const { sourceLanguage, targetLanguage } = settingsStore.value;
