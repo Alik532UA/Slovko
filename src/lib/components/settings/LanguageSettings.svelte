@@ -119,7 +119,7 @@
             <section>
                 <h3>{$_("settings.interfaceLanguage")}</h3>
                 <div class="flags-row">
-                    {#each LANGUAGES as lang}
+                    {#each LANGUAGES as lang (lang)}
                         <button
                             class="flag-btn"
                             class:selected={settingsStore.value
@@ -151,7 +151,7 @@
                             </h4>
                         </div>
                         <div class="flags-column">
-                            {#each LANGUAGES as lang}
+                            {#each LANGUAGES as lang (lang)}
                                 <button
                                     class="flag-btn small"
                                     class:selected={settingsStore.value
@@ -228,7 +228,7 @@
                         </div>
 
                         <div class="flags-column">
-                            {#each LANGUAGES as lang}
+                            {#each LANGUAGES as lang (lang)}
                                 <button
                                     class="flag-btn small"
                                     class:selected={settingsStore.value

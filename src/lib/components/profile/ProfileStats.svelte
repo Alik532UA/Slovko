@@ -86,7 +86,7 @@
             >
                 {$_("common.all", { default: "Всі" })}
             </button>
-            {#each ALL_LEVELS as level}
+            {#each ALL_LEVELS as level (level)}
                 <button
                     class="level-tab"
                     class:active={selectedLevel === level}

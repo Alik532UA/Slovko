@@ -142,10 +142,9 @@
         </button>
 
         <!-- Tabs -->
-        <div class="tabs">
-            {#each TABS as tab}
-                <button
-                    class="tab"
+                    <div class="tabs">
+                        {#each TABS as tab (tab.id)}
+                            <button                    class="tab"
                     class:active={activeTab === tab.id}
                     onclick={() => (activeTab = tab.id)}
                     data-testid={tab.testId}
@@ -159,7 +158,7 @@
         <div class="content">
             {#if activeTab === "levels"}
                 <div class="grid">
-                    {#each ALL_LEVELS as level}
+                    {#each ALL_LEVELS as level (level)}
                         <button
                             class="item"
                             class:selected={settingsStore.value.mode ===
@@ -177,7 +176,7 @@
                 </div>
             {:else if activeTab === "topics"}
                 <div class="grid topics-grid">
-                    {#each ALL_TOPICS as topic}
+                    {#each ALL_TOPICS as topic (topic.id)}
                         {@const Icon = ICON_MAP[topic.icon]}
                         <button
                             class="item topic-item"
@@ -201,7 +200,7 @@
                 </div>
             {:else if activeTab === "phrases"}
                 <div class="grid">
-                    {#each ALL_LEVELS as level}
+                    {#each ALL_LEVELS as level (level)}
                         <button
                             class="item"
                             class:selected={settingsStore.value.mode ===

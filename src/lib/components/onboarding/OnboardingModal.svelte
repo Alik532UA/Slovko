@@ -135,7 +135,7 @@
             </div>
 
             <div class="flags-grid" class:hidden={flyingFlags.length > 0}>
-                {#each LANGUAGES as lang}
+                {#each LANGUAGES as lang (lang)}
                     <button 
                         class="flag-btn" 
                         class:selected-step1={step === 2 && lang === settingsStore.value.targetLanguage}
@@ -153,7 +153,7 @@
 
         {#if isFinalizing}
             <div class="flying-container">
-                {#each flyingFlags as flag}
+                {#each flyingFlags as flag (flag.lang)}
                     <div 
                         class="flying-flag" 
                         style:--start-x="{flag.x}px"

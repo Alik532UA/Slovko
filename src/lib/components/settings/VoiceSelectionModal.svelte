@@ -22,7 +22,7 @@
     
     $effect(() => {
         // Оновлюємо вибраний голос при зміні мови або початковому завантаженні
-        selectedVoiceURI = settingsStore.value.voicePreferences[language] || "";
+        selectedVoiceURI = (settingsStore.value.voicePreferences as Record<string, string>)[language] || "";
     });
 
     let primaryVoices: SpeechSynthesisVoice[] = $state([]);
@@ -204,7 +204,7 @@
                         {$_(`language.${language}`) || language}
                         {$_("language.voices")}
                     </div>
-                    {#each primaryVoices as voice}
+                    {#each primaryVoices as voice (voice.voiceURI)}
                         <button
                             class="voice-item"
                             class:selected={selectedVoiceURI === voice.voiceURI}
@@ -233,7 +233,7 @@
                         {$_("language.en")}
                         {$_("language.voices")}
                     </div>
-                    {#each secondaryVoices as voice}
+                    {#each secondaryVoices as voice (voice.voiceURI)}
                         <button
                             class="voice-item"
                             class:selected={selectedVoiceURI === voice.voiceURI}

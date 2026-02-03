@@ -2,8 +2,17 @@ import { gameDataService } from '$lib/services/gameDataService';
 import { settingsStore } from '$lib/stores/settingsStore.svelte';
 import { playlistStore } from '$lib/stores/playlistStore.svelte';
 import { errorHandler } from '$lib/services/errorHandler';
+import { z } from 'zod';
 import type { PageLoad } from './$types';
 import type { AppSettings } from '$lib/stores/settingsStore.svelte';
+
+// Схема для валідації URL параметрів
+const UrlParamsSchema = z.object({
+    mode: z.enum(['levels', 'topics', 'phrases', 'playlists']).optional(),
+    level: z.enum(['A1', 'A2', 'B1', 'B2', 'C1', 'C2']).optional(),
+    topic: z.string().optional(),
+    playlist: z.enum(['favorites', 'mistakes', 'extra']).optional(),
+});
 
 // Вимикаємо SSR, оскільки гра залежить від localStorage та клієнтської логіки
 export const ssr = false;
@@ -15,16 +24,26 @@ export const load: PageLoad = async ({ url }) => {
     // Створюємо копію для запиту даних
     const requestSettings: AppSettings = { ...settings };
 
-    // Оновлюємо налаштування з URL параметрів (пріоритет URL)
-    const mode = url.searchParams.get('mode');
-    const level = url.searchParams.get('level');
-    const topic = url.searchParams.get('topic');
-    const playlist = url.searchParams.get('playlist');
+    // Отримуємо параметри з URL
+    const params = {
+        mode: url.searchParams.get('mode') || undefined,
+        level: url.searchParams.get('level') || undefined,
+        topic: url.searchParams.get('topic') || undefined,
+        playlist: url.searchParams.get('playlist') || undefined,
+    };
 
-    if (mode) requestSettings.mode = mode as any;
-    if (level) requestSettings.currentLevel = level as any;
-    if (topic) requestSettings.currentTopic = topic;
-    if (playlist) requestSettings.currentPlaylist = playlist as any;
+    // Валідуємо параметри
+    const result = UrlParamsSchema.safeParse(params);
+
+    if (result.success) {
+        const validated = result.data;
+        if (validated.mode) requestSettings.mode = validated.mode;
+        if (validated.level) requestSettings.currentLevel = validated.level;
+        if (validated.topic) requestSettings.currentTopic = validated.topic;
+        if (validated.playlist) requestSettings.currentPlaylist = validated.playlist;
+    } else {
+        console.warn('Invalid URL parameters, ignoring:', result.error.format());
+    }
 
     // Отримуємо snapshot плейлістів
     const playlists = {

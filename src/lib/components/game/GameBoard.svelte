@@ -18,16 +18,6 @@
     let { gameData }: { gameData?: GameData } = $props();
     const gameController = getGameController();
 
-    // Реініціалізація при зміні рівня/теми/мов
-    let lastLevel = $state(settingsStore.value.currentLevel);
-    let lastTopic = $state(settingsStore.value.currentTopic);
-    let lastSource = $state(settingsStore.value.sourceLanguage);
-    let lastTarget = $state(settingsStore.value.targetLanguage);
-    let lastMode = $state(settingsStore.value.mode);
-    let lastPlaylist = $state(settingsStore.value.currentPlaylist);
-    // Додаємо відстеження зміни gameData
-    let lastGameData = gameData;
-
     let contextMenu = $state<{
         x: number;
         y: number;
@@ -36,61 +26,12 @@
         text: string;
     } | null>(null);
 
-    $effect(() => {
-        const {
-            currentLevel,
-            currentTopic,
-            sourceLanguage,
-            targetLanguage,
-            mode,
-            currentPlaylist,
-        } = settingsStore.value;
-
-        // Якщо gameData змінився (нова навігація), ініціалізуємо з ним
-        if (gameData !== lastGameData) {
-            lastGameData = gameData;
-            // Оновлюємо також трекери налаштувань, щоб не тригерити подвійний апдейт
-            lastLevel = currentLevel;
-            lastTopic = currentTopic;
-            lastSource = sourceLanguage;
-            lastTarget = targetLanguage;
-            lastMode = mode;
-            lastPlaylist = currentPlaylist;
-            gameController.initGame(gameData);
-            return;
-        }
-
-        if (
-            currentLevel !== lastLevel ||
-            currentTopic !== lastTopic ||
-            sourceLanguage !== lastSource ||
-            targetLanguage !== lastTarget ||
-            mode !== lastMode ||
-            currentPlaylist !== lastPlaylist
-        ) {
-            lastLevel = currentLevel;
-            lastTopic = currentTopic;
-            lastSource = sourceLanguage;
-            lastTarget = targetLanguage;
-            lastMode = mode;
-            lastPlaylist = currentPlaylist;
-            
-            // Тут ми не передаємо gameData, бо налаштування змінились "всередині" компонента (наприклад, зміна мови),
-            // і треба перезавантажити дані. АЛЕ: якщо зміна рівня/теми йде через URL, то спрацює блок вище (gameData !== lastGameData).
-            // Якщо зміна мови (яка не в URL load function поки що? А, load function бере settingsStore),
-            // то load function не перезапуститься, якщо URL не змінився.
-            // Тому для зміни мови (яка не в URL) залишаємо старий механізм.
-            gameController.initGame();
-        }
-    });
-
     onMount(() => {
         gameController.initGame(gameData);
     });
 
     function handleLongPress(e: PointerEvent, card: ActiveCard) {
-        // Adjust position to keep menu on screen (simple logic)
-        // CardContextMenu has min-width 220px, height ~100px
+        // Adjust position to keep menu on screen
         let x = e.clientX;
         let y = e.clientY;
 
@@ -212,7 +153,7 @@
         width: 100%;
         max-width: 500px;
         height: 100%;
-        max-height: 1000px; /* Обмежуємо максимальну висоту для великих екранів */
+        max-height: 1000px;
         margin: 0 auto;
         padding: 1rem;
     }
@@ -228,12 +169,12 @@
     .card-slot {
         flex: 1;
         min-height: 0;
-        display: grid; /* Використовуємо grid для стабільності розміру */
+        display: grid;
         place-items: stretch;
     }
 
     .card-wrapper {
-        grid-area: 1 / 1; /* Обидві картки (стара і нова) будуть в одній комірці під час анімації */
+        grid-area: 1 / 1;
         width: 100%;
         height: 100%;
         display: flex;
@@ -286,7 +227,7 @@
     }
 
     .retry-button {
-        background: var(--accent-primary);
+        background: var(--accent);
         color: white;
         border: none;
         padding: 0.75rem 1.5rem;

@@ -11,6 +11,7 @@
     import TopBar from "$lib/components/navigation/TopBar.svelte";
     import BottomBar from "$lib/components/navigation/BottomBar.svelte";
     import ErrorFallback from "$lib/components/ui/ErrorFallback.svelte";
+    import ErrorBoundary from "$lib/components/ui/ErrorBoundary.svelte";
 
     let { data }: { data: PageData } = $props();
 
@@ -49,26 +50,22 @@
     <TopBar />
 
     <main>
-        <svelte:boundary>
+        <ErrorBoundary>
             <GameStats />
-            {#snippet failed(error, reset)}
-                <ErrorFallback {error} {reset} />
-            {/snippet}
-        </svelte:boundary>
+        </ErrorBoundary>
 
-        <svelte:boundary>
+        <ErrorBoundary>
             {#if data.error}
                 <ErrorFallback error={data.error} reset={() => window.location.reload()} />
             {:else if data.gameData}
-                <GameBoard gameData={data.gameData} />
+                {#key settingsStore.value.mode + settingsStore.value.currentLevel + settingsStore.value.currentTopic + settingsStore.value.currentPlaylist + settingsStore.value.sourceLanguage + settingsStore.value.targetLanguage}
+                    <GameBoard gameData={data.gameData} />
+                {/key}
             {:else}
                  <!-- Loading state handled by SvelteKit usually, but strictly speaking we shouldn't get here without error or data -->
                  <div class="loading">Loading...</div>
             {/if}
-            {#snippet failed(error, reset)}
-                <ErrorFallback {error} {reset} />
-            {/snippet}
-        </svelte:boundary>
+        </ErrorBoundary>
     </main>
 
     <BottomBar />

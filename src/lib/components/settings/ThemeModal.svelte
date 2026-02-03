@@ -33,7 +33,7 @@
         </div>
 
         <div class="themes-grid">
-            {#each themes as theme}
+            {#each themes as theme (theme.id)}
                 <button
                     class="theme-card"
                     class:selected={settingsStore.value.theme === theme.id}

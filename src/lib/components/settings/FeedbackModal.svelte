@@ -78,11 +78,10 @@
             {#if !selectedCategory}
                 <div class="category-selection" in:slide>
                     <p class="instruction">{$_("about.feedback.instruction", {default: "Оберіть тип повідомлення:"})}</p>
-                    <div class="category-stack">
-                        {#each categories as cat}
-                            <button
-                                type="button"
-                                class="category-large-btn"
+                                            <div class="category-stack">
+                                                {#each categories as cat (cat.id)}
+                                                    <button
+                                                        type="button"                                class="category-large-btn"
                                 onclick={() => selectCategory(cat.id as FeedbackCategory)}
                                 data-testid="feedback-cat-{cat.id}"
                             >

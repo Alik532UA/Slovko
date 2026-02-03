@@ -99,7 +99,7 @@
         </div>
 
         <div class="color-picker-grid" data-testid="color-picker-grid">
-            {#each AVATAR_COLORS as color}
+            {#each AVATAR_COLORS as color (color)}
                 <button
                     class="color-btn"
                     style="background-color: {color === 'transparent'
@@ -114,7 +114,7 @@
         </div>
 
         <div class="icon-picker-grid" data-testid="icon-picker-grid">
-            {#each AVATAR_ICONS as { id, component: IconComp }}
+            {#each AVATAR_ICONS as { id, component: IconComp } (id)}
                 <button
                     class="icon-btn"
                     class:selected={selectedIcon === id}

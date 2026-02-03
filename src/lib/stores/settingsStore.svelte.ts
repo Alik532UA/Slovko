@@ -6,6 +6,7 @@
 import { browser } from '$app/environment';
 import { SyncService } from '../firebase/SyncService';
 import { localStorageProvider } from '../services/storage/storageProvider';
+import { z } from 'zod';
 import {
     ALL_LEVELS,
     ALL_TOPICS,
@@ -18,39 +19,27 @@ import {
 
 const STORAGE_KEY = 'wordApp_settings';
 
-export interface AppSettings {
-    interfaceLanguage: Language;
-    sourceLanguage: Language;
-    targetLanguage: Language;
-    mode: GameMode;
-    currentLevel: CEFRLevel;
-    currentTopic: string;
-    currentPlaylist: PlaylistId | null;
-    hasCompletedOnboarding: boolean;
-    enablePronunciationSource: boolean;
-    enablePronunciationTarget: boolean;
-    showTranscriptionSource: boolean;
-    showTranscriptionTarget: boolean;
-    voicePreferences: Record<string, string>;
-    theme: AppTheme;
-}
+// Zod Schema for validation and defaults
+export const AppSettingsSchema = z.object({
+    interfaceLanguage: z.enum(['en', 'uk', 'nl', 'de', 'el', 'crh']).default('en'),
+    sourceLanguage: z.enum(['en', 'uk', 'nl', 'de', 'el', 'crh']).default('en'),
+    targetLanguage: z.enum(['en', 'uk', 'nl', 'de', 'el', 'crh']).default('uk'),
+    mode: z.enum(['levels', 'topics', 'phrases', 'playlists']).default('levels'),
+    currentLevel: z.enum(['A1', 'A2', 'B1', 'B2', 'C1', 'C2']).default('A1'),
+    currentTopic: z.string().default('basic_verbs'),
+    currentPlaylist: z.enum(['favorites', 'mistakes', 'extra']).nullable().default(null),
+    hasCompletedOnboarding: z.boolean().default(false),
+    enablePronunciationSource: z.boolean().default(true),
+    enablePronunciationTarget: z.boolean().default(false),
+    showTranscriptionSource: z.boolean().default(true),
+    showTranscriptionTarget: z.boolean().default(false),
+    voicePreferences: z.record(z.string(), z.string()).default({}),
+    theme: z.enum(['dark-gray', 'light-gray', 'orange', 'green']).default('dark-gray'),
+});
 
-const DEFAULT_SETTINGS: AppSettings = {
-    interfaceLanguage: 'en',
-    sourceLanguage: 'en',
-    targetLanguage: 'uk',
-    mode: 'levels',
-    currentLevel: 'A1',
-    currentTopic: 'basic_verbs',
-    currentPlaylist: null,
-    hasCompletedOnboarding: false,
-    enablePronunciationSource: true,
-    enablePronunciationTarget: false,
-    showTranscriptionSource: true,
-    showTranscriptionTarget: false,
-    voicePreferences: {},
-    theme: 'dark-gray'
-};
+export type AppSettings = z.infer<typeof AppSettingsSchema>;
+
+const DEFAULT_SETTINGS: AppSettings = AppSettingsSchema.parse({});
 
 function createSettingsStore() {
     let settings = $state<AppSettings>(loadSettings());
@@ -63,32 +52,35 @@ function createSettingsStore() {
             const hasAppVersion = !!localStorageProvider.getItem('app_cache_version');
 
             if (stored) {
-                const parsed = JSON.parse(stored);
+                let parsed = JSON.parse(stored);
+                
+                // Legacy migrations
                 if (parsed.theme === 'purple') parsed.theme = 'orange';
-
-                let migrated = { ...DEFAULT_SETTINGS, ...parsed };
-
-                // Якщо у користувача вже є маркер версії додатку, 
-                // значить він вже був у додатку раніше — пропускаємо онбординг.
-                if (hasAppVersion) {
-                    migrated.hasCompletedOnboarding = true;
-                }
-
-                if (!migrated.voicePreferences) migrated.voicePreferences = {};
-
+                
                 if ('enablePronunciation' in parsed) {
-                    migrated.enablePronunciationSource = parsed.enablePronunciation;
-                    migrated.enablePronunciationTarget = false;
-                    delete (migrated as any).enablePronunciation;
+                    parsed.enablePronunciationSource = parsed.enablePronunciation;
+                    delete parsed.enablePronunciation;
                 }
 
                 if ('showTranscription' in parsed) {
-                    migrated.showTranscriptionSource = parsed.showTranscription;
-                    migrated.showTranscriptionTarget = false;
-                    delete (migrated as any).showTranscription;
+                    parsed.showTranscriptionSource = parsed.showTranscription;
+                    delete parsed.showTranscription;
                 }
 
-                return migrated;
+                // Validate with Zod
+                const result = AppSettingsSchema.safeParse(parsed);
+                
+                if (result.success) {
+                    let validated = result.data as AppSettings;
+                    if (hasAppVersion) {
+                        validated.hasCompletedOnboarding = true;
+                    }
+                    return validated;
+                } else {
+                    console.warn('Invalid settings found, using defaults with partial fix:', result.error);
+                    // Fallback to defaults merged with whatever was valid
+                    return { ...DEFAULT_SETTINGS, ...parsed } as AppSettings; 
+                }
             }
         } catch (e) {
             console.warn('Failed to load settings:', e);
@@ -150,14 +142,14 @@ function createSettingsStore() {
         },
 
         nextLevel() {
-            const currentIndex = ALL_LEVELS.indexOf(settings.currentLevel);
+            const currentIndex = ALL_LEVELS.indexOf(settings.currentLevel as CEFRLevel);
             if (currentIndex < ALL_LEVELS.length - 1) {
                 this.setLevel(ALL_LEVELS[currentIndex + 1]);
             }
         },
 
         prevLevel() {
-            const currentIndex = ALL_LEVELS.indexOf(settings.currentLevel);
+            const currentIndex = ALL_LEVELS.indexOf(settings.currentLevel as CEFRLevel);
             if (currentIndex > 0) {
                 this.setLevel(ALL_LEVELS[currentIndex - 1]);
             }
