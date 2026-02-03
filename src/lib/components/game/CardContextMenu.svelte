@@ -17,7 +17,7 @@
     }
     let { x, y, wordKey, language, text, onclose }: Props = $props();
 
-    let pair = $derived(gameState.constructWordPair(wordKey));
+    let pair = $derived(gameState.constructWordPair(wordKey, settingsStore.value));
     let isFavorite = $derived(playlistStore.isFavorite(wordKey));
     let isExtra = $derived(playlistStore.isExtra(wordKey));
 

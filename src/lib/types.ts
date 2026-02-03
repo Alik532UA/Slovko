@@ -59,7 +59,7 @@ export interface WordPair {
  * Translations are stored separately in `data/translations`.
  */
 export interface WordLevel {
-    id: CEFRLevel;
+    id: string; // id can be CEFRLevel or phrase ID
     name: string;
     words: string[];
 }
@@ -88,6 +88,13 @@ export type TranslationDictionary = Record<string, string>;
  */
 export type TranscriptionDictionary = Record<string, string>;
 
+/**
+ * Локальна семантика для мови (semantics.json)
+ */
+export interface LocalSemantics {
+    labels: Record<string, string>;
+}
+
 // ========================================
 // СТАН ГРИ
 // ========================================
@@ -105,11 +112,6 @@ export type PlaylistId = 'favorites' | 'mistakes' | 'extra';
 
 /**
  * Card visual states:
- * - 'idle': Default state
- * - 'selected': Clicked by user (waiting for pair)
- * - 'correct': Successfully matched (green)
- * - 'wrong': Incorrect match (red shake)
- * - 'hint': Highlighted as a hint
  */
 export type CardStatus = 'idle' | 'selected' | 'correct' | 'wrong' | 'hint' | 'hint-slow';
 

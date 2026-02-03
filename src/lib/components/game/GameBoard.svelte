@@ -5,6 +5,7 @@
      * Фіксовані позиції карток через slots
      */
     import { gameState } from "$lib/stores/gameState.svelte";
+    import { gameController } from "$lib/services/gameController";
     import { settingsStore } from "$lib/stores/settingsStore.svelte";
     import WordCard from "./WordCard.svelte";
     import CardContextMenu from "./CardContextMenu.svelte";
@@ -50,15 +51,15 @@
             lastLevel = currentLevel;
             lastTopic = currentTopic;
             lastSource = sourceLanguage;
-            lastTarget = lastTarget; // wait, there was a typo here, fixing while at it
+            lastTarget = targetLanguage;
             lastMode = mode;
             lastPlaylist = currentPlaylist;
-            gameState.initGame();
+            gameController.initGame();
         }
     });
 
     onMount(() => {
-        gameState.initGame();
+        gameController.initGame();
     });
 
     function handleLongPress(e: PointerEvent, card: ActiveCard) {
@@ -90,8 +91,8 @@
 {:else}
     <div
         class="game-board"
-        onclick={() => gameState.clearSelection()}
-        onkeydown={(e) => e.key === "Escape" && gameState.clearSelection()}
+        onclick={() => gameState.setSelectedCard(null)}
+        onkeydown={(e) => e.key === "Escape" && gameState.setSelectedCard(null)}
         role="button"
         tabindex="0"
         aria-label="Clear selection"
@@ -118,7 +119,7 @@
                             >
                                 <WordCard
                                     {card}
-                                    onclick={() => gameState.selectCard(card)}
+                                    onclick={() => gameController.selectCard(card)}
                                     onlongpress={(e) =>
                                         handleLongPress(e, card)}
                                 />
@@ -139,7 +140,7 @@
                             >
                                 <WordCard
                                     {card}
-                                    onclick={() => gameState.selectCard(card)}
+                                    onclick={() => gameController.selectCard(card)}
                                     onlongpress={(e) =>
                                         handleLongPress(e, card)}
                                 />

@@ -11,27 +11,28 @@ import type {
     TranslationDictionary,
     TranscriptionDictionary,
     CEFRLevel,
-    Language
+    Language,
+    LocalSemantics
 } from '../types';
 
 // Кеш для уникнення повторних завантажень
 const levelCache = new Map<string, WordLevel>();
 const topicCache = new Map<string, WordTopic>();
-const phrasesCache = new Map<string, any[]>();
+const phrasesCache = new Map<string, WordLevel>();
 const translationCache = new Map<string, TranslationDictionary>();
-const semanticsCache = new Map<string, Record<string, any>>();
+const semanticsCache = new Map<string, LocalSemantics>();
 let transcriptionCache: TranscriptionDictionary | null = null;
 
 /**
  * Завантажити локальну семантику для мови
  */
-async function loadLocalSemantics(language: Language): Promise<Record<string, any>> {
+async function loadLocalSemantics(language: Language): Promise<LocalSemantics> {
     if (semanticsCache.has(language)) {
         return semanticsCache.get(language)!;
     }
     try {
         const module = await import(`./translations/${language}/semantics.json`);
-        const data = module.default;
+        const data = module.default as LocalSemantics;
         semanticsCache.set(language, data);
         return data;
     } catch (e) {
@@ -96,9 +97,9 @@ export async function loadTranslations(
         if (category === 'levels') {
             // SSoT: Load all levels up to the current one and merge them.
             // This ensures words from A1/A2 are available in B1/B2.
-            const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
-            const currentIdx = levels.indexOf(id as any);
-            const levelsToLoad = currentIdx !== -1 ? levels.slice(0, currentIdx + 1) : [id];
+            const levels: CEFRLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+            const currentIdx = levels.indexOf(id as CEFRLevel);
+            const levelsToLoad = currentIdx !== -1 ? levels.slice(0, currentIdx + 1) : [id as CEFRLevel];
 
             const levelPromises = levelsToLoad.map(l =>
                 import(`./translations/${language}/levels/${l}.json`)
@@ -120,8 +121,7 @@ export async function loadTranslations(
 
             // 2. Load all levels
             // We load them all to ensure we find the word wherever it is.
-            // In a PWA this is acceptable (~100KB JSON total).
-            const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
+            const levels: CEFRLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
             const levelPromises = levels.map(l =>
                 import(`./translations/${language}/levels/${l}.json`)
                     .then(m => m.default as TranslationDictionary)
