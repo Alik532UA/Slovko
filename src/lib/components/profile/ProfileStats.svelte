@@ -71,91 +71,13 @@
 </script>
 
 <div class="stats-container" data-testid="profile-stats-container">
-    <div
-        class="stats-grid"
-        class:expanded={showMore}
-        data-testid="profile-stats-grid"
-    >
-        <button
-            class="stat-card"
-            data-testid="stat-card-days-streak"
-            onclick={() => playLabel("streak")}
-        >
-            <div class="stat-icon-box"><Flame size={22} /></div>
-            <div class="stat-content">
-                <span class="value">{streak}</span>
-                <span class="label">{$_("profile.stats.streak")}</span>
-            </div>
-        </button>
-        <button
-            class="stat-card"
-            data-testid="stat-card-days-streak-best"
-            onclick={() => playLabel("bestStreak")}
-        >
-            <div class="stat-icon-box"><Trophy size={22} /></div>
-            <div class="stat-content">
-                <span class="value">{bestStreak}</span>
-                <span class="label">{$_("profile.stats.bestStreak")}</span>
-            </div>
-        </button>
-
-        {#if showMore}
-            <button
-                class="stat-card"
-                data-testid="stat-card-correct-today"
-                onclick={() => playLabel("correctToday")}
-            >
-                <div class="stat-icon-box"><CheckCircle size={20} /></div>
-                <div class="stat-content">
-                    <span class="value">{correctToday}</span>
-                    <span class="label">{$_("profile.stats.correctToday")}</span>
-                </div>
-            </button>
-            <button
-                class="stat-card"
-                data-testid="stat-card-correct-daily-avg"
-                onclick={() => playLabel("dailyAverage")}
-            >
-                <div class="stat-icon-box"><TrendingUp size={20} /></div>
-                <div class="stat-content">
-                    <span class="value">{dailyAverage}</span>
-                    <span class="label">{$_("profile.stats.dailyAverage")}</span>
-                </div>
-            </button>
-            <button
-                class="stat-card"
-                data-testid="stat-card-days-total"
-                onclick={() => playLabel("days")}
-            >
-                <div class="stat-icon-box"><Calendar size={20} /></div>
-                <div class="stat-content">
-                    <span class="value">{daysInApp}</span>
-                    <span class="label">{$_("profile.stats.days")}</span>
-                </div>
-            </button>
-        {/if}
-    </div>
-
-    <button
-        class="toggle-stats-btn primary-action-btn"
-        onclick={() => (showMore = !showMore)}
-        data-testid="toggle-stats-btn"
-    >
-        <span
-            >{$_(
-                showMore ? "profile.stats.showLess" : "profile.stats.showMore",
-            )}</span
-        >
-        <div class="btn-shine"></div>
-    </button>
-
-    <!-- Level Stats Section -->
+    <!-- Level Stats Section (Main) -->
     <div class="level-stats-section" data-testid="level-stats-section">
         <h3 class="section-title">
             {$_("profile.stats.byLevel", { default: "По рівнях" })}
         </h3>
 
-        <div class="level-tabs" data-testid="level-tabs">
+        <div class="level-tabs" data-testid="stats-level-tabs">
             <button
                 class="level-tab"
                 class:active={selectedLevel === "all"}
@@ -202,6 +124,88 @@
             </div>
         </div>
     </div>
+
+    {#if showMore}
+        <div class="extra-stats-container">
+            <h3 class="section-title">
+                {$_("profile.stats.general", { default: "Загальна активність" })}
+            </h3>
+            <div
+                class="stats-grid extra-stats"
+                class:expanded={showMore}
+                data-testid="profile-stats-grid"
+            >
+                <button
+                    class="stat-card"
+                    data-testid="stat-card-days-streak"
+                    onclick={() => playLabel("streak")}
+                >
+                    <div class="stat-icon-box"><Flame size={22} /></div>
+                    <div class="stat-content">
+                        <span class="value">{streak}</span>
+                        <span class="label">{$_("profile.stats.streak")}</span>
+                    </div>
+                </button>
+                <button
+                    class="stat-card"
+                    data-testid="stat-card-days-streak-best"
+                    onclick={() => playLabel("bestStreak")}
+                >
+                    <div class="stat-icon-box"><Trophy size={22} /></div>
+                    <div class="stat-content">
+                        <span class="value">{bestStreak}</span>
+                        <span class="label">{$_("profile.stats.bestStreak")}</span>
+                    </div>
+                </button>
+                <button
+                    class="stat-card"
+                    data-testid="stat-card-correct-today"
+                    onclick={() => playLabel("correctToday")}
+                >
+                    <div class="stat-icon-box"><CheckCircle size={20} /></div>
+                    <div class="stat-content">
+                        <span class="value">{correctToday}</span>
+                        <span class="label">{$_("profile.stats.correctToday")}</span>
+                    </div>
+                </button>
+                <button
+                    class="stat-card"
+                    data-testid="stat-card-correct-daily-avg"
+                    onclick={() => playLabel("dailyAverage")}
+                >
+                    <div class="stat-icon-box"><TrendingUp size={20} /></div>
+                    <div class="stat-content">
+                        <span class="value">{dailyAverage}</span>
+                        <span class="label">{$_("profile.stats.dailyAverage")}</span>
+                    </div>
+                </button>
+                <button
+                    class="stat-card"
+                    data-testid="stat-card-days-total"
+                    onclick={() => playLabel("days")}
+                >
+                    <div class="stat-icon-box"><Calendar size={20} /></div>
+                    <div class="stat-content">
+                        <span class="value">{daysInApp}</span>
+                        <span class="label">{$_("profile.stats.days")}</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    {/if}
+
+    <button
+        class="toggle-stats-btn primary-action-btn"
+        onclick={() => (showMore = !showMore)}
+        data-testid="toggle-stats-btn"
+    >
+        <span
+            >{$_(
+                showMore ? "profile.stats.showLess" : "profile.stats.showMore",
+            )}</span
+        >
+        <div class="btn-shine"></div>
+    </button>
 </div>
 
 <style>
@@ -211,6 +215,16 @@
         gap: 0.5rem;
         margin-bottom: 1rem;
         transition: all 0.3s ease;
+    }
+
+    .stats-grid.extra-stats {
+        /* margin-top: 1rem; Removed as handled by container */
+    }
+
+    .extra-stats-container {
+        margin-top: 1.5rem;
+        border-top: 1px solid var(--border);
+        padding-top: 1rem;
     }
 
     .stat-card {
@@ -329,11 +343,10 @@
 
     .level-tabs {
         display: flex;
+        flex-wrap: wrap; /* Allow items to wrap to next line */
         gap: 0.5rem;
-        overflow-x: auto;
         padding-bottom: 0.5rem;
         margin-bottom: 0.75rem;
-        scrollbar-width: none;
         justify-content: center;
     }
 

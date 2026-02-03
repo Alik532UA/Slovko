@@ -85,7 +85,7 @@
 <div class="leaderboard-container" data-testid="leaderboard-container">
     <!-- Filters -->
     <div class="filters">
-        <div class="level-tabs" data-testid="level-tabs">
+        <div class="level-tabs" data-testid="leaderboard-level-tabs">
             <button
                 class="level-tab"
                 class:active={selectedLevel === "all"}
@@ -175,8 +175,8 @@
                 {@const Icon = getIconComponent(realPhoto)}
                 {@const avatarColor = getAvatarColor(realPhoto)}
 
-                <!-- Додаємо рівень до testid, якщо ми на вкладці "Всі" і це метрика стріка -->
-                {@const levelSuffix = (selectedLevel === 'all' && user.bestCorrectStreakLevel && selectedMetric === 'bestCorrectStreak') ? `-${user.bestCorrectStreakLevel}` : ''}
+                <!-- Додаємо рівень до testid, якщо ми на вкладці "Всі" -->
+                {@const levelSuffix = (selectedLevel === 'all' && user.bestCorrectStreakLevel) ? `-${user.bestCorrectStreakLevel}` : ''}
                 
                 <div class="leaderboard-item" class:me={user.isMe} data-testid="leaderboard-item-{user.rank}{levelSuffix}">
                     <div class="col-rank">
@@ -204,6 +204,11 @@
                             </div>
                         {/if}
                         <span class="username">{realName}</span>
+
+                        {#if selectedLevel === 'all' && user.bestCorrectStreakLevel}
+                            <span class="level-badge">{user.bestCorrectStreakLevel}</span>
+                        {/if}
+
                         {#if user.isMe}
                             <span class="me-badge">You</span>
                         {/if}
@@ -249,10 +254,9 @@
     /* Tabs Styles - Reused from ProfileStats but scoped */
     .level-tabs {
         display: flex;
+        flex-wrap: wrap; /* Allow wrapping on mobile */
         gap: 0.5rem;
-        overflow-x: auto;
         padding-bottom: 0.75rem;
-        scrollbar-width: none;
         justify-content: center;
     }
 
@@ -272,14 +276,6 @@
         background: var(--accent);
         color: white;
         border-color: var(--accent);
-    }
-
-    /* Shared Grid Layout */
-    .leaderboard-grid {
-        display: grid;
-        grid-template-columns: 60px 1fr 100px;
-        align-items: center;
-        gap: 0.5rem;
     }
 
     .metric-tabs {
@@ -302,7 +298,7 @@
         flex: 1;
         background: none;
         border: none;
-        padding: 0.6rem 0.5rem;
+        padding: 0.6rem 0.35rem;
         color: var(--text-secondary);
         font-weight: 600;
         border-radius: 12px;
@@ -312,10 +308,10 @@
         align-items: center;
         justify-content: center;
         gap: 0.35rem;
-        font-size: 0.75rem;
-        white-space: nowrap;
-        min-width: 70px;
+        font-size: 0.7rem;
+        min-width: 65px;
         cursor: pointer;
+        line-height: 1.1;
     }
 
     .tab-icon {
@@ -343,25 +339,23 @@
     }
 
     .tab-label {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 90px;
+        white-space: normal; /* Allow wrapping */
+        text-align: center;
+        word-wrap: break-word;
+        display: block;
+        width: 100%;
     }
 
     @media (max-width: 480px) {
         .metric-tab {
-            padding: 0.5rem 0.4rem;
-            font-size: 0.7rem;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.65rem;
             gap: 0.25rem;
             min-width: 60px;
         }
         .tab-icon {
             width: 28px;
             height: 28px;
-        }
-        .tab-label {
-            max-width: 70px;
         }
     }
 
@@ -379,8 +373,22 @@
     }
 
     .col-rank { width: 44px; display: flex; justify-content: center; align-items: center; }
-    .col-user { flex: 1; display: flex; align-items: center; gap: 0.85rem; min-width: 0; }
-    .col-score { width: 90px; text-align: right; font-variant-numeric: tabular-nums; }
+    .col-user { 
+        flex: 1; 
+        display: flex; 
+        align-items: center; 
+        gap: 0.5rem; 
+        min-width: 0;
+        flex-wrap: wrap;
+        max-height: 2.8rem; /* Increased to accommodate 38px avatar */
+        overflow: hidden;
+    }
+    .col-score { 
+        min-width: 50px; 
+        text-align: right; 
+        font-variant-numeric: tabular-nums; 
+        margin-left: 0.5rem; /* Smaller gap */
+    }
 
     .leaderboard-list {
         display: flex;
@@ -444,18 +452,29 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        flex-shrink: 1;
     }
 
-    .me-badge {
+    .me-badge, .level-badge {
         font-size: 0.65rem;
-        background: var(--accent);
-        color: white;
         padding: 0.15rem 0.45rem;
         border-radius: 6px;
-        margin-left: 0.5rem;
         font-weight: 800;
         text-transform: uppercase;
         letter-spacing: 0.02em;
+        flex-shrink: 0;
+    }
+
+    .me-badge {
+        background: var(--accent);
+        color: white;
+        margin-left: 0.25rem;
+    }
+
+    .level-badge {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-secondary);
+        border: 1px solid var(--border);
     }
 
     .score-val {

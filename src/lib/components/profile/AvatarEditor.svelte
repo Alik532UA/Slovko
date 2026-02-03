@@ -177,9 +177,11 @@
     }
 
     .color-picker-grid {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
+        display: flex;
+        flex-wrap: wrap;
         gap: 0.5rem;
+        justify-content: center;
+        max-width: 320px;
     }
 
     .color-btn {
@@ -191,6 +193,7 @@
         transition:
             transform 0.2s,
             border-color 0.2s;
+        flex-shrink: 0;
     }
 
     .color-btn:hover {
@@ -203,9 +206,11 @@
     }
 
     .icon-picker-grid {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
+        display: flex;
+        flex-wrap: wrap;
         gap: 0.5rem;
+        justify-content: center;
+        max-width: 380px;
     }
 
     .icon-btn {
@@ -220,6 +225,7 @@
         align-items: center;
         justify-content: center;
         transition: all 0.2s;
+        flex-shrink: 0;
     }
 
     .icon-btn:hover {

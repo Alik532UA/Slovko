@@ -139,6 +139,8 @@
             "friends": "Friends"
         },
         "stats": {
+            "byLevel": "Stats by Level",
+            "general": "General Activity",
             "correct": "total correct answers",
             "streak": "current daily streak",
             "days": "total days in program",

@@ -122,6 +122,8 @@
             "emailInUse": "Dit e-mailadres is al in gebruik"
         },
         "stats": {
+            "byLevel": "Statistieken per niveau",
+            "general": "Algemene Activiteit",
             "correct": "correcte antwoorden in totaal",
             "streak": "huidige dagelijkse reeks",
             "days": "totaal aantal dagen in programma",

@@ -122,6 +122,8 @@
             "emailInUse": "Diese E-Mail wird bereits verwendet"
         },
         "stats": {
+            "byLevel": "Statistik nach Niveau",
+            "general": "Allgemeine Aktivität",
             "correct": "richtige Antworten insgesamt",
             "streak": "aktuelle Tages-Serie",
             "days": "Tage im Programm insgesamt",

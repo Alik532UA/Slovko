@@ -327,30 +327,34 @@ export const FriendsService = {
     ): Promise<any[]> {
         try {
             const profilesRef = collection(db, COLLECTIONS.PROFILES);
-            let q;
-
             // Для точності беремо більше записів, щоб відфільтрувати "читерів" (1 правильна відповідь = 100%)
             const fetchLimit = metric === 'accuracy' ? 50 : limitCount;
 
-            // Firestore потребує окремі індекси для вкладених полів.
-            // Для простоти зараз беремо загальний топ по метриках, що є в корені профілю.
-            q = query(
-                profilesRef,
-                orderBy(metric, 'desc'),
-                limit(fetchLimit)
-            );
+            // Створюємо базовий запит
+            let q = query(profilesRef);
+
+            // Додаємо фільтрацію за рівнем, якщо обрано конкретний рівень
+            if (cefrLevel !== 'all') {
+                q = query(q, where('bestCorrectStreakLevel', '==', cefrLevel));
+            }
+
+            // Додаємо сортування та ліміт
+            q = query(q, orderBy(metric, 'desc'), limit(fetchLimit));
 
             const snapshot = await getDocs(q);
-            let results = snapshot.docs.map((doc) => ({
-                uid: doc.id,
-                name: doc.data().displayName || 'User',
-                score: doc.data()[metric] || 0,
-                photoURL: doc.data().photoURL,
-                isMe: doc.id === auth.currentUser?.uid,
-                // Додаткові поля
-                totalAttempts: doc.data().totalAttempts || 0,
-                bestCorrectStreakLevel: doc.data().bestCorrectStreakLevel
-            }));
+            let results = snapshot.docs.map((doc) => {
+                const data = doc.data() as any;
+                return {
+                    uid: doc.id,
+                    name: data.displayName || 'User',
+                    score: data[metric] || 0,
+                    photoURL: data.photoURL,
+                    isMe: doc.id === auth.currentUser?.uid,
+                    // Додаткові поля
+                    totalAttempts: data.totalAttempts || 0,
+                    bestCorrectStreakLevel: data.bestCorrectStreakLevel
+                };
+            });
 
             // Фільтрація для точності: прибираємо тих, хто має 100% але менше 100 спроб
             if (metric === 'accuracy') {

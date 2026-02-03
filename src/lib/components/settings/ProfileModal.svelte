@@ -24,7 +24,6 @@
     import Leaderboard from "../profile/Leaderboard.svelte";
     import AvatarEditor from "../profile/AvatarEditor.svelte";
     import AccountActions from "../profile/AccountActions.svelte";
-    import LoginMethods from "../profile/LoginMethods.svelte";
     import EmailAuthForm from "../profile/EmailAuthForm.svelte";
     import FriendsList from "../friends/FriendsList.svelte";
     import UserSearch from "../friends/UserSearch.svelte";
@@ -37,9 +36,7 @@
 
     // UI State
     type LoginMethod =
-        | "choose"
-        | "email-register"
-        | "email-signin"
+        | "auth"
         | "forgot-password"
         | "change-password"
         | "delete-account"
@@ -137,41 +134,64 @@
         }
     }
 
-    // Email handlers
-    async function handleEmailAuth(email: string, password: string) {
-        if (!email || (!password && loginMethod !== "forgot-password")) {
-            errorMessage = $_("profile.errors.fillFields", {
-                default: "Введіть всі поля",
-            });
+    // Auth handlers
+    async function handleEmailSignIn(email: string, password: string) {
+        if (!email || !password) {
+            errorMessage = $_("profile.errors.fillFields", { default: "Введіть всі поля" });
             return;
         }
         isLinking = true;
         errorMessage = "";
         try {
-            if (loginMethod === "email-register") {
-                await authStore.registerWithEmail(email, password);
-                loginMethod = null;
-            } else if (loginMethod === "email-signin") {
-                await authStore.signInWithEmail(email, password);
-                loginMethod = null;
-            } else if (loginMethod === "forgot-password") {
-                const { sendPasswordResetEmail } = await import(
-                    "firebase/auth"
-                );
-                const { auth } = await import("$lib/firebase/config");
-                await sendPasswordResetEmail(auth, email);
-                successMessage = $_("profile.passwordResetSent", {
-                    default: "Лист для відновлення пароля надіслано",
-                });
-                setTimeout(() => {
-                    loginMethod = "email-signin";
-                    resetForm();
-                }, 3000);
-            }
+            await authStore.signInWithEmail(email, password);
+            loginMethod = null;
         } catch (e: any) {
-            logService.error("auth", `${loginMethod} failed`, e);
-            errorMessage =
-                getAuthErrorMessage(e.code) || e.message || "Помилка";
+            logService.warn("auth", "Sign in failed", e.code || e.message);
+            errorMessage = getAuthErrorMessage(e.code) || e.message || "Помилка";
+        } finally {
+            isLinking = false;
+        }
+    }
+
+    async function handleEmailRegister(email: string, password: string) {
+        if (!email || !password) {
+            errorMessage = $_("profile.errors.fillFields", { default: "Введіть всі поля" });
+            return;
+        }
+        isLinking = true;
+        errorMessage = "";
+        try {
+            await authStore.registerWithEmail(email, password);
+            loginMethod = null;
+        } catch (e: any) {
+            logService.warn("auth", "Registration failed", e.code || e.message);
+            errorMessage = getAuthErrorMessage(e.code) || e.message || "Помилка";
+        } finally {
+            isLinking = false;
+        }
+    }
+
+    async function handleForgotPassword(email: string) {
+        if (!email) {
+            errorMessage = $_("profile.errors.enterEmail", { default: "Введіть email" });
+            return;
+        }
+        isLinking = true;
+        errorMessage = "";
+        try {
+            const { sendPasswordResetEmail } = await import("firebase/auth");
+            const { auth } = await import("$lib/firebase/config");
+            await sendPasswordResetEmail(auth, email);
+            successMessage = $_("profile.passwordResetSent", {
+                default: "Лист для відновлення пароля надіслано",
+            });
+            setTimeout(() => {
+                loginMethod = "auth";
+                resetForm();
+            }, 3000);
+        } catch (e: any) {
+            logService.error("auth", "Password reset failed", e);
+            errorMessage = getAuthErrorMessage(e.code) || e.message || "Помилка";
         } finally {
             isLinking = false;
         }
@@ -364,9 +384,30 @@
                 </button>
             {/if}
 
-            <!-- Header -->
-            <div class="header" data-testid="profile-header">
-                {#if authStore.uid && !authStore.isAnonymous && !authStore.isGuest}
+            {#if authStore.isAnonymous || authStore.isGuest}
+                <!-- GUEST / ANONYMOUS LAYOUT (Moved to top) -->
+                <div class="warning-box">
+                    <ShieldAlert size={24} />
+                    <p>
+                        {authStore.isGuest 
+                            ? $_("profile.guestWarning", { default: "Ви граєте як гість. Увійдіть, щоб зберігати прогрес у хмарі та змагатися з іншими." })
+                            : $_("profile.syncWarning", { default: "Ви використовуєте тимчасовий акаунт. Прив'яжіть пошту, щоб не втратити прогрес." })}
+                    </p>
+                </div>
+                <button
+                    class="login-btn"
+                    data-testid="profile-login-btn"
+                    onclick={() => (loginMethod = "auth")}
+                    disabled={isLinking}
+                    style="margin-bottom: 2rem;"
+                >
+                    {authStore.isGuest 
+                        ? $_("profile.login", { default: "Увійти" }) 
+                        : $_("profile.connectAccount", { default: "Прив'язати акаунт" })}
+                </button>
+            {:else}
+                <!-- LOGGED IN HEADER -->
+                <div class="header" data-testid="profile-header">
                     <button
                         class="avatar-wrapper-btn"
                         onclick={startEditingAvatar}
@@ -480,28 +521,9 @@
                             </span>
                         </div>
                     </div>
-                {:else}
-                    <div
-                        class="avatar anonymous"
-                        data-testid="profile-avatar-anonymous"
-                    >
-                        <User size={72} />
-                    </div>
-                    <div class="user-info">
-                        <h2>
-                            {$_("profile.anonymousTitle", { default: "Гість" })}
-                        </h2>
-                        <p>
-                            {$_("profile.anonymousSub", {
-                                default: "Прогрес не синхронізовано",
-                            })}
-                        </p>
-                    </div>
-                {/if}
-            </div>
+                </div>
 
-            <!-- Tabs for logged in users -->
-            {#if authStore.uid && !authStore.isGuest}
+                <!-- Tabs for logged in users -->
                 <div class="tabs-nav" data-testid="profile-tabs-nav">
                     <button
                         class:active={activeTab === "stats"}
@@ -655,53 +677,20 @@
                     />
                 {/if}
             </div>
-
-            <!-- Anonymous or Guest user login prompt -->
-            {#if authStore.isAnonymous || authStore.isGuest}
-                <div class="warning-box">
-                    <ShieldAlert size={24} />
-                    <p>
-                        {authStore.isGuest 
-                            ? $_("profile.guestWarning", { default: "Ви граєте як гість. Увійдіть, щоб зберігати прогрес у хмарі та змагатися з іншими." })
-                            : $_("profile.syncWarning", { default: "Ви використовуєте тимчасовий акаунт. Прив'яжіть пошту, щоб не втратити прогрес." })}
-                    </p>
-                </div>
-                <button
-                    class="login-btn"
-                    data-testid="profile-login-btn"
-                    onclick={() => (loginMethod = "choose")}
-                    disabled={isLinking}
-                >
-                    {authStore.isGuest 
-                        ? $_("profile.login", { default: "Увійти" }) 
-                        : $_("profile.connectAccount", { default: "Прив'язати акаунт" })}
-                </button>
-            {/if}
-        {:else if loginMethod === "choose"}
-            <LoginMethods
-                isLoading={isLinking}
-                ongoogle={handleGoogleLogin}
-                onemailRegister={() => (loginMethod = "email-register")}
-                onemailSignin={() => (loginMethod = "email-signin")}
-                onback={() => (loginMethod = null)}
-            />
-        {:else if loginMethod === "email-register" || loginMethod === "email-signin" || loginMethod === "forgot-password"}
+        {:else if loginMethod === "auth" || loginMethod === "forgot-password"}
             <EmailAuthForm
-                mode={loginMethod === "email-register"
-                    ? "register"
-                    : loginMethod === "email-signin"
-                      ? "signin"
-                      : "forgot-password"}
+                mode={loginMethod}
                 isLoading={isLinking}
                 {errorMessage}
                 {successMessage}
-                onsubmit={handleEmailAuth}
-                onback={() =>
-                    (loginMethod =
-                        loginMethod === "forgot-password"
-                            ? "email-signin"
-                            : "choose")}
-                onforgotPassword={loginMethod === "email-signin"
+                onsubmit={loginMethod === "forgot-password" ? handleForgotPassword : handleEmailSignIn}
+                onregister={handleEmailRegister}
+                ongoogle={handleGoogleLogin}
+                onback={() => {
+                    loginMethod = null;
+                    resetForm();
+                }}
+                onforgotPassword={loginMethod === "auth"
                     ? () => {
                           loginMethod = "forgot-password";
                           resetForm();
@@ -818,18 +807,19 @@
         position: relative;
         color: var(--text-primary);
         margin: auto;
-        padding: 0 1.5rem;
+        padding: 3.5rem 1.5rem 1.5rem; /* Added top padding to clear the close button */
     }
 
     .close-btn {
         position: absolute;
-        top: 1rem;
-        right: 1rem;
+        top: 0.75rem;
+        right: 0.75rem;
         background: transparent;
         color: var(--text-secondary);
         padding: 0.5rem;
         border-radius: 50%;
         transition: background 0.2s;
+        z-index: 10;
     }
 
     .close-btn:hover {
