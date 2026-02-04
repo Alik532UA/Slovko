@@ -58,15 +58,24 @@ export const FriendsService = {
 	/**
 	 * Підписатися на користувача (Атомарно)
 	 * @param targetUid - UID користувача, на якого підписуємось
+	 * @param knownProfile - Опціонально: вже відомі дані профілю (щоб не завантажувати з БД)
 	 */
-	async follow(targetUid: string): Promise<boolean> {
+	async follow(
+		targetUid: string,
+		knownProfile?: { displayName: string; photoURL: string | null },
+	): Promise<boolean> {
 		if (!auth.currentUser) return false;
 		const currentUid = auth.currentUser.uid;
 		if (currentUid === targetUid) return false;
 
 		try {
-			const targetProfile = await this.getUserProfile(targetUid);
-			if (!targetProfile) return false;
+			// Використовуємо відомий профіль або завантажуємо з БД
+			const targetProfile = knownProfile || (await this.getUserProfile(targetUid));
+
+			if (!targetProfile) {
+				logService.warn("sync", `Cannot follow ${targetUid}: Profile not found`);
+				return false;
+			}
 
 			const batch = writeBatch(db);
 

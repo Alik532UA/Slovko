@@ -40,6 +40,7 @@
 	let isLoading = $state(false);
 	let error = $state<string | null>(null);
 	let followingMap = $state<Record<string, boolean>>({});
+	let processingUid = $state<string | null>(null);
 
 	// Watch for tab change or refresh trigger
 	$effect(() => {
@@ -114,7 +115,9 @@
 
 	async function handleUnfollow(uid: string) {
 		if (!confirm($_("friends.confirmUnfollow"))) return;
+		if (processingUid) return;
 
+		processingUid = uid;
 		try {
 			const success = await FriendsService.unfollow(uid);
 			if (success) {
@@ -122,22 +125,37 @@
 				if (activeTab === "following") {
 					list = list.filter((u) => u.uid !== uid);
 				} else {
-					followingMap[uid] = false;
+					followingMap = { ...followingMap, [uid]: false };
 				}
 			}
 		} catch (e) {
 			logService.error("sync", "Unfollow failed", e);
+		} finally {
+			processingUid = null;
 		}
 	}
 
-	async function handleFollowBack(uid: string) {
+	async function handleFollowBack(user: FollowRecord) {
+		if (processingUid) return;
+		processingUid = user.uid;
+
 		try {
-			const success = await FriendsService.follow(uid);
+			logService.log("sync", "Attempting follow back for:", user.uid);
+			const success = await FriendsService.follow(user.uid, {
+				displayName: user.displayName,
+				photoURL: user.photoURL,
+			});
+			logService.log("sync", "Follow back result:", success);
+
 			if (success) {
-				followingMap[uid] = true;
+				followingMap = { ...followingMap, [user.uid]: true };
+			} else {
+				logService.warn("sync", "Follow back failed even with provided data.");
 			}
 		} catch (e) {
 			logService.error("sync", "Follow back failed", e);
+		} finally {
+			processingUid = null;
 		}
 	}
 </script>
@@ -195,11 +213,16 @@
 							{#if activeTab === "following"}
 								<button
 									class="action-btn unfollow"
+									disabled={processingUid === user.uid}
 									onclick={() => handleUnfollow(user.uid)}
 									title={$_("friends.unfollow")}
 									data-testid="friend-list-unfollow-btn-{user.uid}"
 								>
-									<UserCheck size={18} />
+									{#if processingUid === user.uid}
+										<Loader2 size={16} class="spinner" />
+									{:else}
+										<UserCheck size={18} />
+									{/if}
 								</button>
 							{:else}
 								<!-- Followers tab actions -->
@@ -211,11 +234,16 @@
 								{:else}
 									<button
 										class="action-btn follow-back"
-										onclick={() => handleFollowBack(user.uid)}
+										disabled={processingUid === user.uid}
+										onclick={() => handleFollowBack(user)}
 										title={$_("friends.followBack")}
 										data-testid="friend-list-follow-back-btn-{user.uid}"
 									>
-										<UserPlus size={18} />
+										{#if processingUid === user.uid}
+											<Loader2 size={16} class="spinner" />
+										{:else}
+											<UserPlus size={18} />
+										{/if}
 									</button>
 								{/if}
 							{/if}
