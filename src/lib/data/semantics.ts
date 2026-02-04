@@ -65,3 +65,10 @@ export function getBaseKey(key: string): string | null {
 	}
 	return null;
 }
+
+/**
+ * Отримує групу за базовим ключем.
+ */
+export function getSemanticGroup(baseKey: string): SemanticGroup | null {
+	return semanticHierarchy[baseKey] || null;
+}

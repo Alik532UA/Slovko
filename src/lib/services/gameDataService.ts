@@ -15,6 +15,7 @@ import type {
 	WordKey,
 } from "../types";
 import { DictionarySchema } from "../data/schemas";
+import { getSemanticGroup } from "../data/semantics";
 
 export interface GameData {
 	sourceTranslations: TranslationDictionary;
@@ -35,6 +36,56 @@ export interface PlaylistData {
  * Decouples data loading from game logic.
  */
 export class GameDataService {
+	/**
+	 * Розширює список слів на основі семантичних груп.
+	 * Якщо хоча б в одній мові слова різні — додає специфічні ключі.
+	 */
+	private expandWordList(
+		words: WordKey[],
+		sourceTrans: TranslationDictionary,
+		targetTrans: TranslationDictionary,
+	): WordKey[] {
+		const expanded: WordKey[] = [];
+
+		for (const word of words) {
+			const group = getSemanticGroup(word);
+
+			if (group) {
+				// Перевіряємо, чи розрізняються слова в будь-якій з мов
+				let shouldExpand = false;
+
+				const hasDifference = (dict: TranslationDictionary) => {
+					// Беремо ТІЛЬКИ ті переклади, які є реально у словнику (без fallback)
+					const translations = group.specific
+						.map((k) => dict[k])
+						.filter(Boolean);
+
+					const unique = new Set(translations);
+					return unique.size > 1;
+				};
+
+				if (hasDifference(sourceTrans) || hasDifference(targetTrans)) {
+					shouldExpand = true;
+				}
+
+				if (shouldExpand) {
+					logService.log(
+						"game",
+						`Expanding base word "${word}" into:`,
+						group.specific,
+					);
+					expanded.push(...group.specific);
+				} else {
+					expanded.push(word);
+				}
+			} else {
+				expanded.push(word);
+			}
+		}
+
+		return expanded;
+	}
+
 	/**
 	 * Loads all necessary data (translations, transcriptions, word list) for the current game settings.
 	 */
@@ -163,6 +214,13 @@ export class GameDataService {
 						const phrases = await loadPhrasesLevel(currentLevel);
 						words = phrases.words;
 					}
+
+					// Виконуємо розширення списку слів (Expansion Logic)
+					words = this.expandWordList(
+						words,
+						sourceTranslations,
+						targetTranslations,
+					);
 				}
 			}
 		} catch (e) {
