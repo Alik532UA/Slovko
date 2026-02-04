@@ -65,8 +65,12 @@
 	<div
 		class="modal"
 		onclick={(e) => e.stopPropagation()}
+		onkeydown={(e) => {
+			if (e.key === "Escape") onclose();
+		}}
 		role="dialog"
 		aria-modal="true"
+		tabindex="-1"
 		data-testid="friends-settings-modal"
 	>
 		<div class="modal-header">
@@ -205,7 +209,7 @@
 		color: var(--text-primary);
 	}
 
-	.icon {
+	.modal-header h2 :global(.icon) {
 		color: var(--accent);
 	}
 

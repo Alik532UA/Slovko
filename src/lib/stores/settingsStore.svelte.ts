@@ -9,7 +9,6 @@ import { localStorageProvider } from "../services/storage/storageProvider";
 import { z } from "zod";
 import {
 	ALL_LEVELS,
-	ALL_TOPICS,
 	type Language,
 	type CEFRLevel,
 	type GameMode,

@@ -1,4 +1,3 @@
-import { auth } from "./config";
 import { AuthService } from "./AuthService";
 import { SyncService } from "./SyncService";
 import type { User } from "firebase/auth";

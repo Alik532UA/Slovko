@@ -1,12 +1,4 @@
-import type {
-	ActiveCard,
-	CardStatus,
-	TranslationDictionary,
-	TranscriptionDictionary,
-	WordPair,
-	GameMode,
-	Language,
-} from "../types";
+import type { WordKey, ActiveCard, CardStatus, WordPair, GameMode } from "../types";
 import { shuffle } from "../services/gameCardFactory";
 import type { AppSettings } from "./settingsStore.svelte";
 import type { GameData } from "../services/gameDataService";
@@ -30,8 +22,8 @@ function createGameState() {
 	let isProcessing = $state(false);
 	let isLoading = $state(true);
 	let error = $state<string | null>(null);
-	let currentWords = $state<string[]>([]);
-	let usedWordKeys = $state(new Set<string>());
+	let currentWords = $state<WordKey[]>([]);
+	let usedWordKeys = $state(new Set<WordKey>());
 
 	// Статистика
 	let streak = $state(0);
@@ -190,7 +182,7 @@ function createGameState() {
 			return sourceCards.filter((c) => c.status !== "correct").length;
 		},
 
-		getAvailableWords(needed: number): string[] {
+		getAvailableWords(needed: number): WordKey[] {
 			let available = currentWords.filter((w) => !usedWordKeys.has(w));
 			if (available.length < needed) {
 				usedWordKeys.clear();
@@ -202,7 +194,7 @@ function createGameState() {
 			return available.slice(0, needed);
 		},
 
-		markWordAsUsed(word: string) {
+		markWordAsUsed(word: WordKey) {
 			usedWordKeys.add(word);
 		},
 
@@ -238,7 +230,7 @@ function createGameState() {
 				: data.targetTranscriptions;
 		},
 
-		constructWordPair(wordKey: string, settings: AppSettings): WordPair {
+		constructWordPair(wordKey: WordKey, settings: AppSettings): WordPair {
 			const { sourceLanguage, targetLanguage } = settings;
 			let english = "",
 				ukrainian = "";

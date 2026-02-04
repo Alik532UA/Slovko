@@ -199,7 +199,7 @@
 		color: var(--text-primary);
 	}
 
-	.header-icon {
+	:global(.header-icon) {
 		color: var(--accent);
 	}
 
@@ -336,7 +336,7 @@
 		padding: 2rem 0;
 	}
 
-	.success-icon {
+	:global(.success-icon) {
 		color: #4caf50;
 		margin-bottom: 1.5rem;
 	}

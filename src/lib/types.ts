@@ -43,6 +43,9 @@ export const ALL_LEVELS: CEFRLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 // СТРУКТУРА ДАНИХ СЛІВ
 // ========================================
 
+/** Унікальний ідентифікатор слова (зазвичай англійське слово) */
+export type WordKey = string;
+
 /**
  * Represents a pair of words for the game logic (runtime only).
  * Not used for storage on disk.
@@ -79,14 +82,14 @@ export interface WordTopic {
  * Key: English word (e.g., "apple")
  * Value: Translated text (e.g., "яблуко")
  */
-export type TranslationDictionary = Record<string, string>;
+export type TranslationDictionary = Record<WordKey, string>;
 
 /**
  * Key-Value map for IPA transcriptions.
  * Key: English word (e.g., "apple")
  * Value: IPA string (e.g., "ˈæp.l")
  */
-export type TranscriptionDictionary = Record<string, string>;
+export type TranscriptionDictionary = Record<WordKey, string>;
 
 /**
  * Локальна семантика для мови (semantics.json)

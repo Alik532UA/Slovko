@@ -7,7 +7,7 @@ import prettierConfig from "eslint-config-prettier";
 export default [
 	{
 		// Global ignores
-		ignores: ["build/", ".svelte-kit/", "dist/", "node_modules/", "static/"]
+		ignores: ["build/", ".svelte-kit/", "dist/", "node_modules/", "static/"],
 	},
 	{
 		// Config files and scripts (non-project files)
@@ -15,12 +15,12 @@ export default [
 		languageOptions: {
 			parser: tsParser,
 			parserOptions: {
-				project: null
-			}
+				project: null,
+			},
 		},
 		rules: {
-			"no-undef": "off"
-		}
+			"no-undef": "off",
+		},
 	},
 	{
 		// TS files in src/lib
@@ -28,18 +28,21 @@ export default [
 		languageOptions: {
 			parser: tsParser,
 			parserOptions: {
-				project: "./tsconfig.json"
-			}
+				project: "./tsconfig.json",
+			},
 		},
 		plugins: {
-			"@typescript-eslint": tsPlugin
+			"@typescript-eslint": tsPlugin,
 		},
 		rules: {
 			...tsPlugin.configs.recommended.rules,
 			"@typescript-eslint/no-explicit-any": "warn",
-			"@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
-			"@typescript-eslint/ban-ts-comment": "off" // Allow simple @ts-ignore/@ts-expect-error
-		}
+			"@typescript-eslint/no-unused-vars": [
+				"warn",
+				{ argsIgnorePattern: "^_" },
+			],
+			"@typescript-eslint/ban-ts-comment": "off", // Allow simple @ts-ignore/@ts-expect-error
+		},
 	},
 	{
 		// Svelte files and TS files in routes (less strict parsing)
@@ -49,16 +52,16 @@ export default [
 			parserOptions: {
 				parser: tsParser,
 				project: null, // Don't use project for routes/svelte to avoid "file not in project" errors
-				extraFileExtensions: [".svelte"]
-			}
+				extraFileExtensions: [".svelte"],
+			},
 		},
 		plugins: {
-			svelte: sveltePlugin
+			svelte: sveltePlugin,
 		},
 		rules: {
 			...sveltePlugin.configs.recommended.rules,
-			"svelte/no-at-html-tags": "warn"
-		}
+			"svelte/no-at-html-tags": "warn",
+		},
 	},
-	prettierConfig
+	prettierConfig,
 ];

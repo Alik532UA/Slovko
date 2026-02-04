@@ -12,6 +12,7 @@ import type {
 	TranslationDictionary,
 	TranscriptionDictionary,
 	WordPair,
+	WordKey,
 } from "../types";
 import { DictionarySchema } from "../data/schemas";
 
@@ -20,7 +21,7 @@ export interface GameData {
 	targetTranslations: TranslationDictionary;
 	sourceTranscriptions: TranscriptionDictionary;
 	targetTranscriptions: TranscriptionDictionary;
-	words: string[];
+	words: WordKey[];
 }
 
 export interface PlaylistData {

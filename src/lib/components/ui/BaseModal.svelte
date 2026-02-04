@@ -41,6 +41,9 @@
 		data-testid={testid}
 		transition:scale={{ duration: 300, start: 0.9 }}
 		onclick={(e) => e.stopPropagation()}
+		onkeydown={(e) => {
+			if (e.key === "Escape") onclose();
+		}}
 		role="dialog"
 		aria-modal="true"
 		tabindex="-1"

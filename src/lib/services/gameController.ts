@@ -1,8 +1,5 @@
 import type { gameState as GameStateType } from "../stores/gameState.svelte";
-import {
-	settingsStore,
-	type AppSettings,
-} from "../stores/settingsStore.svelte";
+import { settingsStore } from "../stores/settingsStore.svelte";
 import { playlistStore } from "../stores/playlistStore.svelte";
 import {
 	gameDataService,
@@ -14,7 +11,7 @@ import {
 	gameFeedbackHandler,
 	type GameFeedbackHandler,
 } from "./gameFeedbackHandler";
-import { createCardsFromWordKeys, shuffle } from "./gameCardFactory";
+import { createCardsFromWordKeys } from "./gameCardFactory";
 import type { ActiveCard, CardStatus, WordPair } from "../types";
 
 /**

@@ -38,7 +38,7 @@
 		color: var(--text-primary, #fff);
 	}
 
-	.icon {
+	:global(.icon) {
 		color: var(--wrong-bg, #ff4444);
 	}
 

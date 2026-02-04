@@ -504,7 +504,6 @@
 										if (e.key === "Enter") saveName();
 										if (e.key === "Escape") isEditingName = false;
 									}}
-									autofocus
 								/>
 								<div class="edit-actions">
 									<button
@@ -913,13 +912,6 @@
 			height: 64px;
 			border-radius: 18px;
 		}
-	}
-
-	.avatar.anonymous {
-		color: var(--text-secondary);
-	}
-	.avatar.email-user {
-		color: var(--accent);
 	}
 
 	.user-info h2 {

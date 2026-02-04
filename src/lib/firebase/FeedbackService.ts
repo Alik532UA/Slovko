@@ -1,4 +1,4 @@
-import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { addDoc, serverTimestamp, doc, setDoc } from "firebase/firestore";
 import { db, auth } from "./config";
 import { versionStore } from "../stores/versionStore.svelte";
 import { settingsStore } from "../stores/settingsStore.svelte";

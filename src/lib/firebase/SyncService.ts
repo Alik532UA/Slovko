@@ -10,7 +10,6 @@ import { settingsStore } from "../stores/settingsStore.svelte";
 import { progressStore } from "../stores/progressStore.svelte";
 import { playlistStore } from "../stores/playlistStore.svelte";
 import { logService } from "../services/logService";
-import { notificationStore } from "../stores/notificationStore.svelte";
 
 const COLLECTIONS = {
 	USERS: "users",

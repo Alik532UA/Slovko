@@ -222,10 +222,6 @@
 		transition: all 0.3s ease;
 	}
 
-	.stats-grid.extra-stats {
-		/* margin-top: 1rem; Removed as handled by container */
-	}
-
 	.extra-stats-container {
 		margin-top: 1.5rem;
 		border-top: 1px solid var(--border);

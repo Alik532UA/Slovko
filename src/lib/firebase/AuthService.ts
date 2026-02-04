@@ -1,7 +1,5 @@
 import {
 	signInAnonymously,
-	linkWithPopup,
-	GoogleAuthProvider,
 	signOut as fbSignOut,
 	onAuthStateChanged,
 	type User,
@@ -50,12 +48,7 @@ export const AuthService = {
 	 * Вхід або прив'язка Google-акаунта
 	 */
 	async linkWithGoogle() {
-		const {
-			signInWithPopup,
-			linkWithPopup,
-			GoogleAuthProvider,
-			fetchSignInMethodsForEmail,
-		} = await import("firebase/auth");
+		const { signInWithPopup, linkWithPopup } = await import("firebase/auth");
 
 		try {
 			const user = auth.currentUser;

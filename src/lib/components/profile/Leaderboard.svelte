@@ -381,18 +381,6 @@
 	}
 
 	/* List Styles */
-	.list-header {
-		display: flex;
-		padding: 0 1rem;
-		font-size: 0.75rem;
-		color: var(--text-secondary);
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
-		font-weight: 700;
-		margin-bottom: 0.75rem;
-		opacity: 0.8;
-	}
-
 	.col-rank {
 		width: 44px;
 		display: flex;
@@ -508,16 +496,5 @@
 		font-weight: 800;
 		color: var(--text-primary);
 		font-size: 1rem;
-	}
-
-	.demo-notice {
-		text-align: center;
-		font-size: 0.85rem;
-		color: var(--text-secondary);
-		margin-top: 1.5rem;
-		padding: 1rem;
-		background: rgba(255, 255, 255, 0.02);
-		border-radius: 12px;
-		border: 1px dashed rgba(255, 255, 255, 0.1);
 	}
 </style>

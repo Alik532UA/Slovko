@@ -25,9 +25,9 @@ import {
 const levelCache = new Map<string, WordLevel>();
 const topicCache = new Map<string, WordTopic>();
 const phrasesCache = new Map<string, WordLevel>();
+const transcriptionCache = new Map<string, TranscriptionDictionary>();
 const translationCache = new Map<string, TranslationDictionary>();
 const semanticsCache = new Map<string, LocalSemantics>();
-let transcriptionCache: TranscriptionDictionary | null = null;
 
 /**
  * Завантажити локальну семантику для мови
@@ -315,5 +315,5 @@ export function clearCache(): void {
 	topicCache.clear();
 	translationCache.clear();
 	phrasesCache.clear();
-	transcriptionCache = null;
+	transcriptionCache.clear();
 }
