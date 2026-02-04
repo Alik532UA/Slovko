@@ -6,6 +6,7 @@
 	import { speakText } from "$lib/services/speechService";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { scale, fade } from "svelte/transition";
+	import { PLAYLIST_ICONS_MAP } from "$lib/config/icons";
 
 	interface Props {
 		x: number;
@@ -30,16 +31,17 @@
 	}
 
 	function toggleFav() {
-		if (pair) {
-			playlistStore.toggleFavorite(pair);
-		}
+		playlistStore.toggleFavorite(wordKey);
 		onclose();
 	}
 
 	function toggleExt() {
-		if (pair) {
-			playlistStore.toggleExtra(pair);
-		}
+		playlistStore.toggleExtra(wordKey);
+		onclose();
+	}
+
+	function addToPlaylist(id: string) {
+		playlistStore.addWordToPlaylist(id, wordKey);
 		onclose();
 	}
 
@@ -88,6 +90,23 @@
 				: $_("playlists.addToExtra")}</span
 		>
 	</button>
+
+	{#if playlistStore.customPlaylists.length > 0}
+		<div class="divider"></div>
+		<div class="submenu-label">{$_("playlists.addToPlaylist")}</div>
+		{#each playlistStore.customPlaylists as p (p.id)}
+			{@const Icon = PLAYLIST_ICONS_MAP[p.icon || "Bookmark"] || Bookmark}
+			<button onclick={() => addToPlaylist(p.id)} class="custom-playlist-btn">
+				<span class="icon" style="color: {p.color}">
+					<Icon
+						size={18}
+						fill={p.words.includes(wordKey) ? p.color : "none"}
+					/>
+				</span>
+				<span class="playlist-name">{p.name}</span>
+			</button>
+		{/each}
+	{/if}
 
 	<div class="divider"></div>
 
@@ -154,6 +173,25 @@
 		background: var(--border);
 		margin: 0.25rem 0.5rem;
 		opacity: 0.5;
+	}
+
+	.submenu-label {
+		font-size: 0.75rem;
+		color: var(--text-secondary);
+		padding: 0.5rem 1rem 0.25rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.custom-playlist-btn {
+		padding: 0.5rem 1rem;
+		font-size: 0.9rem;
+	}
+
+	.playlist-name {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	.icon {

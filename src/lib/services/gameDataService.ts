@@ -26,9 +26,10 @@ export interface GameData {
 }
 
 export interface PlaylistData {
-	mistakes: { pair: WordPair }[];
+	mistakes: { pair: WordPair; correctStreak: number }[];
 	favorites: WordPair[];
 	extra: WordPair[];
+	custom: { id: string; name: string; words: (string | any)[] }[];
 }
 
 /**
@@ -151,36 +152,39 @@ export class GameDataService {
 					return null;
 				};
 
-				const playlistPairs =
-					currentPlaylist === "mistakes"
-						? playlists.mistakes.map((m) => m.pair)
-						: currentPlaylist === "favorites"
-							? playlists.favorites
-							: playlists.extra;
+				let playlistWords: (string | any)[] = [];
+				if (currentPlaylist === "mistakes") {
+					playlistWords = playlists.mistakes.map((m) => m.pair.id);
+				} else if (currentPlaylist === "favorites") {
+					playlistWords = playlists.favorites.map((p) => p.id);
+				} else if (currentPlaylist === "extra") {
+					playlistWords = playlists.extra.map((p) => p.id);
+				} else {
+					const customP = playlists.custom.find((p) => p.id === currentPlaylist);
+					if (customP) playlistWords = customP.words;
+				}
 
-				// Filter translations for only the words in the playlist to save memory/state size
-				playlistPairs.forEach((p) => {
-					const srcVal = findInDicts(p.id, sourceAll);
-					const tgtVal = findInDicts(p.id, targetAll);
+				// Process words and populate translations
+				playlistWords.forEach((w) => {
+					if (typeof w === "string") {
+						// Standard word key
+						const srcVal = findInDicts(w, sourceAll);
+						const tgtVal = findInDicts(w, targetAll);
 
-					if (!srcVal) {
-						logService.warn(
-							"game",
-							`Missing source translation for ID: ${p.id} (${sourceLanguage})`,
-						);
+						sourceTranslations[w] = srcVal || w;
+						targetTranslations[w] = tgtVal || w;
+						words.push(w);
+					} else if (w && typeof w === "object") {
+						// Custom word object
+						const id = w.id || `custom-${Date.now()}`;
+						sourceTranslations[id] = w.original;
+						targetTranslations[id] = w.translation;
+						if (w.transcription) {
+							sourceTranscriptions[id] = w.transcription;
+						}
+						words.push(id);
 					}
-					if (!tgtVal) {
-						logService.warn(
-							"game",
-							`Missing target translation for ID: ${p.id} (${targetLanguage})`,
-						);
-					}
-					sourceTranslations[p.id] = srcVal || p.id;
-					targetTranslations[p.id] = tgtVal || p.id;
 				});
-
-				// Set words
-				words = playlistPairs.map((p) => p.id);
 			} else {
 				// Normal modes (levels, topics, phrases)
 				let category: "levels" | "topics" | "phrases" = "levels";

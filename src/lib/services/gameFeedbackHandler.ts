@@ -40,8 +40,8 @@ export class GameFeedbackHandler {
 		progressStore.recordWrong(levelId);
 
 		// Add to mistakes playlist
-		playlistStore.recordMistake(pair1);
-		playlistStore.recordMistake(pair2);
+		playlistStore.recordMistake(pair1.id);
+		playlistStore.recordMistake(pair2.id);
 	}
 }
 

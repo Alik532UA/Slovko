@@ -32,8 +32,15 @@
 		MessageSquare,
 		RotateCcw,
 		Bookmark,
+		Plus,
+		Settings2,
+		Trash2,
+		Upload,
 	} from "lucide-svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
+	import { playlistStore } from "$lib/stores/playlistStore.svelte";
+	import PlaylistModal from "./PlaylistModal.svelte";
+	import { PLAYLIST_ICONS_MAP } from "$lib/config/icons";
 	import {
 		ALL_LEVELS,
 		ALL_TOPICS,
@@ -83,6 +90,83 @@
 
 	// Initialize directly from store (SSoT)
 	let activeTab = $state<GameMode>(settingsStore.value.mode);
+
+	// Playlist management state
+	let showPlaylistModal = $state(false);
+	let editingPlaylistId = $state<PlaylistId | undefined>(undefined);
+
+	function openPlaylistModal(id?: PlaylistId) {
+		editingPlaylistId = id;
+		showPlaylistModal = true;
+	}
+
+	function deletePlaylist(id: PlaylistId, e: MouseEvent) {
+		e.stopPropagation();
+		if (confirm($_("playlists.confirmDelete"))) {
+			playlistStore.deletePlaylist(id);
+		}
+	}
+
+	async function handleImport(e: Event) {
+		const file = (e.target as HTMLInputElement).files?.[0];
+		if (!file) return;
+
+		const text = await file.text();
+		try {
+			if (file.name.endsWith(".json")) {
+				const data = JSON.parse(text);
+				// Basic validation
+				if (data.name && Array.isArray(data.words)) {
+					const p = playlistStore.createPlaylist(
+						data.name,
+						data.description || "",
+						data.color || "#FF5733",
+					);
+					playlistStore.updatePlaylist(p.id, { words: data.words });
+				}
+			} else {
+				// Parse TXT with metadata
+				const lines = text.split("\n");
+				let name = "Imported Playlist";
+				let desc = "";
+				let color = "#FF5733";
+				let words: any[] = [];
+				let parsingWords = false;
+
+				for (let line of lines) {
+					line = line.trim();
+					if (line === "---") {
+						parsingWords = true;
+						continue;
+					}
+					if (!parsingWords) {
+						if (line.startsWith("Name:")) name = line.replace("Name:", "").trim();
+						if (line.startsWith("Description:"))
+							desc = line.replace("Description:", "").trim();
+						if (line.startsWith("Color:"))
+							color = line.replace("Color:", "").trim();
+					} else if (line) {
+						if (line.includes("|")) {
+							const [original, translation] = line.split("|");
+							words.push({
+								id: `custom-${Date.now()}-${Math.random()}`,
+								original,
+								translation,
+							});
+						} else {
+							words.push(line);
+						}
+					}
+				}
+				const p = playlistStore.createPlaylist(name, desc, color);
+				playlistStore.updatePlaylist(p.id, { words });
+			}
+		} catch (err) {
+			console.error("Import failed", err);
+			alert($_("playlists.importError"));
+		}
+		(e.target as HTMLInputElement).value = ""; // Reset input
+	}
 
 	function selectLevel(level: CEFRLevel) {
 		goto(`?mode=levels&level=${level}`);
@@ -212,43 +296,118 @@
 				</div>
 			{:else if activeTab === "playlists"}
 				<div class="grid topics-grid">
-					<!-- Favorites -->
-					<button
-						class="item topic-item"
-						class:selected={settingsStore.value.currentPlaylist === "favorites"}
-						onclick={() => selectPlaylist("favorites")}
-						data-testid="playlist-favorites"
-					>
-						<span class="item-icon"><Heart size={24} /></span>
-						<span class="item-title">{$_("playlists.favorites")}</span>
-					</button>
+					<!-- System Playlists -->
+					{#each [playlistStore.systemPlaylists.favorites, playlistStore.systemPlaylists.mistakes, playlistStore.systemPlaylists.extra] as p (p.id)}
+						{@const Icon = PLAYLIST_ICONS_MAP[p.id === "mistakes" ? "RotateCcw" : (p.id === "favorites" ? "Heart" : "Bookmark")]}
+						<!-- svelte-ignore a11y_click_events_have_key_events -->
+						<!-- svelte-ignore a11y_no_static_element_interactions -->
+						<div
+							class="item topic-item {p.id}"
+							class:selected={settingsStore.value.currentPlaylist === p.id}
+							onclick={() => selectPlaylist(p.id)}
+							data-testid="playlist-{p.id}"
+						>
+							<span class="item-icon">
+								{#if Icon}<Icon size={24} />{/if}
+							</span>
+							<div class="item-info">
+								<span class="item-title">{$_(p.name)}</span>
+								<span class="word-count"
+									>{$_("playlists.wordsCount", {
+										values: { count: p.words.length },
+									})}</span
+								>
+							</div>
+							<div class="actions">
+								<button
+									class="action-btn"
+									onclick={(e) => {
+										e.stopPropagation();
+										openPlaylistModal(p.id);
+									}}
+									title={$_("common.edit")}
+								>
+									<Settings2 size={18} />
+								</button>
+							</div>
+						</div>
+					{/each}
 
-					<!-- Mistakes -->
-					<button
-						class="item topic-item"
-						class:selected={settingsStore.value.currentPlaylist === "mistakes"}
-						onclick={() => selectPlaylist("mistakes")}
-						data-testid="playlist-mistakes"
-					>
-						<span class="item-icon"><RotateCcw size={24} /></span>
-						<span class="item-title">{$_("playlists.mistakes")}</span>
-					</button>
+					<!-- Custom Playlists -->
+					{#each playlistStore.customPlaylists as p (p.id)}
+						{@const Icon = PLAYLIST_ICONS_MAP[p.icon || "Bookmark"] || Bookmark}
+						<!-- svelte-ignore a11y_click_events_have_key_events -->
+						<!-- svelte-ignore a11y_no_static_element_interactions -->
+						<div
+							class="item topic-item custom-playlist"
+							style="border-color: {p.color}"
+							class:selected={settingsStore.value.currentPlaylist === p.id}
+							onclick={() => selectPlaylist(p.id)}
+							data-testid="playlist-custom-{p.id}"
+						>
+							<span class="item-icon" style="color: {p.color}">
+								<Icon size={24} />
+							</span>
+							<div class="item-info">
+								<span class="item-title">{p.name}</span>
+								<span class="word-count"
+									>{$_("playlists.wordsCount", {
+										values: { count: p.words.length },
+									})}</span
+								>
+							</div>
+							<div class="actions">
+								<button
+									class="action-btn"
+									onclick={(e) => {
+										e.stopPropagation();
+										openPlaylistModal(p.id);
+									}}
+								>
+									<Settings2 size={18} />
+								</button>
+								<button
+									class="action-btn danger"
+									onclick={(e) => deletePlaylist(p.id, e)}
+								>
+									<Trash2 size={18} />
+								</button>
+							</div>
+						</div>
+					{/each}
 
-					<!-- Extra -->
-					<button
-						class="item topic-item"
-						class:selected={settingsStore.value.currentPlaylist === "extra"}
-						onclick={() => selectPlaylist("extra")}
-						data-testid="playlist-extra"
-					>
-						<span class="item-icon"><Bookmark size={24} /></span>
-						<span class="item-title">{$_("playlists.extra")}</span>
-					</button>
+					<!-- Create New & Import -->
+					<div class="playlist-controls">
+						<!-- svelte-ignore a11y_click_events_have_key_events -->
+						<!-- svelte-ignore a11y_no_static_element_interactions -->
+						<div class="item topic-item add-playlist" onclick={() => openPlaylistModal()}>
+							<Plus size={24} />
+							<span>{$_("playlists.createNew")}</span>
+						</div>
+
+						<label class="item topic-item import-playlist">
+							<Upload size={24} />
+							<span>{$_("playlists.import")}</span>
+							<input
+								type="file"
+								accept=".json,.txt"
+								onchange={handleImport}
+								class="sr-only"
+							/>
+						</label>
+					</div>
 				</div>
 			{/if}
 		</div>
 	</div>
 </div>
+
+{#if showPlaylistModal}
+	<PlaylistModal
+		playlistId={editingPlaylistId}
+		onclose={() => (showPlaylistModal = false)}
+	/>
+{/if}
 
 <style>
 	.modal-backdrop {
@@ -383,6 +542,16 @@
 		box-shadow: 0 0 0 2px var(--selected-border); /* Highlight selected */
 	}
 
+	.item.favorites {
+		border-color: var(--playlist-favorites-border);
+	}
+	.item.mistakes {
+		border-color: var(--playlist-mistakes-border);
+	}
+	.item.extra {
+		border-color: var(--playlist-extra-border);
+	}
+
 	.item-title {
 		font-size: 1.25rem;
 		font-weight: 600;
@@ -417,5 +586,56 @@
 		flex: 1; /* Allow text to take remaining space */
 		word-break: break-word; /* Wrap long words */
 		overflow-wrap: break-word;
+	}
+
+	.item-info {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+	}
+
+	.word-count {
+		font-size: 0.7rem;
+		color: var(--text-secondary);
+		font-weight: 400;
+	}
+
+	.actions {
+		display: flex;
+		gap: 0.25rem;
+	}
+
+	.action-btn {
+		padding: 0.4rem;
+		border-radius: 8px;
+		color: var(--text-secondary);
+		transition: all 0.2s;
+	}
+
+	.action-btn:hover {
+		background: rgba(255, 255, 255, 0.1);
+		color: var(--text-primary);
+	}
+
+	.action-btn.danger:hover {
+		color: var(--toast-error);
+	}
+
+	.playlist-controls {
+		display: contents; /* Keep grid structure */
+	}
+
+	.add-playlist,
+	.import-playlist {
+		border-style: dashed;
+		opacity: 0.8;
+		background: transparent;
+	}
+
+	.add-playlist:hover,
+	.import-playlist:hover {
+		opacity: 1;
+		border-color: var(--accent);
+		color: var(--accent);
 	}
 </style>

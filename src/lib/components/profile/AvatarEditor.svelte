@@ -17,6 +17,7 @@
 		Target,
 	} from "lucide-svelte";
 	import { logService } from "../../services/logService";
+	import { THEME_COLORS } from "../../config/colors";
 
 	interface Props {
 		initialIcon: string;
@@ -53,22 +54,6 @@
 		{ id: "target", component: Target },
 	];
 
-	const AVATAR_COLORS = [
-		"transparent",
-		"#FF5733",
-		"#33FF57",
-		"#3357FF",
-		"#F39C12",
-		"#9B59B6",
-		"#E74C3C",
-		"#2ECC71",
-		"#3498DB",
-		"#34495E",
-		"#F1C40F",
-		"#E67E22",
-		"#D35400",
-	];
-
 	function handleSave() {
 		logService.log("profile", "saveAvatar:", {
 			selectedIcon,
@@ -99,7 +84,7 @@
 		</div>
 
 		<div class="color-picker-grid" data-testid="color-picker-grid">
-			{#each AVATAR_COLORS as color (color)}
+			{#each THEME_COLORS as color (color)}
 				<button
 					class="color-btn"
 					style="background-color: {color === 'transparent'

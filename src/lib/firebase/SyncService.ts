@@ -234,9 +234,9 @@ export const SyncService = {
 				settings: localSettings,
 				progress: localProgress,
 				playlists: {
-					favorites: playlistStore.favorites,
-					extra: playlistStore.extra,
-					mistakes: playlistStore.mistakes,
+					customPlaylists: playlistStore.customPlaylists,
+					systemPlaylists: playlistStore.systemPlaylists,
+					mistakeMetadata: (playlistStore as any).mistakeMetadata || {}
 				},
 				lastSync: Date.now(),
 			};
@@ -452,19 +452,19 @@ export const SyncService = {
 			},
 
 			playlists: {
-				favorites: this.mergeArrays(
-					local.playlists.favorites,
-					cloud.playlists?.favorites || [],
+				customPlaylists: this.mergeArrays(
+					local.playlists.customPlaylists || [],
+					cloud.playlists?.customPlaylists || []
 				),
-				extra: this.mergeArrays(
-					local.playlists.extra,
-					cloud.playlists?.extra || [],
-				),
-				mistakes: this.mergeArrays(
-					local.playlists.mistakes,
-					cloud.playlists?.mistakes || [],
-					"pair.id",
-				),
+				systemPlaylists: {
+					favorites: this.mergePlaylist(local.playlists.systemPlaylists?.favorites, cloud.playlists?.systemPlaylists?.favorites),
+					extra: this.mergePlaylist(local.playlists.systemPlaylists?.extra, cloud.playlists?.systemPlaylists?.extra),
+					mistakes: this.mergePlaylist(local.playlists.systemPlaylists?.mistakes, cloud.playlists?.systemPlaylists?.mistakes),
+				},
+				mistakeMetadata: {
+					...(cloud.playlists?.mistakeMetadata || {}),
+					...(local.playlists.mistakeMetadata || {})
+				}
 			},
 
 			avatar: local.avatar || cloud.avatar || null,
@@ -509,6 +509,16 @@ export const SyncService = {
 		cloud.forEach((item) => map.set(getID(item), item));
 		local.forEach((item) => map.set(getID(item), item)); // Локальні дані мають пріоритет при конфлікті версій
 		return Array.from(map.values());
+	},
+
+	mergePlaylist(local: any, cloud: any) {
+		if (!local) return cloud;
+		if (!cloud) return local;
+		return {
+			...cloud,
+			...local,
+			words: this.mergeArrays(local.words || [], cloud.words || [], typeof (local.words?.[0]) === 'string' ? '' : 'id')
+		};
 	},
 
 	/**

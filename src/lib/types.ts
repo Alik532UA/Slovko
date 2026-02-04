@@ -111,7 +111,38 @@ export interface LocalSemantics {
  */
 export type GameMode = "levels" | "topics" | "phrases" | "playlists";
 
-export type PlaylistId = "favorites" | "mistakes" | "extra";
+// ========================================
+// ПЛЕЙЛИСТИ
+// ========================================
+
+/** Системні плейлисти */
+export type SystemPlaylistId = "favorites" | "mistakes" | "extra";
+
+/** Ідентифікатор плейлиста (системний або UUID) */
+export type PlaylistId = SystemPlaylistId | string;
+
+/** Кастомне слово, створене користувачем */
+export interface CustomWord {
+	id: string;
+	original: string;
+	translation: string;
+	transcription?: string;
+}
+
+/**
+ * Структура плейлиста.
+ * Може містити як ключі існуючих слів, так і повністю кастомні слова.
+ */
+export interface Playlist {
+	id: PlaylistId;
+	name: string;
+	description?: string;
+	color?: string; // HEX колір обводки
+	icon?: string; // Назва іконки Lucide
+	isSystem: boolean;
+	words: (WordKey | CustomWord)[];
+	createdAt: number;
+}
 
 /**
  * Card visual states:

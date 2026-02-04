@@ -9,6 +9,7 @@
 	import { _ } from "svelte-i18n";
 	import { ALL_LEVELS, ALL_TOPICS } from "$lib/types";
 	import LevelTopicModal from "./LevelTopicModal.svelte";
+	import { playlistStore } from "$lib/stores/playlistStore.svelte";
 
 	let showModal = $state(false);
 
@@ -25,7 +26,11 @@
 			// Phrases use levels too (A1, A2...)
 			// Optional: add prefix like "Phrases: A1"? User didn't request it.
 			return $_(`levels.${currentLevel}`);
-		} else if (mode === "playlists") {
+		} else if (mode === "playlists" && currentPlaylist) {
+			const p = playlistStore.getPlaylist(currentPlaylist);
+			if (p) {
+				return p.isSystem ? $_(p.name) : p.name;
+			}
 			return $_(`playlists.${currentPlaylist}`);
 		}
 		return "";

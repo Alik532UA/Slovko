@@ -53,7 +53,7 @@
 		}
 	</script>
 	
-	<BaseModal {onclose} testid="word-report-modal">
+	<BaseModal {onclose} testid="word-report-modal" maxWidth="480px">
 		<div class="content">
 			{#if isSuccess}
 				<div class="success-state" transition:fade>
@@ -148,7 +148,7 @@
 			gap: 0.75rem;
 		}
 	
-		.title-icon {
+		:global(.title-icon) {
 			color: var(--accent);
 			filter: drop-shadow(0 0 8px rgba(58, 143, 214, 0.4));
 		}

@@ -44,24 +44,56 @@ export class GameController {
 
 			// Якщо даних немає, завантажуємо їх (fallback)
 			if (!data) {
+				const playlistsData = {
+					favorites: playlistStore.systemPlaylists.favorites.words.map(w => {
+						const id = typeof w === "string" ? w : w.id;
+						return { id, source: id, target: id };
+					}),
+					extra: playlistStore.systemPlaylists.extra.words.map(w => {
+						const id = typeof w === "string" ? w : w.id;
+						return { id, source: id, target: id };
+					}),
+					mistakes: playlistStore.systemPlaylists.mistakes.words.map(w => { 
+						const id = typeof w === "string" ? w : w.id;
+						return { 
+							pair: { id, source: id, target: id },
+							correctStreak: (playlistStore as any).mistakeMetadata?.[id] || 0
+						};
+					}),
+					custom: playlistStore.customPlaylists.map(p => ({ id: p.id, name: p.name, words: p.words }))
+				};
 				data = await this.dataService.loadGameData(
 					settingsStore.value,
-					playlistStore,
+					playlistsData,
 				);
 			} else {
-				// FIX: Check for missing EN transcriptions (common issue on first load)
-				// If source is EN but dict is empty, force reload.
+				// ... (similar update for the force reload block)
 				const { sourceLanguage } = settingsStore.value;
 				if (
 					sourceLanguage === "en" &&
 					Object.keys(data.sourceTranscriptions).length === 0
 				) {
-					console.warn(
-						"[GameController] Missing EN transcriptions on init. Force reloading data...",
-					);
+					const playlistsData = {
+						favorites: playlistStore.systemPlaylists.favorites.words.map(w => {
+							const id = typeof w === "string" ? w : w.id;
+							return { id, source: id, target: id };
+						}),
+						extra: playlistStore.systemPlaylists.extra.words.map(w => {
+							const id = typeof w === "string" ? w : w.id;
+							return { id, source: id, target: id };
+						}),
+						mistakes: playlistStore.systemPlaylists.mistakes.words.map(w => { 
+							const id = typeof w === "string" ? w : w.id;
+							return { 
+								pair: { id, source: id, target: id },
+								correctStreak: (playlistStore as any).mistakeMetadata?.[id] || 0
+							};
+						}),
+						custom: playlistStore.customPlaylists.map(p => ({ id: p.id, name: p.name, words: p.words }))
+					};
 					data = await this.dataService.loadGameData(
 						settingsStore.value,
-						playlistStore,
+						playlistsData,
 					);
 				}
 			}

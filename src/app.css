@@ -34,6 +34,11 @@
 	--toast-success: #22c55e;
 	--toast-warning: #f59e0b;
 	--toast-error: #ef4444;
+
+	/* Playlist border colors */
+	--playlist-favorites-border: #2ecc71;
+	--playlist-mistakes-border: #e74c3c;
+	--playlist-extra-border: #3a8fd6;
 }
 
 /* Light Gray */

@@ -12,7 +12,7 @@ const UrlParamsSchema = z.object({
 	mode: z.enum(["levels", "topics", "phrases", "playlists"]).optional(),
 	level: z.enum(["A1", "A2", "B1", "B2", "C1", "C2"]).optional(),
 	topic: z.string().optional(),
-	playlist: z.enum(["favorites", "mistakes", "extra"]).optional(),
+	playlist: z.string().optional(),
 	source: z.enum(["en", "uk", "nl", "de", "el", "crh"]).optional(),
 	target: z.enum(["en", "uk", "nl", "de", "el", "crh"]).optional(),
 });
@@ -114,9 +114,26 @@ export const load: PageLoad = async ({ url }) => {
 
 	// Отримуємо snapshot плейлістів
 	const playlists = {
-		favorites: playlistStore.favorites,
-		extra: playlistStore.extra,
-		mistakes: playlistStore.mistakes,
+		favorites: playlistStore.systemPlaylists.favorites.words.map((w) => {
+			const id = typeof w === "string" ? w : w.id;
+			return { id, source: id, target: id };
+		}),
+		extra: playlistStore.systemPlaylists.extra.words.map((w) => {
+			const id = typeof w === "string" ? w : w.id;
+			return { id, source: id, target: id };
+		}),
+		mistakes: playlistStore.systemPlaylists.mistakes.words.map((w) => {
+			const id = typeof w === "string" ? w : w.id;
+			return {
+				pair: { id, source: id, target: id },
+				correctStreak: (playlistStore as any).mistakeMetadata?.[id] || 0,
+			};
+		}),
+		custom: playlistStore.customPlaylists.map((p) => ({
+			id: p.id,
+			name: p.name,
+			words: p.words,
+		})),
 	};
 
 	try {

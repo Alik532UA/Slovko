@@ -1,12 +1,13 @@
 /**
- * Playlist Store — Stores user collections (Favorites, Mistakes, Extra)
+ * Playlist Store — Stores user collections (Favorites, Mistakes, Extra + Custom)
  * Persisted to localStorage
  */
 import { browser } from "$app/environment";
 import { SyncService } from "../firebase/SyncService";
-import type { WordPair } from "../types";
+import type { WordPair, Playlist, PlaylistId, CustomWord, WordKey } from "../types";
 
-const STORAGE_KEY = "wordApp_playlists";
+const STORAGE_KEY = "wordApp_playlists_v2"; // Increment version for new structure
+const LEGACY_STORAGE_KEY = "wordApp_playlists";
 const MISTAKE_REMOVAL_THRESHOLD = 3;
 
 export interface MistakeEntry {
@@ -15,15 +16,47 @@ export interface MistakeEntry {
 }
 
 export interface PlaylistState {
-	favorites: WordPair[];
-	extra: WordPair[];
-	mistakes: MistakeEntry[];
+	customPlaylists: Playlist[];
+	systemPlaylists: {
+		favorites: Playlist;
+		mistakes: Playlist;
+		extra: Playlist;
+	};
+	/** Metadata for mistakes like streaks */
+	mistakeMetadata: Record<string, number>; 
 }
 
+const DEFAULT_SYSTEM_PLAYLISTS = {
+	favorites: {
+		id: "favorites",
+		name: "playlists.favorites",
+		isSystem: true,
+		words: [],
+		createdAt: Date.now(),
+		color: "#2ecc71"
+	},
+	mistakes: {
+		id: "mistakes",
+		name: "playlists.mistakes",
+		isSystem: true,
+		words: [],
+		createdAt: Date.now(),
+		color: "#e74c3c"
+	},
+	extra: {
+		id: "extra",
+		name: "playlists.extra",
+		isSystem: true,
+		words: [],
+		createdAt: Date.now(),
+		color: "#3a8fd6"
+	}
+};
+
 const DEFAULT_STATE: PlaylistState = {
-	favorites: [],
-	extra: [],
-	mistakes: [],
+	customPlaylists: [],
+	systemPlaylists: { ...DEFAULT_SYSTEM_PLAYLISTS },
+	mistakeMetadata: {}
 };
 
 function createPlaylistStore() {
@@ -32,14 +65,41 @@ function createPlaylistStore() {
 	function loadState(): PlaylistState {
 		if (!browser) return DEFAULT_STATE;
 		try {
+			// Try new structure first
 			const stored = localStorage.getItem(STORAGE_KEY);
 			if (stored) {
 				return { ...DEFAULT_STATE, ...JSON.parse(stored) };
+			}
+
+			// Fallback to legacy and migrate
+			const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
+			if (legacy) {
+				const oldData = JSON.parse(legacy);
+				return migrateFromLegacy(oldData);
 			}
 		} catch (e) {
 			console.error("Failed to load playlists", e);
 		}
 		return DEFAULT_STATE;
+	}
+
+	function migrateFromLegacy(oldData: any): PlaylistState {
+		const newState = { ...DEFAULT_STATE };
+		
+		if (Array.isArray(oldData.favorites)) {
+			newState.systemPlaylists.favorites.words = oldData.favorites.map((p: any) => p.id);
+		}
+		if (Array.isArray(oldData.extra)) {
+			newState.systemPlaylists.extra.words = oldData.extra.map((p: any) => p.id);
+		}
+		if (Array.isArray(oldData.mistakes)) {
+			newState.systemPlaylists.mistakes.words = oldData.mistakes.map((m: any) => m.pair.id);
+			oldData.mistakes.forEach((m: any) => {
+				newState.mistakeMetadata[m.pair.id] = m.correctStreak;
+			});
+		}
+		
+		return newState;
 	}
 
 	function saveState() {
@@ -50,17 +110,18 @@ function createPlaylistStore() {
 	}
 
 	return {
-		get favorites() {
-			return state.favorites;
-		},
-		get extra() {
-			return state.extra;
-		},
-		get mistakes() {
-			return state.mistakes;
+		get customPlaylists() { return state.customPlaylists; },
+		get systemPlaylists() { return state.systemPlaylists; },
+		get allPlaylists() { 
+			return [
+				state.systemPlaylists.favorites,
+				state.systemPlaylists.mistakes,
+				state.systemPlaylists.extra,
+				...state.customPlaylists
+			];
 		},
 
-		/** Internal set for SyncService to avoid infinite loops */
+		/** Internal set for SyncService */
 		_internalSet(newData: PlaylistState) {
 			state = newData;
 			if (browser) {
@@ -68,103 +129,125 @@ function createPlaylistStore() {
 			}
 		},
 
-		// Favorites
-		addToFavorites(pair: WordPair) {
-			if (!state.favorites.some((p) => p.id === pair.id)) {
-				state = { ...state, favorites: [...state.favorites, pair] };
-				saveState();
-			}
-		},
-		removeFromFavorites(pairId: string) {
-			state = {
-				...state,
-				favorites: state.favorites.filter((p) => p.id !== pairId),
+		// CRUD for Custom Playlists
+		createPlaylist(name: string, description: string = "", color: string = "#FF5733", icon: string = "Bookmark") {
+			const newPlaylist: Playlist = {
+				id: crypto.randomUUID(),
+				name,
+				description,
+				color,
+				icon,
+				isSystem: false,
+				words: [],
+				createdAt: Date.now()
 			};
+			state.customPlaylists = [...state.customPlaylists, newPlaylist];
 			saveState();
-		},
-		toggleFavorite(pair: WordPair) {
-			if (state.favorites.some((p) => p.id === pair.id)) {
-				this.removeFromFavorites(pair.id);
-			} else {
-				this.addToFavorites(pair);
-			}
-		},
-		isFavorite(pairId: string) {
-			return state.favorites.some((p) => p.id === pairId);
+			return newPlaylist;
 		},
 
-		// Extra
-		addToExtra(pair: WordPair) {
-			if (!state.extra.some((p) => p.id === pair.id)) {
-				state = { ...state, extra: [...state.extra, pair] };
-				saveState();
-			}
-		},
-		removeFromExtra(pairId: string) {
-			state = { ...state, extra: state.extra.filter((p) => p.id !== pairId) };
-			saveState();
-		},
-		toggleExtra(pair: WordPair) {
-			if (state.extra.some((p) => p.id === pair.id)) {
-				this.removeFromExtra(pair.id);
+		updatePlaylist(id: PlaylistId, data: Partial<Playlist>) {
+			if (id === "favorites" || id === "mistakes" || id === "extra") {
+				// Only allow updating words/metadata for system playlists
+				const key = id as keyof typeof state.systemPlaylists;
+				state.systemPlaylists[key] = { ...state.systemPlaylists[key], ...data, isSystem: true, id };
 			} else {
-				this.addToExtra(pair);
-			}
-		},
-		isExtra(pairId: string) {
-			return state.extra.some((p) => p.id === pairId);
-		},
-
-		// Mistakes
-		// Called when user makes a mistake
-		recordMistake(pair: WordPair) {
-			// Check if already in mistakes
-			const existingIdx = state.mistakes.findIndex(
-				(m) => m.pair.id === pair.id,
-			);
-			if (existingIdx >= 0) {
-				// Reset streak? Or just keep it? Usually mistake resets streak.
-				const newMistakes = [...state.mistakes];
-				newMistakes[existingIdx].correctStreak = 0;
-				state = { ...state, mistakes: newMistakes };
-			} else {
-				// Add new
-				state = {
-					...state,
-					mistakes: [...state.mistakes, { pair, correctStreak: 0 }],
-				};
+				state.customPlaylists = state.customPlaylists.map(p => 
+					p.id === id ? { ...p, ...data, isSystem: false, id } : p
+				);
 			}
 			saveState();
 		},
 
-		// Called when user answers correctly
-		// Only affects if pair is in mistakes list
-		recordCorrect(pairId: string) {
-			const existingIdx = state.mistakes.findIndex((m) => m.pair.id === pairId);
-			if (existingIdx >= 0) {
-				const newMistakes = [...state.mistakes];
-				newMistakes[existingIdx].correctStreak += 1;
+		deletePlaylist(id: PlaylistId) {
+			if (id === "favorites" || id === "mistakes" || id === "extra") return;
+			state.customPlaylists = state.customPlaylists.filter(p => p.id !== id);
+			saveState();
+		},
 
-				// Check threshold
-				if (
-					newMistakes[existingIdx].correctStreak >= MISTAKE_REMOVAL_THRESHOLD
-				) {
-					// Remove
-					newMistakes.splice(existingIdx, 1);
+		addWordToPlaylist(playlistId: PlaylistId, word: WordKey | CustomWord) {
+			const playlist = this.getPlaylist(playlistId);
+			if (!playlist) return;
+
+			const wordId = typeof word === "string" ? word : word.id;
+			if (playlist.words.some(w => (typeof w === "string" ? w : w.id) === wordId)) return;
+
+			const updatedWords = [...playlist.words, word];
+			this.updatePlaylist(playlistId, { words: updatedWords });
+		},
+
+		removeWordFromPlaylist(playlistId: PlaylistId, wordId: string) {
+			const playlist = this.getPlaylist(playlistId);
+			if (!playlist) return;
+
+			const updatedWords = playlist.words.filter(w => (typeof w === "string" ? w : w.id) !== wordId);
+			this.updatePlaylist(playlistId, { words: updatedWords });
+		},
+
+		getPlaylist(id: PlaylistId): Playlist | undefined {
+			if (id === "favorites") return state.systemPlaylists.favorites;
+			if (id === "mistakes") return state.systemPlaylists.mistakes;
+			if (id === "extra") return state.systemPlaylists.extra;
+			return state.customPlaylists.find(p => p.id === id);
+		},
+
+		// System specific helpers (Legacy compatibility)
+		toggleFavorite(wordKey: WordKey) {
+			const isFav = state.systemPlaylists.favorites.words.includes(wordKey);
+			if (isFav) {
+				this.removeWordFromPlaylist("favorites", wordKey);
+			} else {
+				this.addWordToPlaylist("favorites", wordKey);
+			}
+		},
+
+		isFavorite(wordKey: WordKey) {
+			return state.systemPlaylists.favorites.words.includes(wordKey);
+		},
+
+		toggleExtra(wordKey: WordKey) {
+			const isExtra = state.systemPlaylists.extra.words.includes(wordKey);
+			if (isExtra) {
+				this.removeWordFromPlaylist("extra", wordKey);
+			} else {
+				this.addWordToPlaylist("extra", wordKey);
+			}
+		},
+
+		isExtra(wordKey: WordKey) {
+			return state.systemPlaylists.extra.words.includes(wordKey);
+		},
+
+		// Mistakes logic
+		recordMistake(wordKey: WordKey) {
+			if (!state.systemPlaylists.mistakes.words.includes(wordKey)) {
+				this.addWordToPlaylist("mistakes", wordKey);
+			}
+			state.mistakeMetadata[wordKey] = 0;
+			saveState();
+		},
+
+		recordCorrect(wordKey: WordKey) {
+			if (state.systemPlaylists.mistakes.words.includes(wordKey)) {
+				const currentStreak = (state.mistakeMetadata[wordKey] || 0) + 1;
+				if (currentStreak >= MISTAKE_REMOVAL_THRESHOLD) {
+					this.removeWordFromPlaylist("mistakes", wordKey);
+					delete state.mistakeMetadata[wordKey];
+				} else {
+					state.mistakeMetadata[wordKey] = currentStreak;
 				}
-
-				state = { ...state, mistakes: newMistakes };
 				saveState();
-				return true; // Was in mistakes
+				return true;
 			}
 			return false;
 		},
 
 		/** Скинути плейлісти (тільки локально) */
 		reset() {
-			state = { ...DEFAULT_STATE };
+			state = { ...DEFAULT_STATE, systemPlaylists: { ...DEFAULT_SYSTEM_PLAYLISTS } };
 			if (browser) {
-				localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+				localStorage.removeItem(STORAGE_KEY);
+				localStorage.removeItem(LEGACY_STORAGE_KEY);
 			}
 		},
 	};

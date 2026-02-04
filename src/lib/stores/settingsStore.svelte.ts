@@ -29,10 +29,7 @@ export const AppSettingsSchema = z.object({
 	mode: z.enum(["levels", "topics", "phrases", "playlists"]).default("levels"),
 	currentLevel: z.enum(["A1", "A2", "B1", "B2", "C1", "C2"]).default("A1"),
 	currentTopic: z.string().default("basic_verbs"),
-	currentPlaylist: z
-		.enum(["favorites", "mistakes", "extra"])
-		.nullable()
-		.default(null),
+	currentPlaylist: z.string().nullable().default(null),
 	hasCompletedOnboarding: z.boolean().default(false),
 	enablePronunciationSource: z.boolean().default(true),
 	enablePronunciationTarget: z.boolean().default(false),
