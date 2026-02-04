@@ -1,6 +1,6 @@
 node_modules
-# .private
-.private\notes.txt
+.private
+.private/notes.txt
 .agent/rules
 
 # Output
