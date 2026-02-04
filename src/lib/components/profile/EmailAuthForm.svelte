@@ -1,6 +1,7 @@
 <script lang="ts">
     import { _ } from "svelte-i18n";
     import { ArrowLeft, Mail } from "lucide-svelte";
+    import { fade } from "svelte/transition";
 
     interface Props {
         mode: "auth" | "forgot-password";
@@ -130,6 +131,17 @@
 
             {#if errorMessage}
                 <p class="error-msg">{errorMessage}</p>
+            {/if}
+
+            {#if isLoading}
+                <div class="loading-hint" transition:fade>
+                    <div class="spinner-small"></div>
+                    <p>
+                        {$_("profile.waitingForGoogle", { 
+                            default: "Очікуємо відповіді від Google... Якщо ви закрили вікно, зачекайте кілька секунд для розблокування." 
+                        })}
+                    </p>
+                </div>
             {/if}
 
             <div class="actions-stack">
@@ -353,6 +365,39 @@
         font-size: 0.85rem;
         text-align: center;
         margin: 0;
+    }
+
+    .loading-hint {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        margin: 0.5rem 0;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .loading-hint p {
+        margin: 0;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        text-align: center;
+        line-height: 1.4;
+    }
+
+    .spinner-small {
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
     }
 
     .success-msg {

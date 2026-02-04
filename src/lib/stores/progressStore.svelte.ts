@@ -219,10 +219,12 @@ function createProgressStore() {
             return w ? w.correctCount >= 3 : false;
         },
 
-        /** Скинути прогрес */
+        /** Скинути прогрес (тільки локально) */
         reset(): void {
-            progress = { ...DEFAULT_PROGRESS };
-            saveProgress();
+            progress = { ...DEFAULT_PROGRESS, firstSeenDate: Date.now() };
+            if (browser) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+            }
         }
     };
 }

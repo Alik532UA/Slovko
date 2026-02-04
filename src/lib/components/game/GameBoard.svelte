@@ -120,8 +120,8 @@
                             >
                                 <WordCard
                                     {card}
-                                    showTranscription={settingsStore.value.showTranscriptionSource}
-                                    enablePronunciation={settingsStore.value.enablePronunciationSource}
+                                    showTranscription={settingsStore.value.showTranscriptionTarget}
+                                    enablePronunciation={settingsStore.value.enablePronunciationTarget}
                                     onclick={() => gameController.selectCard(card)}
                                     onlongpress={(e) =>
                                         handleLongPress(e, card)}

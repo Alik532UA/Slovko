@@ -137,7 +137,11 @@
             "weakPassword": "Пароль занадто слабкий (мін. 6 символів)",
             "emailInUse": "Цей email вже використовується",
             "enterPassword": "Введіть пароль",
-            "invalidCredentials": "Невірний email або пароль"
+            "invalidCredentials": "Невірний email або пароль.",
+            "accountUsesGoogle": "Цей акаунт використовує вхід через Google. Будь ласка, скористайтеся кнопкою Google.",
+            "popupClosed": "Вікно авторизації було закрите. Спробуйте ще раз.",
+            "accountExistsEmail": "Акаунт з цією поштою вже існує. Увійдіть через Email, а потім зможете прив'язати Google у налаштуваннях.",
+            "googleAlreadyLinked": "Цей Google-акаунт вже прив'язаний до іншого користувача Slovko."
         },
         "changePasswordTitle": "Змінити пароль",
         "changePasswordHint": "Функція в розробці",

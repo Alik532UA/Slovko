@@ -14,6 +14,7 @@ interface AuthState {
     photoURL: string | null;
     isAnonymous: boolean;
     isGuest: boolean;
+    providerId: string | null;
 }
 
 /**
@@ -28,7 +29,8 @@ function serializeUser(user: User | null): AuthState {
             displayName: null,
             photoURL: null,
             isAnonymous: false,
-            isGuest: true
+            isGuest: true,
+            providerId: null
         };
     }
     return {
@@ -37,7 +39,8 @@ function serializeUser(user: User | null): AuthState {
         displayName: user.displayName,
         photoURL: user.photoURL,
         isAnonymous: user.isAnonymous,
-        isGuest: false
+        isGuest: false,
+        providerId: user.providerData[0]?.providerId || null
     };
 }
 
@@ -108,8 +111,6 @@ function createAuthStore() {
             if (result) {
                 console.log('[AuthStore] loginWithGoogle success, updating state');
                 updateState(result);
-                // Примусова синхронізація локальних даних у новий акаунт
-                await SyncService.performUpload();
             }
             return result;
         },
@@ -122,8 +123,6 @@ function createAuthStore() {
             if (result) {
                 console.log('[AuthStore] registerWithEmail success, updating state');
                 updateState(result);
-                // Примусова синхронізація
-                await SyncService.performUpload();
             }
             return result;
         },
@@ -135,9 +134,6 @@ function createAuthStore() {
             const result = await AuthService.signInWithEmail(email, password);
             if (result) {
                 updateState(result);
-                // Після входу в існуючий акаунт, SyncService завантажить дані через onSnapshot.
-                // Ми можемо викликати performUpload якщо хочемо об'єднати локальні дані з хмарними.
-                await SyncService.performUpload();
             }
             return result;
         },
@@ -175,10 +171,12 @@ function createAuthStore() {
         },
 
         async logout() {
+            console.log('[AuthStore] Logging out...');
+            SyncService.stop();
+            SyncService.resetLocalData();
             // @ts-ignore
             await AuthService.logout();
             updateState(null);
-            SyncService.resetLocalData();
         }
     };
 }

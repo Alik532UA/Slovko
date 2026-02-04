@@ -144,10 +144,12 @@ function createPlaylistStore() {
             return false;
         },
 
-        /** Скинути плейлісти */
+        /** Скинути плейлісти (тільки локально) */
         reset() {
             state = { ...DEFAULT_STATE };
-            saveState();
+            if (browser) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            }
         }
     };
 }

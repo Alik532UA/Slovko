@@ -137,7 +137,11 @@
             "weakPassword": "Password is too weak (min 6 chars)",
             "emailInUse": "Email is already in use",
             "enterPassword": "Enter password",
-            "invalidCredentials": "Invalid email or password"
+            "invalidCredentials": "Invalid email or password.",
+            "accountUsesGoogle": "This account uses Google sign-in. Please use the Google button below.",
+            "popupClosed": "Authorization window was closed. Please try again.",
+            "accountExistsEmail": "An account with this email already exists. Sign in with Email first, then you can link Google in settings.",
+            "googleAlreadyLinked": "This Google account is already linked to another Slovko user."
         },
         "changePasswordTitle": "Change Password",
         "changePasswordHint": "Feature in development",

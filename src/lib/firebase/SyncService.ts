@@ -30,7 +30,8 @@ export const SyncService = {
         retryCount: 0,
         isOnline: typeof navigator !== 'undefined' ? navigator.onLine : true,
         lastSyncAttempt: 0,
-        offlineNotificationShown: false
+        offlineNotificationShown: false,
+        hasInitialData: false // ПРАПОРЕЦЬ: чи отримали ми перші дані з хмари для поточного юзера
     },
 
     /**
@@ -38,6 +39,7 @@ export const SyncService = {
      */
     init(uid: string) {
         if (this.private.unsubscribe) this.private.unsubscribe();
+        this.private.hasInitialData = false; // Скидаємо для нового юзера
 
         // Слухаємо зміни в документі користувача
         const userDocRef = doc(db, COLLECTIONS.USERS, uid);
@@ -51,10 +53,9 @@ export const SyncService = {
 
         this.private.unsubscribe = onSnapshot(userDocRef,
             (snapshot) => {
-                if (snapshot.exists()) {
-                    const cloudData = snapshot.data();
-                    this.handleCloudUpdate(cloudData);
-                }
+                const cloudData = snapshot.exists() ? snapshot.data() : {};
+                this.handleCloudUpdate(cloudData);
+                this.private.hasInitialData = true; // Тепер ми знаємо стан хмари і можемо аплоадити
             },
             (error) => {
                 logService.warn('sync', 'Snapshot listener error:', error);
@@ -169,7 +170,12 @@ export const SyncService = {
      * Безпосередньо виконує завантаження даних
      */
     async performUpload() {
-        if (!auth.currentUser || this.private.isDownloading) return;
+        if (!auth.currentUser || this.private.isDownloading || !this.private.hasInitialData) {
+            if (!this.private.hasInitialData) {
+                logService.log('sync', 'Upload blocked: initial cloud data not yet loaded');
+            }
+            return;
+        }
 
         // Перевірка на офлайн
         if (!this.private.isOnline) {
@@ -180,15 +186,25 @@ export const SyncService = {
         this.private.isUploading = true;
         const uid = auth.currentUser.uid;
         const userDocRef = doc(db, COLLECTIONS.USERS, uid);
-        const profileRef = doc(db, "profiles", uid); // Колекція профілів для лідерборду
+        const profileRef = doc(db, "profiles", uid);
 
         try {
+            // Отримуємо найсвіжіші дані з хмари перед завантаженням
             const snapshot = await getDoc(userDocRef);
             const cloudData = snapshot.exists() ? snapshot.data() : {};
 
             const localProgress = progressStore.value;
             const localSettings = settingsStore.value;
             
+            // КРИТИЧНИЙ ЗАХИСТ: якщо в хмарі прогрес більший, ніж локально,
+            // ми не повинні робити аплоад, поки не завантажимо ці дані.
+            if (cloudData.progress && cloudData.progress.totalCorrect > localProgress.totalCorrect) {
+                logService.warn('sync', 'Cloud has more progress than local. Forcing download instead of upload.');
+                this.handleCloudUpdate(cloudData);
+                this.private.isUploading = false;
+                return;
+            }
+
             const localData = {
                 settings: localSettings,
                 progress: localProgress,

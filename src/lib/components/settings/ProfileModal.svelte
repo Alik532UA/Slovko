@@ -16,6 +16,7 @@
     } from "lucide-svelte";
     import { logService } from "../../services/logService";
     import { authStore } from "../../firebase/authStore.svelte";
+    import { AuthService } from "../../firebase/AuthService";
     import { progressStore } from "../../stores/progressStore.svelte";
     import { FriendsService } from "../../firebase/FriendsService";
 
@@ -128,16 +129,59 @@
             loginMethod = null;
         } catch (e: any) {
             logService.error("auth", "Google login failed", e);
-            errorMessage = e.message || "Помилка входу";
+            if (e.code === "auth/popup-closed-by-user") {
+                errorMessage = $_("profile.errors.popupClosed", {
+                    default:
+                        "Вікно авторизації було закрите. Будь ласка, спробуйте ще раз.",
+                });
+            } else {
+                errorMessage = e.message || "Помилка входу";
+            }
         } finally {
             isLinking = false;
         }
     }
 
     // Auth handlers
+    async function checkProviderError(
+        email: string,
+        originalCode: string,
+    ): Promise<string | null> {
+        if (
+            originalCode !== "auth/invalid-credential" &&
+            originalCode !== "auth/user-not-found" &&
+            originalCode !== "auth/wrong-password"
+        ) {
+            return null;
+        }
+
+        try {
+            const providers = await AuthService.getProvidersForEmail(email);
+            if (providers.includes("google.com")) {
+                return $_("profile.errors.accountUsesGoogle", {
+                    default:
+                        "Цей акаунт використовує вхід через Google. Будь ласка, скористайтеся кнопкою Google.",
+                });
+            }
+            if (
+                providers.length === 0 &&
+                originalCode === "auth/user-not-found"
+            ) {
+                return $_("profile.errors.userNotFound", {
+                    default: "Користувача з такою поштою не знайдено.",
+                });
+            }
+        } catch (e) {
+            // Ignore check errors (e.g. if protection is enabled)
+        }
+        return null;
+    }
+
     async function handleEmailSignIn(email: string, password: string) {
         if (!email || !password) {
-            errorMessage = $_("profile.errors.fillFields", { default: "Введіть всі поля" });
+            errorMessage = $_("profile.errors.fillFields", {
+                default: "Введіть всі поля",
+            });
             return;
         }
         isLinking = true;
@@ -147,7 +191,13 @@
             loginMethod = null;
         } catch (e: any) {
             logService.warn("auth", "Sign in failed", e.code || e.message);
-            errorMessage = getAuthErrorMessage(e.code) || e.message || "Помилка";
+
+            const specificError = await checkProviderError(email, e.code);
+            errorMessage =
+                specificError ||
+                getAuthErrorMessage(e.code) ||
+                e.message ||
+                "Помилка";
         } finally {
             isLinking = false;
         }
@@ -155,7 +205,9 @@
 
     async function handleEmailRegister(email: string, password: string) {
         if (!email || !password) {
-            errorMessage = $_("profile.errors.fillFields", { default: "Введіть всі поля" });
+            errorMessage = $_("profile.errors.fillFields", {
+                default: "Введіть всі поля",
+            });
             return;
         }
         isLinking = true;
@@ -165,7 +217,8 @@
             loginMethod = null;
         } catch (e: any) {
             logService.warn("auth", "Registration failed", e.code || e.message);
-            errorMessage = getAuthErrorMessage(e.code) || e.message || "Помилка";
+            errorMessage =
+                getAuthErrorMessage(e.code) || e.message || "Помилка";
         } finally {
             isLinking = false;
         }
@@ -173,7 +226,9 @@
 
     async function handleForgotPassword(email: string) {
         if (!email) {
-            errorMessage = $_("profile.errors.enterEmail", { default: "Введіть email" });
+            errorMessage = $_("profile.errors.enterEmail", {
+                default: "Введіть email",
+            });
             return;
         }
         isLinking = true;
@@ -191,7 +246,8 @@
             }, 3000);
         } catch (e: any) {
             logService.error("auth", "Password reset failed", e);
-            errorMessage = getAuthErrorMessage(e.code) || e.message || "Помилка";
+            errorMessage =
+                getAuthErrorMessage(e.code) || e.message || "Помилка";
         } finally {
             isLinking = false;
         }
@@ -199,26 +255,20 @@
 
     function getAuthErrorMessage(code: string): string {
         const errors: Record<string, string> = {
-            "auth/email-already-in-use": $_("profile.errors.emailInUse", {
-                default: "Цей email вже використовується",
-            }),
-            "auth/weak-password": $_("profile.errors.weakPassword", {
-                default: "Пароль занадто слабкий (мін. 6 символів)",
-            }),
-            "auth/invalid-email": $_("profile.errors.invalidEmail", {
-                default: "Невірний формат email",
-            }),
-            "auth/user-not-found": $_("profile.errors.invalidCredentials", {
-                default: "Невірний email або пароль",
-            }),
-            "auth/wrong-password": $_("profile.errors.invalidCredentials", {
-                default: "Невірний email або пароль",
-            }),
-            "auth/invalid-credential": $_("profile.errors.invalidCredentials", {
-                default: "Невірний email або пароль",
-            }),
+            "auth/email-already-in-use": $_("profile.errors.emailInUse"),
+            "auth/weak-password": $_("profile.errors.weakPassword"),
+            "auth/invalid-email": $_("profile.errors.invalidEmail"),
+            "auth/user-not-found": $_("profile.errors.invalidCredentials"),
+            "auth/wrong-password": $_("profile.errors.invalidCredentials"),
+            "auth/invalid-credential": $_("profile.errors.invalidCredentials"),
+            "auth/popup-closed-by-user": $_("profile.errors.popupClosed"),
+            "auth/cancelled-by-user": $_("profile.errors.popupClosed"),
+            ACCOUNT_EXISTS_EMAIL: $_("profile.errors.accountExistsEmail"),
+            GOOGLE_ALREADY_LINKED_ELSEWHERE: $_(
+                "profile.errors.googleAlreadyLinked",
+            ),
         };
-        return errors[code] || "";
+        return errors[code] || code;
     }
 
     // Avatar handlers
@@ -261,7 +311,9 @@
 
     // Password change
     async function handlePasswordAction(email: string, password: string) {
-        if (!password) {
+        const isGoogleUser = authStore.user.providerId === "google.com";
+
+        if (!password && !isGoogleUser) {
             errorMessage = $_("profile.errors.enterPassword", {
                 default: "Введіть пароль",
             });
@@ -389,9 +441,15 @@
                 <div class="warning-box">
                     <ShieldAlert size={24} />
                     <p>
-                        {authStore.isGuest 
-                            ? $_("profile.guestWarning", { default: "Ви граєте як гість. Увійдіть, щоб зберігати прогрес у хмарі та змагатися з іншими." })
-                            : $_("profile.syncWarning", { default: "Ви використовуєте тимчасовий акаунт. Прив'яжіть пошту, щоб не втратити прогрес." })}
+                        {authStore.isGuest
+                            ? $_("profile.guestWarning", {
+                                  default:
+                                      "Ви граєте як гість. Увійдіть, щоб зберігати прогрес у хмарі та змагатися з іншими.",
+                              })
+                            : $_("profile.syncWarning", {
+                                  default:
+                                      "Ви використовуєте тимчасовий акаунт. Прив'яжіть пошту, щоб не втратити прогрес.",
+                              })}
                     </p>
                 </div>
                 <button
@@ -401,9 +459,11 @@
                     disabled={isLinking}
                     style="margin-bottom: 2rem;"
                 >
-                    {authStore.isGuest 
-                        ? $_("profile.login", { default: "Увійти" }) 
-                        : $_("profile.connectAccount", { default: "Прив'язати акаунт" })}
+                    {authStore.isGuest
+                        ? $_("profile.login", { default: "Увійти" })
+                        : $_("profile.connectAccount", {
+                              default: "Прив'язати акаунт",
+                          })}
                 </button>
             {:else}
                 <!-- LOGGED IN HEADER -->
@@ -683,7 +743,9 @@
                 isLoading={isLinking}
                 {errorMessage}
                 {successMessage}
-                onsubmit={loginMethod === "forgot-password" ? handleForgotPassword : handleEmailSignIn}
+                onsubmit={loginMethod === "forgot-password"
+                    ? handleForgotPassword
+                    : handleEmailSignIn}
                 onregister={handleEmailRegister}
                 ongoogle={handleGoogleLogin}
                 onback={() => {
@@ -732,36 +794,56 @@
                     class="email-form"
                     onsubmit={(e) => {
                         e.preventDefault();
-                        handlePasswordAction(
-                            "",
-                            (e.target as any).password.value,
-                        );
+                        const password =
+                            (e.target as any).password?.value || "";
+                        handlePasswordAction("", password);
                     }}
                 >
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder={$_("profile.passwordPlaceholderShort", {
-                            default: "Пароль",
-                        })}
-                        class="input-field"
-                        autocomplete="current-password"
-                        data-testid="delete-account-password-input"
-                    />
+                    {#if authStore.user.providerId === "google.com"}
+                        <p class="form-hint">
+                            {$_("profile.deleteGoogleHint", {
+                                default:
+                                    "Для підтвердження потрібно буде ще раз увійти через Google",
+                            })}
+                        </p>
+                    {:else}
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder={$_(
+                                "profile.passwordPlaceholderShort",
+                                {
+                                    default: "Пароль",
+                                },
+                            )}
+                            class="input-field"
+                            autocomplete="current-password"
+                            data-testid="delete-account-password-input"
+                            required
+                        />
+                    {/if}
+
                     {#if errorMessage}
                         <p class="error-msg">{errorMessage}</p>
                     {/if}
+
                     <button
                         type="submit"
                         class="delete-btn"
                         disabled={isLinking}
                         data-testid="confirm-delete-account-btn"
                     >
-                        {isLinking
-                            ? "..."
-                            : $_("profile.confirmDelete", {
-                                  default: "Підтвердити видалення",
-                              })}
+                        {#if isLinking}
+                            "..."
+                        {:else if authStore.user.providerId === "google.com"}
+                            {$_("profile.deleteViaGoogle", {
+                                default: "Видалити через Google",
+                            })}
+                        {:else}
+                            {$_("profile.confirmDelete", {
+                                default: "Підтвердити видалення",
+                            })}
+                        {/if}
                     </button>
                     <button
                         type="button"
@@ -1144,6 +1226,14 @@
         font-size: 0.9rem;
         color: var(--text-secondary);
         margin: 0 0 1rem;
+    }
+
+    .form-hint {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        text-align: center;
+        margin-bottom: 1rem;
+        line-height: 1.4;
     }
 
     .back-btn {
