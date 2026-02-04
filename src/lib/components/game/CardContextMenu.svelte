@@ -2,10 +2,11 @@
 	import { playlistStore } from "$lib/stores/playlistStore.svelte";
 	import { gameState } from "$lib/stores/gameState.svelte";
 	import { _ } from "svelte-i18n";
-	import { Heart, Bookmark, Volume2 } from "lucide-svelte";
+	import { Heart, Bookmark, Volume2, AlertTriangle } from "lucide-svelte";
 	import { speakText } from "$lib/services/speechService";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { scale, fade } from "svelte/transition";
+	import WordReportModal from "./WordReportModal.svelte";
 
 	interface Props {
 		x: number;
@@ -22,6 +23,7 @@
 	);
 	let isFavorite = $derived(playlistStore.isFavorite(wordKey));
 	let isExtra = $derived(playlistStore.isExtra(wordKey));
+	let showReportModal = $state(false);
 
 	function playSound() {
 		speakText(text, language);
@@ -41,7 +43,25 @@
 		}
 		onclose();
 	}
+
+	function handleReport() {
+		showReportModal = true;
+	}
+
+	function closeAll() {
+		showReportModal = false;
+		onclose();
+	}
 </script>
+
+{#if showReportModal && pair}
+	<WordReportModal
+		{wordKey}
+		sourceTranslation={pair.source}
+		targetTranslation={pair.target}
+		onclose={closeAll}
+	/>
+{/if}
 
 <div
 	class="backdrop"
@@ -81,6 +101,15 @@
 				? $_("playlists.removeFromExtra")
 				: $_("playlists.addToExtra")}</span
 		>
+	</button>
+
+	<div class="divider"></div>
+
+	<button onclick={handleReport} class="report-btn" data-testid="context-menu-report">
+		<span class="icon">
+			<AlertTriangle size={20} />
+		</span>
+		<span>{$_("wordReport.title")}</span>
 	</button>
 </div>
 
@@ -126,12 +155,31 @@
 		background: rgba(255, 255, 255, 0.1);
 	}
 
+	.report-btn {
+		color: var(--error, #ff4444);
+	}
+
+	.report-btn:hover {
+		background: rgba(255, 68, 68, 0.1);
+	}
+
+	.divider {
+		height: 1px;
+		background: var(--border);
+		margin: 0.25rem 0.5rem;
+		opacity: 0.5;
+	}
+
 	.icon {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		color: var(--text-secondary);
 		transition: color 0.2s;
+	}
+
+	.report-btn .icon {
+		color: inherit;
 	}
 
 	.icon.filled {

@@ -192,7 +192,23 @@
 		"confirm": "Confirm",
 		"listen": "Listen",
 		"backToLearning": "Back to learning",
-		"retry": "Try again"
+		"retry": "Try again",
+		"cancel": "Cancel",
+		"send": "Send"
+	},
+	"wordReport": {
+		"title": "Report an Error",
+		"selectType": "Select error type",
+		"commentLabel": "Your comment (optional)",
+		"commentPlaceholder": "Describe what exactly is wrong...",
+		"success": "Thank you! Report sent.",
+		"error": "Error sending report. Please try again later.",
+		"type": {
+			"wrongTranslation": "Wrong translation",
+			"wrongTranscription": "Transcription error",
+			"audioIssue": "Audio issue",
+			"other": "Other"
+		}
 	},
 	"friends": {
 		"searchPlaceholder": "Search users...",

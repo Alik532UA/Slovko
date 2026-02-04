@@ -12,10 +12,21 @@ export interface FeedbackData {
 	message: string;
 }
 
+export interface WordReportData {
+	wordKey: string;
+	errorType: string;
+	comment?: string;
+	sourceTranslation: string;
+	targetTranslation: string;
+}
+
 export const FeedbackService = {
 	async submitFeedback(data: FeedbackData) {
+		// ... існуючий код ...
+	},
+
+	async reportWordError(data: WordReportData) {
 		try {
-			// Генеруємо читабельний ID на основі поточної дати
 			const now = new Date();
 			const timestampId = now
 				.toISOString()
@@ -23,48 +34,36 @@ export const FeedbackService = {
 				.slice(0, 19)
 				.replace(/:/g, "-");
 
-			// Шлях: feedback -> {category} -> messages -> {YYYY-MM-DD-HH-mm-ss}
-			const docRef = doc(
-				db,
-				"feedback",
-				data.category,
-				"messages",
-				timestampId,
-			);
+			// Шлях: word_reports -> {timestampId}
+			const docRef = doc(db, "word_reports", timestampId);
 
 			const payload = {
-				title: data.title || null,
-				message: data.message,
+				...data,
 				status: "new",
 				context: {
 					url: window.location.href,
 					appVersion: versionStore.currentVersion || "unknown",
-					userAgent: navigator.userAgent,
 					language: {
 						interface: settingsStore.value.interfaceLanguage,
 						source: settingsStore.value.sourceLanguage,
 						target: settingsStore.value.targetLanguage,
 					},
+					mode: settingsStore.value.mode,
 					currentLevel: settingsStore.value.currentLevel,
 					currentTopic: settingsStore.value.currentTopic,
 				},
 				user: {
 					uid: auth.currentUser?.uid || null,
 					isAnonymous: auth.currentUser?.isAnonymous ?? true,
-					email: auth.currentUser?.email || null,
 				},
 				timestamp: serverTimestamp(),
 			};
 
 			await setDoc(docRef, payload);
-			logService.log(
-				"sync",
-				`Feedback (${data.category}) submitted with ID:`,
-				timestampId,
-			);
+			logService.log("sync", "Word error reported with ID:", timestampId);
 			return true;
 		} catch (error) {
-			logService.error("sync", "Error submitting feedback:", error);
+			logService.error("sync", "Error reporting word error:", error);
 			throw error;
 		}
 	},
