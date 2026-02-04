@@ -6,29 +6,12 @@
 	} from "$lib/firebase/FriendsService";
 	import {
 		Users,
-		UserPlus,
-		UserCheck,
 		Loader2,
-		User as UserIcon,
-		UserMinus,
 	} from "lucide-svelte";
 	import { logService } from "$lib/services/logService";
-	import {
-		Cat,
-		Dog,
-		Rabbit,
-		Bird,
-		Fish,
-		Snail,
-		Turtle,
-		Bug,
-		Smile,
-		Star,
-		Heart,
-		Zap,
-		Target,
-	} from "lucide-svelte";
 	import ErrorBoundary from "../ui/ErrorBoundary.svelte";
+	import UserAvatar from "./UserAvatar.svelte";
+	import FollowButton from "./FollowButton.svelte";
 
 	interface Props {
 		activeTab: "following" | "followers";
@@ -73,89 +56,21 @@
 	}
 
 	async function checkFollowStatus(users: FollowRecord[]) {
+		const statuses: Record<string, boolean> = {};
 		await Promise.all(
 			users.map(async (user) => {
 				const isFollowing = await FriendsService.isFollowing(user.uid);
-				followingMap[user.uid] = isFollowing;
+				statuses[user.uid] = isFollowing;
 			}),
 		);
+		followingMap = statuses;
 	}
 
-	const AVATAR_ICONS: Record<string, any> = {
-		user: UserIcon,
-		cat: Cat,
-		dog: Dog,
-		rabbit: Rabbit,
-		bird: Bird,
-		fish: Fish,
-		snail: Snail,
-		turtle: Turtle,
-		bug: Bug,
-		smile: Smile,
-		star: Star,
-		heart: Heart,
-		zap: Zap,
-		target: Target,
-	};
-
-	function getIconComponent(photoURL: string | null) {
-		if (photoURL?.startsWith("internal:")) {
-			const iconId = photoURL.split(":")[1];
-			return AVATAR_ICONS[iconId] || UserIcon;
-		}
-		return UserIcon;
-	}
-
-	function getAvatarColor(photoURL: string | null) {
-		if (photoURL?.startsWith("internal:")) {
-			return photoURL.split(":")[2] || "var(--accent)";
-		}
-		return "var(--accent)";
-	}
-
-	async function handleUnfollow(uid: string) {
-		if (!confirm($_("friends.confirmUnfollow"))) return;
-		if (processingUid) return;
-
-		processingUid = uid;
-		try {
-			const success = await FriendsService.unfollow(uid);
-			if (success) {
-				// Optimistic update
-				if (activeTab === "following") {
-					list = list.filter((u) => u.uid !== uid);
-				} else {
-					followingMap = { ...followingMap, [uid]: false };
-				}
-			}
-		} catch (e) {
-			logService.error("sync", "Unfollow failed", e);
-		} finally {
-			processingUid = null;
-		}
-	}
-
-	async function handleFollowBack(user: FollowRecord) {
-		if (processingUid) return;
-		processingUid = user.uid;
-
-		try {
-			logService.log("sync", "Attempting follow back for:", user.uid);
-			const success = await FriendsService.follow(user.uid, {
-				displayName: user.displayName,
-				photoURL: user.photoURL,
-			});
-			logService.log("sync", "Follow back result:", success);
-
-			if (success) {
-				followingMap = { ...followingMap, [user.uid]: true };
-			} else {
-				logService.warn("sync", "Follow back failed even with provided data.");
-			}
-		} catch (e) {
-			logService.error("sync", "Follow back failed", e);
-		} finally {
-			processingUid = null;
+	function handleStatusChange(uid: string, newStatus: boolean) {
+		if (activeTab === "following" && !newStatus) {
+			list = list.filter((u) => u.uid !== uid);
+		} else {
+			followingMap = { ...followingMap, [uid]: newStatus };
 		}
 	}
 </script>
@@ -193,60 +108,22 @@
 		{:else}
 			<div class="friends-list" data-testid="friends-list-items">
 				{#each list as user (user.uid)}
-					{@const Icon = getIconComponent(user.photoURL)}
-					{@const avatarColor = getAvatarColor(user.photoURL)}
 					<div class="friend-card" data-testid="friend-card-{user.uid}">
-						<div class="friend-avatar">
-							<div
-								class="avatar-circle"
-								style="background-color: {avatarColor}"
-							>
-								<Icon size={24} color="white" />
-							</div>
-						</div>
+						<UserAvatar photoURL={user.photoURL} size={24} />
 
 						<div class="friend-info">
 							<span class="display-name">{user.displayName || "User"}</span>
 						</div>
 
 						<div class="friend-actions">
-							{#if activeTab === "following"}
-								<button
-									class="action-btn unfollow"
-									disabled={processingUid === user.uid}
-									onclick={() => handleUnfollow(user.uid)}
-									title={$_("friends.unfollow")}
-									data-testid="friend-list-unfollow-btn-{user.uid}"
-								>
-									{#if processingUid === user.uid}
-										<Loader2 size={16} class="spinner" />
-									{:else}
-										<UserCheck size={18} />
-									{/if}
-								</button>
-							{:else}
-								<!-- Followers tab actions -->
-								{#if followingMap[user.uid]}
-									<div class="mutual-badge">
-										<UserCheck size={14} />
-										<span>{$_("friends.mutual")}</span>
-									</div>
-								{:else}
-									<button
-										class="action-btn follow-back"
-										disabled={processingUid === user.uid}
-										onclick={() => handleFollowBack(user)}
-										title={$_("friends.followBack")}
-										data-testid="friend-list-follow-back-btn-{user.uid}"
-									>
-										{#if processingUid === user.uid}
-											<Loader2 size={16} class="spinner" />
-										{:else}
-											<UserPlus size={18} />
-										{/if}
-									</button>
-								{/if}
-							{/if}
+							<FollowButton
+								uid={user.uid}
+								isFollowing={activeTab === "following" ? true : !!followingMap[user.uid]}
+								isMutual={activeTab === "followers"}
+								displayName={user.displayName}
+								photoURL={user.photoURL}
+								onStatusChange={(status) => handleStatusChange(user.uid, status)}
+							/>
 						</div>
 					</div>
 				{/each}
@@ -315,16 +192,6 @@
 		background: rgba(255, 255, 255, 0.08);
 	}
 
-	.avatar-circle {
-		width: 40px;
-		height: 40px;
-		border-radius: 12px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-shrink: 0;
-	}
-
 	.friend-info {
 		flex: 1;
 		overflow: hidden;
@@ -339,47 +206,11 @@
 		color: var(--text-primary);
 	}
 
-	.action-btn {
-		width: 36px;
-		height: 36px;
-		border-radius: 10px;
-		border: none;
+	.friend-actions {
 		display: flex;
 		align-items: center;
-		justify-content: center;
-		cursor: pointer;
-		transition: all 0.2s;
-	}
-
-	.action-btn.unfollow {
-		background: rgba(34, 197, 94, 0.1);
-		color: #22c55e;
-	}
-
-	.action-btn.unfollow:hover {
-		background: rgba(239, 68, 68, 0.1);
-		color: #ef4444; /* Turn red on hover to indicate destructive action */
-	}
-
-	.action-btn.follow-back {
-		background: var(--bg-secondary);
-		color: var(--text-secondary);
-	}
-
-	.action-btn.follow-back:hover {
-		background: var(--accent);
-		color: white;
-	}
-
-	.mutual-badge {
-		display: flex;
-		align-items: center;
-		gap: 0.25rem;
-		font-size: 0.75rem;
-		color: #22c55e;
-		background: rgba(34, 197, 94, 0.1);
-		padding: 0.25rem 0.5rem;
-		border-radius: 6px;
+		justify-content: flex-end;
+		min-width: 40px;
 	}
 
 	.retry-btn {

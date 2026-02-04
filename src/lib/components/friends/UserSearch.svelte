@@ -2,18 +2,15 @@
 	import { _ } from "svelte-i18n";
 	import {
 		Search,
-		UserPlus,
-		UserMinus,
-		UserCheck,
 		Loader2,
-		User as UserIcon,
 	} from "lucide-svelte";
 	import {
 		FriendsService,
 		type UserProfile,
-		type FollowRecord,
 	} from "$lib/firebase/FriendsService";
 	import { logService } from "$lib/services/logService";
+	import UserAvatar from "./UserAvatar.svelte";
+	import FollowButton from "./FollowButton.svelte";
 
 	// Props
 	interface Props {
@@ -59,87 +56,19 @@
 	}
 
 	async function checkFollowStatus(users: UserProfile[]) {
-		// Parallel check for each user
+		const statuses: Record<string, boolean> = {};
 		await Promise.all(
 			users.map(async (user) => {
 				const isFollowing = await FriendsService.isFollowing(user.uid);
-				followingMap[user.uid] = isFollowing;
+				statuses[user.uid] = isFollowing;
 			}),
 		);
+		followingMap = statuses;
 	}
 
-	async function handleFollowToggle(user: UserProfile) {
-		if (processingUid) return;
-
-		processingUid = user.uid;
-		const isFollowing = followingMap[user.uid];
-
-		try {
-			let success = false;
-			if (isFollowing) {
-				success = await FriendsService.unfollow(user.uid);
-			} else {
-				success = await FriendsService.follow(user.uid);
-			}
-
-			if (success) {
-				followingMap[user.uid] = !isFollowing;
-				onFollowChange(); // Notify parent
-			}
-		} catch (error) {
-			logService.error("sync", "Follow toggle failed", error);
-		} finally {
-			processingUid = null;
-		}
-	}
-
-	// Components for avatar
-	import {
-		Cat,
-		Dog,
-		Rabbit,
-		Bird,
-		Fish,
-		Snail,
-		Turtle,
-		Bug,
-		Smile,
-		Star,
-		Heart,
-		Zap,
-		Target,
-	} from "lucide-svelte";
-
-	const AVATAR_ICONS: Record<string, any> = {
-		user: UserIcon,
-		cat: Cat,
-		dog: Dog,
-		rabbit: Rabbit,
-		bird: Bird,
-		fish: Fish,
-		snail: Snail,
-		turtle: Turtle,
-		bug: Bug,
-		smile: Smile,
-		star: Star,
-		heart: Heart,
-		zap: Zap,
-		target: Target,
-	};
-
-	function getIconComponent(photoURL: string | null) {
-		if (photoURL?.startsWith("internal:")) {
-			const iconId = photoURL.split(":")[1];
-			return AVATAR_ICONS[iconId] || UserIcon;
-		}
-		return UserIcon;
-	}
-
-	function getAvatarColor(photoURL: string | null) {
-		if (photoURL?.startsWith("internal:")) {
-			return photoURL.split(":")[2] || "var(--accent)";
-		}
-		return "var(--accent)";
+	function handleStatusChange(uid: string, newStatus: boolean) {
+		followingMap = { ...followingMap, [uid]: newStatus };
+		onFollowChange();
 	}
 </script>
 
@@ -166,14 +95,8 @@
 	{#if searchResults.length > 0}
 		<div class="results-list" data-testid="user-search-results">
 			{#each searchResults as user (user.uid)}
-				{@const Icon = getIconComponent(user.photoURL)}
-				{@const avatarColor = getAvatarColor(user.photoURL)}
 				<div class="user-card">
-					<div class="user-avatar">
-						<div class="avatar-circle" style="background-color: {avatarColor}">
-							<Icon size={24} color="white" />
-						</div>
-					</div>
+					<UserAvatar photoURL={user.photoURL} size={24} />
 
 					<div class="user-info">
 						<span class="display-name">{user.displayName || "User"}</span>
@@ -182,21 +105,14 @@
 						{/if}
 					</div>
 
-					<button
-						class="action-btn"
-						class:following={followingMap[user.uid]}
-						disabled={processingUid === user.uid}
-						onclick={() => handleFollowToggle(user)}
-						data-testid="user-search-follow-btn-{user.uid}"
-					>
-						{#if processingUid === user.uid}
-							<Loader2 size={18} class="spinner" />
-						{:else if followingMap[user.uid]}
-							<UserCheck size={18} />
-						{:else}
-							<UserPlus size={18} />
-						{/if}
-					</button>
+					<FollowButton
+						uid={user.uid}
+						isFollowing={!!followingMap[user.uid]}
+						displayName={user.displayName}
+						photoURL={user.photoURL}
+						onStatusChange={(status) => handleStatusChange(user.uid, status)}
+						variant="compact"
+					/>
 				</div>
 			{/each}
 		</div>
@@ -295,16 +211,6 @@
 		background: rgba(255, 255, 255, 0.06);
 	}
 
-	.avatar-circle {
-		width: 40px;
-		height: 40px;
-		border-radius: 12px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-shrink: 0;
-	}
-
 	.user-info {
 		flex: 1;
 		display: flex;
@@ -327,48 +233,6 @@
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
-	}
-
-	.action-btn {
-		width: 36px;
-		height: 36px;
-		border-radius: 10px;
-		border: none;
-		background: var(--bg-secondary);
-		color: var(--text-secondary);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		cursor: pointer;
-		transition: all 0.2s;
-	}
-
-	.action-btn:hover:not(:disabled) {
-		background: var(--accent);
-		color: white;
-	}
-
-	.action-btn.following {
-		background: rgba(34, 197, 94, 0.15); /* Green tint */
-		color: #22c55e;
-	}
-
-	.action-btn.following:hover:not(:disabled) {
-		background: rgba(239, 68, 68, 0.15); /* Red tint on hover for unfollow */
-		color: #ef4444;
-	}
-
-	.action-btn.following:hover:not(:disabled) :global(svg) {
-		/* Swap icon on hover visually could be tricky without swapping component logic, 
-           so we rely on color change mainly. 
-           But ideally we could show minus icon on hover. 
-           For simplicity now, just color change. */
-		color: #ef4444;
-	}
-
-	.action-btn:disabled {
-		opacity: 0.6;
-		cursor: not-allowed;
 	}
 
 	.empty-state {
