@@ -106,27 +106,27 @@
 		</div>
 
 		<div class="stats-grid" data-testid="level-stats-grid">
-			<div class="stat-card level-stat" data-testid="level-stat-correct">
+			<button class="stat-card level-stat" data-testid="level-stat-correct" onclick={() => playLabel("correct")}>
 				<div class="stat-icon-box"><Target size={20} /></div>
 				<div class="stat-content">
 					<span class="value">{currentLevelStats.totalCorrect}</span>
 					<span class="label">{$_("profile.stats.correct")}</span>
 				</div>
-			</div>
-			<div class="stat-card level-stat" data-testid="level-stat-streak">
+			</button>
+			<button class="stat-card level-stat" data-testid="level-stat-streak" onclick={() => playLabel("bestCorrectStreak")}>
 				<div class="stat-icon-box"><Medal size={20} /></div>
 				<div class="stat-content">
 					<span class="value">{currentLevelStats.bestCorrectStreak}</span>
 					<span class="label">{$_("profile.stats.bestCorrectStreak")}</span>
 				</div>
-			</div>
-			<div class="stat-card level-stat" data-testid="level-stat-accuracy">
+			</button>
+			<button class="stat-card level-stat" data-testid="level-stat-accuracy" onclick={() => playLabel("accuracy")}>
 				<div class="stat-icon-box"><Percent size={20} /></div>
 				<div class="stat-content">
 					<span class="value">{levelAccuracy}%</span>
 					<span class="label">{$_("profile.stats.accuracy")}</span>
 				</div>
-			</div>
+			</button>
 		</div>
 	</div>
 

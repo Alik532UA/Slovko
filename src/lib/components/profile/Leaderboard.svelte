@@ -158,7 +158,7 @@
 	</div>
 
 	<!-- List -->
-	<div class="leaderboard-list" data-testid="leaderboard-list">
+	<div class="leaderboard-list" data-testid="leaderboard-list" role="list">
 		{#if isLoading}
 			<div class="loading-state">
 				<Loader2 size={32} class="spinner" />
@@ -194,6 +194,7 @@
 					class="leaderboard-item"
 					class:me={user.isMe}
 					data-testid="leaderboard-item-{user.rank}{levelSuffix}"
+					role="listitem"
 				>
 					<div class="col-rank">
 						{#if user.rank === 1}

@@ -1,32 +1,5 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
-	import {
-		Plus,
-		Save,
-		Trash2,
-		ArrowUp,
-		ArrowDown,
-		FileJson,
-		FileText,
-		Bookmark,
-		Star,
-		Heart,
-		List,
-		Music,
-		Book,
-		Pen,
-		Zap,
-		Brain,
-		Trophy,
-		Flame,
-		GraduationCap,
-		Target,
-		Coffee,
-		Rocket,
-		Globe,
-		Smile,
-		Eye,
-	} from "lucide-svelte";
 	import { playlistStore } from "$lib/stores/playlistStore.svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { gameDataService } from "$lib/services/gameDataService";
@@ -40,6 +13,7 @@
 	import { slide } from "svelte/transition";
 	import { untrack } from "svelte";
 	import BaseModal from "../ui/BaseModal.svelte";
+	import { APP_ICONS } from "$lib/config/icons";
 
 	interface Props {
 		playlistId?: PlaylistId; // If null, we are creating new
@@ -48,26 +22,26 @@
 
 	let { playlistId, onclose }: Props = $props();
 
-	// Mapping icons to components
+	// Mapping icons to components from central registry
 	const PLAYLIST_ICONS = [
-		{ id: "Bookmark", component: Bookmark },
-		{ id: "Star", component: Star },
-		{ id: "Heart", component: Heart },
-		{ id: "List", component: List },
-		{ id: "Music", component: Music },
-		{ id: "Book", component: Book },
-		{ id: "Pen", component: Pen },
-		{ id: "Zap", component: Zap },
-		{ id: "Brain", component: Brain },
-		{ id: "Trophy", component: Trophy },
-		{ id: "Flame", component: Flame },
-		{ id: "GraduationCap", component: GraduationCap },
-		{ id: "Target", component: Target },
-		{ id: "Coffee", component: Coffee },
-		{ id: "Rocket", component: Rocket },
-		{ id: "Globe", component: Globe },
-		{ id: "Smile", component: Smile },
-		{ id: "Eye", component: Eye },
+		{ id: "Bookmark", component: APP_ICONS.Bookmark },
+		{ id: "Star", component: APP_ICONS.Star },
+		{ id: "Heart", component: APP_ICONS.Heart },
+		{ id: "List", component: APP_ICONS.List },
+		{ id: "Music", component: APP_ICONS.Music },
+		{ id: "Book", component: APP_ICONS.Book },
+		{ id: "Pen", component: APP_ICONS.Pen },
+		{ id: "Zap", component: APP_ICONS.Zap },
+		{ id: "Brain", component: APP_ICONS.Brain },
+		{ id: "Trophy", component: APP_ICONS.Trophy },
+		{ id: "Flame", component: APP_ICONS.Flame },
+		{ id: "GraduationCap", component: APP_ICONS.GraduationCap },
+		{ id: "Target", component: APP_ICONS.Target },
+		{ id: "Coffee", component: APP_ICONS.Coffee },
+		{ id: "Rocket", component: APP_ICONS.Rocket },
+		{ id: "Globe", component: APP_ICONS.Globe },
+		{ id: "Smile", component: APP_ICONS.Smile },
+		{ id: "Eye", component: APP_ICONS.Eye },
 	];
 
 	// Initial state
@@ -330,7 +304,7 @@
 									data-testid="move-up-{i}"
 									aria-label="Move up"
 								>
-									<ArrowUp size={16} />
+									<APP_ICONS.ArrowUp size={16} />
 								</button>
 								<button
 									onclick={() => moveWord(i, 1)}
@@ -338,7 +312,7 @@
 									data-testid="move-down-{i}"
 									aria-label="Move down"
 								>
-									<ArrowDown size={16} />
+									<APP_ICONS.ArrowDown size={16} />
 								</button>
 								<button
 									class="delete"
@@ -346,7 +320,7 @@
 									data-testid="delete-word-{i}"
 									aria-label="Delete"
 								>
-									<Trash2 size={16} />
+									<APP_ICONS.Trash2 size={16} />
 								</button>
 							</div>
 						</div>
@@ -378,7 +352,7 @@
 								data-testid="add-custom-word-btn"
 								aria-label="Add word"
 							>
-								<Plus size={20} />
+								<APP_ICONS.Plus size={20} />
 							</button>
 						</div>
 					</div>
@@ -394,14 +368,14 @@
 							onclick={exportJSON}
 							data-testid="export-json-btn"
 						>
-							<FileJson size={20} /> JSON
+							<APP_ICONS.FileJson size={20} /> JSON
 						</button>
 						<button
 							class="io-btn"
 							onclick={exportTXT}
 							data-testid="export-txt-btn"
 						>
-							<FileText size={20} /> TXT
+							<APP_ICONS.FileText size={20} /> TXT
 						</button>
 					</div>
 				</section>
@@ -414,7 +388,7 @@
 				onclick={handleSave}
 				data-testid="save-playlist-btn"
 			>
-				<Save size={20} />
+				<APP_ICONS.Save size={20} />
 				{$_("common.save")}
 			</button>
 		</div>

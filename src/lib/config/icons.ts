@@ -1,4 +1,5 @@
 import {
+	// Playlist Icons
 	Bookmark,
 	Star,
 	Heart,
@@ -18,9 +19,61 @@ import {
 	Globe,
 	Smile,
 	Eye,
+	// Topic Icons
+	Leaf,
+	PawPrint,
+	Plane,
+	Utensils,
+	Home,
+	Car,
+	Laptop,
+	HelpCircle,
+	Hash,
+	Palette,
+	Clock,
+	Users,
+	Shirt,
+	User,
+	Footprints,
+	Sparkles,
+	Scale,
+	Puzzle,
+	ArrowLeftRight,
+	// Common UI
+	X,
+	Settings2,
+	Trash2,
+	Upload,
+	Plus,
+	MessageSquare,
+	ChevronLeft,
+	ChevronRight,
+	Copy,
+	CheckCircle,
+	TrendingUp,
+	Calendar,
+	Save,
+	ArrowUp,
+	ArrowDown,
+	FileJson,
+	FileText,
+	AlertTriangle,
+	Loader2,
+	Dog,
+	Rabbit,
+	Bird,
+	Fish,
+	Snail,
+	Turtle,
+	Bug,
 } from "lucide-svelte";
 
-export const PLAYLIST_ICONS_MAP: Record<string, any> = {
+/**
+ * Single source of truth for icons in the app.
+ * Helps with maintainability and AI understanding.
+ */
+export const APP_ICONS = {
+	// Playlists
 	Bookmark,
 	Star,
 	Heart,
@@ -40,4 +93,58 @@ export const PLAYLIST_ICONS_MAP: Record<string, any> = {
 	Globe,
 	Smile,
 	Eye,
-};
+	// Topics
+	Leaf,
+	PawPrint,
+	Plane,
+	Utensils,
+	Home,
+	Car,
+	Laptop,
+	HelpCircle,
+	Hash,
+	Palette,
+	Clock,
+	Users,
+	Shirt,
+	User,
+	Footprints,
+	Sparkles,
+	Scale,
+	Puzzle,
+	ArrowLeftRight,
+	// UI
+	X,
+	Settings2,
+	Trash2,
+	Upload,
+	Plus,
+	MessageSquare,
+	ChevronLeft,
+	ChevronRight,
+	Copy,
+	CheckCircle,
+	TrendingUp,
+	Calendar,
+	Save,
+	ArrowUp,
+	ArrowDown,
+	FileJson,
+	FileText,
+	AlertTriangle,
+	Loader2,
+	// Avatars
+	Dog,
+	Rabbit,
+	Bird,
+	Fish,
+	Snail,
+	Turtle,
+	Bug,
+} as const;
+
+export type AppIconId = keyof typeof APP_ICONS;
+
+// Legacy compatibility
+export const PLAYLIST_ICONS_MAP = APP_ICONS;
+

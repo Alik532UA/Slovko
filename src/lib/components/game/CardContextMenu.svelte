@@ -95,7 +95,7 @@
 		<div class="divider"></div>
 		<div class="submenu-label">{$_("playlists.addToPlaylist")}</div>
 		{#each playlistStore.customPlaylists as p (p.id)}
-			{@const Icon = PLAYLIST_ICONS_MAP[p.icon || "Bookmark"] || Bookmark}
+			{@const Icon = (PLAYLIST_ICONS_MAP as any)[p.icon || "Bookmark"] || Bookmark}
 			<button onclick={() => addToPlaylist(p.id)} class="custom-playlist-btn">
 				<span class="icon" style="color: {p.color}">
 					<Icon size={18} fill={p.words.includes(wordKey) ? p.color : "none"} />
