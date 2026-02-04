@@ -1,5 +1,5 @@
 node_modules
-# .private
+.private
 .private\notes.txt
 .agent/rules
 
