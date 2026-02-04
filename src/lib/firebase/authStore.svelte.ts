@@ -171,7 +171,6 @@ function createAuthStore() {
 		async updateProfile(displayName?: string, photoURL?: string) {
 			if (!firebaseUser) return;
 			try {
-				// @ts-expect-error - Firebase SDK type mismatch
 				const updatedUser = await AuthService.updateProfile(
 					displayName,
 					photoURL,
@@ -193,7 +192,6 @@ function createAuthStore() {
 			console.log("[AuthStore] Logging out...");
 			SyncService.stop();
 			SyncService.resetLocalData();
-			// @ts-expect-error - Firebase SDK type mismatch
 			await AuthService.logout();
 			updateState(null);
 		},
