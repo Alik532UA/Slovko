@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
-	import { ArrowLeft, Mail } from "lucide-svelte";
+	import { ArrowLeft } from "lucide-svelte";
 	import { fade } from "svelte/transition";
 
 	interface Props {

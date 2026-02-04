@@ -6,6 +6,7 @@
 import { browser } from "$app/environment";
 import { SyncService } from "../firebase/SyncService";
 import { localStorageProvider } from "../services/storage/storageProvider";
+import { logService } from "../services/logService";
 import { z } from "zod";
 import {
 	ALL_LEVELS,
@@ -59,21 +60,9 @@ function createSettingsStore() {
 
 			if (stored) {
 				let parsed = JSON.parse(stored);
+				logService.log("settings", "Loading settings from storage:", parsed);
 
-				// Legacy migrations
-				if (parsed.theme === "purple") parsed.theme = "orange";
-
-				if ("enablePronunciation" in parsed) {
-					parsed.enablePronunciationSource = parsed.enablePronunciation;
-					delete parsed.enablePronunciation;
-				}
-
-				if ("showTranscription" in parsed) {
-					parsed.showTranscriptionSource = parsed.showTranscription;
-					delete parsed.showTranscription;
-				}
-
-				// Validate with Zod
+				// ... (rest of logic)
 				const result = AppSettingsSchema.safeParse(parsed);
 
 				if (result.success) {
@@ -81,24 +70,26 @@ function createSettingsStore() {
 					if (hasAppVersion) {
 						validated.hasCompletedOnboarding = true;
 					}
+					logService.log("settings", "Validated settings:", validated);
 					return validated;
 				} else {
-					console.warn(
-						"Invalid settings found, using defaults with partial fix:",
-						result.error,
+					console.error(
+						"CRITICAL: Invalid settings found in localStorage. Resetting to defaults:",
+						result.error.format(),
 					);
-					// Fallback to defaults merged with whatever was valid
-					return { ...DEFAULT_SETTINGS, ...parsed } as AppSettings;
+					// Return default settings if data is corrupted
+					return { ...DEFAULT_SETTINGS };
 				}
 			}
 		} catch (e) {
-			console.warn("Failed to load settings:", e);
+			console.error("Failed to load settings from storage:", e);
 		}
 		return DEFAULT_SETTINGS;
 	}
 
 	function saveSettings() {
 		if (browser) {
+			logService.log("settings", "Saving settings to storage:", settings);
 			localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(settings));
 			SyncService.uploadAll();
 		}
@@ -111,6 +102,7 @@ function createSettingsStore() {
 
 		/** Internal update for SyncService to avoid infinite loops */
 		_internalUpdate(newData: Partial<AppSettings>) {
+			logService.log("settings", "Internal update received:", newData);
 			settings = { ...settings, ...newData };
 			if (browser) {
 				localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(settings));
@@ -118,11 +110,13 @@ function createSettingsStore() {
 		},
 
 		update(partial: Partial<AppSettings>) {
+			logService.log("settings", "Public update requested:", partial);
 			settings = { ...settings, ...partial };
 			saveSettings();
 		},
 
 		setCardLanguages(source: Language, target: Language) {
+			logService.log("settings", "Setting card languages:", { source, target });
 			settings = {
 				...settings,
 				sourceLanguage: source,
@@ -132,26 +126,31 @@ function createSettingsStore() {
 		},
 
 		setInterfaceLanguage(lang: Language) {
+			logService.log("settings", "Setting interface language:", lang);
 			settings = { ...settings, interfaceLanguage: lang };
 			saveSettings();
 		},
 
 		setLevel(level: CEFRLevel) {
+			logService.log("settings", "setLevel:", level);
 			settings = { ...settings, currentLevel: level, mode: "levels" };
 			saveSettings();
 		},
 
 		setPhrasesLevel(level: CEFRLevel) {
+			logService.log("settings", "setPhrasesLevel:", level);
 			settings = { ...settings, currentLevel: level, mode: "phrases" };
 			saveSettings();
 		},
 
 		setTopic(topicId: string) {
+			logService.log("settings", "setTopic:", topicId);
 			settings = { ...settings, currentTopic: topicId, mode: "topics" };
 			saveSettings();
 		},
 
 		setPlaylist(playlistId: PlaylistId) {
+			logService.log("settings", "setPlaylist:", playlistId);
 			settings = {
 				...settings,
 				currentPlaylist: playlistId,

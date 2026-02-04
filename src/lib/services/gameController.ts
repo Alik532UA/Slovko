@@ -53,7 +53,9 @@ export class GameController {
 			this.gameState.setData(data);
 
 			const { sourceLanguage, targetLanguage } = settingsStore.value;
-			const initialWords = data.words.slice(0, this.gameState.getPairsLimit());
+			const initialWords = this.gameState.getAvailableWords(
+				this.gameState.getPairsLimit(),
+			);
 
 			const { source, target } = createCardsFromWordKeys(
 				initialWords,

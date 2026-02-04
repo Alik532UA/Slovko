@@ -30,10 +30,10 @@
 	let selectedIcon = $state("");
 	let selectedColor = $state("");
 
-	// Ініціалізуємо при маунті
+	// Sync when props are available or change
 	$effect(() => {
-		if (!selectedIcon) selectedIcon = initialIcon;
-		if (!selectedColor) selectedColor = initialColor;
+		selectedIcon = initialIcon;
+		selectedColor = initialColor;
 	});
 
 	const AVATAR_ICONS = [

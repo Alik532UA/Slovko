@@ -6,7 +6,10 @@ import {
 	serverTimestamp,
 } from "firebase/firestore";
 import { db, auth } from "./config";
-import { settingsStore } from "../stores/settingsStore.svelte";
+import {
+	settingsStore,
+	AppSettingsSchema,
+} from "../stores/settingsStore.svelte";
 import { progressStore } from "../stores/progressStore.svelte";
 import { playlistStore } from "../stores/playlistStore.svelte";
 import { logService } from "../services/logService";
@@ -331,9 +334,19 @@ export const SyncService = {
 		this.private.isDownloading = true;
 
 		try {
-			// Синхронізація налаштувань
+			// Синхронізація налаштувань з валідацією
 			if (cloudData.settings) {
-				settingsStore._internalUpdate(cloudData.settings);
+				const result = AppSettingsSchema.safeParse(cloudData.settings);
+				if (result.success) {
+					logService.log("settings", "SyncService: applying cloud settings update:", result.data);
+					settingsStore._internalUpdate(result.data);
+				} else {
+					logService.error(
+						"sync",
+						"Invalid settings from cloud, ignoring:",
+						result.error.format(),
+					);
+				}
 			}
 
 			// Синхронізація прогресу

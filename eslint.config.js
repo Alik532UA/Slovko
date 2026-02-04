@@ -23,12 +23,12 @@ export default [
 		},
 	},
 	{
-		// TS files in src/lib
-		files: ["src/lib/**/*.ts"],
+		// TypeScript files
+		files: ["src/**/*.ts"],
 		languageOptions: {
 			parser: tsParser,
 			parserOptions: {
-				project: "./tsconfig.json",
+				project: null,
 			},
 		},
 		plugins: {
@@ -41,25 +41,32 @@ export default [
 				"warn",
 				{ argsIgnorePattern: "^_" },
 			],
-			"@typescript-eslint/ban-ts-comment": "off", // Allow simple @ts-ignore/@ts-expect-error
+			"@typescript-eslint/ban-ts-comment": "off",
 		},
 	},
 	{
-		// Svelte files and TS files in routes (less strict parsing)
-		files: ["src/**/*.svelte", "src/routes/**/*.ts"],
+		// Svelte files
+		files: ["src/**/*.svelte"],
 		languageOptions: {
 			parser: svelteParser,
 			parserOptions: {
 				parser: tsParser,
-				project: null, // Don't use project for routes/svelte to avoid "file not in project" errors
+				project: null,
 				extraFileExtensions: [".svelte"],
 			},
 		},
 		plugins: {
+			"@typescript-eslint": tsPlugin,
 			svelte: sveltePlugin,
 		},
 		rules: {
+			...tsPlugin.configs.recommended.rules,
 			...sveltePlugin.configs.recommended.rules,
+			"@typescript-eslint/no-explicit-any": "warn",
+			"@typescript-eslint/no-unused-vars": [
+				"warn",
+				{ argsIgnorePattern: "^_" },
+			],
 			"svelte/no-at-html-tags": "warn",
 		},
 	},

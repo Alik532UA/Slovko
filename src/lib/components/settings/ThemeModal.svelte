@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import type { AppTheme } from "$lib/types";
-	import { X, Check } from "lucide-svelte";
+	import { Check } from "lucide-svelte";
 	import { _ } from "svelte-i18n";
 
 	let { onclose }: { onclose: () => void } = $props();

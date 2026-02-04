@@ -2,7 +2,6 @@
 	import { _ } from "svelte-i18n";
 	import { ALL_LEVELS } from "$lib/types";
 	import {
-		Trophy,
 		Medal,
 		Crown,
 		User,
@@ -34,7 +33,11 @@
 	let leaderboardData = $state<any[]>([]);
 
 	$effect(() => {
+		const controller = new AbortController();
 		loadLeaderboard();
+		return () => {
+			controller.abort();
+		};
 	});
 
 	async function loadLeaderboard() {

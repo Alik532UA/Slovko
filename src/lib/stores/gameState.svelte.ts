@@ -1,4 +1,10 @@
-import type { WordKey, ActiveCard, CardStatus, WordPair, GameMode } from "../types";
+import type {
+	WordKey,
+	ActiveCard,
+	CardStatus,
+	WordPair,
+	GameMode,
+} from "../types";
 import { shuffle } from "../services/gameCardFactory";
 import type { AppSettings } from "./settingsStore.svelte";
 import type { GameData } from "../services/gameDataService";

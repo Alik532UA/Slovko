@@ -4,11 +4,11 @@
 	 * Modal for selecting a specific system voice for pronunciation.
 	 */
 	import { _ } from "svelte-i18n";
-	import { X, Check } from "lucide-svelte";
+	import { Check } from "lucide-svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import type { Language } from "$lib/types";
 	import { findBestVoice } from "$lib/services/speechService";
-	import { onMount, tick } from "svelte";
+	import { tick } from "svelte";
 
 	interface Props {
 		onclose: () => void;
@@ -42,17 +42,6 @@
 			}
 		}
 	}
-
-	$effect(() => {
-		const loadVoices = () => {
-			const allVoices = window.speechSynthesis.getVoices();
-			if (allVoices.length === 0) return;
-
-			voices = allVoices;
-
-			// ... (rest of filtering logic)
-		};
-	}); // This was a partial snippet, I'll provide the full replacement below
 
 	// Greeting text map for preview
 	const PREVIEW_TEXTS: Record<string, string> = {
@@ -137,9 +126,15 @@
 		};
 
 		loadVoices();
-		if (speechSynthesis.onvoiceschanged !== undefined) {
-			speechSynthesis.onvoiceschanged = loadVoices;
+		if (window.speechSynthesis.onvoiceschanged !== undefined) {
+			window.speechSynthesis.onvoiceschanged = loadVoices;
 		}
+
+		return () => {
+			if (window.speechSynthesis.onvoiceschanged === loadVoices) {
+				window.speechSynthesis.onvoiceschanged = null;
+			}
+		};
 	});
 
 	function handleVoiceSelect(voice: SpeechSynthesisVoice) {

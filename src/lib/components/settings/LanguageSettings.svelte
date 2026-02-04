@@ -4,7 +4,8 @@
 	 * Красиве вікно з прапорами
 	 */
 	import { _ } from "svelte-i18n";
-	import { X, Speech, Captions } from "lucide-svelte";
+	import { goto } from "$app/navigation";
+	import { Speech, Captions } from "lucide-svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import VoiceSelectionModal from "./VoiceSelectionModal.svelte";
 	import { setInterfaceLanguage, LANGUAGES } from "$lib/i18n/init";
@@ -155,16 +156,20 @@
 									class="flag-btn small"
 									class:selected={settingsStore.value.sourceLanguage === lang}
 									onclick={() => {
-										if (lang === settingsStore.value.targetLanguage) {
-											settingsStore.setCardLanguages(
-												lang,
-												settingsStore.value.sourceLanguage,
-											);
+										const currentTarget = settingsStore.value.targetLanguage;
+										const currentSource = settingsStore.value.sourceLanguage;
+										if (lang === currentTarget) {
+											settingsStore.setCardLanguages(lang, currentSource);
+											goto(`?source=${lang}&target=${currentSource}`, {
+												keepFocus: true,
+												noScroll: true,
+											});
 										} else {
-											settingsStore.setCardLanguages(
-												lang,
-												settingsStore.value.targetLanguage,
-											);
+											settingsStore.setCardLanguages(lang, currentTarget);
+											goto(`?source=${lang}&target=${currentTarget}`, {
+												keepFocus: true,
+												noScroll: true,
+											});
 										}
 									}}
 									title={LANGUAGE_NAMES[lang]}
@@ -221,16 +226,20 @@
 									class="flag-btn small"
 									class:selected={settingsStore.value.targetLanguage === lang}
 									onclick={() => {
-										if (lang === settingsStore.value.sourceLanguage) {
-											settingsStore.setCardLanguages(
-												settingsStore.value.targetLanguage,
-												lang,
-											);
+										const currentSource = settingsStore.value.sourceLanguage;
+										const currentTarget = settingsStore.value.targetLanguage;
+										if (lang === currentSource) {
+											settingsStore.setCardLanguages(currentTarget, lang);
+											goto(`?source=${currentTarget}&target=${lang}`, {
+												keepFocus: true,
+												noScroll: true,
+											});
 										} else {
-											settingsStore.setCardLanguages(
-												settingsStore.value.sourceLanguage,
-												lang,
-											);
+											settingsStore.setCardLanguages(currentSource, lang);
+											goto(`?source=${currentSource}&target=${lang}`, {
+												keepFocus: true,
+												noScroll: true,
+											});
 										}
 									}}
 									title={LANGUAGE_NAMES[lang]}

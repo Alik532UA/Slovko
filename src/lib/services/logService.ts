@@ -5,6 +5,7 @@ export const logConfig = {
 	store: false,
 	game: false,
 	sync: true,
+	settings: true,
 };
 
 export const logService = {

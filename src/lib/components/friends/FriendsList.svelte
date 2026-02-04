@@ -42,9 +42,13 @@
 
 	// Watch for tab change or refresh trigger
 	$effect(() => {
+		const controller = new AbortController();
 		if (activeTab || shouldRefresh) {
 			loadList();
 		}
+		return () => {
+			controller.abort();
+		};
 	});
 
 	async function loadList() {

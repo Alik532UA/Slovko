@@ -30,7 +30,6 @@
 		Puzzle,
 		ArrowLeftRight,
 		MessageSquare,
-		List,
 		RotateCcw,
 		Bookmark,
 	} from "lucide-svelte";
