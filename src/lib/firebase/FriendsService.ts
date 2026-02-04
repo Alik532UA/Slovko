@@ -325,6 +325,7 @@ export const FriendsService = {
 					displayName: displayName,
 					displayNameLower: displayName.toLowerCase(),
 					photoURL: auth.currentUser.photoURL,
+					isAnonymous: auth.currentUser.isAnonymous,
 					searchableEmail: auth.currentUser.email?.toLowerCase() || null,
 					updatedAt: serverTimestamp(),
 				},
@@ -392,12 +393,10 @@ export const FriendsService = {
 	): Promise<any[]> {
 		try {
 			const profilesRef = collection(db, COLLECTIONS.PROFILES);
-			// Для точності беремо більше записів, щоб відфільтрувати "читерів" (1 правильна відповідь = 100%)
-			const fetchLimit = metric === "accuracy" ? 50 : limitCount;
+			// Для точності беремо більше записів, щоб відфільтрувати "читерів" та анонімів
+			const fetchLimit = metric === "accuracy" ? 100 : 50;
 
 			// Визначаємо поле для сортування
-			// Якщо обрано 'all', використовуємо глобальну метрику (напр. 'totalCorrect')
-			// Якщо обрано рівень, використовуємо специфічне поле (напр. 'level_A1_totalCorrect')
 			let sortField: string = metric;
 			if (cefrLevel !== "all") {
 				if (metric === "bestStreak") {
@@ -409,8 +408,11 @@ export const FriendsService = {
 			}
 
 			// Створюємо базовий запит
-			// Примітка: для кожного такого запиту Firestore потребуватиме окремий індекс
-			let q = query(profilesRef, orderBy(sortField, "desc"), limit(fetchLimit));
+			let q = query(
+				profilesRef,
+				orderBy(sortField, "desc"),
+				limit(fetchLimit),
+			);
 
 			// Якщо обрано рівень, ми також можемо додати фільтр, щоб прибрати тих, хто ще не грав на ньому
 			if (cefrLevel !== "all") {
@@ -420,17 +422,25 @@ export const FriendsService = {
 			const snapshot = await getDocs(q);
 			let results = snapshot.docs.map((doc) => {
 				const data = doc.data() as any;
+				// Робимо детекцію аноніма суворішою для легасі даних
+				const isAnonymous = data.isAnonymous === true || 
+					(data.isAnonymous === undefined && !data.searchableEmail);
+
 				return {
 					uid: doc.id,
 					name: data.displayName || "User",
 					score: data[sortField] || 0,
 					photoURL: data.photoURL,
 					isMe: doc.id === auth.currentUser?.uid,
+					isAnonymous,
 					// Додаткові поля
 					totalAttempts: data.totalAttempts || 0,
 					bestCorrectStreakLevel: data.bestCorrectStreakLevel,
 				};
 			});
+
+			// Фільтрація: прибираємо анонімів
+			results = results.filter((u) => !u.isAnonymous);
 
 			// Фільтрація для точності: прибираємо тих, хто має 100% але менше 100 спроб
 			if (metric === "accuracy") {

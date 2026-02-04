@@ -94,7 +94,9 @@
 </svelte:head>
 
 <div class="app-container">
-	<TopBar />
+	<ErrorBoundary compact>
+		<TopBar />
+	</ErrorBoundary>
 
 	<main>
 		<ErrorBoundary>
@@ -118,7 +120,9 @@
 		</ErrorBoundary>
 	</main>
 
-	<BottomBar />
+	<ErrorBoundary compact>
+		<BottomBar />
+	</ErrorBoundary>
 </div>
 
 <style>

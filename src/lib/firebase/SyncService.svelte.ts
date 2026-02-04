@@ -322,6 +322,7 @@ class SyncServiceClass {
 			displayName,
 			displayNameLower: displayName.toLowerCase(),
 			photoURL: auth.currentUser?.photoURL || null,
+			isAnonymous: auth.currentUser?.isAnonymous || false,
 			totalCorrect: progress.totalCorrect,
 			totalAttempts: progress.totalAttempts,
 			bestStreak: progress.bestStreak,

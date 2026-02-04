@@ -4,17 +4,19 @@
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { versionStore } from "$lib/stores/versionStore.svelte";
 	import { logService } from "../../services/logService";
+	import type { Snippet } from "svelte";
 
 	interface Props {
-		children: any;
+		children: Snippet;
 		compact?: boolean;
 	}
 	let { children, compact = false }: Props = $props();
 
-	function copyReport(error: any) {
+	function copyReport(error: unknown) {
+		const err = error as any;
 		const report = {
-			error: error?.message || "Unknown error",
-			stack: error?.stack,
+			error: err?.message || "Unknown error",
+			stack: err?.stack,
 			version: versionStore.currentVersion,
 			settings: {
 				mode: settingsStore.value.mode,
@@ -32,7 +34,7 @@
 			.then(() => alert("Report copied to clipboard!"));
 	}
 
-	function handleError(error: any) {
+	function handleError(error: unknown) {
 		logService.error("game", "ErrorBoundary caught an error:", error);
 	}
 </script>

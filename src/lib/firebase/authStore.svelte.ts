@@ -1,5 +1,5 @@
 import { AuthService } from "./AuthService";
-import { SyncService } from "./SyncService";
+import { SyncService } from "./SyncService.svelte";
 import type { User } from "firebase/auth";
 
 /**

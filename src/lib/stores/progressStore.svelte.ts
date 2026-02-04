@@ -4,7 +4,7 @@
  */
 
 import { browser } from "$app/environment";
-import { SyncService } from "../firebase/SyncService";
+import { SyncService } from "../firebase/SyncService.svelte";
 import { streakService } from "../services/streakService";
 import {
 	ProgressStateSchema,
