@@ -1,175 +1,175 @@
 {
-    "app": {
-        "title": "Slovko"
-    },
-    "levels": {
-        "title": "Niveaus",
-        "A1": "Beginner",
-        "A2": "Elementair",
-        "B1": "Gemiddeld",
-        "B2": "Boven gemiddeld",
-        "C1": "Gevorderd",
-        "C2": "Vloeiend",
-        "underConstruction": "Dit niveau is in ontwikkeling, kies een ander niveau"
-    },
-    "tabs": {
-        "levels": "Niveaus",
-        "topics": "Onderwerpen",
-        "phrases": "Zinnen",
-        "playlists": "Lijsten"
-    },
-    "playlists": {
-        "favorites": "Favorieten",
-        "mistakes": "Fouten verbeteren",
-        "extra": "Extra studie",
-        "addToFavorites": "Toevoegen aan 'Favorieten'",
-        "removeFromFavorites": "Verwijderen uit 'Favorieten'",
-        "addToExtra": "Toevoegen aan 'Extra studie'",
-        "removeFromExtra": "Verwijderen uit 'Extra studie'",
-        "empty": "Deze afspeellijst is leeg, maar je kunt er kaarten aan toevoegen. Houd hiervoor een kaart een paar seconden ingedrukt om het contextmenu te openen.",
-        "emptyMistakes": "Deze lijst is leeg en wordt gevuld met woorden waarin je fouten maakt."
-    },
-    "topics": {
-        "title": "Onderwerpen",
-        "nature": "Natuur",
-        "animals": "Dieren",
-        "travel": "Reizen",
-        "food": "Eten",
-        "home": "Thuis",
-        "cars": "Auto's",
-        "it": "IT",
-        "questions": "Vraagwoorden",
-        "numbers": "Getallen",
-        "colors": "Kleuren",
-        "time": "Tijd",
-        "family_relationships": "Familie & Relaties",
-        "body_health": "Lichaam & Gezondheid",
-        "clothes_fashion": "Kleding & Mode",
-        "pronouns_people": "Voornaamwoorden & Mensen",
-        "basic_verbs": "Basiswerkwoorden",
-        "adjectives": "Bijvoeglijke naamwoorden",
-        "education_work": "Onderwijs & Werk",
-        "abstract_concepts": "Abstracte Concepten",
-        "society_law": "Samenleving & Recht",
-        "phrasal_verbs": "Frasale Werkwoorden",
-        "adverbs_prepositions": "Bijwoorden & Voorzetsels"
-    },
-    "onboarding": {
-        "whatToLearn": "Welke taal wil je leren?"
-    },
-    "settings": {
-        "interfaceLanguage": "Interface taal",
-        "cardLanguages": "Kaart talen",
-        "from": "Van",
-        "to": "Naar",
-        "sourceLanguage": "Linker kolom",
-        "targetLanguage": "Rechter kolom",
-        "transcription": "Toon transcriptie",
-        "pronunciation": "Spreek woorden uit",
-        "theme": "Thema",
-        "privacyTitle": "Privacy Settings",
-        "privacySubtitle": "Manage who can see you and interact with you",
-        "showInSearch": "Show me in search",
-        "showInSearchDesc": "Allow other users to find you by email or name",
-        "allowFriendRequests": "Allow friend requests",
-        "allowFriendRequestsDesc": "Allow others to send you friend requests",
-        "shareStats": "Share statistics",
-        "shareStatsDesc": "Allow friends to see your learning progress"
-    },
-    "theme": {
-        "dark-gray": "Donkergrijs",
-        "light-gray": "Lichtgrijs",
-        "orange": "Oranje",
-        "green": "Groen"
-    },
-    "menu": {
-        "donate": "Ondersteun het project",
-        "languages": "Talen",
-        "about": "Over"
-    },
-    "about": {
-        "title": "Over Slovko",
-        "description": "Slovko is een app om woorden te leren via een associatiespel. Verbind woorden en hun vertalingen om ze sneller te onthouden!",
-        "support": "Ondersteun het project",
-        "feedback": {
-            "title": "Feedback",
-            "improvement": "Verbetering",
-            "bug": "Foutmelding",
-            "contentError": "Inhoudsfout",
-            "question": "Vraag",
-            "messagePlaceholder": "Beschrijf je idee of probleem...",
-            "expected": "Wat had er moeten gebeuren?",
-            "actual": "Wat gebeurde er werkelijk?",
-            "send": "Verstuur feedback",
-            "successTitle": "Bedankt!",
-            "successMsg": "Jouw feedback helpt om Slovko beter te maken."
-        },
-        "developer": "Ontwikkelaar",
-        "version": "Versie"
-    },
-    "profile": {
-        "anonymousTitle": "Gast",
-        "anonymousSub": "Voortgang niet gesynchroniseerd",
-        "syncWarning": "Log in om je voortgang in de cloud op te slaan en veilig te houden op verschillende apparaten.",
-        "login": "Inloggen",
-        "logout": "Uitloggen",
-        "back": "Terug",
-        "register": "Registreren",
-        "signin": "Inloggen met e-mail",
-        "googleAuth": "Inloggen met Google",
-        "emailRegister": "Registreren met e-mail",
-        "forgotPassword": "Wachtwoord vergeten?",
-        "forgotPasswordTitle": "Wachtwoord herstellen",
-        "forgotPasswordSubtitle": "Voer het e-mailadres in van je account",
-        "spamWarning": "De e-mail kan in de map Ongewenst terechtkomen omdat de app nieuw is.",
-        "sendResetEmail": "Herstelmail verzenden",
-        "backToSignin": "Terug naar inloggen",
-        "passwordResetSent": "Herstelmail verzonden",
-        "errors": {
-            "enterEmail": "Voer e-mail in",
-            "userNotFound": "Gebruiker met dit e-mailadres niet gevonden",
-            "invalidEmail": "Ongeldig e-mailadres",
-            "fillFields": "Vul alle velden in",
-            "passwordMismatch": "Wachtwoorden komen niet overeen",
-            "weakPassword": "Wachtwoord is te zwak (min. 6 tekens)",
-            "emailInUse": "Dit e-mailadres is al in gebruik"
-        },
-        "stats": {
-            "byLevel": "Statistieken per niveau",
-            "general": "Algemene Activiteit",
-            "correct": "correcte antwoorden in totaal",
-            "streak": "huidige dagelijkse reeks",
-            "days": "totaal aantal dagen in programma",
-            "accuracy": "antwoordnauwkeurigheid",
-            "bestStreak": "record dagelijkse reeks",
-            "bestCorrectStreak": "recordreeks correcte antwoorden",
-            "correctToday": "vandaag correct",
-            "dailyAverage": "gemiddeld per dag",
-            "correctShort": "Correct",
-            "showMore": "toon meer statistieken",
-            "showLess": "toon minder statistieken"
-        }
-    },
-    "updateNotification": {
-        "message": "Update beschikbaar!",
-        "button": "Volledig bijwerken (cache wissen)",
-        "buttonSkip": "Oude cache behouden en doorgaan",
-        "warning": "Voor een stabiele werking is het raadzaam om de versie bij te werken. De update herstelt alle instellingen en afspeellijsten (omdat er nog geen autorisatie is). Indien overgeslagen, kunnen er fouten optreden.",
-        "yourVersion": "Uw versie",
-        "availableVersion": "Beschikbare versie"
-    },
-    "language": {
-        "uk": "Oekraïens",
-        "en": "Engels",
-        "nl": "Nederlands",
-        "de": "Duits",
-        "crh": "Krim-Tataars",
-        "voices": "stemmen"
-    },
-    "common": {
-        "all": "Alle",
-        "confirm": "Bevestigen",
-        "listen": "Luisteren",
-        "backToLearning": "Terug naar leren"
-    }
+	"app": {
+		"title": "Slovko"
+	},
+	"levels": {
+		"title": "Niveaus",
+		"A1": "Beginner",
+		"A2": "Elementair",
+		"B1": "Gemiddeld",
+		"B2": "Boven gemiddeld",
+		"C1": "Gevorderd",
+		"C2": "Vloeiend",
+		"underConstruction": "Dit niveau is in ontwikkeling, kies een ander niveau"
+	},
+	"tabs": {
+		"levels": "Niveaus",
+		"topics": "Onderwerpen",
+		"phrases": "Zinnen",
+		"playlists": "Lijsten"
+	},
+	"playlists": {
+		"favorites": "Favorieten",
+		"mistakes": "Fouten verbeteren",
+		"extra": "Extra studie",
+		"addToFavorites": "Toevoegen aan 'Favorieten'",
+		"removeFromFavorites": "Verwijderen uit 'Favorieten'",
+		"addToExtra": "Toevoegen aan 'Extra studie'",
+		"removeFromExtra": "Verwijderen uit 'Extra studie'",
+		"empty": "Deze afspeellijst is leeg, maar je kunt er kaarten aan toevoegen. Houd hiervoor een kaart een paar seconden ingedrukt om het contextmenu te openen.",
+		"emptyMistakes": "Deze lijst is leeg en wordt gevuld met woorden waarin je fouten maakt."
+	},
+	"topics": {
+		"title": "Onderwerpen",
+		"nature": "Natuur",
+		"animals": "Dieren",
+		"travel": "Reizen",
+		"food": "Eten",
+		"home": "Thuis",
+		"cars": "Auto's",
+		"it": "IT",
+		"questions": "Vraagwoorden",
+		"numbers": "Getallen",
+		"colors": "Kleuren",
+		"time": "Tijd",
+		"family_relationships": "Familie & Relaties",
+		"body_health": "Lichaam & Gezondheid",
+		"clothes_fashion": "Kleding & Mode",
+		"pronouns_people": "Voornaamwoorden & Mensen",
+		"basic_verbs": "Basiswerkwoorden",
+		"adjectives": "Bijvoeglijke naamwoorden",
+		"education_work": "Onderwijs & Werk",
+		"abstract_concepts": "Abstracte Concepten",
+		"society_law": "Samenleving & Recht",
+		"phrasal_verbs": "Frasale Werkwoorden",
+		"adverbs_prepositions": "Bijwoorden & Voorzetsels"
+	},
+	"onboarding": {
+		"whatToLearn": "Welke taal wil je leren?"
+	},
+	"settings": {
+		"interfaceLanguage": "Interface taal",
+		"cardLanguages": "Kaart talen",
+		"from": "Van",
+		"to": "Naar",
+		"sourceLanguage": "Linker kolom",
+		"targetLanguage": "Rechter kolom",
+		"transcription": "Toon transcriptie",
+		"pronunciation": "Spreek woorden uit",
+		"theme": "Thema",
+		"privacyTitle": "Privacy Settings",
+		"privacySubtitle": "Manage who can see you and interact with you",
+		"showInSearch": "Show me in search",
+		"showInSearchDesc": "Allow other users to find you by email or name",
+		"allowFriendRequests": "Allow friend requests",
+		"allowFriendRequestsDesc": "Allow others to send you friend requests",
+		"shareStats": "Share statistics",
+		"shareStatsDesc": "Allow friends to see your learning progress"
+	},
+	"theme": {
+		"dark-gray": "Donkergrijs",
+		"light-gray": "Lichtgrijs",
+		"orange": "Oranje",
+		"green": "Groen"
+	},
+	"menu": {
+		"donate": "Ondersteun het project",
+		"languages": "Talen",
+		"about": "Over"
+	},
+	"about": {
+		"title": "Over Slovko",
+		"description": "Slovko is een app om woorden te leren via een associatiespel. Verbind woorden en hun vertalingen om ze sneller te onthouden!",
+		"support": "Ondersteun het project",
+		"feedback": {
+			"title": "Feedback",
+			"improvement": "Verbetering",
+			"bug": "Foutmelding",
+			"contentError": "Inhoudsfout",
+			"question": "Vraag",
+			"messagePlaceholder": "Beschrijf je idee of probleem...",
+			"expected": "Wat had er moeten gebeuren?",
+			"actual": "Wat gebeurde er werkelijk?",
+			"send": "Verstuur feedback",
+			"successTitle": "Bedankt!",
+			"successMsg": "Jouw feedback helpt om Slovko beter te maken."
+		},
+		"developer": "Ontwikkelaar",
+		"version": "Versie"
+	},
+	"profile": {
+		"anonymousTitle": "Gast",
+		"anonymousSub": "Voortgang niet gesynchroniseerd",
+		"syncWarning": "Log in om je voortgang in de cloud op te slaan en veilig te houden op verschillende apparaten.",
+		"login": "Inloggen",
+		"logout": "Uitloggen",
+		"back": "Terug",
+		"register": "Registreren",
+		"signin": "Inloggen met e-mail",
+		"googleAuth": "Inloggen met Google",
+		"emailRegister": "Registreren met e-mail",
+		"forgotPassword": "Wachtwoord vergeten?",
+		"forgotPasswordTitle": "Wachtwoord herstellen",
+		"forgotPasswordSubtitle": "Voer het e-mailadres in van je account",
+		"spamWarning": "De e-mail kan in de map Ongewenst terechtkomen omdat de app nieuw is.",
+		"sendResetEmail": "Herstelmail verzenden",
+		"backToSignin": "Terug naar inloggen",
+		"passwordResetSent": "Herstelmail verzonden",
+		"errors": {
+			"enterEmail": "Voer e-mail in",
+			"userNotFound": "Gebruiker met dit e-mailadres niet gevonden",
+			"invalidEmail": "Ongeldig e-mailadres",
+			"fillFields": "Vul alle velden in",
+			"passwordMismatch": "Wachtwoorden komen niet overeen",
+			"weakPassword": "Wachtwoord is te zwak (min. 6 tekens)",
+			"emailInUse": "Dit e-mailadres is al in gebruik"
+		},
+		"stats": {
+			"byLevel": "Statistieken per niveau",
+			"general": "Algemene Activiteit",
+			"correct": "correcte antwoorden in totaal",
+			"streak": "huidige dagelijkse reeks",
+			"days": "totaal aantal dagen in programma",
+			"accuracy": "antwoordnauwkeurigheid",
+			"bestStreak": "record dagelijkse reeks",
+			"bestCorrectStreak": "recordreeks correcte antwoorden",
+			"correctToday": "vandaag correct",
+			"dailyAverage": "gemiddeld per dag",
+			"correctShort": "Correct",
+			"showMore": "toon meer statistieken",
+			"showLess": "toon minder statistieken"
+		}
+	},
+	"updateNotification": {
+		"message": "Update beschikbaar!",
+		"button": "Volledig bijwerken (cache wissen)",
+		"buttonSkip": "Oude cache behouden en doorgaan",
+		"warning": "Voor een stabiele werking is het raadzaam om de versie bij te werken. De update herstelt alle instellingen en afspeellijsten (omdat er nog geen autorisatie is). Indien overgeslagen, kunnen er fouten optreden.",
+		"yourVersion": "Uw versie",
+		"availableVersion": "Beschikbare versie"
+	},
+	"language": {
+		"uk": "Oekraïens",
+		"en": "Engels",
+		"nl": "Nederlands",
+		"de": "Duits",
+		"crh": "Krim-Tataars",
+		"voices": "stemmen"
+	},
+	"common": {
+		"all": "Alle",
+		"confirm": "Bevestigen",
+		"listen": "Luisteren",
+		"backToLearning": "Terug naar leren"
+	}
 }

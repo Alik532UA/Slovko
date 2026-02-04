@@ -1,158 +1,158 @@
 {
-    "app": {
-        "title": "Slovko"
-    },
-    "levels": {
-        "title": "Seviyeler",
-        "A1": "Başlanğıç",
-        "A2": "Elementar",
-        "B1": "Orta",
-        "B2": "Orta üstü",
-        "C1": "İleri",
-        "C2": "Serbest",
-        "underConstruction": "Bu seviye işlenmekte, lütfen başqa bir seviye saylañız"
-    },
-    "tabs": {
-        "levels": "Seviyeler",
-        "topics": "Temalar",
-        "phrases": "İbareler",
-        "playlists": "Listeler"
-    },
-    "playlists": {
-        "favorites": "Saylanğanlar",
-        "mistakes": "Hatalar",
-        "extra": "İlaveten",
-        "addToFavorites": "«Saylanğanlarğa» ekle",
-        "removeFromFavorites": "«Saylanğanlardan» sil",
-        "addToExtra": "«İlaveten» ekle",
-        "removeFromExtra": "«İlaveten» sil",
-        "empty": "Bu liste boş, lâkin oña kartlar ekleybilirsiñiz. Bunuñ içün kartqa bir qaç saniye basıp tutıñız ve listelerge ekleme menüsini açıñız.",
-        "emptyMistakes": "Bu liste boş ve hata yapqan sözleriñiznen toldurılacaq."
-    },
-    "topics": {
-        "title": "Temalar",
-        "nature": "Tabiat",
-        "animals": "Ayvanlar",
-        "travel": "Sayahat",
-        "food": "Aş",
-        "home": "Ev",
-        "cars": "Arabalar",
-        "it": "IT",
-        "questions": "Sual sözleri",
-        "numbers": "Sayılar",
-        "colors": "Renkler",
-        "time": "Vaqıt",
-        "family_relationships": "Aile ve Munasebetler",
-        "body_health": "Beden ve Sağlıq",
-        "clothes_fashion": "Urba ve Moda",
-        "pronouns_people": "Zamirler ve İnsanlar",
-        "basic_verbs": "Esas Fiiller",
-        "adjectives": "Sıfatlar",
-        "education_work": "Tahsil ve İş",
-        "abstract_concepts": "Mucerret Mevhumlar",
-        "society_law": "Cemiyet ve Qanun",
-        "phrasal_verbs": "İbareli Fiiller",
-        "adverbs_prepositions": "Zarflar ve Edatlar"
-    },
-    "onboarding": {
-        "whatToLearn": "Qaysı tilni ögrenmege isteysiñiz?"
-    },
-    "settings": {
-        "interfaceLanguage": "Arayüz tili",
-        "cardLanguages": "Kartaların tilleri",
-        "from": "...-den",
-        "to": "...-ge",
-        "sourceLanguage": "Sol sutun",
-        "targetLanguage": "Oñ sutun",
-        "transcription": "Transkriptsiya köster",
-        "pronunciation": "Sözlerni oqumaq",
-        "theme": "Tema",
-        "privacyTitle": "Privacy Settings",
-        "privacySubtitle": "Manage who can see you and interact with you",
-        "showInSearch": "Show me in search",
-        "showInSearchDesc": "Allow other users to find you by email or name",
-        "allowFriendRequests": "Allow friend requests",
-        "allowFriendRequestsDesc": "Allow others to send you friend requests",
-        "shareStats": "Share statistics",
-        "shareStatsDesc": "Allow friends to see your learning progress"
-    },
-    "theme": {
-        "dark-gray": "Qaranlıq",
-        "light-gray": "Yarıq",
-        "orange": "Turuncu",
-        "green": "Yeşil"
-    },
-    "menu": {
-        "donate": "Proyektni destekle",
-        "languages": "Tiller",
-        "about": "Aqqında"
-    },
-    "about": {
-        "title": "Slovko aqqında",
-        "description": "Slovko — assotsiatsiya oyunu vastasınen yañı sözlerni ögrenmek içün ilova. Sözlerni ve olarnıñ tercimelerini birleştirerek daa tez ezberleñiz!",
-        "support": "Leyhanı desteklemek",
-        "developer": "Yaratıcı",
-        "version": "Versiya"
-    },
-    "profile": {
-        "anonymousTitle": "Musafir",
-        "anonymousSub": "İlerleme sin hronizatsiya etilmedi",
-        "syncWarning": "İlerlemeñizni bulutqa saqlamaq ve farqlı cihazlarda qorumaq içün kiriñiz.",
-        "login": "Kirmege",
-        "logout": "Çıqmaq",
-        "back": "Artqa",
-        "register": "Qeydiyat",
-        "signin": "E-mail ilen kiriş",
-        "googleAuth": "Google ilen kiriş",
-        "emailRegister": "E-mail ilen qayd",
-        "forgotPassword": "Parolni unuttıñızmı?",
-        "forgotPasswordTitle": "Parolni yañartuv",
-        "forgotPasswordSubtitle": "Esa-bıñızğa bağlı emailni kirsetiñiz",
-        "spamWarning": "Mektüp \"Spam\" qutusına tüşebilir, çünki uyğulama yañıdır.",
-        "sendResetEmail": "Yañartuv mektübini yollamaq",
-        "backToSignin": "Kirişke qaytmaq",
-        "passwordResetSent": "Yañartuv mektübi yollandı",
-        "errors": {
-            "enterEmail": "Emailni kirsetiñiz",
-            "userNotFound": "Bu emailge sahip qullanıcı tapılmadı",
-            "invalidEmail": "Email formatı yañlış",
-            "fillFields": "Tüm meydanlarnı doldurıñız",
-            "passwordMismatch": "Parollar eşleşmey",
-            "weakPassword": "Parol çoq zayıf (eñ az 6 belgi)",
-            "emailInUse": "Bu email endi qullanıla"
-        },
-        "stats": {
-            "correct": "umumiy \n doğru cevaplar",
-            "streak": "küñlük seri",
-            "days": "programmada \n bütun künler",
-            "accuracy": "umumiy \n doğruluk",
-            "bestStreak": "rekord küñlük \n seri",
-            "bestCorrectStreak": "rekord doğru \n cevaplar serisi",
-            "correctToday": "bugünki \n doğru cevaplar",
-            "dailyAverage": "küñlük \n ortalama",
-            "showMore": "daa çoq statistika köster",
-            "showLess": "statistikani gizle"
-        }
-    },
-    "updateNotification": {
-        "message": "Yañartuv bar!",
-        "button": "Tamamile yañartmaq (keşni temizlemek)",
-        "buttonSkip": "Eski keşni qaldırmaq ve devam etmek",
-        "warning": "Yaxşı çalışması içün programmanı yañartmaq kerek. Yañartuv bütün sazlamalarnı ve pley-listlerni yoq eter (şimdilik avtorizatsiya yoq). Red etseñiz, hatalar ola bile.",
-        "yourVersion": "Siziñ versiyañız",
-        "availableVersion": "Yañı versiya"
-    },
-    "language": {
-        "uk": "Ukrain",
-        "en": "İngliz",
-        "nl": "Felemenk",
-        "de": "Alman",
-        "crh": "Qırımtatar",
-        "voices": "sesleri"
-    },
-    "common": {
-        "confirm": "Tasdıqla",
-        "listen": "Diñlemek",
-        "backToLearning": "Ögrenmege qaytmaq"
-    }
+	"app": {
+		"title": "Slovko"
+	},
+	"levels": {
+		"title": "Seviyeler",
+		"A1": "Başlanğıç",
+		"A2": "Elementar",
+		"B1": "Orta",
+		"B2": "Orta üstü",
+		"C1": "İleri",
+		"C2": "Serbest",
+		"underConstruction": "Bu seviye işlenmekte, lütfen başqa bir seviye saylañız"
+	},
+	"tabs": {
+		"levels": "Seviyeler",
+		"topics": "Temalar",
+		"phrases": "İbareler",
+		"playlists": "Listeler"
+	},
+	"playlists": {
+		"favorites": "Saylanğanlar",
+		"mistakes": "Hatalar",
+		"extra": "İlaveten",
+		"addToFavorites": "«Saylanğanlarğa» ekle",
+		"removeFromFavorites": "«Saylanğanlardan» sil",
+		"addToExtra": "«İlaveten» ekle",
+		"removeFromExtra": "«İlaveten» sil",
+		"empty": "Bu liste boş, lâkin oña kartlar ekleybilirsiñiz. Bunuñ içün kartqa bir qaç saniye basıp tutıñız ve listelerge ekleme menüsini açıñız.",
+		"emptyMistakes": "Bu liste boş ve hata yapqan sözleriñiznen toldurılacaq."
+	},
+	"topics": {
+		"title": "Temalar",
+		"nature": "Tabiat",
+		"animals": "Ayvanlar",
+		"travel": "Sayahat",
+		"food": "Aş",
+		"home": "Ev",
+		"cars": "Arabalar",
+		"it": "IT",
+		"questions": "Sual sözleri",
+		"numbers": "Sayılar",
+		"colors": "Renkler",
+		"time": "Vaqıt",
+		"family_relationships": "Aile ve Munasebetler",
+		"body_health": "Beden ve Sağlıq",
+		"clothes_fashion": "Urba ve Moda",
+		"pronouns_people": "Zamirler ve İnsanlar",
+		"basic_verbs": "Esas Fiiller",
+		"adjectives": "Sıfatlar",
+		"education_work": "Tahsil ve İş",
+		"abstract_concepts": "Mucerret Mevhumlar",
+		"society_law": "Cemiyet ve Qanun",
+		"phrasal_verbs": "İbareli Fiiller",
+		"adverbs_prepositions": "Zarflar ve Edatlar"
+	},
+	"onboarding": {
+		"whatToLearn": "Qaysı tilni ögrenmege isteysiñiz?"
+	},
+	"settings": {
+		"interfaceLanguage": "Arayüz tili",
+		"cardLanguages": "Kartaların tilleri",
+		"from": "...-den",
+		"to": "...-ge",
+		"sourceLanguage": "Sol sutun",
+		"targetLanguage": "Oñ sutun",
+		"transcription": "Transkriptsiya köster",
+		"pronunciation": "Sözlerni oqumaq",
+		"theme": "Tema",
+		"privacyTitle": "Privacy Settings",
+		"privacySubtitle": "Manage who can see you and interact with you",
+		"showInSearch": "Show me in search",
+		"showInSearchDesc": "Allow other users to find you by email or name",
+		"allowFriendRequests": "Allow friend requests",
+		"allowFriendRequestsDesc": "Allow others to send you friend requests",
+		"shareStats": "Share statistics",
+		"shareStatsDesc": "Allow friends to see your learning progress"
+	},
+	"theme": {
+		"dark-gray": "Qaranlıq",
+		"light-gray": "Yarıq",
+		"orange": "Turuncu",
+		"green": "Yeşil"
+	},
+	"menu": {
+		"donate": "Proyektni destekle",
+		"languages": "Tiller",
+		"about": "Aqqında"
+	},
+	"about": {
+		"title": "Slovko aqqında",
+		"description": "Slovko — assotsiatsiya oyunu vastasınen yañı sözlerni ögrenmek içün ilova. Sözlerni ve olarnıñ tercimelerini birleştirerek daa tez ezberleñiz!",
+		"support": "Leyhanı desteklemek",
+		"developer": "Yaratıcı",
+		"version": "Versiya"
+	},
+	"profile": {
+		"anonymousTitle": "Musafir",
+		"anonymousSub": "İlerleme sin hronizatsiya etilmedi",
+		"syncWarning": "İlerlemeñizni bulutqa saqlamaq ve farqlı cihazlarda qorumaq içün kiriñiz.",
+		"login": "Kirmege",
+		"logout": "Çıqmaq",
+		"back": "Artqa",
+		"register": "Qeydiyat",
+		"signin": "E-mail ilen kiriş",
+		"googleAuth": "Google ilen kiriş",
+		"emailRegister": "E-mail ilen qayd",
+		"forgotPassword": "Parolni unuttıñızmı?",
+		"forgotPasswordTitle": "Parolni yañartuv",
+		"forgotPasswordSubtitle": "Esa-bıñızğa bağlı emailni kirsetiñiz",
+		"spamWarning": "Mektüp \"Spam\" qutusına tüşebilir, çünki uyğulama yañıdır.",
+		"sendResetEmail": "Yañartuv mektübini yollamaq",
+		"backToSignin": "Kirişke qaytmaq",
+		"passwordResetSent": "Yañartuv mektübi yollandı",
+		"errors": {
+			"enterEmail": "Emailni kirsetiñiz",
+			"userNotFound": "Bu emailge sahip qullanıcı tapılmadı",
+			"invalidEmail": "Email formatı yañlış",
+			"fillFields": "Tüm meydanlarnı doldurıñız",
+			"passwordMismatch": "Parollar eşleşmey",
+			"weakPassword": "Parol çoq zayıf (eñ az 6 belgi)",
+			"emailInUse": "Bu email endi qullanıla"
+		},
+		"stats": {
+			"correct": "umumiy \n doğru cevaplar",
+			"streak": "küñlük seri",
+			"days": "programmada \n bütun künler",
+			"accuracy": "umumiy \n doğruluk",
+			"bestStreak": "rekord küñlük \n seri",
+			"bestCorrectStreak": "rekord doğru \n cevaplar serisi",
+			"correctToday": "bugünki \n doğru cevaplar",
+			"dailyAverage": "küñlük \n ortalama",
+			"showMore": "daa çoq statistika köster",
+			"showLess": "statistikani gizle"
+		}
+	},
+	"updateNotification": {
+		"message": "Yañartuv bar!",
+		"button": "Tamamile yañartmaq (keşni temizlemek)",
+		"buttonSkip": "Eski keşni qaldırmaq ve devam etmek",
+		"warning": "Yaxşı çalışması içün programmanı yañartmaq kerek. Yañartuv bütün sazlamalarnı ve pley-listlerni yoq eter (şimdilik avtorizatsiya yoq). Red etseñiz, hatalar ola bile.",
+		"yourVersion": "Siziñ versiyañız",
+		"availableVersion": "Yañı versiya"
+	},
+	"language": {
+		"uk": "Ukrain",
+		"en": "İngliz",
+		"nl": "Felemenk",
+		"de": "Alman",
+		"crh": "Qırımtatar",
+		"voices": "sesleri"
+	},
+	"common": {
+		"confirm": "Tasdıqla",
+		"listen": "Diñlemek",
+		"backToLearning": "Ögrenmege qaytmaq"
+	}
 }

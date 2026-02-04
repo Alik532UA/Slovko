@@ -1,11 +1,21 @@
-import type { gameState as GameStateType } from '../stores/gameState.svelte';
-import { settingsStore, type AppSettings } from '../stores/settingsStore.svelte';
-import { playlistStore } from '../stores/playlistStore.svelte';
-import { gameDataService, type GameDataService, type GameData } from './gameDataService';
-import { gameAudioHandler, type GameAudioHandler } from './gameAudioHandler';
-import { gameFeedbackHandler, type GameFeedbackHandler } from './gameFeedbackHandler';
-import { createCardsFromWordKeys, shuffle } from './gameCardFactory';
-import type { ActiveCard, CardStatus, WordPair } from '../types';
+import type { gameState as GameStateType } from "../stores/gameState.svelte";
+import {
+	settingsStore,
+	type AppSettings,
+} from "../stores/settingsStore.svelte";
+import { playlistStore } from "../stores/playlistStore.svelte";
+import {
+	gameDataService,
+	type GameDataService,
+	type GameData,
+} from "./gameDataService";
+import { gameAudioHandler, type GameAudioHandler } from "./gameAudioHandler";
+import {
+	gameFeedbackHandler,
+	type GameFeedbackHandler,
+} from "./gameFeedbackHandler";
+import { createCardsFromWordKeys, shuffle } from "./gameCardFactory";
+import type { ActiveCard, CardStatus, WordPair } from "../types";
 
 /**
  * GameController — сервіс для координації ігрової логіки.
@@ -13,225 +23,238 @@ import type { ActiveCard, CardStatus, WordPair } from '../types';
  * Використовує Dependency Injection для полегшення тестування.
  */
 export class GameController {
-    private lastInteractionTime = 0;
+	private lastInteractionTime = 0;
 
-    constructor(
-        private gameState: typeof GameStateType,
-        private dataService: GameDataService,
-        private audioHandler: GameAudioHandler,
-        private feedbackHandler: GameFeedbackHandler
-    ) {}
+	constructor(
+		private gameState: typeof GameStateType,
+		private dataService: GameDataService,
+		private audioHandler: GameAudioHandler,
+		private feedbackHandler: GameFeedbackHandler,
+	) {}
 
-    /**
-     * Ініціалізація нової гри
-     * @param preloadedData - Опціонально: попередньо завантажені дані (наприклад, з SSR/load function)
-     */
-    async initGame(preloadedData?: GameData): Promise<void> {
-        this.gameState.setLoading(true);
-        this.gameState.setError(null);
-        this.gameState.setProcessing(false);
-        this.lastInteractionTime = Date.now();
+	/**
+	 * Ініціалізація нової гри
+	 * @param preloadedData - Опціонально: попередньо завантажені дані (наприклад, з SSR/load function)
+	 */
+	async initGame(preloadedData?: GameData): Promise<void> {
+		this.gameState.setLoading(true);
+		this.gameState.setError(null);
+		this.gameState.setProcessing(false);
+		this.lastInteractionTime = Date.now();
 
-        try {
-            let data = preloadedData;
-            
-            // Якщо даних немає, завантажуємо їх (fallback)
-            if (!data) {
-                data = await this.dataService.loadGameData(settingsStore.value, playlistStore);
-            }
-            
-            this.gameState.setData(data);
+		try {
+			let data = preloadedData;
 
-            const { sourceLanguage, targetLanguage } = settingsStore.value;
-            const initialWords = data.words.slice(0, this.gameState.getPairsLimit());
-            
-            const { source, target } = createCardsFromWordKeys(
-                initialWords,
-                sourceLanguage,
-                targetLanguage,
-                data.sourceTranslations,
-                data.targetTranslations,
-                data.sourceTranscriptions,
-                data.targetTranscriptions
-            );
+			// Якщо даних немає, завантажуємо їх (fallback)
+			if (!data) {
+				data = await this.dataService.loadGameData(
+					settingsStore.value,
+					playlistStore,
+				);
+			}
 
-            this.gameState.setCards(source, target);
-            initialWords.forEach(w => this.gameState.markWordAsUsed(w));
-        } catch (error: any) {
-            console.error('Failed to initialize game:', error);
-            this.gameState.setError(error?.message || 'Failed to load game data');
-        } finally {
-            this.gameState.setLoading(false);
-        }
-    }
+			this.gameState.setData(data);
 
-    /**
-     * Обробка вибору картки
-     */
-    selectCard(card: ActiveCard): void {
-        this.updateTimers();
+			const { sourceLanguage, targetLanguage } = settingsStore.value;
+			const initialWords = data.words.slice(0, this.gameState.getPairsLimit());
 
-        if (this.gameState.isProcessing || !card.isVisible) return;
-        
-        const selectedCard = this.gameState.selectedCard;
+			const { source, target } = createCardsFromWordKeys(
+				initialWords,
+				sourceLanguage,
+				targetLanguage,
+				data.sourceTranslations,
+				data.targetTranslations,
+				data.sourceTranscriptions,
+				data.targetTranscriptions,
+			);
 
-        // Перший вибір або скасування
-        if (!selectedCard) {
-            this.gameState.updateCardStatus(card.id, 'selected');
-            this.gameState.setSelectedCard(card);
-            return;
-        }
+			this.gameState.setCards(source, target);
+			initialWords.forEach((w) => this.gameState.markWordAsUsed(w));
+		} catch (error: any) {
+			console.error("Failed to initialize game:", error);
+			this.gameState.setError(error?.message || "Failed to load game data");
+		} finally {
+			this.gameState.setLoading(false);
+		}
+	}
 
-        if (selectedCard.id === card.id) {
-            this.gameState.updateCardStatus(card.id, 'idle');
-            this.gameState.setSelectedCard(null);
-            return;
-        }
+	/**
+	 * Обробка вибору картки
+	 */
+	selectCard(card: ActiveCard): void {
+		this.updateTimers();
 
-        // Перемикання мови в межах однієї сторони
-        if (selectedCard.language === card.language) {
-            this.gameState.updateCardStatus(selectedCard.id, 'idle');
-            this.gameState.updateCardStatus(card.id, 'selected');
-            this.gameState.setSelectedCard(card);
-            return;
-        }
+		if (this.gameState.isProcessing || !card.isVisible) return;
 
-        // Другий вибір — перевірка матчу
-        this.gameState.updateCardStatus(card.id, 'selected');
-        const isMatch = selectedCard.wordKey === card.wordKey;
+		const selectedCard = this.gameState.selectedCard;
 
-        if (isMatch) {
-            this.handleMatch(selectedCard, card);
-        } else {
-            this.handleMiss(selectedCard, card);
-        }
-    }
+		// Перший вибір або скасування
+		if (!selectedCard) {
+			this.gameState.updateCardStatus(card.id, "selected");
+			this.gameState.setSelectedCard(card);
+			return;
+		}
 
-    private handleMatch(card1: ActiveCard, card2: ActiveCard) {
-        this.gameState.setProcessing(true);
-        this.gameState.updateCardStatus(card1.id, 'correct');
-        this.gameState.updateCardStatus(card2.id, 'correct');
+		if (selectedCard.id === card.id) {
+			this.gameState.updateCardStatus(card.id, "idle");
+			this.gameState.setSelectedCard(null);
+			return;
+		}
 
-        this.audioHandler.playMatch(card1, card2);
-        this.gameState.recordMatch();
+		// Перемикання мови в межах однієї сторони
+		if (selectedCard.language === card.language) {
+			this.gameState.updateCardStatus(selectedCard.id, "idle");
+			this.gameState.updateCardStatus(card.id, "selected");
+			this.gameState.setSelectedCard(card);
+			return;
+		}
 
-        const levelId = this.getCurrentContextId();
-        const isMistakesPlaylist = settingsStore.value.currentPlaylist === 'mistakes';
-        this.feedbackHandler.handleCorrect(card1.wordKey, levelId, isMistakesPlaylist);
+		// Другий вибір — перевірка матчу
+		this.gameState.updateCardStatus(card.id, "selected");
+		const isMatch = selectedCard.wordKey === card.wordKey;
 
-        this.gameState.setSelectedCard(null);
-        this.gameState.setProcessing(false);
+		if (isMatch) {
+			this.handleMatch(selectedCard, card);
+		} else {
+			this.handleMiss(selectedCard, card);
+		}
+	}
 
-        setTimeout(() => this.checkAndRefill(), 1000);
-    }
+	private handleMatch(card1: ActiveCard, card2: ActiveCard) {
+		this.gameState.setProcessing(true);
+		this.gameState.updateCardStatus(card1.id, "correct");
+		this.gameState.updateCardStatus(card2.id, "correct");
 
-    private handleMiss(card1: ActiveCard, card2: ActiveCard) {
-        this.gameState.updateCardStatus(card1.id, 'wrong');
-        this.gameState.updateCardStatus(card2.id, 'wrong');
+		this.audioHandler.playMatch(card1, card2);
+		this.gameState.recordMatch();
 
-        this.gameState.recordMiss();
-        
-        const pair1 = this.constructWordPair(card1.wordKey);
-        const pair2 = this.constructWordPair(card2.wordKey);
-        const levelId = this.getCurrentContextId();
-        this.feedbackHandler.handleWrong(pair1, pair2, levelId);
+		const levelId = this.getCurrentContextId();
+		const isMistakesPlaylist =
+			settingsStore.value.currentPlaylist === "mistakes";
+		this.feedbackHandler.handleCorrect(
+			card1.wordKey,
+			levelId,
+			isMistakesPlaylist,
+		);
 
-        this.gameState.setSelectedCard(null);
+		this.gameState.setSelectedCard(null);
+		this.gameState.setProcessing(false);
 
-        setTimeout(() => {
-            this.gameState.resetWrongCards(card1.id, card2.id);
-        }, 500);
-    }
+		setTimeout(() => this.checkAndRefill(), 1000);
+	}
 
-    private checkAndRefill() {
-        const visibleCount = this.gameState.getVisiblePairCount();
-        const limit = this.gameState.getPairsLimit();
+	private handleMiss(card1: ActiveCard, card2: ActiveCard) {
+		this.gameState.updateCardStatus(card1.id, "wrong");
+		this.gameState.updateCardStatus(card2.id, "wrong");
 
-        if (visibleCount <= 2) { // REFILL_THRESHOLD
-            const newWords = this.gameState.getAvailableWords(limit - visibleCount);
-            if (newWords.length === 0) return;
+		this.gameState.recordMiss();
 
-            const { sourceLanguage, targetLanguage } = settingsStore.value;
-            const { source, target } = createCardsFromWordKeys(
-                newWords,
-                sourceLanguage,
-                targetLanguage,
-                this.gameState.getTranslations('source'),
-                this.gameState.getTranslations('target'),
-                this.gameState.getTranscriptions('source'),
-                this.gameState.getTranscriptions('target'),
-                this.gameState.totalCardsCount
-            );
+		const pair1 = this.constructWordPair(card1.wordKey);
+		const pair2 = this.constructWordPair(card2.wordKey);
+		const levelId = this.getCurrentContextId();
+		this.feedbackHandler.handleWrong(pair1, pair2, levelId);
 
-            this.gameState.refillCards(source, target);
-            newWords.forEach(w => this.gameState.markWordAsUsed(w));
-        }
-    }
+		this.gameState.setSelectedCard(null);
 
-    private getCurrentContextId(): string {
-        const { mode, currentLevel, currentTopic, currentPlaylist } = settingsStore.value;
-        if (mode === 'topics') return currentTopic;
-        if (mode === 'playlists') return currentPlaylist || 'mixed';
-        return currentLevel; // levels or phrases
-    }
+		setTimeout(() => {
+			this.gameState.resetWrongCards(card1.id, card2.id);
+		}, 500);
+	}
 
-    private updateTimers() {
-        const now = Date.now();
-        if (this.lastInteractionTime > 0) {
-            const diff = now - this.lastInteractionTime;
-            if (diff > 5000 && this.gameState.hasHistory) {
-                this.gameState.addIgnoredTime(diff - 5000);
-            }
-        }
-        this.lastInteractionTime = now;
-    }
+	private checkAndRefill() {
+		const visibleCount = this.gameState.getVisiblePairCount();
+		const limit = this.gameState.getPairsLimit();
 
-    private constructWordPair(wordKey: string): WordPair {
-        return this.gameState.constructWordPair(wordKey, settingsStore.value);
-    }
+		if (visibleCount <= 2) {
+			// REFILL_THRESHOLD
+			const newWords = this.gameState.getAvailableWords(limit - visibleCount);
+			if (newWords.length === 0) return;
 
-    useHint(isSlow = false): boolean {
-        const pair = this.gameState.findAvailableMatch();
-        if (!pair) return false;
+			const { sourceLanguage, targetLanguage } = settingsStore.value;
+			const { source, target } = createCardsFromWordKeys(
+				newWords,
+				sourceLanguage,
+				targetLanguage,
+				this.gameState.getTranslations("source"),
+				this.gameState.getTranslations("target"),
+				this.gameState.getTranscriptions("source"),
+				this.gameState.getTranscriptions("target"),
+				this.gameState.totalCardsCount,
+			);
 
-        const { src, tgt } = pair;
-        const status: CardStatus = isSlow ? 'hint-slow' : 'hint';
-        
-        this.gameState.updateCardStatus(src.id, status);
-        this.gameState.updateCardStatus(tgt.id, status);
+			this.gameState.refillCards(source, target);
+			newWords.forEach((w) => this.gameState.markWordAsUsed(w));
+		}
+	}
 
-        setTimeout(() => {
-            this.gameState.clearHint(src.id, tgt.id, status);
-        }, isSlow ? 5000 : 1000);
+	private getCurrentContextId(): string {
+		const { mode, currentLevel, currentTopic, currentPlaylist } =
+			settingsStore.value;
+		if (mode === "topics") return currentTopic;
+		if (mode === "playlists") return currentPlaylist || "mixed";
+		return currentLevel; // levels or phrases
+	}
 
-        return true;
-    }
+	private updateTimers() {
+		const now = Date.now();
+		if (this.lastInteractionTime > 0) {
+			const diff = now - this.lastInteractionTime;
+			if (diff > 5000 && this.gameState.hasHistory) {
+				this.gameState.addIgnoredTime(diff - 5000);
+			}
+		}
+		this.lastInteractionTime = now;
+	}
 
-    toggleLearningMode(): void {
-        const newState = !this.gameState.isLearningMode;
-        this.gameState.setLearningMode(newState);
-        if (newState) {
-            this.runLearningLoop();
-        }
-    }
+	private constructWordPair(wordKey: string): WordPair {
+		return this.gameState.constructWordPair(wordKey, settingsStore.value);
+	}
 
-    private async runLearningLoop() {
-        if (!this.gameState.isLearningMode) return;
-        if (this.gameState.isProcessing) {
-            setTimeout(() => this.runLearningLoop(), 500);
-            return;
-        }
+	useHint(isSlow = false): boolean {
+		const pair = this.gameState.findAvailableMatch();
+		if (!pair) return false;
 
-        const success = this.useHint(true);
-        setTimeout(() => this.runLearningLoop(), success ? 5500 : 1000);
-    }
+		const { src, tgt } = pair;
+		const status: CardStatus = isSlow ? "hint-slow" : "hint";
+
+		this.gameState.updateCardStatus(src.id, status);
+		this.gameState.updateCardStatus(tgt.id, status);
+
+		setTimeout(
+			() => {
+				this.gameState.clearHint(src.id, tgt.id, status);
+			},
+			isSlow ? 5000 : 1000,
+		);
+
+		return true;
+	}
+
+	toggleLearningMode(): void {
+		const newState = !this.gameState.isLearningMode;
+		this.gameState.setLearningMode(newState);
+		if (newState) {
+			this.runLearningLoop();
+		}
+	}
+
+	private async runLearningLoop() {
+		if (!this.gameState.isLearningMode) return;
+		if (this.gameState.isProcessing) {
+			setTimeout(() => this.runLearningLoop(), 500);
+			return;
+		}
+
+		const success = this.useHint(true);
+		setTimeout(() => this.runLearningLoop(), success ? 5500 : 1000);
+	}
 }
 
-import { gameState } from '../stores/gameState.svelte';
+import { gameState } from "../stores/gameState.svelte";
 
 export const gameController = new GameController(
-    gameState,
-    gameDataService,
-    gameAudioHandler,
-    gameFeedbackHandler
+	gameState,
+	gameDataService,
+	gameAudioHandler,
+	gameFeedbackHandler,
 );

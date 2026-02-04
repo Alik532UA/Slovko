@@ -1,25 +1,25 @@
 {
-    "id": "C1",
-    "words": [
-        "phrase_the_proposal_was_met",
-        "phrase_it_is_imperative_that",
-        "phrase_the_project_has_failed",
-        "phrase_the_findings_of_the",
-        "phrase_we_need_to_adopt",
-        "phrase_the_government_has_implemented",
-        "phrase_there_is_an_inherent",
-        "phrase_the_cultural_diversity_of",
-        "phrase_the_situation_calls_for",
-        "phrase_the_companys_reputation_has",
-        "phrase_it_is_widely_acknowledged",
-        "phrase_the_main_challenge_lies",
-        "phrase_the_author_explores_complex",
-        "phrase_his_arguments_are_based",
-        "phrase_there_has_been_a",
-        "phrase_the_success_of_the",
-        "phrase_the_results_of_the",
-        "phrase_she_has_a_remarkable",
-        "phrase_the_policy_has_had",
-        "phrase_the_debate_highlighted_the"
-    ]
+	"id": "C1",
+	"words": [
+		"phrase_the_proposal_was_met",
+		"phrase_it_is_imperative_that",
+		"phrase_the_project_has_failed",
+		"phrase_the_findings_of_the",
+		"phrase_we_need_to_adopt",
+		"phrase_the_government_has_implemented",
+		"phrase_there_is_an_inherent",
+		"phrase_the_cultural_diversity_of",
+		"phrase_the_situation_calls_for",
+		"phrase_the_companys_reputation_has",
+		"phrase_it_is_widely_acknowledged",
+		"phrase_the_main_challenge_lies",
+		"phrase_the_author_explores_complex",
+		"phrase_his_arguments_are_based",
+		"phrase_there_has_been_a",
+		"phrase_the_success_of_the",
+		"phrase_the_results_of_the",
+		"phrase_she_has_a_remarkable",
+		"phrase_the_policy_has_had",
+		"phrase_the_debate_highlighted_the"
+	]
 }

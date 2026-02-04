@@ -1,215 +1,215 @@
 {
-    "app": {
-        "title": "Slovko"
-    },
-    "errors": {
-        "loadFailed": "Failed to load data"
-    },
-    "levels": {
-        "title": "Levels",
-        "A1": "Beginner",
-        "A2": "Elementary",
-        "B1": "Intermediate",
-        "B2": "Upper-Intermediate",
-        "C1": "Advanced",
-        "C2": "Proficient",
-        "underConstruction": "This level is under development, please choose another level"
-    },
-    "tabs": {
-        "levels": "Levels",
-        "topics": "Topics",
-        "phrases": "Phrases",
-        "playlists": "Playlists"
-    },
-    "playlists": {
-        "favorites": "Favorites",
-        "mistakes": "Mistakes",
-        "extra": "Extra Study",
-        "addToFavorites": "Add to 'Favorites'",
-        "removeFromFavorites": "Remove from 'Favorites'",
-        "addToExtra": "Add to 'Extra Study'",
-        "removeFromExtra": "Remove from 'Extra Study'",
-        "empty": "This playlist is empty, but you can add cards to it. To do this, press and hold on a card for a few seconds to open the playlist menu.",
-        "emptyMistakes": "This list is empty and will be populated with words you make mistakes in."
-    },
-    "topics": {
-        "title": "Topics",
-        "nature": "Nature",
-        "animals": "Animals",
-        "travel": "Travel",
-        "food": "Food",
-        "home": "Home",
-        "cars": "Cars",
-        "it": "IT",
-        "questions": "Questions",
-        "numbers": "Numbers",
-        "colors": "Colors",
-        "time": "Time",
-        "family_relationships": "Family & Relationships",
-        "body_health": "Body & Health",
-        "clothes_fashion": "Clothes & Fashion",
-        "pronouns_people": "Pronouns & People",
-        "basic_verbs": "Basic Verbs",
-        "adjectives": "Adjectives",
-        "education_work": "Education & Work",
-        "abstract_concepts": "Abstract Concepts",
-        "society_law": "Society & Law",
-        "phrasal_verbs": "Phrasal Verbs",
-        "adverbs_prepositions": "Adverbs & Prepositions"
-    },
-    "onboarding": {
-        "whatToLearn": "Which language do you want to learn?"
-    },
-    "settings": {
-        "interfaceLanguage": "Interface language",
-        "cardLanguages": "Card languages",
-        "from": "From",
-        "to": "To",
-        "sourceLanguage": "Left column",
-        "targetLanguage": "Right column",
-        "transcription": "Show transcription",
-        "pronunciation": "Pronounce words",
-        "theme": "Theme",
-        "privacyTitle": "Privacy Settings",
-        "privacySubtitle": "Manage who can see you and interact with you",
-        "showInSearch": "Show me in search",
-        "showInSearchDesc": "Allow other users to find you by email or name",
-        "allowFriendRequests": "Allow friend requests",
-        "allowFriendRequestsDesc": "Allow others to send you friend requests",
-        "shareStats": "Share statistics",
-        "shareStatsDesc": "Allow friends to see your learning progress"
-    },
-    "theme": {
-        "dark-gray": "Dark",
-        "light-gray": "Light",
-        "orange": "Orange",
-        "green": "Green"
-    },
-    "menu": {
-        "donate": "Support the project",
-        "languages": "Languages",
-        "about": "About"
-    },
-    "about": {
-        "title": "About",
-        "description": "Slovko is the result of existing similar apps having intrusive ads. That's why the idea arose to make our own, completely ad-free. Learn languages by matching word pairs without distractions.",
-        "support": "Support the project",
-        "feedback": {
-            "title": "Feedback",
-            "bug": "Report a Problem",
-            "improvement": "Suggest Improvement",
-            "contact": "Contact Developer",
-            "subjectLabel": "Subject / Title",
-            "messageLabel": "Description / Message",
-            "subjectPlaceholder": "Briefly describe the topic...",
-            "messagePlaceholder": "Provide more details...",
-            "send": "Send",
-            "successTitle": "Thank you!",
-            "successMsg": "Your feedback helps make Slovko better."
-        },
-        "developer": "Developer",
-        "version": "Version"
-    },
-    "profile": {
-        "anonymousTitle": "Guest",
-        "anonymousSub": "Progress not synced",
-        "syncWarning": "Sign in to save your progress in the cloud and keep it safe across devices.",
-        "login": "Sign In",
-        "logout": "Sign Out",
-        "back": "Back",
-        "register": "Register",
-        "signin": "Sign in with email",
-        "googleAuth": "Sign in with Google",
-        "emailRegister": "Sign up with email",
-        "forgotPassword": "Forgot password?",
-        "forgotPasswordTitle": "Reset Password",
-        "forgotPasswordSubtitle": "Enter the email associated with your account",
-        "spamWarning": "The email may end up in the Spam folder as the app is new.",
-        "sendResetEmail": "Send Reset Email",
-        "backToSignin": "Back to Sign In",
-        "passwordResetSent": "Password reset email sent",
-        "errors": {
-            "enterEmail": "Enter email",
-            "userNotFound": "User with this email not found",
-            "invalidEmail": "Invalid email format",
-            "fillFields": "Fill all fields",
-            "passwordMismatch": "Passwords do not match",
-            "weakPassword": "Password is too weak (min 6 chars)",
-            "emailInUse": "Email is already in use",
-            "enterPassword": "Enter password",
-            "invalidCredentials": "Invalid email or password.",
-            "accountUsesGoogle": "This account uses Google sign-in. Please use the Google button below.",
-            "popupClosed": "Authorization window was closed. Please try again.",
-            "accountExistsEmail": "An account with this email already exists. Sign in with Email first, then you can link Google in settings.",
-            "googleAlreadyLinked": "This Google account is already linked to another Slovko user."
-        },
-        "changePasswordTitle": "Change Password",
-        "changePasswordHint": "Feature in development",
-        "deleteWarning": "Warning! This action cannot be undone.",
-        "deleteAccount": "Delete Account",
-        "confirmDelete": "Confirm Deletion",
-        "cancel": "Cancel",
-        "passwordPlaceholderShort": "Password",
-        "tabs": {
-            "stats": "Stats",
-            "account": "Account",
-            "friends": "Friends"
-        },
-        "stats": {
-            "byLevel": "Stats by Level",
-            "general": "General Activity",
-            "correct": "total correct answers",
-            "streak": "current daily streak",
-            "days": "total days in program",
-            "accuracy": "answers accuracy",
-            "bestStreak": "record daily streak",
-            "bestCorrectStreak": "record correct answers streak",
-            "correctToday": "correct answers today",
-            "dailyAverage": "average answers per day",
-            "correctShort": "Correct",
-            "showMore": "show more statistics",
-            "showLess": "show less statistics"
-        }
-    },
-    "updateNotification": {
-        "message": "Update available!",
-        "button": "Full update (reset cache)",
-        "buttonSkip": "Keep old cache and continue",
-        "warning": "For stable operation, it is recommended to update. This will reset all settings and playlists (as there is no authorization yet). If skipped, errors may occur.",
-        "yourVersion": "Your version",
-        "availableVersion": "Available version"
-    },
-    "language": {
-        "uk": "Ukrainian",
-        "en": "English",
-        "nl": "Dutch",
-        "de": "German",
-        "crh": "Crimean Tatar",
-        "voices": "voices"
-    },
-    "common": {
-        "all": "All",
-        "confirm": "Confirm",
-        "listen": "Listen",
-        "backToLearning": "Back to learning",
-        "retry": "Try again"
-    },
-    "friends": {
-        "searchPlaceholder": "Search users...",
-        "noResults": "No users found",
-        "loadError": "Failed to load list",
-        "confirmUnfollow": "Unfollow this user?",
-        "noFollowing": "You are not following anyone yet",
-        "noFollowers": "You don't have any followers yet",
-        "unfollow": "Unfollow",
-        "followBack": "Follow back",
-        "mutual": "Mutual",
-        "tabs": {
-            "following": "Following",
-            "followers": "Followers",
-            "search": "Search"
-        },
-        "following": "Following",
-        "followers": "Followers"
-    }
+	"app": {
+		"title": "Slovko"
+	},
+	"errors": {
+		"loadFailed": "Failed to load data"
+	},
+	"levels": {
+		"title": "Levels",
+		"A1": "Beginner",
+		"A2": "Elementary",
+		"B1": "Intermediate",
+		"B2": "Upper-Intermediate",
+		"C1": "Advanced",
+		"C2": "Proficient",
+		"underConstruction": "This level is under development, please choose another level"
+	},
+	"tabs": {
+		"levels": "Levels",
+		"topics": "Topics",
+		"phrases": "Phrases",
+		"playlists": "Playlists"
+	},
+	"playlists": {
+		"favorites": "Favorites",
+		"mistakes": "Mistakes",
+		"extra": "Extra Study",
+		"addToFavorites": "Add to 'Favorites'",
+		"removeFromFavorites": "Remove from 'Favorites'",
+		"addToExtra": "Add to 'Extra Study'",
+		"removeFromExtra": "Remove from 'Extra Study'",
+		"empty": "This playlist is empty, but you can add cards to it. To do this, press and hold on a card for a few seconds to open the playlist menu.",
+		"emptyMistakes": "This list is empty and will be populated with words you make mistakes in."
+	},
+	"topics": {
+		"title": "Topics",
+		"nature": "Nature",
+		"animals": "Animals",
+		"travel": "Travel",
+		"food": "Food",
+		"home": "Home",
+		"cars": "Cars",
+		"it": "IT",
+		"questions": "Questions",
+		"numbers": "Numbers",
+		"colors": "Colors",
+		"time": "Time",
+		"family_relationships": "Family & Relationships",
+		"body_health": "Body & Health",
+		"clothes_fashion": "Clothes & Fashion",
+		"pronouns_people": "Pronouns & People",
+		"basic_verbs": "Basic Verbs",
+		"adjectives": "Adjectives",
+		"education_work": "Education & Work",
+		"abstract_concepts": "Abstract Concepts",
+		"society_law": "Society & Law",
+		"phrasal_verbs": "Phrasal Verbs",
+		"adverbs_prepositions": "Adverbs & Prepositions"
+	},
+	"onboarding": {
+		"whatToLearn": "Which language do you want to learn?"
+	},
+	"settings": {
+		"interfaceLanguage": "Interface language",
+		"cardLanguages": "Card languages",
+		"from": "From",
+		"to": "To",
+		"sourceLanguage": "Left column",
+		"targetLanguage": "Right column",
+		"transcription": "Show transcription",
+		"pronunciation": "Pronounce words",
+		"theme": "Theme",
+		"privacyTitle": "Privacy Settings",
+		"privacySubtitle": "Manage who can see you and interact with you",
+		"showInSearch": "Show me in search",
+		"showInSearchDesc": "Allow other users to find you by email or name",
+		"allowFriendRequests": "Allow friend requests",
+		"allowFriendRequestsDesc": "Allow others to send you friend requests",
+		"shareStats": "Share statistics",
+		"shareStatsDesc": "Allow friends to see your learning progress"
+	},
+	"theme": {
+		"dark-gray": "Dark",
+		"light-gray": "Light",
+		"orange": "Orange",
+		"green": "Green"
+	},
+	"menu": {
+		"donate": "Support the project",
+		"languages": "Languages",
+		"about": "About"
+	},
+	"about": {
+		"title": "About",
+		"description": "Slovko is the result of existing similar apps having intrusive ads. That's why the idea arose to make our own, completely ad-free. Learn languages by matching word pairs without distractions.",
+		"support": "Support the project",
+		"feedback": {
+			"title": "Feedback",
+			"bug": "Report a Problem",
+			"improvement": "Suggest Improvement",
+			"contact": "Contact Developer",
+			"subjectLabel": "Subject / Title",
+			"messageLabel": "Description / Message",
+			"subjectPlaceholder": "Briefly describe the topic...",
+			"messagePlaceholder": "Provide more details...",
+			"send": "Send",
+			"successTitle": "Thank you!",
+			"successMsg": "Your feedback helps make Slovko better."
+		},
+		"developer": "Developer",
+		"version": "Version"
+	},
+	"profile": {
+		"anonymousTitle": "Guest",
+		"anonymousSub": "Progress not synced",
+		"syncWarning": "Sign in to save your progress in the cloud and keep it safe across devices.",
+		"login": "Sign In",
+		"logout": "Sign Out",
+		"back": "Back",
+		"register": "Register",
+		"signin": "Sign in with email",
+		"googleAuth": "Sign in with Google",
+		"emailRegister": "Sign up with email",
+		"forgotPassword": "Forgot password?",
+		"forgotPasswordTitle": "Reset Password",
+		"forgotPasswordSubtitle": "Enter the email associated with your account",
+		"spamWarning": "The email may end up in the Spam folder as the app is new.",
+		"sendResetEmail": "Send Reset Email",
+		"backToSignin": "Back to Sign In",
+		"passwordResetSent": "Password reset email sent",
+		"errors": {
+			"enterEmail": "Enter email",
+			"userNotFound": "User with this email not found",
+			"invalidEmail": "Invalid email format",
+			"fillFields": "Fill all fields",
+			"passwordMismatch": "Passwords do not match",
+			"weakPassword": "Password is too weak (min 6 chars)",
+			"emailInUse": "Email is already in use",
+			"enterPassword": "Enter password",
+			"invalidCredentials": "Invalid email or password.",
+			"accountUsesGoogle": "This account uses Google sign-in. Please use the Google button below.",
+			"popupClosed": "Authorization window was closed. Please try again.",
+			"accountExistsEmail": "An account with this email already exists. Sign in with Email first, then you can link Google in settings.",
+			"googleAlreadyLinked": "This Google account is already linked to another Slovko user."
+		},
+		"changePasswordTitle": "Change Password",
+		"changePasswordHint": "Feature in development",
+		"deleteWarning": "Warning! This action cannot be undone.",
+		"deleteAccount": "Delete Account",
+		"confirmDelete": "Confirm Deletion",
+		"cancel": "Cancel",
+		"passwordPlaceholderShort": "Password",
+		"tabs": {
+			"stats": "Stats",
+			"account": "Account",
+			"friends": "Friends"
+		},
+		"stats": {
+			"byLevel": "Stats by Level",
+			"general": "General Activity",
+			"correct": "total correct answers",
+			"streak": "current daily streak",
+			"days": "total days in program",
+			"accuracy": "answers accuracy",
+			"bestStreak": "record daily streak",
+			"bestCorrectStreak": "record correct answers streak",
+			"correctToday": "correct answers today",
+			"dailyAverage": "average answers per day",
+			"correctShort": "Correct",
+			"showMore": "show more statistics",
+			"showLess": "show less statistics"
+		}
+	},
+	"updateNotification": {
+		"message": "Update available!",
+		"button": "Full update (reset cache)",
+		"buttonSkip": "Keep old cache and continue",
+		"warning": "For stable operation, it is recommended to update. This will reset all settings and playlists (as there is no authorization yet). If skipped, errors may occur.",
+		"yourVersion": "Your version",
+		"availableVersion": "Available version"
+	},
+	"language": {
+		"uk": "Ukrainian",
+		"en": "English",
+		"nl": "Dutch",
+		"de": "German",
+		"crh": "Crimean Tatar",
+		"voices": "voices"
+	},
+	"common": {
+		"all": "All",
+		"confirm": "Confirm",
+		"listen": "Listen",
+		"backToLearning": "Back to learning",
+		"retry": "Try again"
+	},
+	"friends": {
+		"searchPlaceholder": "Search users...",
+		"noResults": "No users found",
+		"loadError": "Failed to load list",
+		"confirmUnfollow": "Unfollow this user?",
+		"noFollowing": "You are not following anyone yet",
+		"noFollowers": "You don't have any followers yet",
+		"unfollow": "Unfollow",
+		"followBack": "Follow back",
+		"mutual": "Mutual",
+		"tabs": {
+			"following": "Following",
+			"followers": "Followers",
+			"search": "Search"
+		},
+		"following": "Following",
+		"followers": "Followers"
+	}
 }

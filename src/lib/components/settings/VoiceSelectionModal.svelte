@@ -1,436 +1,442 @@
 <script lang="ts">
-    /**
-     * VoiceSelectionModal.svelte
-     * Modal for selecting a specific system voice for pronunciation.
-     */
-    import { _ } from "svelte-i18n";
-    import { X, Check } from "lucide-svelte";
-    import { settingsStore } from "$lib/stores/settingsStore.svelte";
-    import type { Language } from "$lib/types";
-    import { findBestVoice } from "$lib/services/speechService";
-    import { onMount, tick } from "svelte";
+	/**
+	 * VoiceSelectionModal.svelte
+	 * Modal for selecting a specific system voice for pronunciation.
+	 */
+	import { _ } from "svelte-i18n";
+	import { X, Check } from "lucide-svelte";
+	import { settingsStore } from "$lib/stores/settingsStore.svelte";
+	import type { Language } from "$lib/types";
+	import { findBestVoice } from "$lib/services/speechService";
+	import { onMount, tick } from "svelte";
 
-    interface Props {
-        onclose: () => void;
-        language: Language;
-    }
-    let { onclose, language }: Props = $props();
+	interface Props {
+		onclose: () => void;
+		language: Language;
+	}
+	let { onclose, language }: Props = $props();
 
-    let voices: SpeechSynthesisVoice[] = $state([]);
-    // Initialize with stored preference
-    let selectedVoiceURI = $state("");
-    
-    $effect(() => {
-        // Оновлюємо вибраний голос при зміні мови або початковому завантаженні
-        selectedVoiceURI = (settingsStore.value.voicePreferences as Record<string, string>)[language] || "";
-    });
+	let voices: SpeechSynthesisVoice[] = $state([]);
+	// Initialize with stored preference
+	let selectedVoiceURI = $state("");
 
-    let primaryVoices: SpeechSynthesisVoice[] = $state([]);
-    let secondaryVoices: SpeechSynthesisVoice[] = $state([]);
+	$effect(() => {
+		// Оновлюємо вибраний голос при зміні мови або початковому завантаженні
+		selectedVoiceURI =
+			(settingsStore.value.voicePreferences as Record<string, string>)[
+				language
+			] || "";
+	});
 
-    let voiceListElement = $state<HTMLElement | null>(null);
+	let primaryVoices: SpeechSynthesisVoice[] = $state([]);
+	let secondaryVoices: SpeechSynthesisVoice[] = $state([]);
 
-    async function scrollToSelected() {
-        await tick();
-        if (voiceListElement) {
-            const selected = voiceListElement.querySelector(".voice-item.selected");
-            if (selected) {
-                selected.scrollIntoView({ block: "center", behavior: "smooth" });
-            }
-        }
-    }
+	let voiceListElement = $state<HTMLElement | null>(null);
 
-    $effect(() => {
-        const loadVoices = () => {
-            const allVoices = window.speechSynthesis.getVoices();
-            if (allVoices.length === 0) return;
-            
-            voices = allVoices;
+	async function scrollToSelected() {
+		await tick();
+		if (voiceListElement) {
+			const selected = voiceListElement.querySelector(".voice-item.selected");
+			if (selected) {
+				selected.scrollIntoView({ block: "center", behavior: "smooth" });
+			}
+		}
+	}
 
-            // ... (rest of filtering logic)
-        };
-    }); // This was a partial snippet, I'll provide the full replacement below
+	$effect(() => {
+		const loadVoices = () => {
+			const allVoices = window.speechSynthesis.getVoices();
+			if (allVoices.length === 0) return;
 
-    // Greeting text map for preview
-    const PREVIEW_TEXTS: Record<string, string> = {
-        uk: "Привіт, як справи?",
-        en: "Hello, how are you?",
-        nl: "Hallo, hoe gaat het?",
-        de: "Hallo, wie geht's?",
-        crh: "Selâm, alesıñız nasıl?", // Using generic greeting
-        tr: "Merhaba, nasılsın?", // Fallback for Turkish voices
-    };
+			voices = allVoices;
 
-    const PREFERRED_REGIONS: Record<string, string> = {
-        nl: "NL",
-        de: "DE",
-        en: "GB",
-        uk: "UA",
-        tr: "TR",
-    };
+			// ... (rest of filtering logic)
+		};
+	}); // This was a partial snippet, I'll provide the full replacement below
 
-    function getPreviewText(lang: string, voiceLang: string): string {
-        // If voice is Turkish (fallback for crh), use Turkish greeting
-        if (voiceLang.startsWith("tr")) return PREVIEW_TEXTS.tr;
-        return PREVIEW_TEXTS[lang] || "Hello";
-    }
+	// Greeting text map for preview
+	const PREVIEW_TEXTS: Record<string, string> = {
+		uk: "Привіт, як справи?",
+		en: "Hello, how are you?",
+		nl: "Hallo, hoe gaat het?",
+		de: "Hallo, wie geht's?",
+		crh: "Selâm, alesıñız nasıl?", // Using generic greeting
+		tr: "Merhaba, nasılsın?", // Fallback for Turkish voices
+	};
 
-    $effect(() => {
-        const loadVoices = () => {
-            const allVoices = window.speechSynthesis.getVoices();
-            if (allVoices.length === 0) return;
+	const PREFERRED_REGIONS: Record<string, string> = {
+		nl: "NL",
+		de: "DE",
+		en: "GB",
+		uk: "UA",
+		tr: "TR",
+	};
 
-            voices = allVoices;
+	function getPreviewText(lang: string, voiceLang: string): string {
+		// If voice is Turkish (fallback for crh), use Turkish greeting
+		if (voiceLang.startsWith("tr")) return PREVIEW_TEXTS.tr;
+		return PREVIEW_TEXTS[lang] || "Hello";
+	}
 
-            // 1. If no preference saved, find what speakText would use
-            if (!selectedVoiceURI) {
-                const best = findBestVoice(allVoices, language);
-                if (best) {
-                    selectedVoiceURI = best.voiceURI;
-                }
-            }
+	$effect(() => {
+		const loadVoices = () => {
+			const allVoices = window.speechSynthesis.getVoices();
+			if (allVoices.length === 0) return;
 
-            // Filter logic
-            let targetLangPrefix: string = language;
-            if (language === "crh") targetLangPrefix = "tr"; // Use Turkish voices for Crimean Tatar
+			voices = allVoices;
 
-            const region = PREFERRED_REGIONS[targetLangPrefix];
+			// 1. If no preference saved, find what speakText would use
+			if (!selectedVoiceURI) {
+				const best = findBestVoice(allVoices, language);
+				if (best) {
+					selectedVoiceURI = best.voiceURI;
+				}
+			}
 
-            primaryVoices = allVoices
-                .filter((v) => v.lang.startsWith(targetLangPrefix))
-                .sort((a, b) => {
-                    // 1. Prioritize preferred region (e.g. nl-NL over nl-BE)
-                    if (region) {
-                        const aPref = a.lang.includes(`-${region}`);
-                        const bPref = b.lang.includes(`-${region}`);
-                        if (aPref && !bPref) return -1;
-                        if (!aPref && bPref) return 1;
-                    }
-                    // 2. Sort by name for consistency
-                    return a.name.localeCompare(b.name);
-                });
+			// Filter logic
+			let targetLangPrefix: string = language;
+			if (language === "crh") targetLangPrefix = "tr"; // Use Turkish voices for Crimean Tatar
 
-            // Also apply refined sorting for secondary voices (English)
-            // Prioritize GB voices as requested
-            const secondaryRegion = PREFERRED_REGIONS["en"];
-            secondaryVoices = allVoices
-                .filter(
-                    (v) =>
-                        !v.lang.startsWith(targetLangPrefix) &&
-                        v.lang.startsWith("en"),
-                )
-                .sort((a, b) => {
-                    // 1. Prioritize GB
-                    if (secondaryRegion) {
-                        const aPref = a.lang.includes(`-${secondaryRegion}`);
-                        const bPref = b.lang.includes(`-${secondaryRegion}`);
-                        if (aPref && !bPref) return -1;
-                        if (!aPref && bPref) return 1;
-                    }
-                    return a.name.localeCompare(b.name);
-                });
-            
-            // Scroll to selected after filtering is done
-            scrollToSelected();
-        };
+			const region = PREFERRED_REGIONS[targetLangPrefix];
 
-        loadVoices();
-        if (speechSynthesis.onvoiceschanged !== undefined) {
-            speechSynthesis.onvoiceschanged = loadVoices;
-        }
-    });
+			primaryVoices = allVoices
+				.filter((v) => v.lang.startsWith(targetLangPrefix))
+				.sort((a, b) => {
+					// 1. Prioritize preferred region (e.g. nl-NL over nl-BE)
+					if (region) {
+						const aPref = a.lang.includes(`-${region}`);
+						const bPref = b.lang.includes(`-${region}`);
+						if (aPref && !bPref) return -1;
+						if (!aPref && bPref) return 1;
+					}
+					// 2. Sort by name for consistency
+					return a.name.localeCompare(b.name);
+				});
 
-    function handleVoiceSelect(voice: SpeechSynthesisVoice) {
-        selectedVoiceURI = voice.voiceURI;
+			// Also apply refined sorting for secondary voices (English)
+			// Prioritize GB voices as requested
+			const secondaryRegion = PREFERRED_REGIONS["en"];
+			secondaryVoices = allVoices
+				.filter(
+					(v) =>
+						!v.lang.startsWith(targetLangPrefix) && v.lang.startsWith("en"),
+				)
+				.sort((a, b) => {
+					// 1. Prioritize GB
+					if (secondaryRegion) {
+						const aPref = a.lang.includes(`-${secondaryRegion}`);
+						const bPref = b.lang.includes(`-${secondaryRegion}`);
+						if (aPref && !bPref) return -1;
+						if (!aPref && bPref) return 1;
+					}
+					return a.name.localeCompare(b.name);
+				});
 
-        // Preview
-        const text = getPreviewText(language, voice.lang);
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.voice = voice;
-        utterance.rate = 0.9;
-        window.speechSynthesis.cancel();
-        window.speechSynthesis.speak(utterance);
-    }
+			// Scroll to selected after filtering is done
+			scrollToSelected();
+		};
 
-    function handleConfirm() {
-        if (selectedVoiceURI) {
-            settingsStore.setVoicePreference(language, selectedVoiceURI);
-        }
-        onclose();
-    }
+		loadVoices();
+		if (speechSynthesis.onvoiceschanged !== undefined) {
+			speechSynthesis.onvoiceschanged = loadVoices;
+		}
+	});
 
-    function handleBackdropClick(e: MouseEvent) {
-        if (e.target === e.currentTarget) {
-            onclose();
-        }
-    }
+	function handleVoiceSelect(voice: SpeechSynthesisVoice) {
+		selectedVoiceURI = voice.voiceURI;
 
-    function handleKeydown(e: KeyboardEvent) {
-        if (e.key === "Escape") {
-            onclose();
-        }
-    }
+		// Preview
+		const text = getPreviewText(language, voice.lang);
+		const utterance = new SpeechSynthesisUtterance(text);
+		utterance.voice = voice;
+		utterance.rate = 0.9;
+		window.speechSynthesis.cancel();
+		window.speechSynthesis.speak(utterance);
+	}
+
+	function handleConfirm() {
+		if (selectedVoiceURI) {
+			settingsStore.setVoicePreference(language, selectedVoiceURI);
+		}
+		onclose();
+	}
+
+	function handleBackdropClick(e: MouseEvent) {
+		if (e.target === e.currentTarget) {
+			onclose();
+		}
+	}
+
+	function handleKeydown(e: KeyboardEvent) {
+		if (e.key === "Escape") {
+			onclose();
+		}
+	}
 </script>
 
 <div
-    class="modal-backdrop"
-    onclick={handleBackdropClick}
-    onkeydown={handleKeydown}
-    role="dialog"
-    aria-modal="true"
-    tabindex="-1"
+	class="modal-backdrop"
+	onclick={handleBackdropClick}
+	onkeydown={handleKeydown}
+	role="dialog"
+	aria-modal="true"
+	tabindex="-1"
 >
-    <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-    <div
-        class="modal"
-        onclick={(e) => e.stopPropagation()}
-        onkeydown={(e) => e.stopPropagation()}
-        role="dialog"
-        aria-modal="true"
-        tabindex="-1"
-        data-testid="voice-selection-modal"
-    >
-        <div class="header-content">
-            <h3>{$_("settings.pronunciation")}</h3>
-        </div>
+	<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+	<div
+		class="modal"
+		onclick={(e) => e.stopPropagation()}
+		onkeydown={(e) => e.stopPropagation()}
+		role="dialog"
+		aria-modal="true"
+		tabindex="-1"
+		data-testid="voice-selection-modal"
+	>
+		<div class="header-content">
+			<h3>{$_("settings.pronunciation")}</h3>
+		</div>
 
-        <div class="voice-list" bind:this={voiceListElement}>
-            {#if voices.length === 0}
-                <div class="empty-state">No voices found</div>
-            {:else}
-                <!-- Primary Voices -->
-                {#if primaryVoices.length > 0}
-                    <div class="group-label">
-                        {$_(`language.${language}`) || language}
-                        {$_("language.voices")}
-                    </div>
-                    {#each primaryVoices as voice (voice.voiceURI)}
-                        <button
-                            class="voice-item"
-                            class:selected={selectedVoiceURI === voice.voiceURI}
-                            onclick={() => handleVoiceSelect(voice)}
-                        >
-                            <div class="voice-info">
-                                <span class="voice-name">{voice.name}</span>
-                                <span class="lang-tag">{voice.lang}</span>
-                            </div>
-                            {#if selectedVoiceURI === voice.voiceURI}
-                                <div class="check-icon">
-                                    <Check size={18} />
-                                </div>
-                            {/if}
-                        </button>
-                    {/each}
-                {/if}
+		<div class="voice-list" bind:this={voiceListElement}>
+			{#if voices.length === 0}
+				<div class="empty-state">No voices found</div>
+			{:else}
+				<!-- Primary Voices -->
+				{#if primaryVoices.length > 0}
+					<div class="group-label">
+						{$_(`language.${language}`) || language}
+						{$_("language.voices")}
+					</div>
+					{#each primaryVoices as voice (voice.voiceURI)}
+						<button
+							class="voice-item"
+							class:selected={selectedVoiceURI === voice.voiceURI}
+							onclick={() => handleVoiceSelect(voice)}
+						>
+							<div class="voice-info">
+								<span class="voice-name">{voice.name}</span>
+								<span class="lang-tag">{voice.lang}</span>
+							</div>
+							{#if selectedVoiceURI === voice.voiceURI}
+								<div class="check-icon">
+									<Check size={18} />
+								</div>
+							{/if}
+						</button>
+					{/each}
+				{/if}
 
-                {#if primaryVoices.length > 0 && secondaryVoices.length > 0}
-                    <div class="separator"></div>
-                {/if}
+				{#if primaryVoices.length > 0 && secondaryVoices.length > 0}
+					<div class="separator"></div>
+				{/if}
 
-                <!-- Secondary Voices (English) -->
-                {#if secondaryVoices.length > 0}
-                    <div class="group-label">
-                        {$_("language.en")}
-                        {$_("language.voices")}
-                    </div>
-                    {#each secondaryVoices as voice (voice.voiceURI)}
-                        <button
-                            class="voice-item"
-                            class:selected={selectedVoiceURI === voice.voiceURI}
-                            onclick={() => handleVoiceSelect(voice)}
-                        >
-                            <div class="voice-info">
-                                <span class="voice-name">{voice.name}</span>
-                                <span class="lang-tag">{voice.lang}</span>
-                            </div>
-                            {#if selectedVoiceURI === voice.voiceURI}
-                                <div class="check-icon">
-                                    <Check size={18} />
-                                </div>
-                            {/if}
-                        </button>
-                    {/each}
-                {/if}
-            {/if}
-        </div>
+				<!-- Secondary Voices (English) -->
+				{#if secondaryVoices.length > 0}
+					<div class="group-label">
+						{$_("language.en")}
+						{$_("language.voices")}
+					</div>
+					{#each secondaryVoices as voice (voice.voiceURI)}
+						<button
+							class="voice-item"
+							class:selected={selectedVoiceURI === voice.voiceURI}
+							onclick={() => handleVoiceSelect(voice)}
+						>
+							<div class="voice-info">
+								<span class="voice-name">{voice.name}</span>
+								<span class="lang-tag">{voice.lang}</span>
+							</div>
+							{#if selectedVoiceURI === voice.voiceURI}
+								<div class="check-icon">
+									<Check size={18} />
+								</div>
+							{/if}
+						</button>
+					{/each}
+				{/if}
+			{/if}
+		</div>
 
-        <div class="footer">
-            <button class="confirm-btn" onclick={handleConfirm} data-testid="confirm-voice-btn">
-                {$_("common.confirm") || "Confirm"}
-            </button>
-        </div>
-    </div>
+		<div class="footer">
+			<button
+				class="confirm-btn"
+				onclick={handleConfirm}
+				data-testid="confirm-voice-btn"
+			>
+				{$_("common.confirm") || "Confirm"}
+			</button>
+		</div>
+	</div>
 </div>
 
 <style>
-    .modal-backdrop {
-        position: fixed;
-        inset: 0;
-        z-index: 10005;
-        background: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(8px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 1rem;
-        transition: background 0.3s;
-    }
+	.modal-backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 10005;
+		background: rgba(0, 0, 0, 0.8);
+		backdrop-filter: blur(8px);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 1rem;
+		transition: background 0.3s;
+	}
 
-    /* Light theme override for backdrop */
-    :global([data-theme="light-gray"]) .modal-backdrop,
-    :global([data-theme="green"]) .modal-backdrop {
-        background: rgba(255, 255, 255, 0.85);
-    }
+	/* Light theme override for backdrop */
+	:global([data-theme="light-gray"]) .modal-backdrop,
+	:global([data-theme="green"]) .modal-backdrop {
+		background: rgba(255, 255, 255, 0.85);
+	}
 
-    .modal {
-        background: transparent;
-        width: 100%;
-        max-width: 360px;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        max-height: 85vh;
-        color: var(--text-primary);
-    }
+	.modal {
+		background: transparent;
+		width: 100%;
+		max-width: 360px;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		max-height: 85vh;
+		color: var(--text-primary);
+	}
 
-    /* Header removal - content flow */
-    .header-content {
-        text-align: center;
-        margin-bottom: 1.5rem;
-    }
+	/* Header removal - content flow */
+	.header-content {
+		text-align: center;
+		margin-bottom: 1.5rem;
+	}
 
-    h3 {
-        margin: 0;
-        font-size: 1.25rem;
-        font-weight: 500;
-        color: var(--text-primary);
-    }
+	h3 {
+		margin: 0;
+		font-size: 1.25rem;
+		font-weight: 500;
+		color: var(--text-primary);
+	}
 
-    .voice-list {
-        overflow-y: auto;
-        padding: 0.5rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.25rem;
-        flex: 1;
-        /* Custom scrollbar */
-        scrollbar-width: thin;
-        scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
-        margin-bottom: 0.5rem;
-    }
+	.voice-list {
+		overflow-y: auto;
+		padding: 0.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		flex: 1;
+		/* Custom scrollbar */
+		scrollbar-width: thin;
+		scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+		margin-bottom: 0.5rem;
+	}
 
-    .voice-list::-webkit-scrollbar {
-        width: 6px;
-    }
+	.voice-list::-webkit-scrollbar {
+		width: 6px;
+	}
 
-    .voice-list::-webkit-scrollbar-track {
-        background: transparent;
-    }
+	.voice-list::-webkit-scrollbar-track {
+		background: transparent;
+	}
 
-    .voice-list::-webkit-scrollbar-thumb {
-        background-color: rgba(255, 255, 255, 0.2);
-        border-radius: 3px;
-    }
+	.voice-list::-webkit-scrollbar-thumb {
+		background-color: rgba(255, 255, 255, 0.2);
+		border-radius: 3px;
+	}
 
-    .group-label {
-        font-size: 0.75rem;
-        color: var(--text-secondary);
-        padding: 0.75rem 0.5rem 0.25rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        font-weight: 600;
-        opacity: 0.8;
-    }
+	.group-label {
+		font-size: 0.75rem;
+		color: var(--text-secondary);
+		padding: 0.75rem 0.5rem 0.25rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		font-weight: 600;
+		opacity: 0.8;
+	}
 
-    .voice-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        padding: 0.75rem;
-        background: transparent;
-        border: 1px solid transparent; /* Prepare for selected state */
-        border-radius: 12px;
-        color: var(--text-primary, white);
-        text-align: left;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
+	.voice-item {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		padding: 0.75rem;
+		background: transparent;
+		border: 1px solid transparent; /* Prepare for selected state */
+		border-radius: 12px;
+		color: var(--text-primary, white);
+		text-align: left;
+		cursor: pointer;
+		transition: all 0.2s;
+	}
 
-    .voice-item:hover {
-        background: rgba(255, 255, 255, 0.05);
-    }
+	.voice-item:hover {
+		background: rgba(255, 255, 255, 0.05);
+	}
 
-    .voice-item.selected {
-        background: rgba(58, 143, 214, 0.15);
-        border-color: rgba(58, 143, 214, 0.3);
-    }
+	.voice-item.selected {
+		background: rgba(58, 143, 214, 0.15);
+		border-color: rgba(58, 143, 214, 0.3);
+	}
 
-    .voice-info {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        padding-right: 0.5rem;
-    }
+	.voice-info {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		padding-right: 0.5rem;
+	}
 
-    .voice-name {
-        font-size: 0.9rem;
-        font-weight: 500;
-        line-height: 1.3;
-    }
+	.voice-name {
+		font-size: 0.9rem;
+		font-weight: 500;
+		line-height: 1.3;
+	}
 
-    .lang-tag {
-        font-size: 0.75rem;
-        color: var(--text-secondary);
-    }
+	.lang-tag {
+		font-size: 0.75rem;
+		color: var(--text-secondary);
+	}
 
-    .check-icon {
-        color: var(--accent, #3a8fd6);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
+	.check-icon {
+		color: var(--accent, #3a8fd6);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
 
-    .separator {
-        height: 1px;
-        background: rgba(255, 255, 255, 0.1);
-        margin: 1rem 0;
-    }
+	.separator {
+		height: 1px;
+		background: rgba(255, 255, 255, 0.1);
+		margin: 1rem 0;
+	}
 
-    .empty-state {
-        text-align: center;
-        padding: 2rem;
-        color: var(--text-secondary);
-    }
+	.empty-state {
+		text-align: center;
+		padding: 2rem;
+		color: var(--text-secondary);
+	}
 
-    .footer {
-        padding: 0.5rem;
-        background: transparent;
-        border-top: none;
-        margin-top: auto;
-    }
+	.footer {
+		padding: 0.5rem;
+		background: transparent;
+		border-top: none;
+		margin-top: auto;
+	}
 
-    .confirm-btn {
-        width: 100%;
-        padding: 1rem;
-        background: var(--accent, #3a8fd6);
-        color: white;
-        border: none;
-        border-radius: 14px;
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.2s;
-        box-shadow: 0 4px 15px rgba(58, 143, 214, 0.3);
-    }
+	.confirm-btn {
+		width: 100%;
+		padding: 1rem;
+		background: var(--accent, #3a8fd6);
+		color: white;
+		border: none;
+		border-radius: 14px;
+		font-weight: 600;
+		font-size: 1rem;
+		cursor: pointer;
+		transition: all 0.2s;
+		box-shadow: 0 4px 15px rgba(58, 143, 214, 0.3);
+	}
 
-    .confirm-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(58, 143, 214, 0.4);
-    }
+	.confirm-btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 6px 20px rgba(58, 143, 214, 0.4);
+	}
 
-    .confirm-btn:active {
-        transform: scale(0.98);
-    }
+	.confirm-btn:active {
+		transform: scale(0.98);
+	}
 </style>

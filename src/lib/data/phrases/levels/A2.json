@@ -1,25 +1,25 @@
 {
-    "id": "A2",
-    "words": [
-        "phrase_i_am_looking_for",
-        "phrase_could_you_repeat_that",
-        "phrase_what_are_your_plans",
-        "phrase_i_would_like_to",
-        "phrase_it_is_raining_outside",
-        "phrase_how_do_i_get",
-        "phrase_i_have_been_learning",
-        "phrase_i_am_sorry_i",
-        "phrase_can_i_try_this",
-        "phrase_what_does_this_word",
-        "phrase_i_need_a_doctor",
-        "phrase_can_you_show_me",
-        "phrase_the_weather_is_very",
-        "phrase_i_am_going_to",
-        "phrase_what_did_you_do",
-        "phrase_i_think_this_is",
-        "phrase_could_you_speak_more",
-        "phrase_is_there_a_supermarket",
-        "phrase_i_dont_have_enough",
-        "phrase_lets_go_for_a"
-    ]
+	"id": "A2",
+	"words": [
+		"phrase_i_am_looking_for",
+		"phrase_could_you_repeat_that",
+		"phrase_what_are_your_plans",
+		"phrase_i_would_like_to",
+		"phrase_it_is_raining_outside",
+		"phrase_how_do_i_get",
+		"phrase_i_have_been_learning",
+		"phrase_i_am_sorry_i",
+		"phrase_can_i_try_this",
+		"phrase_what_does_this_word",
+		"phrase_i_need_a_doctor",
+		"phrase_can_you_show_me",
+		"phrase_the_weather_is_very",
+		"phrase_i_am_going_to",
+		"phrase_what_did_you_do",
+		"phrase_i_think_this_is",
+		"phrase_could_you_speak_more",
+		"phrase_is_there_a_supermarket",
+		"phrase_i_dont_have_enough",
+		"phrase_lets_go_for_a"
+	]
 }

@@ -1,175 +1,175 @@
 {
-    "app": {
-        "title": "Slovko"
-    },
-    "levels": {
-        "title": "Niveaus",
-        "A1": "Anfänger",
-        "A2": "Grundlagen",
-        "B1": "Mittelstufe",
-        "B2": "Obere Mittelstufe",
-        "C1": "Fortgeschritten",
-        "C2": "Kompetent",
-        "underConstruction": "Diese Stufe ist in Entwicklung, bitte wählen Sie eine andere Stufe"
-    },
-    "tabs": {
-        "levels": "Niveaus",
-        "topics": "Themen",
-        "phrases": "Sätze",
-        "playlists": "Listen"
-    },
-    "playlists": {
-        "favorites": "Favoriten",
-        "mistakes": "Fehlerkorrektur",
-        "extra": "Zusätzliches Lernen",
-        "addToFavorites": "Zu «Favoriten» hinzufügen",
-        "removeFromFavorites": "Aus «Favoriten» entfernen",
-        "addToExtra": "Zu «Zusätzlichem Lernen» hinzufügen",
-        "removeFromExtra": "Aus «Zusätzlichem Lernen» entfernen",
-        "empty": "Diese Playlist ist leer, aber Sie können Karten hinzufügen. Drücken und halten Sie dazu eine Karte einige Sekunden lang, um das Kontextmenü zu öffnen.",
-        "emptyMistakes": "Diese Liste ist leer und wird mit Wörtern gefüllt, bei denen Sie Fehler machen."
-    },
-    "topics": {
-        "title": "Themen",
-        "nature": "Natur",
-        "animals": "Tiere",
-        "travel": "Reisen",
-        "food": "Essen",
-        "home": "Zuhause",
-        "cars": "Autos",
-        "it": "IT",
-        "questions": "Fragewörter",
-        "numbers": "Zahlen",
-        "colors": "Farben",
-        "time": "Zeit",
-        "family_relationships": "Familie & Beziehungen",
-        "body_health": "Körper & Gesundheit",
-        "clothes_fashion": "Kleidung & Mode",
-        "pronouns_people": "Pronomen & Menschen",
-        "basic_verbs": "Grundverben",
-        "adjectives": "Adjektive",
-        "education_work": "Bildung & Arbeit",
-        "abstract_concepts": "Abstrakte Konzepte",
-        "society_law": "Gesellschaft & Recht",
-        "phrasal_verbs": "Phrasal Verbs",
-        "adverbs_prepositions": "Adverbien & Präpositionen"
-    },
-    "onboarding": {
-        "whatToLearn": "Welche Sprache möchtest du lernen?"
-    },
-    "settings": {
-        "interfaceLanguage": "Sprache der Benutzeroberfläche",
-        "cardLanguages": "Kartensprachen",
-        "from": "Von",
-        "to": "Nach",
-        "sourceLanguage": "Linke Spalte",
-        "targetLanguage": "Rechte Spalte",
-        "transcription": "Transkription anzeigen",
-        "pronunciation": "Wörter aussprechen",
-        "theme": "Thema",
-        "privacyTitle": "Privacy Settings",
-        "privacySubtitle": "Manage who can see you and interact with you",
-        "showInSearch": "Show me in search",
-        "showInSearchDesc": "Allow other users to find you by email or name",
-        "allowFriendRequests": "Allow friend requests",
-        "allowFriendRequestsDesc": "Allow others to send you friend requests",
-        "shareStats": "Share statistics",
-        "shareStatsDesc": "Allow friends to see your learning progress"
-    },
-    "theme": {
-        "dark-gray": "Dunkelgrau",
-        "light-gray": "Hellgrau",
-        "orange": "Orange",
-        "green": "Grün"
-    },
-    "menu": {
-        "donate": "Projekt unterstützen",
-        "languages": "Sprachen",
-        "about": "Über"
-    },
-    "about": {
-        "title": "Über Slovko",
-        "description": "Slovko ist eine App zum Vokabellernen durch Assoziationsspiele. Verbinde Wörter und ihre Übersetzungen, um sie dir schneller zu merken!",
-        "support": "Projekt unterstützen",
-        "feedback": {
-            "title": "Feedback",
-            "improvement": "Verbesserung",
-            "bug": "Fehlerbericht",
-            "contentError": "Inhaltsfehler",
-            "question": "Frage",
-            "messagePlaceholder": "Beschreibe deine Idee oder dein Problem...",
-            "expected": "Was hätte passieren sollen?",
-            "actual": "Was ist tatsächlich passiert?",
-            "send": "Feedback senden",
-            "successTitle": "Danke!",
-            "successMsg": "Dein Feedback hilft uns, Slovko besser zu machen."
-        },
-        "developer": "Entwickler",
-        "version": "Version"
-    },
-    "profile": {
-        "anonymousTitle": "Gast",
-        "anonymousSub": "Fortschritt nicht synchronisiert",
-        "syncWarning": "Melde dich an, um deinen Fortschritt in der Cloud zu speichern und ihn auf verschiedenen Geräten zu sichern.",
-        "login": "Anmelden",
-        "logout": "Abmelden",
-        "back": "Zurück",
-        "register": "Registrieren",
-        "signin": "Anmelden mit E-Mail",
-        "googleAuth": "Anmelden mit Google",
-        "emailRegister": "Registrieren mit E-Mail",
-        "forgotPassword": "Passwort vergessen?",
-        "forgotPasswordTitle": "Passwort zurücksetzen",
-        "forgotPasswordSubtitle": "Gib die mit deinem Konto verknüpfte E-Mail ein",
-        "spamWarning": "Die E-Mail könnte im Spam-Ordner landen, da die App neu ist.",
-        "sendResetEmail": "Wiederherstellungsmail senden",
-        "backToSignin": "Zurück zur Anmeldung",
-        "passwordResetSent": "Wiederherstellungsmail gesendet",
-        "errors": {
-            "enterEmail": "Gib E-Mail ein",
-            "userNotFound": "Benutzer mit dieser E-Mail nicht gefunden",
-            "invalidEmail": "Ungültiges E-Mail-Format",
-            "fillFields": "Fülle alle Felder aus",
-            "passwordMismatch": "Passwörter stimmen nicht überein",
-            "weakPassword": "Passwort ist zu schwach (min. 6 Zeichen)",
-            "emailInUse": "Diese E-Mail wird bereits verwendet"
-        },
-        "stats": {
-            "byLevel": "Statistik nach Niveau",
-            "general": "Allgemeine Aktivität",
-            "correct": "richtige Antworten insgesamt",
-            "streak": "aktuelle Tages-Serie",
-            "days": "Tage im Programm insgesamt",
-            "accuracy": "Antwortgenauigkeit",
-            "bestStreak": "Rekord-Serie von Tagen",
-            "bestCorrectStreak": "Rekord-Serie richtiger Antworten",
-            "correctToday": "richtige Antworten heute",
-            "dailyAverage": "Durchschnitt pro Tag",
-            "correctShort": "Richtig",
-            "showMore": "mehr Statistiken anzeigen",
-            "showLess": "weniger Statistiken anzeigen"
-        }
-    },
-    "updateNotification": {
-        "message": "Update verfügbar!",
-        "button": "Vollständig aktualisieren (Cache leeren)",
-        "buttonSkip": "Alten Cache behalten und fortfahren",
-        "warning": "Für einen stabilen Betrieb wird empfohlen, die Version zu aktualisieren. Das Update setzt alle Einstellungen und Playlists zurück (da noch keine Autorisierung vorhanden ist). Bei Ablehnung können Fehler auftreten.",
-        "yourVersion": "Ihre Version",
-        "availableVersion": "Verfügbare Version"
-    },
-    "language": {
-        "uk": "Ukrainisch",
-        "en": "Englisch",
-        "nl": "Niederländisch",
-        "de": "Deutsch",
-        "crh": "Krimtatarisch",
-        "voices": "Stimmen"
-    },
-    "common": {
-        "all": "Alle",
-        "confirm": "Bestätigen",
-        "listen": "Hören",
-        "backToLearning": "Zurück zum Lernen"
-    }
+	"app": {
+		"title": "Slovko"
+	},
+	"levels": {
+		"title": "Niveaus",
+		"A1": "Anfänger",
+		"A2": "Grundlagen",
+		"B1": "Mittelstufe",
+		"B2": "Obere Mittelstufe",
+		"C1": "Fortgeschritten",
+		"C2": "Kompetent",
+		"underConstruction": "Diese Stufe ist in Entwicklung, bitte wählen Sie eine andere Stufe"
+	},
+	"tabs": {
+		"levels": "Niveaus",
+		"topics": "Themen",
+		"phrases": "Sätze",
+		"playlists": "Listen"
+	},
+	"playlists": {
+		"favorites": "Favoriten",
+		"mistakes": "Fehlerkorrektur",
+		"extra": "Zusätzliches Lernen",
+		"addToFavorites": "Zu «Favoriten» hinzufügen",
+		"removeFromFavorites": "Aus «Favoriten» entfernen",
+		"addToExtra": "Zu «Zusätzlichem Lernen» hinzufügen",
+		"removeFromExtra": "Aus «Zusätzlichem Lernen» entfernen",
+		"empty": "Diese Playlist ist leer, aber Sie können Karten hinzufügen. Drücken und halten Sie dazu eine Karte einige Sekunden lang, um das Kontextmenü zu öffnen.",
+		"emptyMistakes": "Diese Liste ist leer und wird mit Wörtern gefüllt, bei denen Sie Fehler machen."
+	},
+	"topics": {
+		"title": "Themen",
+		"nature": "Natur",
+		"animals": "Tiere",
+		"travel": "Reisen",
+		"food": "Essen",
+		"home": "Zuhause",
+		"cars": "Autos",
+		"it": "IT",
+		"questions": "Fragewörter",
+		"numbers": "Zahlen",
+		"colors": "Farben",
+		"time": "Zeit",
+		"family_relationships": "Familie & Beziehungen",
+		"body_health": "Körper & Gesundheit",
+		"clothes_fashion": "Kleidung & Mode",
+		"pronouns_people": "Pronomen & Menschen",
+		"basic_verbs": "Grundverben",
+		"adjectives": "Adjektive",
+		"education_work": "Bildung & Arbeit",
+		"abstract_concepts": "Abstrakte Konzepte",
+		"society_law": "Gesellschaft & Recht",
+		"phrasal_verbs": "Phrasal Verbs",
+		"adverbs_prepositions": "Adverbien & Präpositionen"
+	},
+	"onboarding": {
+		"whatToLearn": "Welche Sprache möchtest du lernen?"
+	},
+	"settings": {
+		"interfaceLanguage": "Sprache der Benutzeroberfläche",
+		"cardLanguages": "Kartensprachen",
+		"from": "Von",
+		"to": "Nach",
+		"sourceLanguage": "Linke Spalte",
+		"targetLanguage": "Rechte Spalte",
+		"transcription": "Transkription anzeigen",
+		"pronunciation": "Wörter aussprechen",
+		"theme": "Thema",
+		"privacyTitle": "Privacy Settings",
+		"privacySubtitle": "Manage who can see you and interact with you",
+		"showInSearch": "Show me in search",
+		"showInSearchDesc": "Allow other users to find you by email or name",
+		"allowFriendRequests": "Allow friend requests",
+		"allowFriendRequestsDesc": "Allow others to send you friend requests",
+		"shareStats": "Share statistics",
+		"shareStatsDesc": "Allow friends to see your learning progress"
+	},
+	"theme": {
+		"dark-gray": "Dunkelgrau",
+		"light-gray": "Hellgrau",
+		"orange": "Orange",
+		"green": "Grün"
+	},
+	"menu": {
+		"donate": "Projekt unterstützen",
+		"languages": "Sprachen",
+		"about": "Über"
+	},
+	"about": {
+		"title": "Über Slovko",
+		"description": "Slovko ist eine App zum Vokabellernen durch Assoziationsspiele. Verbinde Wörter und ihre Übersetzungen, um sie dir schneller zu merken!",
+		"support": "Projekt unterstützen",
+		"feedback": {
+			"title": "Feedback",
+			"improvement": "Verbesserung",
+			"bug": "Fehlerbericht",
+			"contentError": "Inhaltsfehler",
+			"question": "Frage",
+			"messagePlaceholder": "Beschreibe deine Idee oder dein Problem...",
+			"expected": "Was hätte passieren sollen?",
+			"actual": "Was ist tatsächlich passiert?",
+			"send": "Feedback senden",
+			"successTitle": "Danke!",
+			"successMsg": "Dein Feedback hilft uns, Slovko besser zu machen."
+		},
+		"developer": "Entwickler",
+		"version": "Version"
+	},
+	"profile": {
+		"anonymousTitle": "Gast",
+		"anonymousSub": "Fortschritt nicht synchronisiert",
+		"syncWarning": "Melde dich an, um deinen Fortschritt in der Cloud zu speichern und ihn auf verschiedenen Geräten zu sichern.",
+		"login": "Anmelden",
+		"logout": "Abmelden",
+		"back": "Zurück",
+		"register": "Registrieren",
+		"signin": "Anmelden mit E-Mail",
+		"googleAuth": "Anmelden mit Google",
+		"emailRegister": "Registrieren mit E-Mail",
+		"forgotPassword": "Passwort vergessen?",
+		"forgotPasswordTitle": "Passwort zurücksetzen",
+		"forgotPasswordSubtitle": "Gib die mit deinem Konto verknüpfte E-Mail ein",
+		"spamWarning": "Die E-Mail könnte im Spam-Ordner landen, da die App neu ist.",
+		"sendResetEmail": "Wiederherstellungsmail senden",
+		"backToSignin": "Zurück zur Anmeldung",
+		"passwordResetSent": "Wiederherstellungsmail gesendet",
+		"errors": {
+			"enterEmail": "Gib E-Mail ein",
+			"userNotFound": "Benutzer mit dieser E-Mail nicht gefunden",
+			"invalidEmail": "Ungültiges E-Mail-Format",
+			"fillFields": "Fülle alle Felder aus",
+			"passwordMismatch": "Passwörter stimmen nicht überein",
+			"weakPassword": "Passwort ist zu schwach (min. 6 Zeichen)",
+			"emailInUse": "Diese E-Mail wird bereits verwendet"
+		},
+		"stats": {
+			"byLevel": "Statistik nach Niveau",
+			"general": "Allgemeine Aktivität",
+			"correct": "richtige Antworten insgesamt",
+			"streak": "aktuelle Tages-Serie",
+			"days": "Tage im Programm insgesamt",
+			"accuracy": "Antwortgenauigkeit",
+			"bestStreak": "Rekord-Serie von Tagen",
+			"bestCorrectStreak": "Rekord-Serie richtiger Antworten",
+			"correctToday": "richtige Antworten heute",
+			"dailyAverage": "Durchschnitt pro Tag",
+			"correctShort": "Richtig",
+			"showMore": "mehr Statistiken anzeigen",
+			"showLess": "weniger Statistiken anzeigen"
+		}
+	},
+	"updateNotification": {
+		"message": "Update verfügbar!",
+		"button": "Vollständig aktualisieren (Cache leeren)",
+		"buttonSkip": "Alten Cache behalten und fortfahren",
+		"warning": "Für einen stabilen Betrieb wird empfohlen, die Version zu aktualisieren. Das Update setzt alle Einstellungen und Playlists zurück (da noch keine Autorisierung vorhanden ist). Bei Ablehnung können Fehler auftreten.",
+		"yourVersion": "Ihre Version",
+		"availableVersion": "Verfügbare Version"
+	},
+	"language": {
+		"uk": "Ukrainisch",
+		"en": "Englisch",
+		"nl": "Niederländisch",
+		"de": "Deutsch",
+		"crh": "Krimtatarisch",
+		"voices": "Stimmen"
+	},
+	"common": {
+		"all": "Alle",
+		"confirm": "Bestätigen",
+		"listen": "Hören",
+		"backToLearning": "Zurück zum Lernen"
+	}
 }

@@ -18,7 +18,8 @@
 	--card-bg: #43464e;
 	--card-border: #565a63;
 	--card-hover-border: #6b6f7a;
-	--font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	--font-family:
+		"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
 	/* Стани (Common) - Default Orange based */
 	--selected-bg: #5e3020;

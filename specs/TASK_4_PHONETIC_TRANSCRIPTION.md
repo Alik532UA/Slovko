@@ -1,9 +1,11 @@
 # Task 4: Phonetic Transcription System (IPA-based)
 
 ## Objective
+
 Implement a robust phonetic transcription system using IPA (International Phonetic Alphabet) as an intermediate layer to support accurate pronunciation guides for any language pair (e.g., Dutch -> Crimean Tatar).
 
 ## Architecture
+
 1.  **Data Source**: IPA Dictionaries per language.
     - `src/lib/data/transcriptions/[lang]/[category]/[id].json`
     - Contains `wordKey` -> `IPA string` mapping.
@@ -14,6 +16,7 @@ Implement a robust phonetic transcription system using IPA (International Phonet
     - Orchestrates the conversion.
 
 ## Steps
+
 1.  **Refactor Data Structure**:
     - Move existing `transcriptions/levels/*.json` to `transcriptions/en/levels/`.
     - Create `transcriptions/nl/levels/A1.json` with IPA data.
@@ -30,7 +33,9 @@ Implement a robust phonetic transcription system using IPA (International Phonet
     - Generate display transcription using Mappers.
 
 ## IPA Mapping Strategy (Draft)
+
 ### Vowels
+
 - `/iː/` -> UK: `і`, CRH: `i`
 - `/ɪ/` -> UK: `и`, CRH: `i`
 - `/e/` -> UK: `е`, CRH: `e`
@@ -43,6 +48,7 @@ Implement a robust phonetic transcription system using IPA (International Phonet
 - `/ə/` -> UK: `е/а`, CRH: `e`
 
 ### Consonants
+
 - `/p/` -> `п`, `p`
 - `/b/` -> `б`, `b`
 - `/t/` -> `т`, `t`

@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 // ========================================
 // БАЗОВІ СХЕМИ
@@ -25,26 +25,32 @@ export const WordListSchema = z.array(z.string());
  * Очікуємо об'єкт з полем words, або просто масив слів (для сумісності).
  * В коді використовується { words: string[] }.
  */
-export const LevelFileSchema = z.object({
-    id: z.string().optional(),
-    name: z.string().optional(),
-    words: WordListSchema
-}).or(
-    // Fallback if file is just an array of strings
-    z.array(z.string()).transform(words => ({ words, id: undefined, name: undefined }))
-);
+export const LevelFileSchema = z
+	.object({
+		id: z.string().optional(),
+		name: z.string().optional(),
+		words: WordListSchema,
+	})
+	.or(
+		// Fallback if file is just an array of strings
+		z
+			.array(z.string())
+			.transform((words) => ({ words, id: undefined, name: undefined })),
+	);
 
 /**
  * Схема файлу теми.
  * В типах сказано: "on disk it is just string[]".
  */
-export const TopicFileSchema = z.array(z.string()).transform(words => ({ words }));
+export const TopicFileSchema = z
+	.array(z.string())
+	.transform((words) => ({ words }));
 
 /**
  * Схема для локальної семантики (semantics.json)
  */
 export const SemanticsSchema = z.object({
-    labels: z.record(z.string(), z.string())
+	labels: z.record(z.string(), z.string()),
 });
 
 // ========================================

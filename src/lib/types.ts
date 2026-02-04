@@ -8,36 +8,36 @@
 // ========================================
 
 /** Підтримувані мови */
-export type Language = 'uk' | 'en' | 'crh' | 'nl' | 'de' | 'el';
+export type Language = "uk" | "en" | "crh" | "nl" | "de" | "el";
 
 /** Назви мов для відображення */
 export const LANGUAGE_NAMES: Record<Language, string> = {
-    uk: 'Українська',
-    en: 'English',
-    crh: 'Qırımtatarca',
-    nl: 'Nederlands',
-    de: 'Deutsch',
-    el: 'Ελληνικά'
+	uk: "Українська",
+	en: "English",
+	crh: "Qırımtatarca",
+	nl: "Nederlands",
+	de: "Deutsch",
+	el: "Ελληνικά",
 };
 
 /** Прапори мов (emoji) */
 export const LANGUAGE_FLAGS: Record<Language, string> = {
-    uk: '🇺🇦',
-    en: '🇬🇧',
-    crh: '🔵', // Кримськотатарський прапор
-    nl: '🇳🇱',
-    de: '🇩🇪',
-    el: '🇬🇷'
+	uk: "🇺🇦",
+	en: "🇬🇧",
+	crh: "🔵", // Кримськотатарський прапор
+	nl: "🇳🇱",
+	de: "🇩🇪",
+	el: "🇬🇷",
 };
 
 /** Теми оформлення */
-export type AppTheme = 'dark-gray' | 'light-gray' | 'orange' | 'green';
+export type AppTheme = "dark-gray" | "light-gray" | "orange" | "green";
 
 /** Мовний CEFR рівень */
-export type CEFRLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
+export type CEFRLevel = "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
 
 /** Всі рівні */
-export const ALL_LEVELS: CEFRLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+export const ALL_LEVELS: CEFRLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 // ========================================
 // СТРУКТУРА ДАНИХ СЛІВ
@@ -48,9 +48,9 @@ export const ALL_LEVELS: CEFRLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
  * Not used for storage on disk.
  */
 export interface WordPair {
-    id: string;
-    ukrainian: string;
-    english: string;
+	id: string;
+	ukrainian: string;
+	english: string;
 }
 
 /**
@@ -59,9 +59,9 @@ export interface WordPair {
  * Translations are stored separately in `data/translations`.
  */
 export interface WordLevel {
-    id: string; // id can be CEFRLevel or phrase ID
-    name: string;
-    words: string[];
+	id: string; // id can be CEFRLevel or phrase ID
+	name: string;
+	words: string[];
 }
 
 /**
@@ -69,9 +69,9 @@ export interface WordLevel {
  * In runtime, it is enriched with metadata from ALL_TOPICS.
  */
 export interface WordTopic {
-    id: string;
-    icon: string; // Lucide icon name
-    words: string[];
+	id: string;
+	icon: string; // Lucide icon name
+	words: string[];
 }
 
 /**
@@ -92,7 +92,7 @@ export type TranscriptionDictionary = Record<string, string>;
  * Локальна семантика для мови (semantics.json)
  */
 export interface LocalSemantics {
-    labels: Record<string, string>;
+	labels: Record<string, string>;
 }
 
 // ========================================
@@ -106,27 +106,33 @@ export interface LocalSemantics {
  * - 'phrases': Learning phrases by level
  * - 'playlists': Custom collections (Favorites, Mistakes, etc.)
  */
-export type GameMode = 'levels' | 'topics' | 'phrases' | 'playlists';
+export type GameMode = "levels" | "topics" | "phrases" | "playlists";
 
-export type PlaylistId = 'favorites' | 'mistakes' | 'extra';
+export type PlaylistId = "favorites" | "mistakes" | "extra";
 
 /**
  * Card visual states:
  */
-export type CardStatus = 'idle' | 'selected' | 'correct' | 'wrong' | 'hint' | 'hint-slow';
+export type CardStatus =
+	| "idle"
+	| "selected"
+	| "correct"
+	| "wrong"
+	| "hint"
+	| "hint-slow";
 
 /**
  * Runtime representation of a card on the game board.
  */
 export interface ActiveCard {
-    id: string;
-    wordKey: string; // Original key from JSON data
-    text: string; // Display text (Translation or Source word)
-    transcription?: string; // Only for Source language cards
-    language: Language;
-    status: CardStatus;
-    slot: number; // Grid position index
-    isVisible: boolean; // False when matched and removed
+	id: string;
+	wordKey: string; // Original key from JSON data
+	text: string; // Display text (Translation or Source word)
+	transcription?: string; // Only for Source language cards
+	language: Language;
+	status: CardStatus;
+	slot: number; // Grid position index
+	isVisible: boolean; // False when matched and removed
 }
 
 // ========================================
@@ -134,9 +140,9 @@ export interface ActiveCard {
 // ========================================
 
 export interface UserPrivacySettings {
-    showInSearch: boolean;
-    allowFriendRequests: boolean;
-    shareStats: boolean;
+	showInSearch: boolean;
+	allowFriendRequests: boolean;
+	shareStats: boolean;
 }
 
 // ========================================
@@ -145,28 +151,28 @@ export interface UserPrivacySettings {
 
 /** Всі теми з іконками (Lucide names) */
 export const ALL_TOPICS = [
-    { id: 'nature', icon: 'Leaf' },
-    { id: 'animals', icon: 'PawPrint' },
-    { id: 'travel', icon: 'Plane' },
-    { id: 'food', icon: 'Utensils' },
-    { id: 'home', icon: 'Home' },
-    { id: 'cars', icon: 'Car' },
-    { id: 'it', icon: 'Laptop' },
-    { id: 'questions', icon: 'HelpCircle' },
-    { id: 'numbers', icon: 'Hash' },
-    { id: 'colors', icon: 'Palette' },
-    { id: 'time', icon: 'Clock' },
-    { id: 'family_relationships', icon: 'Users' },
-    { id: 'body_health', icon: 'Heart' },
-    { id: 'clothes_fashion', icon: 'Shirt' },
-    { id: 'pronouns_people', icon: 'User' },
-    { id: 'basic_verbs', icon: 'Footprints' },
-    { id: 'adjectives', icon: 'Sparkles' },
-    { id: 'education_work', icon: 'GraduationCap' },
-    { id: 'abstract_concepts', icon: 'Brain' },
-    { id: 'society_law', icon: 'Scale' },
-    { id: 'phrasal_verbs', icon: 'Puzzle' },
-    { id: 'adverbs_prepositions', icon: 'ArrowLeftRight' }
+	{ id: "nature", icon: "Leaf" },
+	{ id: "animals", icon: "PawPrint" },
+	{ id: "travel", icon: "Plane" },
+	{ id: "food", icon: "Utensils" },
+	{ id: "home", icon: "Home" },
+	{ id: "cars", icon: "Car" },
+	{ id: "it", icon: "Laptop" },
+	{ id: "questions", icon: "HelpCircle" },
+	{ id: "numbers", icon: "Hash" },
+	{ id: "colors", icon: "Palette" },
+	{ id: "time", icon: "Clock" },
+	{ id: "family_relationships", icon: "Users" },
+	{ id: "body_health", icon: "Heart" },
+	{ id: "clothes_fashion", icon: "Shirt" },
+	{ id: "pronouns_people", icon: "User" },
+	{ id: "basic_verbs", icon: "Footprints" },
+	{ id: "adjectives", icon: "Sparkles" },
+	{ id: "education_work", icon: "GraduationCap" },
+	{ id: "abstract_concepts", icon: "Brain" },
+	{ id: "society_law", icon: "Scale" },
+	{ id: "phrasal_verbs", icon: "Puzzle" },
+	{ id: "adverbs_prepositions", icon: "ArrowLeftRight" },
 ] as const;
 
-export type TopicId = (typeof ALL_TOPICS)[number]['id'];
+export type TopicId = (typeof ALL_TOPICS)[number]["id"];

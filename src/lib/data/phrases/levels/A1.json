@@ -1,25 +1,25 @@
 {
-    "id": "A1",
-    "words": [
-        "phrase_hello_how_are_you",
-        "phrase_what_is_your_name",
-        "phrase_my_name_is_alex",
-        "phrase_nice_to_meet_you",
-        "phrase_where_are_you_from",
-        "phrase_i_am_from_ukraine",
-        "phrase_how_old_are_you",
-        "phrase_i_dont_understand",
-        "phrase_can_you_help_me",
-        "phrase_thank_you_very_much",
-        "phrase_see_you_later",
-        "phrase_i_like_coffee",
-        "phrase_what_time_is_it",
-        "phrase_where_is_the_bathroom",
-        "phrase_how_much_is_it",
-        "phrase_i_speak_a_little",
-        "phrase_do_you_speak_ukrainian",
-        "phrase_have_a_nice_day",
-        "phrase_i_am_sorry",
-        "phrase_good_morning"
-    ]
+	"id": "A1",
+	"words": [
+		"phrase_hello_how_are_you",
+		"phrase_what_is_your_name",
+		"phrase_my_name_is_alex",
+		"phrase_nice_to_meet_you",
+		"phrase_where_are_you_from",
+		"phrase_i_am_from_ukraine",
+		"phrase_how_old_are_you",
+		"phrase_i_dont_understand",
+		"phrase_can_you_help_me",
+		"phrase_thank_you_very_much",
+		"phrase_see_you_later",
+		"phrase_i_like_coffee",
+		"phrase_what_time_is_it",
+		"phrase_where_is_the_bathroom",
+		"phrase_how_much_is_it",
+		"phrase_i_speak_a_little",
+		"phrase_do_you_speak_ukrainian",
+		"phrase_have_a_nice_day",
+		"phrase_i_am_sorry",
+		"phrase_good_morning"
+	]
 }

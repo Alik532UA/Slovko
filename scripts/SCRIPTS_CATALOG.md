@@ -4,9 +4,11 @@ Use these scripts to maintain, analyze, and generate data for the app.
 Run with `node scripts/path/to/script.js`.
 
 ## 🛠️ Maintenance (Data Integrity)
-*Located in `scripts/maintenance/`*
+
+_Located in `scripts/maintenance/`_
 
 ### Core Tools
+
 - **`run_global_migration.js`**: Runs the full data migration pipeline (words -> translations -> transcriptions).
 - **`translation_engine.js`**: Core logic for handling translations and semantic keys.
 - **`sync_all_keys.cjs`**: Synchronizes all keys across levels and languages.
@@ -15,12 +17,14 @@ Run with `node scripts/path/to/script.js`.
 - **`cleanup_word_lists.cjs`**: Standardizes word list files.
 
 ### Specific Level Tools
+
 - **`fix_b2_gaps_from_other_levels.js`**: Fills missing data in B2 using other levels as sources.
 - **`fix_b2_semantic_keys.js`**: Updates B2 keys to follow the semantic naming convention.
 - **`import_b2_translations.js`**: Imports translations from CSV-like text files.
 - **`fill_remaining_b2.js`**: Fills empty slots with English keys (last resort).
 
 ### Topics & Phrases
+
 - **`sync_topic_translations.js`**: Ensures topic translation files match topic word lists.
 - **`cleanup_topics.js`**: Removes duplicate words within topics.
 - **`fix_topic_keys.js`**: Normalizes keys in topic files.
@@ -28,7 +32,8 @@ Run with `node scripts/path/to/script.js`.
 - **`generate_phrase_migration.js`**: Generates mapping for phrase migration.
 
 ## 🔍 Analysis (Debugging)
-*Located in `scripts/analysis/`*
+
+_Located in `scripts/analysis/`_
 
 - **`analyze_all_translations.js`**: Comprehensive check for missing or incorrect translations across all levels and languages.
 - **`vocab_analysis.js`**: Statistics and deep analysis of the vocabulary.
@@ -39,7 +44,8 @@ Run with `node scripts/path/to/script.js`.
 - **`analyze_new_words.js`**: Analyzes newly added words for consistency.
 
 ## ⚙️ Generation (Content Creation)
-*Located in `scripts/generation/`*
+
+_Located in `scripts/generation/`_
 
 - **`add_words_batch.js`**: Adds a batch of words to a level.
 - **`create_topics.js`**: Scaffolding for new topics.
@@ -47,9 +53,11 @@ Run with `node scripts/path/to/script.js`.
 - **`build_translation_map.js`**: Builds a map of translations for faster processing.
 
 ## 📂 Root & Utility Scripts
+
 - **`bump-version.js`**: Increases version in `package.json` and `static/app-version.json`.
 - **`organize_scripts.js`**: (Internal) Helper to maintain this folder structure.
 
 ## 🏛️ Legacy Fixes
-*Located in `scripts/maintenance/legacy_fixes/`*
+
+_Located in `scripts/maintenance/legacy_fixes/`_
 Contains one-time migration scripts and old fixes that are kept for historical reference or potential re-runs if data is reverted.

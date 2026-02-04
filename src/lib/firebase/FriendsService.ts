@@ -1,6 +1,6 @@
 /**
  * FriendsService - Сервіс для управління підписками та друзями
- * 
+ *
  * Структура Firestore:
  * /users/{uid}/following/{targetUid} - на кого підписаний користувач
  * /users/{uid}/followers/{followerUid} - хто підписаний на користувача
@@ -8,20 +8,20 @@
  */
 
 import {
-    collection,
-    doc,
-    setDoc,
-    deleteDoc,
-    getDocs,
-    getDoc,
-    query,
-    where,
-    orderBy,
-    limit,
-    serverTimestamp,
-    getCountFromServer,
-    writeBatch,
-    type Timestamp
+	collection,
+	doc,
+	setDoc,
+	deleteDoc,
+	getDocs,
+	getDoc,
+	query,
+	where,
+	orderBy,
+	limit,
+	serverTimestamp,
+	getCountFromServer,
+	writeBatch,
+	type Timestamp,
 } from "firebase/firestore";
 import { db, auth } from "./config";
 import { logService } from "../services/logService";
@@ -29,385 +29,451 @@ import type { UserPrivacySettings } from "../types";
 
 /** Інтерфейс публічного профілю */
 export interface UserProfile {
-    uid: string;
-    displayName: string;
-    photoURL: string | null;
-    searchableEmail?: string; // Для пошуку (опціонально)
-    privacy?: UserPrivacySettings;
+	uid: string;
+	displayName: string;
+	photoURL: string | null;
+	searchableEmail?: string; // Для пошуку (опціонально)
+	privacy?: UserPrivacySettings;
 }
 
 /** Інтерфейс підписки */
 export interface FollowRecord {
-    uid: string;
-    displayName: string;
-    photoURL: string | null;
-    followedAt: Timestamp | null;
+	uid: string;
+	displayName: string;
+	photoURL: string | null;
+	followedAt: Timestamp | null;
 }
 
 /** Колекції Firestore */
 const COLLECTIONS = {
-    USERS: "users",
-    FOLLOWING: "following",
-    FOLLOWERS: "followers",
-    PROFILES: "profiles"
+	USERS: "users",
+	FOLLOWING: "following",
+	FOLLOWERS: "followers",
+	PROFILES: "profiles",
 };
 
 /**
  * Сервіс для керування друзями та підписками
  */
 export const FriendsService = {
-    /**
-     * Підписатися на користувача (Атомарно)
-     * @param targetUid - UID користувача, на якого підписуємось
-     */
-    async follow(targetUid: string): Promise<boolean> {
-        if (!auth.currentUser) return false;
-        const currentUid = auth.currentUser.uid;
-        if (currentUid === targetUid) return false;
+	/**
+	 * Підписатися на користувача (Атомарно)
+	 * @param targetUid - UID користувача, на якого підписуємось
+	 */
+	async follow(targetUid: string): Promise<boolean> {
+		if (!auth.currentUser) return false;
+		const currentUid = auth.currentUser.uid;
+		if (currentUid === targetUid) return false;
 
-        try {
-            const targetProfile = await this.getUserProfile(targetUid);
-            if (!targetProfile) return false;
+		try {
+			const targetProfile = await this.getUserProfile(targetUid);
+			if (!targetProfile) return false;
 
-            const batch = writeBatch(db);
+			const batch = writeBatch(db);
 
-            // Додаємо в "following" поточного користувача
-            const followingRef = doc(db, COLLECTIONS.USERS, currentUid, COLLECTIONS.FOLLOWING, targetUid);
-            batch.set(followingRef, {
-                uid: targetUid,
-                displayName: targetProfile.displayName,
-                photoURL: targetProfile.photoURL,
-                followedAt: serverTimestamp()
-            });
+			// Додаємо в "following" поточного користувача
+			const followingRef = doc(
+				db,
+				COLLECTIONS.USERS,
+				currentUid,
+				COLLECTIONS.FOLLOWING,
+				targetUid,
+			);
+			batch.set(followingRef, {
+				uid: targetUid,
+				displayName: targetProfile.displayName,
+				photoURL: targetProfile.photoURL,
+				followedAt: serverTimestamp(),
+			});
 
-            // Додаємо в "followers" цільового користувача
-            const followerRef = doc(db, COLLECTIONS.USERS, targetUid, COLLECTIONS.FOLLOWERS, currentUid);
-            batch.set(followerRef, {
-                uid: currentUid,
-                displayName: auth.currentUser.displayName || 'User',
-                photoURL: auth.currentUser.photoURL,
-                followedAt: serverTimestamp()
-            });
+			// Додаємо в "followers" цільового користувача
+			const followerRef = doc(
+				db,
+				COLLECTIONS.USERS,
+				targetUid,
+				COLLECTIONS.FOLLOWERS,
+				currentUid,
+			);
+			batch.set(followerRef, {
+				uid: currentUid,
+				displayName: auth.currentUser.displayName || "User",
+				photoURL: auth.currentUser.photoURL,
+				followedAt: serverTimestamp(),
+			});
 
-            await batch.commit();
-            logService.log('sync', `Followed user: ${targetUid}`);
-            return true;
-        } catch (error) {
-            logService.error('sync', 'Error following user:', error);
-            return false;
-        }
-    },
+			await batch.commit();
+			logService.log("sync", `Followed user: ${targetUid}`);
+			return true;
+		} catch (error) {
+			logService.error("sync", "Error following user:", error);
+			return false;
+		}
+	},
 
-    /**
-     * Відписатися від користувача (Атомарно)
-     * @param targetUid - UID користувача, від якого відписуємось
-     */
-    async unfollow(targetUid: string): Promise<boolean> {
-        if (!auth.currentUser) return false;
-        const currentUid = auth.currentUser.uid;
+	/**
+	 * Відписатися від користувача (Атомарно)
+	 * @param targetUid - UID користувача, від якого відписуємось
+	 */
+	async unfollow(targetUid: string): Promise<boolean> {
+		if (!auth.currentUser) return false;
+		const currentUid = auth.currentUser.uid;
 
-        try {
-            const batch = writeBatch(db);
+		try {
+			const batch = writeBatch(db);
 
-            const followingRef = doc(db, COLLECTIONS.USERS, currentUid, COLLECTIONS.FOLLOWING, targetUid);
-            batch.delete(followingRef);
+			const followingRef = doc(
+				db,
+				COLLECTIONS.USERS,
+				currentUid,
+				COLLECTIONS.FOLLOWING,
+				targetUid,
+			);
+			batch.delete(followingRef);
 
-            const followerRef = doc(db, COLLECTIONS.USERS, targetUid, COLLECTIONS.FOLLOWERS, currentUid);
-            batch.delete(followerRef);
+			const followerRef = doc(
+				db,
+				COLLECTIONS.USERS,
+				targetUid,
+				COLLECTIONS.FOLLOWERS,
+				currentUid,
+			);
+			batch.delete(followerRef);
 
-            await batch.commit();
-            logService.log('sync', `Unfollowed user: ${targetUid}`);
-            return true;
-        } catch (error) {
-            logService.error('sync', 'Error unfollowing user:', error);
-            return false;
-        }
-    },
+			await batch.commit();
+			logService.log("sync", `Unfollowed user: ${targetUid}`);
+			return true;
+		} catch (error) {
+			logService.error("sync", "Error unfollowing user:", error);
+			return false;
+		}
+	},
 
-    /**
-     * Отримати список підписок (на кого підписаний)
-     * @param uid - UID користувача (за замовчуванням - поточний)
-     */
-    async getFollowing(uid?: string): Promise<FollowRecord[]> {
-        const targetUid = uid || auth.currentUser?.uid;
-        if (!targetUid) return [];
+	/**
+	 * Отримати список підписок (на кого підписаний)
+	 * @param uid - UID користувача (за замовчуванням - поточний)
+	 */
+	async getFollowing(uid?: string): Promise<FollowRecord[]> {
+		const targetUid = uid || auth.currentUser?.uid;
+		if (!targetUid) return [];
 
-        try {
-            const followingRef = collection(db, COLLECTIONS.USERS, targetUid, COLLECTIONS.FOLLOWING);
-            const snapshot = await getDocs(followingRef);
+		try {
+			const followingRef = collection(
+				db,
+				COLLECTIONS.USERS,
+				targetUid,
+				COLLECTIONS.FOLLOWING,
+			);
+			const snapshot = await getDocs(followingRef);
 
-            return snapshot.docs.map(doc => doc.data() as FollowRecord);
-        } catch (error) {
-            logService.error('sync', 'Error getting following:', error);
-            return [];
-        }
-    },
+			return snapshot.docs.map((doc) => doc.data() as FollowRecord);
+		} catch (error) {
+			logService.error("sync", "Error getting following:", error);
+			return [];
+		}
+	},
 
-    /**
-     * Отримати список підписників (хто підписаний на мене)
-     * @param uid - UID користувача (за замовчуванням - поточний)
-     */
-    async getFollowers(uid?: string): Promise<FollowRecord[]> {
-        const targetUid = uid || auth.currentUser?.uid;
-        if (!targetUid) return [];
+	/**
+	 * Отримати список підписників (хто підписаний на мене)
+	 * @param uid - UID користувача (за замовчуванням - поточний)
+	 */
+	async getFollowers(uid?: string): Promise<FollowRecord[]> {
+		const targetUid = uid || auth.currentUser?.uid;
+		if (!targetUid) return [];
 
-        try {
-            const followersRef = collection(db, COLLECTIONS.USERS, targetUid, COLLECTIONS.FOLLOWERS);
-            const snapshot = await getDocs(followersRef);
+		try {
+			const followersRef = collection(
+				db,
+				COLLECTIONS.USERS,
+				targetUid,
+				COLLECTIONS.FOLLOWERS,
+			);
+			const snapshot = await getDocs(followersRef);
 
-            return snapshot.docs.map(doc => doc.data() as FollowRecord);
-        } catch (error) {
-            logService.error('sync', 'Error getting followers:', error);
-            return [];
-        }
-    },
+			return snapshot.docs.map((doc) => doc.data() as FollowRecord);
+		} catch (error) {
+			logService.error("sync", "Error getting followers:", error);
+			return [];
+		}
+	},
 
-    /**
-     * Отримати список взаємних друзів
-     */
-    async getMutualFriends(): Promise<FollowRecord[]> {
-        if (!auth.currentUser) return [];
+	/**
+	 * Отримати список взаємних друзів
+	 */
+	async getMutualFriends(): Promise<FollowRecord[]> {
+		if (!auth.currentUser) return [];
 
-        try {
-            const [following, followers] = await Promise.all([
-                this.getFollowing(),
-                this.getFollowers()
-            ]);
+		try {
+			const [following, followers] = await Promise.all([
+				this.getFollowing(),
+				this.getFollowers(),
+			]);
 
-            const followerUids = new Set(followers.map(f => f.uid));
-            return following.filter(f => followerUids.has(f.uid));
-        } catch (error) {
-            logService.error('sync', 'Error getting mutual friends:', error);
-            return [];
-        }
-    },
+			const followerUids = new Set(followers.map((f) => f.uid));
+			return following.filter((f) => followerUids.has(f.uid));
+		} catch (error) {
+			logService.error("sync", "Error getting mutual friends:", error);
+			return [];
+		}
+	},
 
-    /**
-     * Перевірити, чи підписаний на користувача
-     * @param targetUid - UID користувача для перевірки
-     */
-    async isFollowing(targetUid: string): Promise<boolean> {
-        if (!auth.currentUser) return false;
+	/**
+	 * Перевірити, чи підписаний на користувача
+	 * @param targetUid - UID користувача для перевірки
+	 */
+	async isFollowing(targetUid: string): Promise<boolean> {
+		if (!auth.currentUser) return false;
 
-        try {
-            const followingRef = doc(db, COLLECTIONS.USERS, auth.currentUser.uid, COLLECTIONS.FOLLOWING, targetUid);
-            const snapshot = await getDoc(followingRef);
-            return snapshot.exists();
-        } catch (error) {
-            logService.error('sync', 'Error checking follow status:', error);
-            return false;
-        }
-    },
+		try {
+			const followingRef = doc(
+				db,
+				COLLECTIONS.USERS,
+				auth.currentUser.uid,
+				COLLECTIONS.FOLLOWING,
+				targetUid,
+			);
+			const snapshot = await getDoc(followingRef);
+			return snapshot.exists();
+		} catch (error) {
+			logService.error("sync", "Error checking follow status:", error);
+			return false;
+		}
+	},
 
-    /**
-     * Пошук користувачів за ім'ям або email (Без врахування регістру)
-     */
-    async searchUsers(searchQuery: string, maxResults = 10): Promise<UserProfile[]> {
-        if (!searchQuery || searchQuery.length < 2) return [];
+	/**
+	 * Пошук користувачів за ім'ям або email (Без врахування регістру)
+	 */
+	async searchUsers(
+		searchQuery: string,
+		maxResults = 10,
+	): Promise<UserProfile[]> {
+		if (!searchQuery || searchQuery.length < 2) return [];
 
-        try {
-            const queryLower = searchQuery.toLowerCase().trim();
-            const profilesRef = collection(db, COLLECTIONS.PROFILES);
-            
-            // 1. Спочатку спробуємо знайти точний збіг по email
-            const emailQuery = query(
-                profilesRef,
-                where('searchableEmail', '==', queryLower),
-                limit(maxResults)
-            );
-            
-            const emailSnapshot = await getDocs(emailQuery);
-            if (!emailSnapshot.empty) {
-                return emailSnapshot.docs.map(doc => ({ ...doc.data(), uid: doc.id } as UserProfile));
-            }
+		try {
+			const queryLower = searchQuery.toLowerCase().trim();
+			const profilesRef = collection(db, COLLECTIONS.PROFILES);
 
-            // 2. Якщо не знайдено, шукаємо за displayNameLower (префіксний пошук)
-            const nameQuery = query(
-                profilesRef,
-                where('displayNameLower', '>=', queryLower),
-                where('displayNameLower', '<=', queryLower + '\uf8ff'),
-                limit(maxResults)
-            );
+			// 1. Спочатку спробуємо знайти точний збіг по email
+			const emailQuery = query(
+				profilesRef,
+				where("searchableEmail", "==", queryLower),
+				limit(maxResults),
+			);
 
-            const nameSnapshot = await getDocs(nameQuery);
-            const currentUid = auth.currentUser?.uid;
-            
-            return nameSnapshot.docs
-                .map(doc => ({ ...doc.data(), uid: doc.id } as UserProfile))
-                .filter(profile => profile.uid !== currentUid);
-        } catch (error) {
-            logService.error('sync', 'Error searching users:', error);
-            return [];
-        }
-    },
+			const emailSnapshot = await getDocs(emailQuery);
+			if (!emailSnapshot.empty) {
+				return emailSnapshot.docs.map(
+					(doc) => ({ ...doc.data(), uid: doc.id }) as UserProfile,
+				);
+			}
 
-    /**
-     * Отримати публічний профіль користувача
-     */
-    async getUserProfile(uid: string): Promise<UserProfile | null> {
-        try {
-            const profileRef = doc(db, COLLECTIONS.PROFILES, uid);
-            const snapshot = await getDoc(profileRef);
+			// 2. Якщо не знайдено, шукаємо за displayNameLower (префіксний пошук)
+			const nameQuery = query(
+				profilesRef,
+				where("displayNameLower", ">=", queryLower),
+				where("displayNameLower", "<=", queryLower + "\uf8ff"),
+				limit(maxResults),
+			);
 
-            if (snapshot.exists()) {
-                return { ...snapshot.data(), uid } as UserProfile;
-            }
+			const nameSnapshot = await getDocs(nameQuery);
+			const currentUid = auth.currentUser?.uid;
 
-            return null;
-        } catch (error) {
-            logService.error('sync', 'Error getting user profile:', error);
-            return null;
-        }
-    },
+			return nameSnapshot.docs
+				.map((doc) => ({ ...doc.data(), uid: doc.id }) as UserProfile)
+				.filter((profile) => profile.uid !== currentUid);
+		} catch (error) {
+			logService.error("sync", "Error searching users:", error);
+			return [];
+		}
+	},
 
-    /**
-     * Оновити свій публічний профіль для пошуку
-     */
-    async updatePublicProfile(): Promise<void> {
-        if (!auth.currentUser) return;
+	/**
+	 * Отримати публічний профіль користувача
+	 */
+	async getUserProfile(uid: string): Promise<UserProfile | null> {
+		try {
+			const profileRef = doc(db, COLLECTIONS.PROFILES, uid);
+			const snapshot = await getDoc(profileRef);
 
-        try {
-            const profileRef = doc(db, COLLECTIONS.PROFILES, auth.currentUser.uid);
-            
-            // Визначаємо найкраще ім'я для відображення
-            const displayName = auth.currentUser.displayName || 
-                              auth.currentUser.email?.split('@')[0] || 
-                              (auth.currentUser.isAnonymous ? 'Гість' : 'User');
-            
-            await setDoc(profileRef, {
-                displayName: displayName,
-                displayNameLower: displayName.toLowerCase(),
-                photoURL: auth.currentUser.photoURL,
-                searchableEmail: auth.currentUser.email?.toLowerCase() || null,
-                updatedAt: serverTimestamp()
-            }, { merge: true });
+			if (snapshot.exists()) {
+				return { ...snapshot.data(), uid } as UserProfile;
+			}
 
-            logService.log('sync', 'Public profile updated');
-        } catch (error) {
-            logService.error('sync', 'Error updating public profile:', error);
-        }
-    },
+			return null;
+		} catch (error) {
+			logService.error("sync", "Error getting user profile:", error);
+			return null;
+		}
+	},
 
-    /**
-     * Отримати кількість підписників та підписок (Оптимізовано)
-     */
-    async getCounts(uid?: string): Promise<{ following: number; followers: number }> {
-        const targetUid = uid || auth.currentUser?.uid;
-        if (!targetUid) return { following: 0, followers: 0 };
+	/**
+	 * Оновити свій публічний профіль для пошуку
+	 */
+	async updatePublicProfile(): Promise<void> {
+		if (!auth.currentUser) return;
 
-        try {
-            const followingRef = collection(db, COLLECTIONS.USERS, targetUid, COLLECTIONS.FOLLOWING);
-            const followersRef = collection(db, COLLECTIONS.USERS, targetUid, COLLECTIONS.FOLLOWERS);
+		try {
+			const profileRef = doc(db, COLLECTIONS.PROFILES, auth.currentUser.uid);
 
-            const [followingSnap, followersSnap] = await Promise.all([
-                getCountFromServer(followingRef),
-                getCountFromServer(followersRef)
-            ]);
+			// Визначаємо найкраще ім'я для відображення
+			const displayName =
+				auth.currentUser.displayName ||
+				auth.currentUser.email?.split("@")[0] ||
+				(auth.currentUser.isAnonymous ? "Гість" : "User");
 
-            return {
-                following: followingSnap.data().count,
-                followers: followersSnap.data().count
-            };
-        } catch (error) {
-            logService.error('sync', 'Error getting counts:', error);
-            return { following: 0, followers: 0 };
-        }
-    },
+			await setDoc(
+				profileRef,
+				{
+					displayName: displayName,
+					displayNameLower: displayName.toLowerCase(),
+					photoURL: auth.currentUser.photoURL,
+					searchableEmail: auth.currentUser.email?.toLowerCase() || null,
+					updatedAt: serverTimestamp(),
+				},
+				{ merge: true },
+			);
 
-    /**
-     * Отримати глобальний лідерборд
-     * @param metric - Метрика (totalCorrect, bestStreak, bestCorrectStreak, accuracy)
-     * @param cefrLevel - Рівень (optional)
-     * @param limitCount - Кількість результатів
-     */
-    async getLeaderboard(
-        metric: 'totalCorrect' | 'bestStreak' | 'bestCorrectStreak' | 'accuracy' = 'totalCorrect',
-        cefrLevel: string = 'all',
-        limitCount: number = 20
-    ): Promise<any[]> {
-        try {
-            const profilesRef = collection(db, COLLECTIONS.PROFILES);
-            // Для точності беремо більше записів, щоб відфільтрувати "читерів" (1 правильна відповідь = 100%)
-            const fetchLimit = metric === 'accuracy' ? 50 : limitCount;
+			logService.log("sync", "Public profile updated");
+		} catch (error) {
+			logService.error("sync", "Error updating public profile:", error);
+		}
+	},
 
-            // Визначаємо поле для сортування
-            // Якщо обрано 'all', використовуємо глобальну метрику (напр. 'totalCorrect')
-            // Якщо обрано рівень, використовуємо специфічне поле (напр. 'level_A1_totalCorrect')
-            let sortField: string = metric;
-            if (cefrLevel !== 'all') {
-                if (metric === 'bestStreak') {
-                    // Рівневого 'bestStreak' (днів) немає, залишаємо глобальний
-                    sortField = metric;
-                } else {
-                    sortField = `level_${cefrLevel}_${metric}`;
-                }
-            }
+	/**
+	 * Отримати кількість підписників та підписок (Оптимізовано)
+	 */
+	async getCounts(
+		uid?: string,
+	): Promise<{ following: number; followers: number }> {
+		const targetUid = uid || auth.currentUser?.uid;
+		if (!targetUid) return { following: 0, followers: 0 };
 
-            // Створюємо базовий запит
-            // Примітка: для кожного такого запиту Firestore потребуватиме окремий індекс
-            let q = query(
-                profilesRef, 
-                orderBy(sortField, 'desc'), 
-                limit(fetchLimit)
-            );
+		try {
+			const followingRef = collection(
+				db,
+				COLLECTIONS.USERS,
+				targetUid,
+				COLLECTIONS.FOLLOWING,
+			);
+			const followersRef = collection(
+				db,
+				COLLECTIONS.USERS,
+				targetUid,
+				COLLECTIONS.FOLLOWERS,
+			);
 
-            // Якщо обрано рівень, ми також можемо додати фільтр, щоб прибрати тих, хто ще не грав на ньому
-            if (cefrLevel !== 'all') {
-                q = query(q, where(sortField, '>', 0));
-            }
+			const [followingSnap, followersSnap] = await Promise.all([
+				getCountFromServer(followingRef),
+				getCountFromServer(followersRef),
+			]);
 
-            const snapshot = await getDocs(q);
-            let results = snapshot.docs.map((doc) => {
-                const data = doc.data() as any;
-                return {
-                    uid: doc.id,
-                    name: data.displayName || 'User',
-                    score: data[sortField] || 0,
-                    photoURL: data.photoURL,
-                    isMe: doc.id === auth.currentUser?.uid,
-                    // Додаткові поля
-                    totalAttempts: data.totalAttempts || 0,
-                    bestCorrectStreakLevel: data.bestCorrectStreakLevel
-                };
-            });
+			return {
+				following: followingSnap.data().count,
+				followers: followersSnap.data().count,
+			};
+		} catch (error) {
+			logService.error("sync", "Error getting counts:", error);
+			return { following: 0, followers: 0 };
+		}
+	},
 
-            // Фільтрація для точності: прибираємо тих, хто має 100% але менше 100 спроб
-            if (metric === 'accuracy') {
-                results = results.filter(u => {
-                    if (u.score === 100 && u.totalAttempts < 100) return false;
-                    return true;
-                });
-            }
+	/**
+	 * Отримати глобальний лідерборд
+	 * @param metric - Метрика (totalCorrect, bestStreak, bestCorrectStreak, accuracy)
+	 * @param cefrLevel - Рівень (optional)
+	 * @param limitCount - Кількість результатів
+	 */
+	async getLeaderboard(
+		metric:
+			| "totalCorrect"
+			| "bestStreak"
+			| "bestCorrectStreak"
+			| "accuracy" = "totalCorrect",
+		cefrLevel: string = "all",
+		limitCount: number = 20,
+	): Promise<any[]> {
+		try {
+			const profilesRef = collection(db, COLLECTIONS.PROFILES);
+			// Для точності беремо більше записів, щоб відфільтрувати "читерів" (1 правильна відповідь = 100%)
+			const fetchLimit = metric === "accuracy" ? 50 : limitCount;
 
-            // Обрізаємо до запитаної кількості і додаємо ранг
-            return results.slice(0, limitCount).map((u, index) => ({
-                ...u,
-                rank: index + 1
-            }));
-        } catch (error) {
-            logService.error('sync', 'Error getting leaderboard:', error);
-            return [];
-        }
-    },
+			// Визначаємо поле для сортування
+			// Якщо обрано 'all', використовуємо глобальну метрику (напр. 'totalCorrect')
+			// Якщо обрано рівень, використовуємо специфічне поле (напр. 'level_A1_totalCorrect')
+			let sortField: string = metric;
+			if (cefrLevel !== "all") {
+				if (metric === "bestStreak") {
+					// Рівневого 'bestStreak' (днів) немає, залишаємо глобальний
+					sortField = metric;
+				} else {
+					sortField = `level_${cefrLevel}_${metric}`;
+				}
+			}
 
-    /**
-     * Оновити налаштування приватності
-     */
-    async updatePrivacySettings(settings: UserPrivacySettings): Promise<boolean> {
-        if (!auth.currentUser) return false;
+			// Створюємо базовий запит
+			// Примітка: для кожного такого запиту Firestore потребуватиме окремий індекс
+			let q = query(profilesRef, orderBy(sortField, "desc"), limit(fetchLimit));
 
-        try {
-            const profileRef = doc(db, COLLECTIONS.PROFILES, auth.currentUser.uid);
-            await setDoc(profileRef, {
-                privacy: settings,
-                updatedAt: serverTimestamp()
-            }, { merge: true });
+			// Якщо обрано рівень, ми також можемо додати фільтр, щоб прибрати тих, хто ще не грав на ньому
+			if (cefrLevel !== "all") {
+				q = query(q, where(sortField, ">", 0));
+			}
 
-            logService.log('sync', 'Privacy settings updated');
-            return true;
-        } catch (error) {
-            logService.error('sync', 'Error updating privacy settings:', error);
-            return false;
-        }
-    }
+			const snapshot = await getDocs(q);
+			let results = snapshot.docs.map((doc) => {
+				const data = doc.data() as any;
+				return {
+					uid: doc.id,
+					name: data.displayName || "User",
+					score: data[sortField] || 0,
+					photoURL: data.photoURL,
+					isMe: doc.id === auth.currentUser?.uid,
+					// Додаткові поля
+					totalAttempts: data.totalAttempts || 0,
+					bestCorrectStreakLevel: data.bestCorrectStreakLevel,
+				};
+			});
+
+			// Фільтрація для точності: прибираємо тих, хто має 100% але менше 100 спроб
+			if (metric === "accuracy") {
+				results = results.filter((u) => {
+					if (u.score === 100 && u.totalAttempts < 100) return false;
+					return true;
+				});
+			}
+
+			// Обрізаємо до запитаної кількості і додаємо ранг
+			return results.slice(0, limitCount).map((u, index) => ({
+				...u,
+				rank: index + 1,
+			}));
+		} catch (error) {
+			logService.error("sync", "Error getting leaderboard:", error);
+			return [];
+		}
+	},
+
+	/**
+	 * Оновити налаштування приватності
+	 */
+	async updatePrivacySettings(settings: UserPrivacySettings): Promise<boolean> {
+		if (!auth.currentUser) return false;
+
+		try {
+			const profileRef = doc(db, COLLECTIONS.PROFILES, auth.currentUser.uid);
+			await setDoc(
+				profileRef,
+				{
+					privacy: settings,
+					updatedAt: serverTimestamp(),
+				},
+				{ merge: true },
+			);
+
+			logService.log("sync", "Privacy settings updated");
+			return true;
+		} catch (error) {
+			logService.error("sync", "Error updating privacy settings:", error);
+			return false;
+		}
+	},
 };

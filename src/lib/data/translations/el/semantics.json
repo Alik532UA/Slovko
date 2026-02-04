@@ -1,10 +1,10 @@
 {
-  "labels": {
-    "brother_older": "μεγαλύτερος",
-    "brother_younger": "μικρότερος",
-    "sister_older": "μεγαλύτερη",
-    "sister_younger": "μικρότερη",
-    "walk_action": "περπατώ",
-    "walk_pleasure": "κάνω βόλτα"
-  }
+	"labels": {
+		"brother_older": "μεγαλύτερος",
+		"brother_younger": "μικρότερος",
+		"sister_older": "μεγαλύτερη",
+		"sister_younger": "μικρότερη",
+		"walk_action": "περπατώ",
+		"walk_pleasure": "κάνω βόλτα"
+	}
 }
