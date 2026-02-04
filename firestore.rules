@@ -1,0 +1,38 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // 1. Система зворотного зв'язку (Feedback)
+    // Дозволяємо будькому (навіть гостям) додавати відгуки
+    // Підтримуємо основні та dev колекції
+    function isFeedbackColl(coll) {
+      return coll == 'feedback' || coll == 'feedback_anonymous' || 
+             coll == 'dev_feedback' || coll == 'dev_feedback_anonymous';
+    }
+
+    match /{rootColl}/{category}/messages/{messageId} {
+      allow create: if isFeedbackColl(rootColl);
+      allow read, update, delete: if false;
+    }
+    
+    // 2. Публічні профілі (Leaderboard & Search)
+    match /profiles/{userId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // 3. Приватні дані користувача (Sync & Progress)
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      match /following/{targetId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+      
+      match /followers/{followerId} {
+        allow read: if true; 
+        allow write: if request.auth != null && request.auth.uid == followerId;
+      }
+    }
+  }
+}

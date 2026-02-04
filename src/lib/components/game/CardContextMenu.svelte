@@ -6,7 +6,6 @@
 	import { speakText } from "$lib/services/speechService";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { scale, fade } from "svelte/transition";
-	import WordReportModal from "./WordReportModal.svelte";
 
 	interface Props {
 		x: number;
@@ -15,15 +14,15 @@
 		language: string; // New prop to know which language to speak
 		text: string; // New prop to know what to speak
 		onclose: () => void;
+		onreport: () => void;
 	}
-	let { x, y, wordKey, language, text, onclose }: Props = $props();
+	let { x, y, wordKey, language, text, onclose, onreport }: Props = $props();
 
 	let pair = $derived(
 		gameState.constructWordPair(wordKey, settingsStore.value),
 	);
 	let isFavorite = $derived(playlistStore.isFavorite(wordKey));
 	let isExtra = $derived(playlistStore.isExtra(wordKey));
-	let showReportModal = $state(false);
 
 	function playSound() {
 		speakText(text, language);
@@ -45,23 +44,10 @@
 	}
 
 	function handleReport() {
-		showReportModal = true;
-	}
-
-	function closeAll() {
-		showReportModal = false;
+		onreport();
 		onclose();
 	}
 </script>
-
-{#if showReportModal && pair}
-	<WordReportModal
-		{wordKey}
-		sourceTranslation={pair.source}
-		targetTranslation={pair.target}
-		onclose={closeAll}
-	/>
-{/if}
 
 <div
 	class="backdrop"

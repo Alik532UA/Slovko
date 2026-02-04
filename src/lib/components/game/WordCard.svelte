@@ -190,6 +190,16 @@
 	.word-card.selected {
 		background: var(--selected-bg);
 		border-color: var(--selected-border);
+		animation: selectedPulse 2s infinite ease-in-out;
+	}
+
+	@keyframes selectedPulse {
+		0%, 100% {
+			box-shadow: 0 0 0 rgba(58, 143, 214, 0);
+		}
+		50% {
+			box-shadow: 0 0 12px rgba(58, 143, 214, 0.3);
+		}
 	}
 
 	/* Правильна відповідь — зелений спалах + 25% прозорість */
@@ -218,11 +228,11 @@
 
 	/* Підказка — плавне блимання */
 	.word-card.hint {
-		animation: hintPulse 1s ease-in-out;
+		animation: hintPulse 2s ease-in-out infinite;
 	}
 
 	.word-card.hint-slow {
-		animation: hintPulse 5s ease-in-out;
+		animation: hintPulse 5s ease-in-out infinite;
 	}
 
 	@keyframes hintPulse {
@@ -232,12 +242,11 @@
 			border-color: var(--card-border);
 			box-shadow: 0 0 0 rgba(58, 143, 214, 0);
 		}
-		20%,
-		80% {
-			transform: scale(1.05);
-			background-color: rgba(58, 143, 214, 0.15); /* Blue tint */
-			border-color: var(--selected-border);
-			box-shadow: 0 0 20px rgba(58, 143, 214, 0.4);
+		50% {
+			transform: scale(1.03);
+			background-color: rgba(58, 143, 214, 0.15);
+			border-color: #3a8fd6;
+			box-shadow: 0 0 25px rgba(58, 143, 214, 0.4);
 		}
 		100% {
 			transform: scale(1);

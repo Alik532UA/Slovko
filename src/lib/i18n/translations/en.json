@@ -203,6 +203,7 @@
 		"commentPlaceholder": "Describe what exactly is wrong...",
 		"success": "Thank you! Report sent.",
 		"error": "Error sending report. Please try again later.",
+		"authRequired": "Please sign in to send feedback.",
 		"type": {
 			"wrongTranslation": "Wrong translation",
 			"wrongTranscription": "Transcription error",

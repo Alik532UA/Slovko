@@ -23,7 +23,7 @@ const STORAGE_KEY = "wordApp_settings";
 export const AppSettingsSchema = z.object({
 	interfaceLanguage: z
 		.enum(["en", "uk", "nl", "de", "el", "crh"])
-		.default("en"),
+		.default("uk"),
 	sourceLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("en"),
 	targetLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("uk"),
 	mode: z.enum(["levels", "topics", "phrases", "playlists"]).default("levels"),

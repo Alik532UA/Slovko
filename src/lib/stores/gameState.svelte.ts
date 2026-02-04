@@ -6,6 +6,8 @@ import type {
 	GameMode,
 } from "../types";
 import { shuffle } from "../services/gameCardFactory";
+import { getTranslation } from "../data/wordService";
+import { logService } from "../services/logService";
 import type { AppSettings } from "./settingsStore.svelte";
 import type { GameData } from "../services/gameDataService";
 
@@ -243,19 +245,28 @@ function createGameState() {
 		},
 
 		constructWordPair(wordKey: WordKey, settings: AppSettings): WordPair {
-			const { sourceLanguage, targetLanguage } = settings;
-			let english = "",
-				ukrainian = "";
+			const source = getTranslation(
+				wordKey,
+				data.sourceTranslations,
+				settings.sourceLanguage,
+			);
+			const target = getTranslation(
+				wordKey,
+				data.targetTranslations,
+				settings.targetLanguage,
+			);
 
-			if (sourceLanguage === "en") english = data.sourceTranslations[wordKey];
-			else if (targetLanguage === "en")
-				english = data.targetTranslations[wordKey];
+			logService.log("game", "Constructing word pair for report:", {
+				wordKey,
+				source,
+				target,
+			});
 
-			if (sourceLanguage === "uk") ukrainian = data.sourceTranslations[wordKey];
-			else if (targetLanguage === "uk")
-				ukrainian = data.targetTranslations[wordKey];
-
-			return { id: wordKey, english, ukrainian };
+			return {
+				id: wordKey,
+				source,
+				target,
+			};
 		},
 
 		findAvailableMatch() {

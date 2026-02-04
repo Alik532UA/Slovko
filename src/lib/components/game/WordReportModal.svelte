@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
-	import { X, Send, AlertCircle } from "lucide-svelte";
+	import { Send, AlertTriangle } from "lucide-svelte";
 	import { FeedbackService } from "$lib/firebase/FeedbackService";
-	import { fade, scale } from "svelte/transition";
 	import { notificationStore } from "$lib/stores/notificationStore.svelte";
+	import BaseModal from "../ui/BaseModal.svelte";
 
 	interface Props {
 		wordKey: string;
@@ -37,61 +37,47 @@
 				sourceTranslation,
 				targetTranslation,
 			});
-			notificationStore.show($_("wordReport.success"), "success");
+			notificationStore.success($_("wordReport.success"));
 			onclose();
-		} catch (e) {
-			notificationStore.show($_("wordReport.error"), "error");
+		} catch (e: any) {
+			if (e.message === "AUTH_REQUIRED") {
+				notificationStore.error($_("wordReport.authRequired"));
+			} else {
+				notificationStore.error($_("wordReport.error"));
+			}
 		} finally {
 			isSubmitting = false;
 		}
 	}
-
-	function handleBackdropClick(e: MouseEvent) {
-		if (e.target === e.currentTarget) onclose();
-	}
 </script>
 
-<div
-	class="modal-backdrop"
-	onclick={handleBackdropClick}
-	role="dialog"
-	aria-modal="true"
-	tabindex="-1"
-	onkeydown={(e) => e.key === "Escape" && onclose()}
-	in:fade={{ duration: 200 }}
->
-	<div
-		class="modal"
-		in:scale={{ duration: 200, start: 0.95 }}
-		onclick={(e) => e.stopPropagation()}
-		role="document"
-	>
+<BaseModal {onclose} testid="word-report-modal">
+	<div class="content">
 		<header>
-			<div class="title-group">
-				<AlertCircle size={24} class="title-icon" />
-				<h2>{$_("wordReport.title")}</h2>
-			</div>
-			<button class="close-btn" onclick={onclose} aria-label="Close">
-				<X size={24} />
-			</button>
+			<AlertTriangle size={32} class="title-icon" />
+			<h2>{$_("wordReport.title")}</h2>
 		</header>
 
 		<div class="word-info">
-			<div class="word-pair">
-				<span class="source">{sourceTranslation}</span>
-				<span class="arrow">→</span>
-				<span class="target">{targetTranslation}</span>
+			<div class="mini-card source-card">
+				<span class="lang-label">{$_("settings.sourceLanguage")}</span>
+				<span class="word-val">{sourceTranslation}</span>
+			</div>
+			<div class="mini-card target-card">
+				<span class="lang-label">{$_("settings.targetLanguage")}</span>
+				<span class="word-val">{targetTranslation}</span>
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label for="error-type">{$_("wordReport.selectType")}</label>
+			<span class="section-label">{$_("wordReport.selectType")}</span>
 			<div class="options-grid">
 				{#each ERROR_TYPES as type}
 					<button
-						class="option-card"
+						class="option-btn"
 						class:active={selectedType === type}
 						onclick={() => (selectedType = type)}
+						data-testid="report-option-{type}"
 					>
 						{$_(`wordReport.type.${type}`)}
 					</button>
@@ -100,230 +86,202 @@
 		</div>
 
 		<div class="form-group">
-			<label for="comment">{$_("wordReport.commentLabel")}</label>
+			<label for="report-comment">{$_("wordReport.commentLabel")}</label>
 			<textarea
-				id="comment"
+				id="report-comment"
 				bind:value={comment}
 				placeholder={$_("wordReport.commentPlaceholder")}
 				rows="3"
+				data-testid="report-comment-input"
 			></textarea>
 		</div>
 
-		<footer>
-			<button class="cancel-btn" onclick={onclose}>
-				{$_("common.cancel")}
-			</button>
+		<div class="actions">
 			<button
-				class="submit-btn"
+				class="submit-btn primary-action-btn"
 				disabled={!selectedType || isSubmitting}
 				onclick={handleSubmit}
+				data-testid="report-submit-btn"
 			>
 				{#if isSubmitting}
 					<div class="spinner"></div>
 				{:else}
-					<Send size={18} />
+					<Send size={20} />
 					{$_("common.send")}
 				{/if}
 			</button>
-		</footer>
+
+			<button 
+				class="cancel-btn" 
+				onclick={onclose}
+				data-testid="report-cancel-btn"
+			>
+				{$_("common.cancel")}
+			</button>
+		</div>
 	</div>
-</div>
+</BaseModal>
 
 <style>
-	.modal-backdrop {
-		position: fixed;
-		inset: 0;
-		z-index: 30000;
-		background: rgba(0, 0, 0, 0.85);
-		backdrop-filter: blur(10px);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 1rem;
-	}
-
-	.modal {
-		background: var(--card-bg);
-		border: 1px solid var(--border);
-		border-radius: 20px;
-		width: 100%;
-		max-width: 450px;
+	.content {
 		display: flex;
 		flex-direction: column;
-		gap: 1.5rem;
-		padding: 1.5rem;
-		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+		gap: 2rem;
+		text-align: center;
+		padding: 0.5rem;
 	}
 
 	header {
 		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-
-	.title-group {
-		display: flex;
+		flex-direction: column;
 		align-items: center;
 		gap: 0.75rem;
 	}
 
 	.title-icon {
 		color: var(--accent);
+		filter: drop-shadow(0 0 8px rgba(58, 143, 214, 0.4));
 	}
 
 	h2 {
 		margin: 0;
-		font-size: 1.25rem;
+		font-size: 1.75rem;
 		font-weight: 700;
 		color: var(--text-primary);
 	}
 
-	.close-btn {
-		background: transparent;
-		border: none;
-		color: var(--text-secondary);
-		cursor: pointer;
-		padding: 0.25rem;
-		border-radius: 50%;
-		display: flex;
-		transition: all 0.2s;
-	}
-
-	.close-btn:hover {
-		background: rgba(255, 255, 255, 0.1);
-		color: var(--text-primary);
-	}
-
 	.word-info {
-		background: var(--bg-secondary);
-		padding: 1rem;
-		border-radius: 12px;
-		border: 1px dashed var(--border);
-	}
-
-	.word-pair {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		gap: 0.75rem;
-		font-size: 1.1rem;
-		font-weight: 500;
+		width: 100%;
 	}
 
-	.arrow {
+	.mini-card {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.25rem;
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid var(--border);
+		border-radius: 16px;
+		padding: 1rem 0.5rem;
+		min-width: 0; /* Allow shrinking */
+	}
+
+	.lang-label {
+		font-size: 0.65rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
 		color: var(--text-secondary);
-		opacity: 0.5;
+		opacity: 0.6;
+	}
+
+	.word-val {
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: var(--text-primary);
+		text-align: center;
+		word-break: break-word;
 	}
 
 	.form-group {
 		display: flex;
 		flex-direction: column;
-		gap: 0.75rem;
+		gap: 1rem;
+		text-align: left;
 	}
 
-	label {
+	label,
+	.section-label {
 		font-size: 0.9rem;
 		font-weight: 600;
 		color: var(--text-secondary);
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
+		padding-left: 0.5rem;
 	}
 
 	.options-grid {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		gap: 0.5rem;
+		gap: 0.75rem;
 	}
 
-	.option-card {
-		padding: 0.75rem;
-		background: var(--bg-secondary);
+	.option-btn {
+		padding: 0.85rem;
+		background: transparent;
 		border: 2px solid var(--border);
-		border-radius: 10px;
+		border-radius: 14px;
 		color: var(--text-primary);
-		font-size: 0.9rem;
+		font-size: 0.95rem;
+		font-weight: 500;
 		cursor: pointer;
 		transition: all 0.2s;
-		text-align: center;
 	}
 
-	.option-card:hover {
+	.option-btn:hover {
+		background: rgba(255, 255, 255, 0.05);
 		border-color: var(--text-secondary);
 	}
 
-	.option-card.active {
+	.option-btn.active {
 		background: var(--selected-bg);
 		border-color: var(--selected-border);
-		color: var(--text-primary);
+		box-shadow: 0 4px 12px rgba(58, 143, 214, 0.2);
 	}
 
 	textarea {
-		background: var(--bg-secondary);
+		background: rgba(255, 255, 255, 0.05);
 		border: 2px solid var(--border);
-		border-radius: 10px;
-		padding: 0.75rem;
+		border-radius: 14px;
+		padding: 1rem;
 		color: var(--text-primary);
 		font-family: inherit;
-		font-size: 1rem;
+		font-size: 1.1rem;
 		resize: none;
-		transition: border-color 0.2s;
+		transition: all 0.2s;
 	}
 
 	textarea:focus {
 		outline: none;
 		border-color: var(--accent);
+		background: rgba(255, 255, 255, 0.08);
 	}
 
-	footer {
+	.actions {
 		display: flex;
+		flex-direction: column;
 		gap: 1rem;
 		margin-top: 0.5rem;
 	}
 
-	footer button {
-		flex: 1;
-		padding: 0.875rem;
-		border-radius: 12px;
-		font-weight: 600;
-		cursor: pointer;
-		transition: all 0.2s;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 0.5rem;
+	.submit-btn {
+		width: 100%;
 	}
 
 	.cancel-btn {
 		background: transparent;
-		border: 2px solid var(--border);
+		border: none;
 		color: var(--text-secondary);
+		font-size: 1rem;
+		font-weight: 500;
+		cursor: pointer;
+		padding: 0.5rem;
+		transition: color 0.2s;
 	}
 
 	.cancel-btn:hover {
-		background: rgba(255, 255, 255, 0.05);
 		color: var(--text-primary);
 	}
 
-	.submit-btn {
-		background: var(--accent);
-		border: none;
-		color: white;
-	}
-
-	.submit-btn:hover:not(:disabled) {
-		filter: brightness(1.1);
-		transform: translateY(-2px);
-	}
-
-	.submit-btn:disabled {
-		opacity: 0.5;
-		cursor: not-allowed;
-	}
-
 	.spinner {
-		width: 20px;
-		height: 20px;
-		border: 2px solid rgba(255, 255, 255, 0.3);
+		width: 24px;
+		height: 24px;
+		border: 3px solid rgba(255, 255, 255, 0.3);
 		border-top-color: white;
 		border-radius: 50%;
 		animation: spin 0.8s linear infinite;
@@ -332,6 +290,12 @@
 	@keyframes spin {
 		to {
 			transform: rotate(360deg);
+		}
+	}
+
+	@media (max-width: 400px) {
+		.options-grid {
+			grid-template-columns: 1fr;
 		}
 	}
 </style>

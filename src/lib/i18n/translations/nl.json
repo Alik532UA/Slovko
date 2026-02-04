@@ -193,7 +193,24 @@
 		"confirm": "Bevestigen",
 		"listen": "Luisteren",
 		"backToLearning": "Terug naar leren",
-		"retry": "Opnieuw proberen"
+		"retry": "Opnieuw proberen",
+		"cancel": "Annuleren",
+		"send": "Versturen"
+	},
+	"wordReport": {
+		"title": "Een fout melden",
+		"selectType": "Selecteer type fout",
+		"commentLabel": "Jouw opmerking (optioneel)",
+		"commentPlaceholder": "Beschrijf wat er precies mis is...",
+		"success": "Bedankt! Het rapport is verzonden.",
+		"error": "Fout bij verzenden. Probeer het later opnieuw.",
+		"authRequired": "Log in om feedback te sturen.",
+		"type": {
+			"wrongTranslation": "Verkeerde vertaling",
+			"wrongTranscription": "Fout in transcriptie",
+			"audioIssue": "Probleem met audio",
+			"other": "Anders"
+		}
 	},
 	"friends": {
 		"searchPlaceholder": "Gebruikers zoeken...",

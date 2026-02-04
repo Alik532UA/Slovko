@@ -27,6 +27,7 @@ export const AuthService = {
 			await signInAnonymously(auth);
 		} catch (error) {
 			console.error("Firebase Anonymous Auth Error:", error);
+			throw error; // Прокидаємо помилку далі
 		}
 	},
 

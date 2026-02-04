@@ -52,8 +52,8 @@ export type WordKey = string;
  */
 export interface WordPair {
 	id: string;
-	ukrainian: string;
-	english: string;
+	source: string;
+	target: string;
 }
 
 /**

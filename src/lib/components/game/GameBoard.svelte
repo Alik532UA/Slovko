@@ -9,10 +9,11 @@
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import WordCard from "./WordCard.svelte";
 	import CardContextMenu from "./CardContextMenu.svelte";
+	import WordReportModal from "./WordReportModal.svelte";
 	import { onMount } from "svelte";
 	import { fade } from "svelte/transition";
 	import { _ } from "svelte-i18n";
-	import type { ActiveCard } from "$lib/types";
+	import type { ActiveCard, WordPair } from "$lib/types";
 	import type { GameData } from "$lib/services/gameDataService";
 
 	let { gameData }: { gameData?: GameData } = $props();
@@ -24,6 +25,11 @@
 		wordKey: string;
 		language: string;
 		text: string;
+	} | null>(null);
+
+	let reportingData = $state<{
+		wordKey: string;
+		pair: WordPair;
 	} | null>(null);
 
 	onMount(() => {
@@ -48,6 +54,13 @@
 			language: card.language,
 			text: card.text,
 		};
+	}
+
+	function openReport(wordKey: string) {
+		const pair = gameState.constructWordPair(wordKey, settingsStore.value);
+		if (pair) {
+			reportingData = { wordKey, pair };
+		}
 	}
 </script>
 
@@ -144,6 +157,16 @@
 			language={contextMenu.language}
 			text={contextMenu.text}
 			onclose={() => (contextMenu = null)}
+			onreport={() => openReport(contextMenu!.wordKey)}
+		/>
+	{/if}
+
+	{#if reportingData}
+		<WordReportModal
+			wordKey={reportingData.wordKey}
+			sourceTranslation={reportingData.pair.source}
+			targetTranslation={reportingData.pair.target}
+			onclose={() => (reportingData = null)}
 		/>
 	{/if}
 {/if}

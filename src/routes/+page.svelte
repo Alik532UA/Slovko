@@ -35,7 +35,15 @@
 				s.targetLanguage !== ds.targetLanguage
 			) {
 				logService.log("settings", "Syncing store with new page data:", ds);
-				settingsStore._internalUpdate(ds);
+				// Оновлюємо ТІЛЬКИ ігрові параметри, щоб не затерти системні (interfaceLanguage, theme тощо)
+				settingsStore._internalUpdate({
+					mode: ds.mode,
+					currentLevel: ds.currentLevel,
+					currentTopic: ds.currentTopic,
+					currentPlaylist: ds.currentPlaylist,
+					sourceLanguage: ds.sourceLanguage,
+					targetLanguage: ds.targetLanguage,
+				});
 			}
 		}
 	});

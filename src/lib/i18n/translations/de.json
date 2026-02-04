@@ -170,6 +170,24 @@
 		"all": "Alle",
 		"confirm": "Bestätigen",
 		"listen": "Hören",
-		"backToLearning": "Zurück zum Lernen"
+		"backToLearning": "Zurück zum Lernen",
+		"retry": "Erneut versuchen",
+		"cancel": "Abbrechen",
+		"send": "Senden"
+	},
+	"wordReport": {
+		"title": "Einen Fehler melden",
+		"selectType": "Fehlertyp auswählen",
+		"commentLabel": "Dein Kommentar (optional)",
+		"commentPlaceholder": "Beschreibe, was genau falsch ist...",
+		"success": "Danke! Der Bericht wurde gesendet.",
+		"error": "Fehler beim Senden. Bitte versuche es später erneut.",
+		"authRequired": "Bitte melden Sie sich an, um Feedback zu senden.",
+		"type": {
+			"wrongTranslation": "Falsche Übersetzung",
+			"wrongTranscription": "Fehler in der Transkription",
+			"audioIssue": "Problem mit der Vertonung",
+			"other": "Sonstiges"
+		}
 	}
 }
