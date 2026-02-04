@@ -275,7 +275,7 @@ export function getTranslation(
 
 			if (import.meta.env.DEV) {
 				console.log(
-					`[Semantic Fallback] Using "${baseKey}" for "${word}" in ${language}`,
+					`[Semantic Fallback] Key: "${word}", Base: "${baseKey}", Translation: "${translation}" (${language})`,
 				);
 			}
 		}
