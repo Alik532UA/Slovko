@@ -68,7 +68,16 @@ function createPlaylistStore() {
 			// Try new structure first
 			const stored = localStorage.getItem(STORAGE_KEY);
 			if (stored) {
-				return { ...DEFAULT_STATE, ...JSON.parse(stored) };
+				const parsed = JSON.parse(stored);
+				return {
+					...DEFAULT_STATE,
+					...parsed,
+					systemPlaylists: {
+						favorites: { ...DEFAULT_SYSTEM_PLAYLISTS.favorites, ...(parsed.systemPlaylists?.favorites || {}) },
+						mistakes: { ...DEFAULT_SYSTEM_PLAYLISTS.mistakes, ...(parsed.systemPlaylists?.mistakes || {}) },
+						extra: { ...DEFAULT_SYSTEM_PLAYLISTS.extra, ...(parsed.systemPlaylists?.extra || {}) },
+					}
+				};
 			}
 
 			// Fallback to legacy and migrate
@@ -123,8 +132,21 @@ function createPlaylistStore() {
 		},
 
 		/** Internal set for SyncService */
-		_internalSet(newData: PlaylistState) {
-			state = newData;
+		_internalSet(newData: any) {
+			if (!newData) return;
+			
+			// Ensure structure is correct even if cloud data is old or partial
+			const mergedData: PlaylistState = {
+				customPlaylists: Array.isArray(newData.customPlaylists) ? newData.customPlaylists : [],
+				systemPlaylists: {
+					favorites: { ...DEFAULT_SYSTEM_PLAYLISTS.favorites, ...(newData.systemPlaylists?.favorites || newData.favorites || {}) },
+					mistakes: { ...DEFAULT_SYSTEM_PLAYLISTS.mistakes, ...(newData.systemPlaylists?.mistakes || newData.mistakes || {}) },
+					extra: { ...DEFAULT_SYSTEM_PLAYLISTS.extra, ...(newData.systemPlaylists?.extra || newData.extra || {}) },
+				},
+				mistakeMetadata: newData.mistakeMetadata || {}
+			};
+
+			state = mergedData;
 			if (browser) {
 				localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 			}

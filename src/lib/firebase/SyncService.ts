@@ -457,9 +457,18 @@ export const SyncService = {
 					cloud.playlists?.customPlaylists || []
 				),
 				systemPlaylists: {
-					favorites: this.mergePlaylist(local.playlists.systemPlaylists?.favorites, cloud.playlists?.systemPlaylists?.favorites),
-					extra: this.mergePlaylist(local.playlists.systemPlaylists?.extra, cloud.playlists?.systemPlaylists?.extra),
-					mistakes: this.mergePlaylist(local.playlists.systemPlaylists?.mistakes, cloud.playlists?.systemPlaylists?.mistakes),
+					favorites: this.mergePlaylist(
+						local.playlists.systemPlaylists?.favorites,
+						cloud.playlists?.systemPlaylists?.favorites || cloud.playlists?.favorites
+					),
+					extra: this.mergePlaylist(
+						local.playlists.systemPlaylists?.extra,
+						cloud.playlists?.systemPlaylists?.extra || cloud.playlists?.extra
+					),
+					mistakes: this.mergePlaylist(
+						local.playlists.systemPlaylists?.mistakes,
+						cloud.playlists?.systemPlaylists?.mistakes || cloud.playlists?.mistakes
+					),
 				},
 				mistakeMetadata: {
 					...(cloud.playlists?.mistakeMetadata || {}),

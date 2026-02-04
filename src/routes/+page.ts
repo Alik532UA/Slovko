@@ -112,27 +112,28 @@ export const load: PageLoad = async ({ url }) => {
 		console.warn("Invalid URL parameters, ignoring:", result.error.format());
 	}
 
-	// Отримуємо snapshot плейлістів
+	// Отримуємо snapshot плейлістів з безпечними перевірками
+	const systemPlaylists = playlistStore.systemPlaylists || {};
 	const playlists = {
-		favorites: playlistStore.systemPlaylists.favorites.words.map((w) => {
+		favorites: (systemPlaylists.favorites?.words || []).map((w) => {
 			const id = typeof w === "string" ? w : w.id;
 			return { id, source: id, target: id };
 		}),
-		extra: playlistStore.systemPlaylists.extra.words.map((w) => {
+		extra: (systemPlaylists.extra?.words || []).map((w) => {
 			const id = typeof w === "string" ? w : w.id;
 			return { id, source: id, target: id };
 		}),
-		mistakes: playlistStore.systemPlaylists.mistakes.words.map((w) => {
+		mistakes: (systemPlaylists.mistakes?.words || []).map((w) => {
 			const id = typeof w === "string" ? w : w.id;
 			return {
 				pair: { id, source: id, target: id },
-				correctStreak: (playlistStore as any).mistakeMetadata?.[id] || 0,
+				correctStreak: (playlistStore.mistakeMetadata || {})[id] || 0,
 			};
 		}),
-		custom: playlistStore.customPlaylists.map((p) => ({
+		custom: (playlistStore.customPlaylists || []).map((p) => ({
 			id: p.id,
 			name: p.name,
-			words: p.words,
+			words: p.words || [],
 		})),
 	};
 
