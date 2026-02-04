@@ -54,6 +54,13 @@
 		"stats",
 	);
 
+	// Auto-reset tab on logout/auth change
+	$effect(() => {
+		if (authStore.isAnonymous || authStore.isGuest) {
+			if (activeTab !== "stats") activeTab = "stats";
+		}
+	});
+
 	// Friends state
 	let friendsSubTab = $state<"following" | "followers" | "search">("following");
 	let shouldRefreshFriends = $state(false);
