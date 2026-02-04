@@ -45,7 +45,7 @@ export class GameController {
 
 			// Якщо даних немає, завантажуємо їх (fallback)
 			if (!data) {
-				const playlistsData = this.getPlaylistsData();
+				const playlistsData = playlistStore.getSnapshot();
 				data = await this.dataService.loadGameData(
 					settingsStore.value,
 					playlistsData,
@@ -58,7 +58,7 @@ export class GameController {
 					sourceLanguage === "en" &&
 					Object.keys(data.sourceTranscriptions).length === 0
 				) {
-					const playlistsData = this.getPlaylistsData();
+					const playlistsData = playlistStore.getSnapshot();
 					data = await this.dataService.loadGameData(
 						settingsStore.value,
 						playlistsData,
@@ -93,37 +93,6 @@ export class GameController {
 		} finally {
 			this.gameState.setLoading(false);
 		}
-	}
-
-	private getPlaylistsData() {
-		return {
-			favorites: playlistStore.systemPlaylists.favorites.words.map(
-				(w: string | CustomWord) => {
-					const id = typeof w === "string" ? w : w.id;
-					return { id, source: id, target: id };
-				},
-			),
-			extra: playlistStore.systemPlaylists.extra.words.map(
-				(w: string | CustomWord) => {
-					const id = typeof w === "string" ? w : w.id;
-					return { id, source: id, target: id };
-				},
-			),
-			mistakes: playlistStore.systemPlaylists.mistakes.words.map(
-				(w: string | CustomWord) => {
-					const id = typeof w === "string" ? w : w.id;
-					return {
-						pair: { id, source: id, target: id },
-						correctStreak: (playlistStore.mistakeMetadata || {})[id] || 0,
-					};
-				},
-			),
-			custom: playlistStore.customPlaylists.map((p: Playlist) => ({
-				id: p.id,
-				name: p.name,
-				words: p.words,
-			})),
-		};
 	}
 
 	/**

@@ -299,6 +299,33 @@ function createPlaylistStore() {
 				localStorage.removeItem(LEGACY_STORAGE_KEY);
 			}
 		},
+
+		/** Отримати snapshot для завантаження в гру */
+		getSnapshot() {
+			const system = state.systemPlaylists;
+			return {
+				favorites: system.favorites.words.map((w: string | CustomWord) => {
+					const id = typeof w === "string" ? w : w.id;
+					return { id, source: id, target: id };
+				}),
+				extra: system.extra.words.map((w: string | CustomWord) => {
+					const id = typeof w === "string" ? w : w.id;
+					return { id, source: id, target: id };
+				}),
+				mistakes: system.mistakes.words.map((w: string | CustomWord) => {
+					const id = typeof w === "string" ? w : w.id;
+					return {
+						pair: { id, source: id, target: id },
+						correctStreak: state.mistakeMetadata[id] || 0,
+					};
+				}),
+				custom: state.customPlaylists.map((p: Playlist) => ({
+					id: p.id,
+					name: p.name,
+					words: p.words,
+				})),
+			};
+		},
 	};
 }
 
