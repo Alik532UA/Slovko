@@ -52,7 +52,7 @@ export class GameController {
 
 			this.gameState.setData(data);
 
-			const { sourceLanguage, targetLanguage } = settingsStore.value;
+			const { sourceLanguage, targetLanguage, interfaceLanguage } = settingsStore.value;
 			const initialWords = this.gameState.getAvailableWords(
 				this.gameState.getPairsLimit(),
 			);
@@ -61,6 +61,7 @@ export class GameController {
 				initialWords,
 				sourceLanguage,
 				targetLanguage,
+				interfaceLanguage,
 				data.sourceTranslations,
 				data.targetTranslations,
 				data.sourceTranscriptions,
@@ -169,11 +170,12 @@ export class GameController {
 			const newWords = this.gameState.getAvailableWords(limit - visibleCount);
 			if (newWords.length === 0) return;
 
-			const { sourceLanguage, targetLanguage } = settingsStore.value;
+			const { sourceLanguage, targetLanguage, interfaceLanguage } = settingsStore.value;
 			const { source, target } = createCardsFromWordKeys(
 				newWords,
 				sourceLanguage,
 				targetLanguage,
+				interfaceLanguage,
 				this.gameState.getTranslations("source"),
 				this.gameState.getTranslations("target"),
 				this.gameState.getTranscriptions("source"),

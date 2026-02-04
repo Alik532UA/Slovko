@@ -5,14 +5,14 @@
 export function generateNlIPA(text: string): string {
 	let t = text.toLowerCase();
 
-	// Diphthongs & digraphs order matters
+	// 1. Long vowels & Digraphs (Order is critical)
 	t = t
+		.replace(/sch/g, "sx")
+		.replace(/ch/g, "x")
 		.replace(/ij/g, "ɛi")
 		.replace(/ei/g, "ɛi")
 		.replace(/ui/g, "œy")
 		.replace(/oe/g, "u")
-		.replace(/auw/g, "ɑu")
-		.replace(/ouw/g, "ɑu")
 		.replace(/au/g, "ɑu")
 		.replace(/ou/g, "ɑu")
 		.replace(/eu/g, "øː")
@@ -20,15 +20,21 @@ export function generateNlIPA(text: string): string {
 		.replace(/aa/g, "aː")
 		.replace(/ee/g, "eː")
 		.replace(/oo/g, "oː")
-		.replace(/uu/g, "yː")
-		.replace(/ch/g, "x")
-		.replace(/sch/g, "sx")
+		.replace(/uu/g, "yː");
+
+	// 2. Complex Consonants
+	t = t
 		.replace(/ng/g, "ŋ")
 		.replace(/nj/g, "ɲ")
-		.replace(/je($|\s)/g, "jə")
-		.replace(/en($|\s)/g, "ə")
-		.replace(/o($|\s)/g, "ɔ");
+		.replace(/sj/g, "ʃ")
+		.replace(/zj/g, "ʒ");
 
+	// 3. Special endings (simplified)
+	t = t
+		.replace(/en($|\s)/g, "ə")
+		.replace(/je($|\s)/g, "jə");
+
+	// 4. Single Letter Mapping
 	const map: Record<string, string> = {
 		j: "j",
 		y: "i",
@@ -37,6 +43,18 @@ export function generateNlIPA(text: string): string {
 		z: "z",
 		g: "ɣ",
 		c: "k",
+		r: "r",
+		l: "l",
+		n: "n",
+		m: "m",
+		t: "t",
+		d: "d",
+		s: "s",
+		p: "p",
+		b: "b",
+		k: "k",
+		f: "f",
+		h: "h",
 	};
 
 	return t

@@ -10,7 +10,6 @@ import type {
 } from "../types";
 import { getTranslation, getTranscription } from "../data/wordService";
 import { generateRulesIPA } from "./transcriptionService";
-import { convertIPAToTarget } from "./phoneticsService";
 
 /**
  * Генерує унікальний ID для картки.
@@ -33,10 +32,6 @@ export function shuffle<T>(array: T[]): T[] {
 
 /**
  * Створює пару карток (Source та Target) для заданого ключа слова.
- * Відповідає за:
- * - Отримання перекладів.
- * - Генерацію IPA (фонетичного запису) за правилами, якщо його немає в словнику.
- * - Конвертацію IPA в алфавіт цільової мови (транслітерація звуків).
  */
 function createCardPair(
 	wordKey: string,
@@ -44,6 +39,7 @@ function createCardPair(
 	startSlot: number,
 	sourceLanguage: Language,
 	targetLanguage: Language,
+	interfaceLanguage: Language,
 	sourceTranslations: TranslationDictionary,
 	targetTranslations: TranslationDictionary,
 	sourceTranscriptions: TranscriptionDictionary,
@@ -65,34 +61,25 @@ function createCardPair(
 		text: string,
 		lang: Language,
 		dict: TranscriptionDictionary,
-		targetAlphabetLang: Language,
 	): string | undefined => {
-		let ipa = getTranscription(wordKey, dict, true);
+		// 1. Спробуємо отримати статичну транскрипцію (наприклад, для EN)
+		const staticTscr = getTranscription(wordKey, dict, true);
+		if (staticTscr) return staticTscr;
 
-		// If no dictionary IPA, generate on the fly
-		if (!ipa) {
-			ipa = generateRulesIPA(text, lang);
-		}
-
-		if (lang === "en" && ipa) {
-			return ipa; // English shows raw IPA
-		} else if (ipa) {
-			return convertIPAToTarget(ipa, targetAlphabetLang); // Convert IPA to Target language alphabet
-		}
-		return undefined;
+		// 2. Якщо немає статичної, генеруємо за 2-ступеневим алгоритмом
+		// (Текст -> IPA -> Мова Інтерфейсу)
+		return generateRulesIPA(text, lang, interfaceLanguage);
 	};
 
 	const sourceTranscription = getProcessedTranscription(
 		sourceText,
 		sourceLanguage,
 		sourceTranscriptions,
-		targetLanguage,
 	);
 	const targetTranscription = getProcessedTranscription(
 		targetText,
 		targetLanguage,
 		targetTranscriptions,
-		sourceLanguage,
 	);
 
 	const sourceCard: ActiveCard = {
@@ -137,6 +124,7 @@ export function createCardsFromWordKeys(
 	wordKeys: string[],
 	sourceLanguage: Language,
 	targetLanguage: Language,
+	interfaceLanguage: Language,
 	sourceTranslations: TranslationDictionary,
 	targetTranslations: TranslationDictionary,
 	sourceTranscriptions: TranscriptionDictionary,
@@ -153,6 +141,7 @@ export function createCardsFromWordKeys(
 			startSlot,
 			sourceLanguage,
 			targetLanguage,
+			interfaceLanguage,
 			sourceTranslations,
 			targetTranslations,
 			sourceTranscriptions,

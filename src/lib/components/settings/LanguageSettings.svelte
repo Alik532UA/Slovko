@@ -5,12 +5,14 @@
 	 */
 	import { _ } from "svelte-i18n";
 	import { goto } from "$app/navigation";
-	import { Speech, Captions } from "lucide-svelte";
+	import { Speech, Captions, Volume2 } from "lucide-svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import VoiceSelectionModal from "./VoiceSelectionModal.svelte";
 	import { setInterfaceLanguage, LANGUAGES } from "$lib/i18n/init";
 	import { LANGUAGE_NAMES, type Language } from "$lib/types";
 	import { base } from "$app/paths";
+	import { onMount } from "svelte";
+	import { fade } from "svelte/transition";
 
 	interface Props {
 		onclose: () => void;
@@ -20,6 +22,14 @@
 	let pressTimer: ReturnType<typeof setTimeout> | null = null;
 	let isLongPress = false;
 	let showVoiceSelection = $state(false);
+	let isSpeechIcon = $state(true);
+
+	onMount(() => {
+		const interval = setInterval(() => {
+			isSpeechIcon = !isSpeechIcon;
+		}, 2000);
+		return () => clearInterval(interval);
+	});
 
 	function handleInterfaceLanguage(lang: Language) {
 		settingsStore.setInterfaceLanguage(lang);
@@ -207,7 +217,17 @@
 								title={$_("settings.pronunciation")}
 								data-testid="pronunciation-left-btn"
 							>
-								<Speech size={16} />
+								<div class="icon-stack">
+									{#if isSpeechIcon}
+										<div class="icon-wrapper" in:fade={{ duration: 300 }} out:fade={{ duration: 300 }}>
+											<Speech size={16} />
+										</div>
+									{:else}
+										<div class="icon-wrapper" in:fade={{ duration: 300 }} out:fade={{ duration: 300 }}>
+											<Volume2 size={16} />
+										</div>
+									{/if}
+								</div>
 							</button>
 						</div>
 					</div>
@@ -277,7 +297,17 @@
 								title={$_("settings.pronunciation")}
 								data-testid="pronunciation-right-btn"
 							>
-								<Speech size={16} />
+								<div class="icon-stack">
+									{#if isSpeechIcon}
+										<div class="icon-wrapper" in:fade={{ duration: 300 }} out:fade={{ duration: 300 }}>
+											<Speech size={16} />
+										</div>
+									{:else}
+										<div class="icon-wrapper" in:fade={{ duration: 300 }} out:fade={{ duration: 300 }}>
+											<Volume2 size={16} />
+										</div>
+									{/if}
+								</div>
 							</button>
 						</div>
 					</div>
@@ -512,6 +542,22 @@
 	.icon-btn.small {
 		padding: 0.35rem;
 		border-radius: 8px;
+	}
+
+	.icon-stack {
+		position: relative;
+		width: 16px;
+		height: 16px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.icon-wrapper {
+		position: absolute;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.separator {
