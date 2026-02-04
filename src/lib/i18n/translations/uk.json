@@ -40,6 +40,7 @@
 		"description": "Опис",
 		"descPlaceholder": "Про що цей плейліст...",
 		"color": "Колір",
+		"icon": "Іконка",
 		"wordsCount": "{count} слів",
 		"addCustomWord": "Створити своє слово",
 		"wordPlaceholder": "Слово (English)",

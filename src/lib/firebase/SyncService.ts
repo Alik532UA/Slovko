@@ -504,7 +504,10 @@ export const SyncService = {
 	},
 
 	mergeArrays(local: any[], cloud: any[], idPath = "id") {
-		const getID = (obj: any) => idPath.split(".").reduce((o, i) => o[i], obj);
+		const getID = (obj: any) => {
+			if (!idPath) return obj;
+			return idPath.split(".").reduce((o, i) => o[i], obj);
+		};
 		const map = new Map();
 		cloud.forEach((item) => map.set(getID(item), item));
 		local.forEach((item) => map.set(getID(item), item)); // Локальні дані мають пріоритет при конфлікті версій
@@ -514,10 +517,11 @@ export const SyncService = {
 	mergePlaylist(local: any, cloud: any) {
 		if (!local) return cloud;
 		if (!cloud) return local;
+		const isStringArray = Array.isArray(local.words) && typeof local.words[0] === "string";
 		return {
 			...cloud,
 			...local,
-			words: this.mergeArrays(local.words || [], cloud.words || [], typeof (local.words?.[0]) === 'string' ? '' : 'id')
+			words: this.mergeArrays(local.words || [], cloud.words || [], isStringArray ? "" : "id")
 		};
 	},
 

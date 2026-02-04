@@ -18,6 +18,7 @@
 	} from "lucide-svelte";
 	import { logService } from "../../services/logService";
 	import { THEME_COLORS } from "../../config/colors";
+	import { untrack } from "svelte";
 
 	interface Props {
 		initialIcon: string;
@@ -33,8 +34,12 @@
 
 	// Sync when props are available or change
 	$effect(() => {
-		selectedIcon = initialIcon;
-		selectedColor = initialColor;
+		const icon = initialIcon;
+		const color = initialColor;
+		untrack(() => {
+			selectedIcon = icon;
+			selectedColor = color;
+		});
 	});
 
 	const AVATAR_ICONS = [

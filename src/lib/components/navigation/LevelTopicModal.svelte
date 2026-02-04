@@ -503,7 +503,7 @@
 	}
 
 	.topics-grid {
-		grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 	}
 
 	.item {
@@ -511,125 +511,112 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		padding: 1rem 0.5rem;
+		padding: 1rem 0.75rem;
 		background: var(--card-bg); /* Cards keep their background */
 		border: 2px solid var(--card-border);
-		border-radius: 12px;
+		border-radius: 16px;
 		cursor: pointer;
-		transition: all 0.2s;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
-		height: 100%; /* Ensure full height in grid */
+		transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		height: 100%;
 	}
 
 	.topic-item {
 		flex-direction: row;
 		justify-content: flex-start;
-		align-items: center; /* Center vertically */
+		align-items: center;
 		padding: 0.75rem 1rem;
 		gap: 0.75rem;
-		min-height: 60px; /* Enforce minimum height */
+		min-height: 72px;
 	}
 
 	.item:hover {
 		border-color: var(--card-hover-border);
-		transform: translateY(-2px);
-		box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+		transform: translateY(-3px);
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 	}
 
 	.item.selected {
 		background: var(--selected-bg);
 		border-color: var(--selected-border);
-		box-shadow: 0 0 0 2px var(--selected-border); /* Highlight selected */
+		box-shadow: 0 0 0 2px var(--selected-border);
 	}
 
-	.item.favorites {
-		border-color: var(--playlist-favorites-border);
-	}
-	.item.mistakes {
-		border-color: var(--playlist-mistakes-border);
-	}
-	.item.extra {
-		border-color: var(--playlist-extra-border);
-	}
+	.item.favorites { border-color: var(--playlist-favorites-border); }
+	.item.mistakes { border-color: var(--playlist-mistakes-border); }
+	.item.extra { border-color: var(--playlist-extra-border); }
 
 	.item-title {
-		font-size: 1.25rem;
-		font-weight: 600;
+		font-size: 1.1rem;
+		font-weight: 700;
 		color: var(--text-primary);
-		line-height: 1.2;
-	}
-
-	.item-desc {
-		font-size: 0.75rem;
-		color: var(--text-secondary);
-		margin-top: 0.25rem;
-	}
-
-	.item-icon {
-		font-size: 2rem;
-		margin-bottom: 0.5rem;
-		display: flex; /* Fix icon alignment */
-		align-items: center;
-		justify-content: center;
-		flex-shrink: 0; /* Prevent icon shrinking */
-		color: var(--text-primary);
-	}
-
-	.topic-item .item-icon {
-		font-size: 1.25rem;
-		margin-bottom: 0;
+		line-height: 1.25;
+		margin: 0;
 	}
 
 	.topic-item .item-title {
-		font-size: 0.95rem;
+		font-size: 1rem;
 		text-align: left;
-		flex: 1; /* Allow text to take remaining space */
-		word-break: break-word; /* Wrap long words */
-		overflow-wrap: break-word;
+		flex: 1;
+		word-break: normal; /* Prevent breaking mid-word */
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
 	}
 
 	.item-info {
 		display: flex;
 		flex-direction: column;
 		flex: 1;
+		min-width: 0; /* Important for ellipsis */
 	}
 
 	.word-count {
-		font-size: 0.7rem;
+		font-size: 0.8rem;
 		color: var(--text-secondary);
-		font-weight: 400;
+		font-weight: 500;
+		opacity: 0.8;
 	}
 
 	.actions {
 		display: flex;
-		gap: 0.25rem;
+		gap: 0.15rem;
+		margin-left: auto;
 	}
 
 	.action-btn {
-		padding: 0.4rem;
-		border-radius: 8px;
+		padding: 0.35rem;
+		border-radius: 10px;
 		color: var(--text-secondary);
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid transparent;
 		transition: all 0.2s;
 	}
 
 	.action-btn:hover {
 		background: rgba(255, 255, 255, 0.1);
 		color: var(--text-primary);
+		border-color: rgba(255, 255, 255, 0.1);
 	}
 
 	.action-btn.danger:hover {
 		color: var(--toast-error);
+		background: rgba(239, 68, 68, 0.1);
+		border-color: rgba(239, 68, 68, 0.2);
 	}
 
 	.playlist-controls {
-		display: contents; /* Keep grid structure */
+		display: contents;
 	}
 
 	.add-playlist,
 	.import-playlist {
 		border-style: dashed;
-		opacity: 0.8;
-		background: transparent;
+		opacity: 0.7;
+		background: rgba(255, 255, 255, 0.02);
+		font-weight: 600;
 	}
 
 	.add-playlist:hover,
@@ -637,5 +624,6 @@
 		opacity: 1;
 		border-color: var(--accent);
 		color: var(--accent);
+		background: rgba(var(--accent-rgb, 233, 84, 32), 0.05);
 	}
 </style>

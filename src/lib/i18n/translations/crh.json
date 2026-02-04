@@ -40,6 +40,7 @@
 		"description": "Tasvir",
 		"descPlaceholder": "Bu playlist ne aqqında...",
 		"color": "Renk",
+		"icon": "İkonka",
 		"wordsCount": "{count} söz",
 		"addCustomWord": "Öz sözüñizni qoşuñız",
 		"wordPlaceholder": "Söz",

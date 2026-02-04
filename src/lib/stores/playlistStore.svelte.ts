@@ -112,6 +112,7 @@ function createPlaylistStore() {
 	return {
 		get customPlaylists() { return state.customPlaylists; },
 		get systemPlaylists() { return state.systemPlaylists; },
+		get mistakeMetadata() { return state.mistakeMetadata; },
 		get allPlaylists() { 
 			return [
 				state.systemPlaylists.favorites,
