@@ -3,17 +3,7 @@ import { settingsStore } from "../stores/settingsStore.svelte";
 import { playlistStore } from "../stores/playlistStore.svelte";
 import { gameDataService, type GameData, type PlaylistData } from "./gameDataService";
 import { logService } from "./logService";
-import type { AppSettings, CustomWord, Playlist } from "../data/schemas";
-
-// Схема для валідації URL параметрів
-const UrlParamsSchema = z.object({
-	mode: z.enum(["levels", "topics", "phrases", "playlists"]).optional(),
-	level: z.enum(["A1", "A2", "B1", "B2", "C1", "C2"]).optional(),
-	topic: z.string().optional(),
-	playlist: z.string().optional(),
-	source: z.enum(["en", "uk", "nl", "de", "el", "crh"]).optional(),
-	target: z.enum(["en", "uk", "nl", "de", "el", "crh"]).optional(),
-});
+import { UrlParamsSchema, type AppSettings, type CustomWord, type Playlist } from "../data/schemas";
 
 export interface GameSessionResult {
 	gameData: GameData | null;

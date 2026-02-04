@@ -18,72 +18,25 @@
 	import { logService } from "$lib/services/logService";
 
 	import { untrack } from "svelte";
+	import { UrlSyncService } from "$lib/services/urlSyncService";
 
 	let { data }: { data: PageData } = $props();
 
 	// 1. Синхронізуємо стор з даними, що прийшли з URL (URL -> Store)
-	// Цей ефект спрацьовує тільки коли змінюється data (результат функції load)
 	$effect(() => {
 		if (data.gameSettings) {
-			const ds = data.gameSettings;
-			const s = untrack(() => settingsStore.value);
-
-			// Перевіряємо чи є реальна різниця між URL та Store
-			if (
-				s.mode !== ds.mode ||
-				s.currentLevel !== ds.currentLevel ||
-				s.currentTopic !== ds.currentTopic ||
-				s.currentPlaylist !== ds.currentPlaylist ||
-				s.sourceLanguage !== ds.sourceLanguage ||
-				s.targetLanguage !== ds.targetLanguage
-			) {
-				// logService.log("settings", "Syncing store from URL data:", ds);
-				settingsStore._internalUpdate({
-					mode: ds.mode,
-					currentLevel: ds.currentLevel,
-					currentTopic: ds.currentTopic,
-					currentPlaylist: ds.currentPlaylist,
-					sourceLanguage: ds.sourceLanguage,
-					targetLanguage: ds.targetLanguage,
-				});
-			}
+			UrlSyncService.syncStoreWithUrl(data.gameSettings);
 		}
 	});
 
 	// 2. Синхронізуємо URL зі стором (Store -> URL)
-	// Цей ефект спрацьовує тільки коли змінюються налаштування в Store
 	$effect(() => {
 		const s = settingsStore.value;
 		const url = untrack(() => $page.url);
+		const newUrl = UrlSyncService.getUpdatedUrl(url, s);
 
-		// Перевіряємо, чи потрібно оновити URL
-		const needsUrlUpdate =
-			url.searchParams.toString() === "" ||
-			url.searchParams.get("source") !== s.sourceLanguage ||
-			url.searchParams.get("target") !== s.targetLanguage ||
-			url.searchParams.get("mode") !== s.mode ||
-			(s.mode === "levels" &&
-				url.searchParams.get("level") !== s.currentLevel) ||
-			(s.mode === "topics" && url.searchParams.get("topic") !== s.currentTopic);
-
-		if (needsUrlUpdate) {
-			const newUrl = new URL(url);
-			newUrl.searchParams.set("mode", s.mode);
-
-			if (s.mode === "levels" || s.mode === "phrases")
-				newUrl.searchParams.set("level", s.currentLevel);
-			if (s.mode === "topics") newUrl.searchParams.set("topic", s.currentTopic);
-			if (s.mode === "playlists" && s.currentPlaylist)
-				newUrl.searchParams.set("playlist", s.currentPlaylist);
-
-			newUrl.searchParams.set("source", s.sourceLanguage);
-			newUrl.searchParams.set("target", s.targetLanguage);
-
-			if (newUrl.toString() !== url.toString()) {
-				// logService.log("settings", "Refreshing page data for new settings:", s.sourceLanguage, s.targetLanguage);
-				// goto ініціює перезавантаження load функціі і завантаження НОВИХ gameData (перекладів)
-				goto(newUrl, { replaceState: true, noScroll: true, keepFocus: true });
-			}
+		if (newUrl) {
+			goto(newUrl, { replaceState: true, noScroll: true, keepFocus: true });
 		}
 	});
 </script>

@@ -359,3 +359,18 @@ export type ProgressState = z.infer<typeof ProgressStateSchema>;
 export type LevelStats = z.infer<typeof LevelStatsSchema>;
 export type WordProgress = z.infer<typeof WordProgressSchema>;
 
+// ========================================
+// СХЕМИ URL (Параметри сторінки)
+// ========================================
+
+export const UrlParamsSchema = z.object({
+	mode: z.enum(["levels", "topics", "phrases", "playlists"]).optional(),
+	level: z.enum(["A1", "A2", "B1", "B2", "C1", "C2"]).optional(),
+	topic: z.string().optional(),
+	playlist: z.string().optional(),
+	source: z.enum(["en", "uk", "nl", "de", "el", "crh"]).optional(),
+	target: z.enum(["en", "uk", "nl", "de", "el", "crh"]).optional(),
+});
+
+export type UrlParams = z.infer<typeof UrlParamsSchema>;
+
