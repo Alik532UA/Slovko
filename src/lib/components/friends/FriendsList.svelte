@@ -65,9 +65,7 @@
 			}
 		} catch (e) {
 			logService.error("sync", "Failed to load friends list", e);
-			error = $_("friends.loadError", {
-				default: "Помилка завантаження списку",
-			});
+			error = $_("friends.loadError");
 		} finally {
 			isLoading = false;
 		}
@@ -117,9 +115,7 @@
 	async function handleUnfollow(uid: string) {
 		if (
 			!confirm(
-				$_("friends.confirmUnfollow", {
-					default: "Відписатися від користувача?",
-				}),
+				$_("friends.confirmUnfollow"),
 			)
 		)
 			return;
@@ -167,7 +163,7 @@
 					class="retry-btn"
 					data-testid="friends-retry-btn"
 				>
-					{$_("common.retry", { default: "Спробувати ще" })}
+					{$_("common.retry")}
 				</button>
 			</div>
 		{:else if list.length === 0}
@@ -177,12 +173,8 @@
 				</div>
 				<p>
 					{activeTab === "following"
-						? $_("friends.noFollowing", {
-								default: "Ви поки ні на кого не підписані",
-							})
-						: $_("friends.noFollowers", {
-								default: "У вас поки немає підписників",
-							})}
+						? $_("friends.noFollowing")
+						: $_("friends.noFollowers")}
 				</p>
 			</div>
 		{:else}
@@ -209,9 +201,7 @@
 								<button
 									class="action-btn unfollow"
 									onclick={() => handleUnfollow(user.uid)}
-									title={$_("friends.unfollow", {
-										default: "Відписатися",
-									})}
+									title={$_("friends.unfollow")}
 									data-testid="friend-list-unfollow-btn-{user.uid}"
 								>
 									<UserCheck size={18} />
@@ -221,19 +211,13 @@
 								{#if followingMap[user.uid]}
 									<div class="mutual-badge">
 										<UserCheck size={14} />
-										<span
-											>{$_("friends.mutual", {
-												default: "Взаємно",
-											})}</span
-										>
+										<span>{$_("friends.mutual")}</span>
 									</div>
 								{:else}
 									<button
 										class="action-btn follow-back"
 										onclick={() => handleFollowBack(user.uid)}
-										title={$_("friends.followBack", {
-											default: "Підписатися теж",
-										})}
+										title={$_("friends.followBack")}
 										data-testid="friend-list-follow-back-btn-{user.uid}"
 									>
 										<UserPlus size={18} />

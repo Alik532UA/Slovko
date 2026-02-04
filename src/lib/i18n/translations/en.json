@@ -58,7 +58,8 @@
 		"adverbs_prepositions": "Adverbs & Prepositions"
 	},
 	"onboarding": {
-		"whatToLearn": "Which language do you want to learn?"
+		"whatToLearn": "Which language do you want to learn?",
+		"yourLanguage": "Your language"
 	},
 	"settings": {
 		"interfaceLanguage": "Interface language",
@@ -77,7 +78,9 @@
 		"allowFriendRequests": "Allow friend requests",
 		"allowFriendRequestsDesc": "Allow others to send you friend requests",
 		"shareStats": "Share statistics",
-		"shareStatsDesc": "Allow friends to see your learning progress"
+		"shareStatsDesc": "Allow friends to see your learning progress",
+		"learningMode": "Learning Mode",
+		"hint": "Hint"
 	},
 	"theme": {
 		"dark-gray": "Dark",
@@ -114,20 +117,25 @@
 		"anonymousTitle": "Guest",
 		"anonymousSub": "Progress not synced",
 		"syncWarning": "Sign in to save your progress in the cloud and keep it safe across devices.",
+		"guestWarning": "You are playing as a guest. Sign in to save progress in the cloud and compete with others.",
+		"tempAccountWarning": "You are using a temporary account. Link an email so you don't lose your progress.",
 		"login": "Sign In",
 		"logout": "Sign Out",
 		"back": "Back",
 		"register": "Register",
 		"signin": "Sign in with email",
+		"signinTitle": "Sign In or Register",
 		"googleAuth": "Sign in with Google",
 		"emailRegister": "Sign up with email",
-		"forgotPassword": "Forgot password?",
+		"forgotPassword": "Forgot?",
 		"forgotPasswordTitle": "Reset Password",
 		"forgotPasswordSubtitle": "Enter the email associated with your account",
 		"spamWarning": "The email may end up in the Spam folder as the app is new.",
 		"sendResetEmail": "Send Reset Email",
 		"backToSignin": "Back to Sign In",
 		"passwordResetSent": "Password reset email sent",
+		"linkAccount": "Link Account",
+		"editAvatarTitle": "Edit Avatar",
 		"errors": {
 			"enterEmail": "Enter email",
 			"userNotFound": "User with this email not found",
@@ -141,7 +149,10 @@
 			"accountUsesGoogle": "This account uses Google sign-in. Please use the Google button below.",
 			"popupClosed": "Authorization window was closed. Please try again.",
 			"accountExistsEmail": "An account with this email already exists. Sign in with Email first, then you can link Google in settings.",
-			"googleAlreadyLinked": "This Google account is already linked to another Slovko user."
+			"googleAlreadyLinked": "This Google account is already linked to another Slovko user.",
+			"waitingGoogle": "Waiting for Google response... If you closed the window, wait a few seconds to unlock.",
+			"unknownError": "An error occurred",
+			"loginFailed": "Login failed"
 		},
 		"changePasswordTitle": "Change Password",
 		"changePasswordHint": "Feature in development",
@@ -150,10 +161,13 @@
 		"confirmDelete": "Confirm Deletion",
 		"cancel": "Cancel",
 		"passwordPlaceholderShort": "Password",
+		"deleteGoogleReauth": "You will need to sign in with Google again to confirm",
+		"deleteViaGoogle": "Delete via Google",
 		"tabs": {
 			"stats": "Stats",
 			"account": "Account",
-			"friends": "Friends"
+			"friends": "Friends",
+			"leaderboard": "Top"
 		},
 		"stats": {
 			"byLevel": "Stats by Level",
@@ -194,7 +208,12 @@
 		"backToLearning": "Back to learning",
 		"retry": "Try again",
 		"cancel": "Cancel",
-		"send": "Send"
+		"send": "Send",
+		"copyReport": "Copy report",
+		"error": {
+			"oops": "Oops! Something went wrong"
+		},
+		"or": "or"
 	},
 	"wordReport": {
 		"title": "Report an Error",
@@ -228,5 +247,10 @@
 		},
 		"following": "Following",
 		"followers": "Followers"
+	},
+	"leaderboard": {
+		"loading": "Loading top...",
+		"noData": "No data to display yet",
+		"authWarning": "Sign in to appear in the leaderboard and compete with others!"
 	}
 }

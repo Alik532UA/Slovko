@@ -114,20 +114,25 @@
 		"anonymousTitle": "Gast",
 		"anonymousSub": "Voortgang niet gesynchroniseerd",
 		"syncWarning": "Log in om je voortgang in de cloud op te slaan en veilig te houden op verschillende apparaten.",
+		"guestWarning": "Je speelt als gast. Log in om je voortgang op te slaan en met anderen te concurreren.",
+		"tempAccountWarning": "Je gebruikt een tijdelijk account. Koppel een e-mailadres zodat je je voortgang niet verliest.",
 		"login": "Inloggen",
 		"logout": "Uitloggen",
 		"back": "Terug",
 		"register": "Registreren",
 		"signin": "Inloggen met e-mail",
+		"signinTitle": "Inloggen of Registreren",
 		"googleAuth": "Inloggen met Google",
 		"emailRegister": "Registreren met e-mail",
-		"forgotPassword": "Wachtwoord vergeten?",
+		"forgotPassword": "Vergeten?",
 		"forgotPasswordTitle": "Wachtwoord herstellen",
 		"forgotPasswordSubtitle": "Voer het e-mailadres in van je account",
 		"spamWarning": "De e-mail kan in de map Ongewenst terechtkomen omdat de app nieuw is.",
 		"sendResetEmail": "Herstelmail verzenden",
 		"backToSignin": "Terug naar inloggen",
 		"passwordResetSent": "Herstelmail verzonden",
+		"linkAccount": "Account koppelen",
+		"editAvatarTitle": "Avatar bewerken",
 		"errors": {
 			"enterEmail": "Voer e-mail in",
 			"userNotFound": "Gebruiker met dit e-mailadres niet gevonden",
@@ -140,8 +145,9 @@
 			"invalidCredentials": "Ongeldig e-mailadres of wachtwoord.",
 			"accountUsesGoogle": "Dit account gebruikt Google-login. Gebruik de Google-knop hieronder.",
 			"popupClosed": "Autorisatievenster is gesloten. Probeer het opnieuw.",
-			"accountExistsEmail": "Er bestaat al een account met dit e-mailadres.",
-			"googleAlreadyLinked": "Dit Google-account is al gekoppeld aan een andere Slovko-gebruiker."
+			"accountExistsEmail": "Er bestaat al een account met dit e-mailadres. Log eerst in via e-mail en koppel Google in de instellingen.",
+			"googleAlreadyLinked": "Dit Google-account is al gekoppeld aan een andere Slovko-gebruiker.",
+			"waitingGoogle": "Wachten op antwoord van Google... Als je het venster hebt gesloten, wacht dan een paar seconden."
 		},
 		"changePasswordTitle": "Wachtwoord wijzigen",
 		"changePasswordHint": "Functie in ontwikkeling",
@@ -150,6 +156,8 @@
 		"confirmDelete": "Verwijdering bevestigen",
 		"cancel": "Annuleren",
 		"passwordPlaceholderShort": "Wachtwoord",
+		"deleteGoogleReauth": "U moet opnieuw inloggen met Google om te bevestigen",
+		"deleteViaGoogle": "Verwijderen via Google",
 		"tabs": {
 			"stats": "Stats",
 			"account": "Account",
@@ -195,7 +203,12 @@
 		"backToLearning": "Terug naar leren",
 		"retry": "Opnieuw proberen",
 		"cancel": "Annuleren",
-		"send": "Versturen"
+		"send": "Versturen",
+		"copyReport": "Rapport kopiëren",
+		"error": {
+			"oops": "Oeps! Er ging iets mis"
+		},
+		"or": "of"
 	},
 	"wordReport": {
 		"title": "Een fout melden",
@@ -229,5 +242,10 @@
 		},
 		"following": "Volgend",
 		"followers": "Volgers"
+	},
+	"leaderboard": {
+		"loading": "Ranglijst laden...",
+		"noData": "Nog geen gegevens om weer te geven",
+		"authWarning": "Log in om in de ranglijst te verschijnen en met anderen te concurreren!"
 	}
 }

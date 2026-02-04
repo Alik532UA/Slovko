@@ -81,7 +81,7 @@
 	<!-- Level Stats Section (Main) -->
 	<div class="level-stats-section" data-testid="level-stats-section">
 		<h3 class="section-title">
-			{$_("profile.stats.byLevel", { default: "По рівнях" })}
+			{$_("profile.stats.byLevel")}
 		</h3>
 
 		<div class="level-tabs" data-testid="stats-level-tabs">
@@ -91,7 +91,7 @@
 				onclick={() => (selectedLevel = "all")}
 				data-testid="level-stats-tab-all"
 			>
-				{$_("common.all", { default: "Всі" })}
+				{$_("common.all")}
 			</button>
 			{#each ALL_LEVELS as level (level)}
 				<button
@@ -133,7 +133,7 @@
 	{#if showMore}
 		<div class="extra-stats-container">
 			<h3 class="section-title">
-				{$_("profile.stats.general", { default: "Загальна активність" })}
+				{$_("profile.stats.general")}
 			</h3>
 			<div
 				class="stats-grid extra-stats"

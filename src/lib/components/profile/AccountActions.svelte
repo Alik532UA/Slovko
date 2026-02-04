@@ -18,7 +18,7 @@
 		onclick={onchangePassword}
 	>
 		<Key size={20} />
-		{$_("profile.changePassword", { default: "Змінити пароль" })}
+		{$_("profile.changePasswordTitle")}
 	</button>
 
 	<button
@@ -27,7 +27,7 @@
 		onclick={onlogout}
 	>
 		<LogOut size={20} />
-		{$_("profile.logout", { default: "Вийти" })}
+		{$_("profile.logout")}
 	</button>
 
 	<button
@@ -36,7 +36,7 @@
 		onclick={ondeleteAccount}
 	>
 		<Trash2 size={20} />
-		{$_("profile.deleteAccount", { default: "Видалити акаунт" })}
+		{$_("profile.deleteAccount")}
 	</button>
 </div>
 

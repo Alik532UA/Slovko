@@ -45,19 +45,13 @@
 	{#if mode === "forgot-password"}
 		<form class="email-form" onsubmit={handleSubmit}>
 			<p class="form-title">
-				{$_("profile.forgotPasswordTitle", {
-					default: "Відновлення пароля",
-				})}
+				{$_("profile.forgotPasswordTitle")}
 			</p>
 			<p class="form-subtitle">
-				{$_("profile.forgotPasswordSubtitle", {
-					default: "Введіть email, на який зареєстровано акаунт",
-				})}
+				{$_("profile.forgotPasswordSubtitle")}
 			</p>
 			<p class="spam-warning">
-				⚠️ {$_("profile.spamWarning", {
-					default: "Лист може потрапити в папку «Спам»",
-				})}
+				⚠️ {$_("profile.spamWarning")}
 			</p>
 
 			<input
@@ -80,18 +74,18 @@
 			<button type="submit" class="primary-btn" disabled={isLoading}>
 				{isLoading
 					? "..."
-					: $_("profile.sendResetEmail", { default: "Надіслати лист" })}
+					: $_("profile.sendResetEmail")}
 			</button>
 
 			<button type="button" class="back-link" onclick={onback}>
 				<ArrowLeft size={16} />
-				{$_("profile.backToSignin", { default: "Повернутись до входу" })}
+				{$_("profile.backToSignin")}
 			</button>
 		</form>
 	{:else}
 		<form class="email-form" onsubmit={handleSubmit}>
 			<p class="form-title">
-				{$_("profile.signinTitle", { default: "Вхід або реєстрація" })}
+				{$_("profile.signinTitle")}
 			</p>
 
 			<input
@@ -107,9 +101,7 @@
 			<div class="password-wrapper">
 				<input
 					type="password"
-					placeholder={$_("profile.passwordPlaceholderShort", {
-						default: "Пароль",
-					})}
+					placeholder={$_("profile.passwordPlaceholderShort")}
 					bind:value={password}
 					class="input-field"
 					data-testid="profile-auth-password-input"
@@ -122,7 +114,7 @@
 						class="forgot-password-link"
 						onclick={onforgotPassword}
 					>
-						{$_("profile.forgotPassword", { default: "Забули?" })}
+						{$_("profile.forgotPassword")}
 					</button>
 				{/if}
 			</div>
@@ -135,10 +127,7 @@
 				<div class="loading-hint" transition:fade>
 					<div class="spinner-small"></div>
 					<p>
-						{$_("profile.waitingForGoogle", {
-							default:
-								"Очікуємо відповіді від Google... Якщо ви закрили вікно, зачекайте кілька секунд для розблокування.",
-						})}
+						{$_("profile.errors.waitingGoogle")}
 					</p>
 				</div>
 			{/if}
@@ -150,7 +139,7 @@
 					data-testid="profile-signin-email-btn"
 					disabled={isLoading}
 				>
-					{isLoading ? "..." : $_("profile.login", { default: "Увійти" })}
+					{isLoading ? "..." : $_("profile.login")}
 				</button>
 
 				<button
@@ -160,12 +149,12 @@
 					onclick={handleRegister}
 					disabled={isLoading}
 				>
-					{$_("profile.register", { default: "Зареєструватися" })}
+					{$_("profile.register")}
 				</button>
 			</div>
 
 			<div class="divider">
-				<span>{$_("common.or", { default: "або" })}</span>
+				<span>{$_("common.or")}</span>
 			</div>
 
 			<button
@@ -193,12 +182,12 @@
 						d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
 					/>
 				</svg>
-				{$_("profile.googleAuth", { default: "Авторизація через Google" })}
+				{$_("profile.googleAuth")}
 			</button>
 
 			<button type="button" class="back-link" onclick={onback}>
 				<ArrowLeft size={16} />
-				{$_("profile.back", { default: "Назад" })}
+				{$_("profile.back")}
 			</button>
 		</form>
 	{/if}

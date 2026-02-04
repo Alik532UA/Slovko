@@ -99,7 +99,7 @@
 				onclick={() => (selectedLevel = "all")}
 				data-testid="level-tab-all"
 			>
-				{$_("common.all", { default: "Всі" })}
+				{$_("common.all")}
 			</button>
 			{#each ALL_LEVELS as level (level)}
 				<button
@@ -162,11 +162,11 @@
 		{#if isLoading}
 			<div class="loading-state">
 				<Loader2 size={32} class="spinner" />
-				<p>Завантаження топу...</p>
+				<p>{$_("leaderboard.loading")}</p>
 			</div>
 		{:else if leaderboardData.length === 0}
 			<div class="empty-state">
-				<p>Поки що немає даних для відображення</p>
+				<p>{$_("leaderboard.noData")}</p>
 			</div>
 		{:else}
 			{#each leaderboardData as user (user.uid)}
@@ -246,10 +246,7 @@
 	{#if authStore.isGuest}
 		<div class="guest-cta">
 			<p>
-				{$_("profile.leaderboard.guestHint", {
-					default:
-						"Увійдіть, щоб ваші рекорди з'явилися в топі та змагайтеся з іншими!",
-				})}
+				{$_("leaderboard.authWarning")}
 			</p>
 		</div>
 	{/if}

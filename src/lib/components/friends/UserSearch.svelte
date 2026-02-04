@@ -152,9 +152,7 @@
 			type="text"
 			bind:value={searchQuery}
 			oninput={handleSearchInput}
-			placeholder={$_("friends.searchPlaceholder", {
-				default: "Пошук користувачів...",
-			})}
+			placeholder={$_("friends.searchPlaceholder")}
 			class="search-input"
 			data-testid="search-users-input"
 		/>
@@ -205,9 +203,7 @@
 	{:else if searchQuery.length >= 2 && !isSearching}
 		<div class="empty-state" data-testid="user-search-empty">
 			<p>
-				{$_("friends.noResults", {
-					default: "Користувачів не знайдено",
-				})}
+				{$_("friends.noResults")}
 			</p>
 		</div>
 	{/if}

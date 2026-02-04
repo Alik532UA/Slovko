@@ -12,20 +12,23 @@
 	import ErrorFallback from "$lib/components/ui/ErrorFallback.svelte";
 	import ErrorBoundary from "$lib/components/ui/ErrorBoundary.svelte";
 
-	import { replaceState } from "$app/navigation";
+	import { goto, replaceState } from "$app/navigation";
 	import { page } from "$app/stores";
 
 	import { logService } from "$lib/services/logService";
 
+	import { untrack } from "svelte";
+
 	let { data }: { data: PageData } = $props();
 
-	// 1. Синхронізуємо стор з даними, що прийшли з URL (через load)
+	// 1. Синхронізуємо стор з даними, що прийшли з URL (URL -> Store)
+	// Цей ефект спрацьовує тільки коли змінюється data (результат функції load)
 	$effect(() => {
 		if (data.gameSettings) {
-			const s = settingsStore.value;
 			const ds = data.gameSettings;
+			const s = untrack(() => settingsStore.value);
 
-			// Перевіряємо чи є реальна різниця, щоб не зациклити
+			// Перевіряємо чи є реальна різниця між URL та Store
 			if (
 				s.mode !== ds.mode ||
 				s.currentLevel !== ds.currentLevel ||
@@ -34,8 +37,7 @@
 				s.sourceLanguage !== ds.sourceLanguage ||
 				s.targetLanguage !== ds.targetLanguage
 			) {
-				logService.log("settings", "Syncing store with new page data:", ds);
-				// Оновлюємо ТІЛЬКИ ігрові параметри, щоб не затерти системні (interfaceLanguage, theme тощо)
+				// logService.log("settings", "Syncing store from URL data:", ds);
 				settingsStore._internalUpdate({
 					mode: ds.mode,
 					currentLevel: ds.currentLevel,
@@ -48,27 +50,40 @@
 		}
 	});
 
-	// 2. Відображаємо стан стору в URL, якщо параметрів немає (Initial Entry)
+	// 2. Синхронізуємо URL зі стором (Store -> URL)
+	// Цей ефект спрацьовує тільки коли змінюються налаштування в Store
 	$effect(() => {
-		const url = $page.url;
-		if (url.searchParams.toString() === "" && data.gameSettings) {
-			logService.log(
-				"settings",
-				"No URL params, reflecting store state to URL...",
-			);
-			const s = data.gameSettings;
+		const s = settingsStore.value;
+		const url = untrack(() => $page.url);
+
+		// Перевіряємо, чи потрібно оновити URL
+		const needsUrlUpdate = 
+			url.searchParams.toString() === "" || 
+			url.searchParams.get("source") !== s.sourceLanguage ||
+			url.searchParams.get("target") !== s.targetLanguage ||
+			url.searchParams.get("mode") !== s.mode ||
+			(s.mode === "levels" && url.searchParams.get("level") !== s.currentLevel) ||
+			(s.mode === "topics" && url.searchParams.get("topic") !== s.currentTopic);
+
+		if (needsUrlUpdate) {
 			const newUrl = new URL(url);
 			newUrl.searchParams.set("mode", s.mode);
+			
 			if (s.mode === "levels" || s.mode === "phrases")
 				newUrl.searchParams.set("level", s.currentLevel);
-			if (s.mode === "topics") newUrl.searchParams.set("topic", s.currentTopic);
+			if (s.mode === "topics") 
+				newUrl.searchParams.set("topic", s.currentTopic);
 			if (s.mode === "playlists" && s.currentPlaylist)
 				newUrl.searchParams.set("playlist", s.currentPlaylist);
+				
 			newUrl.searchParams.set("source", s.sourceLanguage);
 			newUrl.searchParams.set("target", s.targetLanguage);
 
-			logService.log("settings", "New URL reflecting state:", newUrl.toString());
-			replaceState(newUrl, {});
+			if (newUrl.toString() !== url.toString()) {
+				// logService.log("settings", "Refreshing page data for new settings:", s.sourceLanguage, s.targetLanguage);
+				// goto ініціює перезавантаження load функціі і завантаження НОВИХ gameData (перекладів)
+				goto(newUrl, { replaceState: true, noScroll: true, keepFocus: true });
+			}
 		}
 	});
 </script>

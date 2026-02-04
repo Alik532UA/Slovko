@@ -2,6 +2,7 @@
 	/**
 	 * GameStats.svelte - Відображення статистики (стрік, швидкість)
 	 */
+	import { _ } from "svelte-i18n";
 	import { gameState } from "$lib/stores/gameState.svelte";
 	import { getGameController } from "$lib/context/gameContext";
 	import { Flame, Target, Lightbulb, GraduationCap } from "lucide-svelte";
@@ -94,8 +95,8 @@
 			class:active-mode={gameState.isLearningMode}
 			onclick={() => gameController.toggleLearningMode()}
 			disabled={gameState.isProcessing && !gameState.isLearningMode}
-			title="Режим навчання"
-			aria-label="Увімкнути режим навчання"
+			title={$_("settings.learningMode")}
+			aria-label={$_("settings.learningMode")}
 			data-testid="learning-mode-btn"
 		>
 			<div class="icon-wrapper">
@@ -107,8 +108,8 @@
 			class="stat-item hint-btn"
 			onclick={() => gameController.useHint()}
 			disabled={gameState.isProcessing || gameState.isLearningMode}
-			title="Підказка"
-			aria-label="Показати підказку"
+			title={$_("settings.hint")}
+			aria-label={$_("settings.hint")}
 			data-testid="hint-btn"
 		>
 			<div class="icon-wrapper">

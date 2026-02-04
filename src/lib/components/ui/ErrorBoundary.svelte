@@ -48,7 +48,7 @@
 
 				{#if !compact}
 					<h2>
-						{$_("common.error.oops", { default: "Упс! Щось пішло не так" })}
+						{$_("common.error.oops")}
 					</h2>
 				{/if}
 
@@ -59,17 +59,13 @@
 				<div class="actions" class:compact-actions={compact}>
 					<button class="action-btn retry" onclick={reset}>
 						<RotateCcw size={compact ? 16 : 20} />
-						<span>{$_("common.retry", { default: "Спробувати знову" })}</span>
+						<span>{$_("common.retry")}</span>
 					</button>
 
 					{#if !compact}
 						<button class="action-btn report" onclick={() => copyReport(error)}>
 							<Copy size={20} />
-							<span
-								>{$_("common.error.copyReport", {
-									default: "Скопіювати звіт",
-								})}</span
-							>
+							<span>{$_("common.copyReport")}</span>
 						</button>
 					{/if}
 				</div>

@@ -114,20 +114,25 @@
 		"anonymousTitle": "Επισκέπτης",
 		"anonymousSub": "Η πρόοδος δεν έχει συγχρονιστεί",
 		"syncWarning": "Συνδεθείτε για να αποθηκεύσετε την πρόοδό σας στο cloud.",
+		"guestWarning": "Παίζετε ως επισκέπτης. Συνδεθείτε για να αποθηκεύσετε την πρόοδο στο cloud και να ανταγωνιστείτε με άλλους.",
+		"tempAccountWarning": "Χρησιμοποιείτε έναν προσωρινό λογαριασμό. Συνδέστε ένα email για να μην χάσετε την πρόοδό σας.",
 		"login": "Σύνδεση",
 		"logout": "Αποσύνδεση",
 		"back": "Πίσω",
 		"register": "Εγγραφή",
 		"signin": "Σύνδεση με email",
+		"signinTitle": "Σύνδεση ή Εγγραφή",
 		"googleAuth": "Σύνδεση με Google",
 		"emailRegister": "Εγγραφή με email",
-		"forgotPassword": "Ξεχάσατε τον κωδικό;",
+		"forgotPassword": "Ξεχάσατε;",
 		"forgotPasswordTitle": "Επαναφορά κωδικού",
 		"forgotPasswordSubtitle": "Εισαγάγετε το email του λογαριασμού σας",
 		"spamWarning": "Το email μπορεί να καταλήξει στα Ανεπιθύμητα.",
 		"sendResetEmail": "Αποστολή email επαναφοράς",
 		"backToSignin": "Πίσω στη σύνδεση",
 		"passwordResetSent": "Το email επαναφοράς στάλθηκε",
+		"linkAccount": "Σύνδεση λογαριασμού",
+		"editAvatarTitle": "Επεξεργασία αβατάρ",
 		"errors": {
 			"enterEmail": "Εισαγάγετε email",
 			"userNotFound": "Δεν βρέθηκε χρήστης με αυτό το email",
@@ -140,8 +145,9 @@
 			"invalidCredentials": "Μη έγκυρο email ή κωδικός",
 			"accountUsesGoogle": "Αυτός ο λογαριασμός χρησιμοποιεί Google. Χρησιμοποιήστε το κουμπί Google παρακάτω.",
 			"popupClosed": "Το παράθυρο έκλεισε. Δοκιμάστε ξανά.",
-			"accountExistsEmail": "Υπάρχει ήδη λογαριασμός με αυτό το email.",
-			"googleAlreadyLinked": "Αυτός ο λογαριασμός Google είναι ήδη συνδεδεμένος."
+			"accountExistsEmail": "Υπάρχει ήδη λογαριασμός με αυτό το email. Συνδεθείτε με Email πρώτα και μετά συνδέστε το Google.",
+			"googleAlreadyLinked": "Αυτός ο λογαριασμός Google είναι ήδη συνδεδεμένος.",
+			"waitingGoogle": "Αναμονή για απάντηση από την Google... Εάν κλείσατε το παράθυρο, περιμένετε λίγα δευτερόλεπτα."
 		},
 		"changePasswordTitle": "Αλλαγή κωδικού",
 		"changePasswordHint": "Λειτουργία υπό ανάπτυξη",
@@ -150,6 +156,8 @@
 		"confirmDelete": "Επιβεβαίωση διαγραφής",
 		"cancel": "Ακύρωση",
 		"passwordPlaceholderShort": "Κωδικός",
+		"deleteGoogleReauth": "Θα χρειαστεί να συνδεθείτε ξανά με την Google για επιβεβαίωση",
+		"deleteViaGoogle": "Διαγραφή μέσω Google",
 		"tabs": {
 			"stats": "Στατιστικά",
 			"account": "Λογαριασμός",
@@ -195,13 +203,18 @@
 		"backToLearning": "Επιστροφή στη μάθηση",
 		"retry": "Δοκιμάστε ξανά",
 		"cancel": "Ακύρωση",
-		"send": "Αποστολή"
+		"send": "Αποστολή",
+		"copyReport": "Αντιγραφή αναφοράς",
+		"error": {
+			"oops": "Ωχ! Κάτι πήγε στραβά"
+		},
+		"or": "ή"
 	},
 	"wordReport": {
 		"title": "Αναφορά σφάλματος",
 		"selectType": "Επιλέξτε τύπο σφάλματος",
 		"commentLabel": "Το σχόλιό σας (προαιρετικό)",
-		"commentPlaceholder": "Περιγράψτε τι ακριβώς είναι λάθος...",
+		"commentPlaceholder": "Περιγράψτε τι ακριвно είναι λάθος...",
 		"success": "Ευχαριστούμε! Η αναφορά στάλθηκε.",
 		"error": "Σφάλμα κατά την αποστολή. Δοκιμάστε ξανά αργότερα.",
 		"authRequired": "Παρακαλώ συνδεθείτε για να στείλετε σχόλια.",
@@ -226,6 +239,13 @@
 			"following": "Ακολουθείτε",
 			"followers": "Ακόλουθοι",
 			"search": "Αναζήτηση"
-		}
+		},
+		"following": "Ακολουθείτε",
+		"followers": "Ακόλουθοι"
+	},
+	"leaderboard": {
+		"loading": "Φόρτωση κατάταξης...",
+		"noData": "Δεν υπάρχουν δεδομένα ακόμα",
+		"authWarning": "Συνδεθείτε για να εμφανιστείτε στην κατάταξη και να ανταγωνιστείτε με άλλους!"
 	}
 }

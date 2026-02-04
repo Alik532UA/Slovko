@@ -58,7 +58,8 @@
 		"adverbs_prepositions": "Прислівники та Прийменники"
 	},
 	"onboarding": {
-		"whatToLearn": "Яку мову ви плануєте вчити?"
+		"whatToLearn": "Яку мову ви плануєте вчити?",
+		"yourLanguage": "Твоя мова"
 	},
 	"settings": {
 		"interfaceLanguage": "Мова інтерфейсу",
@@ -77,7 +78,9 @@
 		"allowFriendRequests": "Дозволити запити в друзі",
 		"allowFriendRequestsDesc": "Дозволити іншим надсилати вам запити на дружбу",
 		"shareStats": "Ділитися статистикою",
-		"shareStatsDesc": "Дозволити друзям бачити ваш прогрес навчання"
+		"shareStatsDesc": "Дозволити друзям бачити ваш прогрес навчання",
+		"learningMode": "Режим навчання",
+		"hint": "Підказка"
 	},
 	"theme": {
 		"dark-gray": "Темна",
@@ -114,20 +117,25 @@
 		"anonymousTitle": "Гість",
 		"anonymousSub": "Прогрес не синхронізовано",
 		"syncWarning": "Увійдіть, щоб зберегти свій прогрес у хмарі та не втратити його при зміні пристрою.",
+		"guestWarning": "Ви граєте як гість. Увійдіть, щоб зберігати прогрес у хмарі та змагатися з іншими.",
+		"tempAccountWarning": "Ви використовуєте тимчасовий акаунт. Прив'яжіть пошту, щоб не втратити прогрес.",
 		"login": "Увійти",
 		"logout": "Вийти",
 		"back": "Назад",
 		"register": "Зареєструватись",
 		"signin": "Вхід за допомогою email",
+		"signinTitle": "Вхід або реєстрація",
 		"googleAuth": "Авторизація через Google",
 		"emailRegister": "Реєстрація за допомогою email",
-		"forgotPassword": "Забули пароль?",
+		"forgotPassword": "Забули?",
 		"forgotPasswordTitle": "Відновлення пароля",
 		"forgotPasswordSubtitle": "Введіть email, на який зареєстровано акаунт",
 		"spamWarning": "Лист може потрапити в папку «Спам», оскільки додаток новий.",
 		"sendResetEmail": "Надіслати лист",
 		"backToSignin": "Повернутись до входу",
 		"passwordResetSent": "Лист для відновлення пароля надіслано на вашу пошту",
+		"linkAccount": "Прив'язати акаунт",
+		"editAvatarTitle": "Редагування аватара",
 		"errors": {
 			"enterEmail": "Введіть email",
 			"userNotFound": "Користувача з таким email не знайдено",
@@ -141,7 +149,10 @@
 			"accountUsesGoogle": "Цей акаунт використовує вхід через Google. Будь ласка, скористайтеся кнопкою Google.",
 			"popupClosed": "Вікно авторизації було закрите. Спробуйте ще раз.",
 			"accountExistsEmail": "Акаунт з цією поштою вже існує. Увійдіть через Email, а потім зможете прив'язати Google у налаштуваннях.",
-			"googleAlreadyLinked": "Цей Google-акаунт вже прив'язаний до іншого користувача Slovko."
+			"googleAlreadyLinked": "Цей Google-акаунт вже прив'язаний до іншого користувача Slovko.",
+			"waitingGoogle": "Очікуємо відповіді від Google... Якщо ви закрили вікно, зачекайте кілька секунд для розблокування.",
+			"unknownError": "Сталася помилка",
+			"loginFailed": "Помилка входу"
 		},
 		"changePasswordTitle": "Змінити пароль",
 		"changePasswordHint": "Функція в розробці",
@@ -150,6 +161,8 @@
 		"confirmDelete": "Підтвердити видалення",
 		"cancel": "Скасувати",
 		"passwordPlaceholderShort": "Пароль",
+		"deleteGoogleReauth": "Для підтвердження потрібно буде ще раз увійти через Google",
+		"deleteViaGoogle": "Видалити через Google",
 		"tabs": {
 			"stats": "Статистика",
 			"account": "Акаунт",
@@ -195,7 +208,12 @@
 		"backToLearning": "Повернутися до навчання",
 		"retry": "Спробувати ще",
 		"cancel": "Скасувати",
-		"send": "Відправити"
+		"send": "Відправити",
+		"copyReport": "Скопіювати звіт",
+		"error": {
+			"oops": "Упс! Щось пішло не так"
+		},
+		"or": "або"
 	},
 	"wordReport": {
 		"title": "Повідомити про помилку",
@@ -229,5 +247,10 @@
 		},
 		"following": "Підписки",
 		"followers": "Підписники"
+	},
+	"leaderboard": {
+		"loading": "Завантаження топу...",
+		"noData": "Поки що немає даних для відображення",
+		"authWarning": "Увійдіть, щоб ваші рекорди з'явилися в топі та змагайтеся з іншими!"
 	}
 }

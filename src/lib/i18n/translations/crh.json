@@ -2,6 +2,9 @@
 	"app": {
 		"title": "Slovko"
 	},
+	"errors": {
+		"loadFailed": "Malümat yüklenip olamadı"
+	},
 	"levels": {
 		"title": "Seviyeler",
 		"A1": "Başlanğıç",
@@ -67,14 +70,14 @@
 		"transcription": "Transkriptsiya köster",
 		"pronunciation": "Sözlerni oqumaq",
 		"theme": "Tema",
-		"privacyTitle": "Privacy Settings",
-		"privacySubtitle": "Manage who can see you and interact with you",
-		"showInSearch": "Show me in search",
-		"showInSearchDesc": "Allow other users to find you by email or name",
-		"allowFriendRequests": "Allow friend requests",
-		"allowFriendRequestsDesc": "Allow others to send you friend requests",
-		"shareStats": "Share statistics",
-		"shareStatsDesc": "Allow friends to see your learning progress"
+		"privacyTitle": "Şahsiylik sazlamaları",
+		"privacySubtitle": "Kim sizi körip olğanını ve siznen alâqa qurğanını idare etiñiz",
+		"showInSearch": "Meni qıdıruvda köster",
+		"showInSearchDesc": "Diger qullanıcılarğa sizi email ya da isimnen tapmağa ruhset beriñiz",
+		"allowFriendRequests": "Dostluq muracaatları",
+		"allowFriendRequestsDesc": "Diger qullanıcılarğa size dostluq muracaatlarını yollamağa ruhset beriñiz",
+		"shareStats": "Statistikanı paylaşmaq",
+		"shareStatsDesc": "Dostlarıñızğa ilerlemeñizni körmege ruhset beriñiz"
 	},
 	"theme": {
 		"dark-gray": "Qaranlıq",
@@ -91,6 +94,19 @@
 		"title": "Slovko aqqında",
 		"description": "Slovko — assotsiatsiya oyunu vastasınen yañı sözlerni ögrenmek içün ilova. Sözlerni ve olarnıñ tercimelerini birleştirerek daa tez ezberleñiz!",
 		"support": "Leyhanı desteklemek",
+		"feedback": {
+			"title": "Keritesir",
+			"bug": "Mesele aqqında bildirmek",
+			"improvement": "Yañartuv teklif etmek",
+			"contact": "Yaratıcığa yazmaq",
+			"subjectLabel": "Mevzu / Başlıq",
+			"messageLabel": "Tarif / Haber",
+			"subjectPlaceholder": "Mevzu aqqında qısqaca...",
+			"messagePlaceholder": "Haber detalleri...",
+			"send": "Yollamaq",
+			"successTitle": "Sağ oluñız!",
+			"successMsg": "Siziñ keritesiriñiz Slovko-nı daa yahşı yapmağa yardım eder."
+		},
 		"developer": "Yaratıcı",
 		"version": "Versiya"
 	},
@@ -98,20 +114,25 @@
 		"anonymousTitle": "Musafir",
 		"anonymousSub": "İlerleme sin hronizatsiya etilmedi",
 		"syncWarning": "İlerlemeñizni bulutqa saqlamaq ve farqlı cihazlarda qorumaq içün kiriñiz.",
+		"guestWarning": "Siz musafir olaraq oynaysıñız. İlerlemeni saqlamaq ve digerlernen yarışmaq içün kiriñiz.",
+		"tempAccountWarning": "Siz vaqtınca esap qullanaysıñız. İlerlemeñizni coymamaq içün email bañlañız.",
 		"login": "Kirmege",
 		"logout": "Çıqmaq",
 		"back": "Artqa",
 		"register": "Qeydiyat",
 		"signin": "E-mail ilen kiriş",
+		"signinTitle": "Kiriş ya da Qeydiyat",
 		"googleAuth": "Google ilen kiriş",
 		"emailRegister": "E-mail ilen qayd",
-		"forgotPassword": "Parolni unuttıñızmı?",
+		"forgotPassword": "Unuttıñızmı?",
 		"forgotPasswordTitle": "Parolni yañartuv",
 		"forgotPasswordSubtitle": "Esa-bıñızğa bağlı emailni kirsetiñiz",
 		"spamWarning": "Mektüp \"Spam\" qutusına tüşebilir, çünki uyğulama yañıdır.",
-		"sendResetEmail": "Yañartuv mektübini yollamaq",
+		"sendResetEmail": "Yollamaq",
 		"backToSignin": "Kirişke qaytmaq",
 		"passwordResetSent": "Yañartuv mektübi yollandı",
+		"linkAccount": "Esapnı bağlamaq",
+		"editAvatarTitle": "Avatarnı deñiştirmek",
 		"errors": {
 			"enterEmail": "Emailni kirsetiñiz",
 			"userNotFound": "Bu emailge sahip qullanıcı tapılmadı",
@@ -119,17 +140,42 @@
 			"fillFields": "Tüm meydanlarnı doldurıñız",
 			"passwordMismatch": "Parollar eşleşmey",
 			"weakPassword": "Parol çoq zayıf (eñ az 6 belgi)",
-			"emailInUse": "Bu email endi qullanıla"
+			"emailInUse": "Bu email endi qullanıla",
+			"enterPassword": "Parolni kirsetiñiz",
+			"invalidCredentials": "Email ya da parol yañlış.",
+			"accountUsesGoogle": "Bu esap Google-nen kiriş qullana. Lütfen Google dögmesini qullanıñız.",
+			"popupClosed": "Pencere qapatıldı. Lütfen kene deñeñiz.",
+			"accountExistsEmail": "Bu emailnen esap endi bar. Önce Email-nen kiriñiz, soñ sazlamalarda Google-nı bağlaybilirsiñiz.",
+			"googleAlreadyLinked": "Bu Google-esabı endi başqa Slovko qullanıcısına bağlıdır.",
+			"waitingGoogle": "Google cevabını bekleymiz... Pencere qapatılsa, kene açılğanına qadar bir qaç saniye bekliñiz."
+		},
+		"changePasswordTitle": "Parolni deñiştirmek",
+		"changePasswordHint": "Bu funktsiya işlenmekte",
+		"deleteWarning": "Diqqat! Bu areketni keri qaytarıp olamazsıñız.",
+		"deleteAccount": "Esapnı silmek",
+		"confirmDelete": "Silüvni tasdıqlamaq",
+		"cancel": "Vazgeçmek",
+		"passwordPlaceholderShort": "Parol",
+		"deleteGoogleReauth": "Tasdıqlamaq içün kene Google-nen kirmege kerek olursıñız",
+		"deleteViaGoogle": "Google vastasınen silmek",
+		"tabs": {
+			"stats": "Statistika",
+			"account": "Esap",
+			"friends": "Dostlar",
+			"leaderboard": "Top"
 		},
 		"stats": {
-			"correct": "umumiy \n doğru cevaplar",
+			"byLevel": "Seviyeler boyunça statistika",
+			"general": "Umumiy faaliyet",
+			"correct": "doğru cevaplar",
 			"streak": "küñlük seri",
-			"days": "programmada \n bütun künler",
-			"accuracy": "umumiy \n doğruluk",
-			"bestStreak": "rekord küñlük \n seri",
-			"bestCorrectStreak": "rekord doğru \n cevaplar serisi",
-			"correctToday": "bugünki \n doğru cevaplar",
-			"dailyAverage": "küñlük \n ortalama",
+			"days": "bütun künler",
+			"accuracy": "doğruluk",
+			"bestStreak": "rekord küñlük seri",
+			"bestCorrectStreak": "rekord doğru cevaplar serisi",
+			"correctToday": "bugünki doğru cevaplar",
+			"dailyAverage": "küñlük ortalama",
+			"correctShort": "Doğru",
 			"showMore": "daa çoq statistika köster",
 			"showLess": "statistikani gizle"
 		}
@@ -151,8 +197,55 @@
 		"voices": "sesleri"
 	},
 	"common": {
+		"all": "Episi",
 		"confirm": "Tasdıqla",
 		"listen": "Diñlemek",
-		"backToLearning": "Ögrenmege qaytmaq"
+		"backToLearning": "Ögrenmege qaytmaq",
+		"retry": "Kene deñemek",
+		"cancel": "Vazgeçmek",
+		"send": "Yollamaq",
+		"copyReport": "Esepni kopiyalamaq",
+		"error": {
+			"oops": "Vay! Bir şey yañlış ketti"
+		},
+		"or": "ya da"
+	},
+	"wordReport": {
+		"title": "Hata aqqında bildirmek",
+		"selectType": "Hata türini saylañız",
+		"commentLabel": "Siziñ tefsiriñiz (istek boyunça)",
+		"commentPlaceholder": "Neniñ yañlış olğanını tarif etiñiz...",
+		"success": "Sağ oluñız! Haber yollandı.",
+		"error": "Yollav hatası. Lütfen soñra deñeñiz.",
+		"authRequired": "Fikir yollamaq içün lütfen kiriñiz.",
+		"type": {
+			"wrongTranslation": "Yañlış tercime",
+			"wrongTranscription": "Transkriptsiya hatası",
+			"audioIssue": "Ses meselesi",
+			"other": "Başqa"
+		}
+	},
+	"friends": {
+		"searchPlaceholder": "Qullanıcılarnı qıdıruv...",
+		"noResults": "Qullanıcılar tapılmadı",
+		"loadError": "Listeni yüklev hatası",
+		"confirmUnfollow": "Qullanıcıdan vazgeçmege?",
+		"noFollowing": "Siz şimdilik kimsege bağlı degilsiñiz",
+		"noFollowers": "Siziñ şimdilik takipçiñiz yoq",
+		"unfollow": "Vazgeçmek",
+		"followBack": "Takip etmek",
+		"mutual": "Qarşılıqlı",
+		"tabs": {
+			"following": "Takip etkenlerim",
+			"followers": "Takipçilerim",
+			"search": "Qıdıruv"
+		},
+		"following": "Takip etkenlerim",
+		"followers": "Takipçilerim"
+	},
+	"leaderboard": {
+		"loading": "Top yüklenile...",
+		"noData": "Şimdilik malümat yoq",
+		"authWarning": "Rekordlarıñıznıñ top-listte kösterilmesi ve digerlernen yarışmaq içün kiriñiz!"
 	}
 }

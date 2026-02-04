@@ -2,6 +2,9 @@
 	"app": {
 		"title": "Slovko"
 	},
+	"errors": {
+		"loadFailed": "Laden der Daten fehlgeschlagen"
+	},
 	"levels": {
 		"title": "Niveaus",
 		"A1": "Anfänger",
@@ -67,14 +70,14 @@
 		"transcription": "Transkription anzeigen",
 		"pronunciation": "Wörter aussprechen",
 		"theme": "Thema",
-		"privacyTitle": "Privacy Settings",
-		"privacySubtitle": "Manage who can see you and interact with you",
-		"showInSearch": "Show me in search",
-		"showInSearchDesc": "Allow other users to find you by email or name",
-		"allowFriendRequests": "Allow friend requests",
-		"allowFriendRequestsDesc": "Allow others to send you friend requests",
-		"shareStats": "Share statistics",
-		"shareStatsDesc": "Allow friends to see your learning progress"
+		"privacyTitle": "Datenschutzeinstellungen",
+		"privacySubtitle": "Verwalten Sie, wer Sie sehen und mit Ihnen interagieren kann",
+		"showInSearch": "Mich in der Suche anzeigen",
+		"showInSearchDesc": "Anderen Benutzern erlauben, Sie per E-Mail oder Namen zu finden",
+		"allowFriendRequests": "Freundschaftsanfragen erlauben",
+		"allowFriendRequestsDesc": "Anderen erlauben, Ihnen Freundschaftsanfragen zu senden",
+		"shareStats": "Statistiken teilen",
+		"shareStatsDesc": "Freunden erlauben, Ihren Lernfortschritt zu sehen"
 	},
 	"theme": {
 		"dark-gray": "Dunkelgrau",
@@ -93,16 +96,16 @@
 		"support": "Projekt unterstützen",
 		"feedback": {
 			"title": "Feedback",
-			"improvement": "Verbesserung",
-			"bug": "Fehlerbericht",
-			"contentError": "Inhaltsfehler",
-			"question": "Frage",
-			"messagePlaceholder": "Beschreibe deine Idee oder dein Problem...",
-			"expected": "Was hätte passieren sollen?",
-			"actual": "Was ist tatsächlich passiert?",
-			"send": "Feedback senden",
+			"bug": "Ein Problem melden",
+			"improvement": "Verbesserung vorschlagen",
+			"contact": "Kontakt zum Entwickler",
+			"subjectLabel": "Betreff / Titel",
+			"messageLabel": "Beschreibung / Nachricht",
+			"subjectPlaceholder": "Kurze Beschreibung des Themas...",
+			"messagePlaceholder": "Geben Sie weitere Details an...",
+			"send": "Senden",
 			"successTitle": "Danke!",
-			"successMsg": "Dein Feedback hilft uns, Slovko besser zu machen."
+			"successMsg": "Ihr Feedback hilft uns, Slovko besser zu machen."
 		},
 		"developer": "Entwickler",
 		"version": "Version"
@@ -110,21 +113,26 @@
 	"profile": {
 		"anonymousTitle": "Gast",
 		"anonymousSub": "Fortschritt nicht synchronisiert",
-		"syncWarning": "Melde dich an, um deinen Fortschritt in der Cloud zu speichern und ihn auf verschiedenen Geräten zu sichern.",
+		"syncWarning": "Melden Sie sich an, um Ihren Fortschritt in der Cloud zu speichern und ihn auf verschiedenen Geräten zu sichern.",
+		"guestWarning": "Sie spielen als Gast. Melden Sie sich an, um den Fortschritt in der Cloud zu speichern und mit anderen zu konkurrieren.",
+		"tempAccountWarning": "Sie verwenden ein temporäres Konto. Verknüpfen Sie eine E-Mail, damit Sie Ihren Fortschritt nicht verlieren.",
 		"login": "Anmelden",
 		"logout": "Abmelden",
 		"back": "Zurück",
 		"register": "Registrieren",
 		"signin": "Anmelden mit E-Mail",
+		"signinTitle": "Anmelden oder Registrieren",
 		"googleAuth": "Anmelden mit Google",
 		"emailRegister": "Registrieren mit E-Mail",
-		"forgotPassword": "Passwort vergessen?",
+		"forgotPassword": "Vergessen?",
 		"forgotPasswordTitle": "Passwort zurücksetzen",
 		"forgotPasswordSubtitle": "Gib die mit deinem Konto verknüpfte E-Mail ein",
 		"spamWarning": "Die E-Mail könnte im Spam-Ordner landen, da die App neu ist.",
 		"sendResetEmail": "Wiederherstellungsmail senden",
 		"backToSignin": "Zurück zur Anmeldung",
 		"passwordResetSent": "Wiederherstellungsmail gesendet",
+		"linkAccount": "Konto verknüpfen",
+		"editAvatarTitle": "Avatar bearbeiten",
 		"errors": {
 			"enterEmail": "Gib E-Mail ein",
 			"userNotFound": "Benutzer mit dieser E-Mail nicht gefunden",
@@ -132,7 +140,29 @@
 			"fillFields": "Fülle alle Felder aus",
 			"passwordMismatch": "Passwörter stimmen nicht überein",
 			"weakPassword": "Passwort ist zu schwach (min. 6 Zeichen)",
-			"emailInUse": "Diese E-Mail wird bereits verwendet"
+			"emailInUse": "Diese E-Mail wird bereits verwendet",
+			"enterPassword": "Passwort eingeben",
+			"invalidCredentials": "Ungültige E-Mail oder Passwort.",
+			"accountUsesGoogle": "Dieses Konto verwendet die Google-Anmeldung. Bitte nutzen Sie die Google-Schaltfläche unten.",
+			"popupClosed": "Das Autorisierungsfenster wurde geschlossen. Bitte versuchen Sie es erneut.",
+			"accountExistsEmail": "Ein Konto mit dieser E-Mail existiert bereits. Melden Sie sich zuerst mit E-Mail an, dann können Sie Google in den Einstellungen verknüpfen.",
+			"googleAlreadyLinked": "Dieses Google-Konto ist bereits mit einem anderen Slovko-Benutzer verknüpft.",
+			"waitingGoogle": "Warten auf Google-Antwort... Wenn Sie das Fenster geschlossen haben, warten Sie einige Sekunden zum Entsperren."
+		},
+		"changePasswordTitle": "Passwort ändern",
+		"changePasswordHint": "Funktion in Entwicklung",
+		"deleteWarning": "Achtung! Diese Aktion kann nicht rückgängig gemacht werden.",
+		"deleteAccount": "Konto löschen",
+		"confirmDelete": "Löschen bestätigen",
+		"cancel": "Abbrechen",
+		"passwordPlaceholderShort": "Passwort",
+		"deleteGoogleReauth": "Sie müssen sich zur Bestätigung erneut bei Google anmelden",
+		"deleteViaGoogle": "Über Google löschen",
+		"tabs": {
+			"stats": "Statistik",
+			"account": "Konto",
+			"friends": "Freunde",
+			"leaderboard": "Bestenliste"
 		},
 		"stats": {
 			"byLevel": "Statistik nach Niveau",
@@ -154,7 +184,7 @@
 		"message": "Update verfügbar!",
 		"button": "Vollständig aktualisieren (Cache leeren)",
 		"buttonSkip": "Alten Cache behalten und fortfahren",
-		"warning": "Für einen stabilen Betrieb wird empfohlen, die Version zu aktualisieren. Das Update setzt alle Einstellungen und Playlists zurück (da noch keine Autorisierung vorhanden ist). Bei Ablehnung können Fehler auftreten.",
+		"warning": "Für einen stabilen Betrieb wird empfohlen, die Version zu aktualisieren. Das Update setzt alle Einstellungen und Playlists zurück. Bei Ablehnung können Fehler auftreten.",
 		"yourVersion": "Ihre Version",
 		"availableVersion": "Verfügbare Version"
 	},
@@ -173,7 +203,12 @@
 		"backToLearning": "Zurück zum Lernen",
 		"retry": "Erneut versuchen",
 		"cancel": "Abbrechen",
-		"send": "Senden"
+		"send": "Senden",
+		"copyReport": "Bericht kopieren",
+		"error": {
+			"oops": "Hoppla! Etwas ist schief gelaufen"
+		},
+		"or": "oder"
 	},
 	"wordReport": {
 		"title": "Einen Fehler melden",
@@ -189,5 +224,28 @@
 			"audioIssue": "Problem mit der Vertonung",
 			"other": "Sonstiges"
 		}
+	},
+	"friends": {
+		"searchPlaceholder": "Benutzer suchen...",
+		"noResults": "Keine Benutzer gefunden",
+		"loadError": "Fehler beim Laden der Liste",
+		"confirmUnfollow": "Vom Benutzer abmelden?",
+		"noFollowing": "Sie folgen noch niemandem",
+		"noFollowers": "Sie haben noch keine Follower",
+		"unfollow": "Abmelden",
+		"followBack": "Ebenfalls folgen",
+		"mutual": "Gegenseitig",
+		"tabs": {
+			"following": "Folge ich",
+			"followers": "Follower",
+			"search": "Suche"
+		},
+		"following": "Folge ich",
+		"followers": "Follower"
+	},
+	"leaderboard": {
+		"loading": "Bestenliste laden...",
+		"noData": "Noch keine Daten zum Anzeigen",
+		"authWarning": "Melden Sie sich an, um in der Bestenliste zu erscheinen und mit anderen zu konkurrieren!"
 	}
 }

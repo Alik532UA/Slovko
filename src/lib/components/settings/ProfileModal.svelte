@@ -135,12 +135,9 @@
 		} catch (e: any) {
 			logService.error("auth", "Google login failed", e);
 			if (e.code === "auth/popup-closed-by-user") {
-				errorMessage = $_("profile.errors.popupClosed", {
-					default:
-						"Вікно авторизації було закрите. Будь ласка, спробуйте ще раз.",
-				});
+				errorMessage = $_("profile.errors.popupClosed");
 			} else {
-				errorMessage = e.message || "Помилка входу";
+				errorMessage = e.message || $_("profile.errors.loginFailed", { default: "Login error" });
 			}
 		} finally {
 			isLinking = false;
@@ -163,15 +160,10 @@
 		try {
 			const providers = await AuthService.getProvidersForEmail(email);
 			if (providers.includes("google.com")) {
-				return $_("profile.errors.accountUsesGoogle", {
-					default:
-						"Цей акаунт використовує вхід через Google. Будь ласка, скористайтеся кнопкою Google.",
-				});
+				return $_("profile.errors.accountUsesGoogle");
 			}
 			if (providers.length === 0 && originalCode === "auth/user-not-found") {
-				return $_("profile.errors.userNotFound", {
-					default: "Користувача з такою поштою не знайдено.",
-				});
+				return $_("profile.errors.userNotFound");
 			}
 		} catch (e) {
 			// Ignore check errors (e.g. if protection is enabled)
@@ -181,9 +173,7 @@
 
 	async function handleEmailSignIn(email: string, password: string) {
 		if (!email || !password) {
-			errorMessage = $_("profile.errors.fillFields", {
-				default: "Введіть всі поля",
-			});
+			errorMessage = $_("profile.errors.fillFields");
 			return;
 		}
 		isLinking = true;
@@ -196,7 +186,7 @@
 
 			const specificError = await checkProviderError(email, e.code);
 			errorMessage =
-				specificError || getAuthErrorMessage(e.code) || e.message || "Помилка";
+				specificError || getAuthErrorMessage(e.code) || e.message || $_("profile.errors.unknownError", { default: "Error" });
 		} finally {
 			isLinking = false;
 		}
@@ -204,9 +194,7 @@
 
 	async function handleEmailRegister(email: string, password: string) {
 		if (!email || !password) {
-			errorMessage = $_("profile.errors.fillFields", {
-				default: "Введіть всі поля",
-			});
+			errorMessage = $_("profile.errors.fillFields");
 			return;
 		}
 		isLinking = true;
@@ -216,7 +204,7 @@
 			loginMethod = null;
 		} catch (e: any) {
 			logService.warn("auth", "Registration failed", e.code || e.message);
-			errorMessage = getAuthErrorMessage(e.code) || e.message || "Помилка";
+			errorMessage = getAuthErrorMessage(e.code) || e.message || $_("profile.errors.unknownError", { default: "Error" });
 		} finally {
 			isLinking = false;
 		}
@@ -224,9 +212,7 @@
 
 	async function handleForgotPassword(email: string) {
 		if (!email) {
-			errorMessage = $_("profile.errors.enterEmail", {
-				default: "Введіть email",
-			});
+			errorMessage = $_("profile.errors.enterEmail");
 			return;
 		}
 		isLinking = true;
@@ -235,16 +221,14 @@
 			const { sendPasswordResetEmail } = await import("firebase/auth");
 			const { auth } = await import("$lib/firebase/config");
 			await sendPasswordResetEmail(auth, email);
-			successMessage = $_("profile.passwordResetSent", {
-				default: "Лист для відновлення пароля надіслано",
-			});
+			successMessage = $_("profile.passwordResetSent");
 			setTimeout(() => {
 				loginMethod = "auth";
 				resetForm();
 			}, 3000);
 		} catch (e: any) {
 			logService.error("auth", "Password reset failed", e);
-			errorMessage = getAuthErrorMessage(e.code) || e.message || "Помилка";
+			errorMessage = getAuthErrorMessage(e.code) || e.message || $_("profile.errors.unknownError", { default: "Error" });
 		} finally {
 			isLinking = false;
 		}
@@ -436,14 +420,8 @@
 					<ShieldAlert size={24} />
 					<p>
 						{authStore.isGuest
-							? $_("profile.guestWarning", {
-									default:
-										"Ви граєте як гість. Увійдіть, щоб зберігати прогрес у хмарі та змагатися з іншими.",
-								})
-							: $_("profile.syncWarning", {
-									default:
-										"Ви використовуєте тимчасовий акаунт. Прив'яжіть пошту, щоб не втратити прогрес.",
-								})}
+							? $_("profile.guestWarning")
+							: $_("profile.tempAccountWarning")}
 					</p>
 				</div>
 				<button
@@ -454,10 +432,8 @@
 					style="margin-bottom: 2rem;"
 				>
 					{authStore.isGuest
-						? $_("profile.login", { default: "Увійти" })
-						: $_("profile.connectAccount", {
-								default: "Прив'язати акаунт",
-							})}
+						? $_("profile.login")
+						: $_("profile.linkAccount")}
 				</button>
 			{:else}
 				<!-- LOGGED IN HEADER -->
@@ -579,11 +555,7 @@
 						data-testid="tab-stats"
 					>
 						<div class="tab-icon"><Target size={18} /></div>
-						<span
-							>{$_("profile.tabs.stats", {
-								default: "Статистика",
-							})}</span
-						>
+						<span>{$_("profile.tabs.stats")}</span>
 					</button>
 					<button
 						class:active={activeTab === "friends"}
@@ -591,11 +563,7 @@
 						data-testid="tab-friends"
 					>
 						<div class="tab-icon"><Users size={18} /></div>
-						<span
-							>{$_("profile.tabs.friends", {
-								default: "Друзі",
-							})}</span
-						>
+						<span>{$_("profile.tabs.friends")}</span>
 					</button>
 					<button
 						class:active={activeTab === "leaderboard"}
@@ -603,11 +571,7 @@
 						data-testid="tab-leaderboard"
 					>
 						<div class="tab-icon"><Trophy size={18} /></div>
-						<span
-							>{$_("profile.tabs.leaderboard", {
-								default: "Топ",
-							})}</span
-						>
+						<span>{$_("profile.tabs.leaderboard")}</span>
 					</button>
 					<button
 						class:active={activeTab === "account"}
@@ -615,11 +579,7 @@
 						data-testid="tab-account"
 					>
 						<div class="tab-icon"><LayoutGrid size={18} /></div>
-						<span
-							>{$_("profile.tabs.account", {
-								default: "Акаунт",
-							})}</span
-						>
+						<span>{$_("profile.tabs.account")}</span>
 					</button>
 				</div>
 			{/if}
@@ -648,27 +608,21 @@
 										onclick={() => (friendsSubTab = "following")}
 										data-testid="subtab-following"
 									>
-										{$_("friends.tabs.following", {
-											default: "Підписки",
-										})}
+										{$_("friends.tabs.following")}
 									</button>
 									<button
 										class:active={friendsSubTab === "followers"}
 										onclick={() => (friendsSubTab = "followers")}
 										data-testid="subtab-followers"
 									>
-										{$_("friends.tabs.followers", {
-											default: "Підписники",
-										})}
+										{$_("friends.tabs.followers")}
 									</button>
 									<button
 										class:active={friendsSubTab === "search"}
 										onclick={() => (friendsSubTab = "search")}
 										data-testid="subtab-search"
 									>
-										{$_("friends.tabs.search", {
-											default: "Пошук",
-										})}
+										{$_("friends.tabs.search")}
 									</button>
 								</div>
 								<div class="friends-actions">
@@ -817,13 +771,9 @@
 						{#if isLinking}
 							"..."
 						{:else if authStore.user.providerId === "google.com"}
-							{$_("profile.deleteViaGoogle", {
-								default: "Видалити через Google",
-							})}
+							{$_("profile.deleteViaGoogle")}
 						{:else}
-							{$_("profile.confirmDelete", {
-								default: "Підтвердити видалення",
-							})}
+							{$_("profile.confirmDelete")}
 						{/if}
 					</button>
 					<button
@@ -835,7 +785,7 @@
 						}}
 						data-testid="delete-account-cancel-btn"
 					>
-						{$_("profile.cancel", { default: "Скасувати" })}
+						{$_("profile.cancel")}
 					</button>
 				</form>
 			</div>
