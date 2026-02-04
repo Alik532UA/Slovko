@@ -24,6 +24,7 @@
 	} from "lucide-svelte";
 	import { FriendsService } from "$lib/firebase/FriendsService";
 	import { authStore } from "$lib/firebase/authStore.svelte";
+	import UserAvatar from "../friends/UserAvatar.svelte";
 
 	let selectedLevel = $state("all");
 	let selectedMetric = $state<
@@ -209,20 +210,7 @@
 					</div>
 
 					<div class="col-user">
-						{#if realPhoto?.startsWith("internal:")}
-							<div
-								class="avatar-placeholder"
-								style="background-color: {avatarColor}"
-							>
-								<Icon size={18} color="white" />
-							</div>
-						{:else if realPhoto}
-							<img src={realPhoto} alt="" class="avatar-img" />
-						{:else}
-							<div class="avatar-placeholder">
-								<Icon size={18} />
-							</div>
-						{/if}
+						<UserAvatar uid={user.uid} photoURL={realPhoto} size={24} />
 						<span class="username">{realName}</span>
 
 						{#if selectedLevel === "all" && user.bestCorrectStreakLevel}

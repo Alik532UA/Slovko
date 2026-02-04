@@ -15,14 +15,16 @@
 		Zap,
 		Target,
 	} from "lucide-svelte";
+	import { PresenceService } from "$lib/firebase/PresenceService.svelte";
 
 	interface Props {
+		uid: string | null;
 		photoURL: string | null;
 		size?: number;
 		className?: string;
 	}
 
-	let { photoURL, size = 24, className = "" }: Props = $props();
+	let { uid, photoURL, size = 24, className = "" }: Props = $props();
 
 	const AVATAR_ICONS: Record<string, any> = {
 		user: UserIcon,
@@ -58,9 +60,22 @@
 	let isInternal = $derived(photoURL?.startsWith("internal:"));
 	let Icon = $derived(AVATAR_ICONS[getIconId(photoURL)] || UserIcon);
 	let bgColor = $derived(getAvatarColor(photoURL));
+
+	// Відстежуємо статус, якщо є UID
+	$effect(() => {
+		if (uid) {
+			PresenceService.trackFriendStatus(uid);
+		}
+	});
+
+	let isOnline = $derived(uid ? PresenceService.isOnline(uid) : false);
 </script>
 
-<div class="avatar-container {className}" style:width="{size * 1.6}px" style:height="{size * 1.6}px">
+<div
+	class="avatar-container {className}"
+	style:width="{size * 1.6}px"
+	style:height="{size * 1.6}px"
+>
 	{#if isInternal}
 		<div class="avatar-circle" style:background-color={bgColor}>
 			<Icon size={size} color="white" />
@@ -72,6 +87,14 @@
 			<UserIcon size={size} />
 		</div>
 	{/if}
+
+	{#if isOnline}
+		<div
+			class="online-indicator"
+			style:width="{size / 2.5}px"
+			style:height="{size / 2.5}px"
+		></div>
+	{/if}
 </div>
 
 <style>
@@ -80,6 +103,7 @@
 		align-items: center;
 		justify-content: center;
 		flex-shrink: 0;
+		position: relative;
 	}
 
 	.avatar-circle {
@@ -102,5 +126,16 @@
 		height: 100%;
 		border-radius: 12px;
 		object-fit: cover;
+	}
+
+	.online-indicator {
+		position: absolute;
+		bottom: -2px;
+		right: -2px;
+		background: #2ecc71;
+		border: 2px solid var(--bg-primary, #1a1a2e);
+		border-radius: 50%;
+		box-shadow: 0 0 8px rgba(46, 204, 113, 0.6);
+		z-index: 2;
 	}
 </style>

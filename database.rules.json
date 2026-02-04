@@ -1,0 +1,19 @@
+{
+  "rules": {
+    "status": {
+      "$uid": {
+        ".read": "auth != null",
+        ".write": "$uid === auth.uid",
+        ".validate": "newData.hasChildren(['state', 'lastChanged']) && (newData.child('state').val() === 'online' || newData.child('state').val() === 'offline')"
+      }
+    },
+    "signals": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        "$signalId": {
+          ".write": "auth != null && newData.child('fromUid').val() === auth.uid"
+        }
+      }
+    }
+  }
+}

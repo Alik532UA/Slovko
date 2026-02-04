@@ -109,7 +109,7 @@
 			<div class="friends-list" data-testid="friends-list-items">
 				{#each list as user (user.uid)}
 					<div class="friend-card" data-testid="friend-card-{user.uid}">
-						<UserAvatar photoURL={user.photoURL} size={24} />
+						<UserAvatar uid={user.uid} photoURL={user.photoURL} size={24} />
 
 						<div class="friend-info">
 							<span class="display-name">{user.displayName || "User"}</span>

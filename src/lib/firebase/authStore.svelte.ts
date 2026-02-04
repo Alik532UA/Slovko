@@ -1,5 +1,6 @@
 import { AuthService } from "./AuthService";
 import { SyncService } from "./SyncService.svelte";
+import { PresenceService } from "./PresenceService.svelte";
 import type { User } from "firebase/auth";
 
 /**
@@ -75,7 +76,9 @@ function createAuthStore() {
 
 		if (user) {
 			SyncService.init(user.uid);
+			PresenceService.init(user.uid);
 		} else {
+			if (state.uid) PresenceService.goOffline(state.uid);
 			SyncService.stop();
 		}
 	}
@@ -189,6 +192,7 @@ function createAuthStore() {
 
 		async logout() {
 			console.log("[AuthStore] Logging out...");
+			if (state.uid) PresenceService.goOffline(state.uid);
 			SyncService.stop();
 			SyncService.resetLocalData();
 			await AuthService.logout();

@@ -96,7 +96,7 @@
 		<div class="results-list" data-testid="user-search-results">
 			{#each searchResults as user (user.uid)}
 				<div class="user-card">
-					<UserAvatar photoURL={user.photoURL} size={24} />
+					<UserAvatar uid={user.uid} photoURL={user.photoURL} size={24} />
 
 					<div class="user-info">
 						<span class="display-name">{user.displayName || "User"}</span>
