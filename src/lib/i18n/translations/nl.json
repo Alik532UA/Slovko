@@ -2,6 +2,9 @@
 	"app": {
 		"title": "Slovko"
 	},
+	"errors": {
+		"loadFailed": "Laden van gegevens mislukt"
+	},
 	"levels": {
 		"title": "Niveaus",
 		"A1": "Beginner",
@@ -67,14 +70,14 @@
 		"transcription": "Toon transcriptie",
 		"pronunciation": "Spreek woorden uit",
 		"theme": "Thema",
-		"privacyTitle": "Privacy Settings",
-		"privacySubtitle": "Manage who can see you and interact with you",
-		"showInSearch": "Show me in search",
-		"showInSearchDesc": "Allow other users to find you by email or name",
-		"allowFriendRequests": "Allow friend requests",
-		"allowFriendRequestsDesc": "Allow others to send you friend requests",
-		"shareStats": "Share statistics",
-		"shareStatsDesc": "Allow friends to see your learning progress"
+		"privacyTitle": "Privacy-instellingen",
+		"privacySubtitle": "Beheer wie je kan zien en met je kan communiceren",
+		"showInSearch": "Toon mij in zoekopdrachten",
+		"showInSearchDesc": "Sta andere gebruikers toe je te vinden via e-mail of naam",
+		"allowFriendRequests": "Vriendschapsverzoeken toestaan",
+		"allowFriendRequestsDesc": "Sta anderen toe je vriendschapsverzoeken te sturen",
+		"shareStats": "Statistieken delen",
+		"shareStatsDesc": "Sta vrienden toe je leervoortgang te zien"
 	},
 	"theme": {
 		"dark-gray": "Donkergrijs",
@@ -89,18 +92,18 @@
 	},
 	"about": {
 		"title": "Over Slovko",
-		"description": "Slovko is een app om woorden te leren via een associatiespel. Verbind woorden en hun vertalingen om ze sneller te onthouden!",
+		"description": "Slovko is het resultaat van irritatie over opdringerige advertenties in soortgelijke apps. Daarom ontstond het idee om er zelf een te maken, volledig advertentievrij. Leer talen door woordparen te verbinden zonder afleiding.",
 		"support": "Ondersteun het project",
 		"feedback": {
 			"title": "Feedback",
-			"improvement": "Verbetering",
-			"bug": "Foutmelding",
-			"contentError": "Inhoudsfout",
-			"question": "Vraag",
-			"messagePlaceholder": "Beschrijf je idee of probleem...",
-			"expected": "Wat had er moeten gebeuren?",
-			"actual": "Wat gebeurde er werkelijk?",
-			"send": "Verstuur feedback",
+			"bug": "Een probleem melden",
+			"improvement": "Verbetering voorstellen",
+			"contact": "Contact met ontwikkelaar",
+			"subjectLabel": "Onderwerp / Titel",
+			"messageLabel": "Beschrijving / Bericht",
+			"subjectPlaceholder": "Beschrijf kort het onderwerp...",
+			"messagePlaceholder": "Geef meer details...",
+			"send": "Versturen",
 			"successTitle": "Bedankt!",
 			"successMsg": "Jouw feedback helpt om Slovko beter te maken."
 		},
@@ -132,7 +135,26 @@
 			"fillFields": "Vul alle velden in",
 			"passwordMismatch": "Wachtwoorden komen niet overeen",
 			"weakPassword": "Wachtwoord is te zwak (min. 6 tekens)",
-			"emailInUse": "Dit e-mailadres is al in gebruik"
+			"emailInUse": "Dit e-mailadres is al in gebruik",
+			"enterPassword": "Voer wachtwoord in",
+			"invalidCredentials": "Ongeldig e-mailadres of wachtwoord.",
+			"accountUsesGoogle": "Dit account gebruikt Google-login. Gebruik de Google-knop hieronder.",
+			"popupClosed": "Autorisatievenster is gesloten. Probeer het opnieuw.",
+			"accountExistsEmail": "Er bestaat al een account met dit e-mailadres.",
+			"googleAlreadyLinked": "Dit Google-account is al gekoppeld aan een andere Slovko-gebruiker."
+		},
+		"changePasswordTitle": "Wachtwoord wijzigen",
+		"changePasswordHint": "Functie in ontwikkeling",
+		"deleteWarning": "Waarschuwing! Deze actie kan niet ongedaan worden gemaakt.",
+		"deleteAccount": "Account verwijderen",
+		"confirmDelete": "Verwijdering bevestigen",
+		"cancel": "Annuleren",
+		"passwordPlaceholderShort": "Wachtwoord",
+		"tabs": {
+			"stats": "Stats",
+			"account": "Account",
+			"friends": "Vrienden",
+			"leaderboard": "Ranglijst"
 		},
 		"stats": {
 			"byLevel": "Statistieken per niveau",
@@ -154,7 +176,7 @@
 		"message": "Update beschikbaar!",
 		"button": "Volledig bijwerken (cache wissen)",
 		"buttonSkip": "Oude cache behouden en doorgaan",
-		"warning": "Voor een stabiele werking is het raadzaam om de versie bij te werken. De update herstelt alle instellingen en afspeellijsten (omdat er nog geen autorisatie is). Indien overgeslagen, kunnen er fouten optreden.",
+		"warning": "Voor een stabiele werking is het raadzaam om de versie bij te werken. De update herstelt alle instellingen en afspeellijsten. Indien overgeslagen, kunnen er fouten optreden.",
 		"yourVersion": "Uw versie",
 		"availableVersion": "Beschikbare versie"
 	},
@@ -170,6 +192,25 @@
 		"all": "Alle",
 		"confirm": "Bevestigen",
 		"listen": "Luisteren",
-		"backToLearning": "Terug naar leren"
+		"backToLearning": "Terug naar leren",
+		"retry": "Opnieuw proberen"
+	},
+	"friends": {
+		"searchPlaceholder": "Gebruikers zoeken...",
+		"noResults": "Geen gebruikers gevonden",
+		"loadError": "Lijst laden mislukt",
+		"confirmUnfollow": "Deze gebruiker ontvolgen?",
+		"noFollowing": "Je volgt nog niemand",
+		"noFollowers": "Je hebt nog geen volgers",
+		"unfollow": "Ontvolgen",
+		"followBack": "Terug volgen",
+		"mutual": "Wederzijds",
+		"tabs": {
+			"following": "Volgend",
+			"followers": "Volgers",
+			"search": "Zoeken"
+		},
+		"following": "Volgend",
+		"followers": "Volgers"
 	}
 }

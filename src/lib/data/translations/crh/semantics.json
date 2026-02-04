@@ -1,6 +1,18 @@
 {
 	"labels": {
+		"brother_older": "ağa",
+		"brother_younger": "qardaş",
+		"sister_older": "tatay",
+		"sister_younger": "singil",
+		"orange_color": "tüs",
+		"orange_fruit": "meyva",
+		"you_informal": "sen",
+		"you_formal": "siz",
+		"go_foot": "piyade",
+		"go_vehicle": "naqliyatnen",
 		"walk_action": "yürmek",
-		"walk_pleasure": "qıdır-"
+		"walk_pleasure": "qıdır-",
+		"blue_dark": "tünd",
+		"blue_light": "aciq"
 	}
 }

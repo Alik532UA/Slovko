@@ -4,7 +4,15 @@
 		"brother_younger": "μικρότερος",
 		"sister_older": "μεγαλύτερη",
 		"sister_younger": "μικρότερη",
+		"orange_color": "χρώμα",
+		"orange_fruit": "φρούτο",
+		"you_informal": "εσύ",
+		"you_formal": "εσείς",
+		"go_foot": "με τα πόδια",
+		"go_vehicle": "με όχημα",
 		"walk_action": "περπατώ",
-		"walk_pleasure": "κάνω βόλτα"
+		"walk_pleasure": "κάνω βόλτα",
+		"blue_dark": "σκούρο",
+		"blue_light": "ανοιχτό"
 	}
 }

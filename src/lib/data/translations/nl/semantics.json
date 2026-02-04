@@ -4,7 +4,24 @@
 		"brother_younger": "jongere",
 		"sister_older": "oudere",
 		"sister_younger": "jongere",
+		"orange_color": "kleur",
+		"orange_fruit": "vrucht",
+		"aunt_paternal": "vaderszijde",
+		"aunt_maternal": "moederszijde",
+		"uncle_paternal": "vaderszijde",
+		"uncle_maternal": "moederszijde",
+		"leg_full": "been",
+		"foot": "voet",
+		"he_pronoun": "hij",
+		"she_pronoun": "zij",
+		"it_pronoun": "het",
+		"you_informal": "jij",
+		"you_formal": "u",
+		"go_foot": "te voet",
+		"go_vehicle": "met voertuig",
 		"walk_action": "lopen",
-		"walk_pleasure": "wandelen"
+		"walk_pleasure": "wandelen",
+		"blue_dark": "donker",
+		"blue_light": "licht"
 	}
 }

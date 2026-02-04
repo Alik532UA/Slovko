@@ -6,11 +6,22 @@
 		"sister_younger": "jüngere",
 		"orange_color": "Farbe",
 		"orange_fruit": "Frucht",
+		"aunt_paternal": "väterlicherseits",
+		"aunt_maternal": "mütterlicherseits",
+		"uncle_paternal": "väterlicherseits",
+		"uncle_maternal": "mütterlicherseits",
+		"leg_full": "Bein",
+		"foot": "Fuß",
+		"he_pronoun": "er",
+		"she_pronoun": "sie",
+		"it_pronoun": "es",
 		"you_informal": "du",
 		"you_formal": "Sie",
 		"go_foot": "zu Fuß",
 		"go_vehicle": "mit Fahrzeug",
 		"walk_action": "laufen",
-		"walk_pleasure": "spazieren"
+		"walk_pleasure": "spazieren",
+		"blue_dark": "dunkel",
+		"blue_light": "hell"
 	}
 }
