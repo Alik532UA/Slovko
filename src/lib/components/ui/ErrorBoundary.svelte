@@ -3,11 +3,13 @@
 	import { AlertTriangle, Copy, RotateCcw } from "lucide-svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { versionStore } from "$lib/stores/versionStore.svelte";
+	import { logService } from "../../services/logService";
 
 	interface Props {
 		children: any;
+		compact?: boolean;
 	}
-	let { children }: Props = $props();
+	let { children, compact = false }: Props = $props();
 
 	function copyReport(error: any) {
 		const report = {
@@ -29,38 +31,47 @@
 			.writeText(JSON.stringify(report, null, 2))
 			.then(() => alert("Report copied to clipboard!"));
 	}
+
+	function handleError(error: any) {
+		logService.error("game", "ErrorBoundary caught an error:", error);
+	}
 </script>
 
-<svelte:boundary>
+<svelte:boundary onerror={handleError}>
 	{@render children()}
 	{#snippet failed(error, reset)}
-		<div class="error-container" data-testid="error-boundary">
-			<div class="error-card">
-				<div class="icon-box">
-					<AlertTriangle size={48} />
+		<div class="error-container" class:compact data-testid="error-boundary">
+			<div class="error-card" class:compact-card={compact}>
+				<div class="icon-box" class:compact-icon={compact}>
+					<AlertTriangle size={compact ? 24 : 48} />
 				</div>
 
-				<h2>
-					{$_("common.error.oops", { default: "Упс! Щось пішло не так" })}
-				</h2>
-				<p class="error-msg">
+				{#if !compact}
+					<h2>
+						{$_("common.error.oops", { default: "Упс! Щось пішло не так" })}
+					</h2>
+				{/if}
+
+				<p class="error-msg" class:compact-msg={compact}>
 					{(error as any)?.message || "An unexpected error occurred"}
 				</p>
 
-				<div class="actions">
+				<div class="actions" class:compact-actions={compact}>
 					<button class="action-btn retry" onclick={reset}>
-						<RotateCcw size={20} />
+						<RotateCcw size={compact ? 16 : 20} />
 						<span>{$_("common.retry", { default: "Спробувати знову" })}</span>
 					</button>
 
-					<button class="action-btn report" onclick={() => copyReport(error)}>
-						<Copy size={20} />
-						<span
-							>{$_("common.error.copyReport", {
-								default: "Скопіювати звіт",
-							})}</span
-						>
-					</button>
+					{#if !compact}
+						<button class="action-btn report" onclick={() => copyReport(error)}>
+							<Copy size={20} />
+							<span
+								>{$_("common.error.copyReport", {
+									default: "Скопіювати звіт",
+								})}</span
+							>
+						</button>
+					{/if}
 				</div>
 			</div>
 		</div>
@@ -78,6 +89,11 @@
 		min-height: 300px;
 	}
 
+	.error-container.compact {
+		padding: 0.5rem;
+		min-height: auto;
+	}
+
 	.error-card {
 		background: rgba(255, 255, 255, 0.05);
 		backdrop-filter: blur(10px);
@@ -90,11 +106,20 @@
 		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 	}
 
+	.error-card.compact-card {
+		padding: 1rem;
+		border-radius: 12px;
+	}
+
 	.icon-box {
 		color: #f59e0b;
 		margin-bottom: 1.5rem;
 		display: flex;
 		justify-content: center;
+	}
+
+	.icon-box.compact-icon {
+		margin-bottom: 0.5rem;
 	}
 
 	h2 {
@@ -111,10 +136,19 @@
 		word-break: break-word;
 	}
 
+	.error-msg.compact-msg {
+		font-size: 0.8rem;
+		margin-bottom: 1rem;
+	}
+
 	.actions {
 		display: flex;
 		flex-direction: column;
 		gap: 0.75rem;
+	}
+
+	.actions.compact-actions {
+		flex-direction: row;
 	}
 
 	.action-btn {
@@ -129,6 +163,12 @@
 		transition: all 0.2s;
 		border: none;
 		width: 100%;
+	}
+
+	.actions.compact-actions .action-btn {
+		padding: 0.5rem;
+		font-size: 0.8rem;
+		border-radius: 8px;
 	}
 
 	.retry {

@@ -6,6 +6,7 @@
 	 */
 	import type { ActiveCard } from "$lib/types";
 	import { speakText } from "$lib/services/speechService";
+	import type { Snippet } from "svelte";
 
 	interface Props {
 		card: ActiveCard;
@@ -13,6 +14,8 @@
 		enablePronunciation?: boolean;
 		onclick: () => void;
 		onlongpress?: (e: PointerEvent) => void;
+		wordSnippet?: Snippet<[string]>;
+		transcriptionSnippet?: Snippet<[string]>;
 	}
 
 	let {
@@ -21,6 +24,8 @@
 		enablePronunciation = false,
 		onclick,
 		onlongpress,
+		wordSnippet,
+		transcriptionSnippet,
 	}: Props = $props();
 
 	let longPressTimer: ReturnType<typeof setTimeout> | null = null;
@@ -100,9 +105,18 @@
 	onclick={handleClick}
 	data-testid="word-card-{card.id}"
 >
-	<span class="word-text">{card.text}</span>
+	{#if wordSnippet}
+		{@render wordSnippet(card.text)}
+	{:else}
+		<span class="word-text">{card.text}</span>
+	{/if}
+
 	{#if card.transcription && showTranscription}
-		<span class="transcription">{card.transcription}</span>
+		{#if transcriptionSnippet}
+			{@render transcriptionSnippet(card.transcription)}
+		{:else}
+			<span class="transcription">{card.transcription}</span>
+		{/if}
 	{/if}
 </button>
 

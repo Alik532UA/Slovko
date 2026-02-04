@@ -86,7 +86,7 @@
 				</p>
 			</div>
 		{:else}
-			<div class="column source">
+			<div class="column source" aria-label="Source words">
 				{#each gameState.sourceCards as card, i (i)}
 					<div class="card-slot">
 						{#key card.id}
@@ -110,7 +110,7 @@
 				{/each}
 			</div>
 
-			<div class="column target">
+			<div class="column target" aria-label="Target translations">
 				{#each gameState.targetCards as card, i (i)}
 					<div class="card-slot">
 						{#key card.id}

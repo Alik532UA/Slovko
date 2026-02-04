@@ -29,6 +29,7 @@
 	import FriendsList from "../friends/FriendsList.svelte";
 	import UserSearch from "../friends/UserSearch.svelte";
 	import FriendsSettingsModal from "../friends/FriendsSettingsModal.svelte";
+	import ErrorBoundary from "../ui/ErrorBoundary.svelte";
 
 	interface Props {
 		onclose: () => void;
@@ -625,99 +626,101 @@
 
 			<!-- Content -->
 			<div class="profile-content" data-testid="profile-content">
-				{#if activeTab === "stats" || authStore.isAnonymous}
-					<ProfileStats
-						{totalCorrect}
-						{streak}
-						{daysInApp}
-						{accuracy}
-						{bestStreak}
-						{bestCorrectStreak}
-						{correctToday}
-						{dailyAverage}
-						{levelStats}
-					/>
-				{:else if activeTab === "friends" && !authStore.isAnonymous}
-					<div class="friends-layout" data-testid="friends-layout">
-						<div class="sub-tabs-container">
-							<div class="sub-tabs" data-testid="friends-sub-tabs">
-								<button
-									class:active={friendsSubTab === "following"}
-									onclick={() => (friendsSubTab = "following")}
-									data-testid="subtab-following"
-								>
-									{$_("friends.tabs.following", {
-										default: "Підписки",
-									})}
-								</button>
-								<button
-									class:active={friendsSubTab === "followers"}
-									onclick={() => (friendsSubTab = "followers")}
-									data-testid="subtab-followers"
-								>
-									{$_("friends.tabs.followers", {
-										default: "Підписники",
-									})}
-								</button>
-								<button
-									class:active={friendsSubTab === "search"}
-									onclick={() => (friendsSubTab = "search")}
-									data-testid="subtab-search"
-								>
-									{$_("friends.tabs.search", {
-										default: "Пошук",
-									})}
-								</button>
+				<ErrorBoundary>
+					{#if activeTab === "stats" || authStore.isAnonymous}
+						<ProfileStats
+							{totalCorrect}
+							{streak}
+							{daysInApp}
+							{accuracy}
+							{bestStreak}
+							{bestCorrectStreak}
+							{correctToday}
+							{dailyAverage}
+							{levelStats}
+						/>
+					{:else if activeTab === "friends" && !authStore.isAnonymous}
+						<div class="friends-layout" data-testid="friends-layout">
+							<div class="sub-tabs-container">
+								<div class="sub-tabs" data-testid="friends-sub-tabs">
+									<button
+										class:active={friendsSubTab === "following"}
+										onclick={() => (friendsSubTab = "following")}
+										data-testid="subtab-following"
+									>
+										{$_("friends.tabs.following", {
+											default: "Підписки",
+										})}
+									</button>
+									<button
+										class:active={friendsSubTab === "followers"}
+										onclick={() => (friendsSubTab = "followers")}
+										data-testid="subtab-followers"
+									>
+										{$_("friends.tabs.followers", {
+											default: "Підписники",
+										})}
+									</button>
+									<button
+										class:active={friendsSubTab === "search"}
+										onclick={() => (friendsSubTab = "search")}
+										data-testid="subtab-search"
+									>
+										{$_("friends.tabs.search", {
+											default: "Пошук",
+										})}
+									</button>
+								</div>
+								<div class="friends-actions">
+									<button
+										class="friends-settings-btn"
+										onclick={() => (showFriendsSettings = true)}
+										title={$_("settings.privacyTitle", {
+											default: "Privacy Settings",
+										})}
+										data-testid="friends-settings-btn"
+									>
+										<Settings size={18} />
+									</button>
+								</div>
 							</div>
-							<div class="friends-actions">
-								<button
-									class="friends-settings-btn"
-									onclick={() => (showFriendsSettings = true)}
-									title={$_("settings.privacyTitle", {
-										default: "Privacy Settings",
-									})}
-									data-testid="friends-settings-btn"
-								>
-									<Settings size={18} />
-								</button>
+
+							<div
+								class="friends-content-area"
+								data-testid="friends-content-area"
+							>
+								{#if friendsSubTab === "search"}
+									<UserSearch onFollowChange={refreshCounts} />
+								{:else}
+									<FriendsList
+										activeTab={friendsSubTab}
+										shouldRefresh={shouldRefreshFriends}
+									/>
+								{/if}
 							</div>
 						</div>
 
-						<div
-							class="friends-content-area"
-							data-testid="friends-content-area"
-						>
-							{#if friendsSubTab === "search"}
-								<UserSearch onFollowChange={refreshCounts} />
-							{:else}
-								<FriendsList
-									activeTab={friendsSubTab}
-									shouldRefresh={shouldRefreshFriends}
-								/>
-							{/if}
-						</div>
-					</div>
-
-					{#if showFriendsSettings}
-						<FriendsSettingsModal
-							onclose={() => (showFriendsSettings = false)}
+						{#if showFriendsSettings}
+							<FriendsSettingsModal
+								onclose={() => (showFriendsSettings = false)}
+							/>
+						{/if}
+					{:else if activeTab === "leaderboard" && !authStore.isAnonymous}
+						<Leaderboard />
+					{:else if activeTab === "account" && !authStore.isAnonymous}
+						<AccountActions
+							onchangePassword={() => {
+								loginMethod = "change-password";
+								resetForm();
+							}}
+							onlogout={handleLogout}
+							ondeleteAccount={() => {
+								loginMethod = "delete-account";
+								resetForm();
+							}}
 						/>
 					{/if}
-				{:else if activeTab === "leaderboard" && !authStore.isAnonymous}
-					<Leaderboard />
-				{:else if activeTab === "account" && !authStore.isAnonymous}
-					<AccountActions
-						onchangePassword={() => {
-							loginMethod = "change-password";
-							resetForm();
-						}}
-						onlogout={handleLogout}
-						ondeleteAccount={() => {
-							loginMethod = "delete-account";
-							resetForm();
-						}}
-					/>
-				{/if}
+				</ErrorBoundary>
 			</div>
 		{:else if loginMethod === "auth" || loginMethod === "forgot-password"}
 			<EmailAuthForm

@@ -135,12 +135,10 @@ function createGameState() {
 		},
 
 		updateCardStatus(id: string, status: CardStatus) {
-			sourceCards = sourceCards.map((c) =>
-				c.id === id ? { ...c, status } : c,
-			);
-			targetCards = targetCards.map((c) =>
-				c.id === id ? { ...c, status } : c,
-			);
+			const sc = sourceCards.find((c) => c.id === id);
+			if (sc) sc.status = status;
+			const tc = targetCards.find((c) => c.id === id);
+			if (tc) tc.status = status;
 		},
 
 		setSelectedCard(card: ActiveCard | null) {
@@ -149,7 +147,8 @@ function createGameState() {
 
 		recordMatch() {
 			streak++;
-			correctAnswersHistory = [...correctAnswersHistory, Date.now()];
+			// Використовуємо мутацію масиву для реактивності
+			correctAnswersHistory.push(Date.now());
 		},
 
 		recordMiss() {
@@ -170,12 +169,13 @@ function createGameState() {
 		},
 
 		resetWrongCards(id1: string, id2: string) {
-			const reset = (c: ActiveCard): ActiveCard =>
-				(c.id === id1 || c.id === id2) && c.status === "wrong"
-					? { ...c, status: "idle" as CardStatus }
-					: c;
-			sourceCards = sourceCards.map(reset);
-			targetCards = targetCards.map(reset);
+			const reset = (c: ActiveCard) => {
+				if ((c.id === id1 || c.id === id2) && c.status === "wrong") {
+					c.status = "idle";
+				}
+			};
+			sourceCards.forEach(reset);
+			targetCards.forEach(reset);
 		},
 
 		// Helper logic for controller
@@ -207,21 +207,27 @@ function createGameState() {
 		refillCards(newSource: ActiveCard[], newTarget: ActiveCard[]) {
 			let sIdx = 0,
 				tIdx = 0;
-			sourceCards = sourceCards.map((c) =>
-				c.status === "correct" && sIdx < newSource.length
-					? { ...newSource[sIdx++], slot: c.slot }
-					: c,
-			);
-			targetCards = targetCards.map((c) =>
-				c.status === "correct" && tIdx < newTarget.length
-					? { ...newTarget[tIdx++], slot: c.slot }
-					: c,
-			);
 
-			if (sIdx < newSource.length)
-				sourceCards = [...sourceCards, ...newSource.slice(sIdx)];
-			if (tIdx < newTarget.length)
-				targetCards = [...targetCards, ...newTarget.slice(tIdx)];
+			// Точкова заміна в існуючих масивах (slots)
+			sourceCards.forEach((c, i) => {
+				if (c.status === "correct" && sIdx < newSource.length) {
+					sourceCards[i] = { ...newSource[sIdx++], slot: c.slot };
+				}
+			});
+
+			targetCards.forEach((c, i) => {
+				if (c.status === "correct" && tIdx < newTarget.length) {
+					targetCards[i] = { ...newTarget[tIdx++], slot: c.slot };
+				}
+			});
+
+			// Додавання нових, якщо масив був меншим (хоча зазвичай вони однакового розміру)
+			if (sIdx < newSource.length) {
+				sourceCards.push(...newSource.slice(sIdx));
+			}
+			if (tIdx < newTarget.length) {
+				targetCards.push(...newTarget.slice(tIdx));
+			}
 		},
 
 		getTranslations(type: "source" | "target") {
@@ -274,12 +280,13 @@ function createGameState() {
 		},
 
 		clearHint(id1: string, id2: string, status: CardStatus) {
-			const reset = (c: ActiveCard): ActiveCard =>
-				(c.id === id1 || c.id === id2) && c.status === status
-					? { ...c, status: "idle" as CardStatus }
-					: c;
-			sourceCards = sourceCards.map(reset);
-			targetCards = targetCards.map(reset);
+			const reset = (c: ActiveCard) => {
+				if ((c.id === id1 || c.id === id2) && c.status === status) {
+					c.status = "idle";
+				}
+			};
+			sourceCards.forEach(reset);
+			targetCards.forEach(reset);
 		},
 	};
 }

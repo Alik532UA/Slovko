@@ -28,6 +28,7 @@
 		Zap,
 		Target,
 	} from "lucide-svelte";
+	import ErrorBoundary from "../ui/ErrorBoundary.svelte";
 
 	interface Props {
 		activeTab: "following" | "followers";
@@ -151,95 +152,100 @@
 </script>
 
 <div class="list-container" data-testid="friends-list-root">
-	{#if isLoading}
-		<div class="loading-state" data-testid="friends-loading">
-			<div class="spinner">
-				<Loader2 size={32} />
+	<ErrorBoundary compact>
+		{#if isLoading}
+			<div class="loading-state" data-testid="friends-loading">
+				<div class="spinner">
+					<Loader2 size={32} />
+				</div>
 			</div>
-		</div>
-	{:else if error}
-		<div class="error-state" data-testid="friends-error">
-			<p>{error}</p>
-			<button
-				onclick={loadList}
-				class="retry-btn"
-				data-testid="friends-retry-btn"
-			>
-				{$_("common.retry", { default: "Спробувати ще" })}
-			</button>
-		</div>
-	{:else if list.length === 0}
-		<div class="empty-state" data-testid="friends-empty">
-			<div class="empty-icon-wrapper">
-				<Users size={48} />
+		{:else if error}
+			<div class="error-state" data-testid="friends-error">
+				<p>{error}</p>
+				<button
+					onclick={loadList}
+					class="retry-btn"
+					data-testid="friends-retry-btn"
+				>
+					{$_("common.retry", { default: "Спробувати ще" })}
+				</button>
 			</div>
-			<p>
-				{activeTab === "following"
-					? $_("friends.noFollowing", {
-							default: "Ви поки ні на кого не підписані",
-						})
-					: $_("friends.noFollowers", {
-							default: "У вас поки немає підписників",
-						})}
-			</p>
-		</div>
-	{:else}
-		<div class="friends-list" data-testid="friends-list-items">
-			{#each list as user (user.uid)}
-				{@const Icon = getIconComponent(user.photoURL)}
-				{@const avatarColor = getAvatarColor(user.photoURL)}
-				<div class="friend-card" data-testid="friend-card-{user.uid}">
-					<div class="friend-avatar">
-						<div class="avatar-circle" style="background-color: {avatarColor}">
-							<Icon size={24} color="white" />
+		{:else if list.length === 0}
+			<div class="empty-state" data-testid="friends-empty">
+				<div class="empty-icon-wrapper">
+					<Users size={48} />
+				</div>
+				<p>
+					{activeTab === "following"
+						? $_("friends.noFollowing", {
+								default: "Ви поки ні на кого не підписані",
+							})
+						: $_("friends.noFollowers", {
+								default: "У вас поки немає підписників",
+							})}
+				</p>
+			</div>
+		{:else}
+			<div class="friends-list" data-testid="friends-list-items">
+				{#each list as user (user.uid)}
+					{@const Icon = getIconComponent(user.photoURL)}
+					{@const avatarColor = getAvatarColor(user.photoURL)}
+					<div class="friend-card" data-testid="friend-card-{user.uid}">
+						<div class="friend-avatar">
+							<div
+								class="avatar-circle"
+								style="background-color: {avatarColor}"
+							>
+								<Icon size={24} color="white" />
+							</div>
+						</div>
+
+						<div class="friend-info">
+							<span class="display-name">{user.displayName || "User"}</span>
+						</div>
+
+						<div class="friend-actions">
+							{#if activeTab === "following"}
+								<button
+									class="action-btn unfollow"
+									onclick={() => handleUnfollow(user.uid)}
+									title={$_("friends.unfollow", {
+										default: "Відписатися",
+									})}
+									data-testid="friend-list-unfollow-btn-{user.uid}"
+								>
+									<UserCheck size={18} />
+								</button>
+							{:else}
+								<!-- Followers tab actions -->
+								{#if followingMap[user.uid]}
+									<div class="mutual-badge">
+										<UserCheck size={14} />
+										<span
+											>{$_("friends.mutual", {
+												default: "Взаємно",
+											})}</span
+										>
+									</div>
+								{:else}
+									<button
+										class="action-btn follow-back"
+										onclick={() => handleFollowBack(user.uid)}
+										title={$_("friends.followBack", {
+											default: "Підписатися теж",
+										})}
+										data-testid="friend-list-follow-back-btn-{user.uid}"
+									>
+										<UserPlus size={18} />
+									</button>
+								{/if}
+							{/if}
 						</div>
 					</div>
-
-					<div class="friend-info">
-						<span class="display-name">{user.displayName || "User"}</span>
-					</div>
-
-					<div class="friend-actions">
-						{#if activeTab === "following"}
-							<button
-								class="action-btn unfollow"
-								onclick={() => handleUnfollow(user.uid)}
-								title={$_("friends.unfollow", {
-									default: "Відписатися",
-								})}
-								data-testid="friend-list-unfollow-btn-{user.uid}"
-							>
-								<UserCheck size={18} />
-							</button>
-						{:else}
-							<!-- Followers tab actions -->
-							{#if followingMap[user.uid]}
-								<div class="mutual-badge">
-									<UserCheck size={14} />
-									<span
-										>{$_("friends.mutual", {
-											default: "Взаємно",
-										})}</span
-									>
-								</div>
-							{:else}
-								<button
-									class="action-btn follow-back"
-									onclick={() => handleFollowBack(user.uid)}
-									title={$_("friends.followBack", {
-										default: "Підписатися теж",
-									})}
-									data-testid="friend-list-follow-back-btn-{user.uid}"
-								>
-									<UserPlus size={18} />
-								</button>
-							{/if}
-						{/if}
-					</div>
-				</div>
-			{/each}
-		</div>
-	{/if}
+				{/each}
+			</div>
+		{/if}
+	</ErrorBoundary>
 </div>
 
 <style>
