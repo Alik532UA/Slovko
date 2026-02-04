@@ -466,5 +466,8 @@
 	"beer": "beer",
 	"stove": "stove",
 	"sink": "sink",
-	"balcony": "balcony"
+	"balcony": "balcony",
+	"boy": "boy",
+	"you_informal": "you",
+	"you_formal": "you"
 }

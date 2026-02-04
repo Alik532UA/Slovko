@@ -469,5 +469,11 @@
 	"beer": "pivo",
 	"stove": "ocaq",
 	"sink": "rakovina",
-	"balcony": "balkon"
+	"balcony": "balkon",
+	"sister": "qız qardaş",
+	"brother": "erkek qardaş",
+	"go": "ketmek",
+	"he_pronoun": "o",
+	"she_pronoun": "o",
+	"it_pronoun": "o"
 }
