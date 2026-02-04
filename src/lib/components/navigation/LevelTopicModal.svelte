@@ -140,7 +140,8 @@
 						continue;
 					}
 					if (!parsingWords) {
-						if (line.startsWith("Name:")) name = line.replace("Name:", "").trim();
+						if (line.startsWith("Name:"))
+							name = line.replace("Name:", "").trim();
 						if (line.startsWith("Description:"))
 							desc = line.replace("Description:", "").trim();
 						if (line.startsWith("Color:"))
@@ -298,7 +299,14 @@
 				<div class="grid topics-grid">
 					<!-- System Playlists -->
 					{#each [playlistStore.systemPlaylists.favorites, playlistStore.systemPlaylists.mistakes, playlistStore.systemPlaylists.extra] as p (p.id)}
-						{@const Icon = PLAYLIST_ICONS_MAP[p.id === "mistakes" ? "RotateCcw" : (p.id === "favorites" ? "Heart" : "Bookmark")]}
+						{@const Icon =
+							PLAYLIST_ICONS_MAP[
+								p.id === "mistakes"
+									? "RotateCcw"
+									: p.id === "favorites"
+										? "Heart"
+										: "Bookmark"
+							]}
 						<!-- svelte-ignore a11y_click_events_have_key_events -->
 						<!-- svelte-ignore a11y_no_static_element_interactions -->
 						<div
@@ -380,7 +388,10 @@
 					<div class="playlist-controls">
 						<!-- svelte-ignore a11y_click_events_have_key_events -->
 						<!-- svelte-ignore a11y_no_static_element_interactions -->
-						<div class="item topic-item add-playlist" onclick={() => openPlaylistModal()}>
+						<div
+							class="item topic-item add-playlist"
+							onclick={() => openPlaylistModal()}
+						>
 							<Plus size={24} />
 							<span>{$_("playlists.createNew")}</span>
 						</div>
@@ -542,9 +553,15 @@
 		box-shadow: 0 0 0 2px var(--selected-border);
 	}
 
-	.item.favorites { border-color: var(--playlist-favorites-border); }
-	.item.mistakes { border-color: var(--playlist-mistakes-border); }
-	.item.extra { border-color: var(--playlist-extra-border); }
+	.item.favorites {
+		border-color: var(--playlist-favorites-border);
+	}
+	.item.mistakes {
+		border-color: var(--playlist-mistakes-border);
+	}
+	.item.extra {
+		border-color: var(--playlist-extra-border);
+	}
 
 	.item-title {
 		font-size: 1.1rem;
@@ -563,6 +580,7 @@
 		text-overflow: ellipsis;
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
+		line-clamp: 2;
 		-webkit-box-orient: vertical;
 	}
 

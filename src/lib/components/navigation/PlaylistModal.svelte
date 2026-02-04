@@ -1,14 +1,41 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
-	import { 
-		Plus, Save, Trash2, ArrowUp, ArrowDown, FileJson, FileText,
-		Bookmark, Star, Heart, List, Music, Book, Pen, Zap, Brain, Trophy, Flame, GraduationCap,
-		Target, Coffee, Rocket, Globe, Smile, Eye
+	import {
+		Plus,
+		Save,
+		Trash2,
+		ArrowUp,
+		ArrowDown,
+		FileJson,
+		FileText,
+		Bookmark,
+		Star,
+		Heart,
+		List,
+		Music,
+		Book,
+		Pen,
+		Zap,
+		Brain,
+		Trophy,
+		Flame,
+		GraduationCap,
+		Target,
+		Coffee,
+		Rocket,
+		Globe,
+		Smile,
+		Eye,
 	} from "lucide-svelte";
 	import { playlistStore } from "$lib/stores/playlistStore.svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { gameDataService } from "$lib/services/gameDataService";
-	import type { PlaylistId, WordKey, CustomWord, TranslationDictionary } from "$lib/types";
+	import type {
+		PlaylistId,
+		WordKey,
+		CustomWord,
+		TranslationDictionary,
+	} from "$lib/types";
 	import { THEME_COLORS } from "$lib/config/colors";
 	import { slide } from "svelte/transition";
 	import { untrack } from "svelte";
@@ -40,19 +67,21 @@
 		{ id: "Rocket", component: Rocket },
 		{ id: "Globe", component: Globe },
 		{ id: "Smile", component: Smile },
-		{ id: "Eye", component: Eye }
+		{ id: "Eye", component: Eye },
 	];
 
 	// Initial state
-	const existingPlaylist = $derived(playlistId ? playlistStore.getPlaylist(playlistId) : null);
+	const existingPlaylist = $derived(
+		playlistId ? playlistStore.getPlaylist(playlistId) : null,
+	);
 	const isSystem = $derived(existingPlaylist?.isSystem || false);
-	
+
 	let name = $state("");
 	let description = $state("");
 	let color = $state(THEME_COLORS[1]);
 	let selectedIcon = $state("Bookmark");
 	let words = $state<(WordKey | CustomWord)[]>([]);
-	
+
 	// Cache for word translations (for system keys)
 	let translations = $state<TranslationDictionary>({});
 
@@ -72,13 +101,13 @@
 	});
 
 	async function loadMissingTranslations() {
-		const keys = words.filter(w => typeof w === "string") as string[];
+		const keys = words.filter((w) => typeof w === "string") as string[];
 		if (keys.length === 0) return;
 
 		try {
 			const data = await gameDataService.loadGameData(
-				{ ...settingsStore.value, mode: "levels", currentLevel: "C2" }, 
-				{ favorites: [], extra: [], mistakes: [], custom: [] }
+				{ ...settingsStore.value, mode: "levels", currentLevel: "C2" },
+				{ favorites: [], extra: [], mistakes: [], custom: [] },
 			);
 			translations = { ...translations, ...data.targetTranslations };
 		} catch (e) {
@@ -98,10 +127,15 @@
 				description,
 				color,
 				icon: selectedIcon,
-				words
+				words,
 			});
 		} else {
-			const p = playlistStore.createPlaylist(name, description, color, selectedIcon);
+			const p = playlistStore.createPlaylist(
+				name,
+				description,
+				color,
+				selectedIcon,
+			);
 			playlistStore.updatePlaylist(p.id, { words });
 		}
 		onclose();
@@ -109,13 +143,13 @@
 
 	function addCustomWord() {
 		if (!newWordOriginal.trim() || !newWordTranslation.trim()) return;
-		
+
 		const custom: CustomWord = {
 			id: `custom-${Date.now()}`,
 			original: newWordOriginal.trim(),
-			translation: newWordTranslation.trim()
+			translation: newWordTranslation.trim(),
 		};
-		
+
 		words = [...words, custom];
 		newWordOriginal = "";
 		newWordTranslation = "";
@@ -128,9 +162,12 @@
 	function moveWord(index: number, direction: -1 | 1) {
 		const newIndex = index + direction;
 		if (newIndex < 0 || newIndex >= words.length) return;
-		
+
 		const newWords = [...words];
-		[newWords[index], newWords[newIndex]] = [newWords[newIndex], newWords[index]];
+		[newWords[index], newWords[newIndex]] = [
+			newWords[newIndex],
+			newWords[index],
+		];
 		words = newWords;
 	}
 
@@ -143,7 +180,7 @@
 	function exportTXT() {
 		if (!existingPlaylist) return;
 		let content = `Name: ${name}\nDescription: ${description}\nColor: ${color}\nIcon: ${selectedIcon}\n---\n`;
-		words.forEach(w => {
+		words.forEach((w) => {
 			if (typeof w === "string") {
 				content += `${w}\n`;
 			} else {
@@ -168,7 +205,9 @@
 	<div class="content" data-testid="playlist-modal-content">
 		<div class="header">
 			<h2 data-testid="playlist-modal-title">
-				{existingPlaylist ? $_("playlists.editTitle") : $_("playlists.createTitle")}
+				{existingPlaylist
+					? $_("playlists.editTitle")
+					: $_("playlists.createTitle")}
 			</h2>
 		</div>
 
@@ -176,20 +215,20 @@
 			<section class="section" data-testid="playlist-meta-section">
 				<label>
 					<span>{$_("playlists.name")}</span>
-					<input 
-						type="text" 
-						bind:value={name} 
-						placeholder={$_("playlists.namePlaceholder")} 
+					<input
+						type="text"
+						bind:value={name}
+						placeholder={$_("playlists.namePlaceholder")}
 						disabled={isSystem}
 						data-testid="playlist-name-input"
 					/>
 				</label>
-				
+
 				{#if !isSystem}
 					<label transition:slide>
 						<span>{$_("playlists.description")}</span>
-						<textarea 
-							bind:value={description} 
+						<textarea
+							bind:value={description}
 							placeholder={$_("playlists.descPlaceholder")}
 							data-testid="playlist-desc-input"
 						></textarea>
@@ -198,14 +237,20 @@
 			</section>
 
 			{#if !isSystem}
-				<section class="section customization-section" transition:slide data-testid="playlist-customize-section">
+				<section
+					class="section customization-section"
+					transition:slide
+					data-testid="playlist-customize-section"
+				>
 					<div class="picker-group">
 						<h3>{$_("playlists.color")}</h3>
 						<div class="color-grid" data-testid="playlist-color-picker">
 							{#each THEME_COLORS as c}
-								<button 
-									class="color-btn" 
-									style="background-color: {c === 'transparent' ? 'rgba(255,255,255,0.1)' : c}"
+								<button
+									class="color-btn"
+									style="background-color: {c === 'transparent'
+										? 'rgba(255,255,255,0.1)'
+										: c}"
 									class:selected={color === c}
 									onclick={() => (color = c)}
 									aria-label={c}
@@ -220,8 +265,8 @@
 						<h3>{$_("playlists.icon")}</h3>
 						<div class="icon-grid" data-testid="playlist-icon-picker">
 							{#each PLAYLIST_ICONS as { id, component: Icon }}
-								<button 
-									class="icon-picker-btn" 
+								<button
+									class="icon-picker-btn"
 									class:selected={selectedIcon === id}
 									onclick={() => (selectedIcon = id)}
 									data-testid="icon-btn-{id}"
@@ -235,39 +280,72 @@
 				</section>
 			{/if}
 
-			<section class="section words-section" data-testid="playlist-words-section">
+			<section
+				class="section words-section"
+				data-testid="playlist-words-section"
+			>
 				<div class="section-header">
-					<h3>{$_("playlists.wordsCount", { values: { count: words.length } })}</h3>       
+					<h3>
+						{$_("playlists.wordsCount", { values: { count: words.length } })}
+					</h3>
 				</div>
 
 				<div class="words-list" data-testid="playlist-words-list">
-					{#each words as word, i (typeof word === 'string' ? word : word.id)}
-						<div class="word-item" transition:slide data-testid="playlist-word-item-{i}">
+					{#each words as word, i (typeof word === "string" ? word : word.id)}
+						<div
+							class="word-item"
+							transition:slide
+							data-testid="playlist-word-item-{i}"
+						>
 							<div class="word-info">
 								{#if typeof word === "string"}
 									<div class="word-pill source" data-testid="word-key-{word}">
 										{word}
 									</div>
-									<div class="word-pill target" data-testid="word-target-{word}">
+									<div
+										class="word-pill target"
+										data-testid="word-target-{word}"
+									>
 										{translations[word] || "..."}
 									</div>
 								{:else}
-									<div class="word-pill source" data-testid="word-original-{word.id}">
+									<div
+										class="word-pill source"
+										data-testid="word-original-{word.id}"
+									>
 										{word.original}
 									</div>
-									<div class="word-pill target" data-testid="word-translation-{word.id}">
+									<div
+										class="word-pill target"
+										data-testid="word-translation-{word.id}"
+									>
 										{word.translation}
 									</div>
 								{/if}
 							</div>
 							<div class="word-actions">
-								<button onclick={() => moveWord(i, -1)} disabled={i === 0} data-testid="move-up-{i}" aria-label="Move up">
+								<button
+									onclick={() => moveWord(i, -1)}
+									disabled={i === 0}
+									data-testid="move-up-{i}"
+									aria-label="Move up"
+								>
 									<ArrowUp size={16} />
 								</button>
-								<button onclick={() => moveWord(i, 1)} disabled={i === words.length - 1} data-testid="move-down-{i}" aria-label="Move down">
+								<button
+									onclick={() => moveWord(i, 1)}
+									disabled={i === words.length - 1}
+									data-testid="move-down-{i}"
+									aria-label="Move down"
+								>
 									<ArrowDown size={16} />
 								</button>
-								<button class="delete" onclick={() => removeWord(i)} data-testid="delete-word-{i}" aria-label="Delete">
+								<button
+									class="delete"
+									onclick={() => removeWord(i)}
+									data-testid="delete-word-{i}"
+									aria-label="Delete"
+								>
 									<Trash2 size={16} />
 								</button>
 							</div>
@@ -276,22 +354,26 @@
 				</div>
 
 				{#if !isSystem}
-					<div class="add-custom-word" transition:slide data-testid="playlist-add-word-container">
+					<div
+						class="add-custom-word"
+						transition:slide
+						data-testid="playlist-add-word-container"
+					>
 						<div class="custom-word-inputs">
-							<input 
-								type="text" 
-								bind:value={newWordOriginal} 
-								placeholder={$_("settings.sourceLanguage")} 
+							<input
+								type="text"
+								bind:value={newWordOriginal}
+								placeholder={$_("settings.sourceLanguage")}
 								data-testid="new-word-original-input"
 							/>
-							<input 
-								type="text" 
-								bind:value={newWordTranslation} 
-								placeholder={$_("settings.targetLanguage")} 
+							<input
+								type="text"
+								bind:value={newWordTranslation}
+								placeholder={$_("settings.targetLanguage")}
 								data-testid="new-word-translation-input"
 							/>
-							<button 
-								class="add-btn" 
+							<button
+								class="add-btn"
 								onclick={addCustomWord}
 								data-testid="add-custom-word-btn"
 								aria-label="Add word"
@@ -307,10 +389,18 @@
 				<section class="section io-section" data-testid="playlist-io-section">
 					<h3>{$_("playlists.exportTitle")}</h3>
 					<div class="io-actions" data-testid="playlist-io-actions">
-						<button class="io-btn" onclick={exportJSON} data-testid="export-json-btn">
+						<button
+							class="io-btn"
+							onclick={exportJSON}
+							data-testid="export-json-btn"
+						>
 							<FileJson size={20} /> JSON
 						</button>
-						<button class="io-btn" onclick={exportTXT} data-testid="export-txt-btn">
+						<button
+							class="io-btn"
+							onclick={exportTXT}
+							data-testid="export-txt-btn"
+						>
 							<FileText size={20} /> TXT
 						</button>
 					</div>
@@ -319,7 +409,11 @@
 		</div>
 
 		<div class="footer">
-			<button class="primary-action-btn save-btn" onclick={handleSave} data-testid="save-playlist-btn">
+			<button
+				class="primary-action-btn save-btn"
+				onclick={handleSave}
+				data-testid="save-playlist-btn"
+			>
 				<Save size={20} />
 				{$_("common.save")}
 			</button>
@@ -328,41 +422,247 @@
 </BaseModal>
 
 <style>
-	.content { display: flex; flex-direction: column; max-height: 80vh; }
-	.header { margin-bottom: 1.5rem; text-align: center; }
-	.header h2 { margin: 0; font-size: 1.5rem; color: var(--text-primary); }
-	.scroll-content { overflow-y: auto; padding-right: 0.5rem; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
-	.section { margin-bottom: 2rem; }
-	.section h3 { margin-bottom: 1rem; font-size: 1.1rem; color: var(--text-secondary); }
-	label { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
-	label span { font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; padding-left: 0.25rem; }
-	input, textarea { width: 100%; padding: 0.85rem 1.1rem; border-radius: 14px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-primary); font-family: inherit; font-size: 1rem; transition: all 0.2s; }
-	input:focus, textarea:focus { outline: none; border-color: var(--accent); background: rgba(255, 255, 255, 0.06); box-shadow: 0 0 0 3px rgba(233, 84, 32, 0.1); }
-	input:disabled { opacity: 0.5; cursor: not-allowed; background: rgba(0, 0, 0, 0.05); }
-	.customization-section { display: flex; flex-direction: column; gap: 1.5rem; }
-	.picker-group { display: flex; flex-direction: column; }
-	.color-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
-	.color-btn { width: 36px; height: 36px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s; }
-	.color-btn.selected { border-color: var(--text-primary); transform: scale(1.2); box-shadow: 0 0 10px rgba(0,0,0,0.3); }
-	.icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 0.5rem; justify-items: center; }
-	.icon-picker-btn { width: 40px; height: 40px; border-radius: 10px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); color: var(--text-secondary); display: flex; align-items: center; justify-content: center; transition: all 0.2s; cursor: pointer; }
-	.icon-picker-btn:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--text-primary); }
-	.icon-picker-btn.selected { background: var(--accent); color: white; border-color: var(--accent); transform: scale(1.1); }
-	.word-item { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.03); border-radius: 12px; border: 1px solid var(--border); gap: 1rem; }
-	.word-info { display: flex; align-items: center; gap: 0.5rem; flex: 1; min-width: 0; }
-	.word-pill { padding: 0.5rem 0.75rem; border-radius: 10px; font-size: 0.95rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; max-width: 50%; border: 1px solid transparent; text-align: center; }
-	.word-pill.source { background: rgba(255, 255, 255, 0.08); color: var(--text-primary); border-color: rgba(255, 255, 255, 0.1); }
-	.word-pill.target { background: rgba(233, 84, 32, 0.1); color: var(--accent); border-color: rgba(233, 84, 32, 0.2); }
-	.word-actions { display: flex; gap: 0.25rem; }
-	.word-actions button { padding: 0.4rem; border-radius: 8px; color: var(--text-secondary); background: transparent; border: none; cursor: pointer; transition: all 0.2s; }
-	.word-actions button:hover:not(:disabled) { background: rgba(255, 255, 255, 0.1); color: var(--text-primary); }
-	.word-actions button.delete:hover { color: var(--toast-error); background: rgba(239, 68, 68, 0.1); }
-	.add-custom-word { background: rgba(233, 84, 32, 0.08); padding: 1.25rem; border-radius: 16px; border: 1px solid rgba(233, 84, 32, 0.15); margin-top: 1rem; }
-	.custom-word-inputs { display: grid; grid-template-columns: 1fr 1fr 48px; gap: 0.75rem; align-items: center; }
-	.custom-word-inputs input { flex: none; width: 100%; min-width: 0; height: 48px; }
-	.add-btn { background: var(--accent); color: white; height: 48px; width: 48px; border-radius: 12px; border: none; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; }
-	.io-actions { display: flex; flex-direction: row; gap: 0.75rem; }
-	.io-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); border-radius: 12px; color: var(--text-primary); font-weight: 600; cursor: pointer; }
-	.footer { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
-	.save-btn { width: 100%; }
+	.content {
+		display: flex;
+		flex-direction: column;
+		max-height: 80vh;
+	}
+	.header {
+		margin-bottom: 1.5rem;
+		text-align: center;
+	}
+	.header h2 {
+		margin: 0;
+		font-size: 1.5rem;
+		color: var(--text-primary);
+	}
+	.scroll-content {
+		overflow-y: auto;
+		padding-right: 0.5rem;
+		scrollbar-width: thin;
+		scrollbar-color: var(--border) transparent;
+	}
+	.section {
+		margin-bottom: 2rem;
+	}
+	.section h3 {
+		margin-bottom: 1rem;
+		font-size: 1.1rem;
+		color: var(--text-secondary);
+	}
+	label {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		margin-bottom: 1rem;
+	}
+	label span {
+		font-size: 0.9rem;
+		font-weight: 600;
+		color: var(--text-secondary);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		padding-left: 0.25rem;
+	}
+	input,
+	textarea {
+		width: 100%;
+		padding: 0.85rem 1.1rem;
+		border-radius: 14px;
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		color: var(--text-primary);
+		font-family: inherit;
+		font-size: 1rem;
+		transition: all 0.2s;
+	}
+	input:focus,
+	textarea:focus {
+		outline: none;
+		border-color: var(--accent);
+		background: rgba(255, 255, 255, 0.06);
+		box-shadow: 0 0 0 3px rgba(233, 84, 32, 0.1);
+	}
+	input:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+		background: rgba(0, 0, 0, 0.05);
+	}
+	.customization-section {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+	.picker-group {
+		display: flex;
+		flex-direction: column;
+	}
+	.color-grid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		justify-content: center;
+	}
+	.color-btn {
+		width: 36px;
+		height: 36px;
+		border-radius: 50%;
+		border: 2px solid transparent;
+		cursor: pointer;
+		transition: transform 0.2s;
+	}
+	.color-btn.selected {
+		border-color: var(--text-primary);
+		transform: scale(1.2);
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	}
+	.icon-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+		gap: 0.5rem;
+		justify-items: center;
+	}
+	.icon-picker-btn {
+		width: 40px;
+		height: 40px;
+		border-radius: 10px;
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid var(--border);
+		color: var(--text-secondary);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.2s;
+		cursor: pointer;
+	}
+	.icon-picker-btn:hover {
+		background: rgba(255, 255, 255, 0.08);
+		border-color: var(--text-primary);
+	}
+	.icon-picker-btn.selected {
+		background: var(--accent);
+		color: white;
+		border-color: var(--accent);
+		transform: scale(1.1);
+	}
+	.word-item {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0.75rem 1rem;
+		background: rgba(255, 255, 255, 0.03);
+		border-radius: 12px;
+		border: 1px solid var(--border);
+		gap: 1rem;
+	}
+	.word-info {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex: 1;
+		min-width: 0;
+	}
+	.word-pill {
+		padding: 0.5rem 0.75rem;
+		border-radius: 10px;
+		font-size: 0.95rem;
+		font-weight: 500;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		flex: 1;
+		max-width: 50%;
+		border: 1px solid transparent;
+		text-align: center;
+	}
+	.word-pill.source {
+		background: rgba(255, 255, 255, 0.08);
+		color: var(--text-primary);
+		border-color: rgba(255, 255, 255, 0.1);
+	}
+	.word-pill.target {
+		background: rgba(233, 84, 32, 0.1);
+		color: var(--accent);
+		border-color: rgba(233, 84, 32, 0.2);
+	}
+	.word-actions {
+		display: flex;
+		gap: 0.25rem;
+	}
+	.word-actions button {
+		padding: 0.4rem;
+		border-radius: 8px;
+		color: var(--text-secondary);
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		transition: all 0.2s;
+	}
+	.word-actions button:hover:not(:disabled) {
+		background: rgba(255, 255, 255, 0.1);
+		color: var(--text-primary);
+	}
+	.word-actions button.delete:hover {
+		color: var(--toast-error);
+		background: rgba(239, 68, 68, 0.1);
+	}
+	.add-custom-word {
+		background: rgba(233, 84, 32, 0.08);
+		padding: 1.25rem;
+		border-radius: 16px;
+		border: 1px solid rgba(233, 84, 32, 0.15);
+		margin-top: 1rem;
+	}
+	.custom-word-inputs {
+		display: grid;
+		grid-template-columns: 1fr 1fr 48px;
+		gap: 0.75rem;
+		align-items: center;
+	}
+	.custom-word-inputs input {
+		flex: none;
+		width: 100%;
+		min-width: 0;
+		height: 48px;
+	}
+	.add-btn {
+		background: var(--accent);
+		color: white;
+		height: 48px;
+		width: 48px;
+		border-radius: 12px;
+		border: none;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		cursor: pointer;
+	}
+	.io-actions {
+		display: flex;
+		flex-direction: row;
+		gap: 0.75rem;
+	}
+	.io-btn {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		padding: 0.75rem;
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid var(--border);
+		border-radius: 12px;
+		color: var(--text-primary);
+		font-weight: 600;
+		cursor: pointer;
+	}
+	.footer {
+		margin-top: 1.5rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--border);
+	}
+	.save-btn {
+		width: 100%;
+	}
 </style>

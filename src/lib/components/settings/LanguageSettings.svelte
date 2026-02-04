@@ -219,11 +219,19 @@
 							>
 								<div class="icon-stack">
 									{#if isSpeechIcon}
-										<div class="icon-wrapper" in:fade={{ duration: 300 }} out:fade={{ duration: 300 }}>
+										<div
+											class="icon-wrapper"
+											in:fade={{ duration: 300 }}
+											out:fade={{ duration: 300 }}
+										>
 											<Speech size={16} />
 										</div>
 									{:else}
-										<div class="icon-wrapper" in:fade={{ duration: 300 }} out:fade={{ duration: 300 }}>
+										<div
+											class="icon-wrapper"
+											in:fade={{ duration: 300 }}
+											out:fade={{ duration: 300 }}
+										>
 											<Volume2 size={16} />
 										</div>
 									{/if}
@@ -299,11 +307,19 @@
 							>
 								<div class="icon-stack">
 									{#if isSpeechIcon}
-										<div class="icon-wrapper" in:fade={{ duration: 300 }} out:fade={{ duration: 300 }}>
+										<div
+											class="icon-wrapper"
+											in:fade={{ duration: 300 }}
+											out:fade={{ duration: 300 }}
+										>
 											<Speech size={16} />
 										</div>
 									{:else}
-										<div class="icon-wrapper" in:fade={{ duration: 300 }} out:fade={{ duration: 300 }}>
+										<div
+											class="icon-wrapper"
+											in:fade={{ duration: 300 }}
+											out:fade={{ duration: 300 }}
+										>
 											<Volume2 size={16} />
 										</div>
 									{/if}

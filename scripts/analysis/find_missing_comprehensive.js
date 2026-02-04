@@ -26,7 +26,7 @@ levels.forEach((level) => {
 
 	// words.json contains a field "words" which is an array of keys
 	const allWords = Array.isArray(wordsData.words) ? wordsData.words : [];
-	
+
 	report[level] = {};
 
 	langs.forEach((lang) => {
@@ -60,7 +60,7 @@ levels.forEach((level) => {
 		if (missing.length > 0) {
 			report[level][lang] = {
 				count: missing.length,
-				words: missing
+				words: missing,
 			};
 		}
 	});

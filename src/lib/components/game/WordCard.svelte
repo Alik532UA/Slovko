@@ -194,7 +194,8 @@
 	}
 
 	@keyframes selectedPulse {
-		0%, 100% {
+		0%,
+		100% {
 			box-shadow: 0 0 0 rgba(58, 143, 214, 0);
 		}
 		50% {

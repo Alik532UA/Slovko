@@ -160,7 +160,9 @@ export class GameDataService {
 				} else if (currentPlaylist === "extra") {
 					playlistWords = playlists.extra.map((p) => p.id);
 				} else {
-					const customP = playlists.custom.find((p) => p.id === currentPlaylist);
+					const customP = playlists.custom.find(
+						(p) => p.id === currentPlaylist,
+					);
 					if (customP) playlistWords = customP.words;
 				}
 

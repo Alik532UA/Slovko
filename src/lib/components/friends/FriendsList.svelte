@@ -113,12 +113,7 @@
 	}
 
 	async function handleUnfollow(uid: string) {
-		if (
-			!confirm(
-				$_("friends.confirmUnfollow"),
-			)
-		)
-			return;
+		if (!confirm($_("friends.confirmUnfollow"))) return;
 
 		try {
 			const success = await FriendsService.unfollow(uid);

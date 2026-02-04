@@ -13,6 +13,7 @@ import {
 } from "./gameFeedbackHandler";
 import { createCardsFromWordKeys } from "./gameCardFactory";
 import type { ActiveCard, CardStatus, WordPair } from "../types";
+import type { Playlist, CustomWord } from "../data/schemas";
 
 /**
  * GameController — сервіс для координації ігрової логіки.
@@ -44,53 +45,20 @@ export class GameController {
 
 			// Якщо даних немає, завантажуємо їх (fallback)
 			if (!data) {
-				const playlistsData = {
-					favorites: playlistStore.systemPlaylists.favorites.words.map(w => {
-						const id = typeof w === "string" ? w : w.id;
-						return { id, source: id, target: id };
-					}),
-					extra: playlistStore.systemPlaylists.extra.words.map(w => {
-						const id = typeof w === "string" ? w : w.id;
-						return { id, source: id, target: id };
-					}),
-					mistakes: playlistStore.systemPlaylists.mistakes.words.map(w => { 
-						const id = typeof w === "string" ? w : w.id;
-						return { 
-							pair: { id, source: id, target: id },
-							correctStreak: (playlistStore as any).mistakeMetadata?.[id] || 0
-						};
-					}),
-					custom: playlistStore.customPlaylists.map(p => ({ id: p.id, name: p.name, words: p.words }))
-				};
+				const playlistsData = this.getPlaylistsData();
 				data = await this.dataService.loadGameData(
 					settingsStore.value,
 					playlistsData,
 				);
 			} else {
-				// ... (similar update for the force reload block)
+				// В деяких випадках нам потрібно примусово перевантажити дані
+				// (наприклад, якщо ми в режимі English і транскрипції відсутні)
 				const { sourceLanguage } = settingsStore.value;
 				if (
 					sourceLanguage === "en" &&
 					Object.keys(data.sourceTranscriptions).length === 0
 				) {
-					const playlistsData = {
-						favorites: playlistStore.systemPlaylists.favorites.words.map(w => {
-							const id = typeof w === "string" ? w : w.id;
-							return { id, source: id, target: id };
-						}),
-						extra: playlistStore.systemPlaylists.extra.words.map(w => {
-							const id = typeof w === "string" ? w : w.id;
-							return { id, source: id, target: id };
-						}),
-						mistakes: playlistStore.systemPlaylists.mistakes.words.map(w => { 
-							const id = typeof w === "string" ? w : w.id;
-							return { 
-								pair: { id, source: id, target: id },
-								correctStreak: (playlistStore as any).mistakeMetadata?.[id] || 0
-							};
-						}),
-						custom: playlistStore.customPlaylists.map(p => ({ id: p.id, name: p.name, words: p.words }))
-					};
+					const playlistsData = this.getPlaylistsData();
 					data = await this.dataService.loadGameData(
 						settingsStore.value,
 						playlistsData,
@@ -100,7 +68,8 @@ export class GameController {
 
 			this.gameState.setData(data);
 
-			const { sourceLanguage, targetLanguage, interfaceLanguage } = settingsStore.value;
+			const { sourceLanguage, targetLanguage, interfaceLanguage } =
+				settingsStore.value;
 			const initialWords = this.gameState.getAvailableWords(
 				this.gameState.getPairsLimit(),
 			);
@@ -124,6 +93,37 @@ export class GameController {
 		} finally {
 			this.gameState.setLoading(false);
 		}
+	}
+
+	private getPlaylistsData() {
+		return {
+			favorites: playlistStore.systemPlaylists.favorites.words.map(
+				(w: string | CustomWord) => {
+					const id = typeof w === "string" ? w : w.id;
+					return { id, source: id, target: id };
+				},
+			),
+			extra: playlistStore.systemPlaylists.extra.words.map(
+				(w: string | CustomWord) => {
+					const id = typeof w === "string" ? w : w.id;
+					return { id, source: id, target: id };
+				},
+			),
+			mistakes: playlistStore.systemPlaylists.mistakes.words.map(
+				(w: string | CustomWord) => {
+					const id = typeof w === "string" ? w : w.id;
+					return {
+						pair: { id, source: id, target: id },
+						correctStreak: (playlistStore.mistakeMetadata || {})[id] || 0,
+					};
+				},
+			),
+			custom: playlistStore.customPlaylists.map((p: Playlist) => ({
+				id: p.id,
+				name: p.name,
+				words: p.words,
+			})),
+		};
 	}
 
 	/**
@@ -218,7 +218,8 @@ export class GameController {
 			const newWords = this.gameState.getAvailableWords(limit - visibleCount);
 			if (newWords.length === 0) return;
 
-			const { sourceLanguage, targetLanguage, interfaceLanguage } = settingsStore.value;
+			const { sourceLanguage, targetLanguage, interfaceLanguage } =
+				settingsStore.value;
 			const { source, target } = createCardsFromWordKeys(
 				newWords,
 				sourceLanguage,

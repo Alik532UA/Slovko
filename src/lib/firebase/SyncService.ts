@@ -236,7 +236,7 @@ export const SyncService = {
 				playlists: {
 					customPlaylists: playlistStore.customPlaylists,
 					systemPlaylists: playlistStore.systemPlaylists,
-					mistakeMetadata: (playlistStore as any).mistakeMetadata || {}
+					mistakeMetadata: (playlistStore as any).mistakeMetadata || {},
 				},
 				lastSync: Date.now(),
 			};
@@ -338,7 +338,11 @@ export const SyncService = {
 			if (cloudData.settings) {
 				const result = AppSettingsSchema.safeParse(cloudData.settings);
 				if (result.success) {
-					logService.log("settings", "SyncService: applying cloud settings update:", result.data);
+					logService.log(
+						"settings",
+						"SyncService: applying cloud settings update:",
+						result.data,
+					);
 					settingsStore._internalUpdate(result.data);
 				} else {
 					logService.error(
@@ -454,26 +458,28 @@ export const SyncService = {
 			playlists: {
 				customPlaylists: this.mergeArrays(
 					local.playlists.customPlaylists || [],
-					cloud.playlists?.customPlaylists || []
+					cloud.playlists?.customPlaylists || [],
 				),
 				systemPlaylists: {
 					favorites: this.mergePlaylist(
 						local.playlists.systemPlaylists?.favorites,
-						cloud.playlists?.systemPlaylists?.favorites || cloud.playlists?.favorites
+						cloud.playlists?.systemPlaylists?.favorites ||
+							cloud.playlists?.favorites,
 					),
 					extra: this.mergePlaylist(
 						local.playlists.systemPlaylists?.extra,
-						cloud.playlists?.systemPlaylists?.extra || cloud.playlists?.extra
+						cloud.playlists?.systemPlaylists?.extra || cloud.playlists?.extra,
 					),
 					mistakes: this.mergePlaylist(
 						local.playlists.systemPlaylists?.mistakes,
-						cloud.playlists?.systemPlaylists?.mistakes || cloud.playlists?.mistakes
+						cloud.playlists?.systemPlaylists?.mistakes ||
+							cloud.playlists?.mistakes,
 					),
 				},
 				mistakeMetadata: {
 					...(cloud.playlists?.mistakeMetadata || {}),
-					...(local.playlists.mistakeMetadata || {})
-				}
+					...(local.playlists.mistakeMetadata || {}),
+				},
 			},
 
 			avatar: local.avatar || cloud.avatar || null,
@@ -526,11 +532,16 @@ export const SyncService = {
 	mergePlaylist(local: any, cloud: any) {
 		if (!local) return cloud;
 		if (!cloud) return local;
-		const isStringArray = Array.isArray(local.words) && typeof local.words[0] === "string";
+		const isStringArray =
+			Array.isArray(local.words) && typeof local.words[0] === "string";
 		return {
 			...cloud,
 			...local,
-			words: this.mergeArrays(local.words || [], cloud.words || [], isStringArray ? "" : "id")
+			words: this.mergeArrays(
+				local.words || [],
+				cloud.words || [],
+				isStringArray ? "" : "id",
+			),
 		};
 	},
 

@@ -72,9 +72,7 @@
 			{/if}
 
 			<button type="submit" class="primary-btn" disabled={isLoading}>
-				{isLoading
-					? "..."
-					: $_("profile.sendResetEmail")}
+				{isLoading ? "..." : $_("profile.sendResetEmail")}
 			</button>
 
 			<button type="button" class="back-link" onclick={onback}>

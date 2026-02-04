@@ -4,7 +4,12 @@
  */
 import { browser } from "$app/environment";
 import { SyncService } from "../firebase/SyncService";
-import type { WordPair, Playlist, PlaylistId, CustomWord, WordKey } from "../types";
+import type { WordPair, PlaylistId, CustomWord, WordKey } from "../types";
+import {
+	PlaylistStateSchema,
+	type PlaylistState,
+	type Playlist,
+} from "../data/schemas";
 
 const STORAGE_KEY = "wordApp_playlists_v2"; // Increment version for new structure
 const LEGACY_STORAGE_KEY = "wordApp_playlists";
@@ -15,17 +20,7 @@ export interface MistakeEntry {
 	correctStreak: number;
 }
 
-export interface PlaylistState {
-	customPlaylists: Playlist[];
-	systemPlaylists: {
-		favorites: Playlist;
-		mistakes: Playlist;
-		extra: Playlist;
-	};
-	/** Metadata for mistakes like streaks */
-	mistakeMetadata: Record<string, number>; 
-}
-
+// Local defaults matching schema for initialization
 const DEFAULT_SYSTEM_PLAYLISTS = {
 	favorites: {
 		id: "favorites",
@@ -33,7 +28,9 @@ const DEFAULT_SYSTEM_PLAYLISTS = {
 		isSystem: true,
 		words: [],
 		createdAt: Date.now(),
-		color: "#2ecc71"
+		color: "#2ecc71",
+		description: "",
+		icon: "Bookmark",
 	},
 	mistakes: {
 		id: "mistakes",
@@ -41,7 +38,9 @@ const DEFAULT_SYSTEM_PLAYLISTS = {
 		isSystem: true,
 		words: [],
 		createdAt: Date.now(),
-		color: "#e74c3c"
+		color: "#e74c3c",
+		description: "",
+		icon: "Bookmark",
 	},
 	extra: {
 		id: "extra",
@@ -49,14 +48,16 @@ const DEFAULT_SYSTEM_PLAYLISTS = {
 		isSystem: true,
 		words: [],
 		createdAt: Date.now(),
-		color: "#3a8fd6"
-	}
+		color: "#3a8fd6",
+		description: "",
+		icon: "Bookmark",
+	},
 };
 
 const DEFAULT_STATE: PlaylistState = {
 	customPlaylists: [],
 	systemPlaylists: { ...DEFAULT_SYSTEM_PLAYLISTS },
-	mistakeMetadata: {}
+	mistakeMetadata: {},
 };
 
 function createPlaylistStore() {
@@ -69,22 +70,16 @@ function createPlaylistStore() {
 			const stored = localStorage.getItem(STORAGE_KEY);
 			if (stored) {
 				const parsed = JSON.parse(stored);
-				return {
-					...DEFAULT_STATE,
-					...parsed,
-					systemPlaylists: {
-						favorites: { ...DEFAULT_SYSTEM_PLAYLISTS.favorites, ...(parsed.systemPlaylists?.favorites || {}) },
-						mistakes: { ...DEFAULT_SYSTEM_PLAYLISTS.mistakes, ...(parsed.systemPlaylists?.mistakes || {}) },
-						extra: { ...DEFAULT_SYSTEM_PLAYLISTS.extra, ...(parsed.systemPlaylists?.extra || {}) },
-					}
-				};
+				// Use Zod to validate and fill defaults/missing fields
+				return PlaylistStateSchema.parse(parsed);
 			}
 
 			// Fallback to legacy and migrate
 			const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
 			if (legacy) {
 				const oldData = JSON.parse(legacy);
-				return migrateFromLegacy(oldData);
+				// Migrate and then validate to ensure structure
+				return PlaylistStateSchema.parse(migrateFromLegacy(oldData));
 			}
 		} catch (e) {
 			console.error("Failed to load playlists", e);
@@ -92,22 +87,29 @@ function createPlaylistStore() {
 		return DEFAULT_STATE;
 	}
 
-	function migrateFromLegacy(oldData: any): PlaylistState {
+	function migrateFromLegacy(oldData: any): any {
+		// Return any, let Zod fix it
 		const newState = { ...DEFAULT_STATE };
-		
+
 		if (Array.isArray(oldData.favorites)) {
-			newState.systemPlaylists.favorites.words = oldData.favorites.map((p: any) => p.id);
+			newState.systemPlaylists.favorites.words = oldData.favorites.map(
+				(p: any) => p.id,
+			);
 		}
 		if (Array.isArray(oldData.extra)) {
-			newState.systemPlaylists.extra.words = oldData.extra.map((p: any) => p.id);
+			newState.systemPlaylists.extra.words = oldData.extra.map(
+				(p: any) => p.id,
+			);
 		}
 		if (Array.isArray(oldData.mistakes)) {
-			newState.systemPlaylists.mistakes.words = oldData.mistakes.map((m: any) => m.pair.id);
+			newState.systemPlaylists.mistakes.words = oldData.mistakes.map(
+				(m: any) => m.pair.id,
+			);
 			oldData.mistakes.forEach((m: any) => {
 				newState.mistakeMetadata[m.pair.id] = m.correctStreak;
 			});
 		}
-		
+
 		return newState;
 	}
 
@@ -119,41 +121,48 @@ function createPlaylistStore() {
 	}
 
 	return {
-		get customPlaylists() { return state.customPlaylists; },
-		get systemPlaylists() { return state.systemPlaylists; },
-		get mistakeMetadata() { return state.mistakeMetadata; },
-		get allPlaylists() { 
+		get customPlaylists() {
+			return state.customPlaylists;
+		},
+		get systemPlaylists() {
+			return state.systemPlaylists;
+		},
+		get mistakeMetadata() {
+			return state.mistakeMetadata;
+		},
+		get allPlaylists() {
 			return [
 				state.systemPlaylists.favorites,
 				state.systemPlaylists.mistakes,
 				state.systemPlaylists.extra,
-				...state.customPlaylists
+				...state.customPlaylists,
 			];
 		},
 
 		/** Internal set for SyncService */
 		_internalSet(newData: any) {
 			if (!newData) return;
-			
-			// Ensure structure is correct even if cloud data is old or partial
-			const mergedData: PlaylistState = {
-				customPlaylists: Array.isArray(newData.customPlaylists) ? newData.customPlaylists : [],
-				systemPlaylists: {
-					favorites: { ...DEFAULT_SYSTEM_PLAYLISTS.favorites, ...(newData.systemPlaylists?.favorites || newData.favorites || {}) },
-					mistakes: { ...DEFAULT_SYSTEM_PLAYLISTS.mistakes, ...(newData.systemPlaylists?.mistakes || newData.mistakes || {}) },
-					extra: { ...DEFAULT_SYSTEM_PLAYLISTS.extra, ...(newData.systemPlaylists?.extra || newData.extra || {}) },
-				},
-				mistakeMetadata: newData.mistakeMetadata || {}
-			};
 
-			state = mergedData;
-			if (browser) {
-				localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+			try {
+				// Validate and normalize incoming cloud data using Zod
+				const validData = PlaylistStateSchema.parse(newData);
+				state = validData;
+
+				if (browser) {
+					localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+				}
+			} catch (e) {
+				console.error("Failed to sync playlists: invalid data", e);
 			}
 		},
 
 		// CRUD for Custom Playlists
-		createPlaylist(name: string, description: string = "", color: string = "#FF5733", icon: string = "Bookmark") {
+		createPlaylist(
+			name: string,
+			description: string = "",
+			color: string = "#FF5733",
+			icon: string = "Bookmark",
+		) {
 			const newPlaylist: Playlist = {
 				id: crypto.randomUUID(),
 				name,
@@ -162,7 +171,7 @@ function createPlaylistStore() {
 				icon,
 				isSystem: false,
 				words: [],
-				createdAt: Date.now()
+				createdAt: Date.now(),
 			};
 			state.customPlaylists = [...state.customPlaylists, newPlaylist];
 			saveState();
@@ -173,10 +182,15 @@ function createPlaylistStore() {
 			if (id === "favorites" || id === "mistakes" || id === "extra") {
 				// Only allow updating words/metadata for system playlists
 				const key = id as keyof typeof state.systemPlaylists;
-				state.systemPlaylists[key] = { ...state.systemPlaylists[key], ...data, isSystem: true, id };
+				state.systemPlaylists[key] = {
+					...state.systemPlaylists[key],
+					...data,
+					isSystem: true,
+					id,
+				};
 			} else {
-				state.customPlaylists = state.customPlaylists.map(p => 
-					p.id === id ? { ...p, ...data, isSystem: false, id } : p
+				state.customPlaylists = state.customPlaylists.map((p: Playlist) =>
+					p.id === id ? { ...p, ...data, isSystem: false, id } : p,
 				);
 			}
 			saveState();
@@ -184,7 +198,9 @@ function createPlaylistStore() {
 
 		deletePlaylist(id: PlaylistId) {
 			if (id === "favorites" || id === "mistakes" || id === "extra") return;
-			state.customPlaylists = state.customPlaylists.filter(p => p.id !== id);
+			state.customPlaylists = state.customPlaylists.filter(
+				(p: Playlist) => p.id !== id,
+			);
 			saveState();
 		},
 
@@ -193,7 +209,12 @@ function createPlaylistStore() {
 			if (!playlist) return;
 
 			const wordId = typeof word === "string" ? word : word.id;
-			if (playlist.words.some(w => (typeof w === "string" ? w : w.id) === wordId)) return;
+			if (
+				playlist.words.some(
+					(w) => (typeof w === "string" ? w : w.id) === wordId,
+				)
+			)
+				return;
 
 			const updatedWords = [...playlist.words, word];
 			this.updatePlaylist(playlistId, { words: updatedWords });
@@ -203,7 +224,9 @@ function createPlaylistStore() {
 			const playlist = this.getPlaylist(playlistId);
 			if (!playlist) return;
 
-			const updatedWords = playlist.words.filter(w => (typeof w === "string" ? w : w.id) !== wordId);
+			const updatedWords = playlist.words.filter(
+				(w) => (typeof w === "string" ? w : w.id) !== wordId,
+			);
 			this.updatePlaylist(playlistId, { words: updatedWords });
 		},
 
@@ -211,7 +234,7 @@ function createPlaylistStore() {
 			if (id === "favorites") return state.systemPlaylists.favorites;
 			if (id === "mistakes") return state.systemPlaylists.mistakes;
 			if (id === "extra") return state.systemPlaylists.extra;
-			return state.customPlaylists.find(p => p.id === id);
+			return state.customPlaylists.find((p: Playlist) => p.id === id);
 		},
 
 		// System specific helpers (Legacy compatibility)
@@ -267,7 +290,10 @@ function createPlaylistStore() {
 
 		/** Скинути плейлісти (тільки локально) */
 		reset() {
-			state = { ...DEFAULT_STATE, systemPlaylists: { ...DEFAULT_SYSTEM_PLAYLISTS } };
+			state = {
+				...DEFAULT_STATE,
+				systemPlaylists: { ...DEFAULT_SYSTEM_PLAYLISTS },
+			};
 			if (browser) {
 				localStorage.removeItem(STORAGE_KEY);
 				localStorage.removeItem(LEGACY_STORAGE_KEY);

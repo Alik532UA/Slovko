@@ -57,25 +57,25 @@
 		const url = untrack(() => $page.url);
 
 		// Перевіряємо, чи потрібно оновити URL
-		const needsUrlUpdate = 
-			url.searchParams.toString() === "" || 
+		const needsUrlUpdate =
+			url.searchParams.toString() === "" ||
 			url.searchParams.get("source") !== s.sourceLanguage ||
 			url.searchParams.get("target") !== s.targetLanguage ||
 			url.searchParams.get("mode") !== s.mode ||
-			(s.mode === "levels" && url.searchParams.get("level") !== s.currentLevel) ||
+			(s.mode === "levels" &&
+				url.searchParams.get("level") !== s.currentLevel) ||
 			(s.mode === "topics" && url.searchParams.get("topic") !== s.currentTopic);
 
 		if (needsUrlUpdate) {
 			const newUrl = new URL(url);
 			newUrl.searchParams.set("mode", s.mode);
-			
+
 			if (s.mode === "levels" || s.mode === "phrases")
 				newUrl.searchParams.set("level", s.currentLevel);
-			if (s.mode === "topics") 
-				newUrl.searchParams.set("topic", s.currentTopic);
+			if (s.mode === "topics") newUrl.searchParams.set("topic", s.currentTopic);
 			if (s.mode === "playlists" && s.currentPlaylist)
 				newUrl.searchParams.set("playlist", s.currentPlaylist);
-				
+
 			newUrl.searchParams.set("source", s.sourceLanguage);
 			newUrl.searchParams.set("target", s.targetLanguage);
 

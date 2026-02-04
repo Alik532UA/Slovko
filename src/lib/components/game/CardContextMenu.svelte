@@ -98,10 +98,7 @@
 			{@const Icon = PLAYLIST_ICONS_MAP[p.icon || "Bookmark"] || Bookmark}
 			<button onclick={() => addToPlaylist(p.id)} class="custom-playlist-btn">
 				<span class="icon" style="color: {p.color}">
-					<Icon
-						size={18}
-						fill={p.words.includes(wordKey) ? p.color : "none"}
-					/>
+					<Icon size={18} fill={p.words.includes(wordKey) ? p.color : "none"} />
 				</span>
 				<span class="playlist-name">{p.name}</span>
 			</button>
@@ -110,7 +107,11 @@
 
 	<div class="divider"></div>
 
-	<button onclick={handleReport} class="report-btn" data-testid="context-menu-report">
+	<button
+		onclick={handleReport}
+		class="report-btn"
+		data-testid="context-menu-report"
+	>
 		<span class="icon">
 			<AlertTriangle size={20} />
 		</span>

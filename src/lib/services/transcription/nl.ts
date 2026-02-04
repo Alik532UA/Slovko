@@ -30,9 +30,7 @@ export function generateNlIPA(text: string): string {
 		.replace(/zj/g, "ʒ");
 
 	// 3. Special endings (simplified)
-	t = t
-		.replace(/en($|\s)/g, "ə")
-		.replace(/je($|\s)/g, "jə");
+	t = t.replace(/en($|\s)/g, "ə").replace(/je($|\s)/g, "jə");
 
 	// 4. Single Letter Mapping
 	const map: Record<string, string> = {

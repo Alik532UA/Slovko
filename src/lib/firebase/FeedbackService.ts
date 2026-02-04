@@ -1,4 +1,10 @@
-import { serverTimestamp, collection, addDoc, doc, setDoc } from "firebase/firestore";
+import {
+	serverTimestamp,
+	collection,
+	addDoc,
+	doc,
+	setDoc,
+} from "firebase/firestore";
 import { db, auth } from "./config";
 import { AuthService } from "./AuthService";
 import { versionStore } from "../stores/versionStore.svelte";
@@ -45,9 +51,14 @@ export const FeedbackService = {
 			const isAnonymous = !user || user.isAnonymous;
 			const prefix = import.meta.env.DEV ? "dev_" : "";
 			const rootCollection = `${prefix}${isAnonymous ? "feedback_anonymous" : "feedback"}`;
-			
+
 			// Використовуємо addDoc для автоматичної генерації ID та чистоти коду
-			const messagesRef = collection(db, rootCollection, data.category, "messages");
+			const messagesRef = collection(
+				db,
+				rootCollection,
+				data.category,
+				"messages",
+			);
 
 			const payload = {
 				title: data.title || null,
@@ -74,11 +85,19 @@ export const FeedbackService = {
 				timestamp: serverTimestamp(),
 			};
 
-			const timestampId = new Date().toISOString().replace("T", "-").slice(0, 19).replace(/:/g, "-");
+			const timestampId = new Date()
+				.toISOString()
+				.replace("T", "-")
+				.slice(0, 19)
+				.replace(/:/g, "-");
 			const docRef = doc(messagesRef, timestampId);
 			await setDoc(docRef, payload);
-			
-			logService.log("sync", `Feedback saved to ${rootCollection} with ID:`, timestampId);
+
+			logService.log(
+				"sync",
+				`Feedback saved to ${rootCollection} with ID:`,
+				timestampId,
+			);
 			return true;
 		} catch (error: any) {
 			logService.error("sync", "Error submitting feedback:", error);
@@ -93,8 +112,13 @@ export const FeedbackService = {
 			const isAnonymous = !user || user.isAnonymous;
 			const prefix = import.meta.env.DEV ? "dev_" : "";
 			const rootCollection = `${prefix}${isAnonymous ? "feedback_anonymous" : "feedback"}`;
-			
-			const messagesRef = collection(db, rootCollection, "word_error", "messages");
+
+			const messagesRef = collection(
+				db,
+				rootCollection,
+				"word_error",
+				"messages",
+			);
 
 			const payload = {
 				...data,
@@ -120,11 +144,19 @@ export const FeedbackService = {
 				timestamp: serverTimestamp(),
 			};
 
-			const timestampId = new Date().toISOString().replace("T", "-").slice(0, 19).replace(/:/g, "-");
+			const timestampId = new Date()
+				.toISOString()
+				.replace("T", "-")
+				.slice(0, 19)
+				.replace(/:/g, "-");
 			const docRef = doc(messagesRef, timestampId);
 			await setDoc(docRef, payload);
 
-			logService.log("sync", `Word error saved to ${rootCollection} with ID:`, timestampId);
+			logService.log(
+				"sync",
+				`Word error saved to ${rootCollection} with ID:`,
+				timestampId,
+			);
 			return true;
 		} catch (error: any) {
 			logService.error("sync", "Error reporting word error:", error);

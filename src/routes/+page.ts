@@ -6,6 +6,7 @@ import { logService } from "$lib/services/logService";
 import { z } from "zod";
 import type { PageLoad } from "./$types";
 import type { AppSettings } from "$lib/stores/settingsStore.svelte";
+import type { Playlist, CustomWord } from "$lib/data/schemas";
 
 // Схема для валідації URL параметрів
 const UrlParamsSchema = z.object({
@@ -115,22 +116,28 @@ export const load: PageLoad = async ({ url }) => {
 	// Отримуємо snapshot плейлістів з безпечними перевірками
 	const systemPlaylists = playlistStore.systemPlaylists || {};
 	const playlists = {
-		favorites: (systemPlaylists.favorites?.words || []).map((w) => {
-			const id = typeof w === "string" ? w : w.id;
-			return { id, source: id, target: id };
-		}),
-		extra: (systemPlaylists.extra?.words || []).map((w) => {
-			const id = typeof w === "string" ? w : w.id;
-			return { id, source: id, target: id };
-		}),
-		mistakes: (systemPlaylists.mistakes?.words || []).map((w) => {
-			const id = typeof w === "string" ? w : w.id;
-			return {
-				pair: { id, source: id, target: id },
-				correctStreak: (playlistStore.mistakeMetadata || {})[id] || 0,
-			};
-		}),
-		custom: (playlistStore.customPlaylists || []).map((p) => ({
+		favorites: (systemPlaylists.favorites?.words || []).map(
+			(w: string | CustomWord) => {
+				const id = typeof w === "string" ? w : w.id;
+				return { id, source: id, target: id };
+			},
+		),
+		extra: (systemPlaylists.extra?.words || []).map(
+			(w: string | CustomWord) => {
+				const id = typeof w === "string" ? w : w.id;
+				return { id, source: id, target: id };
+			},
+		),
+		mistakes: (systemPlaylists.mistakes?.words || []).map(
+			(w: string | CustomWord) => {
+				const id = typeof w === "string" ? w : w.id;
+				return {
+					pair: { id, source: id, target: id },
+					correctStreak: (playlistStore.mistakeMetadata || {})[id] || 0,
+				};
+			},
+		),
+		custom: (playlistStore.customPlaylists || []).map((p: Playlist) => ({
 			id: p.id,
 			name: p.name,
 			words: p.words || [],

@@ -137,7 +137,9 @@
 			if (e.code === "auth/popup-closed-by-user") {
 				errorMessage = $_("profile.errors.popupClosed");
 			} else {
-				errorMessage = e.message || $_("profile.errors.loginFailed", { default: "Login error" });
+				errorMessage =
+					e.message ||
+					$_("profile.errors.loginFailed", { default: "Login error" });
 			}
 		} finally {
 			isLinking = false;
@@ -186,7 +188,10 @@
 
 			const specificError = await checkProviderError(email, e.code);
 			errorMessage =
-				specificError || getAuthErrorMessage(e.code) || e.message || $_("profile.errors.unknownError", { default: "Error" });
+				specificError ||
+				getAuthErrorMessage(e.code) ||
+				e.message ||
+				$_("profile.errors.unknownError", { default: "Error" });
 		} finally {
 			isLinking = false;
 		}
@@ -204,7 +209,10 @@
 			loginMethod = null;
 		} catch (e: any) {
 			logService.warn("auth", "Registration failed", e.code || e.message);
-			errorMessage = getAuthErrorMessage(e.code) || e.message || $_("profile.errors.unknownError", { default: "Error" });
+			errorMessage =
+				getAuthErrorMessage(e.code) ||
+				e.message ||
+				$_("profile.errors.unknownError", { default: "Error" });
 		} finally {
 			isLinking = false;
 		}
@@ -228,7 +236,10 @@
 			}, 3000);
 		} catch (e: any) {
 			logService.error("auth", "Password reset failed", e);
-			errorMessage = getAuthErrorMessage(e.code) || e.message || $_("profile.errors.unknownError", { default: "Error" });
+			errorMessage =
+				getAuthErrorMessage(e.code) ||
+				e.message ||
+				$_("profile.errors.unknownError", { default: "Error" });
 		} finally {
 			isLinking = false;
 		}
@@ -431,9 +442,7 @@
 					disabled={isLinking}
 					style="margin-bottom: 2rem;"
 				>
-					{authStore.isGuest
-						? $_("profile.login")
-						: $_("profile.linkAccount")}
+					{authStore.isGuest ? $_("profile.login") : $_("profile.linkAccount")}
 				</button>
 			{:else}
 				<!-- LOGGED IN HEADER -->

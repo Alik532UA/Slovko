@@ -1,6 +1,23 @@
-import { 
-	Bookmark, Star, Heart, List, Music, Book, Pen, Zap, Brain, Trophy, Flame, GraduationCap, RotateCcw,
-	Target, Coffee, Rocket, Globe, Smile, Eye
+import {
+	Bookmark,
+	Star,
+	Heart,
+	List,
+	Music,
+	Book,
+	Pen,
+	Zap,
+	Brain,
+	Trophy,
+	Flame,
+	GraduationCap,
+	RotateCcw,
+	Target,
+	Coffee,
+	Rocket,
+	Globe,
+	Smile,
+	Eye,
 } from "lucide-svelte";
 
 export const PLAYLIST_ICONS_MAP: Record<string, any> = {
@@ -22,5 +39,5 @@ export const PLAYLIST_ICONS_MAP: Record<string, any> = {
 	Rocket,
 	Globe,
 	Smile,
-	Eye
+	Eye,
 };
