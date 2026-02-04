@@ -6,11 +6,13 @@
 	import { LANGUAGE_NAMES, type Language } from "$lib/types";
 	import { base } from "$app/paths";
 	import { _ } from "svelte-i18n";
+	import { Languages, Speech, Captions } from "lucide-svelte";
 
 	let step = $state(1);
 	let detectedLang = $state("en");
 	let isVisible = $state(true);
 	let isFinalizing = $state(false);
+	let showExplanation = $state(false);
 	let selectedFlags = $state<Language[]>([]);
 
 	// Координати для анімації
@@ -112,15 +114,19 @@
 			}, 1500);
 		}
 
-		// 3. Завершуємо все через 3с
+		// 3. Показуємо пояснення після завершення анімацій
 		setTimeout(() => {
-			isVisible = false;
-			settingsStore.completeOnboarding();
+			showExplanation = true;
+		}, 3500);
+	}
 
-			// Примусово викликаємо ресайз, щоб PWA перерахував висоту
-			// та BottomBar не перекривався системними кнопками
-			window.dispatchEvent(new Event("resize"));
-		}, 3000);
+	function handleFinish() {
+		isVisible = false;
+		settingsStore.completeOnboarding();
+
+		// Примусово викликаємо ресайз, щоб PWA перерахував висоту
+		// та BottomBar не перекривався системними кнопками
+		window.dispatchEvent(new Event("resize"));
 	}
 
 	const detectedTitle = $derived(
@@ -131,55 +137,87 @@
 {#if isVisible}
 	<div
 		class="onboarding-overlay"
-		class:transparent={isFinalizing}
+		class:transparent={isFinalizing && !showExplanation}
 		transition:fade
 		data-testid="onboarding-modal"
 	>
-		<div class="container">
-			<div class="header-area">
-				{#if !isFinalizing}
-					{#key step}
-						<h1
-							in:fade={{ duration: 400, delay: 200 }}
-							out:fade={{ duration: 300 }}
+		{#if !showExplanation}
+			<div class="container" transition:fade>
+				<div class="header-area">
+					{#if !isFinalizing}
+						{#key step}
+							<h1
+								in:fade={{ duration: 400, delay: 200 }}
+								out:fade={{ duration: 300 }}
+							>
+								{#if step === 1}
+									<div class="title-stack">
+										{#if detectedTitle}
+											<div class="secondary">{detectedTitle}</div>
+										{/if}
+										<div class="primary">{titles.en}</div>
+									</div>
+								{:else}
+									{$_("onboarding.whatToLearn")}
+								{/if}
+							</h1>
+						{/key}
+					{/if}
+				</div>
+
+				<div class="flags-grid" class:hidden={flyingFlags.length > 0}>
+					{#each LANGUAGES as lang (lang)}
+						<button
+							class="flag-btn"
+							class:selected-step1={step === 2 &&
+								lang === settingsStore.value.targetLanguage}
+							data-lang={lang}
+							onclick={() =>
+								!isFinalizing &&
+								(step === 1 ? selectStep1(lang) : selectStep2(lang))}
+							disabled={isFinalizing ||
+								(step === 2 && lang === settingsStore.value.targetLanguage)}
+							data-testid="onboarding-flag-{lang}"
 						>
-							{#if step === 1}
-								<div class="title-stack">
-									{#if detectedTitle}
-										<div class="secondary">{detectedTitle}</div>
-									{/if}
-									<div class="primary">{titles.en}</div>
-								</div>
-							{:else}
-								{$_("onboarding.whatToLearn")}
-							{/if}
-						</h1>
-					{/key}
-				{/if}
+							<img src="{base}/flags/{lang}.svg" alt={LANGUAGE_NAMES[lang]} />
+							<span>{LANGUAGE_NAMES[lang]}</span>
+						</button>
+					{/each}
+				</div>
 			</div>
+		{:else}
+			<div class="explanation-card" transition:fade>
+				<div class="icon-header">
+					<div class="icon-circle">
+						<Languages size={32} />
+					</div>
+				</div>
 
-			<div class="flags-grid" class:hidden={flyingFlags.length > 0}>
-				{#each LANGUAGES as lang (lang)}
-					<button
-						class="flag-btn"
-						class:selected-step1={step === 2 &&
-							lang === settingsStore.value.targetLanguage}
-						data-lang={lang}
-						onclick={() =>
-							!isFinalizing &&
-							(step === 1 ? selectStep1(lang) : selectStep2(lang))}
-						disabled={isFinalizing ||
-							(step === 2 && lang === settingsStore.value.targetLanguage)}
-						data-testid="onboarding-flag-{lang}"
-					>
-						<img src="{base}/flags/{lang}.svg" alt={LANGUAGE_NAMES[lang]} />
-						<span>{LANGUAGE_NAMES[lang]}</span>
-					</button>
-				{/each}
+				<div class="explanation-text">
+					<p>
+						{$_("onboarding.explanation")}
+						<span class="inline-icon"><Languages size={18} /></span>
+					</p>
+					<p class="detail">
+						{$_("onboarding.explanationPart1")}
+						<span class="inline-icon"><Speech size={16} /></span>,
+						{$_("onboarding.explanationPart2")}
+						<span class="inline-icon"><Captions size={16} /></span>
+						{$_("onboarding.explanationPart3")}
+					</p>
+				</div>
+
+				<button
+					class="start-btn"
+					onclick={handleFinish}
+					data-testid="onboarding-finish-btn"
+				>
+					<span>{$_("onboarding.startBtn")}</span>
+				</button>
 			</div>
-		</div>
+		{/if}
 
-		{#if isFinalizing}
+		{#if isFinalizing && !showExplanation}
 			<div class="flying-container">
 				{#each flyingFlags as flag (flag.lang)}
 					<div
@@ -205,9 +243,8 @@
 		z-index: 20000;
 		background: rgba(0, 0, 0, 0.92);
 		backdrop-filter: blur(15px);
-		display: flex;
-		justify-content: center;
-		align-items: flex-start;
+		display: grid;
+		place-items: center;
 		padding: 2rem 1rem;
 		overflow-y: auto;
 		transition:
@@ -222,6 +259,98 @@
 		pointer-events: none;
 	}
 
+	.onboarding-overlay.transparent .container {
+		display: none;
+	}
+
+	.explanation-card {
+		background: rgba(255, 255, 255, 0.05);
+		backdrop-filter: blur(25px);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 32px;
+		padding: 2.5rem 2rem;
+		max-width: 450px;
+		width: 100%;
+		text-align: center;
+		pointer-events: auto;
+		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		z-index: 20002;
+	}
+
+	.inline-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(255, 255, 255, 0.1);
+		padding: 4px;
+		border-radius: 6px;
+		margin: 0 2px;
+		vertical-align: middle;
+		color: var(--accent);
+	}
+
+	.icon-header {
+		display: flex;
+		justify-content: center;
+	}
+
+	.icon-circle {
+		width: 64px;
+		height: 64px;
+		background: var(--accent);
+		border-radius: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		box-shadow: 0 8px 20px rgba(var(--accent-rgb, 58, 143, 214), 0.3);
+	}
+
+	.explanation-text {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.explanation-text p {
+		font-size: 1.15rem;
+		color: white;
+		line-height: 1.4;
+		margin: 0;
+		font-weight: 500;
+	}
+
+	.explanation-text .detail {
+		font-size: 0.95rem;
+		opacity: 0.7;
+		font-weight: 400;
+	}
+
+	.start-btn {
+		background: white;
+		color: black;
+		border: none;
+		border-radius: 16px;
+		padding: 1rem;
+		font-size: 1.1rem;
+		font-weight: 700;
+		cursor: pointer;
+		transition: all 0.2s;
+		margin-top: 0.5rem;
+	}
+
+	.start-btn:hover {
+		transform: scale(1.02);
+		background: #f0f0f0;
+	}
+
+	.start-btn:active {
+		transform: scale(0.98);
+	}
+
 	.onboarding-overlay::-webkit-scrollbar {
 		display: none;
 	}
@@ -230,7 +359,7 @@
 		max-width: 600px;
 		width: 100%;
 		text-align: center;
-		margin: auto 0;
+		margin: auto;
 	}
 
 	.header-area {

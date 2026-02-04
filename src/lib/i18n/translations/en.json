@@ -77,7 +77,12 @@
 	},
 	"onboarding": {
 		"whatToLearn": "Which language do you want to learn?",
-		"yourLanguage": "Your language"
+		"yourLanguage": "Your language",
+		"explanation": "You can change interface and card languages in settings",
+		"explanationPart1": "There you can also toggle pronunciation",
+		"explanationPart2": "or transcription",
+		"explanationPart3": "for each column separately.",
+		"startBtn": "Start"
 	},
 	"settings": {
 		"interfaceLanguage": "Interface language",

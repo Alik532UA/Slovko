@@ -77,7 +77,12 @@
 	},
 	"onboarding": {
 		"whatToLearn": "Яку мову ви плануєте вчити?",
-		"yourLanguage": "Твоя мова"
+		"yourLanguage": "Твоя мова",
+		"explanation": "Мову інтерфейсу та мову карток ви можете змінити в налаштуваннях",
+		"explanationPart1": "Також там можна вимкнути чи увімкнути озвучку слів",
+		"explanationPart2": "або вимкнути чи увімкнути транскрипцію",
+		"explanationPart3": "для кожного стовпця окремо.",
+		"startBtn": "Почати"
 	},
 	"settings": {
 		"interfaceLanguage": "Мова інтерфейсу",
