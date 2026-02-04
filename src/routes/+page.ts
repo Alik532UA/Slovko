@@ -5,8 +5,7 @@ import { errorHandler } from "$lib/services/errorHandler";
 import { logService } from "$lib/services/logService";
 import { z } from "zod";
 import type { PageLoad } from "./$types";
-import type { AppSettings } from "$lib/stores/settingsStore.svelte";
-import type { Playlist, CustomWord } from "$lib/data/schemas";
+import type { AppSettings, Playlist, CustomWord } from "$lib/data/schemas";
 
 // Схема для валідації URL параметрів
 const UrlParamsSchema = z.object({

@@ -290,6 +290,61 @@ export const PlaylistStateSchema = z.preprocess((val: unknown) => {
 }, PlaylistStateCoreSchema);
 
 // ========================================
+// СХЕМИ НАЛАШТУВАНЬ (AppSettings)
+// ========================================
+
+export const AppSettingsSchema = z.object({
+	interfaceLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("uk"),
+	sourceLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("en"),
+	targetLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("uk"),
+	mode: z.enum(["levels", "topics", "phrases", "playlists"]).default("levels"),
+	currentLevel: z.enum(["A1", "A2", "B1", "B2", "C1", "C2"]).default("A1"),
+	currentTopic: z.string().default("basic_verbs"),
+	currentPlaylist: z.string().nullable().default(null),
+	hasCompletedOnboarding: z.boolean().default(false),
+	enablePronunciationSource: z.boolean().default(true),
+	enablePronunciationTarget: z.boolean().default(false),
+	showTranscriptionSource: z.boolean().default(true),
+	showTranscriptionTarget: z.boolean().default(false),
+	voicePreferences: z.record(z.string(), z.string()).default({}),
+	theme: z
+		.enum(["dark-gray", "light-gray", "orange", "green"])
+		.default("dark-gray"),
+});
+
+// ========================================
+// СХЕМИ ПРОГРЕСУ (UserProgress)
+// ========================================
+
+export const WordProgressSchema = z.object({
+	wordKey: z.string(),
+	correctCount: z.number().default(0),
+	lastSeen: z.number().default(0),
+});
+
+export const LevelStatsSchema = z.object({
+	totalCorrect: z.number().default(0),
+	totalAttempts: z.number().default(0),
+	bestCorrectStreak: z.number().default(0),
+	currentCorrectStreak: z.number().default(0),
+});
+
+export const ProgressStateSchema = z.object({
+	words: z.record(z.string(), WordProgressSchema).default({}),
+	levelStats: z.record(z.string(), LevelStatsSchema).default({}),
+	totalCorrect: z.number().default(0),
+	totalAttempts: z.number().default(0),
+	lastUpdated: z.number().default(() => Date.now()),
+	streak: z.number().default(0),
+	bestStreak: z.number().default(0),
+	currentCorrectStreak: z.number().default(0),
+	bestCorrectStreak: z.number().default(0),
+	lastCorrectDate: z.string().nullable().default(null),
+	dailyCorrect: z.number().default(0),
+	firstSeenDate: z.number().default(() => Date.now()),
+});
+
+// ========================================
 // ТИПИ ZOD
 // ========================================
 
@@ -299,3 +354,8 @@ export type TopicFile = z.infer<typeof TopicFileSchema>;
 export type PlaylistState = z.infer<typeof PlaylistStateSchema>;
 export type Playlist = z.infer<typeof PlaylistSchema>;
 export type CustomWord = z.infer<typeof CustomWordSchema>;
+export type AppSettings = z.infer<typeof AppSettingsSchema>;
+export type ProgressState = z.infer<typeof ProgressStateSchema>;
+export type LevelStats = z.infer<typeof LevelStatsSchema>;
+export type WordProgress = z.infer<typeof WordProgressSchema>;
+

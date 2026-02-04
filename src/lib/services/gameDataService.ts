@@ -7,7 +7,7 @@ import {
 } from "../data/wordService";
 import { logService } from "./logService";
 import { SUPPORTED_LEVELS } from "../config";
-import type { AppSettings } from "../stores/settingsStore.svelte";
+import type { AppSettings } from "../data/schemas";
 import type {
 	TranslationDictionary,
 	TranscriptionDictionary,

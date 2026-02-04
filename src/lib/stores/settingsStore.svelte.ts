@@ -7,41 +7,16 @@ import { browser } from "$app/environment";
 import { SyncService } from "../firebase/SyncService";
 import { localStorageProvider } from "../services/storage/storageProvider";
 import { logService } from "../services/logService";
-import { z } from "zod";
 import {
 	ALL_LEVELS,
 	type Language,
 	type CEFRLevel,
-	type GameMode,
 	type AppTheme,
 	type PlaylistId,
 } from "../types";
+import { AppSettingsSchema, type AppSettings } from "../data/schemas";
 
 const STORAGE_KEY = "wordApp_settings";
-
-// Zod Schema for validation and defaults
-export const AppSettingsSchema = z.object({
-	interfaceLanguage: z
-		.enum(["en", "uk", "nl", "de", "el", "crh"])
-		.default("uk"),
-	sourceLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("en"),
-	targetLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("uk"),
-	mode: z.enum(["levels", "topics", "phrases", "playlists"]).default("levels"),
-	currentLevel: z.enum(["A1", "A2", "B1", "B2", "C1", "C2"]).default("A1"),
-	currentTopic: z.string().default("basic_verbs"),
-	currentPlaylist: z.string().nullable().default(null),
-	hasCompletedOnboarding: z.boolean().default(false),
-	enablePronunciationSource: z.boolean().default(true),
-	enablePronunciationTarget: z.boolean().default(false),
-	showTranscriptionSource: z.boolean().default(true),
-	showTranscriptionTarget: z.boolean().default(false),
-	voicePreferences: z.record(z.string(), z.string()).default({}),
-	theme: z
-		.enum(["dark-gray", "light-gray", "orange", "green"])
-		.default("dark-gray"),
-});
-
-export type AppSettings = z.infer<typeof AppSettingsSchema>;
 
 const DEFAULT_SETTINGS: AppSettings = AppSettingsSchema.parse({});
 

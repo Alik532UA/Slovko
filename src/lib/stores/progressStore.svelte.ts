@@ -6,69 +6,30 @@
 import { browser } from "$app/environment";
 import { SyncService } from "../firebase/SyncService";
 import { streakService } from "../services/streakService";
+import {
+	ProgressStateSchema,
+	type ProgressState,
+	type LevelStats,
+	type WordProgress,
+} from "../data/schemas";
 
 const STORAGE_KEY = "wordApp_progress";
 
-/** Прогрес для одного слова */
-interface WordProgress {
-	wordKey: string;
-	correctCount: number;
-	lastSeen: number; // timestamp
-}
-
-export interface LevelStats {
-	totalCorrect: number;
-	totalAttempts: number;
-	bestCorrectStreak: number;
-	currentCorrectStreak: number;
-}
-
-/** Загальний прогрес користувача */
-interface UserProgress {
-	words: Record<string, WordProgress>;
-	levelStats: Record<string, LevelStats>; // Статистика по рівнях
-	totalCorrect: number;
-	totalAttempts: number;
-	lastUpdated: number;
-	// Нові поля для Streak
-	streak: number;
-	bestStreak: number; // Рекорд днів
-	currentCorrectStreak: number; // Поточна серія правильних (до помилки)
-	bestCorrectStreak: number; // Рекорд правильних відповідей за весь час
-	lastCorrectDate: string | null; // Формат "YYYY-MM-DD"
-	dailyCorrect: number;
-	firstSeenDate: number; // Дата першого входу
-}
-
 /** Значення за замовчуванням */
-const DEFAULT_PROGRESS: UserProgress = {
-	words: {},
-	levelStats: {},
-	totalCorrect: 0,
-	totalAttempts: 0,
-	lastUpdated: Date.now(),
-	streak: 0,
-	bestStreak: 0,
-	currentCorrectStreak: 0,
-	bestCorrectStreak: 0,
-	lastCorrectDate: null,
-	dailyCorrect: 0,
-	firstSeenDate: Date.now(),
-};
+const DEFAULT_PROGRESS: ProgressState = ProgressStateSchema.parse({});
 
 function createProgressStore() {
-	let progress = $state<UserProgress>(loadProgress());
+	let progress = $state<ProgressState>(loadProgress());
 
-	function loadProgress(): UserProgress {
+	function loadProgress(): ProgressState {
 		if (!browser) return DEFAULT_PROGRESS;
 
 		try {
 			const stored = localStorage.getItem(STORAGE_KEY);
 			if (stored) {
 				const parsed = JSON.parse(stored);
-				// Migration: ensure levelStats exists
-				if (!parsed.levelStats) parsed.levelStats = {};
-				return { ...DEFAULT_PROGRESS, ...parsed };
+				// Use Zod to validate and fill defaults
+				return ProgressStateSchema.parse(parsed);
 			}
 		} catch (e) {
 			console.warn("Failed to load progress:", e);
@@ -90,16 +51,20 @@ function createProgressStore() {
 		},
 
 		/** Internal set for SyncService to avoid infinite loops */
-		_internalSet(newData: UserProgress) {
-			progress = newData;
-			if (browser) {
-				localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+		_internalSet(newData: any) {
+			try {
+				progress = ProgressStateSchema.parse(newData);
+				if (browser) {
+					localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+				}
+			} catch (e) {
+				console.error("Failed to sync progress: invalid data", e);
 			}
 		},
 
 		/** Записати правильну відповідь */
 		recordCorrect(wordKey: string, levelId: string = "unknown"): void {
-			const wordProgress = progress.words[wordKey] || {
+			const wordProgress: WordProgress = progress.words[wordKey] || {
 				wordKey,
 				correctCount: 0,
 				lastSeen: 0,

@@ -8,7 +8,7 @@ import type {
 import { shuffle } from "../services/gameCardFactory";
 import { getTranslation } from "../data/wordService";
 import { logService } from "../services/logService";
-import type { AppSettings } from "./settingsStore.svelte";
+import type { AppSettings } from "../data/schemas";
 import type { GameData } from "../services/gameDataService";
 
 const MODE_CONFIG: Record<GameMode, { pairsPerPage: number }> = {
