@@ -48,6 +48,22 @@ export class GameController {
 					settingsStore.value,
 					playlistStore,
 				);
+			} else {
+				// FIX: Check for missing EN transcriptions (common issue on first load)
+				// If source is EN but dict is empty, force reload.
+				const { sourceLanguage } = settingsStore.value;
+				if (
+					sourceLanguage === "en" &&
+					Object.keys(data.sourceTranscriptions).length === 0
+				) {
+					console.warn(
+						"[GameController] Missing EN transcriptions on init. Force reloading data...",
+					);
+					data = await this.dataService.loadGameData(
+						settingsStore.value,
+						playlistStore,
+					);
+				}
 			}
 
 			this.gameState.setData(data);

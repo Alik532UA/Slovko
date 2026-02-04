@@ -68,7 +68,7 @@ function createCardPair(
 
 		// 2. Якщо немає статичної, генеруємо за 2-ступеневим алгоритмом
 		// (Текст -> IPA -> Мова Інтерфейсу)
-		return generateRulesIPA(text, lang, interfaceLanguage);
+		return generateRulesIPA(text, lang, interfaceLanguage || "uk");
 	};
 
 	const sourceTranscription = getProcessedTranscription(

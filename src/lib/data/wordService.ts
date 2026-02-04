@@ -195,14 +195,16 @@ export async function loadTranscriptions(
 	try {
 		let module;
 		if (category === "levels") {
-			module = await import(`./transcriptions/${language}/levels/${id}.json`);
+			module = await import(
+				`$lib/data/transcriptions/${language}/levels/${id}.json`
+			);
 			return DictionarySchema.parse(module.default);
 		} else if (category === "topics") {
 			// SSoT for Transcriptions
 			const topic = await loadTopic(id);
 			const levels = ["A1", "A2", "B1", "B2", "C1", "C2"] as const;
 			const promises = levels.map((l) =>
-				import(`./transcriptions/${language}/levels/${l}.json`)
+				import(`$lib/data/transcriptions/${language}/levels/${l}.json`)
 					.then((m) => DictionarySchema.parse(m.default))
 					.catch(() => ({})),
 			);
