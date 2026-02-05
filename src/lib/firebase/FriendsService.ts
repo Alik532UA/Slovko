@@ -402,9 +402,11 @@ export const FriendsService = {
 			const profilesRef = collection(db, COLLECTIONS.PROFILES);
 
 			// 1. Спочатку спробуємо знайти точний збіг по email
+			// Фільтруємо за privacy.showInSearch
 			const emailQuery = query(
 				profilesRef,
 				where("searchableEmail", "==", queryLower),
+				where("privacy.showInSearch", "==", true),
 				limit(maxResults),
 			);
 
@@ -416,10 +418,13 @@ export const FriendsService = {
 			}
 
 			// 2. Якщо не знайдено, шукаємо за displayNameLower (префіксний пошук)
+			// Firestore не дозволяє декілька операторів inequality/range на різних полях одночасно в одному запиті
+			// Тому ми використовуємо displayNameLower для фільтрації і додаємо showInSearch
 			const nameQuery = query(
 				profilesRef,
 				where("displayNameLower", ">=", queryLower),
 				where("displayNameLower", "<=", queryLower + "\uf8ff"),
+				where("privacy.showInSearch", "==", true),
 				limit(maxResults),
 			);
 
@@ -489,11 +494,22 @@ export const FriendsService = {
 		try {
 			const profileRef = doc(db, COLLECTIONS.PROFILES, auth.currentUser.uid);
 
+			// Отримуємо поточний профіль, щоб зберегти налаштування приватності
+			const snapshot = await getDoc(profileRef);
+			const currentData = snapshot.exists() ? snapshot.data() : {};
+
 			// Визначаємо найкраще ім'я для відображення
 			const displayName =
 				auth.currentUser.displayName ||
 				auth.currentUser.email?.split("@")[0] ||
 				(auth.currentUser.isAnonymous ? "Гість" : "User");
+
+			// Дефолтні налаштування приватності, якщо вони відсутні
+			const privacy = currentData.privacy || {
+				showInSearch: true,
+				allowFriendRequests: true,
+				shareStats: true,
+			};
 
 			await setDoc(
 				profileRef,
@@ -504,6 +520,7 @@ export const FriendsService = {
 					isAnonymous: auth.currentUser.isAnonymous,
 					searchableEmail: auth.currentUser.email?.toLowerCase() || null,
 					updatedAt: serverTimestamp(),
+					privacy: privacy,
 				},
 				{ merge: true },
 			);
