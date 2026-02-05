@@ -255,10 +255,10 @@ export const FriendsService = {
 	},
 
 	/**
-	 * Оновити дані друга в локальному списку підписок, якщо вони змінилися
-	 * Викликається при перегляді профілю або списку друзів
+	 * Оновити дані контакту в локальних списках (following/followers), якщо вони змінилися.
+	 * Викликається для синхронізації денормалізованих даних.
 	 */
-	async refreshFriendData(targetUid: string): Promise<void> {
+	async refreshContactData(targetUid: string): Promise<void> {
 		if (!auth.currentUser) return;
 		const currentUid = auth.currentUser.uid;
 
@@ -266,22 +266,51 @@ export const FriendsService = {
 			const profile = await this.getUserProfile(targetUid);
 			if (!profile) return;
 
+			const batch = writeBatch(db);
+			let hasChanges = false;
+
+			// 1. Перевіряємо в following
 			const followingRef = doc(db, COLLECTIONS.USERS, currentUid, COLLECTIONS.FOLLOWING, targetUid);
 			const followingSnap = await getDoc(followingRef);
-
 			if (followingSnap.exists()) {
 				const data = followingSnap.data();
 				if (data.displayName !== profile.displayName || data.photoURL !== profile.photoURL) {
-					await setDoc(followingRef, {
+					batch.update(followingRef, {
 						displayName: profile.displayName,
 						photoURL: profile.photoURL
-					}, { merge: true });
-					logService.log("sync", `Updated profile cache for friend: ${targetUid}`);
+					});
+					hasChanges = true;
 				}
 			}
+
+			// 2. Перевіряємо в followers
+			const followerRef = doc(db, COLLECTIONS.USERS, currentUid, COLLECTIONS.FOLLOWERS, targetUid);
+			const followerSnap = await getDoc(followerRef);
+			if (followerSnap.exists()) {
+				const data = followerSnap.data();
+				if (data.displayName !== profile.displayName || data.photoURL !== profile.photoURL) {
+					batch.update(followerRef, {
+						displayName: profile.displayName,
+						photoURL: profile.photoURL
+					});
+					hasChanges = true;
+				}
+			}
+
+			if (hasChanges) {
+				await batch.commit();
+				logService.log("sync", `Synchronized contact data for: ${targetUid}`);
+			}
 		} catch (error) {
-			logService.error("sync", "Error refreshing friend data:", error);
+			logService.error("sync", "Error refreshing contact data:", error);
 		}
+	},
+
+	/**
+	 * @deprecated Use refreshContactData instead
+	 */
+	async refreshFriendData(targetUid: string): Promise<void> {
+		return this.refreshContactData(targetUid);
 	},
 
 	async getFollowers(uid?: string): Promise<FollowRecord[]> {

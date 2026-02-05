@@ -9,6 +9,7 @@
 		Loader2,
 	} from "lucide-svelte";
 	import { logService } from "$lib/services/logService";
+	import { friendsStore } from "$lib/stores/friendsStore.svelte";
 	import ErrorBoundary from "../ui/ErrorBoundary.svelte";
 	import UserAvatar from "./UserAvatar.svelte";
 	import FollowButton from "./FollowButton.svelte";
@@ -81,19 +82,26 @@
 		{:else}
 			<div class="friends-list" data-testid="friends-list-items">
 				{#each list as user (user.uid)}
-														<div class="friend-card" data-testid="friend-card-{user.uid}">
-																	<UserAvatar uid={user.uid} photoURL={user.photoURL} displayName={user.displayName} size={24} />
-					
-																	<div class="friend-info">
-					
-							<span class="display-name">{user.displayName || "User"}</span>
+					{@const actualName = friendsStore.resolveName(user.uid, user.displayName)}
+					{@const actualPhoto = friendsStore.resolvePhoto(user.uid, user.photoURL)}
+
+					<div class="friend-card" data-testid="friend-card-{user.uid}">
+						<UserAvatar
+							uid={user.uid}
+							photoURL={actualPhoto}
+							displayName={actualName}
+							size={24}
+						/>
+
+						<div class="friend-info">
+							<span class="display-name">{actualName}</span>
 						</div>
 
 						<div class="friend-actions">
 							<FollowButton
 								uid={user.uid}
-								displayName={user.displayName}
-								photoURL={user.photoURL}
+								displayName={actualName}
+								photoURL={actualPhoto}
 							/>
 						</div>
 					</div>

@@ -28,11 +28,52 @@ class FriendsStoreClass {
 			this.lastUpdated = Date.now();
 			
 			logService.log("presence", `Friends store refreshed: ${following.length} following, ${followers.length} followers`);
+
+			// Запускаємо фонове оновлення профілів для актуалізації імен
+			this.refreshProfiles([...following, ...followers]);
 		} catch (error) {
 			logService.error("presence", "Failed to refresh friends store:", error);
 		} finally {
 			this.isLoading = false;
 		}
+	}
+
+	/**
+	 * Фонове завантаження актуальних профілів для списку UIDs
+	 */
+	private async refreshProfiles(records: FollowRecord[]) {
+		// Беремо унікальні UIDs
+		const uids = [...new Set(records.map(r => r.uid))];
+		
+		for (const uid of uids) {
+			// Якщо бачимо ім'я "User" або в кеші пусто - завантажуємо актуальний профіль
+			const record = records.find(r => r.uid === uid);
+			if (!this.profilesCache[uid] || record?.displayName === "User") {
+				const profile = await FriendsService.getUserProfile(uid);
+				if (profile) {
+					this.profilesCache[uid] = profile;
+					
+					// Якщо в списку було "User", а в профілі інше - запускаємо синхронізацію в БД
+					if (record?.displayName !== profile.displayName) {
+						FriendsService.refreshContactData(uid);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Отримати ім'я користувача (пріоритет на кеш профілю)
+	 */
+	resolveName(uid: string, fallback: string): string {
+		return this.profilesCache[uid]?.displayName || fallback || "User";
+	}
+
+	/**
+	 * Отримати фото користувача (пріоритет на кеш профілю)
+	 */
+	resolvePhoto(uid: string, fallback: string | null): string | null {
+		return this.profilesCache[uid]?.photoURL || fallback;
 	}
 
 	/**
