@@ -11,8 +11,8 @@
       "$uid": {
         ".read": "auth != null && auth.uid === $uid",
         "$signalId": {
-          ".write": "auth != null && (auth.uid === $uid || !data.exists())",
-          ".validate": "newData.hasChildren(['fromUid', 'type', 'timestamp'])"
+          ".write": "auth != null && (auth.uid === $uid || (!data.exists() && newData.child('fromUid').val() === auth.uid))",
+          ".validate": "newData.hasChildren(['fromUid', 'type', 'timestamp']) && newData.child('timestamp').val() <= now"
         }
       }
     }
