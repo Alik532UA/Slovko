@@ -288,6 +288,12 @@ class SyncServiceClass {
 						logService.log("sync", "Local settings are newer, skipping cloud settings update");
 						this.uploadAll();
 					}
+				} else {
+					logService.error("sync", "Cloud settings validation failed:", result.error);
+					logService.logToRemote("sync_validation_error", { 
+						type: "settings", 
+						error: result.error.message 
+					});
 				}
 			}
 
@@ -296,6 +302,12 @@ class SyncServiceClass {
 				if (result.success) {
 					const merged = this.mergeProgress(progressStore.value, result.data);
 					progressStore._internalSet(merged);
+				} else {
+					logService.error("sync", "Cloud progress validation failed:", result.error);
+					logService.logToRemote("sync_validation_error", { 
+						type: "progress", 
+						error: result.error.message 
+					});
 				}
 			}
 

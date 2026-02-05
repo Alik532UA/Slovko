@@ -56,6 +56,7 @@ const COLLECTIONS = {
  */
 const LEADERBOARD_CACHE: Record<string, { data: any[], timestamp: number }> = {};
 const CACHE_TTL = 5 * 60 * 1000; // 5 хвилин
+const MAX_FOLLOWING = 500;
 
 export const FriendsService = {
 	/**
@@ -72,6 +73,13 @@ export const FriendsService = {
 		if (currentUid === targetUid) return false;
 
 		try {
+			// Перевірка ліміту підписок
+			const counts = await this.getCounts(currentUid);
+			if (counts.following >= MAX_FOLLOWING) {
+				logService.warn("sync", `Follow limit reached (${MAX_FOLLOWING})`);
+				return false;
+			}
+
 			// Використовуємо відомий профіль або завантажуємо з БД
 			const targetProfile = knownProfile || (await this.getUserProfile(targetUid));
 
