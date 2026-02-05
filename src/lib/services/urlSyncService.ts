@@ -13,6 +13,11 @@ export class UrlSyncService {
 	static syncStoreWithUrl(dataSettings: AppSettings) {
 		const current = settingsStore.value;
 
+		// КРИТИЧНО: Якщо онбординг не завершено, ми НЕ дозволяємо URL перезаписувати вибір користувача.
+		// Це запобігає ситуації, коли параметри за замовчуванням (?source=en&target=uk)
+		// перебивають те, що користувач щойно вибрав у модальному вікні.
+		if (!current.hasCompletedOnboarding) return;
+
 		// Перевіряємо чи є реальна різниця між даними з URL та Store
 		if (
 			current.mode !== dataSettings.mode ||

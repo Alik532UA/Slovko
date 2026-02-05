@@ -58,7 +58,13 @@
 		"adverbs_prepositions": "Bijwoorden & Voorzetsels"
 	},
 	"onboarding": {
-		"whatToLearn": "Welke taal wil je leren?"
+		"whatToLearn": "Welke taal wil je leren?",
+		"yourLanguage": "Jouw taal",
+		"explanation": "Je kunt interface- и kaarttalen wijzigen in de instellingen",
+		"explanationPart1": "Daar kun je ook de uitspraak aan- of uitzetten",
+		"explanationPart2": "of de transcriptie",
+		"explanationPart3": "voor elke kolom afzonderlijk.",
+		"startBtn": "Starten"
 	},
 	"settings": {
 		"interfaceLanguage": "Interface taal",

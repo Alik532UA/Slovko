@@ -76,7 +76,13 @@
 		"adverbs_prepositions": "Επιρρήματα & Προθέσεις"
 	},
 	"onboarding": {
-		"whatToLearn": "Ποια γλώσσα θέλετε να μάθετε;"
+		"whatToLearn": "Ποια γλώσσα θέλετε να μάθετε;",
+		"yourLanguage": "Η γλώσσα σου",
+		"explanation": "Μπορείτε να αλλάξετε τη γλώσσα διεπαφής και καρτών στις ρυθμίσεις",
+		"explanationPart1": "Εκεί μπορείτε επίσης να ενεργοποιήσετε την προφορά",
+		"explanationPart2": "ή τη φωνητική μεταγραφή",
+		"explanationPart3": "για κάθε στήλη ξεχωριστά.",
+		"startBtn": "Έναρξη"
 	},
 	"settings": {
 		"interfaceLanguage": "Γλώσσα διεπαφής",

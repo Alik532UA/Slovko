@@ -76,7 +76,13 @@
 		"adverbs_prepositions": "Zarflar ve Edatlar"
 	},
 	"onboarding": {
-		"whatToLearn": "Qaysı tilni ögrenmege isteysiñiz?"
+		"whatToLearn": "Qaysı tilni ögrenmege isteysiñiz?",
+		"yourLanguage": "Seniñ tiliñ",
+		"explanation": "Arayüz tili ve kartalar tilini sazlamalarda deñiştirebilirsiñiz",
+		"explanationPart1": "Anda daa sözlerniñ seslendirmesini açıp-qapatabilirsiñiz",
+		"explanationPart2": "ya da transkriptsiyanı açıp-qapatabilirsiñiz",
+		"explanationPart3": "er bir sutun içün ayrı-ayrı.",
+		"startBtn": "Başlamaq"
 	},
 	"settings": {
 		"interfaceLanguage": "Arayüz tili",

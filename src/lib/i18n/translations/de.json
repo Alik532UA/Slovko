@@ -58,7 +58,13 @@
 		"adverbs_prepositions": "Adverbien & Präpositionen"
 	},
 	"onboarding": {
-		"whatToLearn": "Welche Sprache möchtest du lernen?"
+		"whatToLearn": "Welche Sprache möchtest du lernen?",
+		"yourLanguage": "Deine Sprache",
+		"explanation": "Interface- und Kartensprachen können in den Einstellungen geändert werden",
+		"explanationPart1": "Dort können Sie auch die Aussprache ein- oder ausschalten",
+		"explanationPart2": "oder die Transkription",
+		"explanationPart3": "für jede Spalte separat.",
+		"startBtn": "Starten"
 	},
 	"settings": {
 		"interfaceLanguage": "Sprache der Benutzeroberfläche",

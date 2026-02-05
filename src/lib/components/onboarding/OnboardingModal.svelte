@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { fade } from "svelte/transition";
+	import { fade, fly } from "svelte/transition";
+	import { waitLocale, _ } from "svelte-i18n";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { setInterfaceLanguage, LANGUAGES } from "$lib/i18n/init";
 	import { LANGUAGE_NAMES, type Language } from "$lib/types";
 	import { base } from "$app/paths";
-	import { _ } from "svelte-i18n";
 	import { Languages, Speech, Captions } from "lucide-svelte";
 
 	let step = $state(1);
@@ -13,6 +13,7 @@
 	let isVisible = $state(true);
 	let isFinalizing = $state(false);
 	let showExplanation = $state(false);
+	let isFlyingTriggered = $state(false);
 	let selectedFlags = $state<Language[]>([]);
 
 	// Координати для анімації
@@ -37,7 +38,6 @@
 	};
 
 	onMount(() => {
-		// Миттєво встановлюємо мову за браузером
 		const browserLangs = navigator.languages || [navigator.language];
 		for (const lang of browserLangs) {
 			const shortLang = lang.split("-")[0];
@@ -53,85 +53,82 @@
 			interfaceLanguage: lang,
 			targetLanguage: lang,
 		});
-		await setInterfaceLanguage(lang);
+		setInterfaceLanguage(lang);
+		await waitLocale(lang);
 		selectedFlags.push(lang);
 		step = 2;
 	}
 
-	function selectStep2(lang: Language) {
+	async function selectStep2(lang: Language) {
 		if (lang === settingsStore.value.targetLanguage) {
 			settingsStore.update({ sourceLanguage: "en" });
 		} else {
 			settingsStore.update({ sourceLanguage: lang });
 		}
 		selectedFlags.push(lang);
-		animateAndFinish();
+		
+		await waitLocale();
+
+		// ПІДГОТОВКА ПРАПОРІВ ЗАЗДАЛЕГІДЬ
+		const settingsBtn = document.querySelector('[data-testid="language-settings-btn"]');
+		const targetRect = settingsBtn?.getBoundingClientRect();
+		const tx = targetRect ? targetRect.left + targetRect.width / 2 : window.innerWidth * 0.9;
+		const ty = targetRect ? targetRect.top + targetRect.height / 2 : 40;
+
+		const newFlyingFlags: any[] = [];
+		const centerX = window.innerWidth / 2;
+		const centerY = window.innerHeight / 2;
+
+		LANGUAGES.forEach((l, index) => {
+			newFlyingFlags.push({
+				lang: l,
+				x: centerX + (Math.random() - 0.5) * window.innerWidth * 0.9,
+				y: centerY + (Math.random() - 0.5) * window.innerHeight * 0.8,
+				tx,
+				ty,
+				delay: index * 0.08,
+			});
+		});
+		flyingFlags = newFlyingFlags;
+		
+		showExplanation = true;
+		isFinalizing = true;
 	}
 
-	async function animateAndFinish() {
-		// 1. Починаємо фіналізацію (фон стає прозорим)
-		isFinalizing = true;
-
-		// Знаходимо ціль миттєво
-		const settingsBtn = document.querySelector(
-			'[data-testid="language-settings-btn"]',
-		);
-		if (settingsBtn) {
-			const targetRect = settingsBtn.getBoundingClientRect();
-			const tx = targetRect.left + targetRect.width / 2;
-			const ty = targetRect.top + targetRect.height / 2;
-
-			const flagImages = document.querySelectorAll(".flag-btn img");
-			const newFlyingFlags: any[] = [];
-
-			flagImages.forEach((img, index) => {
-				const rect = img.getBoundingClientRect();
-				const btn = img.closest(".flag-btn");
-				const lang = btn?.getAttribute("data-lang") as Language;
-
-				newFlyingFlags.push({
-					lang,
-					x: rect.left + rect.width / 2,
-					y: rect.top + rect.height / 2,
-					tx,
-					ty,
-					delay: index * 0.05,
-				});
-			});
-
-			// 2. Включаємо літаючі прапори одночасно зі зникненням фону
-			flyingFlags = newFlyingFlags;
-
-			// 2.5. Блимаємо кнопкою через 1.5с (коли основна маса прапорів долітає)
-			setTimeout(() => {
-				const btn = document.querySelector(
-					'[data-testid="language-settings-btn"]',
-				);
-				if (btn) {
-					btn.classList.add("settings-btn-blink");
-					setTimeout(() => btn.classList.remove("settings-btn-blink"), 2000);
-				}
-			}, 1500);
-		}
-
-		// 3. Показуємо пояснення після завершення анімацій
+	async function startAnimations() {
 		setTimeout(() => {
-			showExplanation = true;
-		}, 3500);
+			const btn = document.querySelector('[data-testid="language-settings-btn"]');
+			if (btn) {
+				btn.classList.add("settings-btn-blink");
+				setTimeout(() => btn.classList.remove("settings-btn-blink"), 2000);
+			}
+		}, 1500);
+
+		setTimeout(() => {
+			finishOnboarding();
+		}, 3000);
 	}
 
 	function handleFinish() {
+		showExplanation = false;
+		isFlyingTriggered = true;
+		startAnimations();
+	}
+
+	function finishOnboarding() {
 		isVisible = false;
 		settingsStore.completeOnboarding();
-
-		// Примусово викликаємо ресайз, щоб PWA перерахував висоту
-		// та BottomBar не перекривався системними кнопками
 		window.dispatchEvent(new Event("resize"));
 	}
 
 	const detectedTitle = $derived(
 		detectedLang !== "en" ? titles[detectedLang] : null,
 	);
+
+	const transitionParams = {
+		in: { y: 30, duration: 400, delay: 300 },
+		out: { y: -30, duration: 300 }
+	};
 </script>
 
 {#if isVisible}
@@ -141,85 +138,9 @@
 		transition:fade
 		data-testid="onboarding-modal"
 	>
-		{#if !showExplanation}
-			<div class="container" transition:fade data-testid="onboarding-container">
-				<div class="header-area" data-testid="onboarding-header">
-					{#if !isFinalizing}
-						{#key step}
-							<h1
-								in:fade={{ duration: 400, delay: 200 }}
-								out:fade={{ duration: 300 }}
-								data-testid="onboarding-title"
-							>
-								{#if step === 1}
-									<div class="title-stack">
-										{#if detectedTitle}
-											<div class="secondary" data-testid="onboarding-detected-title">{detectedTitle}</div>
-										{/if}
-										<div class="primary" data-testid="onboarding-primary-title">{titles.en}</div>
-									</div>
-								{:else}
-									<span data-testid="onboarding-step2-title">{$_("onboarding.whatToLearn")}</span>
-								{/if}
-							</h1>
-						{/key}
-					{/if}
-				</div>
-
-				<div class="flags-grid" class:hidden={flyingFlags.length > 0} data-testid="onboarding-flags-grid">
-					{#each LANGUAGES as lang (lang)}
-						<button
-							class="flag-btn"
-							class:selected-step1={step === 2 &&
-								lang === settingsStore.value.targetLanguage}
-							data-lang={lang}
-							onclick={() =>
-								!isFinalizing &&
-								(step === 1 ? selectStep1(lang) : selectStep2(lang))}
-							disabled={isFinalizing ||
-								(step === 2 && lang === settingsStore.value.targetLanguage)}
-							data-testid="onboarding-flag-{lang}"
-						>
-							<img src="{base}/flags/{lang}.svg" alt={LANGUAGE_NAMES[lang]} />
-							<span>{LANGUAGE_NAMES[lang]}</span>
-						</button>
-					{/each}
-				</div>
-			</div>
-		{:else}
-			<div class="explanation-card" transition:fade data-testid="onboarding-explanation-card">
-				<div class="icon-header">
-					<div class="icon-circle">
-						<Languages size={32} />
-					</div>
-				</div>
-
-				<div class="explanation-text" data-testid="onboarding-explanation-text">
-					<p>
-						{$_("onboarding.explanation")}
-						<span class="inline-icon"><Languages size={18} /></span>
-					</p>
-					<p class="detail" data-testid="onboarding-explanation-detail">
-						{$_("onboarding.explanationPart1")}
-						<span class="inline-icon"><Speech size={16} /></span>,
-						{$_("onboarding.explanationPart2")}
-						<span class="inline-icon"><Captions size={16} /></span>
-						{$_("onboarding.explanationPart3")}
-					</p>
-				</div>
-
-				<button
-					class="start-btn"
-					onclick={handleFinish}
-					data-testid="onboarding-finish-btn"
-				>
-					<span>{$_("onboarding.startBtn")}</span>
-				</button>
-			</div>
-		{/if}
-
-		{#if isFinalizing && !showExplanation}
-			<div class="flying-container">
+		<!-- Прапори на фоні -->
+		{#if isFinalizing}
+			<div class="flying-container" class:is-running={isFlyingTriggered}>
 				{#each flyingFlags as flag (flag.lang)}
 					<div
 						class="flying-flag"
@@ -234,6 +155,98 @@
 				{/each}
 			</div>
 		{/if}
+
+		<div class="step-wrapper">
+			{#if !showExplanation}
+				<div 
+					class="step-container" 
+					in:fly={transitionParams.in}
+					out:fly={transitionParams.out}
+					data-testid="onboarding-container"
+				>
+					<div class="header-area" data-testid="onboarding-header">
+						{#if !isFinalizing}
+							{#key step}
+								<div 
+									class="title-wrapper"
+									in:fly={transitionParams.in}
+									out:fly={transitionParams.out}
+								>
+									<h1 data-testid="onboarding-title">
+										{#if step === 1}
+											<div class="title-stack">
+												{#if detectedTitle}
+													<div class="secondary" data-testid="onboarding-detected-title">{detectedTitle}</div>
+												{/if}
+												<div class="primary" data-testid="onboarding-primary-title">{titles.en}</div>
+											</div>
+										{:else}
+											<span data-testid="onboarding-step2-title">{$_("onboarding.whatToLearn")}</span>
+										{/if}
+									</h1>
+								</div>
+							{/key}
+						{/if}
+					</div>
+
+					<div class="flags-grid" class:hidden={flyingFlags.length > 0} data-testid="onboarding-flags-grid">
+						{#each LANGUAGES as lang (lang)}
+							<button
+								class="flag-btn"
+								class:selected-step1={step === 2 &&
+									lang === settingsStore.value.targetLanguage}
+								data-lang={lang}
+								onclick={() =>
+									!isFinalizing &&
+									(step === 1 ? selectStep1(lang) : selectStep2(lang))}
+								disabled={isFinalizing ||
+									(step === 2 && lang === settingsStore.value.targetLanguage)}
+								data-testid="onboarding-flag-{lang}"
+							>
+								<img src="{base}/flags/{lang}.svg" alt={LANGUAGE_NAMES[lang]} />
+								<span>{LANGUAGE_NAMES[lang]}</span>
+							</button>
+						{/each}
+					</div>
+				</div>
+			{:else}
+				<div 
+					class="step-container"
+					in:fly={transitionParams.in}
+					out:fly={transitionParams.out}
+				>
+					<div class="explanation-card" data-testid="onboarding-explanation-card">
+						<div class="icon-header">
+							<div class="icon-circle">
+								<Languages size={32} />
+							</div>
+						</div>
+
+						<div class="explanation-text" data-testid="onboarding-explanation-text">
+							<p>
+								{$_("onboarding.explanation")}
+								<span class="inline-icon"><Languages size={18} /></span>
+							</p>
+							<p class="detail" data-testid="onboarding-explanation-detail">
+								{$_("onboarding.explanationPart1")}
+								<span class="inline-icon"><Speech size={16} /></span>,
+								{$_("onboarding.explanationPart2")}
+								<span class="inline-icon"><Captions size={16} /></span>
+								{$_("onboarding.explanationPart3")}
+							</p>
+						</div>
+
+						<button
+							class="start-btn"
+							onclick={handleFinish}
+							data-testid="onboarding-finish-btn"
+						>
+							<span>{$_("onboarding.startBtn")}</span>
+						</button>
+					</div>
+				</div>
+			{/if}
+		</div>
 	</div>
 {/if}
 
@@ -247,11 +260,28 @@
 		display: grid;
 		place-items: center;
 		padding: 2rem 1rem;
-		overflow-y: auto;
+		overflow: hidden;
 		transition:
 			background 0.8s ease,
 			backdrop-filter 0.8s ease;
 		scrollbar-width: none;
+	}
+
+	.step-wrapper {
+		position: relative;
+		width: 100%;
+		max-width: 600px;
+		display: grid;
+		place-items: center;
+		z-index: 20002;
+	}
+
+	.step-container {
+		grid-area: 1 / 1 / 2 / 1;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 	}
 
 	.onboarding-overlay.transparent {
@@ -260,7 +290,7 @@
 		pointer-events: none;
 	}
 
-	.onboarding-overlay.transparent .container {
+	.onboarding-overlay.transparent .step-wrapper {
 		display: none;
 	}
 
@@ -278,7 +308,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1.5rem;
-		z-index: 20002;
 	}
 
 	.inline-icon {
@@ -352,35 +381,27 @@
 		transform: scale(0.98);
 	}
 
-	.onboarding-overlay::-webkit-scrollbar {
-		display: none;
-	}
-
-	.container {
-		max-width: 600px;
-		width: 100%;
-		text-align: center;
-		margin: auto;
-	}
-
 	.header-area {
 		height: 120px;
 		position: relative;
 		width: 100%;
 		margin-bottom: 2rem;
+		display: grid;
+		place-items: center;
+	}
+
+	.title-wrapper {
+		grid-area: 1 / 1 / 2 / 1;
+		width: 100%;
 	}
 
 	h1 {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		width: 100%;
 		font-size: 2.2rem;
 		margin: 0;
 		color: white;
 		font-weight: 700;
 		line-height: 1.1;
+		text-align: center;
 	}
 
 	.title-stack {
@@ -446,17 +467,16 @@
 		cursor: default;
 	}
 
-	/* Вибрана мова на 1 кроці має виглядати заблокованою на 2 кроці */
 	.flag-btn.selected-step1 {
 		opacity: 0.4 !important;
 		border-color: rgba(255, 255, 255, 0.1);
 		background: transparent;
 		cursor: default;
-		transform: none !important; /* Прибрати підйом при наведенні */
+		transform: none !important;
 	}
 
 	.flag-btn.selected-step1 img {
-		filter: grayscale(0.2); /* Легкий ефект 'минулого' */
+		filter: grayscale(0.2);
 	}
 
 	.flag-btn img {
@@ -474,7 +494,7 @@
 		position: fixed;
 		inset: 0;
 		pointer-events: none;
-		z-index: 20001;
+		z-index: 10;
 	}
 
 	.flying-flag {
@@ -484,10 +504,10 @@
 		width: 80px;
 		height: 54px;
 		pointer-events: none;
-		animation: fly-to-settings 2s forwards cubic-bezier(0.4, 0, 0.2, 1);
-		animation-delay: var(--delay);
-		/* Прибираємо статичний transform, він є в 0% анімації */
+		transform: translate(var(--start-x), var(--start-y)) translate(-50%, -50%);
 		opacity: 0;
+		/* Анімація появи на 3 секунди */
+		animation: flag-materialize 3s forwards ease-out;
 	}
 
 	.flying-flag img {
@@ -498,20 +518,29 @@
 		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
 	}
 
+	/* Перехід до польоту */
+	.is-running .flying-flag {
+		opacity: 1;
+		animation: fly-to-settings 2s forwards cubic-bezier(0.4, 0, 0.2, 1);
+		animation-delay: var(--delay);
+	}
+
+	@keyframes flag-materialize {
+		from { opacity: 0; }
+		to { opacity: 0.15; }
+	}
+
 	@keyframes fly-to-settings {
 		0% {
-			transform: translate(var(--start-x), var(--start-y)) translate(-50%, -50%)
-				scale(1);
-			opacity: 1;
+			transform: translate(var(--start-x), var(--start-y)) translate(-50%, -50%) scale(1);
+			opacity: 0.15;
 		}
-		20% {
-			transform: translate(var(--start-x), var(--start-y)) translate(-50%, -50%)
-				scale(1.1);
+		15% {
 			opacity: 1;
+			transform: translate(var(--start-x), var(--start-y)) translate(-50%, -50%) scale(1.1);
 		}
 		100% {
-			transform: translate(var(--target-x), var(--target-y))
-				translate(-50%, -50%) scale(0.1);
+			transform: translate(var(--target-x), var(--target-y)) translate(-50%, -50%) scale(0.1);
 			opacity: 0;
 		}
 	}
