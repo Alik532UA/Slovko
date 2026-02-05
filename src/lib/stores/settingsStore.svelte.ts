@@ -21,6 +21,7 @@ const STORAGE_KEY = "wordApp_settings";
 const DEFAULT_SETTINGS: AppSettings = AppSettingsSchema.parse({});
 
 function createSettingsStore() {
+	let isCorrupted = false;
 	let settings = $state<AppSettings>(loadSettings());
 
 	function loadSettings(): AppSettings {
@@ -34,7 +35,6 @@ function createSettingsStore() {
 				let parsed = JSON.parse(stored);
 				logService.log("settings", "Loading settings from storage:", parsed);
 
-				// ... (rest of logic)
 				const result = AppSettingsSchema.safeParse(parsed);
 
 				if (result.success) {
@@ -49,7 +49,7 @@ function createSettingsStore() {
 						"CRITICAL: Invalid settings found in localStorage. Resetting to defaults:",
 						result.error.format(),
 					);
-					// Return default settings if data is corrupted
+					isCorrupted = true; // Маркуємо як пошкоджені
 					return { ...DEFAULT_SETTINGS };
 				}
 			}
@@ -63,15 +63,23 @@ function createSettingsStore() {
 
 	function saveSettings() {
 		if (browser) {
+			// Якщо локальні дані були пошкоджені, ми не синхронізуємо їх у хмару автоматично,
+			// щоб не затерти справні дані в Firebase. 
+			// Користувач має зробити хоча б одну зміну сам.
 			settings = { ...settings, updatedAt: Date.now() };
 			logService.log("settings", "Saving settings to storage (immediate):", settings);
 			localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(settings));
 			
+			if (isCorrupted) {
+				logService.warn("settings", "Settings are in fallback mode (corrupted local data). Skipping cloud sync to protect data integrity.");
+				return;
+			}
+
 			// Дебаунс для синхронізації з хмарою
 			if (saveTimeout) clearTimeout(saveTimeout);
 			saveTimeout = setTimeout(() => {
 				SyncService.uploadAll();
-			}, 1000); // 1 секунда затримки для налаштувань
+			}, 1000); 
 		}
 	}
 
@@ -80,17 +88,9 @@ function createSettingsStore() {
 			return settings;
 		},
 
-		/** Internal update for SyncService to avoid infinite loops */
-		_internalUpdate(newData: Partial<AppSettings>) {
-			logService.log("settings", "Internal update received:", newData);
-			settings = { ...settings, ...newData };
-			if (browser) {
-				localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(settings));
-			}
-		},
-
 		update(partial: Partial<AppSettings>) {
 			logService.log("settings", "Public update requested:", partial);
+			isCorrupted = false; // Після ручного оновлення ми знову вважаємо дані валідними
 			settings = { ...settings, ...partial };
 			saveSettings();
 		},

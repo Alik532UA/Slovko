@@ -90,13 +90,16 @@ export const FeedbackService = {
 				.replace("T", "-")
 				.slice(0, 19)
 				.replace(/:/g, "-");
-			const docRef = doc(messagesRef, timestampId);
+			
+			// Додаємо рандомний суфікс для запобігання колізіям при швидкій відправці
+			const uniqueId = `${timestampId}-${Math.random().toString(36).substring(2, 7)}`;
+			const docRef = doc(messagesRef, uniqueId);
 			await setDoc(docRef, payload);
 
 			logService.log(
 				"sync",
 				`Feedback saved to ${rootCollection} with ID:`,
-				timestampId,
+				uniqueId,
 			);
 			return true;
 		} catch (error: any) {
@@ -149,13 +152,15 @@ export const FeedbackService = {
 				.replace("T", "-")
 				.slice(0, 19)
 				.replace(/:/g, "-");
-			const docRef = doc(messagesRef, timestampId);
+			
+			const uniqueId = `${timestampId}-${Math.random().toString(36).substring(2, 7)}`;
+			const docRef = doc(messagesRef, uniqueId);
 			await setDoc(docRef, payload);
 
 			logService.log(
 				"sync",
 				`Word error saved to ${rootCollection} with ID:`,
-				timestampId,
+				uniqueId,
 			);
 			return true;
 		} catch (error: any) {
