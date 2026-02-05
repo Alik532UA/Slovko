@@ -14,11 +14,13 @@ const LANGUAGE_VOICE_PRIORITIES: Record<string, string[]> = {
 	crh: ["tr-TR", "tr", "az-AZ", "az"], // Кримськотатарська: fallback на турецьку або азербайджанську
 };
 
+let isVoiceInitialized = false;
+
 /**
  * Ініціалізація голосу
  */
 function initVoice(): void {
-	if (!browser || !window.speechSynthesis) return;
+	if (!browser || !window.speechSynthesis || isVoiceInitialized) return;
 
 	const loadVoices = () => {
 		window.speechSynthesis.getVoices();
@@ -27,8 +29,9 @@ function initVoice(): void {
 	if (window.speechSynthesis.getVoices().length > 0) {
 		loadVoices();
 	} else {
-		window.speechSynthesis.addEventListener("voiceschanged", loadVoices);
+		window.speechSynthesis.addEventListener("voiceschanged", loadVoices, { once: true });
 	}
+	isVoiceInitialized = true;
 }
 
 /**

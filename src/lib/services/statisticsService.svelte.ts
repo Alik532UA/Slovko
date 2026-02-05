@@ -25,6 +25,7 @@ class StatisticsServiceClass {
 	// Реактивні дані для календаря або поточної статистики
 	historyCache = $state<Record<string, DailyActivity>>({});
 	isLoading = $state(false);
+	private readonly MAX_CACHE_SIZE = 60; // Зберігаємо максимум 60 днів у кеші
 
 	/**
 	 * Отримати історію активності за діапазон дат (YYYY-MM-DD).
@@ -51,7 +52,7 @@ class StatisticsServiceClass {
 				try {
 					const data = DailyActivitySchema.parse(doc.data());
 					results.push(data);
-					this.historyCache[data.date] = data;
+					this.addToCache(data);
 				} catch (e) {
 					logService.error("stats", `Failed to parse history doc ${doc.id}:`, e);
 				}
@@ -63,6 +64,20 @@ class StatisticsServiceClass {
 			return [];
 		} finally {
 			this.isLoading = false;
+		}
+	}
+
+	/**
+	 * Додає дані в кеш з контролем розміру
+	 */
+	private addToCache(data: DailyActivity) {
+		this.historyCache[data.date] = data;
+		
+		const keys = Object.keys(this.historyCache);
+		if (keys.length > this.MAX_CACHE_SIZE) {
+			// Видаляємо найстаріший запис (за ключем-датою)
+			const oldestKey = keys.sort()[0];
+			delete this.historyCache[oldestKey];
 		}
 	}
 
@@ -81,7 +96,7 @@ class StatisticsServiceClass {
 			
 			if (snap.exists()) {
 				const data = DailyActivitySchema.parse(snap.data());
-				this.historyCache[date] = data;
+				this.addToCache(data);
 				return data;
 			}
 			return null;
