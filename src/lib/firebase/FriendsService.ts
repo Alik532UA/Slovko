@@ -20,6 +20,7 @@ import {
 	serverTimestamp,
 	getCountFromServer,
 	writeBatch,
+	documentId,
 	type Timestamp,
 } from "firebase/firestore";
 import { db, auth } from "./config";
@@ -430,6 +431,32 @@ export const FriendsService = {
 				.filter((profile) => profile.uid !== currentUid);
 		} catch (error) {
 			logService.error("sync", "Error searching users:", error);
+			return [];
+		}
+	},
+
+	/**
+	 * Отримати кілька профілів за один запит (Batch Get)
+	 */
+	async getUserProfiles(uids: string[]): Promise<UserProfile[]> {
+		if (!uids.length) return [];
+		
+		try {
+			const profilesRef = collection(db, COLLECTIONS.PROFILES);
+			// Firestore дозволяє до 30 елементів в операторі 'in'
+			const batches = [];
+			for (let i = 0; i < uids.length; i += 30) {
+				const chunk = uids.slice(i, i + 30);
+				const q = query(profilesRef, where(documentId(), "in", chunk));
+				batches.push(getDocs(q));
+			}
+
+			const snapshots = await Promise.all(batches);
+			return snapshots.flatMap(snap => 
+				snap.docs.map(doc => ({ ...doc.data(), uid: doc.id }) as UserProfile)
+			);
+		} catch (error) {
+			logService.error("sync", "Error getting batch user profiles:", error);
 			return [];
 		}
 	},

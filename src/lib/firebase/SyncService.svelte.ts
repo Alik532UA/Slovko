@@ -141,6 +141,8 @@ class SyncServiceClass {
 			clearTimeout(this.uploadTimeout);
 			this.uploadTimeout = null;
 		}
+		this.isUploading = false;
+		this.isDownloading = false;
 		this.currentUid = null;
 		this.retryCount = 0;
 		this.status = "idle";

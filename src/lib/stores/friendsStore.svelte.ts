@@ -42,24 +42,27 @@ class FriendsStoreClass {
 	 * Фонове завантаження актуальних профілів для списку UIDs
 	 */
 	private async refreshProfiles(records: FollowRecord[]) {
-		// Беремо унікальні UIDs
-		const uids = [...new Set(records.map(r => r.uid))];
+		// Беремо унікальні UIDs, яких ще немає в кеші або які потребують оновлення (ім'я "User")
+		const uidsToFetch = records
+			.filter(r => !this.profilesCache[r.uid] || r.displayName === "User")
+			.map(r => r.uid);
 		
-		for (const uid of uids) {
-			// Якщо бачимо ім'я "User" або в кеші пусто - завантажуємо актуальний профіль
-			const record = records.find(r => r.uid === uid);
-			if (!this.profilesCache[uid] || record?.displayName === "User") {
-				const profile = await FriendsService.getUserProfile(uid);
-				if (profile) {
-					this.profilesCache[uid] = profile;
-					
-					// Якщо в списку було "User", а в профілі інше - запускаємо синхронізацію в БД
-					if (record?.displayName !== profile.displayName) {
-						FriendsService.refreshContactData(uid);
-					}
-				}
+		const uniqueUids = [...new Set(uidsToFetch)];
+		if (uniqueUids.length === 0) return;
+
+		logService.log("presence", `Batch fetching ${uniqueUids.length} profiles...`);
+		
+		const profiles = await FriendsService.getUserProfiles(uniqueUids);
+		
+		profiles.forEach(profile => {
+			this.profilesCache[profile.uid] = profile;
+			
+			// Перевіряємо, чи потрібно синхронізувати ім'я в БД
+			const record = records.find(r => r.uid === profile.uid);
+			if (record && record.displayName !== profile.displayName) {
+				FriendsService.refreshContactData(profile.uid);
 			}
-		}
+		});
 	}
 
 	/**
