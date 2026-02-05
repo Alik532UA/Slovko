@@ -122,7 +122,6 @@
 				{@const lang = rawColor.replace("flag-", "")}
 				<div class="flag-bg-wrapper">
 					<img src="{base}/flags/{lang}.svg" alt={lang} class="flag-bg-img" />
-					<div class="overlay-dim"></div>
 				</div>
 			{/if}
 			{#if Icon}
@@ -201,15 +200,10 @@
 		object-fit: cover;
 	}
 
-	.overlay-dim {
-		position: absolute;
-		inset: 0;
-		background: rgba(0, 0, 0, 0.2);
-	}
-
 	.avatar-circle :global(svg) {
 		position: relative;
 		z-index: 1;
+		filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
 	}
 
 	.avatar-circle.fallback {

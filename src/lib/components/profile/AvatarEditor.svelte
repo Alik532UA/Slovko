@@ -99,7 +99,6 @@
 				{@const lang = selectedColor.replace("flag-", "")}
 				<div class="flag-bg-wrapper">
 					<img src="{base}/flags/{lang}.svg" alt={lang} class="flag-bg-img" />
-					<div class="overlay-dim"></div>
 				</div>
 				{#if Icon}
 					<Icon size={86} color="white" />
@@ -165,21 +164,19 @@
 					onclick={() => (selectedIcon = id)}
 					data-testid="icon-btn-{id}"
 				>
-					{#if selectedColor.startsWith("flag-")}
-						{@const lang = selectedColor.replace("flag-", "")}
-						<div class="flag-bg-wrapper">
-							<img src="{base}/flags/{lang}.svg" alt={lang} class="flag-bg-img" />
-							<div class="overlay-dim"></div>
-						</div>
-					{/if}
+														{#if selectedColor.startsWith("flag-")}
+															{@const lang = selectedColor.replace("flag-", "")}
+															<div class="flag-bg-wrapper">
+																<img src="{base}/flags/{lang}.svg" alt={lang} class="flag-bg-img" />
+															</div>
+														{/if}
 					
-					{#if IconComp}
-						<IconComp size={36} color={selectedColor === "" || selectedColor === "transparent" ? "currentColor" : "white"} />
-					{/if}
-				</button>
-			{/each}
-		</div>
-
+														{#if IconComp}
+															<IconComp size={36} color={selectedColor === "" || selectedColor === "transparent" ? "currentColor" : "white"} />
+														{/if}
+													</button>
+												{/each}
+											</div>
 		<div class="edit-actions" style="margin-top: 1rem;">
 			<button
 				class="icon-action-btn save"
@@ -268,12 +265,6 @@
 		object-fit: cover;
 	}
 
-	.overlay-dim {
-		position: absolute;
-		inset: 0;
-		background: rgba(0, 0, 0, 0.2);
-	}
-
 	.flag-btn-choice {
 		padding: 0;
 		overflow: hidden;
@@ -347,6 +338,7 @@
 	.avatar :global(svg) {
 		position: relative;
 		z-index: 1;
+		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 	}
 
 	.icon-btn:hover {
