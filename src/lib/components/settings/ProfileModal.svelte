@@ -534,8 +534,8 @@
 						<p>{authStore.email}</p>
 
 						<!-- Social Counts -->
-						<div class="social-counts">
-							<span class="count-item">
+						<div class="social-counts" data-testid="profile-social-counts">
+							<span class="count-item" data-testid="following-count">
 								<span class="count-val">{socialCounts.following}</span>
 								<span class="count-lbl"
 									>{$_("friends.following", {
@@ -544,7 +544,7 @@
 								>
 							</span>
 							<span class="divider">•</span>
-							<span class="count-item">
+							<span class="count-item" data-testid="followers-count">
 								<span class="count-val">{socialCounts.followers}</span>
 								<span class="count-lbl"
 									>{$_("friends.followers", {
@@ -708,38 +708,130 @@
 					: undefined}
 			/>
 		{:else if loginMethod === "change-password"}
-			<div class="form-section">
-				<p class="form-title">
+			<div class="form-section" data-testid="change-password-section">
+				<p class="form-title" data-testid="change-password-title">
 					{$_("profile.changePasswordTitle", {
 						default: "Змінити пароль",
 					})}
 				</p>
-				<p class="form-subtitle">
-					{$_("profile.changePasswordHint", {
-						default: "Функція в розробці",
-					})}
-				</p>
-				<button
-					class="back-btn"
-					onclick={() => {
-						loginMethod = null;
-						resetForm();
-					}}
-					data-testid="change-password-back-btn"
-				>
-					<ArrowLeft size={16} />
-					{$_("profile.back", { default: "Назад" })}
-				</button>
+
+				{#if authStore.user.providerId === "google.com"}
+					<div class="info-box" data-testid="google-password-info">
+						<p class="form-subtitle">
+							{$_("profile.googlePasswordInfo", {
+								default: "Ви використовуєте Google-авторизацію для входу в систему. Пароль для вашого акаунта Slovko не встановлено, оскільки автентифікація керується вашим Google-профілем.",
+							})}
+						</p>
+					</div>
+					<button
+						class="back-btn"
+						onclick={() => {
+							loginMethod = null;
+							resetForm();
+						}}
+						data-testid="change-password-back-btn"
+					>
+						<ArrowLeft size={16} />
+						{$_("profile.back", { default: "Назад" })}
+					</button>
+				{:else}
+					<form
+						class="email-form"
+						data-testid="change-password-form"
+						onsubmit={async (e) => {
+							e.preventDefault();
+							const target = e.target as any;
+							const current = target.currentPassword.value;
+							const newPass = target.newPassword.value;
+							const confirmPass = target.confirmPassword.value;
+
+							if (newPass !== confirmPass) {
+								errorMessage = $_("profile.errors.passwordsDoNotMatch");
+								return;
+							}
+
+							isLinking = true;
+							errorMessage = "";
+							try {
+								await authStore.changePassword(current, newPass);
+								successMessage = $_("profile.passwordChangedSuccess");
+								setTimeout(() => {
+									loginMethod = null;
+									resetForm();
+								}, 2000);
+							} catch (e: any) {
+								errorMessage = getAuthErrorMessage(e.code) || e.message;
+							} finally {
+								isLinking = false;
+							}
+						}}
+					>
+						<input
+							type="password"
+							name="currentPassword"
+							placeholder={$_("profile.currentPasswordPlaceholder", { default: "Поточний пароль" })}
+							class="input-field"
+							data-testid="current-password-input"
+							required
+						/>
+						<input
+							type="password"
+							name="newPassword"
+							placeholder={$_("profile.newPasswordPlaceholder", { default: "Новий пароль" })}
+							class="input-field"
+							data-testid="new-password-input"
+							required
+						/>
+						<input
+							type="password"
+							name="confirmPassword"
+							placeholder={$_("profile.confirmPasswordPlaceholder", { default: "Підтвердіть новий пароль" })}
+							class="input-field"
+							data-testid="confirm-password-input"
+							required
+						/>
+
+						{#if errorMessage}
+							<p class="error-msg">{errorMessage}</p>
+						{/if}
+						{#if successMessage}
+							<p class="success-msg">{successMessage}</p>
+						{/if}
+
+						<button
+							type="submit"
+							class="primary-btn"
+							disabled={isLinking}
+							data-testid="submit-change-password-btn"
+						>
+							{isLinking ? "..." : $_("profile.updatePasswordBtn", { default: "Оновити пароль" })}
+						</button>
+
+						<button
+							type="button"
+							class="back-btn"
+							onclick={() => {
+								loginMethod = null;
+								resetForm();
+							}}
+							data-testid="change-password-back-btn"
+						>
+							<ArrowLeft size={16} />
+							{$_("profile.back", { default: "Назад" })}
+						</button>
+					</form>
+				{/if}
 			</div>
 		{:else if loginMethod === "delete-account"}
-			<div class="delete-warning">
-				<p class="warning-text">
+			<div class="delete-warning" data-testid="delete-account-section">
+				<p class="warning-text" data-testid="delete-account-warning">
 					{$_("profile.deleteWarning", {
 						default: "Увага! Цю дію неможливо скасувати.",
 					})}
 				</p>
 				<form
 					class="email-form"
+					data-testid="delete-account-form"
 					onsubmit={(e) => {
 						e.preventDefault();
 						const password = (e.target as any).password?.value || "";
@@ -1242,6 +1334,21 @@
 		font-size: 0.9rem;
 		text-align: center;
 		margin: 0;
+	}
+
+	.success-msg {
+		color: #4caf50;
+		font-size: 0.9rem;
+		text-align: center;
+		margin: 0;
+	}
+
+	.info-box {
+		background: rgba(var(--accent-rgb, 58, 143, 214), 0.1);
+		border: 1px solid var(--accent);
+		padding: 1rem;
+		border-radius: 12px;
+		margin-bottom: 1.5rem;
 	}
 
 	.profile-content {

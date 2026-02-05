@@ -175,10 +175,16 @@
 			"googleAlreadyLinked": "This Google account is already linked to another Slovko user.",
 			"waitingGoogle": "Waiting for Google response... If you closed the window, wait a few seconds to unlock.",
 			"unknownError": "An error occurred",
-			"loginFailed": "Login failed"
+			"loginFailed": "Login failed",
+			"passwordsDoNotMatch": "New passwords do not match"
 		},
 		"changePasswordTitle": "Change Password",
-		"changePasswordHint": "Feature in development",
+		"googlePasswordInfo": "You are using Google authorization to sign in. A password for your Slovko account is not set because authentication is managed by your Google profile.",
+		"currentPasswordPlaceholder": "Current Password",
+		"newPasswordPlaceholder": "New Password",
+		"confirmPasswordPlaceholder": "Confirm New Password",
+		"updatePasswordBtn": "Update Password",
+		"passwordChangedSuccess": "Password changed successfully!",
 		"deleteWarning": "Warning! This action cannot be undone.",
 		"deleteAccount": "Delete Account",
 		"confirmDelete": "Confirm Deletion",

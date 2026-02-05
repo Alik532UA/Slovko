@@ -175,10 +175,16 @@
 			"googleAlreadyLinked": "Цей Google-акаунт вже прив'язаний до іншого користувача Slovko.",
 			"waitingGoogle": "Очікуємо відповіді від Google... Якщо ви закрили вікно, зачекайте кілька секунд для розблокування.",
 			"unknownError": "Сталася помилка",
-			"loginFailed": "Помилка входу"
+			"loginFailed": "Помилка входу",
+			"passwordsDoNotMatch": "Нові паролі не співпадають"
 		},
 		"changePasswordTitle": "Змінити пароль",
-		"changePasswordHint": "Функція в розробці",
+		"googlePasswordInfo": "Ви використовуєте Google-авторизацію для входу в систему. Пароль для вашого акаунта Slovko не встановлено, оскільки автентифікація керується вашим Google-профілем.",
+		"currentPasswordPlaceholder": "Поточний пароль",
+		"newPasswordPlaceholder": "Новий пароль",
+		"confirmPasswordPlaceholder": "Підтвердіть новий пароль",
+		"updatePasswordBtn": "Оновити пароль",
+		"passwordChangedSuccess": "Пароль успішно змінено!",
 		"deleteWarning": "Увага! Цю дію неможливо скасувати.",
 		"deleteAccount": "Видалити акаунт",
 		"confirmDelete": "Підтвердити видалення",
