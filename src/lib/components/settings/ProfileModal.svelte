@@ -19,6 +19,7 @@
 	import { AuthService } from "../../firebase/AuthService";
 	import { progressStore } from "../../stores/progressStore.svelte";
 	import { FriendsService } from "../../firebase/FriendsService";
+	import { base } from "$app/paths";
 
 	// Sub-components
 	import ProfileStats from "../profile/ProfileStats.svelte";
@@ -475,14 +476,24 @@
 						{#if authStore.photoURL?.startsWith("internal:")}
 							{@const parts = authStore.photoURL.split(":")}
 							{@const iconId = parts[1]}
-							{@const color = parts[2]}
-							{@const Icon = getIconComponent(iconId)}
+							{@const rawColor = parts[2]}
+							{@const Icon = iconId === "none" ? null : getIconComponent(iconId)}
+							{@const isFlag = rawColor?.startsWith("flag-")}
 							<div
 								class="avatar email-user"
-								style="background-color: {color};"
+								style:background-color={isFlag ? "transparent" : rawColor}
 								data-testid="profile-avatar-email"
 							>
-								<Icon size={72} color="white" />
+								{#if isFlag}
+									{@const lang = rawColor.replace("flag-", "")}
+									<div class="flag-bg-wrapper">
+										<img src="{base}/flags/{lang}.svg" alt={lang} class="flag-bg-img" />
+										<div class="overlay-dim"></div>
+									</div>
+								{/if}
+								{#if Icon}
+									<Icon size={72} color="white" />
+								{/if}
 							</div>
 						{:else if authStore.photoURL}
 							<img
@@ -984,6 +995,31 @@
 		justify-content: center;
 		border: 2px solid var(--border);
 		flex-shrink: 0;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.flag-bg-wrapper {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+	}
+
+	.flag-bg-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.overlay-dim {
+		position: absolute;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.2);
+	}
+
+	.avatar :global(svg) {
+		position: relative;
+		z-index: 1;
 	}
 
 	@media (max-width: 480px) {

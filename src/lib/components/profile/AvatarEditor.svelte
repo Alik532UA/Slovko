@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
-	import { User, Check, X } from "lucide-svelte";
+	import { User, Check, X, Ban } from "lucide-svelte";
 	import {
 		Cat,
 		Dog,
@@ -20,6 +20,8 @@
 	import { THEME_COLORS } from "../../config/colors";
 	import { untrack } from "svelte";
 	import { authStore } from "../../firebase/authStore.svelte";
+	import { LANGUAGES } from "../../i18n/init";
+	import { base } from "$app/paths";
 
 	interface Props {
 		initialIcon: string;
@@ -44,6 +46,7 @@
 	});
 
 	const AVATAR_ICONS = [
+		{ id: "none", component: null },
 		{ id: "user", component: User },
 		{ id: "cat", component: Cat },
 		{ id: "dog", component: Dog },
@@ -69,7 +72,7 @@
 	}
 
 	const Icon = $derived(
-		AVATAR_ICONS.find((i) => i.id === selectedIcon)?.component || User,
+		AVATAR_ICONS.find((i) => i.id === selectedIcon)?.component || null,
 	);
 </script>
 
@@ -83,7 +86,7 @@
 	<div class="avatar-editor" data-testid="avatar-editor-container">
 		<div
 			class="avatar email-user preview-avatar"
-			style="background-color: {selectedColor === 'google' ? 'transparent' : selectedColor}"
+			style:background-color={selectedColor.startsWith("flag-") || selectedColor === "google" ? "transparent" : selectedColor}
 			data-testid="profile-preview-avatar"
 		>
 			{#if selectedColor === "google" && authStore.originalPhotoURL}
@@ -92,8 +95,19 @@
 					alt=""
 					class="google-preview-img"
 				/>
+			{:else if selectedColor.startsWith("flag-")}
+				{@const lang = selectedColor.replace("flag-", "")}
+				<div class="flag-bg-wrapper">
+					<img src="{base}/flags/{lang}.svg" alt={lang} class="flag-bg-img" />
+					<div class="overlay-dim"></div>
+				</div>
+				{#if Icon}
+					<Icon size={86} color="white" />
+				{/if}
 			{:else}
-				<Icon size={86} color="white" />
+				{#if Icon}
+					<Icon size={86} color="white" />
+				{/if}
 			{/if}
 		</div>
 
@@ -113,6 +127,18 @@
 				</button>
 			{/if}
 
+			{#each LANGUAGES as lang (lang)}
+				<button
+					class="color-btn flag-btn-choice"
+					class:selected={selectedColor === `flag-${lang}`}
+					onclick={() => (selectedColor = `flag-${lang}`)}
+					aria-label="Flag {lang}"
+					data-testid="color-btn-flag-{lang}"
+				>
+					<img src="{base}/flags/{lang}.svg" alt={lang} class="flag-choice-img" />
+				</button>
+			{/each}
+
 			{#each THEME_COLORS as color (color)}
 				<button
 					class="color-btn"
@@ -120,7 +146,10 @@
 						? 'rgba(255,255,255,0.1)'
 						: color}"
 					class:selected={selectedColor === color}
-					onclick={() => (selectedColor = color)}
+					onclick={() => {
+						selectedColor = color;
+						if (selectedIcon === "google") selectedIcon = "user";
+					}}
 					aria-label={color}
 					data-testid="color-btn-{color}"
 				></button>
@@ -132,10 +161,21 @@
 				<button
 					class="icon-btn"
 					class:selected={selectedIcon === id}
+					style:background-color={selectedColor.startsWith("flag-") || selectedColor === "google" ? "transparent" : selectedColor}
 					onclick={() => (selectedIcon = id)}
 					data-testid="icon-btn-{id}"
 				>
-					<IconComp size={36} />
+					{#if selectedColor.startsWith("flag-")}
+						{@const lang = selectedColor.replace("flag-", "")}
+						<div class="flag-bg-wrapper">
+							<img src="{base}/flags/{lang}.svg" alt={lang} class="flag-bg-img" />
+							<div class="overlay-dim"></div>
+						</div>
+					{/if}
+					
+					{#if IconComp}
+						<IconComp size={36} color={selectedColor === "" || selectedColor === "transparent" ? "currentColor" : "white"} />
+					{/if}
 				</button>
 			{/each}
 		</div>
@@ -182,6 +222,8 @@
 		align-items: center;
 		justify-content: center;
 		border: 3px solid var(--border);
+		position: relative;
+		overflow: hidden;
 	}
 
 	.avatar.email-user {
@@ -209,6 +251,39 @@
 	}
 
 	.google-btn-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.flag-bg-wrapper {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+	}
+
+	.flag-bg-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.overlay-dim {
+		position: absolute;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.2);
+	}
+
+	.flag-btn-choice {
+		padding: 0;
+		overflow: hidden;
+		background: var(--bg-primary);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.flag-choice-img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
@@ -264,6 +339,14 @@
 		justify-content: center;
 		transition: all 0.2s;
 		flex-shrink: 0;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.icon-btn :global(svg),
+	.avatar :global(svg) {
+		position: relative;
+		z-index: 1;
 	}
 
 	.icon-btn:hover {

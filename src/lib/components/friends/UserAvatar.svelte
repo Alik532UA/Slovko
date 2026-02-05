@@ -18,6 +18,7 @@
 	import { PresenceService } from "$lib/firebase/PresenceService.svelte";
 	import { authStore } from "$lib/firebase/authStore.svelte";
 	import { logService } from "$lib/services/logService";
+	import { base } from "$app/paths";
 
 	interface Props {
 		uid: string | null;
@@ -71,8 +72,11 @@
 	}
 
 	let isInternal = $derived(photoURL?.startsWith("internal:"));
-	let Icon = $derived(AVATAR_ICONS[getIconId(photoURL)] || UserIcon);
-	let bgColor = $derived(getAvatarColor(photoURL));
+	let iconId = $derived(getIconId(photoURL));
+	let Icon = $derived(iconId === "none" ? null : (AVATAR_ICONS[iconId] || UserIcon));
+	let rawColor = $derived(getAvatarColor(photoURL));
+	let isFlagColor = $derived(rawColor?.startsWith("flag-"));
+	let bgColor = $derived(isFlagColor ? "transparent" : rawColor);
 
 	// Відстежуємо статус тільки якщо увімкнено показ і є UID
 	$effect(() => {
@@ -114,7 +118,16 @@
 >
 	{#if isInternal}
 		<div class="avatar-circle" style:background-color={bgColor} data-testid="user-avatar-internal">
-			<Icon size={size} color="white" />
+			{#if isFlagColor}
+				{@const lang = rawColor.replace("flag-", "")}
+				<div class="flag-bg-wrapper">
+					<img src="{base}/flags/{lang}.svg" alt={lang} class="flag-bg-img" />
+					<div class="overlay-dim"></div>
+				</div>
+			{/if}
+			{#if Icon}
+				<Icon size={size} color="white" />
+			{/if}
 		</div>
 	{:else if photoURL}
 		<img 
@@ -172,6 +185,31 @@
 		align-items: center;
 		justify-content: center;
 		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.flag-bg-wrapper {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+	}
+
+	.flag-bg-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.overlay-dim {
+		position: absolute;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.2);
+	}
+
+	.avatar-circle :global(svg) {
+		position: relative;
+		z-index: 1;
 	}
 
 	.avatar-circle.fallback {
