@@ -100,21 +100,10 @@
 	});
 
 	// Відстеження зміни сторінок
-	$effect(() => {
-		trackPageView($page.url.pathname);
-	});
-
-	// Фонове відстеження статусів взаємних друзів
-	$effect(() => {
-		const mutuals = friendsStore.mutualFriends;
-		const unsubs = mutuals.map(friend => PresenceService.trackFriendStatus(friend.uid));
-		
-		return () => {
-			unsubs.forEach(unsub => unsub());
-		};
-	});
-</script>
-
+		$effect(() => {
+			trackPageView($page.url.pathname);
+		});
+	</script>
 <DebugListener />
 
 {#if ready && !$isLoading && authStore.isDataReady}

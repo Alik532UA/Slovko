@@ -42,14 +42,34 @@ class PresenceServiceClass {
 	private lastWaveSentAt: number = 0;
 	private lastSignalSentAt: number = 0;
 	private processedSignals: Set<string> = new Set();
-	private isPaused = false;
-	private currentUid: string | null = null;
-	private initialStatusLoaded: Set<string> = new Set();
-	private boundHandleVisibilityChange: (() => void) | null = null;
-
-	/**
-	 * Додає подію в чергу
-	 */
+		private isPaused = false;
+		private currentUid: string | null = null;
+		private initialStatusLoaded: Set<string> = new Set();
+		private boundHandleVisibilityChange: (() => void) | null = null;
+		private backgroundUnsubscribers: (() => void)[] = [];
+	
+		/**
+		 * Налаштовує фонове відстеження статусів для обмеженої кількості друзів.
+		 * Це потрібно для роботи сповіщень про вхід друзів в онлайн.
+		 */
+		limitBackgroundTracking(uids: string[], limit = 20) {
+			// Спочатку відписуємося від попередніх фонових підписок
+			this.backgroundUnsubscribers.forEach(unsub => unsub());
+			this.backgroundUnsubscribers = [];
+	
+			if (this.isPaused) return;
+	
+			// Відстежуємо лише перші N друзів (найактивніші/взаємні)
+			const toTrack = uids.slice(0, limit);
+			logService.log("presence", `Setting up background tracking for ${toTrack.length} friends (limit: ${limit})`);
+			
+			toTrack.forEach(uid => {
+				this.backgroundUnsubscribers.push(this.trackFriendStatus(uid));
+			});
+		}
+	
+		/**
+		 * Додає подію в чергу	 */
 	private addInteraction(event: Omit<InteractionEvent, 'id' | 'timestamp' | 'state'> & { state?: InteractionEvent['state'] }) {
 		// Захист від дублювання: не додаємо 'online', якщо він вже є для цього юзера
 		if (event.type === 'online') {
@@ -391,9 +411,8 @@ class PresenceServiceClass {
 			logService.log("presence", "Stopping tracking status for (no more listeners):", uid);
 			entry.unsub();
 			this.statusUnsubscribers.delete(uid);
-			this.initialStatusLoaded.delete(uid);
-			// Очищаємо статус, щоб не тримати застарілі дані
-			delete this.friendsStatus[uid];
+			// Ми НЕ видаляємо initialStatusLoaded та friendsStatus тут, 
+			// щоб при повторній підписці (наприклад, через ліміт) ми знали попередній стан
 		}
 	}
 

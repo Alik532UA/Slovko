@@ -6,9 +6,24 @@ class FriendsStoreClass {
 	following = $state<FollowRecord[]>([]);
 	followers = $state<FollowRecord[]>([]);
 	profilesCache = $state<Record<string, UserProfile>>({});
-	
+
 	isLoading = $state(false);
 	lastUpdated = $state(0);
+
+	constructor() {
+		// Використовуємо $effect.root для створення глобального ефекту без прив'язки до компонента
+		$effect.root(() => {
+			$effect(() => {
+				const uids = this.mutualFriends.map(f => f.uid);
+				if (uids.length > 0) {
+					// Використовуємо динамічний імпорт або відкладений доступ, щоб уникнути ReferenceError при ініціалізації
+					import("../firebase/PresenceService.svelte").then(({ PresenceService }) => {
+						PresenceService.limitBackgroundTracking(uids, 20);
+					});
+				}
+			});
+		});
+	}
 
 	/**
 	 * Завантажити всі дані про друзів
@@ -26,7 +41,7 @@ class FriendsStoreClass {
 			this.following = following;
 			this.followers = followers;
 			this.lastUpdated = Date.now();
-			
+
 			logService.log("presence", `Friends store refreshed: ${following.length} following, ${followers.length} followers`);
 
 			// Запускаємо фонове оновлення профілів для актуалізації імен
@@ -37,7 +52,6 @@ class FriendsStoreClass {
 			this.isLoading = false;
 		}
 	}
-
 	/**
 	 * Фонове завантаження актуальних профілів для списку UIDs
 	 */

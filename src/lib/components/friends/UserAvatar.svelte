@@ -74,9 +74,9 @@
 	let Icon = $derived(AVATAR_ICONS[getIconId(photoURL)] || UserIcon);
 	let bgColor = $derived(getAvatarColor(photoURL));
 
-	// Відстежуємо статус, якщо є UID
+	// Відстежуємо статус тільки якщо увімкнено показ і є UID
 	$effect(() => {
-		if (uid) {
+		if (uid && showStatus) {
 			const unsub = PresenceService.trackFriendStatus(uid);
 			return () => unsub();
 		}
