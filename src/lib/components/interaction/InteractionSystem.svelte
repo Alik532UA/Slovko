@@ -4,7 +4,9 @@
 	import { flip } from "svelte/animate";
 
 	let sortedInteractions = $derived(
-		[...PresenceService.interactions].sort((a, b) => b.timestamp - a.timestamp)
+		[...PresenceService.interactions]
+			.sort((a, b) => b.timestamp - a.timestamp)
+			.slice(0, 5) // Показуємо лише 5 найсвіжіших
 	);
 </script>
 

@@ -108,6 +108,11 @@ function createAuthStore() {
 		get isInitialized() {
 			return isInitialized;
 		},
+		get isDataReady() {
+			// Дані готові, якщо ми анонім/гість (локальні дані) 
+			// АБО якщо SyncService вже отримав початковий знімок з хмари
+			return isInitialized && (state.isGuest || SyncService.hasInitialData);
+		},
 		get isAnonymous() {
 			return state.isAnonymous;
 		},
