@@ -83,6 +83,19 @@ function createSettingsStore() {
 		}
 	}
 
+	if (browser) {
+		window.addEventListener("storage", (e) => {
+			if (e.key === STORAGE_KEY && e.newValue) {
+				const parsed = JSON.parse(e.newValue);
+				const result = AppSettingsSchema.safeParse(parsed);
+				if (result.success) {
+					logService.log("settings", "Settings updated from another tab");
+					settings = result.data;
+				}
+			}
+		});
+	}
+
 	return {
 		get value() {
 			return settings;

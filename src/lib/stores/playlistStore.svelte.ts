@@ -121,6 +121,18 @@ function createPlaylistStore() {
 		}
 	}
 
+	if (browser) {
+		window.addEventListener("storage", (e) => {
+			if (e.key === STORAGE_KEY && e.newValue) {
+				const parsed = JSON.parse(e.newValue);
+				const result = PlaylistStateSchema.safeParse(parsed);
+				if (result.success) {
+					state = result.data;
+				}
+			}
+		});
+	}
+
 	return {
 		get customPlaylists() {
 			return state.customPlaylists;

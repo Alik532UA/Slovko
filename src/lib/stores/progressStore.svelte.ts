@@ -93,6 +93,25 @@ function createProgressStore() {
 		}
 	}
 
+	if (browser) {
+		window.addEventListener("storage", (e) => {
+			if (e.key === STORAGE_KEY && e.newValue) {
+				const parsed = JSON.parse(e.newValue);
+				const result = ProgressStateSchema.safeParse(parsed);
+				if (result.success) {
+					progress = result.data;
+				}
+			}
+			if (e.key === ACTIVITY_STORAGE_KEY && e.newValue) {
+				const parsed = JSON.parse(e.newValue);
+				const result = DailyActivitySchema.safeParse(parsed);
+				if (result.success) {
+					dailyActivity = result.data;
+				}
+			}
+		});
+	}
+
 	return {
 		get value() {
 			return progress;

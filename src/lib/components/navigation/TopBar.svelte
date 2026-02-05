@@ -3,7 +3,8 @@
 	 * TopBar — Верхня панель з іконками
 	 * Донат, Мови, Про проєкт
 	 */
-	import { Coins, Languages, Info, Palette, User } from "lucide-svelte";
+	import { Coins, Languages, Info, Palette, User, Cloud, CloudOff, RefreshCcw, AlertCircle } from "lucide-svelte";
+	import { SyncService } from "$lib/firebase/SyncService.svelte";
 	import LanguageSettings from "../settings/LanguageSettings.svelte";
 	import AboutModal from "../settings/AboutModal.svelte";
 	import ThemeModal from "../settings/ThemeModal.svelte";
@@ -16,6 +17,9 @@
 
 	const donateUrl = "https://send.monobank.ua/jar/7sCsydhJnR";
 	const ICON_SIZE = 24;
+
+	// Стан синхронізації
+	let syncStatus = $derived(SyncService.status);
 </script>
 
 <div class="top-icons-bar">
@@ -69,9 +73,10 @@
 		</div>
 	</button>
 
-	<!-- Профіль -->
+	<!-- Профіль та статус синхронізації -->
 	<button
-		class="icon-btn"
+		class="icon-btn profile-btn"
+		class:syncing={syncStatus === "syncing"}
 		onclick={() => (showProfileModal = true)}
 		title="Profile"
 		data-testid="profile-btn"
@@ -79,6 +84,19 @@
 		<div class="icon-inner">
 			<User size={ICON_SIZE} />
 		</div>
+		{#if syncStatus === "syncing"}
+			<div class="sync-indicator syncing" title="Syncing...">
+				<RefreshCcw size={12} />
+			</div>
+		{:else if syncStatus === "error"}
+			<div class="sync-indicator error" title="Sync Error">
+				<AlertCircle size={12} />
+			</div>
+		{:else if syncStatus === "offline"}
+			<div class="sync-indicator offline" title="Offline">
+				<CloudOff size={12} />
+			</div>
+		{/if}
 	</button>
 </div>
 
@@ -141,6 +159,43 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	.profile-btn {
+		position: relative;
+	}
+
+	.sync-indicator {
+		position: absolute;
+		top: 4px;
+		right: 4px;
+		width: 18px;
+		height: 18px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: var(--bg-primary);
+		border: 1px solid var(--border);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	}
+
+	.sync-indicator.syncing {
+		color: var(--accent);
+		animation: spin 2s linear infinite;
+	}
+
+	.sync-indicator.error {
+		color: #ef4444;
+	}
+
+	.sync-indicator.offline {
+		color: var(--text-secondary);
+	}
+
+	@keyframes spin {
+		from { transform: rotate(0deg); }
+		to { transform: rotate(360deg); }
 	}
 
 	@media (min-width: 768px) {
