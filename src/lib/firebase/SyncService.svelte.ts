@@ -408,7 +408,9 @@ class SyncServiceClass {
 		const current = progressStore.value;
 		const newRestoredTotal = (current.restoredPoints || 0) + amount;
 		const newTotalCorrect = current.totalCorrect + amount;
-		const newHistory = [...(current.restorationHistory || []), record];
+		
+		// Обмежуємо історію останніми 10 записами
+		const newHistory = [...(current.restorationHistory || []), record].slice(-10);
 
 		progressStore._internalSet({
 			...current,

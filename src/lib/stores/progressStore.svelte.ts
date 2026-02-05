@@ -62,34 +62,39 @@ function createProgressStore() {
 		return DailyActivitySchema.parse({ date: getTodayDate() });
 	}
 
+	let saveTimeout: ReturnType<typeof setTimeout>;
+
 	function saveProgress(): void {
 		if (browser) {
-			// Garbage Collection: Видаляємо записи про слова, які давно не бачили (наприклад, > 180 днів)
-			// і які не мають значного прогресу, щоб не роздувати localStorage.
-			const now = Date.now();
-			const MAX_AGE = 180 * 24 * 60 * 60 * 1000;
+			if (saveTimeout) clearTimeout(saveTimeout);
 			
-			let hasCleanup = false;
-			const cleanedWords = { ...progress.words };
-			
-			for (const [key, word] of Object.entries(cleanedWords)) {
-				if (now - word.lastSeen > MAX_AGE && word.correctCount < 2) {
-					delete cleanedWords[key];
-					hasCleanup = true;
+			saveTimeout = setTimeout(() => {
+				// Garbage Collection: Видаляємо записи про слова, які давно не бачили
+				const now = Date.now();
+				const MAX_AGE = 180 * 24 * 60 * 60 * 1000;
+				
+				let hasCleanup = false;
+				const cleanedWords = { ...progress.words };
+				
+				for (const [key, word] of Object.entries(cleanedWords)) {
+					if (now - word.lastSeen > MAX_AGE && word.correctCount < 2) {
+						delete cleanedWords[key];
+						hasCleanup = true;
+					}
 				}
-			}
-			
-			if (hasCleanup) {
-				progress.words = cleanedWords;
-			}
+				
+				if (hasCleanup) {
+					progress.words = cleanedWords;
+				}
 
-			progress.lastUpdated = now;
-			localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-			
-			dailyActivity.updatedAt = Date.now();
-			localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(dailyActivity));
-			
-			SyncService.uploadAll();
+				progress.lastUpdated = now;
+				localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+				
+				dailyActivity.updatedAt = now;
+				localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(dailyActivity));
+				
+				SyncService.uploadAll();
+			}, 1000); // 1 секунда дебаунсу для прогресу
 		}
 	}
 
