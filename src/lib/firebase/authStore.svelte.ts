@@ -13,6 +13,7 @@ interface AuthState {
 	email: string | null;
 	displayName: string | null;
 	photoURL: string | null;
+	originalPhotoURL: string | null;
 	isAnonymous: boolean;
 	isGuest: boolean;
 	providerId: string | null;
@@ -29,16 +30,23 @@ function serializeUser(user: User | null): AuthState {
 			email: null,
 			displayName: null,
 			photoURL: null,
+			originalPhotoURL: null,
 			isAnonymous: false,
 			isGuest: true,
 			providerId: null,
 		};
 	}
+
+	const googleProvider = user.providerData.find(
+		(p) => p.providerId === "google.com",
+	);
+
 	return {
 		uid: user.uid,
 		email: user.email,
 		displayName: user.displayName,
 		photoURL: user.photoURL,
+		originalPhotoURL: googleProvider?.photoURL || null,
 		isAnonymous: user.isAnonymous,
 		isGuest: false,
 		providerId: user.providerData[0]?.providerId || null,
@@ -130,6 +138,9 @@ function createAuthStore() {
 		},
 		get photoURL() {
 			return state.photoURL;
+		},
+		get originalPhotoURL() {
+			return state.originalPhotoURL;
 		},
 
 		/**

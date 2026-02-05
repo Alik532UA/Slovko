@@ -112,6 +112,8 @@
 		if (authStore.photoURL?.startsWith("internal:")) {
 			return authStore.photoURL.split(":")[2] || "transparent";
 		}
+		// Якщо photoURL є, але він не internal — значить це Google або інший зовнішній аватар
+		if (authStore.photoURL) return "google";
 		return "transparent";
 	});
 
@@ -280,7 +282,13 @@
 	}
 
 	async function saveAvatar(icon: string, color: string) {
-		const photoURL = `internal:${icon}:${color}`;
+		let photoURL = `internal:${icon}:${color}`;
+
+		// Якщо вибрано Google-аватарку, використовуємо оригінальний URL
+		if (color === "google" && authStore.originalPhotoURL) {
+			photoURL = authStore.originalPhotoURL;
+		}
+
 		try {
 			await authStore.updateProfile(
 				undefined, // Не змінювати ім'я

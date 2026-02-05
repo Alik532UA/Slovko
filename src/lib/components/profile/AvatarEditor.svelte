@@ -19,6 +19,7 @@
 	import { logService } from "../../services/logService";
 	import { THEME_COLORS } from "../../config/colors";
 	import { untrack } from "svelte";
+	import { authStore } from "../../firebase/authStore.svelte";
 
 	interface Props {
 		initialIcon: string;
@@ -82,13 +83,36 @@
 	<div class="avatar-editor" data-testid="avatar-editor-container">
 		<div
 			class="avatar email-user preview-avatar"
-			style="background-color: {selectedColor}"
+			style="background-color: {selectedColor === 'google' ? 'transparent' : selectedColor}"
 			data-testid="profile-preview-avatar"
 		>
-			<Icon size={86} color="white" />
+			{#if selectedColor === "google" && authStore.originalPhotoURL}
+				<img
+					src={authStore.originalPhotoURL}
+					alt=""
+					class="google-preview-img"
+				/>
+			{:else}
+				<Icon size={86} color="white" />
+			{/if}
 		</div>
 
 		<div class="color-picker-grid" data-testid="color-picker-grid">
+			{#if authStore.originalPhotoURL}
+				<button
+					class="color-btn google-btn"
+					class:selected={selectedColor === "google"}
+					onclick={() => {
+						selectedColor = "google";
+						selectedIcon = "user";
+					}}
+					aria-label="Google Profile Picture"
+					data-testid="color-btn-google"
+				>
+					<img src={authStore.originalPhotoURL} alt="" class="google-btn-img" />
+				</button>
+			{/if}
+
 			{#each THEME_COLORS as color (color)}
 				<button
 					class="color-btn"
@@ -166,6 +190,28 @@
 
 	.preview-avatar {
 		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+		overflow: hidden;
+	}
+
+	.google-preview-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.google-btn {
+		padding: 0;
+		overflow: hidden;
+		background: var(--bg-primary);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.google-btn-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
 
 	.color-picker-grid {
