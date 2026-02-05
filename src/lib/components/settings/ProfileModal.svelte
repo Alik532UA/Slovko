@@ -16,6 +16,7 @@
 	} from "lucide-svelte";
 	import { logService } from "../../services/logService";
 	import { authStore } from "../../firebase/authStore.svelte";
+	import { friendsStore } from "../../stores/friendsStore.svelte";
 	import { AuthService } from "../../firebase/AuthService";
 	import { progressStore } from "../../stores/progressStore.svelte";
 	import { FriendsService } from "../../firebase/FriendsService";
@@ -66,22 +67,12 @@
 	// Friends state
 	let friendsSubTab = $state<"following" | "followers" | "search">("following");
 	let shouldRefreshFriends = $state(false);
-	let socialCounts = $state({ following: 0, followers: 0 });
 
-	// Load counts on mount if user is logged in
-	$effect(() => {
-		if (authStore.uid && !authStore.isAnonymous) {
-			loadSocialCounts();
-		}
-	});
+	// Derived stats from stores
+	const followingCount = $derived(friendsStore.followingCount);
+	const followersCount = $derived(friendsStore.followersCount);
 
-	async function loadSocialCounts() {
-		if (authStore.uid) {
-			socialCounts = await FriendsService.getCounts(authStore.uid);
-		}
-	}
-
-	// Derived stats
+	// Derived stats from progress store
 	const totalCorrect = $derived(progressStore.value.totalCorrect);
 	const streak = $derived(progressStore.value.streak);
 	const bestStreak = $derived(progressStore.value.bestStreak || 0);
@@ -121,11 +112,6 @@
 	function resetForm() {
 		errorMessage = "";
 		successMessage = "";
-	}
-
-	function refreshCounts() {
-		loadSocialCounts();
-		shouldRefreshFriends = !shouldRefreshFriends;
 	}
 
 	// Google Login
@@ -565,7 +551,7 @@
 						<!-- Social Counts -->
 						<div class="social-counts" data-testid="profile-social-counts">
 							<span class="count-item" data-testid="following-count">
-								<span class="count-val">{socialCounts.following}</span>
+								<span class="count-val">{followingCount}</span>
 								<span class="count-lbl"
 									>{$_("friends.following", {
 										default: "Підписки",
@@ -574,7 +560,7 @@
 							</span>
 							<span class="divider">•</span>
 							<span class="count-item" data-testid="followers-count">
-								<span class="count-val">{socialCounts.followers}</span>
+								<span class="count-val">{followersCount}</span>
 								<span class="count-lbl"
 									>{$_("friends.followers", {
 										default: "Підписники",
@@ -682,7 +668,7 @@
 								data-testid="friends-content-area"
 							>
 								{#if friendsSubTab === "search"}
-									<UserSearch onFollowChange={refreshCounts} />
+									<UserSearch />
 								{:else}
 									<FriendsList
 										activeTab={friendsSubTab}

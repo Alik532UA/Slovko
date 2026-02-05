@@ -12,12 +12,6 @@
 	import UserAvatar from "./UserAvatar.svelte";
 	import FollowButton from "./FollowButton.svelte";
 
-	// Props
-	interface Props {
-		onFollowChange?: () => void; // Callback to refresh friends list
-	}
-	let { onFollowChange: _onFollowChange }: Props = $props();
-
 	// State
 	let searchQuery = $state("");
 	let searchResults = $state<UserProfile[]>([]);

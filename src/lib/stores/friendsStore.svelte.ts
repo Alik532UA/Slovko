@@ -1,6 +1,7 @@
-import { auth } from "../firebase/config";
+import { auth, db } from "../firebase/config";
 import { FriendsService, type FollowRecord, type UserProfile } from "../firebase/FriendsService";
 import { logService } from "../services/logService";
+import { collection, onSnapshot, query } from "firebase/firestore";
 
 class FriendsStoreClass {
 	following = $state<FollowRecord[]>([]);
@@ -9,6 +10,8 @@ class FriendsStoreClass {
 
 	isLoading = $state(false);
 	lastUpdated = $state(0);
+	
+	private unsubs: (() => void)[] = [];
 
 	constructor() {
 		// Використовуємо $effect.root для створення глобального ефекту без прив'язки до компонента
@@ -26,32 +29,58 @@ class FriendsStoreClass {
 	}
 
 	/**
-	 * Завантажити всі дані про друзів
+	 * Ініціалізувати real-time підписки для поточного користувача
+	 */
+	init(uid: string) {
+		this.stop(); // Очищуємо попередні підписки
+		
+		logService.log("sync", "Initializing real-time FriendsStore for:", uid);
+		
+		const followingRef = collection(db, "users", uid, "following");
+		const followersRef = collection(db, "users", uid, "followers");
+
+		// Слухаємо підписки (кого я фоловлю)
+		const unsubFollowing = onSnapshot(followingRef, (snapshot) => {
+			this.following = snapshot.docs.map(doc => doc.data() as FollowRecord);
+			this.lastUpdated = Date.now();
+			logService.log("sync", `Real-time following updated: ${this.following.length}`);
+			this.refreshProfiles(this.following);
+		}, (err) => {
+			logService.error("sync", "Error in following snapshot:", err);
+		});
+
+		// Слухаємо підписників (хто мене фоловить)
+		const unsubFollowers = onSnapshot(followersRef, (snapshot) => {
+			this.followers = snapshot.docs.map(doc => doc.data() as FollowRecord);
+			this.lastUpdated = Date.now();
+			logService.log("sync", `Real-time followers updated: ${this.followers.length}`);
+			this.refreshProfiles(this.followers);
+		}, (err) => {
+			logService.error("sync", "Error in followers snapshot:", err);
+		});
+
+		this.unsubs.push(unsubFollowing, unsubFollowers);
+	}
+
+	/**
+	 * Зупинити всі підписки
+	 */
+	stop() {
+		this.unsubs.forEach(unsub => unsub());
+		this.unsubs = [];
+	}
+
+	/**
+	 * Завантажити всі дані про друзів (Legacy / Force refresh)
 	 */
 	async refreshAll() {
-		if (!auth.currentUser || this.isLoading) return;
-		this.isLoading = true;
-
-		try {
-			const [following, followers] = await Promise.all([
-				FriendsService.getFollowing(),
-				FriendsService.getFollowers()
-			]);
-
-			this.following = following;
-			this.followers = followers;
-			this.lastUpdated = Date.now();
-
-			logService.log("presence", `Friends store refreshed: ${following.length} following, ${followers.length} followers`);
-
-			// Запускаємо фонове оновлення профілів для актуалізації імен
-			this.refreshProfiles([...following, ...followers]);
-		} catch (error) {
-			logService.error("presence", "Failed to refresh friends store:", error);
-		} finally {
-			this.isLoading = false;
+		if (!auth.currentUser) return;
+		// Метод init тепер робить це автоматично через snapshot
+		if (this.unsubs.length === 0) {
+			this.init(auth.currentUser.uid);
 		}
 	}
+
 	/**
 	 * Фонове завантаження актуальних профілів для списку UIDs
 	 */
@@ -107,6 +136,12 @@ class FriendsStoreClass {
 	}
 
 	/**
+	 * Лічильники (реактивно)
+	 */
+	followingCount = $derived(this.following.length);
+	followersCount = $derived(this.followers.length);
+
+	/**
 	 * Взаємні друзі (реактивно)
 	 */
 	mutualFriends = $derived.by(() => {
@@ -139,6 +174,7 @@ class FriendsStoreClass {
 	 * Скинути стан (при логауті)
 	 */
 	reset() {
+		this.stop();
 		this.following = [];
 		this.followers = [];
 		this.profilesCache = {};
@@ -147,3 +183,4 @@ class FriendsStoreClass {
 }
 
 export const friendsStore = new FriendsStoreClass();
+

@@ -81,11 +81,12 @@ function createAuthStore() {
 			state = serializeUser(user);
 			SyncService.init(user.uid);
 			PresenceService.init(user.uid);
-			friendsStore.refreshAll();
+			friendsStore.init(user.uid);
 		} else {
 			if (oldUid) PresenceService.goOffline(oldUid);
 			SyncService.stop();
 			SyncService.resetLocalData();
+			friendsStore.stop();
 			friendsStore.reset();
 			state = serializeUser(null);
 		}
