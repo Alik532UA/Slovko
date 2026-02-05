@@ -64,7 +64,26 @@ function createProgressStore() {
 
 	function saveProgress(): void {
 		if (browser) {
-			progress.lastUpdated = Date.now();
+			// Garbage Collection: Видаляємо записи про слова, які давно не бачили (наприклад, > 180 днів)
+			// і які не мають значного прогресу, щоб не роздувати localStorage.
+			const now = Date.now();
+			const MAX_AGE = 180 * 24 * 60 * 60 * 1000;
+			
+			let hasCleanup = false;
+			const cleanedWords = { ...progress.words };
+			
+			for (const [key, word] of Object.entries(cleanedWords)) {
+				if (now - word.lastSeen > MAX_AGE && word.correctCount < 2) {
+					delete cleanedWords[key];
+					hasCleanup = true;
+				}
+			}
+			
+			if (hasCleanup) {
+				progress.words = cleanedWords;
+			}
+
+			progress.lastUpdated = now;
 			localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
 			
 			dailyActivity.updatedAt = Date.now();

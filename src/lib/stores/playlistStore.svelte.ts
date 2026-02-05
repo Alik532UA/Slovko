@@ -4,6 +4,7 @@
  */
 import { browser } from "$app/environment";
 import { SyncService } from "../firebase/SyncService.svelte";
+import { settingsStore } from "./settingsStore.svelte";
 import type { WordPair, PlaylistId, CustomWord, WordKey } from "../types";
 import {
 	PlaylistStateSchema,
@@ -198,6 +199,12 @@ function createPlaylistStore() {
 
 		deletePlaylist(id: PlaylistId) {
 			if (id === "favorites" || id === "mistakes" || id === "extra") return;
+			
+			// Якщо видаляється активний плейліст - скидаємо налаштування на рівні
+			if (settingsStore.value.currentPlaylist === id) {
+				settingsStore.setLevel("A1");
+			}
+
 			state.customPlaylists = state.customPlaylists.filter(
 				(p: Playlist) => p.id !== id,
 			);
