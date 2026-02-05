@@ -66,13 +66,17 @@
 			settingsStore.update({ sourceLanguage: lang });
 		}
 		selectedFlags.push(lang);
-		
+
 		await waitLocale();
 
 		// ПІДГОТОВКА ПРАПОРІВ ЗАЗДАЛЕГІДЬ
-		const settingsBtn = document.querySelector('[data-testid="language-settings-btn"]');
+		const settingsBtn = document.querySelector(
+			'[data-testid="language-settings-btn"]',
+		);
 		const targetRect = settingsBtn?.getBoundingClientRect();
-		const tx = targetRect ? targetRect.left + targetRect.width / 2 : window.innerWidth * 0.9;
+		const tx = targetRect
+			? targetRect.left + targetRect.width / 2
+			: window.innerWidth * 0.9;
 		const ty = targetRect ? targetRect.top + targetRect.height / 2 : 40;
 
 		const newFlyingFlags: any[] = [];
@@ -90,14 +94,16 @@
 			});
 		});
 		flyingFlags = newFlyingFlags;
-		
+
 		showExplanation = true;
 		isFinalizing = true;
 	}
 
 	async function startAnimations() {
 		setTimeout(() => {
-			const btn = document.querySelector('[data-testid="language-settings-btn"]');
+			const btn = document.querySelector(
+				'[data-testid="language-settings-btn"]',
+			);
 			if (btn) {
 				btn.classList.add("settings-btn-blink");
 				setTimeout(() => btn.classList.remove("settings-btn-blink"), 2000);
@@ -127,7 +133,7 @@
 
 	const transitionParams = {
 		in: { y: 30, duration: 400, delay: 300 },
-		out: { y: -30, duration: 300 }
+		out: { y: -30, duration: 300 },
 	};
 </script>
 
@@ -158,8 +164,8 @@
 
 		<div class="step-wrapper">
 			{#if !showExplanation}
-				<div 
-					class="step-container" 
+				<div
+					class="step-container"
 					in:fly={transitionParams.in}
 					out:fly={transitionParams.out}
 					data-testid="onboarding-container"
@@ -167,7 +173,7 @@
 					<div class="header-area" data-testid="onboarding-header">
 						{#if !isFinalizing}
 							{#key step}
-								<div 
+								<div
 									class="title-wrapper"
 									in:fly={transitionParams.in}
 									out:fly={transitionParams.out}
@@ -176,12 +182,24 @@
 										{#if step === 1}
 											<div class="title-stack">
 												{#if detectedTitle}
-													<div class="secondary" data-testid="onboarding-detected-title">{detectedTitle}</div>
+													<div
+														class="secondary"
+														data-testid="onboarding-detected-title"
+													>
+														{detectedTitle}
+													</div>
 												{/if}
-												<div class="primary" data-testid="onboarding-primary-title">{titles.en}</div>
+												<div
+													class="primary"
+													data-testid="onboarding-primary-title"
+												>
+													{titles.en}
+												</div>
 											</div>
 										{:else}
-											<span data-testid="onboarding-step2-title">{$_("onboarding.whatToLearn")}</span>
+											<span data-testid="onboarding-step2-title"
+												>{$_("onboarding.whatToLearn")}</span
+											>
 										{/if}
 									</h1>
 								</div>
@@ -189,7 +207,11 @@
 						{/if}
 					</div>
 
-					<div class="flags-grid" class:hidden={flyingFlags.length > 0} data-testid="onboarding-flags-grid">
+					<div
+						class="flags-grid"
+						class:hidden={flyingFlags.length > 0}
+						data-testid="onboarding-flags-grid"
+					>
 						{#each LANGUAGES as lang (lang)}
 							<button
 								class="flag-btn"
@@ -210,19 +232,25 @@
 					</div>
 				</div>
 			{:else}
-				<div 
+				<div
 					class="step-container"
 					in:fly={transitionParams.in}
 					out:fly={transitionParams.out}
 				>
-					<div class="explanation-card" data-testid="onboarding-explanation-card">
+					<div
+						class="explanation-card"
+						data-testid="onboarding-explanation-card"
+					>
 						<div class="icon-header">
 							<div class="icon-circle">
 								<Languages size={32} />
 							</div>
 						</div>
 
-						<div class="explanation-text" data-testid="onboarding-explanation-text">
+						<div
+							class="explanation-text"
+							data-testid="onboarding-explanation-text"
+						>
 							<p>
 								{$_("onboarding.explanation")}
 								<span class="inline-icon"><Languages size={18} /></span>
@@ -509,7 +537,7 @@
 		transform: translate(var(--start-x), var(--start-y)) translate(-50%, -50%);
 		opacity: 0;
 		/* Анімація появи: стає ледь помітним (0.15) */
-		animation: flag-materialize 2.5s forwards ease-out;
+		animation: flag-materialize 5s forwards ease-out;
 		animation-delay: 0.8s;
 	}
 
@@ -523,27 +551,34 @@
 
 	/* Перехід до польоту */
 	.is-running .flying-flag {
-		opacity: 0.15;
+		opacity: 0.05;
 		animation: fly-to-settings 2s both cubic-bezier(0.4, 0, 0.2, 1);
 		animation-delay: var(--delay);
 	}
 
 	@keyframes flag-materialize {
-		from { opacity: 0; }
-		to { opacity: 0.15; }
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 0.15;
+		}
 	}
 
 	@keyframes fly-to-settings {
 		0% {
-			transform: translate(var(--start-x), var(--start-y)) translate(-50%, -50%) scale(1);
+			transform: translate(var(--start-x), var(--start-y)) translate(-50%, -50%)
+				scale(1);
 			opacity: 0.15;
 		}
 		15% {
 			opacity: 1;
-			transform: translate(var(--start-x), var(--start-y)) translate(-50%, -50%) scale(1.1);
+			transform: translate(var(--start-x), var(--start-y)) translate(-50%, -50%)
+				scale(1.1);
 		}
 		100% {
-			transform: translate(var(--target-x), var(--target-y)) translate(-50%, -50%) scale(0.1);
+			transform: translate(var(--target-x), var(--target-y))
+				translate(-50%, -50%) scale(0.1);
 			opacity: 0;
 		}
 	}
