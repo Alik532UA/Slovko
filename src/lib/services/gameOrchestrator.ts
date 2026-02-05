@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { settingsStore } from "../stores/settingsStore.svelte";
 import { playlistStore } from "../stores/playlistStore.svelte";
-import { gameDataService, type GameData, type PlaylistData } from "./gameDataService";
+import { gameDataService, type GameData } from "./gameDataService";
 import { logService } from "./logService";
-import { UrlParamsSchema, type AppSettings, type CustomWord, type Playlist } from "../data/schemas";
+import { UrlParamsSchema, type AppSettings } from "../data/schemas";
 
 export interface GameSessionResult {
 	gameData: GameData | null;

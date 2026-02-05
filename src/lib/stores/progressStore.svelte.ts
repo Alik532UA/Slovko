@@ -127,25 +127,25 @@ function createProgressStore() {
 		},
 
 		/** Internal set for SyncService to avoid infinite loops */
-		_internalSet(newData: any) {
+		_internalSet(newData: unknown) {
 			try {
 				progress = ProgressStateSchema.parse(newData);
 				if (browser) {
 					localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
 				}
-			} catch (e) {
+			} catch (e: unknown) {
 				console.error("Failed to sync progress: invalid data", e);
 			}
 		},
 
 		/** Internal set for Daily Activity */
-		_internalSetActivity(newData: any) {
+		_internalSetActivity(newData: unknown) {
 			try {
 				dailyActivity = DailyActivitySchema.parse(newData);
 				if (browser) {
 					localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(dailyActivity));
 				}
-			} catch (e) {
+			} catch (e: unknown) {
 				console.error("Failed to sync daily activity: invalid data", e);
 			}
 		},

@@ -1,9 +1,9 @@
 import {
 	serverTimestamp,
 	collection,
-	addDoc,
 	doc,
 	setDoc,
+	FirestoreError,
 } from "firebase/firestore";
 import { db, auth } from "./config";
 import { AuthService } from "./AuthService";
@@ -37,7 +37,7 @@ async function ensureAuth() {
 			await AuthService.loginAnonymously();
 			await new Promise((resolve) => setTimeout(resolve, 600));
 			user = auth.currentUser;
-		} catch (e) {
+		} catch {
 			console.warn("[FeedbackService] Could not establish anonymous session");
 		}
 	}
@@ -52,7 +52,7 @@ export const FeedbackService = {
 			const prefix = import.meta.env.DEV ? "dev_" : "";
 			const rootCollection = `${prefix}${isAnonymous ? "feedback_anonymous" : "feedback"}`;
 
-			// Використовуємо addDoc для автоматичної генерації ID та чистоти коду
+			// Використовуємо надійний референс колекції
 			const messagesRef = collection(
 				db,
 				rootCollection,
@@ -102,9 +102,10 @@ export const FeedbackService = {
 				uniqueId,
 			);
 			return true;
-		} catch (error: any) {
-			logService.error("sync", "Error submitting feedback:", error);
-			if (error.code === "permission-denied") throw new Error("AUTH_REQUIRED");
+		} catch (error: unknown) {
+			const err = error as FirestoreError;
+			logService.error("sync", "Error submitting feedback:", err);
+			if (err.code === "permission-denied") throw new Error("AUTH_REQUIRED");
 			throw error;
 		}
 	},
@@ -163,9 +164,10 @@ export const FeedbackService = {
 				uniqueId,
 			);
 			return true;
-		} catch (error: any) {
-			logService.error("sync", "Error reporting word error:", error);
-			if (error.code === "permission-denied") throw new Error("AUTH_REQUIRED");
+		} catch (error: unknown) {
+			const err = error as FirestoreError;
+			logService.error("sync", "Error reporting word error:", err);
+			if (err.code === "permission-denied") throw new Error("AUTH_REQUIRED");
 			throw error;
 		}
 	},

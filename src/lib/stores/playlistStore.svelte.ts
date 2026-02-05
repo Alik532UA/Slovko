@@ -88,25 +88,24 @@ function createPlaylistStore() {
 		return DEFAULT_STATE;
 	}
 
-	function migrateFromLegacy(oldData: any): any {
-		// Return any, let Zod fix it
+	function migrateFromLegacy(oldData: Record<string, unknown>): PlaylistState {
 		const newState = { ...DEFAULT_STATE };
 
 		if (Array.isArray(oldData.favorites)) {
 			newState.systemPlaylists.favorites.words = oldData.favorites.map(
-				(p: any) => p.id,
+				(p: { id: string }) => p.id,
 			);
 		}
 		if (Array.isArray(oldData.extra)) {
 			newState.systemPlaylists.extra.words = oldData.extra.map(
-				(p: any) => p.id,
+				(p: { id: string }) => p.id,
 			);
 		}
 		if (Array.isArray(oldData.mistakes)) {
 			newState.systemPlaylists.mistakes.words = oldData.mistakes.map(
-				(m: any) => m.pair.id,
+				(m: { pair: { id: string } }) => m.pair.id,
 			);
-			oldData.mistakes.forEach((m: any) => {
+			oldData.mistakes.forEach((m: { pair: { id: string }, correctStreak: number }) => {
 				newState.mistakeMetadata[m.pair.id] = m.correctStreak;
 			});
 		}
@@ -122,7 +121,7 @@ function createPlaylistStore() {
 	}
 
 	if (browser) {
-		window.addEventListener("storage", (e) => {
+		window.addEventListener("storage", (e: StorageEvent) => {
 			if (e.key === STORAGE_KEY && e.newValue) {
 				const parsed = JSON.parse(e.newValue);
 				const result = PlaylistStateSchema.safeParse(parsed);
@@ -153,7 +152,7 @@ function createPlaylistStore() {
 		},
 
 		/** Internal set for SyncService */
-		_internalSet(newData: any) {
+		_internalSet(newData: unknown) {
 			if (!newData) return;
 
 			try {
@@ -164,7 +163,7 @@ function createPlaylistStore() {
 				if (browser) {
 					localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 				}
-			} catch (e) {
+			} catch (e: unknown) {
 				console.error("Failed to sync playlists: invalid data", e);
 			}
 		},

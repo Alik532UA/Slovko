@@ -12,9 +12,7 @@
 	import ToastContainer from "$lib/components/ui/ToastContainer.svelte";
 	import InteractionSystem from "$lib/components/interaction/InteractionSystem.svelte";
 	import OnboardingModal from "$lib/components/onboarding/OnboardingModal.svelte";
-	import { friendsStore } from "$lib/stores/friendsStore.svelte";
 	import { authStore } from "$lib/firebase/authStore.svelte";
-	import { PresenceService } from "$lib/firebase/PresenceService.svelte";
 	import DebugListener from "$lib/components/debug/DebugListener.svelte";
 	import {
 		initGA,

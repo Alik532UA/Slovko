@@ -15,25 +15,31 @@ const recentLogs: string[] = [];
 const MAX_RECENT_LOGS = 100;
 
 export const logService = {
-	log(category: keyof typeof logConfig, message: string, ...args: any[]) {
+	log(category: keyof typeof logConfig, message: string, ...args: unknown[]) {
 		const logMsg = `[${category.toUpperCase()}] ${message}`;
 		this.addToRecent(logMsg, args);
 		if (logConfig[category]) {
 			console.log(logMsg, ...args);
 		}
 	},
-	error(category: keyof typeof logConfig, message: string, ...args: any[]) {
+	error(category: keyof typeof logConfig, message: string, ...args: unknown[]) {
 		const logMsg = `[ERROR][${category.toUpperCase()}] ${message}`;
 		this.addToRecent(logMsg, args);
 		console.error(logMsg, ...args);
 	},
-	warn(category: keyof typeof logConfig, message: string, ...args: any[]) {
+	warn(category: keyof typeof logConfig, message: string, ...args: unknown[]) {
 		const logMsg = `[WARN][${category.toUpperCase()}] ${message}`;
 		this.addToRecent(logMsg, args);
 		console.warn(logMsg, ...args);
 	},
-	addToRecent(msg: string, args: any[]) {
-		const fullMsg = `${new Date().toISOString().split('T')[1].split('.')[0]} ${msg} ${args.map(a => JSON.stringify(a)).join(' ')}`;
+	addToRecent(msg: string, args: unknown[]) {
+		const fullMsg = `${new Date().toISOString().split('T')[1].split('.')[0]} ${msg} ${args.map(a => {
+			try {
+				return JSON.stringify(a);
+			} catch {
+				return String(a);
+			}
+		}).join(' ')}`;
 		recentLogs.push(fullMsg);
 		if (recentLogs.length > MAX_RECENT_LOGS) recentLogs.shift();
 	},
@@ -44,7 +50,7 @@ export const logService = {
 	/**
 	 * Очищує об'єкт від чутливих даних перед відправкою
 	 */
-	sanitizeDetails(details: Record<string, any>): Record<string, any> {
+	sanitizeDetails(details: Record<string, unknown>): Record<string, unknown> {
 		const SENSITIVE_KEYS = ['password', 'token', 'email', 'credential', 'secret', 'key'];
 		const sanitized = { ...details };
 		
@@ -53,7 +59,7 @@ export const logService = {
 			if (SENSITIVE_KEYS.some(k => lowerKey.includes(k))) {
 				sanitized[key] = '[REDACTED]';
 			} else if (typeof sanitized[key] === 'object' && sanitized[key] !== null) {
-				sanitized[key] = this.sanitizeDetails(sanitized[key]);
+				sanitized[key] = this.sanitizeDetails(sanitized[key] as Record<string, unknown>);
 			}
 		});
 		
@@ -63,7 +69,7 @@ export const logService = {
 	/**
 	 * Записує важливі події у Firestore для аналізу
 	 */
-	async logToRemote(action: string, details: Record<string, any>) {
+	async logToRemote(action: string, details: Record<string, unknown>) {
 		try {
 			const sanitizedDetails = this.sanitizeDetails(details);
 			const { db, auth } = await import("../firebase/config");
@@ -78,7 +84,7 @@ export const logService = {
 				details: sanitizedDetails,
 				userAgent: navigator.userAgent
 			});
-		} catch (e) {
+		} catch (e: unknown) {
 			console.error("Failed to log to remote:", e);
 		}
 	}

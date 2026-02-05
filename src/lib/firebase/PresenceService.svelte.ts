@@ -1,4 +1,4 @@
-import { ref, onValue, set, onDisconnect, push, serverTimestamp, onChildAdded, remove, type Unsubscribe } from "firebase/database";
+import { ref, onValue, set, onDisconnect, serverTimestamp, onChildAdded, remove, type Unsubscribe } from "firebase/database";
 import { rtdb, auth } from "./config";
 import { logService } from "../services/logService";
 

@@ -131,13 +131,13 @@ export const FriendsService = {
 			});
 			
 			return true;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			logService.error("sync", "Error following user:", error);
 			
 			// Remote logging for errors
 			logService.logToRemote("friend_follow_error", {
 				targetUid,
-				error: error.message || error
+				error: (error as Error).message || String(error)
 			});
 			
 			return false;
@@ -180,13 +180,13 @@ export const FriendsService = {
 			logService.logToRemote("friend_unfollow_success", { targetUid });
 			
 			return true;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			logService.error("sync", "Error unfollowing user:", error);
 			
 			// Remote logging
 			logService.logToRemote("friend_unfollow_error", { 
 				targetUid, 
-				error: error.message || error 
+				error: (error as Error).message || String(error) 
 			});
 			
 			return false;
@@ -213,9 +213,9 @@ export const FriendsService = {
 			
 			logService.log("sync", `Fetched following for ${targetUid}: ${results.length} items`, results.map(r => r.uid));
 			return results;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			logService.error("sync", "Error getting following:", error);
-			logService.logToRemote("friend_get_following_error", { targetUid, error: error.message });
+			logService.logToRemote("friend_get_following_error", { targetUid, error: (error as Error).message });
 			return [];
 		}
 	},
@@ -256,9 +256,9 @@ export const FriendsService = {
 			logService.log("sync", `Successfully removed follower: ${followerUid}`);
 			logService.logToRemote("friend_remove_follower_success", { followerUid });
 			return true;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			logService.error("sync", "Error removing follower:", error);
-			logService.logToRemote("friend_remove_follower_error", { followerUid, error: error.message });
+			logService.logToRemote("friend_remove_follower_error", { followerUid, error: (error as Error).message });
 			return false;
 		}
 	},
@@ -338,9 +338,9 @@ export const FriendsService = {
 
 			logService.log("sync", `Fetched followers for ${targetUid}: ${results.length} items`, results.map(r => r.uid));
 			return results;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			logService.error("sync", "Error getting followers:", error);
-			logService.logToRemote("friend_get_followers_error", { targetUid, error: error.message });
+			logService.logToRemote("friend_get_followers_error", { targetUid, error: (error as Error).message });
 			return [];
 		}
 	},
@@ -622,21 +622,21 @@ export const FriendsService = {
 
 			const snapshot = await getDocs(q);
 			let results = snapshot.docs.map((doc) => {
-				const data = doc.data() as any;
+				const data = doc.data() as Record<string, any>;
 				// Робимо детекцію аноніма суворішою для легасі даних
 				const isAnonymous = data.isAnonymous === true || 
 					(data.isAnonymous === undefined && !data.searchableEmail);
 
 				return {
 					uid: doc.id,
-					name: data.displayName || "User",
-					score: data[sortField] || 0,
-					photoURL: data.photoURL,
+					name: (data.displayName as string) || "User",
+					score: (data[sortField] as number) || 0,
+					photoURL: data.photoURL as string | null,
 					isMe: doc.id === auth.currentUser?.uid,
 					isAnonymous,
 					// Додаткові поля
-					totalAttempts: data.totalAttempts || 0,
-					bestCorrectStreakLevel: data.bestCorrectStreakLevel,
+					totalAttempts: (data.totalAttempts as number) || 0,
+					bestCorrectStreakLevel: data.bestCorrectStreakLevel as string | undefined,
 				};
 			});
 
@@ -659,7 +659,7 @@ export const FriendsService = {
 
 			LEADERBOARD_CACHE[cacheKey] = { data: finalResults, timestamp: Date.now() };
 			return finalResults;
-		} catch (error) {
+		} catch (error: unknown) {
 			logService.error("sync", "Error getting leaderboard:", error);
 			return [];
 		}

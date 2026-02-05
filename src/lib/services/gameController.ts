@@ -13,7 +13,6 @@ import {
 } from "./gameFeedbackHandler";
 import { createCardsFromWordKeys } from "./gameCardFactory";
 import type { ActiveCard, CardStatus, WordPair } from "../types";
-import type { Playlist, CustomWord } from "../data/schemas";
 
 /**
  * GameController — сервіс для координації ігрової логіки.

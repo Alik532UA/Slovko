@@ -12,10 +12,8 @@
 	import ErrorFallback from "$lib/components/ui/ErrorFallback.svelte";
 	import ErrorBoundary from "$lib/components/ui/ErrorBoundary.svelte";
 
-	import { goto, replaceState } from "$app/navigation";
+	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
-
-	import { logService } from "$lib/services/logService";
 
 	import { untrack } from "svelte";
 	import { UrlSyncService } from "$lib/services/urlSyncService";

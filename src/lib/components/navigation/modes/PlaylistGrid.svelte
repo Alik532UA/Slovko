@@ -6,14 +6,11 @@
 		Settings2,
 		Trash2,
 		Upload,
-		Heart,
-		RotateCcw,
 	} from "lucide-svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { playlistStore } from "$lib/stores/playlistStore.svelte";
 	import PlaylistModal from "../PlaylistModal.svelte";
 	import { PLAYLIST_ICONS_MAP } from "$lib/config/icons";
-	import type { Playlist } from "$lib/data/schemas";
 	import type { PlaylistId } from "$lib/types";
 
 	interface Props {

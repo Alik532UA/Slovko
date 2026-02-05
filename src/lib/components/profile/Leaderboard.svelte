@@ -209,9 +209,6 @@
 				{@const localValue = user.isMe ? getLocalMetricValue(selectedMetric, selectedLevel) : 0}
 				{@const displayScore = user.isMe ? Math.max(user.score, localValue) : user.score}
 
-				{@const Icon = getIconComponent(realPhoto)}
-				{@const avatarColor = getAvatarColor(realPhoto)}
-
 				<!-- Додаємо рівень до testid, якщо ми на вкладці "Всі" -->
 				{@const levelSuffix =
 					selectedLevel === "all" && user.bestCorrectStreakLevel
