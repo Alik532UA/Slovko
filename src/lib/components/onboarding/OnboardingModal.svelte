@@ -291,7 +291,9 @@
 	}
 
 	.onboarding-overlay.transparent .step-wrapper {
-		display: none;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.6s ease;
 	}
 
 	.explanation-card {
@@ -506,8 +508,9 @@
 		pointer-events: none;
 		transform: translate(var(--start-x), var(--start-y)) translate(-50%, -50%);
 		opacity: 0;
-		/* Анімація появи на 3 секунди */
-		animation: flag-materialize 3s forwards ease-out;
+		/* Анімація появи: стає ледь помітним (0.15) */
+		animation: flag-materialize 2.5s forwards ease-out;
+		animation-delay: 0.8s;
 	}
 
 	.flying-flag img {
@@ -520,8 +523,8 @@
 
 	/* Перехід до польоту */
 	.is-running .flying-flag {
-		opacity: 1;
-		animation: fly-to-settings 2s forwards cubic-bezier(0.4, 0, 0.2, 1);
+		opacity: 0.15;
+		animation: fly-to-settings 2s both cubic-bezier(0.4, 0, 0.2, 1);
 		animation-delay: var(--delay);
 	}
 
