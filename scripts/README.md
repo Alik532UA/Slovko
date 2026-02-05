@@ -1,13 +1,20 @@
-# Slovko Scripts
+---
+Назва: Скрипти Slovko
+Опис: Огляд структури та призначення папки зі скриптами.
+Тип: Документація
+Дати: Створено 2026-02-05, Оновлено 2026-02-05
+---
 
-This folder contains utility scripts for data management, analysis, and generation.
+# Скрипти Slovko
 
-- **[SCRIPTS_CATALOG.md](./SCRIPTS_CATALOG.md)** — Detailed description of each script.
-- **[README_OLD.md](./README.md)** (this file) — Overview of the structure.
+Ця папка містить допоміжні скрипти для керування даними, аналізу та генерації.
 
-## Folder Structure
+- **[SCRIPTS_CATALOG.md](./SCRIPTS_CATALOG.md)** — Детальний опис кожного скрипта.
+- **[README_OLD.md](./README.md)** (цей файл) — Огляд структури.
 
-- `analysis/` — Scripts to find missing translations, analyze polysemy, etc.
-- `generation/` — Tools to add new words or topics.
-- `maintenance/` — Data synchronization, key fixes, and migrations.
-  - `legacy_fixes/` — Archive of one-time scripts.
+## Структура папок
+
+- `analysis/` — Скрипти для пошуку відсутніх перекладів, аналізу полісемії тощо.
+- `generation/` — Інструменти для додавання нових слів або тем.
+- `maintenance/` — Синхронізація даних, виправлення ключів та міграції.
+  - `legacy_fixes/` — Архів одноразових скриптів.

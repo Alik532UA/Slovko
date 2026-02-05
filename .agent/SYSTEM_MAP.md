@@ -1,75 +1,82 @@
-# System Map (Slovko)
+---
+Назва: Системна карта (Slovko)
+Опис: Огляд архітектури проекту, зокрема логіки гри (MVC).
+Тип: Документація
+Дати: Створено 2026-02-05, Оновлено 2026-02-05
+---
 
-## Overview
+# Системна карта (Slovko)
 
-This document maps the key architectural components of the Slovko project, specifically focusing on the Game Logic layer which has recently undergone refactoring to a Model-View-Controller (MVC) pattern.
+## Огляд
 
-## Core Architecture (Game)
+Цей документ описує ключові архітектурні компоненти проекту Slovko, зосереджуючись на рівні логіки гри, який було рефакторизовано за шаблоном Model-View-Controller (MVC).
 
-### 1. View (UI Components)
+## Основна архітектура (Гра)
 
-Responsible for rendering the game state and capturing user input.
+### 1. View (UI Компоненти)
 
-- **`src/lib/components/game/GameBoard.svelte`**: Main game container. Renders cards and layout.
-- **`src/lib/components/game/WordCard.svelte`**: Individual card component.
-- **`src/lib/components/game/GameStats.svelte`**: Stats bar (streak, accuracy) and control buttons (hint, learning mode).
-- **`src/lib/components/game/CardContextMenu.svelte`**: Context menu for additional actions (listen, favorite).
+Відповідає за відображення стану гри та обробку вводу користувача.
 
-**Interaction:** Components _read_ data from `gameState` (Store) and _call_ methods on `gameController` (Controller).
+- **`src/lib/components/game/GameBoard.svelte`**: Основний контейнер гри. Відображає картки та макет.
+- **`src/lib/components/game/WordCard.svelte`**: Компонент окремої картки.
+- **`src/lib/components/game/GameStats.svelte`**: Панель статистики (серія, точність) та кнопки керування (підказка, режим навчання).
+- **`src/lib/components/game/CardContextMenu.svelte`**: Контекстне меню для додаткових дій (прослухати, додати в обране).
 
-### 2. Model (State Store)
+**Взаємодія:** Компоненти *читають* дані з `gameState` (Store) та *викликають* методи `gameController` (Controller).
 
-Responsible for holding the current state of the game in a pure, reactive way.
+### 2. Model (Сховище стану)
+
+Відповідає за збереження поточного стану гри у чистому, реактивному вигляді.
 
 - **`src/lib/stores/gameState.svelte.ts`**:
-  - **Type:** Svelte 5 Runes Store.
-  - **Responsibility:** Holds `sourceCards`, `targetCards`, `stats`, `isLoading`, etc.
-  - **Pattern:** Passive Data Store. It has setters/updaters but contains NO business logic (e.g., no "rules of the game").
+  - **Тип:** Svelte 5 Runes Store.
+  - **Відповідальність:** Зберігає `sourceCards`, `targetCards`, `stats`, `isLoading` тощо.
+  - **Шаблон:** Passive Data Store (Пасивне сховище даних). Містить сетери/оновлювачі, але НЕ містить бізнес-логіки (наприклад, правил гри).
   - **API:** `setCards`, `updateCardStatus`, `recordMatch`, `getAvailableWords`.
 
-### 3. Controller (Game Logic)
+### 3. Controller (Логіка гри)
 
-Responsible for coordinating the game flow, enforcing rules, and managing side effects.
+Відповідає за координацію ігрового процесу, дотримання правил та керування побічними ефектами.
 
 - **`src/lib/services/gameController.ts`**:
-  - **Responsibility:**
-    - `initGame()`: Orchestrates data loading and initial setup.
-    - `selectCard()`: Handles user clicks, match/miss logic.
-    - `handleMatch()` / `handleMiss()`: Updates score, plays audio.
-    - `checkAndRefill()`: Monitoring board state to add new words.
-    - `useHint()` / `runLearningLoop()`: Automation logic.
-  - **Dependencies:** Uses `gameState` to update the view, `gameDataService` for data, `gameAudioHandler` for sound.
+  - **Відповідальність:**
+    - `initGame()`: Оркеструє завантаження даних та початкове налаштування.
+    - `selectCard()`: Обробляє кліки користувача, логіку співпадіння/помилки.
+    - `handleMatch()` / `handleMiss()`: Оновлює рахунок, відтворює звук.
+    - `checkAndRefill()`: Моніторить стан ігрового поля для додавання нових слів.
+    - `useHint()` / `runLearningLoop()`: Логіка автоматизації.
+  - **Залежності:** Використовує `gameState` для оновлення вигляду, `gameDataService` для отримання даних, `gameAudioHandler` для звуку.
 
-### 4. Services (Infrastructure)
+### 4. Сервіси (Інфраструктура)
 
-Helper services that handle specific domain capabilities.
+Допоміжні сервіси, що забезпечують специфічні можливості домену.
 
-- **`src/lib/services/gameDataService.ts`**: Unified data loader (Translations, Transcriptions).
-- **`src/lib/services/gameAudioHandler.ts`**: Manages audio playback for game events.
-- **`src/lib/services/gameFeedbackHandler.ts`**: Manages progress saving (streaks, mistakes) and external store updates.
-- **`src/lib/data/wordService.ts`**: Low-level JSON loader (to be merged with gameDataService).
+- **`src/lib/services/gameDataService.ts`**: Уніфікований завантажувач даних (переклади, транскрипції).
+- **`src/lib/services/gameAudioHandler.ts`**: Керує відтворенням аудіо для ігрових подій.
+- **`src/lib/services/gameFeedbackHandler.ts`**: Керує збереженням прогресу (серії, помилки) та оновленням зовнішніх сховищ.
+- **`src/lib/data/wordService.ts`**: Низькорівневий завантажувач JSON (планується об'єднання з gameDataService).
 
-## Data Flow
+## Потік даних (Data Flow)
 
-1.  **User Action:** User clicks a card in `GameBoard`.
-2.  **Controller:** `gameController.selectCard(card)` is called.
-3.  **Logic:** Controller checks `gameState` for `selectedCard`.
-    - If first selection: Calls `gameState.setSelectedCard(card)`.
-    - If second selection: Checks match.
-4.  **Update:**
-    - **Match:** Controller calls `gameState.updateCardStatus('correct')`, plays sound, updates stats.
-    - **Miss:** Controller calls `gameState.updateCardStatus('wrong')`, resets selection after delay.
-5.  **Reactive Update:** `gameState` updates runed values -> Svelte re-renders `GameBoard` automatically.
+1.  **Дія користувача:** Користувач клікає на картку в `GameBoard`.
+2.  **Контролер:** Викликається `gameController.selectCard(card)`.
+3.  **Логіка:** Контролер перевіряє `gameState` на наявність `selectedCard`.
+    - Якщо перший вибір: Викликає `gameState.setSelectedCard(card)`.
+    - Якщо другий вибір: Перевіряє співпадіння.
+4.  **Оновлення:**
+    - **Співпадіння:** Контролер викликає `gameState.updateCardStatus('correct')`, програє звук, оновлює статистику.
+    - **Помилка:** Контролер викликає `gameState.updateCardStatus('wrong')`, скидає вибір після затримки.
+5.  **Реактивне оновлення:** `gameState` оновлює rune-значення -> Svelte автоматично перемальовує `GameBoard`.
 
-## Key Files & Locations
+## Ключові файли та розташування
 
-| Component      | Path                                       | Description                     |
-| :------------- | :----------------------------------------- | :------------------------------ |
-| **Store**      | `src/lib/stores/gameState.svelte.ts`       | The "Database" of the frontend. |
-| **Controller** | `src/lib/services/gameController.ts`       | The "Brain" of the game.        |
-| **View**       | `src/lib/components/game/GameBoard.svelte` | The "Face" of the game.         |
+| Компонент      | Шлях                                       | Опис                         |
+| :------------- | :----------------------------------------- | :--------------------------- |
+| **Сховище**    | `src/lib/stores/gameState.svelte.ts`       | "База даних" фронтенду.      |
+| **Контролер**  | `src/lib/services/gameController.ts`       | "Мозок" гри.                 |
+| **Вигляд**     | `src/lib/components/game/GameBoard.svelte` | "Обличчя" гри.               |
 
-## Future Improvements
+## Майбутні покращення
 
-- Merge `wordService` and `gameDataService`.
-- Add stricter state machine for `CardStatus`.
+- Об'єднати `wordService` та `gameDataService`.
+- Додати строгий автомат станів (state machine) для `CardStatus`.

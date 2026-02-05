@@ -1,63 +1,70 @@
-# Scripts Catalog
+---
+Назва: Каталог скриптів
+Опис: Повний перелік інструментів для обслуговування, аналізу та генерації даних.
+Тип: Документація
+Дати: Створено 2026-02-05, Оновлено 2026-02-05
+---
 
-Use these scripts to maintain, analyze, and generate data for the app.
-Run with `node scripts/path/to/script.js`.
+# Каталог скриптів
 
-## 🛠️ Maintenance (Data Integrity)
+Використовуйте ці скрипти для підтримки, аналізу та генерації даних для додатка.
+Запуск: `node scripts/шлях/до/скрипта.js`.
 
-_Located in `scripts/maintenance/`_
+## 🛠️ Обслуговування (Цілісність даних)
 
-### Core Tools
+*Розташовані в `scripts/maintenance/`*
 
-- **`run_global_migration.js`**: Runs the full data migration pipeline (words -> translations -> transcriptions).
-- **`translation_engine.js`**: Core logic for handling translations and semantic keys.
-- **`sync_all_keys.cjs`**: Synchronizes all keys across levels and languages.
-- **`global_fix_translations.js`**: Applies global fixes to translations based on predefined rules.
-- **`auto_translate_mymemory.js`**: Uses MyMemory API for automatic translation (use with caution).
-- **`cleanup_word_lists.cjs`**: Standardizes word list files.
+### Основні інструменти
 
-### Specific Level Tools
+- **`run_global_migration.js`**: Запускає повний конвеєр міграції даних (слова -> переклади -> транскрипції).
+- **`translation_engine.js`**: Основна логіка для обробки перекладів та семантичних ключів.
+- **`sync_all_keys.cjs`**: Синхронізує всі ключі між рівнями та мовами.
+- **`global_fix_translations.js`**: Застосовує глобальні виправлення до перекладів на основі попередньо визначених правил.
+- **`auto_translate_mymemory.js`**: Використовує MyMemory API для автоматичного перекладу (використовувати обережно).
+- **`cleanup_word_lists.cjs`**: Стандартизує файли списків слів.
 
-- **`fix_b2_gaps_from_other_levels.js`**: Fills missing data in B2 using other levels as sources.
-- **`fix_b2_semantic_keys.js`**: Updates B2 keys to follow the semantic naming convention.
-- **`import_b2_translations.js`**: Imports translations from CSV-like text files.
-- **`fill_remaining_b2.js`**: Fills empty slots with English keys (last resort).
+### Інструменти для конкретних рівнів
 
-### Topics & Phrases
+- **`fix_b2_gaps_from_other_levels.js`**: Заповнює відсутні дані в B2, використовуючи інші рівні як джерела.
+- **`fix_b2_semantic_keys.js`**: Оновлює ключі B2 відповідно до конвенції семантичних назв.
+- **`import_b2_translations.js`**: Імпортує переклади з текстових файлів, схожих на CSV.
+- **`fill_remaining_b2.js`**: Заповнює порожні слоти англійськими ключами (останній засіб).
 
-- **`sync_topic_translations.js`**: Ensures topic translation files match topic word lists.
-- **`cleanup_topics.js`**: Removes duplicate words within topics.
-- **`fix_topic_keys.js`**: Normalizes keys in topic files.
-- **`migrate_phrases.cjs`**: Handles migration of phrase data.
-- **`generate_phrase_migration.js`**: Generates mapping for phrase migration.
+### Теми та фрази
 
-## 🔍 Analysis (Debugging)
+- **`sync_topic_translations.js`**: Забезпечує відповідність файлів перекладу тем спискам слів тем.
+- **`cleanup_topics.js`**: Видаляє дублікати слів у межах тем.
+- **`fix_topic_keys.js`**: Нормалізує ключі у файлах тем.
+- **`migrate_phrases.cjs`**: Обробляє міграцію даних фраз.
+- **`generate_phrase_migration.js`**: Генерує мапінг для міграції фраз.
 
-_Located in `scripts/analysis/`_
+## 🔍 Аналіз (Налагодження)
 
-- **`analyze_all_translations.js`**: Comprehensive check for missing or incorrect translations across all levels and languages.
-- **`vocab_analysis.js`**: Statistics and deep analysis of the vocabulary.
-- **`find_missing_all.js`**: Project-wide scan for missing keys.
-- **`analyze_polysemy.js`**: Detailed report on words with multiple meanings (polysemy).
-- **`generate_md_report.js`**: Generates the `GLOBAL_TRANSLATION_REPORT.md`.
-- **`test_ipa_rules.cjs`**: Validates phonetic transcription rules and IPA mapping.
-- **`analyze_new_words.js`**: Analyzes newly added words for consistency.
+*Розташовані в `scripts/analysis/`*
 
-## ⚙️ Generation (Content Creation)
+- **`analyze_all_translations.js`**: Комплексна перевірка відсутніх або неправильних перекладів на всіх рівнях та мовах.
+- **`vocab_analysis.js`**: Статистика та глибокий аналіз словникового запасу.
+- **`find_missing_all.js`**: Сканування всього проекту на наявність відсутніх ключів.
+- **`analyze_polysemy.js`**: Детальний звіт про слова з декількома значеннями (полісемія).
+- **`generate_md_report.js`**: Генерує файл `GLOBAL_TRANSLATION_REPORT.md`.
+- **`test_ipa_rules.cjs`**: Перевіряє правила фонетичної транскрипції та мапінг IPA.
+- **`analyze_new_words.js`**: Аналізує новододані слова на відповідність.
 
-_Located in `scripts/generation/`_
+## ⚙️ Генерація (Створення контенту)
 
-- **`add_words_batch.js`**: Adds a batch of words to a level.
-- **`create_topics.js`**: Scaffolding for new topics.
-- **`align_topics.js`**: Aligns topic files with master lists.
-- **`build_translation_map.js`**: Builds a map of translations for faster processing.
+*Розташовані в `scripts/generation/`*
 
-## 📂 Root & Utility Scripts
+- **`add_words_batch.js`**: Додає пакет слів до рівня.
+- **`create_topics.js`**: Створення основи (scaffolding) для нових тем.
+- **`align_topics.js`**: Узгоджує файли тем із майстер-списками.
+- **`build_translation_map.js`**: Створює карту перекладів для швидшої обробки.
 
-- **`bump-version.js`**: Increases version in `package.json` and `static/app-version.json`.
-- **`organize_scripts.js`**: (Internal) Helper to maintain this folder structure.
+## 📂 Кореневі та допоміжні скрипти
 
-## 🏛️ Legacy Fixes
+- **`bump-version.js`**: Збільшує версію в `package.json` та `static/app-version.json`.
+- **`organize_scripts.js`**: (Внутрішній) Помічник для підтримки структури папок.
 
-_Located in `scripts/maintenance/legacy_fixes/`_
-Contains one-time migration scripts and old fixes that are kept for historical reference or potential re-runs if data is reverted.
+## 🏛️ Застарілі виправлення (Legacy)
+
+*Розташовані в `scripts/maintenance/legacy_fixes/`*
+Містить одноразові скрипти міграції та старі виправлення, які зберігаються для історії або повторного запуску у разі відкату даних.

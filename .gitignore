@@ -3,6 +3,7 @@ node_modules
 .private
 .private/notes.txt
 .agent/rules
+README-source.md
 
 # Output
 .output

@@ -1,51 +1,18 @@
-# sv
+---
+Назва: Slovko - Додаток для вивчення слів
+Опис: Проект для ефективного вивчення іноземних слів.
+Тип: Документація
+Дати: Створено 2026-02-05, Оновлено 2026-02-05
+---
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+# Slovko
 
-## Creating a project
+**Slovko** — це сучасний веб-додаток для вивчення іноземних слів, створений з використанням Svelte 5 та сучасних підходів до проектування інтерфейсів.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## ☕ Підтримка проекту
 
-```sh
-# create a new project
-npx sv create my-app
-```
+Ми розвиваємо Slovko як інструмент, що допомагає людям розширювати свій словниковий запас. Якщо ви вважаєте цей проект корисним або хочете подякувати за нашу роботу, ви можете підтримати нас фінансово:
 
-To recreate this project with the same configuration:
+👉 **[Підтримати проект через Monobank (Банка)](https://send.monobank.ua/jar/7sCsydhJnR)**
 
-```sh
-# recreate this project
-npx sv create --template minimal --types ts --install npm ./
-```
-
-## 🤖 For AI Agents & Developers
-
-If you are an AI assistant or a developer working on this codebase, please refer to the following guides:
-
-- **[Architecture Guide](AI_ARCHITECTURE.md)**: Detailed overview of data structures, state management, and project conventions.
-- **[Scripts Catalog](scripts/SCRIPTS_CATALOG.md)**: Complete list of maintenance and generation tools available in the `scripts/` directory.
-
-## 🛠️ Development
-
-```bash
-# Install dependencies
-npm install
-
-# Start dev server
-npm run dev
-
-# Run type checks
-npm run check
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+Ваша підтримка допомагає нам швидше впроваджувати нові функції та покращувати навчальні матеріали. Дякуємо!
