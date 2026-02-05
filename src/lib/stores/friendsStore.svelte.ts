@@ -14,7 +14,7 @@ class FriendsStoreClass {
 	 * Завантажити всі дані про друзів
 	 */
 	async refreshAll() {
-		if (!auth.currentUser) return;
+		if (!auth.currentUser || this.isLoading) return;
 		this.isLoading = true;
 
 		try {

@@ -61,6 +61,7 @@ class SyncServiceClass {
 
 	private isDownloading = false;
 	private isUploading = false;
+	private currentUid: string | null = null;
 
 	constructor() {
 		if (typeof window !== "undefined") {
@@ -73,7 +74,13 @@ class SyncServiceClass {
 	 * Ініціалізація синхронізації для користувача
 	 */
 	init(uid: string) {
+		if (this.currentUid === uid && this.unsubscribe) {
+			logService.log("sync", "Sync already initialized for this user, skipping.");
+			return;
+		}
+
 		this.stop();
+		this.currentUid = uid;
 		this.hasInitialData = false;
 		this.status = "syncing";
 
@@ -126,6 +133,7 @@ class SyncServiceClass {
 			clearTimeout(this.uploadTimeout);
 			this.uploadTimeout = null;
 		}
+		this.currentUid = null;
 		this.retryCount = 0;
 		this.status = "idle";
 	}
@@ -342,20 +350,29 @@ class SyncServiceClass {
 	}
 
 	private mergeProgress(local: ProgressState, cloud: any): ProgressState {
-		// Для лічильників беремо максимум
+		// Обчислюємо сумарні показники з рівнів для валідації цілісності
+		const levelStats = this.mergeLevelStats(local.levelStats, cloud.levelStats || {});
+		const sumLevelCorrect = Object.values(levelStats).reduce((sum, s) => sum + s.totalCorrect, 0);
+		
+		// Для лічильників беремо максимум, але не менше суми по рівнях (Integrity Protection)
+		const baseTotalCorrect = Math.max(local.totalCorrect, cloud.totalCorrect || 0);
+		const restored = Math.max(local.restoredPoints || 0, cloud.restoredPoints || 0);
+		
+		// Total Correct = Сума по рівнях + відновлені бали
+		const validatedTotalCorrect = Math.max(baseTotalCorrect, sumLevelCorrect + restored);
+
 		const merged: ProgressState = {
 			...local,
 			...cloud,
-			totalCorrect: Math.max(local.totalCorrect, cloud.totalCorrect || 0),
+			totalCorrect: validatedTotalCorrect,
 			totalAttempts: Math.max(local.totalAttempts, cloud.totalAttempts || 0),
-			// Зберігаємо відновлені бали
-			restoredPoints: Math.max(local.restoredPoints || 0, cloud.restoredPoints || 0),
+			restoredPoints: restored,
 			restorationHistory: this.mergeArrays(local.restorationHistory || [], cloud.restorationHistory || [], (i) => i.timestamp + i.reason),
 			bestStreak: Math.max(local.bestStreak, cloud.bestStreak || 0),
 			bestCorrectStreak: Math.max(local.bestCorrectStreak, cloud.bestCorrectStreak || 0),
 			lastUpdated: Math.max(local.lastUpdated, cloud.lastUpdated || 0),
 			words: this.mergeWordProgress(local.words, cloud.words || {}),
-			levelStats: this.mergeLevelStats(local.levelStats, cloud.levelStats || {}),
+			levelStats: levelStats,
 		};
 		return merged;
 	}
