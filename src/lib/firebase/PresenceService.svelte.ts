@@ -45,13 +45,20 @@ class PresenceServiceClass {
 	private isPaused = false;
 	private currentUid: string | null = null;
 	private initialStatusLoaded: Set<string> = new Set();
+	private boundHandleVisibilityChange: (() => void) | null = null;
 
 	/**
 	 * Додає подію в чергу
 	 */
 	private addInteraction(event: Omit<InteractionEvent, 'id' | 'timestamp' | 'state'> & { state?: InteractionEvent['state'] }) {
-		// Робимо ID унікальним для кожної події, щоб вони не перекривали одна одну
-		const id = `${event.type}-${event.uid}-${Math.random().toString(36).slice(2, 9)}`;
+		// Захист від дублювання: не додаємо 'online', якщо він вже є для цього юзера
+		if (event.type === 'online') {
+			const exists = this.interactions.some(i => i.uid === event.uid && i.type === 'online');
+			if (exists) return;
+		}
+
+		// Використовуємо надійний UUID
+		const id = crypto.randomUUID();
 		
 		const newEvent: InteractionEvent = {
 			id,
@@ -91,7 +98,11 @@ class PresenceServiceClass {
 		logService.log("presence", "Initializing PresenceService for:", uid);
 		
 		if (typeof document !== "undefined") {
-			document.addEventListener("visibilitychange", () => this.handleVisibilityChange());
+			if (this.boundHandleVisibilityChange) {
+				document.removeEventListener("visibilitychange", this.boundHandleVisibilityChange);
+			}
+			this.boundHandleVisibilityChange = () => this.handleVisibilityChange();
+			document.addEventListener("visibilitychange", this.boundHandleVisibilityChange);
 		}
 
 		const userStatusRef = ref(rtdb, `/status/${uid}`);
@@ -266,9 +277,14 @@ class PresenceServiceClass {
 	}
 
 	/**
-	 * Зупиняє відстеження (при логауті)
+	 * Зупиняє відстеження та очищує ресурси
 	 */
 		goOffline(uid: string) {
+			if (typeof document !== "undefined" && this.boundHandleVisibilityChange) {
+				document.removeEventListener("visibilitychange", this.boundHandleVisibilityChange);
+				this.boundHandleVisibilityChange = null;
+			}
+
 			const userStatusRef = ref(rtdb, `/status/${uid}`);
 			set(userStatusRef, {
 				state: "offline",
@@ -287,6 +303,7 @@ class PresenceServiceClass {
 			this.signalUnsubscribe = null;
 		}
 		this.processedSignals.clear();
+		this.currentUid = null;
 	}
 
 	/**

@@ -66,24 +66,27 @@ function createAuthStore() {
 	 * Створює новий об'єкт стану, гарантуючи реактивність Svelte 5
 	 */
 	function updateState(user: User | null) {
+		const oldUid = state.uid;
 		firebaseUser = user;
-		state = serializeUser(user); // Новий об'єкт — тригерить реактивність
+
+		if (user) {
+			state = serializeUser(user);
+			SyncService.init(user.uid);
+			PresenceService.init(user.uid);
+			friendsStore.refreshAll();
+		} else {
+			if (oldUid) PresenceService.goOffline(oldUid);
+			SyncService.stop();
+			SyncService.resetLocalData();
+			friendsStore.reset();
+			state = serializeUser(null);
+		}
 
 		console.log("[AuthStore] State updated:", {
 			uid: state.uid,
 			email: state.email,
 			isAnonymous: state.isAnonymous,
 		});
-
-		if (user) {
-			SyncService.init(user.uid);
-			PresenceService.init(user.uid);
-			friendsStore.refreshAll();
-		} else {
-			if (state.uid) PresenceService.goOffline(state.uid);
-			SyncService.stop();
-			friendsStore.reset();
-		}
 	}
 
 	// Ініціалізація слухача Firebase Auth
@@ -195,27 +198,12 @@ function createAuthStore() {
 
 		async logout() {
 			console.log("[AuthStore] Logging out...");
-			const uid = state.uid;
 			
-			// 1. Зупиняємо синхронізацію негайно
-			SyncService.stop();
+			// Примусово зберігаємо останні дані перед виходом
+			await SyncService.uploadAll(true);
 			
-			// 2. Ставимо статус офлайн, поки токен ще валідний
-			if (uid) {
-				try {
-					await PresenceService.goOffline(uid);
-				} catch (e) {
-					console.warn("[AuthStore] Presence offline failed", e);
-				}
-			}
-			
-			// 3. Очищуємо локальні дані
-			SyncService.resetLocalData();
-			friendsStore.reset();
-			
-			// 4. Офіційний логаут Firebase
+			// Офіційний логаут Firebase. updateState(null) буде викликано через listener
 			await AuthService.logout();
-			updateState(null);
 		},
 	};
 }

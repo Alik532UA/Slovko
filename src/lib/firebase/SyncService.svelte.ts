@@ -63,19 +63,21 @@ class SyncServiceClass {
 	private isUploading = false;
 	private consecutiveFailures = 0;
 	private currentUid: string | null = null;
+	private boundHandleVisibilityChange: (() => void) | null = null;
 
 	constructor() {
 		if (typeof window !== "undefined") {
 			window.addEventListener("online", () => this.handleNetworkChange(true));
 			window.addEventListener("offline", () => this.handleNetworkChange(false));
 			
-			// Захист від закриття вкладки під час синхронізації
-			window.addEventListener("beforeunload", (e) => {
-				if (this.status === "syncing" || this.uploadTimeout) {
-					e.preventDefault();
-					e.returnValue = "";
+			// Надійний спосіб збереження при закритті/згортанні
+			this.boundHandleVisibilityChange = () => {
+				if (document.visibilityState === "hidden" && (this.uploadTimeout || this.status === "syncing")) {
+					logService.log("sync", "App hidden, forcing immediate sync...");
+					this.performUpload();
 				}
-			});
+			};
+			document.addEventListener("visibilitychange", this.boundHandleVisibilityChange);
 		}
 	}
 
@@ -142,6 +144,10 @@ class SyncServiceClass {
 			clearTimeout(this.uploadTimeout);
 			this.uploadTimeout = null;
 		}
+		if (typeof document !== "undefined" && this.boundHandleVisibilityChange) {
+			document.removeEventListener("visibilitychange", this.boundHandleVisibilityChange);
+			this.boundHandleVisibilityChange = null;
+		}
 		this.isUploading = false;
 		this.isDownloading = false;
 		this.currentUid = null;
@@ -190,16 +196,20 @@ class SyncServiceClass {
 	}
 
 	/**
-	 * Вивантажити локальні зміни в хмару (з дебаунсом)
+	 * Вивантажити локальні зміни в хмару (з дебаунсом або примусово)
 	 */
-	uploadAll() {
+	uploadAll(force = false) {
 		if (!auth.currentUser || this.isDownloading || !this.isOnline) return;
 
 		if (this.uploadTimeout) clearTimeout(this.uploadTimeout);
 
-		this.uploadTimeout = setTimeout(() => {
+		if (force) {
 			this.performUpload();
-		}, 3000);
+		} else {
+			this.uploadTimeout = setTimeout(() => {
+				this.performUpload();
+			}, 3000);
+		}
 	}
 
 	private async performUpload() {
