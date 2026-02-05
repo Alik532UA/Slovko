@@ -272,7 +272,7 @@ class PresenceServiceClass {
 		logService.log("interaction", `Attempting to send ${type} to:`, targetUid);
 		this[lastSentTimestampKey] = now;
 
-		const signalsRef = ref(rtdb, `/signals/${targetUid}`);
+		const signalRef = ref(rtdb, `/signals/${targetUid}/${auth.currentUser.uid}`);
 		const newSignal: Signal = {
 			type,
 			fromUid: auth.currentUser.uid,
@@ -287,7 +287,7 @@ class PresenceServiceClass {
 				this.updateInteractionState(eventId, 'sent');
 			}
 
-			await push(signalsRef, newSignal);
+			await set(signalRef, newSignal);
 			logService.log("interaction", `${type} successfully sent to:`, targetUid);
 		} catch (error) {
 			logService.error("interaction", `Failed to send ${type}:`, error);

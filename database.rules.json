@@ -10,9 +10,9 @@
     "signals": {
       "$uid": {
         ".read": "auth != null && auth.uid === $uid",
-        "$signalId": {
-          ".write": "auth != null && (auth.uid === $uid || (!data.exists() && newData.child('fromUid').val() === auth.uid))",
-          ".validate": "newData.hasChildren(['fromUid', 'type', 'timestamp']) && newData.child('timestamp').val() <= now"
+        "$senderUid": {
+          ".write": "auth != null && (auth.uid === $uid || (auth.uid === $senderUid && !data.exists()))",
+          ".validate": "newData.hasChildren(['fromUid', 'type', 'timestamp']) && newData.child('fromUid').val() === auth.uid && newData.child('timestamp').val() <= now"
         }
       }
     }
