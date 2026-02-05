@@ -18,25 +18,65 @@ export interface Signal {
 	timestamp: number;
 }
 
+export interface InteractionEvent {
+	id: string;
+	type: 'online' | 'incoming_wave' | 'manual_menu';
+	uid: string;
+	profile: { name: string; photoURL: string | null };
+	timestamp: number;
+	state: 'collapsed' | 'expanded' | 'sent';
+}
+
 /**
  * PresenceService — сервіс для відстеження онлайн-статусу та обміну сигналами.
  */
 class PresenceServiceClass {
 	// Реактивна карта статусів: [uid] -> UserStatus
 	friendsStatus = $state<Record<string, UserStatus>>({});
-	// Останній отриманий сигнал
-	latestSignal = $state<Signal | null>(null);
 	
-	// Стан для меню взаємодії
-	activeTargetUid = $state<string | null>(null);
-	activeTargetProfile = $state<{ name: string; photoURL: string | null } | null>(null);
+	// Черга активних подій взаємодії
+	interactions = $state<InteractionEvent[]>([]);
 	
 	private statusUnsubscribers: Map<string, { unsub: Unsubscribe, count: number }> = new Map();
 	private signalUnsubscribe: Unsubscribe | null = null;
 	private lastWaveSentAt: number = 0;
+	private lastSignalSentAt: number = 0;
 	private processedSignals: Set<string> = new Set();
 	private isPaused = false;
 	private currentUid: string | null = null;
+	private initialStatusLoaded: Set<string> = new Set();
+
+	/**
+	 * Додає подію в чергу
+	 */
+	private addInteraction(event: Omit<InteractionEvent, 'id' | 'timestamp' | 'state'> & { state?: InteractionEvent['state'] }) {
+		// Робимо ID унікальним для кожної події, щоб вони не перекривали одна одну
+		const id = `${event.type}-${event.uid}-${Math.random().toString(36).slice(2, 9)}`;
+		
+		const newEvent: InteractionEvent = {
+			id,
+			timestamp: Date.now(),
+			state: event.state || (event.type === 'incoming_wave' ? 'expanded' : 'collapsed'),
+			...event
+		};
+
+		this.interactions.push(newEvent);
+	}
+
+	/**
+	 * Видаляє подію з черги
+	 */
+	removeInteraction(id: string) {
+		this.interactions = this.interactions.filter(i => i.id !== id);
+	}
+
+	/**
+	 * Оновлює стан події
+	 */
+	updateInteractionState(id: string, state: InteractionEvent['state']) {
+		const event = this.interactions.find(i => i.id === id);
+		if (event) event.state = state;
+	}
 
 	/**
 	 * Встановлює статус користувача "online" та налаштовує автоматичний перехід в "offline".
@@ -147,8 +187,12 @@ class PresenceServiceClass {
 
 				// Ігноруємо старі сигнали (старше 30 секунд)
 				if (age < 30000) {
-					logService.log("interaction", "Signal is fresh, setting latestSignal");
-					this.latestSignal = { ...signal, id: signalKey };
+					logService.log("interaction", "Signal is fresh, adding to interactions queue");
+					this.addInteraction({
+						type: 'incoming_wave',
+						uid: signal.fromUid,
+						profile: { name: signal.fromName, photoURL: signal.fromPhoto }
+					});
 				} else {
 					logService.log("interaction", "Signal is too old, ignoring");
 				}
@@ -170,39 +214,57 @@ class PresenceServiceClass {
 	}
 
 	/**
-	 * Надсилає "привіт" (Wave) іншому користувачу
+	 * Внутрішній метод для відправки сигналів з підтримкою різних лімітів (cooldown)
 	 */
-	async sendWave(targetUid: string, senderProfile: { name: string; photoURL: string | null }) {
+	private async sendSignalInternal(
+		targetUid: string, 
+		type: Signal["type"], 
+		senderProfile: { name: string; photoURL: string | null },
+		cooldown: number,
+		lastSentTimestampKey: "lastWaveSentAt" | "lastSignalSentAt",
+		eventId?: string // Опціональний ID події для оновлення стану
+	) {
 		if (!auth.currentUser) {
-			logService.error("interaction", "Cannot send wave: No current user");
+			logService.error("interaction", `Cannot send ${type}: No current user`);
 			return;
 		}
 
-		// Обмеження: не частіше ніж кожні 5 секунд
 		const now = Date.now();
-		if (now - this.lastWaveSentAt < 5000) {
-			logService.warn("interaction", "Wave throttled (5s cooldown)");
+		if (now - this[lastSentTimestampKey] < cooldown) {
+			logService.warn("interaction", `${type} throttled (${cooldown}ms cooldown)`);
 			return;
 		}
 		
-		logService.log("interaction", "Attempting to send wave to:", targetUid);
-		this.lastWaveSentAt = now;
+		logService.log("interaction", `Attempting to send ${type} to:`, targetUid);
+		this[lastSentTimestampKey] = now;
 
 		const signalsRef = ref(rtdb, `/signals/${targetUid}`);
 		const newSignal: Signal = {
-			type: "wave",
+			type,
 			fromUid: auth.currentUser.uid,
 			fromName: senderProfile.name,
 			fromPhoto: senderProfile.photoURL,
-			timestamp: Date.now()
+			timestamp: now
 		};
 
 		try {
+			// Оновлюємо стан конкретної капсули, якщо ID надано
+			if (eventId) {
+				this.updateInteractionState(eventId, 'sent');
+			}
+
 			await push(signalsRef, newSignal);
-			logService.log("interaction", "Wave successfully sent to:", targetUid);
+			logService.log("interaction", `${type} successfully sent to:`, targetUid);
 		} catch (error) {
-			logService.error("interaction", "Failed to send wave:", error);
+			logService.error("interaction", `Failed to send ${type}:`, error);
 		}
+	}
+
+	/**
+	 * Надсилає "привіт" (Wave) іншому користувачу.
+	 */
+	async sendWave(targetUid: string, senderProfile: { name: string; photoURL: string | null }, eventId?: string) {
+		return this.sendSignalInternal(targetUid, "wave", senderProfile, 100, "lastWaveSentAt", eventId);
 	}
 
 	/**
@@ -219,6 +281,8 @@ class PresenceServiceClass {
 			this.statusUnsubscribers.forEach(entry => entry.unsub());
 			this.statusUnsubscribers.clear();
 			this.friendsStatus = {};
+			this.initialStatusLoaded.clear();
+			this.interactions = [];
 		// Відписуємося від сигналів
 		if (this.signalUnsubscribe) {
 			this.signalUnsubscribe();
@@ -241,10 +305,26 @@ class PresenceServiceClass {
 		logService.log("presence", "Starting to track friend status for:", uid);
 		const statusRef = ref(rtdb, `/status/${uid}`);
 		const unsub = onValue(statusRef, (snapshot) => {
-			const data = snapshot.val();
+			const data = snapshot.val() as UserStatus | null;
 			logService.log("presence", `Status update for ${uid}:`, data);
+			
+			const prevStatus = this.friendsStatus[uid];
+			
 			if (data) {
+				// Логіка сповіщення про вхід в онлайн
+				if (data.state === "online") {
+					const isNewOnline = !prevStatus || prevStatus.state !== "online";
+					const isRecent = data.lastChanged && (Date.now() - (data.lastChanged as number)) < 15000;
+					
+					// Якщо ми вже завантажили початковий статус і це новий вхід,
+					// АБО якщо ми тільки завантажили і статус зовсім свіжий (< 15 сек)
+					if (isNewOnline && (this.initialStatusLoaded.has(uid) || isRecent)) {
+						this.handleFriendOnline(uid);
+					}
+				}
+				
 				this.friendsStatus[uid] = data;
+				this.initialStatusLoaded.add(uid);
 			}
 		}, (error) => {
 			logService.error("presence", `Error tracking status for ${uid}:`, error);
@@ -252,6 +332,35 @@ class PresenceServiceClass {
 
 		this.statusUnsubscribers.set(uid, { unsub, count: 1 });
 		return () => this.untrackFriendStatus(uid);
+	}
+
+	/**
+	 * Обробка входу друга в онлайн
+	 */
+	private async handleFriendOnline(uid: string) {
+		// Ми не хочемо показувати сповіщення про себе (хоча ми і не трекаємо себе зазвичай)
+		if (uid === this.currentUid) return;
+
+		// Отримуємо профіль друга з стору
+		const { friendsStore } = await import("../stores/friendsStore.svelte");
+		const profile = await friendsStore.getProfile(uid);
+		
+		if (profile) {
+			logService.log("presence", `Friend went online: ${profile.displayName}`);
+			this.addInteraction({
+				type: 'online',
+				uid: profile.uid,
+				profile: { name: profile.displayName, photoURL: profile.photoURL },
+				state: 'collapsed'
+			});
+		}
+	}
+
+	/**
+	 * Скидає стан сповіщення про онлайн
+	 */
+	clearFriendOnline() {
+		this.interactions = this.interactions.filter(i => i.type !== 'online');
 	}
 
 	/**
@@ -267,6 +376,7 @@ class PresenceServiceClass {
 			logService.log("presence", "Stopping tracking status for (no more listeners):", uid);
 			entry.unsub();
 			this.statusUnsubscribers.delete(uid);
+			this.initialStatusLoaded.delete(uid);
 			// Очищаємо статус, щоб не тримати застарілі дані
 			delete this.friendsStatus[uid];
 		}
@@ -282,24 +392,34 @@ class PresenceServiceClass {
 	/**
 	 * Відкриває меню взаємодії
 	 */
-	openInteractionMenu(uid: string, profile: { name: string; photoURL: string | null }) {
-		this.activeTargetUid = uid;
-		this.activeTargetProfile = profile;
+	openInteractionMenu(uid: string, profile: { name: string; photoURL: string | null }, _position = { x: 0, y: 0 }) {
+		logService.log("interaction", `Opening interaction menu for: ${uid}`, profile);
+		this.addInteraction({
+			type: 'manual_menu',
+			uid,
+			profile,
+			state: 'collapsed' // Початковий стан - тільки аватарка
+		});
+		
+		// Одразу розгортаємо її
+		setTimeout(() => {
+			this.updateInteractionState(`manual_menu-${uid}`, 'expanded');
+		}, 50);
 	}
 
 	/**
 	 * Закриває меню взаємодії
 	 */
 	closeInteractionMenu() {
-		this.activeTargetUid = null;
-		this.activeTargetProfile = null;
+		logService.log("interaction", "Closing interaction menus");
+		this.interactions = this.interactions.filter(i => i.type !== 'manual_menu');
 	}
 	
 	/**
 	 * Скидає останній сигнал (після показу)
 	 */
 	clearSignal() {
-		this.latestSignal = null;
+		this.interactions = this.interactions.filter(i => i.type !== 'incoming_wave');
 	}
 }
 

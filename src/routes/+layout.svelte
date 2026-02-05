@@ -10,9 +10,10 @@
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import UpdateNotification from "$lib/components/navigation/UpdateNotification.svelte";
 	import ToastContainer from "$lib/components/ui/ToastContainer.svelte";
-	import InteractionBubble from "$lib/components/interaction/InteractionBubble.svelte";
-	import InteractionMenu from "$lib/components/interaction/InteractionMenu.svelte";
+	import InteractionSystem from "$lib/components/interaction/InteractionSystem.svelte";
 	import OnboardingModal from "$lib/components/onboarding/OnboardingModal.svelte";
+	import { friendsStore } from "$lib/stores/friendsStore.svelte";
+	import { PresenceService } from "$lib/firebase/PresenceService.svelte";
 	import DebugListener from "$lib/components/debug/DebugListener.svelte";
 	import {
 		initGA,
@@ -101,6 +102,16 @@
 	$effect(() => {
 		trackPageView($page.url.pathname);
 	});
+
+	// Фонове відстеження статусів взаємних друзів
+	$effect(() => {
+		const mutuals = friendsStore.mutualFriends;
+		const unsubs = mutuals.map(friend => PresenceService.trackFriendStatus(friend.uid));
+		
+		return () => {
+			unsubs.forEach(unsub => unsub());
+		};
+	});
 </script>
 
 <DebugListener />
@@ -116,8 +127,7 @@
 		<UpdateNotification version={versionStore.currentVersion} />
 	{/if}
 	<ToastContainer />
-	<InteractionBubble />
-	<InteractionMenu />
+	<InteractionSystem />
 {:else}
 	<div class="loading">
 		<div class="loading-spinner"></div>

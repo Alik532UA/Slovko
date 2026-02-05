@@ -1,5 +1,5 @@
 export const logConfig = {
-	auth: true,
+	auth: false,
 	profile: false,
 	editor: false,
 	store: false,
@@ -8,7 +8,7 @@ export const logConfig = {
 	settings: false,
 	interaction: true,
 	presence: true,
-	stats: true,
+	stats: false,
 };
 
 const recentLogs: string[] = [];
