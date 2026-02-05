@@ -171,12 +171,10 @@ class PresenceServiceClass {
 			// Маркуємо як оброблений негайно, щоб запобігти повторним спробам
 			this.processedSignals.add(signalKey);
 
-			// Захист від спаму: не обробляємо більше 5 нових сигналів одночасно
-			if (this.latestSignal && !this.processedSignals.has(this.latestSignal.id || "")) {
-				// Якщо у нас вже є активний сигнал, який ще не показаний, ігноруємо надлишок
-				if (this.processedSignals.size % 10 === 0) {
-					logService.warn("interaction", "High volume of incoming signals detected, throttling...");
-				}
+			// Захист від спаму: не обробляємо більше 10 активних сигналів одночасно
+			if (this.interactions.length > 10) {
+				logService.warn("interaction", "High volume of incoming signals detected, throttling...");
+				return;
 			}
 
 			logService.log("interaction", "Received signal snapshot:", signalKey, signal);

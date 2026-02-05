@@ -426,27 +426,6 @@
 		font-size: 0.95rem;
 	}
 
-	.avatar-placeholder {
-		width: 38px;
-		height: 38px;
-		border-radius: 12px;
-		background: rgba(255, 255, 255, 0.05);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: var(--text-secondary);
-		flex-shrink: 0;
-		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-	}
-
-	.avatar-img {
-		width: 38px;
-		height: 38px;
-		border-radius: 12px;
-		object-fit: cover;
-		flex-shrink: 0;
-	}
-
 	.username {
 		font-weight: 600;
 		color: var(--text-primary);

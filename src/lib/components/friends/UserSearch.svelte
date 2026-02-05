@@ -108,10 +108,8 @@
 
 					<FollowButton
 						uid={user.uid}
-						isFollowing={!!followingMap[user.uid]}
 						displayName={user.displayName}
 						photoURL={user.photoURL}
-						onStatusChange={(status) => handleStatusChange(user.uid, status)}
 						variant="compact"
 					/>
 				</div>
