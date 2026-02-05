@@ -457,16 +457,17 @@ class SyncServiceClass {
 	private mergeLevelStats(local: Record<string, LevelStats>, cloud: Record<string, any>) {
 		const merged = { ...cloud };
 		for (const [lvl, l] of Object.entries(local)) {
-			const c = cloud[lvl];
+			const c = cloud[lvl] as LevelStats | undefined;
 			if (!c) {
 				merged[lvl] = l;
 			} else {
-				merged[lvl] = {
-					totalCorrect: Math.max(l.totalCorrect, c.totalCorrect || 0),
-					totalAttempts: Math.max(l.totalAttempts, c.totalAttempts || 0),
-					bestCorrectStreak: Math.max(l.bestCorrectStreak, c.bestCorrectStreak || 0),
-					currentCorrectStreak: Math.max(l.currentCorrectStreak, c.currentCorrectStreak || 0),
-				};
+				// Вибираємо об'єкт з більшим прогресом як основний (VULN_08)
+				// Це запобігає створенню неможливих станів (наприклад, 10/20 при реальних 10/10)
+				if (l.totalCorrect >= c.totalCorrect) {
+					merged[lvl] = l;
+				} else {
+					merged[lvl] = c;
+				}
 			}
 		}
 		return merged;

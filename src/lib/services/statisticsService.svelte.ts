@@ -178,14 +178,17 @@ class StatisticsServiceClass {
 		for (const [lvl, r] of Object.entries(recovered)) {
 			const l = local[lvl];
 			if (!l) {
-				merged[lvl] = r;
+				merged[lvl] = r as LevelStats;
 			} else {
-				merged[lvl] = {
-					totalCorrect: Math.max(l.totalCorrect, r.totalCorrect || 0),
-					totalAttempts: Math.max(l.totalAttempts, r.totalAttempts || 0),
-					bestCorrectStreak: Math.max(l.bestCorrectStreak, r.bestCorrectStreak || 0),
-					currentCorrectStreak: l.currentCorrectStreak, // Залишаємо поточний
-				};
+				// Вибираємо об'єкт з більшим прогресом (VULN_08)
+				if ((r.totalCorrect || 0) > l.totalCorrect) {
+					merged[lvl] = {
+						...l,
+						totalCorrect: r.totalCorrect,
+						totalAttempts: r.totalAttempts,
+						bestCorrectStreak: Math.max(l.bestCorrectStreak, r.bestCorrectStreak || 0)
+					};
+				}
 			}
 		}
 		return merged;
