@@ -32,7 +32,8 @@ export interface InteractionEvent {
  */
 class PresenceServiceClass {
 	// Реактивна карта статусів: [uid] -> UserStatus
-	friendsStatus = $state<Record<string, UserStatus>>({});
+	// Використовуємо Svelte Map для кращої гранулярності реактивності
+	friendsStatus = $state(new Map<string, UserStatus>());
 	
 	// Черга активних подій взаємодії
 	interactions = $state<InteractionEvent[]>([]);
@@ -47,20 +48,29 @@ class PresenceServiceClass {
 		private initialStatusLoaded: Set<string> = new Set();
 		private boundHandleVisibilityChange: (() => void) | null = null;
 		private backgroundUnsubscribers: (() => void)[] = [];
+		private lastTrackedUids: string[] = [];
 	
 		/**
 		 * Налаштовує фонове відстеження статусів для обмеженої кількості друзів.
 		 * Це потрібно для роботи сповіщень про вхід друзів в онлайн.
 		 */
 		limitBackgroundTracking(uids: string[], limit = 20) {
+			const toTrack = uids.slice(0, limit);
+			
+			// Перевірка: чи змінився список UIDs?
+			if (this.lastTrackedUids.length === toTrack.length && 
+				this.lastTrackedUids.every((uid, i) => uid === toTrack[i])) {
+				return;
+			}
+
+			this.lastTrackedUids = toTrack;
+
 			// Спочатку відписуємося від попередніх фонових підписок
 			this.backgroundUnsubscribers.forEach(unsub => unsub());
 			this.backgroundUnsubscribers = [];
 	
 			if (this.isPaused) return;
 	
-			// Відстежуємо лише перші N друзів (найактивніші/взаємні)
-			const toTrack = uids.slice(0, limit);
 			logService.log("presence", `Setting up background tracking for ${toTrack.length} friends (limit: ${limit})`);
 			
 			toTrack.forEach(uid => {
@@ -319,7 +329,7 @@ class PresenceServiceClass {
 			// Відписуємося від усіх статусів
 			this.statusUnsubscribers.forEach(entry => entry.unsub());
 			this.statusUnsubscribers.clear();
-			this.friendsStatus = {};
+			this.friendsStatus.clear();
 			this.initialStatusLoaded.clear();
 			this.interactions = [];
 		// Відписуємося від сигналів
@@ -346,9 +356,13 @@ class PresenceServiceClass {
 		const statusRef = ref(rtdb, `/status/${uid}`);
 		const unsub = onValue(statusRef, (snapshot) => {
 			const data = snapshot.val() as UserStatus | null;
-			logService.log("presence", `Status update for ${uid}:`, data);
 			
-			const prevStatus = this.friendsStatus[uid];
+			const prevStatus = this.friendsStatus.get(uid);
+
+			// Захист від зайвих оновлень: якщо стан не змінився — нічого не робимо
+			if (prevStatus && data && prevStatus.state === data.state) {
+				return;
+			}
 			
 			if (data) {
 				// Логіка сповіщення про вхід в онлайн
@@ -363,7 +377,7 @@ class PresenceServiceClass {
 					}
 				}
 				
-				this.friendsStatus[uid] = data;
+				this.friendsStatus.set(uid, data);
 				this.initialStatusLoaded.add(uid);
 			}
 		}, (error) => {
@@ -425,7 +439,7 @@ class PresenceServiceClass {
 	 * Перевірити, чи користувач онлайн
 	 */
 	isOnline(uid: string): boolean {
-		return this.friendsStatus[uid]?.state === "online";
+		return this.friendsStatus.get(uid)?.state === "online";
 	}
 	
 	/**

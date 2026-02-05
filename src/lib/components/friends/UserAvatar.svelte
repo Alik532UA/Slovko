@@ -117,7 +117,15 @@
 			<Icon size={size} color="white" />
 		</div>
 	{:else if photoURL}
-		<img src={photoURL} alt="" class="avatar-img" data-testid="user-avatar-img" />
+		<img 
+			src={photoURL} 
+			alt="" 
+			class="avatar-img" 
+			loading="lazy"
+			decoding="async"
+			referrerpolicy="no-referrer"
+			data-testid="user-avatar-img" 
+		/>
 	{:else}
 		<div class="avatar-circle fallback" data-testid="user-avatar-fallback">
 			<UserIcon size={size} />
