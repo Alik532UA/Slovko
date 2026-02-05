@@ -360,16 +360,36 @@ class SyncServiceClass {
 	 */
 	private mergeSettings(local: AppSettings, cloud: any): AppSettings {
 		if (!cloud) return local;
-		
+
 		try {
 			const cloudSettings = AppSettingsSchema.parse(cloud);
-			if (cloudSettings.updatedAt > (local.updatedAt || 0)) {
-				return cloudSettings;
+			const cloudTime = cloudSettings.updatedAt || 0;
+			const localTime = local.updatedAt || 0;
+
+			// Використовуємо глибокий мерж для захисту вкладених полів (VULN_03)
+			if (cloudTime > localTime) {
+				return this.deepMergeSettings(local, cloudSettings);
+			} else {
+				return this.deepMergeSettings(cloudSettings, local);
 			}
 		} catch (e) {
 			logService.error("sync", "Failed to parse cloud settings during merge", e);
 		}
 		return local;
+	}
+
+	private deepMergeSettings(base: AppSettings, updates: AppSettings): AppSettings {
+		const result = { ...base, ...updates };
+
+		// Глибокий мерж для voicePreferences
+		if (base.voicePreferences && updates.voicePreferences) {
+			result.voicePreferences = {
+				...base.voicePreferences,
+				...updates.voicePreferences
+			};
+		}
+
+		return result;
 	}
 
 	private mergeProgress(local: ProgressState, cloud: any): ProgressState {
