@@ -14,6 +14,8 @@ export const streakService = {
 		dailyCorrect: number;
 		lastCorrectDate: string;
 	} {
+		// ПОПЕРЕДЖЕННЯ: Використання клієнтської дати є вразливим до маніпуляцій.
+		// У майбутньому варто перейти на серверний час Firestore.
 		const today = new Date().toISOString().split("T")[0];
 		let newStreak = currentStreak;
 		let newDailyCorrect = dailyCorrect;

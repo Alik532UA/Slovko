@@ -17,6 +17,7 @@ import { progressStore } from "../stores/progressStore.svelte";
 import { playlistStore } from "../stores/playlistStore.svelte";
 import { logService } from "../services/logService";
 import { statisticsService } from "../services/statisticsService.svelte";
+import { dev } from "$app/environment";
 import {
 	AppSettingsSchema,
 	ProgressStateSchema,
@@ -100,8 +101,8 @@ class SyncServiceClass {
 
 		logService.log("sync", `Sync initialized for user: ${uid}`);
 
-		// Додаємо доступ для дебагу в консолі
-		if (typeof window !== "undefined") {
+		// Додаємо доступ для дебагу в консолі ТІЛЬКИ в dev режимі
+		if (dev && typeof window !== "undefined") {
 			(window as any).wordApp = {
 				sync: this,
 				stats: statisticsService,
@@ -215,24 +216,32 @@ class SyncServiceClass {
 				mistakeMetadata: (playlistStore as any).mistakeMetadata || {},
 			};
 
-			// Захист: не перетирати прогрес, якщо в хмарі він більший
+			// Smart Merge: Замість повної відмови від завантаження, ми об'єднуємо дані
+			// Бали беремо найбільші (хмара vs локально), налаштування - найновіші
+			const mergedProgress = this.mergeProgress(localProgress, cloudData.progress || {});
+			const mergedSettings = this.mergeSettings(localSettings, cloudData.settings || null);
+			const mergedPlaylists = this.mergePlaylists(localPlaylists, cloudData.playlists || {});
+
+			// Якщо хмарні дані значно відрізняються (наприклад, більше прогресу), 
+			// ми оновлюємо локальний стор, але ТІЛЬКИ тими полями, які реально новіші в хмарі
 			if (cloudData.progress?.totalCorrect > localProgress.totalCorrect) {
-				logService.warn("sync", "Cloud has more progress. Syncing down.");
-				this.handleCloudUpdate(cloudData);
-				// Також оновимо локальну історію з хмари, якщо вона там є
+				logService.warn("sync", "Cloud has more progress. Partial sync down.");
+				progressStore._internalSet(mergedProgress);
+				
 				if (cloudHistory) {
 					progressStore._internalSetActivity(cloudHistory);
 				}
-				return;
 			}
 
-			const mergedData = this.mergeData(
-				{ settings: localSettings, progress: localProgress, playlists: localPlaylists },
-				cloudData
-			);
+			const mergedData = {
+				settings: mergedSettings,
+				progress: mergedProgress,
+				playlists: mergedPlaylists,
+				lastSync: Date.now(),
+			};
 
 			// Публічний профіль для лідерборду
-			const profileUpdate = this.prepareProfileUpdate(localProgress);
+			const profileUpdate = this.prepareProfileUpdate(mergedProgress);
 
 			// Виконуємо запити послідовно або з окремим логуванням помилок для дебагу
 			try {
@@ -311,27 +320,20 @@ class SyncServiceClass {
 	}
 
 	/**
-	 * Логіка об'єднання даних
+	 * Логіка об'єднання налаштувань на основі updatedAt
 	 */
-	private mergeData(local: any, cloud: any) {
-		const localSettings = local.settings as AppSettings;
-		const cloudSettings = (cloud.settings ? AppSettingsSchema.parse(cloud.settings) : null) as AppSettings | null;
-
-		let mergedSettings = localSettings;
-		if (cloudSettings) {
-			if (cloudSettings.updatedAt > localSettings.updatedAt) {
-				mergedSettings = { ...localSettings, ...cloudSettings };
-			} else {
-				mergedSettings = { ...cloudSettings, ...localSettings };
+	private mergeSettings(local: AppSettings, cloud: any): AppSettings {
+		if (!cloud) return local;
+		
+		try {
+			const cloudSettings = AppSettingsSchema.parse(cloud);
+			if (cloudSettings.updatedAt > (local.updatedAt || 0)) {
+				return cloudSettings;
 			}
+		} catch (e) {
+			logService.error("sync", "Failed to parse cloud settings during merge", e);
 		}
-
-		return {
-			settings: mergedSettings,
-			progress: this.mergeProgress(local.progress, cloud.progress || {}),
-			playlists: this.mergePlaylists(local.playlists, cloud.playlists || {}),
-			lastSync: Date.now(),
-		};
+		return local;
 	}
 
 	private mergeProgress(local: ProgressState, cloud: any): ProgressState {

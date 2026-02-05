@@ -112,11 +112,16 @@ class StatisticsServiceClass {
 			const recoveredLevelStats: Record<string, LevelStats> = {};
 			let totalCorrect = 0;
 			let totalAttempts = 0;
+			let maxDate = "";
 
 			snapshot.docs.forEach(doc => {
 				const data = doc.data() as DailyActivity;
 				totalCorrect += data.totalCorrect || 0;
 				totalAttempts += data.totalAttempts || 0;
+				
+				if (data.date > maxDate) {
+					maxDate = data.date;
+				}
 
 				if (data.levelStats) {
 					for (const [lvl, stats] of Object.entries(data.levelStats)) {
@@ -140,6 +145,7 @@ class StatisticsServiceClass {
 				...currentProgress,
 				totalCorrect: Math.max(currentProgress.totalCorrect, totalCorrect),
 				totalAttempts: Math.max(currentProgress.totalAttempts, totalAttempts),
+				lastCorrectDate: maxDate || currentProgress.lastCorrectDate,
 				levelStats: this.mergeLevelStats(currentProgress.levelStats, recoveredLevelStats)
 			});
 
