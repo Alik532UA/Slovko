@@ -127,6 +127,7 @@
 		"forgotPassword": "Vergessen?",
 		"forgotPasswordTitle": "Passwort zurücksetzen",
 		"forgotPasswordSubtitle": "Gib die mit deinem Konto verknüpfte E-Mail ein",
+		"forgotPasswordGoogleInfo": "Ihr Konto ist über Google verbunden. Da die Authentifizierung über Ihr Google-Profil verwaltet wird, wurde kein separates Slovko-Passwort für diese Adresse festgelegt. Bitte melden Sie sich über Google an.",
 		"spamWarning": "Die E-Mail könnte im Spam-Ordner landen, da die App neu ist.",
 		"sendResetEmail": "Wiederherstellungsmail senden",
 		"backToSignin": "Zurück zur Anmeldung",

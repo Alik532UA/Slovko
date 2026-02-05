@@ -43,8 +43,8 @@
 
 <div class="auth-container" data-testid="profile-auth-container">
 	{#if mode === "forgot-password"}
-		<form class="email-form" onsubmit={handleSubmit}>
-			<p class="form-title">
+		<form class="email-form" data-testid="forgot-password-form" onsubmit={handleSubmit}>
+			<p class="form-title" data-testid="forgot-password-title">
 				{$_("profile.forgotPasswordTitle")}
 			</p>
 			<p class="form-subtitle">
@@ -59,30 +59,40 @@
 				placeholder="Email"
 				bind:value={email}
 				class="input-field"
-				data-testid="profile-forgot-password-email-input"
+				data-testid="forgot-password-email-input"
 				autocomplete="email"
 				required
 			/>
 
 			{#if errorMessage}
-				<p class="error-msg">{errorMessage}</p>
+				<p class="error-msg" data-testid="forgot-password-error">{errorMessage}</p>
 			{/if}
 			{#if successMessage}
-				<p class="success-msg">{successMessage}</p>
+				<p class="success-msg" data-testid="forgot-password-success">{successMessage}</p>
 			{/if}
 
-			<button type="submit" class="primary-btn" disabled={isLoading}>
+			<button 
+				type="submit" 
+				class="primary-btn" 
+				data-testid="send-reset-email-btn"
+				disabled={isLoading}
+			>
 				{isLoading ? "..." : $_("profile.sendResetEmail")}
 			</button>
 
-			<button type="button" class="back-link" onclick={onback}>
+			<button 
+				type="button" 
+				class="back-link" 
+				data-testid="forgot-password-back-btn"
+				onclick={onback}
+			>
 				<ArrowLeft size={16} />
 				{$_("profile.backToSignin")}
 			</button>
 		</form>
 	{:else}
-		<form class="email-form" onsubmit={handleSubmit}>
-			<p class="form-title">
+		<form class="email-form" data-testid="signin-form" onsubmit={handleSubmit}>
+			<p class="form-title" data-testid="signin-title">
 				{$_("profile.signinTitle")}
 			</p>
 
@@ -91,7 +101,7 @@
 				placeholder="Email"
 				bind:value={email}
 				class="input-field"
-				data-testid="profile-auth-email-input"
+				data-testid="signin-email-input"
 				autocomplete="email"
 				required
 			/>
@@ -102,7 +112,7 @@
 					placeholder={$_("profile.passwordPlaceholderShort")}
 					bind:value={password}
 					class="input-field"
-					data-testid="profile-auth-password-input"
+					data-testid="signin-password-input"
 					autocomplete="current-password"
 					required
 				/>
@@ -110,6 +120,7 @@
 					<button
 						type="button"
 						class="forgot-password-link"
+						data-testid="forgot-password-link"
 						onclick={onforgotPassword}
 					>
 						{$_("profile.forgotPassword")}
@@ -118,11 +129,11 @@
 			</div>
 
 			{#if errorMessage}
-				<p class="error-msg">{errorMessage}</p>
+				<p class="error-msg" data-testid="signin-error">{errorMessage}</p>
 			{/if}
 
 			{#if isLoading}
-				<div class="loading-hint" transition:fade>
+				<div class="loading-hint" transition:fade data-testid="auth-loading-hint">
 					<div class="spinner-small"></div>
 					<p>
 						{$_("profile.errors.waitingGoogle")}
@@ -134,7 +145,7 @@
 				<button
 					type="submit"
 					class="primary-btn"
-					data-testid="profile-signin-email-btn"
+					data-testid="signin-submit-btn"
 					disabled={isLoading}
 				>
 					{isLoading ? "..." : $_("profile.login")}
@@ -143,7 +154,7 @@
 				<button
 					type="button"
 					class="secondary-btn"
-					data-testid="profile-register-email-btn"
+					data-testid="signup-redirect-btn"
 					onclick={handleRegister}
 					disabled={isLoading}
 				>
@@ -158,7 +169,7 @@
 			<button
 				type="button"
 				class="google-btn"
-				data-testid="profile-google-btn"
+				data-testid="auth-google-btn"
 				onclick={ongoogle}
 				disabled={isLoading}
 			>
@@ -183,7 +194,12 @@
 				{$_("profile.googleAuth")}
 			</button>
 
-			<button type="button" class="back-link" onclick={onback}>
+			<button 
+				type="button" 
+				class="back-link" 
+				data-testid="auth-back-btn"
+				onclick={onback}
+			>
 				<ArrowLeft size={16} />
 				{$_("profile.back")}
 			</button>

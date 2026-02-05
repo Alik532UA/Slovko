@@ -127,6 +127,7 @@
 		"forgotPassword": "Vergeten?",
 		"forgotPasswordTitle": "Wachtwoord herstellen",
 		"forgotPasswordSubtitle": "Voer het e-mailadres in van je account",
+		"forgotPasswordGoogleInfo": "Uw account is gekoppeld via Google. Aangezien de authenticatie wordt beheerd door uw Google-profiel, is er geen apart Slovko-wachtwoord ingesteld voor dit adres. Log in via Google.",
 		"spamWarning": "De e-mail kan in de map Ongewenst terechtkomen omdat de app nieuw is.",
 		"sendResetEmail": "Herstelmail verzenden",
 		"backToSignin": "Terug naar inloggen",

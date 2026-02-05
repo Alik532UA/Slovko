@@ -145,6 +145,7 @@
 		"forgotPassword": "Unuttıñızmı?",
 		"forgotPasswordTitle": "Parolni yañartuv",
 		"forgotPasswordSubtitle": "Esa-bıñızğa bağlı emailni kirsetiñiz",
+		"forgotPasswordGoogleInfo": "Esabıñız Google vastasınen bağlanğan. İdentifikatsiya Google-profiliñiznen idare etilgeni içün, bu adres içün Slovko paroli belgilenmegen. Lütfen, Google vastasınen kiriñiz.",
 		"spamWarning": "Mektüp \"Spam\" qutusına tüşebilir, çünki uyğulama yañıdır.",
 		"sendResetEmail": "Yollamaq",
 		"backToSignin": "Kirişke qaytmaq",

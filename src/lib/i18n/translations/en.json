@@ -153,6 +153,7 @@
 		"forgotPassword": "Forgot?",
 		"forgotPasswordTitle": "Reset Password",
 		"forgotPasswordSubtitle": "Enter the email associated with your account",
+		"forgotPasswordGoogleInfo": "Your account is connected via Google. Since authentication is managed by your Google profile, a separate Slovko password has not been set for this address. Please sign in using Google.",
 		"spamWarning": "The email may end up in the Spam folder as the app is new.",
 		"sendResetEmail": "Send Reset Email",
 		"backToSignin": "Back to Sign In",

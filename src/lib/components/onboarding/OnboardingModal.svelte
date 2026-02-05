@@ -142,30 +142,31 @@
 		data-testid="onboarding-modal"
 	>
 		{#if !showExplanation}
-			<div class="container" transition:fade>
-				<div class="header-area">
+			<div class="container" transition:fade data-testid="onboarding-container">
+				<div class="header-area" data-testid="onboarding-header">
 					{#if !isFinalizing}
 						{#key step}
 							<h1
 								in:fade={{ duration: 400, delay: 200 }}
 								out:fade={{ duration: 300 }}
+								data-testid="onboarding-title"
 							>
 								{#if step === 1}
 									<div class="title-stack">
 										{#if detectedTitle}
-											<div class="secondary">{detectedTitle}</div>
+											<div class="secondary" data-testid="onboarding-detected-title">{detectedTitle}</div>
 										{/if}
-										<div class="primary">{titles.en}</div>
+										<div class="primary" data-testid="onboarding-primary-title">{titles.en}</div>
 									</div>
 								{:else}
-									{$_("onboarding.whatToLearn")}
+									<span data-testid="onboarding-step2-title">{$_("onboarding.whatToLearn")}</span>
 								{/if}
 							</h1>
 						{/key}
 					{/if}
 				</div>
 
-				<div class="flags-grid" class:hidden={flyingFlags.length > 0}>
+				<div class="flags-grid" class:hidden={flyingFlags.length > 0} data-testid="onboarding-flags-grid">
 					{#each LANGUAGES as lang (lang)}
 						<button
 							class="flag-btn"
@@ -186,19 +187,19 @@
 				</div>
 			</div>
 		{:else}
-			<div class="explanation-card" transition:fade>
+			<div class="explanation-card" transition:fade data-testid="onboarding-explanation-card">
 				<div class="icon-header">
 					<div class="icon-circle">
 						<Languages size={32} />
 					</div>
 				</div>
 
-				<div class="explanation-text">
+				<div class="explanation-text" data-testid="onboarding-explanation-text">
 					<p>
 						{$_("onboarding.explanation")}
 						<span class="inline-icon"><Languages size={18} /></span>
 					</p>
-					<p class="detail">
+					<p class="detail" data-testid="onboarding-explanation-detail">
 						{$_("onboarding.explanationPart1")}
 						<span class="inline-icon"><Speech size={16} /></span>,
 						{$_("onboarding.explanationPart2")}

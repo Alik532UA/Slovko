@@ -226,6 +226,17 @@
 		isLinking = true;
 		errorMessage = "";
 		try {
+			// Перевіряємо методи входу для цього email
+			const providers = await AuthService.getProvidersForEmail(email);
+			
+			if (providers.includes("google.com")) {
+				errorMessage = $_("profile.forgotPasswordGoogleInfo", {
+					default: "Ваш акаунт підключено через Google. Оскільки автентифікація керується вашим Google-профілем, окремий пароль Slovko для цієї адреси не встановлено. Будь ласка, увійдіть за допомогою Google."
+				});
+				isLinking = false;
+				return;
+			}
+
 			const { sendPasswordResetEmail } = await import("firebase/auth");
 			const { auth } = await import("$lib/firebase/config");
 			await sendPasswordResetEmail(auth, email);

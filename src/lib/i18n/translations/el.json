@@ -145,6 +145,7 @@
 		"forgotPassword": "Ξεχάσατε;",
 		"forgotPasswordTitle": "Επαναφορά κωδικού",
 		"forgotPasswordSubtitle": "Εισαγάγετε το email του λογαριασμού σας",
+		"forgotPasswordGoogleInfo": "Ο λογαριασμός σας είναι συνδεδεμένος μέσω Google. Εφόσον η διαχείριση της πρόσβασης γίνεται από το προφίλ σας στην Google, δεν έχει οριστεί ξεχωριστός κωδικός πρόσβασης Slovko για αυτή τη διεύθυνση. Παρακαλούμε συνδεθείτε μέσω Google.",
 		"spamWarning": "Το email μπορεί να καταλήξει στα Ανεπιθύμητα.",
 		"sendResetEmail": "Αποστολή email επαναφοράς",
 		"backToSignin": "Πίσω στη σύνδεση",
