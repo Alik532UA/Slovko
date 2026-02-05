@@ -4,7 +4,7 @@
       "$uid": {
         ".read": "auth != null",
         ".write": "auth != null && $uid === auth.uid",
-        ".validate": "newData.hasChildren(['state', 'lastChanged'])"
+        ".validate": "newData.hasChildren(['state', 'lastChanged']) && (newData.child('state').val() === 'online' || newData.child('state').val() === 'offline')"
       }
     },
     "signals": {

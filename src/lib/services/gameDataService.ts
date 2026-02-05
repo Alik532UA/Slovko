@@ -173,9 +173,14 @@ export class GameDataService {
 						const srcVal = findInDicts(w, sourceAll);
 						const tgtVal = findInDicts(w, targetAll);
 
-						sourceTranslations[w] = srcVal || w;
-						targetTranslations[w] = tgtVal || w;
-						words.push(w);
+						// Тільки якщо слово знайдено хоча б в одному словнику
+						if (srcVal || tgtVal) {
+							sourceTranslations[w] = srcVal || w;
+							targetTranslations[w] = tgtVal || w;
+							words.push(w);
+						} else {
+							logService.warn("game", `Ghost word detected in playlist: ${w}. Skipping.`);
+						}
 					} else if (w && typeof w === "object") {
 						// Custom word object
 						const id = w.id || `custom-${Date.now()}`;
