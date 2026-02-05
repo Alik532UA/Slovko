@@ -61,6 +61,7 @@ class SyncServiceClass {
 
 	private isDownloading = false;
 	private isUploading = false;
+	private pendingCloudUpdate: any = null;
 	private consecutiveFailures = 0;
 	private currentUid: string | null = null;
 	private boundHandleVisibilityChange: (() => void) | null = null;
@@ -292,6 +293,14 @@ class SyncServiceClass {
 			this.lastSyncAttempt = Date.now();
 			this.status = "up-to-date";
 			logService.log("sync", "Upload successful");
+
+			// Після успішного вивантаження перевіряємо, чи не прийшли нові дані з хмари (VULN_06)
+			if (this.pendingCloudUpdate) {
+				const dataToProcess = this.pendingCloudUpdate;
+				this.pendingCloudUpdate = null;
+				logService.log("sync", "Processing queued cloud update after upload");
+				this.handleCloudUpdate(dataToProcess);
+			}
 		} catch (e) {
 			logService.error("sync", "Sync Upload Error:", e);
 			this.status = "error";
@@ -299,11 +308,25 @@ class SyncServiceClass {
 			this.scheduleRetry();
 		} finally {
 			this.isUploading = false;
+
+			// На випадок помилки також перевіряємо чергу
+			if (this.pendingCloudUpdate && !this.isUploading) {
+				const dataToProcess = this.pendingCloudUpdate;
+				this.pendingCloudUpdate = null;
+				this.handleCloudUpdate(dataToProcess);
+			}
 		}
 	}
 
 	private handleCloudUpdate(cloudData: any) {
-		if (this.isUploading || !auth.currentUser) return;
+		if (!auth.currentUser) return;
+		
+		if (this.isUploading) {
+			logService.log("sync", "Upload in progress, queuing cloud update");
+			this.pendingCloudUpdate = cloudData;
+			return;
+		}
+
 		this.isDownloading = true;
 
 		try {
