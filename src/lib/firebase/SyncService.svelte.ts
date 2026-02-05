@@ -67,6 +67,14 @@ class SyncServiceClass {
 		if (typeof window !== "undefined") {
 			window.addEventListener("online", () => this.handleNetworkChange(true));
 			window.addEventListener("offline", () => this.handleNetworkChange(false));
+			
+			// Захист від закриття вкладки під час синхронізації
+			window.addEventListener("beforeunload", (e) => {
+				if (this.status === "syncing" || this.uploadTimeout) {
+					e.preventDefault();
+					e.returnValue = "";
+				}
+			});
 		}
 	}
 

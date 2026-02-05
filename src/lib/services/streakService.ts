@@ -15,8 +15,8 @@ export const streakService = {
 		lastCorrectDate: string;
 	} {
 		// ПОПЕРЕДЖЕННЯ: Використання клієнтської дати є вразливим до маніпуляцій.
-		// У майбутньому варто перейти на серверний час Firestore.
-		const today = new Date().toISOString().split("T")[0];
+		// Ми використовуємо локальну дату (YYYY-MM-DD), щоб стрік відповідав реальному дню користувача.
+		const today = new Date().toLocaleDateString('en-CA'); // Формат YYYY-MM-DD у локальному часі
 		let newStreak = currentStreak;
 		let newDailyCorrect = dailyCorrect;
 

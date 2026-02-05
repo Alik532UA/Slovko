@@ -26,7 +26,7 @@ function createProgressStore() {
 	let dailyActivity = $state<DailyActivity>(loadDailyActivity());
 
 	function getTodayDate(): string {
-		return new Date().toISOString().split("T")[0];
+		return new Date().toLocaleDateString('en-CA');
 	}
 
 	function loadProgress(): ProgressState {
@@ -94,7 +94,7 @@ function createProgressStore() {
 				localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(dailyActivity));
 				
 				SyncService.uploadAll();
-			}, 1000); // 1 секунда дебаунсу для прогресу
+			}, 3000); // 3 секунди дебаунсу для прогресу (економія квот)
 		}
 	}
 
