@@ -21,6 +21,20 @@ import {
 	SemanticsSchema,
 } from "./schemas";
 
+/**
+ * Допоміжна функція для повторних спроб динамічного імпорту.
+ * Корисна при нестабільному з'єднанні.
+ */
+async function withRetry<T>(fn: () => Promise<T>, retries = 3, delay = 1000): Promise<T> {
+	try {
+		return await fn();
+	} catch (e) {
+		if (retries <= 0) throw e;
+		await new Promise(resolve => setTimeout(resolve, delay));
+		return withRetry(fn, retries - 1, delay * 2);
+	}
+}
+
 // Кеш для уникнення повторних завантажень
 const levelCache = new Map<string, WordLevel>();
 const topicCache = new Map<string, WordTopic>();
@@ -57,7 +71,7 @@ export async function loadLevel(levelId: CEFRLevel): Promise<WordLevel> {
 		return levelCache.get(levelId)!;
 	}
 
-	const module = await import(`./words/levels/${levelId}.json`);
+	const module = await withRetry(() => import(`./words/levels/${levelId}.json`));
 	const parsed = LevelFileSchema.parse(module.default);
 	// Ensure id/name are present (LevelFileSchema allows them to be optional for backward compat)
 	const level: WordLevel = {
@@ -77,7 +91,7 @@ export async function loadTopic(topicId: string): Promise<WordTopic> {
 		return topicCache.get(topicId)!;
 	}
 
-	const module = await import(`./words/topics/${topicId}.json`);
+	const module = await withRetry(() => import(`./words/topics/${topicId}.json`));
 	// On disk, topic is just string[]. In runtime, we enrich it.
 	const parsed = TopicFileSchema.parse(module.default);
 	const words = parsed.words;

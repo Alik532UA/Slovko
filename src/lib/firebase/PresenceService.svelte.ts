@@ -35,12 +35,20 @@ class PresenceServiceClass {
 	private signalUnsubscribe: Unsubscribe | null = null;
 	private lastWaveSentAt: number = 0;
 	private processedSignals: Set<string> = new Set();
+	private isPaused = false;
+	private currentUid: string | null = null;
 
 	/**
 	 * Встановлює статус користувача "online" та налаштовує автоматичний перехід в "offline".
 	 */
 	async init(uid: string) {
+		this.currentUid = uid;
 		logService.log("presence", "Initializing PresenceService for:", uid);
+		
+		if (typeof document !== "undefined") {
+			document.addEventListener("visibilitychange", () => this.handleVisibilityChange());
+		}
+
 		const userStatusRef = ref(rtdb, `/status/${uid}`);
 
 		const isOfflineForDatabase = {
@@ -70,6 +78,34 @@ class PresenceServiceClass {
 	}
 
 	/**
+	 * Обробка зміни видимості сторінки (Tab focus/blur)
+	 */
+	private handleVisibilityChange() {
+		if (!this.currentUid) return;
+		
+		const isHidden = document.visibilityState === "hidden";
+		if (isHidden === this.isPaused) return;
+		
+		this.isPaused = isHidden;
+		logService.log("presence", `App visibility changed: ${isHidden ? "hidden" : "visible"}. Pausing RTDB listeners: ${isHidden}`);
+
+		if (this.isPaused) {
+			// Призупиняємо підписки на друзів та сигнали (але не власний статус!)
+			this.statusUnsubscribers.forEach(entry => entry.unsub());
+			if (this.signalUnsubscribe) {
+				this.signalUnsubscribe();
+				this.signalUnsubscribe = null;
+			}
+		} else {
+			// Відновлюємо підписки
+			const uidsToTrack = Array.from(this.statusUnsubscribers.keys());
+			this.statusUnsubscribers.clear(); // Очищуємо карту, щоб trackFriendStatus створив нові
+			uidsToTrack.forEach(uid => this.trackFriendStatus(uid));
+			this.listenForSignals(this.currentUid);
+		}
+	}
+
+	/**
 	 * Слухає нові сигнали для користувача
 	 */
 	private listenForSignals(uid: string) {
@@ -78,6 +114,8 @@ class PresenceServiceClass {
 		
 		// Використовуємо onChildAdded, щоб ловити кожен новий сигнал
 		this.signalUnsubscribe = onChildAdded(signalsRef, async (snapshot) => {
+			if (!auth.currentUser || auth.currentUser.uid !== uid) return;
+			
 			const signal = snapshot.val() as Signal;
 			const signalKey = snapshot.key;
 
@@ -87,6 +125,14 @@ class PresenceServiceClass {
 
 			// Маркуємо як оброблений негайно, щоб запобігти повторним спробам
 			this.processedSignals.add(signalKey);
+
+			// Захист від спаму: не обробляємо більше 5 нових сигналів одночасно
+			if (this.latestSignal && !this.processedSignals.has(this.latestSignal.id || "")) {
+				// Якщо у нас вже є активний сигнал, який ще не показаний, ігноруємо надлишок
+				if (this.processedSignals.size % 10 === 0) {
+					logService.warn("interaction", "High volume of incoming signals detected, throttling...");
+				}
+			}
 
 			logService.log("interaction", "Received signal snapshot:", signalKey, signal);
 
@@ -173,6 +219,7 @@ class PresenceServiceClass {
 			this.signalUnsubscribe();
 			this.signalUnsubscribe = null;
 		}
+		this.processedSignals.clear();
 	}
 
 	/**

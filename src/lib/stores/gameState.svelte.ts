@@ -148,9 +148,18 @@ function createGameState() {
 		},
 
 		recordMatch() {
+			const now = Date.now();
+			const lastAnswer = correctAnswersHistory[correctAnswersHistory.length - 1] || 0;
+			
+			// Integrity Check: якщо між відповідями менше 200мс - це підозріло (автоклікер)
+			// Ми зараховуємо бали, але не враховуємо цей час для статистики швидкості,
+			// щоб не спотворювати слова за хвилину.
+			if (now - lastAnswer < 200) {
+				logService.warn("game", "Extremely fast match detected, possible automation or race condition.");
+			}
+
 			streak++;
-			// Використовуємо мутацію масиву для реактивності
-			correctAnswersHistory.push(Date.now());
+			correctAnswersHistory.push(now);
 		},
 
 		recordMiss() {
