@@ -4,9 +4,9 @@ export const logConfig = {
 	editor: false,
 	store: false,
 	game: false,
-	sync: false,
-	settings: false,
-	interaction: false,
+	sync: true, // Включено для дебагу
+	settings: true, // Включено для дебагу
+	interaction: true, // Включено для дебагу
 	presence: false,
 	stats: false,
 };

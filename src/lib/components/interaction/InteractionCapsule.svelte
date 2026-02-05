@@ -15,8 +15,26 @@
 	let { event }: Props = $props();
 	let timer: NodeJS.Timeout;
 
-	function handleWave(e: MouseEvent) {
+	async function handleAction(e: MouseEvent) {
 		e.stopPropagation();
+		
+		if (event.type === 'new_follower') {
+			const { FriendsService } = await import("$lib/firebase/FriendsService");
+			const success = await FriendsService.follow(event.uid, {
+				displayName: event.profile.name,
+				photoURL: event.profile.photoURL
+			});
+			if (success) {
+				PresenceService.updateInteractionState(event.id, 'sent');
+				// Закриваємо через 2 секунди
+				if (timer) clearTimeout(timer);
+				timer = setTimeout(() => {
+					PresenceService.removeInteraction(event.id);
+				}, 2000);
+			}
+			return;
+		}
+
 		const senderProfile = {
 			name: authStore.displayName || "Гравець",
 			photoURL: authStore.photoURL
@@ -33,7 +51,7 @@
 	function toggleExpand() {
 		if (event.state === 'collapsed') {
 			PresenceService.updateInteractionState(event.id, 'expanded');
-		} else if (event.state === 'expanded' && event.type === 'manual_menu') {
+		} else if (event.state === 'expanded' && (event.type === 'manual_menu' || event.type === 'new_follower')) {
 			PresenceService.updateInteractionState(event.id, 'collapsed');
 		}
 	}
@@ -50,6 +68,16 @@
 		return () => {
 			if (timer) clearTimeout(timer);
 		};
+	});
+
+	const statusText = $derived(() => {
+		if (event.state === 'sent') {
+			return event.type === 'new_follower' ? 'Ви підписалися!' : 'Ви помахали!';
+		}
+		if (event.type === 'incoming_wave') return 'махає тобі!';
+		if (event.type === 'new_follower') return 'підписався на вас';
+		if (event.type === 'online') return 'зараз в онлайні';
+		return 'помахати?';
 	});
 </script>
 
@@ -73,7 +101,7 @@
 				<div class="text-block">
 					<span class="nickname" data-testid="interaction-nickname">{event.profile.name}</span>
 					<span class="status-text" data-testid="interaction-status-text">
-						{event.state === 'sent' ? 'Ви помахали!' : (event.type === 'incoming_wave' ? 'махає тобі!' : 'помахати?')}
+						{statusText()}
 					</span>
 				</div>
 
@@ -84,9 +112,9 @@
 				{:else}
 					<button 
 						class="wave-btn" 
-						onclick={handleWave} 
-						aria-label="Помахати"
-						data-testid="interaction-wave-btn"
+						onclick={handleAction} 
+						aria-label={event.type === 'new_follower' ? "Підписатися у відповідь" : "Помахати"}
+						data-testid="interaction-action-btn"
 					>
 						<Hand size={18} />
 					</button>

@@ -346,6 +346,7 @@ export const AppSettingsSchema = z.object({
 	theme: z
 		.enum(["dark-gray", "light-gray", "orange", "green"])
 		.default("dark-gray"),
+	lastSeenFollowerAt: z.number().default(0),
 	updatedAt: z.number().default(0),
 });
 

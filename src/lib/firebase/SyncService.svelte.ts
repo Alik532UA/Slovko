@@ -14,6 +14,7 @@ import { db, auth } from "./config";
 import { settingsStore } from "../stores/settingsStore.svelte";
 import { progressStore } from "../stores/progressStore.svelte";
 import { playlistStore } from "../stores/playlistStore.svelte";
+import { friendsStore } from "../stores/friendsStore.svelte";
 import { logService } from "../services/logService";
 import { statisticsService } from "../services/statisticsService.svelte";
 import { dev } from "$app/environment";
@@ -59,6 +60,7 @@ class SyncServiceClass {
 
 	private isDownloading = false;
 	private isUploading = false;
+	private pendingUpload = false;
 	private pendingCloudUpdate: any = null;
 	private consecutiveFailures = 0;
 	private currentUid: string | null = null;
@@ -71,7 +73,7 @@ class SyncServiceClass {
 			
 			// Надійний спосіб збереження при закритті/згортанні
 			this.boundHandleVisibilityChange = () => {
-				if (document.visibilityState === "hidden" && (this.uploadTimeout || this.status === "syncing")) {
+				if (document.visibilityState === "hidden" && (this.uploadTimeout || this.status === "syncing" || this.pendingUpload)) {
 					logService.log("sync", "App hidden, forcing immediate sync...");
 					this.performUpload();
 				}
@@ -198,7 +200,9 @@ class SyncServiceClass {
 	 * Вивантажити локальні зміни в хмару (з дебаунсом або примусово)
 	 */
 	uploadAll(force = false) {
-		if (!auth.currentUser || this.isDownloading || !this.isOnline) return;
+		if (!auth.currentUser || !this.isOnline) return;
+
+		this.pendingUpload = true;
 
 		if (this.uploadTimeout) clearTimeout(this.uploadTimeout);
 
@@ -217,6 +221,7 @@ class SyncServiceClass {
 		}
 
 		this.isUploading = true;
+		this.pendingUpload = false;
 		this.status = "syncing";
 		
 		const uid = auth.currentUser.uid;
@@ -307,8 +312,11 @@ class SyncServiceClass {
 		} finally {
 			this.isUploading = false;
 
-			// На випадок помилки також перевіряємо чергу
-			if (this.pendingCloudUpdate && !this.isUploading) {
+			// Якщо під час вивантаження прийшов запит на нове вивантаження — запускаємо його
+			if (this.pendingUpload) {
+				this.performUpload();
+			} else if (this.pendingCloudUpdate) {
+				// На випадок помилки або якщо немає нових вивантажень, перевіряємо чергу вхідних даних
 				const dataToProcess = this.pendingCloudUpdate;
 				this.pendingCloudUpdate = null;
 				this.handleCloudUpdate(dataToProcess);
@@ -329,23 +337,16 @@ class SyncServiceClass {
 
 		try {
 			if (cloudData.settings) {
-				const result = AppSettingsSchema.safeParse(cloudData.settings);
-				if (result.success) {
-					const cloudSettings = result.data;
-					const localSettings = settingsStore.value;
-
-					if (cloudSettings.updatedAt >= (localSettings.updatedAt || 0)) {
-						settingsStore._internalUpdate(cloudSettings);
-					} else {
-						logService.log("sync", "Local settings are newer, skipping cloud settings update");
-						this.uploadAll();
-					}
+				const localSettings = settingsStore.value;
+				const mergedSettings = this.mergeSettings(localSettings, cloudData.settings);
+				
+				// Якщо результат злиття відрізняється від локального, оновлюємо стор
+				// Це важливо для відновлення полів типу lastSeenFollowerAt
+				if (JSON.stringify(mergedSettings) !== JSON.stringify(localSettings)) {
+					logService.log("sync", "Cloud settings merged into local state");
+					settingsStore._internalUpdate(mergedSettings);
 				} else {
-					logService.error("sync", "Cloud settings validation failed:", result.error);
-					logService.logToRemote("sync_validation_error", { 
-						type: "settings", 
-						error: result.error.message 
-					});
+					logService.log("sync", "Local settings are already up-to-date with cloud merge");
 				}
 			}
 
@@ -367,6 +368,9 @@ class SyncServiceClass {
 				// playlistStore._internalSet вже має вбудовану валідацію через Zod
 				playlistStore._internalSet(cloudData.playlists);
 			}
+
+			// Після завантаження налаштувань перевіряємо сповіщення про підписників
+			friendsStore.checkFollowerNotifications();
 
 			logService.log("sync", "Cloud update processed");
 		} catch (e) {
@@ -408,6 +412,15 @@ class SyncServiceClass {
 				...base.voicePreferences,
 				...updates.voicePreferences
 			};
+		}
+
+		// CRDT Fix: lastSeenFollowerAt must always be monotonic (take max)
+		// Це вирішує проблему, коли новий пристрій (local=0) перезаписує історію з хмари,
+		// навіть якщо локальні налаштування формально "новіші" (через auto-save при старті).
+		const maxLastSeen = Math.max(base.lastSeenFollowerAt || 0, updates.lastSeenFollowerAt || 0);
+		if (maxLastSeen > result.lastSeenFollowerAt) {
+			logService.log("sync", `Restoring lastSeenFollowerAt from history: ${result.lastSeenFollowerAt} -> ${maxLastSeen}`);
+			result.lastSeenFollowerAt = maxLastSeen;
 		}
 
 		return result;

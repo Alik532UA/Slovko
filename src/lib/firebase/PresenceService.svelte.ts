@@ -20,7 +20,7 @@ export interface Signal {
 
 export interface InteractionEvent {
 	id: string;
-	type: 'online' | 'incoming_wave' | 'manual_menu';
+	type: 'online' | 'incoming_wave' | 'manual_menu' | 'new_follower';
 	uid: string;
 	profile: { name: string; photoURL: string | null };
 	timestamp: number;
@@ -87,17 +87,34 @@ class PresenceServiceClass {
 			if (exists) return;
 		}
 
+		// Захист від дублювання підписок
+		if (event.type === 'new_follower') {
+			const exists = this.interactions.some(i => i.uid === event.uid && i.type === 'new_follower');
+			if (exists) return;
+		}
+
 		// Використовуємо надійний UUID
 		const id = crypto.randomUUID();
 		
 		const newEvent: InteractionEvent = {
 			id,
 			timestamp: Date.now(),
-			state: event.state || (event.type === 'incoming_wave' ? 'expanded' : 'collapsed'),
+			state: event.state || (event.type === 'incoming_wave' || event.type === 'new_follower' ? 'expanded' : 'collapsed'),
 			...event
 		};
 
 		this.interactions.push(newEvent);
+	}
+
+	/**
+	 * Публічний метод для сповіщення про нового підписника
+	 */
+	addFollowerNotification(uid: string, profile: { name: string; photoURL: string | null }) {
+		this.addInteraction({
+			type: 'new_follower',
+			uid,
+			profile
+		});
 	}
 
 	/**

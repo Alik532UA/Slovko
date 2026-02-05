@@ -2,6 +2,7 @@ import { auth, db } from "../firebase/config";
 import { FriendsService, type FollowRecord, type UserProfile } from "../firebase/FriendsService";
 import { logService } from "../services/logService";
 import { collection, onSnapshot, query } from "firebase/firestore";
+import { settingsStore } from "./settingsStore.svelte";
 
 class FriendsStoreClass {
 	following = $state<FollowRecord[]>([]);
@@ -12,6 +13,9 @@ class FriendsStoreClass {
 	lastUpdated = $state(0);
 	
 	private unsubs: (() => void)[] = [];
+	private isFirstFollowerLoad = $state(true);
+	private followersLoaded = $state(false);
+	private isCheckingNotifications = false;
 
 	constructor() {
 		// Використовуємо $effect.root для створення глобального ефекту без прив'язки до компонента
@@ -29,10 +33,53 @@ class FriendsStoreClass {
 	}
 
 	/**
+	 * Перевірити сповіщення про підписників.
+	 * Цей метод має запускатися ТІЛЬКИ коли:
+	 * 1. Список підписників завантажено (followersLoaded = true)
+	 * 2. Налаштування з хмари завантажено (SyncService.hasInitialData = true)
+	 */
+	async checkFollowerNotifications() {
+		if (!this.isFirstFollowerLoad || !this.followersLoaded || this.isCheckingNotifications) return;
+
+		this.isCheckingNotifications = true;
+
+		try {
+			// Додаткова перевірка: чи дійсно SyncService готовий?
+			const { SyncService } = await import("../firebase/SyncService.svelte");
+			if (!SyncService.hasInitialData) return;
+
+			const lastSeen = settingsStore.value.lastSeenFollowerAt || 0;
+			logService.log("sync", `Checking follower notifications. Last seen: ${lastSeen}, Followers: ${this.followers.length}`);
+			
+			// Сортуємо від найновіших до найстаріших
+			const unseenFollowers = this.followers
+				.filter(f => f.followedAt && f.followedAt.toMillis() > lastSeen)
+				.sort((a, b) => (b.followedAt?.toMillis() || 0) - (a.followedAt?.toMillis() || 0));
+
+			if (unseenFollowers.length > 0) {
+				// Показуємо тільки 3 найновіших
+				unseenFollowers.slice(0, 3).forEach(f => this.triggerFollowerNotification(f));
+
+				// Але помічаємо ВСІХ як прочитаних (використовуємо таймстамп найновішого)
+				const latestMs = unseenFollowers[0].followedAt?.toMillis();
+				if (latestMs && latestMs > lastSeen) {
+					settingsStore.update({ lastSeenFollowerAt: latestMs });
+				}
+			}
+			
+			this.isFirstFollowerLoad = false;
+		} finally {
+			this.isCheckingNotifications = false;
+		}
+	}
+
+	/**
 	 * Ініціалізувати real-time підписки для поточного користувача
 	 */
 	init(uid: string) {
 		this.stop(); // Очищуємо попередні підписки
+		this.isFirstFollowerLoad = true;
+		this.followersLoaded = false;
 		
 		logService.log("sync", "Initializing real-time FriendsStore for:", uid);
 		
@@ -43,7 +90,6 @@ class FriendsStoreClass {
 		const unsubFollowing = onSnapshot(followingRef, (snapshot) => {
 			this.following = snapshot.docs.map(doc => doc.data() as FollowRecord);
 			this.lastUpdated = Date.now();
-			logService.log("sync", `Real-time following updated: ${this.following.length}`);
 			this.refreshProfiles(this.following);
 		}, (err) => {
 			logService.error("sync", "Error in following snapshot:", err);
@@ -51,15 +97,58 @@ class FriendsStoreClass {
 
 		// Слухаємо підписників (хто мене фоловить)
 		const unsubFollowers = onSnapshot(followersRef, (snapshot) => {
-			this.followers = snapshot.docs.map(doc => doc.data() as FollowRecord);
+			const oldFollowers = this.followers;
+			const newFollowers = snapshot.docs.map(doc => doc.data() as FollowRecord);
+			
+			this.followers = newFollowers;
 			this.lastUpdated = Date.now();
-			logService.log("sync", `Real-time followers updated: ${this.followers.length}`);
+			this.followersLoaded = true;
+			
+			// Спроба 1: Перевірити сповіщення при завантаженні списку
+			import("../firebase/SyncService.svelte").then(({ SyncService }) => {
+				if (SyncService.hasInitialData && this.isFirstFollowerLoad) {
+					this.checkFollowerNotifications();
+				}
+			});
+			
+			// Real-time обробка (якщо це вже НЕ перше завантаження)
+			if (!this.isFirstFollowerLoad) {
+				const oldUids = new Set(oldFollowers.map(f => f.uid));
+				const added = newFollowers.filter(f => !oldUids.has(f.uid));
+				
+				if (added.length > 0) {
+					let latestMs = settingsStore.value.lastSeenFollowerAt || 0;
+					added.forEach(f => {
+						this.triggerFollowerNotification(f);
+						if (f.followedAt) {
+							const ms = f.followedAt.toMillis();
+							if (ms > latestMs) latestMs = ms;
+						}
+					});
+					settingsStore.update({ lastSeenFollowerAt: latestMs });
+				}
+			}
+
 			this.refreshProfiles(this.followers);
 		}, (err) => {
 			logService.error("sync", "Error in followers snapshot:", err);
 		});
 
 		this.unsubs.push(unsubFollowing, unsubFollowers);
+	}
+
+	/**
+	 * Викликає сповіщення про нового підписника
+	 */
+	private triggerFollowerNotification(follower: FollowRecord) {
+		import("../firebase/PresenceService.svelte").then(({ PresenceService }) => {
+			// Не показуємо, якщо ми вже підписані у відповідь (можливо)
+			// Але зазвичай краще показати в будь-якому випадку як приємну подію
+			PresenceService.addFollowerNotification(follower.uid, {
+				name: follower.displayName,
+				photoURL: follower.photoURL
+			});
+		});
 	}
 
 	/**
