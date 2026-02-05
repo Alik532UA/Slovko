@@ -417,6 +417,10 @@ export const FriendsService = {
 				);
 			}
 
+			/* 
+			DISABLED FOR SECURITY: Searching by name allows impersonation and finding random users.
+			Only exact email match is allowed.
+			
 			// 2. Якщо не знайдено, шукаємо за displayNameLower (префіксний пошук)
 			// Firestore не дозволяє декілька операторів inequality/range на різних полях одночасно в одному запиті
 			// Тому ми використовуємо displayNameLower для фільтрації і додаємо showInSearch
@@ -434,6 +438,8 @@ export const FriendsService = {
 			return nameSnapshot.docs
 				.map((doc) => ({ ...doc.data(), uid: doc.id }) as UserProfile)
 				.filter((profile) => profile.uid !== currentUid);
+			*/
+			return [];
 		} catch (error) {
 			logService.error("sync", "Error searching users:", error);
 			return [];

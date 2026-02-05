@@ -2,6 +2,7 @@
 	import { PresenceService, type InteractionEvent } from "$lib/firebase/PresenceService.svelte";
 	import { authStore } from "$lib/firebase/authStore.svelte";
 	import { logService } from "$lib/services/logService";
+	import { _ } from "svelte-i18n";
 	import UserAvatar from "../friends/UserAvatar.svelte";
 	import { fade, slide, scale } from "svelte/transition";
 	import { Hand, Check } from "lucide-svelte";
@@ -72,12 +73,12 @@
 
 	const statusText = $derived(() => {
 		if (event.state === 'sent') {
-			return event.type === 'new_follower' ? 'Ви підписалися!' : 'Ви помахали!';
+			return event.type === 'new_follower' ? $_('interaction.youFollowed') : $_('interaction.youWaved');
 		}
-		if (event.type === 'incoming_wave') return 'махає тобі!';
-		if (event.type === 'new_follower') return 'підписався на вас';
-		if (event.type === 'online') return 'зараз в онлайні';
-		return 'помахати?';
+		if (event.type === 'incoming_wave') return $_('interaction.wavingAtYou');
+		if (event.type === 'new_follower') return $_('interaction.followedYou');
+		if (event.type === 'online') return $_('interaction.onlineNow');
+		return $_('interaction.waveBack');
 	});
 </script>
 
@@ -113,7 +114,7 @@
 					<button 
 						class="wave-btn" 
 						onclick={handleAction} 
-						aria-label={event.type === 'new_follower' ? "Підписатися у відповідь" : "Помахати"}
+						aria-label={event.type === 'new_follower' ? $_("interaction.followBack") : $_("interaction.waveBack")}
 						data-testid="interaction-action-btn"
 					>
 						<Hand size={18} />

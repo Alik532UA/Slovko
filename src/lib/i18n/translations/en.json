@@ -264,6 +264,7 @@
 	},
 	"friends": {
 		"searchPlaceholder": "Search users...",
+		"searchPlaceholderEmail": "Enter exact email...",
 		"noResults": "No users found",
 		"loadError": "Failed to load list",
 		"confirmUnfollow": "Unfollow this user?",
@@ -284,5 +285,23 @@
 		"loading": "Loading top...",
 		"noData": "No data to display yet",
 		"authWarning": "Sign in to appear in the leaderboard and compete with others!"
+	},
+	"interaction": {
+		"youFollowed": "You followed!",
+		"youWaved": "You waved!",
+		"wavingAtYou": "is waving at you!",
+		"followedYou": "followed you",
+		"onlineNow": "is online now",
+		"waveBack": "wave back?",
+		"followBack": "follow back"
+	},
+	"discovery": {
+		"title": "Active Search",
+		"enable": "Enable",
+		"disable": "Disable",
+		"hint": "Enable to find friends nearby who have also opened this menu.",
+		"active": "Active",
+		"waiting": "Waiting for others...",
+		"paste": "Paste from clipboard"
 	}
 }

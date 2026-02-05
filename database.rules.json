@@ -4,16 +4,26 @@
       "$uid": {
         ".read": "auth != null",
         ".write": "auth != null && $uid === auth.uid",
-        ".validate": "newData.hasChildren(['state', 'lastChanged']) && (newData.child('state').val() === 'online' || newData.child('state').val() === 'offline')"
+        ".validate": "newData.hasChildren(['state', 'lastChanged'])"
       }
     },
     "signals": {
       "$uid": {
+        // Отримувач може читати свої сигнали
         ".read": "auth != null && auth.uid === $uid",
         "$senderUid": {
-          ".write": "auth != null && (auth.uid === $uid || (auth.uid === $senderUid && !data.exists()))",
-          ".validate": "newData.hasChildren(['fromUid', 'type', 'timestamp']) && newData.child('fromUid').val() === auth.uid && newData.child('timestamp').val() <= now"
+          // Відправник може писати (якщо не існує), отримувач може видаляти
+          ".write": "auth != null && ((auth.uid === $senderUid && !data.exists()) || (auth.uid === $uid && !newData.exists()))",
+          ".validate": "!newData.exists() || (newData.hasChildren(['fromUid', 'type', 'timestamp']) && newData.child('fromUid').val() === auth.uid)"
         }
+      }
+    },
+    "discovery": {
+      ".read": "auth != null",
+      ".indexOn": ["timestamp"],
+      "$uid": {
+        ".write": "auth != null && $uid === auth.uid",
+        ".validate": "!newData.exists() || newData.hasChildren(['displayName', 'timestamp'])"
       }
     }
   }

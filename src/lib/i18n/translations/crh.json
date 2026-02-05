@@ -262,6 +262,7 @@
 	},
 	"friends": {
 		"searchPlaceholder": "Qullanıcılarnı qıdıruv...",
+		"searchPlaceholderEmail": "Tam email kirtiñiz...",
 		"noResults": "Qullanıcılar tapılmadı",
 		"loadError": "Listeni yüklev hatası",
 		"confirmUnfollow": "Qullanıcıdan vazgeçmege?",
@@ -282,5 +283,23 @@
 		"loading": "Top yüklenile...",
 		"noData": "Şimdilik malümat yoq",
 		"authWarning": "Rekordlarıñıznıñ top-listte kösterilmesi ve digerlernen yarışmaq içün kiriñiz!"
+	},
+	"interaction": {
+		"youFollowed": "Siz takip ettiñiz!",
+		"youWaved": "Siz el salladıñız!",
+		"wavingAtYou": "siğe el sallay!",
+		"followedYou": "sizni takip ete",
+		"onlineNow": "şimdi onlayn",
+		"waveBack": "el sallamaq?",
+		"followBack": "takip etmek"
+	},
+	"discovery": {
+		"title": "Aktiv qıdırıv",
+		"enable": "Açmaq",
+		"disable": "Qapatmaq",
+		"hint": "Yaqındaki dostları tapmaq içün açıñız, olar da bu menüni açqan olmalı.",
+		"active": "Aktiv",
+		"waiting": "Digerlerini bekleymiz...",
+		"paste": "Kopiyalanğanını kirtmek"
 	}
 }

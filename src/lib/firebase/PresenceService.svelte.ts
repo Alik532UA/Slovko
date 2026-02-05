@@ -1,4 +1,4 @@
-import { ref, onValue, set, onDisconnect, serverTimestamp, onChildAdded, remove, type Unsubscribe } from "firebase/database";
+import { ref, onValue, set, onDisconnect, serverTimestamp, onChildAdded, remove, query, orderByChild, limitToLast, type Unsubscribe } from "firebase/database";
 import { rtdb, auth } from "./config";
 import { logService } from "../services/logService";
 
@@ -7,6 +7,13 @@ export type OnlineStatus = "online" | "offline";
 export interface UserStatus {
 	state: OnlineStatus;
 	lastChanged: number;
+}
+
+export interface DiscoveryUser {
+	uid: string;
+	displayName: string;
+	photoURL: string | null;
+	timestamp: number;
 }
 
 export interface Signal {
@@ -130,6 +137,70 @@ class PresenceServiceClass {
 	updateInteractionState(id: string, state: InteractionEvent['state']) {
 		const event = this.interactions.find(i => i.id === id);
 		if (event) event.state = state;
+	}
+
+	/**
+	 * Увійти в режим "Активний пошук" (Discovery Mode)
+	 */
+	async enterDiscoveryMode(profile: { displayName: string; photoURL: string | null }) {
+		if (!this.currentUid) return;
+		
+		const discoveryRef = ref(rtdb, `/discovery/${this.currentUid}`);
+		const data = {
+			...profile,
+			timestamp: serverTimestamp()
+		};
+
+		// Встановлюємо дані та хук для видалення при втраті зв'язку
+		await onDisconnect(discoveryRef).remove();
+		await set(discoveryRef, data);
+		logService.log("presence", "Entered discovery mode");
+	}
+
+	/**
+	 * Вийти з режиму "Активний пошук"
+	 */
+	async leaveDiscoveryMode() {
+		if (!this.currentUid) return;
+		
+		// Скасовуємо onDisconnect (хоча remove все одно спрацює, але це good practice)
+		const discoveryRef = ref(rtdb, `/discovery/${this.currentUid}`);
+		await onDisconnect(discoveryRef).cancel();
+		await remove(discoveryRef);
+		
+		logService.log("presence", "Left discovery mode");
+	}
+
+	/**
+	 * Підписатися на список активних користувачів в пошуку
+	 * Повертає функцію для відписки
+	 */
+	subscribeToDiscovery(callback: (users: DiscoveryUser[]) => void): () => void {
+		const discoveryListRef = query(
+			ref(rtdb, 'discovery'),
+			orderByChild('timestamp'),
+			limitToLast(30) // Показуємо тільки останніх 30 активних
+		);
+
+		const unsub = onValue(discoveryListRef, (snapshot) => {
+			const users: DiscoveryUser[] = [];
+			snapshot.forEach((childSnapshot) => {
+				const val = childSnapshot.val();
+				// Не показуємо себе у списку
+				if (childSnapshot.key !== this.currentUid) {
+					users.push({
+						uid: childSnapshot.key as string,
+						displayName: val.displayName,
+						photoURL: val.photoURL,
+						timestamp: val.timestamp
+					});
+				}
+			});
+			// Сортуємо: найновіші зверху
+			callback(users.reverse());
+		});
+
+		return unsub;
 	}
 
 	/**

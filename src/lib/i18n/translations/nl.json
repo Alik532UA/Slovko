@@ -242,6 +242,7 @@
 	},
 	"friends": {
 		"searchPlaceholder": "Gebruikers zoeken...",
+		"searchPlaceholderEmail": "Voer het exacte e-mailadres in...",
 		"noResults": "Geen gebruikers gevonden",
 		"loadError": "Lijst laden mislukt",
 		"confirmUnfollow": "Deze gebruiker ontvolgen?",
@@ -262,5 +263,23 @@
 		"loading": "Ranglijst laden...",
 		"noData": "Nog geen gegevens om weer te geven",
 		"authWarning": "Log in om in de ranglijst te verschijnen en met anderen te concurreren!"
+	},
+	"interaction": {
+		"youFollowed": "Je bent gaan volgen!",
+		"youWaved": "Je hebt gezwaaid!",
+		"wavingAtYou": "zwaait naar je!",
+		"followedYou": "volgt jou nu",
+		"onlineNow": "is nu online",
+		"waveBack": "terugzwaaien?",
+		"followBack": "terug volgen"
+	},
+	"discovery": {
+		"title": "Actief zoeken",
+		"enable": "Inschakelen",
+		"disable": "Uitschakelen",
+		"hint": "Schakel in om vrienden in de buurt te vinden die ook dit menu hebben geopend.",
+		"active": "Actief",
+		"waiting": "Wachten op anderen...",
+		"paste": "Plakken van klembord"
 	}
 }

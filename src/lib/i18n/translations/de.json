@@ -242,6 +242,7 @@
 	},
 	"friends": {
 		"searchPlaceholder": "Benutzer suchen...",
+		"searchPlaceholderEmail": "Geben Sie die genaue E-Mail-Adresse ein...",
 		"noResults": "Keine Benutzer gefunden",
 		"loadError": "Fehler beim Laden der Liste",
 		"confirmUnfollow": "Vom Benutzer abmelden?",
@@ -262,5 +263,23 @@
 		"loading": "Bestenliste laden...",
 		"noData": "Noch keine Daten zum Anzeigen",
 		"authWarning": "Melden Sie sich an, um in der Bestenliste zu erscheinen und mit anderen zu konkurrieren!"
+	},
+	"interaction": {
+		"youFollowed": "Du bist gefolgt!",
+		"youWaved": "Du hast gewunken!",
+		"wavingAtYou": "winkt dir zu!",
+		"followedYou": "folgt dir jetzt",
+		"onlineNow": "ist jetzt online",
+		"waveBack": "zurückwinken?",
+		"followBack": "zurück folgen"
+	},
+	"discovery": {
+		"title": "Aktive Suche",
+		"enable": "Aktivieren",
+		"disable": "Deaktivieren",
+		"hint": "Aktivieren, um Freunde in der Nähe zu finden, die dieses Menü ebenfalls geöffnet haben.",
+		"active": "Aktiv",
+		"waiting": "Warten auf andere...",
+		"paste": "Aus Zwischenablage einfügen"
 	}
 }
