@@ -6,8 +6,8 @@ export const logConfig = {
 	game: false,
 	sync: false,
 	settings: false,
-	interaction: true,
-	presence: true,
+	interaction: false,
+	presence: false,
 	stats: false,
 };
 

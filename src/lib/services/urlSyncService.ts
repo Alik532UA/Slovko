@@ -1,5 +1,6 @@
 import { settingsStore } from "../stores/settingsStore.svelte";
 import type { AppSettings } from "../data/schemas";
+import { logService } from "./logService";
 
 /**
  * UrlSyncService - відповідає за синхронізацію стану між URL та SettingsStore.
@@ -12,11 +13,27 @@ export class UrlSyncService {
 	 */
 	static syncStoreWithUrl(dataSettings: AppSettings) {
 		const current = settingsStore.value;
+		logService.log("sync", "syncStoreWithUrl check:", {
+			urlSource: dataSettings.sourceLanguage,
+			storeSource: current.sourceLanguage,
+			urlUpdated: dataSettings.updatedAt,
+			storeUpdated: current.updatedAt,
+			hasCompletedOnboarding: current.hasCompletedOnboarding
+		});
 
 		// КРИТИЧНО: Якщо онбординг не завершено, ми НЕ дозволяємо URL перезаписувати вибір користувача.
-		// Це запобігає ситуації, коли параметри за замовчуванням (?source=en&target=uk)
-		// перебивають те, що користувач щойно вибрав у модальному вікні.
 		if (!current.hasCompletedOnboarding) return;
+
+		// ЗАХИСТ ВІД СТАРИХ ДАНИХ (Race Condition):
+		// Якщо дані з URL старіші за дані в сторі — ігноруємо їх.
+		// Це запобігає "відкату" налаштувань під час переходу між сторінками.
+		const urlTime = dataSettings.updatedAt || 0;
+		const storeTime = current.updatedAt || 0;
+
+		if (storeTime > urlTime) {
+			logService.log("sync", "URL data is stale (older than store). Skipping sync.", { urlTime, storeTime });
+			return;
+		}
 
 		// Перевіряємо чи є реальна різниця між даними з URL та Store
 		if (
@@ -27,6 +44,7 @@ export class UrlSyncService {
 			current.sourceLanguage !== dataSettings.sourceLanguage ||
 			current.targetLanguage !== dataSettings.targetLanguage
 		) {
+			logService.log("sync", "Applying URL data to Store (Mismatch found)");
 			settingsStore._internalUpdate({
 				mode: dataSettings.mode,
 				currentLevel: dataSettings.currentLevel,
@@ -57,6 +75,8 @@ export class UrlSyncService {
 			(s.mode === "playlists" && s.currentPlaylist && url.searchParams.get("playlist") !== s.currentPlaylist);
 
 		if (!needsUpdate) return null;
+
+		logService.log("sync", "URL needs update based on Store state");
 
 		// Оновлюємо параметри
 		url.searchParams.set("mode", s.mode);

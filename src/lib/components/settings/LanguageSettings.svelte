@@ -22,14 +22,6 @@
 	let pressTimer: ReturnType<typeof setTimeout> | null = null;
 	let isLongPress = false;
 	let showVoiceSelection = $state(false);
-	let isSpeechIcon = $state(true);
-
-	onMount(() => {
-		const interval = setInterval(() => {
-			isSpeechIcon = !isSpeechIcon;
-		}, 2000);
-		return () => clearInterval(interval);
-	});
 
 	function handleInterfaceLanguage(lang: Language) {
 		settingsStore.setInterfaceLanguage(lang);
@@ -157,7 +149,7 @@
 					<div class="lang-column">
 						<div class="column-header">
 							<h4 class="column-title">
-								{$_("settings.sourceLanguage")}
+								{$_("settings.columnLeft")}
 							</h4>
 						</div>
 						<div class="flags-column">
@@ -169,18 +161,12 @@
 										const currentTarget = settingsStore.value.targetLanguage;
 										const currentSource = settingsStore.value.sourceLanguage;
 										if (lang === currentTarget) {
+											// Swap logic
 											settingsStore.setCardLanguages(lang, currentSource);
-											goto(`?source=${lang}&target=${currentSource}`, {
-												keepFocus: true,
-												noScroll: true,
-											});
 										} else {
 											settingsStore.setCardLanguages(lang, currentTarget);
-											goto(`?source=${lang}&target=${currentTarget}`, {
-												keepFocus: true,
-												noScroll: true,
-											});
 										}
+										// Manual 'goto' removed to fix sync race condition
 									}}
 									title={LANGUAGE_NAMES[lang]}
 									data-testid="source-lang-{lang}"
@@ -217,25 +203,7 @@
 								title={$_("settings.pronunciation")}
 								data-testid="pronunciation-left-btn"
 							>
-								<div class="icon-stack">
-									{#if isSpeechIcon}
-										<div
-											class="icon-wrapper"
-											in:fade={{ duration: 300 }}
-											out:fade={{ duration: 300 }}
-										>
-											<Speech size={16} />
-										</div>
-									{:else}
-										<div
-											class="icon-wrapper"
-											in:fade={{ duration: 300 }}
-											out:fade={{ duration: 300 }}
-										>
-											<Volume2 size={16} />
-										</div>
-									{/if}
-								</div>
+								<Speech size={16} />
 							</button>
 						</div>
 					</div>
@@ -244,7 +212,7 @@
 					<div class="lang-column">
 						<div class="column-header">
 							<h4 class="column-title">
-								{$_("settings.targetLanguage")}
+								{$_("settings.columnRight")}
 							</h4>
 						</div>
 
@@ -257,18 +225,12 @@
 										const currentSource = settingsStore.value.sourceLanguage;
 										const currentTarget = settingsStore.value.targetLanguage;
 										if (lang === currentSource) {
+											// Swap logic
 											settingsStore.setCardLanguages(currentTarget, lang);
-											goto(`?source=${currentTarget}&target=${lang}`, {
-												keepFocus: true,
-												noScroll: true,
-											});
 										} else {
 											settingsStore.setCardLanguages(currentSource, lang);
-											goto(`?source=${currentSource}&target=${lang}`, {
-												keepFocus: true,
-												noScroll: true,
-											});
 										}
+										// Manual 'goto' removed to fix sync race condition
 									}}
 									title={LANGUAGE_NAMES[lang]}
 									data-testid="target-lang-{lang}"
@@ -305,25 +267,7 @@
 								title={$_("settings.pronunciation")}
 								data-testid="pronunciation-right-btn"
 							>
-								<div class="icon-stack">
-									{#if isSpeechIcon}
-										<div
-											class="icon-wrapper"
-											in:fade={{ duration: 300 }}
-											out:fade={{ duration: 300 }}
-										>
-											<Speech size={16} />
-										</div>
-									{:else}
-										<div
-											class="icon-wrapper"
-											in:fade={{ duration: 300 }}
-											out:fade={{ duration: 300 }}
-										>
-											<Volume2 size={16} />
-										</div>
-									{/if}
-								</div>
+								<Speech size={16} />
 							</button>
 						</div>
 					</div>
@@ -558,22 +502,6 @@
 	.icon-btn.small {
 		padding: 0.35rem;
 		border-radius: 8px;
-	}
-
-	.icon-stack {
-		position: relative;
-		width: 16px;
-		height: 16px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.icon-wrapper {
-		position: absolute;
-		display: flex;
-		align-items: center;
-		justify-content: center;
 	}
 
 	.separator {
