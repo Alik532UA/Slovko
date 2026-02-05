@@ -58,33 +58,43 @@
 	class:expanded={event.state !== 'collapsed'}
 	class:sent={event.state === 'sent'}
 	transition:scale={{ duration: 200, start: 0.8 }}
+	data-testid="interaction-capsule-{event.type}"
 >
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
-	<div class="interactive-area" onclick={toggleExpand}>
+	<div 
+		class="interactive-area" 
+		onclick={toggleExpand}
+		data-testid="interaction-trigger-{event.uid}"
+	>
 		
 		{#if event.state !== 'collapsed'}
-			<div class="content-panel" transition:slide={{ axis: 'x', duration: 250 }}>
+			<div class="content-panel" transition:slide={{ axis: 'x', duration: 250 }} data-testid="interaction-content">
 				<div class="text-block">
-					<span class="nickname">{event.profile.name}</span>
-					<span class="status-text">
+					<span class="nickname" data-testid="interaction-nickname">{event.profile.name}</span>
+					<span class="status-text" data-testid="interaction-status-text">
 						{event.state === 'sent' ? 'Ви помахали!' : (event.type === 'incoming_wave' ? 'махає тобі!' : 'помахати?')}
 					</span>
 				</div>
 
 				{#if event.state === 'sent'}
-					<div class="sent-indicator" transition:scale>
+					<div class="sent-indicator" transition:scale data-testid="interaction-sent-indicator">
 						<Check size={18} />
 					</div>
 				{:else}
-					<button class="wave-btn" onclick={handleWave} aria-label="Помахати">
+					<button 
+						class="wave-btn" 
+						onclick={handleWave} 
+						aria-label="Помахати"
+						data-testid="interaction-wave-btn"
+					>
 						<Hand size={18} />
 					</button>
 				{/if}
 			</div>
 		{/if}
 
-		<div class="avatar-anchor">
+		<div class="avatar-anchor" data-testid="interaction-avatar">
 			<UserAvatar 
 				uid={event.uid} 
 				photoURL={event.profile.photoURL} 

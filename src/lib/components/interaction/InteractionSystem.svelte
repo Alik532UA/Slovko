@@ -10,9 +10,9 @@
 	);
 </script>
 
-<div class="interaction-system">
+<div class="interaction-system" data-testid="interaction-system">
 	{#each sortedInteractions as event (event.id)}
-		<div class="capsule-slot" animate:flip={{ duration: 300 }}>
+		<div class="capsule-slot" animate:flip={{ duration: 300 }} data-testid="interaction-slot-{event.type}">
 			<InteractionCapsule {event} />
 		</div>
 	{/each}
