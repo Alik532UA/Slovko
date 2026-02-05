@@ -53,8 +53,8 @@ export const PlaylistWordSchema = z.union([z.string(), CustomWordSchema]);
 
 export const PlaylistSchema = z.object({
 	id: z.string(),
-	name: z.string(),
-	description: z.string().optional().default(""),
+	name: z.string().max(50, "Name too long"),
+	description: z.string().max(200, "Description too long").optional().default(""),
 	color: z.string().optional().default("#3a8fd6"),
 	icon: z.string().optional().default("Bookmark"),
 	isSystem: z.boolean().default(false),
