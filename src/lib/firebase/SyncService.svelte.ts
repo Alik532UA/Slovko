@@ -61,6 +61,7 @@ class SyncServiceClass {
 
 	private isDownloading = false;
 	private isUploading = false;
+	private consecutiveFailures = 0;
 	private currentUid: string | null = null;
 
 	constructor() {
@@ -271,11 +272,13 @@ class SyncServiceClass {
 			try {
 				await batch.commit();
 			} catch (err) {
-				logService.error("sync", "Atomic Sync Failed:", err);
+				this.consecutiveFailures++;
+				logService.error("sync", `Atomic Sync Failed (${this.consecutiveFailures}):`, err);
 				throw err;
 			}
 
 			this.retryCount = 0;
+			this.consecutiveFailures = 0; // Успіх! Скидаємо лічильник
 			this.lastSyncAttempt = Date.now();
 			this.status = "up-to-date";
 			logService.log("sync", "Upload successful");
@@ -509,7 +512,11 @@ class SyncServiceClass {
 	}
 
 	private scheduleRetry() {
-		if (this.retryCount >= RETRY_CONFIG.maxAttempts) return;
+		if (this.retryCount >= RETRY_CONFIG.maxAttempts || this.consecutiveFailures >= 5) {
+			logService.error("sync", "Max sync retries reached. Stopping automatic attempts.");
+			this.status = "error";
+			return;
+		}
 		const delay = Math.min(RETRY_CONFIG.baseDelay * Math.pow(2, this.retryCount), RETRY_CONFIG.maxDelay);
 		this.retryCount++;
 		setTimeout(() => {

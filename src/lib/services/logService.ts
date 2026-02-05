@@ -40,12 +40,32 @@ export const logService = {
 	getRecentLogs() {
 		return recentLogs.join('\n');
 	},
+
+	/**
+	 * Очищує об'єкт від чутливих даних перед відправкою
+	 */
+	sanitizeDetails(details: Record<string, any>): Record<string, any> {
+		const SENSITIVE_KEYS = ['password', 'token', 'email', 'credential', 'secret', 'key'];
+		const sanitized = { ...details };
+		
+		Object.keys(sanitized).forEach(key => {
+			const lowerKey = key.toLowerCase();
+			if (SENSITIVE_KEYS.some(k => lowerKey.includes(k))) {
+				sanitized[key] = '[REDACTED]';
+			} else if (typeof sanitized[key] === 'object' && sanitized[key] !== null) {
+				sanitized[key] = this.sanitizeDetails(sanitized[key]);
+			}
+		});
+		
+		return sanitized;
+	},
 	
 	/**
 	 * Записує важливі події у Firestore для аналізу
 	 */
 	async logToRemote(action: string, details: Record<string, any>) {
 		try {
+			const sanitizedDetails = this.sanitizeDetails(details);
 			const { db, auth } = await import("../firebase/config");
 			const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
 			
@@ -55,7 +75,7 @@ export const logService = {
 				timestamp: serverTimestamp(),
 				uid,
 				action,
-				details,
+				details: sanitizedDetails,
 				userAgent: navigator.userAgent
 			});
 		} catch (e) {
