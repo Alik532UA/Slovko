@@ -209,11 +209,10 @@
 						{/if}
 					</div>
 
-					<div class="col-user">
-						<UserAvatar uid={user.uid} photoURL={realPhoto} size={24} />
-						<span class="username">{realName}</span>
-
-						{#if selectedLevel === "all" && user.bestCorrectStreakLevel}
+															<div class="col-user">
+																	<UserAvatar uid={user.uid} photoURL={realPhoto} displayName={realName} size={24} />
+																	<span class="username">{realName}</span>
+											{#if selectedLevel === "all" && user.bestCorrectStreakLevel}
 							<span class="level-badge">{user.bestCorrectStreakLevel}</span>
 						{/if}
 

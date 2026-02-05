@@ -3,15 +3,16 @@
     "status": {
       "$uid": {
         ".read": "auth != null",
-        ".write": "$uid === auth.uid",
-        ".validate": "newData.hasChildren(['state', 'lastChanged']) && (newData.child('state').val() === 'online' || newData.child('state').val() === 'offline')"
+        ".write": "auth != null && $uid === auth.uid",
+        ".validate": "newData.hasChildren(['state', 'lastChanged'])"
       }
     },
     "signals": {
       "$uid": {
-        ".read": "$uid === auth.uid",
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid",
         "$signalId": {
-          ".write": "auth != null && newData.child('fromUid').val() === auth.uid"
+          ".write": "auth != null && (auth.uid === $uid || !data.exists())"
         }
       }
     }

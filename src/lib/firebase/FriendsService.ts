@@ -54,6 +54,9 @@ const COLLECTIONS = {
 /**
  * Сервіс для керування друзями та підписками
  */
+const LEADERBOARD_CACHE: Record<string, { data: any[], timestamp: number }> = {};
+const CACHE_TTL = 5 * 60 * 1000; // 5 хвилин
+
 export const FriendsService = {
 	/**
 	 * Підписатися на користувача (Атомарно)
@@ -111,9 +114,23 @@ export const FriendsService = {
 
 			await batch.commit();
 			logService.log("sync", `Followed user: ${targetUid}`);
+			
+			// Remote logging for analysis
+			logService.logToRemote("friend_follow_success", {
+				targetUid,
+				targetName: targetProfile.displayName
+			});
+			
 			return true;
-		} catch (error) {
+		} catch (error: any) {
 			logService.error("sync", "Error following user:", error);
+			
+			// Remote logging for errors
+			logService.logToRemote("friend_follow_error", {
+				targetUid,
+				error: error.message || error
+			});
+			
 			return false;
 		}
 	},
@@ -149,9 +166,20 @@ export const FriendsService = {
 
 			await batch.commit();
 			logService.log("sync", `Unfollowed user: ${targetUid}`);
+			
+			// Remote logging
+			logService.logToRemote("friend_unfollow_success", { targetUid });
+			
 			return true;
-		} catch (error) {
+		} catch (error: any) {
 			logService.error("sync", "Error unfollowing user:", error);
+			
+			// Remote logging
+			logService.logToRemote("friend_unfollow_error", { 
+				targetUid, 
+				error: error.message || error 
+			});
+			
 			return false;
 		}
 	},
@@ -172,18 +200,90 @@ export const FriendsService = {
 				COLLECTIONS.FOLLOWING,
 			);
 			const snapshot = await getDocs(followingRef);
-
-			return snapshot.docs.map((doc) => doc.data() as FollowRecord);
-		} catch (error) {
+			const results = snapshot.docs.map((doc) => doc.data() as FollowRecord);
+			
+			logService.log("sync", `Fetched following for ${targetUid}: ${results.length} items`, results.map(r => r.uid));
+			return results;
+		} catch (error: any) {
 			logService.error("sync", "Error getting following:", error);
+			logService.logToRemote("friend_get_following_error", { targetUid, error: error.message });
 			return [];
 		}
 	},
 
 	/**
-	 * Отримати список підписників (хто підписаний на мене)
-	 * @param uid - UID користувача (за замовчуванням - поточний)
+	 * Видалити підписника (змусити іншого відписатися від мене)
+	 * @param followerUid - UID підписника, якого треба видалити
 	 */
+	async removeFollower(followerUid: string): Promise<boolean> {
+		if (!auth.currentUser) return false;
+		const currentUid = auth.currentUser.uid;
+
+		try {
+			logService.log("sync", `Attempting to remove follower: ${followerUid} from user: ${currentUid}`);
+			const batch = writeBatch(db);
+
+			// Видаляємо з моїх followers
+			const followerRef = doc(
+				db,
+				COLLECTIONS.USERS,
+				currentUid,
+				COLLECTIONS.FOLLOWERS,
+				followerUid,
+			);
+			batch.delete(followerRef);
+
+			// Видаляємо з його following
+			const followingRef = doc(
+				db,
+				COLLECTIONS.USERS,
+				followerUid,
+				COLLECTIONS.FOLLOWING,
+				currentUid,
+			);
+			batch.delete(followingRef);
+
+			await batch.commit();
+			logService.log("sync", `Successfully removed follower: ${followerUid}`);
+			logService.logToRemote("friend_remove_follower_success", { followerUid });
+			return true;
+		} catch (error: any) {
+			logService.error("sync", "Error removing follower:", error);
+			logService.logToRemote("friend_remove_follower_error", { followerUid, error: error.message });
+			return false;
+		}
+	},
+
+	/**
+	 * Оновити дані друга в локальному списку підписок, якщо вони змінилися
+	 * Викликається при перегляді профілю або списку друзів
+	 */
+	async refreshFriendData(targetUid: string): Promise<void> {
+		if (!auth.currentUser) return;
+		const currentUid = auth.currentUser.uid;
+
+		try {
+			const profile = await this.getUserProfile(targetUid);
+			if (!profile) return;
+
+			const followingRef = doc(db, COLLECTIONS.USERS, currentUid, COLLECTIONS.FOLLOWING, targetUid);
+			const followingSnap = await getDoc(followingRef);
+
+			if (followingSnap.exists()) {
+				const data = followingSnap.data();
+				if (data.displayName !== profile.displayName || data.photoURL !== profile.photoURL) {
+					await setDoc(followingRef, {
+						displayName: profile.displayName,
+						photoURL: profile.photoURL
+					}, { merge: true });
+					logService.log("sync", `Updated profile cache for friend: ${targetUid}`);
+				}
+			}
+		} catch (error) {
+			logService.error("sync", "Error refreshing friend data:", error);
+		}
+	},
+
 	async getFollowers(uid?: string): Promise<FollowRecord[]> {
 		const targetUid = uid || auth.currentUser?.uid;
 		if (!targetUid) return [];
@@ -196,10 +296,13 @@ export const FriendsService = {
 				COLLECTIONS.FOLLOWERS,
 			);
 			const snapshot = await getDocs(followersRef);
+			const results = snapshot.docs.map((doc) => doc.data() as FollowRecord);
 
-			return snapshot.docs.map((doc) => doc.data() as FollowRecord);
-		} catch (error) {
+			logService.log("sync", `Fetched followers for ${targetUid}: ${results.length} items`, results.map(r => r.uid));
+			return results;
+		} catch (error: any) {
 			logService.error("sync", "Error getting followers:", error);
+			logService.logToRemote("friend_get_followers_error", { targetUid, error: error.message });
 			return [];
 		}
 	},
@@ -400,6 +503,14 @@ export const FriendsService = {
 		cefrLevel: string = "all",
 		limitCount: number = 20,
 	): Promise<any[]> {
+		const cacheKey = `${metric}_${cefrLevel}_${limitCount}`;
+		const now = Date.now();
+		
+		if (LEADERBOARD_CACHE[cacheKey] && (now - LEADERBOARD_CACHE[cacheKey].timestamp < CACHE_TTL)) {
+			logService.log("presence", "Returning cached leaderboard");
+			return LEADERBOARD_CACHE[cacheKey].data;
+		}
+
 		try {
 			const profilesRef = collection(db, COLLECTIONS.PROFILES);
 			// Для точності беремо більше записів, щоб відфільтрувати "читерів" та анонімів
@@ -460,10 +571,13 @@ export const FriendsService = {
 			}
 
 			// Обрізаємо до запитаної кількості і додаємо ранг
-			return results.slice(0, limitCount).map((u, index) => ({
+			const finalResults = results.slice(0, limitCount).map((u, index) => ({
 				...u,
 				rank: index + 1,
 			}));
+
+			LEADERBOARD_CACHE[cacheKey] = { data: finalResults, timestamp: Date.now() };
+			return finalResults;
 		} catch (error) {
 			logService.error("sync", "Error getting leaderboard:", error);
 			return [];

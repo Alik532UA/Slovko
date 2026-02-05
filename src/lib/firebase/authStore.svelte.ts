@@ -1,6 +1,7 @@
 import { AuthService } from "./AuthService";
 import { SyncService } from "./SyncService.svelte";
 import { PresenceService } from "./PresenceService.svelte";
+import { friendsStore } from "../stores/friendsStore.svelte";
 import type { User } from "firebase/auth";
 
 /**
@@ -77,9 +78,11 @@ function createAuthStore() {
 		if (user) {
 			SyncService.init(user.uid);
 			PresenceService.init(user.uid);
+			friendsStore.refreshAll();
 		} else {
 			if (state.uid) PresenceService.goOffline(state.uid);
 			SyncService.stop();
+			friendsStore.reset();
 		}
 	}
 

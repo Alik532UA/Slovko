@@ -61,6 +61,7 @@ function createSettingsStore() {
 
 	function saveSettings() {
 		if (browser) {
+			settings = { ...settings, updatedAt: Date.now() };
 			logService.log("settings", "Saving settings to storage:", settings);
 			localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(settings));
 			SyncService.uploadAll();

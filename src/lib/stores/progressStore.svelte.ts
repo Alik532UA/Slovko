@@ -8,18 +8,26 @@ import { SyncService } from "../firebase/SyncService.svelte";
 import { streakService } from "../services/streakService";
 import {
 	ProgressStateSchema,
+	DailyActivitySchema,
 	type ProgressState,
 	type LevelStats,
 	type WordProgress,
+	type DailyActivity,
 } from "../data/schemas";
 
 const STORAGE_KEY = "wordApp_progress";
+const ACTIVITY_STORAGE_KEY = "wordApp_daily_activity";
 
 /** Значення за замовчуванням */
 const DEFAULT_PROGRESS: ProgressState = ProgressStateSchema.parse({});
 
 function createProgressStore() {
 	let progress = $state<ProgressState>(loadProgress());
+	let dailyActivity = $state<DailyActivity>(loadDailyActivity());
+
+	function getTodayDate(): string {
+		return new Date().toISOString().split("T")[0];
+	}
 
 	function loadProgress(): ProgressState {
 		if (!browser) return DEFAULT_PROGRESS;
@@ -28,7 +36,6 @@ function createProgressStore() {
 			const stored = localStorage.getItem(STORAGE_KEY);
 			if (stored) {
 				const parsed = JSON.parse(stored);
-				// Use Zod to validate and fill defaults
 				return ProgressStateSchema.parse(parsed);
 			}
 		} catch (e) {
@@ -37,10 +44,32 @@ function createProgressStore() {
 		return DEFAULT_PROGRESS;
 	}
 
+	function loadDailyActivity(): DailyActivity {
+		if (!browser) return DailyActivitySchema.parse({ date: getTodayDate() });
+
+		try {
+			const stored = localStorage.getItem(ACTIVITY_STORAGE_KEY);
+			if (stored) {
+				const parsed = JSON.parse(stored);
+				const today = getTodayDate();
+				if (parsed.date === today) {
+					return DailyActivitySchema.parse(parsed);
+				}
+			}
+		} catch (e) {
+			console.warn("Failed to load daily activity:", e);
+		}
+		return DailyActivitySchema.parse({ date: getTodayDate() });
+	}
+
 	function saveProgress(): void {
 		if (browser) {
 			progress.lastUpdated = Date.now();
 			localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+			
+			dailyActivity.updatedAt = Date.now();
+			localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(dailyActivity));
+			
 			SyncService.uploadAll();
 		}
 	}
@@ -48,6 +77,10 @@ function createProgressStore() {
 	return {
 		get value() {
 			return progress;
+		},
+
+		get todayActivity() {
+			return dailyActivity;
 		},
 
 		/** Internal set for SyncService to avoid infinite loops */
@@ -62,8 +95,35 @@ function createProgressStore() {
 			}
 		},
 
+		/** Internal set for Daily Activity */
+		_internalSetActivity(newData: any) {
+			try {
+				dailyActivity = DailyActivitySchema.parse(newData);
+				if (browser) {
+					localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(dailyActivity));
+				}
+			} catch (e) {
+				console.error("Failed to sync daily activity: invalid data", e);
+			}
+		},
+
 		/** Записати правильну відповідь */
 		recordCorrect(wordKey: string, levelId: string = "unknown"): void {
+			// Update Daily Activity
+			const today = getTodayDate();
+			if (dailyActivity.date !== today) {
+				dailyActivity = DailyActivitySchema.parse({ date: today });
+			}
+			
+			dailyActivity.totalCorrect++;
+			dailyActivity.totalAttempts++;
+			if (!dailyActivity.levelStats[levelId]) {
+				dailyActivity.levelStats[levelId] = { correct: 0, attempts: 0 };
+			}
+			dailyActivity.levelStats[levelId].correct++;
+			dailyActivity.levelStats[levelId].attempts++;
+
+			// Update General Progress
 			const wordProgress: WordProgress = progress.words[wordKey] || {
 				wordKey,
 				correctCount: 0,
@@ -142,6 +202,17 @@ function createProgressStore() {
 
 		/** Записати неправильну відповідь */
 		recordWrong(levelId: string = "unknown"): void {
+			// Update Daily Activity
+			const today = getTodayDate();
+			if (dailyActivity.date !== today) {
+				dailyActivity = DailyActivitySchema.parse({ date: today });
+			}
+			dailyActivity.totalAttempts++;
+			if (!dailyActivity.levelStats[levelId]) {
+				dailyActivity.levelStats[levelId] = { correct: 0, attempts: 0 };
+			}
+			dailyActivity.levelStats[levelId].attempts++;
+
 			// Логіка по рівнях
 			const currentLevelStats = progress.levelStats[levelId] || {
 				totalCorrect: 0,
@@ -201,8 +272,10 @@ function createProgressStore() {
 		/** Скинути прогрес (тільки локально) */
 		reset(): void {
 			progress = { ...DEFAULT_PROGRESS, firstSeenDate: Date.now() };
+			dailyActivity = DailyActivitySchema.parse({ date: getTodayDate() });
 			if (browser) {
 				localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+				localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(dailyActivity));
 			}
 		},
 	};

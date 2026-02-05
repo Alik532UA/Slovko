@@ -10,6 +10,8 @@
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import UpdateNotification from "$lib/components/navigation/UpdateNotification.svelte";
 	import ToastContainer from "$lib/components/ui/ToastContainer.svelte";
+	import InteractionBubble from "$lib/components/interaction/InteractionBubble.svelte";
+	import InteractionMenu from "$lib/components/interaction/InteractionMenu.svelte";
 	import OnboardingModal from "$lib/components/onboarding/OnboardingModal.svelte";
 	import DebugListener from "$lib/components/debug/DebugListener.svelte";
 	import {
@@ -114,6 +116,8 @@
 		<UpdateNotification version={versionStore.currentVersion} />
 	{/if}
 	<ToastContainer />
+	<InteractionBubble />
+	<InteractionMenu />
 {:else}
 	<div class="loading">
 		<div class="loading-spinner"></div>

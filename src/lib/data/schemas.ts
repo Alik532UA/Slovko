@@ -310,6 +310,7 @@ export const AppSettingsSchema = z.object({
 	theme: z
 		.enum(["dark-gray", "light-gray", "orange", "green"])
 		.default("dark-gray"),
+	updatedAt: z.number().default(0),
 });
 
 // ========================================
@@ -329,11 +330,22 @@ export const LevelStatsSchema = z.object({
 	currentCorrectStreak: z.number().default(0),
 });
 
+export const RestorationRecordSchema = z.object({
+	amount: z.number(),
+	reason: z.string(),
+	timestamp: z.number().default(() => Date.now()),
+	adminId: z.string().optional(),
+});
+
 export const ProgressStateSchema = z.object({
 	words: z.record(z.string(), WordProgressSchema).default({}),
 	levelStats: z.record(z.string(), LevelStatsSchema).default({}),
 	totalCorrect: z.number().default(0),
 	totalAttempts: z.number().default(0),
+	// Поле для зберігання суми відновлених балів (входить у totalCorrect)
+	restoredPoints: z.number().default(0),
+	// Історія ручних відновлень
+	restorationHistory: z.array(RestorationRecordSchema).default([]),
 	lastUpdated: z.number().default(() => Date.now()),
 	streak: z.number().default(0),
 	bestStreak: z.number().default(0),
@@ -342,6 +354,24 @@ export const ProgressStateSchema = z.object({
 	lastCorrectDate: z.string().nullable().default(null),
 	dailyCorrect: z.number().default(0),
 	firstSeenDate: z.number().default(() => Date.now()),
+});
+
+/**
+ * Схема для щоденної активності користувача.
+ * Використовується для аудиту та відновлення статистики.
+ */
+export const DailyActivitySchema = z.object({
+	date: z.string(), // Формат YYYY-MM-DD
+	totalCorrect: z.number().default(0),
+	totalAttempts: z.number().default(0),
+	levelStats: z.record(
+		z.string(),
+		z.object({
+			correct: z.number().default(0),
+			attempts: z.number().default(0),
+		}),
+	).default({}),
+	updatedAt: z.number().default(() => Date.now()),
 });
 
 // ========================================
@@ -358,6 +388,8 @@ export type AppSettings = z.infer<typeof AppSettingsSchema>;
 export type ProgressState = z.infer<typeof ProgressStateSchema>;
 export type LevelStats = z.infer<typeof LevelStatsSchema>;
 export type WordProgress = z.infer<typeof WordProgressSchema>;
+export type DailyActivity = z.infer<typeof DailyActivitySchema>;
+export type RestorationRecord = z.infer<typeof RestorationRecordSchema>;
 
 // ========================================
 // СХЕМИ URL (Параметри сторінки)

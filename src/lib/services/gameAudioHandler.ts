@@ -20,6 +20,11 @@ export class GameAudioHandler {
 	 * - Додає затримку між озвученнями, якщо увімкнено обидва канали, для запобігання накладанню звуку.
 	 */
 	playMatch(card1: ActiveCard, card2: ActiveCard) {
+		// Озвучення при поєднанні карток вимкнено, щоб уникнути подвійного звуку,
+		// оскільки слово вже озвучується при натисканні на картку (в WordCard.svelte).
+		// Закоментовано за запитом користувача, може знадобитися в майбутньому для специфічних режимів.
+		
+		/*
 		// Access store value non-reactively (snapshot)
 		const {
 			sourceLanguage,
@@ -42,6 +47,7 @@ export class GameAudioHandler {
 				speakText(tgt.text, tgt.language);
 			}, delay);
 		}
+		*/
 	}
 }
 

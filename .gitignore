@@ -1,4 +1,5 @@
 node_modules
+.firebase
 .private
 .private/notes.txt
 .agent/rules

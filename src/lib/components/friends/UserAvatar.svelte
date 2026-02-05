@@ -16,15 +16,18 @@
 		Target,
 	} from "lucide-svelte";
 	import { PresenceService } from "$lib/firebase/PresenceService.svelte";
+	import { authStore } from "$lib/firebase/authStore.svelte";
 
 	interface Props {
 		uid: string | null;
 		photoURL: string | null;
+		displayName?: string | null;
 		size?: number;
 		className?: string;
+		interactive?: boolean;
 	}
 
-	let { uid, photoURL, size = 24, className = "" }: Props = $props();
+	let { uid, photoURL, displayName, size = 24, className = "", interactive = true }: Props = $props();
 
 	const AVATAR_ICONS: Record<string, any> = {
 		user: UserIcon,
@@ -64,17 +67,33 @@
 	// Відстежуємо статус, якщо є UID
 	$effect(() => {
 		if (uid) {
-			PresenceService.trackFriendStatus(uid);
+			const unsub = PresenceService.trackFriendStatus(uid);
+			return () => unsub();
 		}
 	});
 
 	let isOnline = $derived(uid ? PresenceService.isOnline(uid) : false);
+	let isCurrentUser = $derived(uid === authStore.uid);
+
+	function handleClick(e: MouseEvent) {
+		if (interactive && uid && !isCurrentUser) {
+			e.stopPropagation();
+			PresenceService.openInteractionMenu(uid, {
+				name: displayName || "Користувач",
+				photoURL: photoURL
+			});
+		}
+	}
 </script>
 
-<div
-	class="avatar-container {className}"
-	style:width="{size * 1.6}px"
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div 
+	class="avatar-container {className}" 
+	class:interactive={interactive && uid && !isCurrentUser}
+	style:width="{size * 1.6}px" 
 	style:height="{size * 1.6}px"
+	onclick={handleClick}
 >
 	{#if isInternal}
 		<div class="avatar-circle" style:background-color={bgColor}>
@@ -104,6 +123,19 @@
 		justify-content: center;
 		flex-shrink: 0;
 		position: relative;
+	}
+
+	.avatar-container.interactive {
+		cursor: pointer;
+		transition: transform 0.2s;
+	}
+
+	.avatar-container.interactive:hover {
+		transform: scale(1.1);
+	}
+
+	.avatar-container.interactive:active {
+		transform: scale(0.95);
 	}
 
 	.avatar-circle {

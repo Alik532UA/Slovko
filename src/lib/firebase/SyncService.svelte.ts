@@ -3,7 +3,12 @@ import {
 	setDoc,
 	onSnapshot,
 	getDoc,
+	getDocs,
+	collection,
 	serverTimestamp,
+	query,
+	where,
+	limit,
 	type Unsubscribe,
 } from "firebase/firestore";
 import { db, auth } from "./config";
@@ -11,6 +16,7 @@ import { settingsStore } from "../stores/settingsStore.svelte";
 import { progressStore } from "../stores/progressStore.svelte";
 import { playlistStore } from "../stores/playlistStore.svelte";
 import { logService } from "../services/logService";
+import { statisticsService } from "../services/statisticsService.svelte";
 import {
 	AppSettingsSchema,
 	ProgressStateSchema,
@@ -27,6 +33,7 @@ export type SyncStatus = "idle" | "syncing" | "error" | "up-to-date" | "offline"
 const COLLECTIONS = {
 	USERS: "users",
 	PROFILES: "profiles",
+	HISTORY: "history",
 };
 
 const RETRY_CONFIG = {
@@ -76,6 +83,12 @@ class SyncServiceClass {
 				const cloudData = snapshot.exists() ? snapshot.data() : {};
 				this.handleCloudUpdate(cloudData);
 				this.hasInitialData = true;
+
+				// Auto-Healing: Якщо профіль пустий, але може бути історія (наприклад, після очищення кешу)
+				if (!snapshot.exists() || (cloudData.progress?.totalCorrect || 0) === 0) {
+					this.checkForOrphanedHistory(uid);
+				}
+
 				if (this.status === "syncing") this.status = "up-to-date";
 			},
 			(error) => {
@@ -86,6 +99,17 @@ class SyncServiceClass {
 		);
 
 		logService.log("sync", `Sync initialized for user: ${uid}`);
+
+		// Додаємо доступ для дебагу в консолі
+		if (typeof window !== "undefined") {
+			(window as any).wordApp = {
+				sync: this,
+				stats: statisticsService,
+				restorePoints: (amount: number, reason: string) => this.restorePoints(amount, reason),
+				recover: () => statisticsService.recoverProgressFromHistory(),
+				getHistory: (start: string, end: string) => statisticsService.getHistoryByRange(start, end)
+			};
+		}
 	}
 
 	/**
@@ -112,6 +136,27 @@ class SyncServiceClass {
 			this.uploadAll();
 		} else {
 			this.status = "offline";
+		}
+	}
+
+	/**
+	 * Перевіряє, чи є "сирота" історія у користувача з пустим профілем.
+	 * Якщо так — запускає відновлення.
+	 */
+	private async checkForOrphanedHistory(uid: string) {
+		try {
+			const historyRef = collection(db, COLLECTIONS.USERS, uid, COLLECTIONS.HISTORY);
+			// Перевіряємо наявність хоча б одного запису в історії
+			const q = query(historyRef, limit(1));
+			const snapshot = await getDocs(q);
+
+			if (!snapshot.empty) {
+				logService.warn("sync", "Found orphaned history for empty profile. Initiating recovery...");
+				await statisticsService.recoverProgressFromHistory();
+				this.uploadAll();
+			}
+		} catch (e) {
+			logService.error("sync", "Error checking orphaned history:", e);
 		}
 	}
 
@@ -149,11 +194,21 @@ class SyncServiceClass {
 		const profileRef = doc(db, COLLECTIONS.PROFILES, uid);
 
 		try {
-			const snapshot = await getDoc(userDocRef);
+			// Паралельно отримуємо основні дані та дані за сьогодні
+			const today = new Date().toISOString().split("T")[0];
+			const historyRef = doc(db, COLLECTIONS.USERS, uid, COLLECTIONS.HISTORY, today);
+
+			const [snapshot, historySnap] = await Promise.all([
+				getDoc(userDocRef),
+				getDoc(historyRef)
+			]);
+
 			const cloudData = snapshot.exists() ? snapshot.data() : {};
+			const cloudHistory = historySnap.exists() ? historySnap.data() : null;
 
 			const localProgress = progressStore.value;
 			const localSettings = settingsStore.value;
+			const localActivity = progressStore.todayActivity;
 			const localPlaylists: PlaylistState = {
 				customPlaylists: playlistStore.customPlaylists,
 				systemPlaylists: playlistStore.systemPlaylists,
@@ -164,6 +219,10 @@ class SyncServiceClass {
 			if (cloudData.progress?.totalCorrect > localProgress.totalCorrect) {
 				logService.warn("sync", "Cloud has more progress. Syncing down.");
 				this.handleCloudUpdate(cloudData);
+				// Також оновимо локальну історію з хмари, якщо вона там є
+				if (cloudHistory) {
+					progressStore._internalSetActivity(cloudHistory);
+				}
 				return;
 			}
 
@@ -175,10 +234,27 @@ class SyncServiceClass {
 			// Публічний профіль для лідерборду
 			const profileUpdate = this.prepareProfileUpdate(localProgress);
 
-			await Promise.all([
-				setDoc(userDocRef, mergedData, { merge: true }),
-				setDoc(profileRef, profileUpdate, { merge: true }),
-			]);
+			// Виконуємо запити послідовно або з окремим логуванням помилок для дебагу
+			try {
+				await setDoc(userDocRef, mergedData, { merge: true });
+			} catch (err) {
+				logService.error("sync", "Error writing to user doc:", err);
+				throw err;
+			}
+
+			try {
+				await setDoc(profileRef, profileUpdate, { merge: true });
+			} catch (err) {
+				logService.error("sync", "Error writing to profile doc:", err);
+				throw err;
+			}
+
+			try {
+				await setDoc(historyRef, localActivity, { merge: true });
+			} catch (err) {
+				logService.error("sync", "Error writing to history doc:", err);
+				throw err;
+			}
 
 			this.retryCount = 0;
 			this.lastSyncAttempt = Date.now();
@@ -200,7 +276,17 @@ class SyncServiceClass {
 		try {
 			if (cloudData.settings) {
 				const result = AppSettingsSchema.safeParse(cloudData.settings);
-				if (result.success) settingsStore._internalUpdate(result.data);
+				if (result.success) {
+					const cloudSettings = result.data;
+					const localSettings = settingsStore.value;
+
+					if (cloudSettings.updatedAt >= (localSettings.updatedAt || 0)) {
+						settingsStore._internalUpdate(cloudSettings);
+					} else {
+						logService.log("sync", "Local settings are newer, skipping cloud settings update");
+						this.uploadAll();
+					}
+				}
 			}
 
 			if (cloudData.progress) {
@@ -228,12 +314,20 @@ class SyncServiceClass {
 	 * Логіка об'єднання даних
 	 */
 	private mergeData(local: any, cloud: any) {
-		const cloudIsNewer = (cloud.lastSync || 0) > (local.lastSync || 0);
+		const localSettings = local.settings as AppSettings;
+		const cloudSettings = (cloud.settings ? AppSettingsSchema.parse(cloud.settings) : null) as AppSettings | null;
+
+		let mergedSettings = localSettings;
+		if (cloudSettings) {
+			if (cloudSettings.updatedAt > localSettings.updatedAt) {
+				mergedSettings = { ...localSettings, ...cloudSettings };
+			} else {
+				mergedSettings = { ...cloudSettings, ...localSettings };
+			}
+		}
 
 		return {
-			settings: cloudIsNewer
-				? { ...local.settings, ...cloud.settings }
-				: { ...cloud.settings, ...local.settings },
+			settings: mergedSettings,
 			progress: this.mergeProgress(local.progress, cloud.progress || {}),
 			playlists: this.mergePlaylists(local.playlists, cloud.playlists || {}),
 			lastSync: Date.now(),
@@ -247,6 +341,9 @@ class SyncServiceClass {
 			...cloud,
 			totalCorrect: Math.max(local.totalCorrect, cloud.totalCorrect || 0),
 			totalAttempts: Math.max(local.totalAttempts, cloud.totalAttempts || 0),
+			// Зберігаємо відновлені бали
+			restoredPoints: Math.max(local.restoredPoints || 0, cloud.restoredPoints || 0),
+			restorationHistory: this.mergeArrays(local.restorationHistory || [], cloud.restorationHistory || [], (i) => i.timestamp + i.reason),
 			bestStreak: Math.max(local.bestStreak, cloud.bestStreak || 0),
 			bestCorrectStreak: Math.max(local.bestCorrectStreak, cloud.bestCorrectStreak || 0),
 			lastUpdated: Math.max(local.lastUpdated, cloud.lastUpdated || 0),
@@ -278,11 +375,44 @@ class SyncServiceClass {
 					totalCorrect: Math.max(l.totalCorrect, c.totalCorrect || 0),
 					totalAttempts: Math.max(l.totalAttempts, c.totalAttempts || 0),
 					bestCorrectStreak: Math.max(l.bestCorrectStreak, c.bestCorrectStreak || 0),
-					currentCorrectStreak: 0,
+					currentCorrectStreak: Math.max(l.currentCorrectStreak, c.currentCorrectStreak || 0),
 				};
 			}
 		}
 		return merged;
+	}
+
+	/**
+	 * Ручне нарахування балів (для відновлення даних або компенсацій).
+	 * Додає бали до restoredPoints та totalCorrect.
+	 */
+	async restorePoints(amount: number, reason: string) {
+		if (!auth.currentUser || amount <= 0) return;
+		const uid = auth.currentUser.uid;
+		
+		const record = {
+			amount,
+			reason,
+			timestamp: Date.now(),
+			adminId: "system" // Можна замінити на реальний ID адміна, якщо викликається з адмінки
+		};
+
+		// Оновлюємо локальний стан
+		const current = progressStore.value;
+		const newRestoredTotal = (current.restoredPoints || 0) + amount;
+		const newTotalCorrect = current.totalCorrect + amount;
+		const newHistory = [...(current.restorationHistory || []), record];
+
+		progressStore._internalSet({
+			...current,
+			totalCorrect: newTotalCorrect,
+			restoredPoints: newRestoredTotal,
+			restorationHistory: newHistory
+		});
+
+		// Примусова синхронізація
+		this.uploadAll();
+		logService.log("sync", `Restored ${amount} points. Reason: ${reason}`);
 	}
 
 	private mergePlaylists(local: PlaylistState, cloud: any): PlaylistState {

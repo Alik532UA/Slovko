@@ -22,18 +22,12 @@
 	let list = $state<FollowRecord[]>([]);
 	let isLoading = $state(false);
 	let error = $state<string | null>(null);
-	let followingMap = $state<Record<string, boolean>>({});
-	let processingUid = $state<string | null>(null);
 
 	// Watch for tab change or refresh trigger
 	$effect(() => {
-		const controller = new AbortController();
 		if (activeTab || shouldRefresh) {
 			loadList();
 		}
-		return () => {
-			controller.abort();
-		};
 	});
 
 	async function loadList() {
@@ -44,33 +38,12 @@
 				list = await FriendsService.getFollowing();
 			} else {
 				list = await FriendsService.getFollowers();
-				// Check mutual status for followers
-				await checkFollowStatus(list);
 			}
 		} catch (e) {
 			logService.error("sync", "Failed to load friends list", e);
 			error = $_("friends.loadError");
 		} finally {
 			isLoading = false;
-		}
-	}
-
-	async function checkFollowStatus(users: FollowRecord[]) {
-		const statuses: Record<string, boolean> = {};
-		await Promise.all(
-			users.map(async (user) => {
-				const isFollowing = await FriendsService.isFollowing(user.uid);
-				statuses[user.uid] = isFollowing;
-			}),
-		);
-		followingMap = statuses;
-	}
-
-	function handleStatusChange(uid: string, newStatus: boolean) {
-		if (activeTab === "following" && !newStatus) {
-			list = list.filter((u) => u.uid !== uid);
-		} else {
-			followingMap = { ...followingMap, [uid]: newStatus };
 		}
 	}
 </script>
@@ -108,21 +81,19 @@
 		{:else}
 			<div class="friends-list" data-testid="friends-list-items">
 				{#each list as user (user.uid)}
-					<div class="friend-card" data-testid="friend-card-{user.uid}">
-						<UserAvatar uid={user.uid} photoURL={user.photoURL} size={24} />
-
-						<div class="friend-info">
+														<div class="friend-card" data-testid="friend-card-{user.uid}">
+																	<UserAvatar uid={user.uid} photoURL={user.photoURL} displayName={user.displayName} size={24} />
+					
+																	<div class="friend-info">
+					
 							<span class="display-name">{user.displayName || "User"}</span>
 						</div>
 
 						<div class="friend-actions">
 							<FollowButton
 								uid={user.uid}
-								isFollowing={activeTab === "following" ? true : !!followingMap[user.uid]}
-								isMutual={activeTab === "followers"}
 								displayName={user.displayName}
 								photoURL={user.photoURL}
-								onStatusChange={(status) => handleStatusChange(user.uid, status)}
 							/>
 						</div>
 					</div>
