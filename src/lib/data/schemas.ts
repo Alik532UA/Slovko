@@ -211,35 +211,71 @@ export const PlaylistStateSchema = z.preprocess((val: unknown) => {
 
 
 
-						// В іншому випадку спробуємо витягнути будь-який id або перетворити на рядок
+												// В іншому випадку спробуємо витягнути будь-який id або перетворити на рядок
 
 
 
-						return w.id || JSON.stringify(w);
+												return w.id || JSON.stringify(w);
 
 
 
-					}
+											}
 
 
 
-					return String(w);
+											return String(w);
 
 
 
-				});
+										});
 
 
 
-			}
+						
 
 
 
-			return result;
+										// Дедуплікація слів за ID для запобігання роздуванню БД
 
 
 
-		};
+										const seen = new Set();
+
+
+
+										result.words = result.words.filter((w: any) => {
+
+
+
+											const id = typeof w === "string" ? w : w.id;
+
+
+
+											if (seen.has(id)) return false;
+
+
+
+											seen.add(id);
+
+
+
+											return true;
+
+
+
+										});
+
+
+
+									}
+
+
+
+									return result;
+
+
+
+								};
 
 
 

@@ -9,6 +9,7 @@ import {
 	query,
 	where,
 	limit,
+	writeBatch,
 	type Unsubscribe,
 } from "firebase/firestore";
 import { db, auth } from "./config";
@@ -183,7 +184,7 @@ class SyncServiceClass {
 	}
 
 	private async performUpload() {
-		if (!auth.currentUser || this.isDownloading || !this.hasInitialData || !this.isOnline) {
+		if (!auth.currentUser || this.isDownloading || !this.hasInitialData || !this.isOnline || this.isUploading) {
 			return;
 		}
 
@@ -243,25 +244,16 @@ class SyncServiceClass {
 			// Публічний профіль для лідерборду
 			const profileUpdate = this.prepareProfileUpdate(mergedProgress);
 
-			// Виконуємо запити послідовно або з окремим логуванням помилок для дебагу
-			try {
-				await setDoc(userDocRef, mergedData, { merge: true });
-			} catch (err) {
-				logService.error("sync", "Error writing to user doc:", err);
-				throw err;
-			}
+			// Атомарне оновлення через Batch для гарантування цілісності даних
+			const batch = writeBatch(db);
+			batch.set(userDocRef, mergedData, { merge: true });
+			batch.set(profileRef, profileUpdate, { merge: true });
+			batch.set(historyRef, localActivity, { merge: true });
 
 			try {
-				await setDoc(profileRef, profileUpdate, { merge: true });
+				await batch.commit();
 			} catch (err) {
-				logService.error("sync", "Error writing to profile doc:", err);
-				throw err;
-			}
-
-			try {
-				await setDoc(historyRef, localActivity, { merge: true });
-			} catch (err) {
-				logService.error("sync", "Error writing to history doc:", err);
+				logService.error("sync", "Atomic Sync Failed:", err);
 				throw err;
 			}
 
@@ -272,6 +264,7 @@ class SyncServiceClass {
 		} catch (e) {
 			logService.error("sync", "Sync Upload Error:", e);
 			this.status = "error";
+			this.isUploading = false; // Важливо: дозволити наступні спроби
 			this.scheduleRetry();
 		} finally {
 			this.isUploading = false;
@@ -279,7 +272,7 @@ class SyncServiceClass {
 	}
 
 	private handleCloudUpdate(cloudData: any) {
-		if (this.isUploading) return;
+		if (this.isUploading || !auth.currentUser) return;
 		this.isDownloading = true;
 
 		try {

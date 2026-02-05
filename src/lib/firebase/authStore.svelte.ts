@@ -195,9 +195,25 @@ function createAuthStore() {
 
 		async logout() {
 			console.log("[AuthStore] Logging out...");
-			if (state.uid) PresenceService.goOffline(state.uid);
+			const uid = state.uid;
+			
+			// 1. Зупиняємо синхронізацію негайно
 			SyncService.stop();
+			
+			// 2. Ставимо статус офлайн, поки токен ще валідний
+			if (uid) {
+				try {
+					await PresenceService.goOffline(uid);
+				} catch (e) {
+					console.warn("[AuthStore] Presence offline failed", e);
+				}
+			}
+			
+			// 3. Очищуємо локальні дані
 			SyncService.resetLocalData();
+			friendsStore.reset();
+			
+			// 4. Офіційний логаут Firebase
 			await AuthService.logout();
 			updateState(null);
 		},
