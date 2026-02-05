@@ -4,23 +4,10 @@
 	import {
 		Medal,
 		Crown,
-		User,
-		Star,
-		Flame,
 		Target,
 		CheckCircle,
 		Loader2,
-		Cat,
-		Dog,
-		Rabbit,
-		Bird,
-		Fish,
-		Snail,
-		Turtle,
-		Bug,
-		Smile,
-		Heart,
-		Zap,
+		Flame,
 	} from "lucide-svelte";
 	import { FriendsService } from "$lib/firebase/FriendsService";
 	import { authStore } from "$lib/firebase/authStore.svelte";
@@ -56,38 +43,6 @@
 		} finally {
 			isLoading = false;
 		}
-	}
-
-	const AVATAR_ICONS: Record<string, any> = {
-		user: User,
-		cat: Cat,
-		dog: Dog,
-		rabbit: Rabbit,
-		bird: Bird,
-		fish: Fish,
-		snail: Snail,
-		turtle: Turtle,
-		bug: Bug,
-		smile: Smile,
-		star: Star,
-		heart: Heart,
-		zap: Zap,
-		target: Target,
-	};
-
-	function getIconComponent(photoURL: string | null) {
-		if (photoURL?.startsWith("internal:")) {
-			const iconId = photoURL.split(":")[1];
-			return AVATAR_ICONS[iconId] || User;
-		}
-		return User;
-	}
-
-	function getAvatarColor(photoURL: string | null) {
-		if (photoURL?.startsWith("internal:")) {
-			return photoURL.split(":")[2] || "var(--accent)";
-		}
-		return "transparent";
 	}
 
 	/**

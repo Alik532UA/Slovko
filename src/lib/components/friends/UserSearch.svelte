@@ -14,16 +14,14 @@
 
 	// Props
 	interface Props {
-		onFollowChange: () => void; // Callback to refresh friends list
+		onFollowChange?: () => void; // Callback to refresh friends list
 	}
-	let { onFollowChange }: Props = $props();
+	let { onFollowChange: _onFollowChange }: Props = $props();
 
 	// State
 	let searchQuery = $state("");
 	let searchResults = $state<UserProfile[]>([]);
 	let isSearching = $state(false);
-	let followingMap = $state<Record<string, boolean>>({}); // Cache follow status
-	let processingUid = $state<string | null>(null); // Uid being processed (follow/unfollow)
 
 	// Debounce search
 	let searchTimeout: ReturnType<typeof setTimeout>;
@@ -46,29 +44,11 @@
 		isSearching = true;
 		try {
 			searchResults = await FriendsService.searchUsers(searchQuery);
-			// Check follow status for results
-			await checkFollowStatus(searchResults);
 		} catch (error) {
 			logService.error("sync", "Search failed", error);
 		} finally {
 			isSearching = false;
 		}
-	}
-
-	async function checkFollowStatus(users: UserProfile[]) {
-		const statuses: Record<string, boolean> = {};
-		await Promise.all(
-			users.map(async (user) => {
-				const isFollowing = await FriendsService.isFollowing(user.uid);
-				statuses[user.uid] = isFollowing;
-			}),
-		);
-		followingMap = statuses;
-	}
-
-	function handleStatusChange(uid: string, newStatus: boolean) {
-		followingMap = { ...followingMap, [uid]: newStatus };
-		onFollowChange();
 	}
 </script>
 

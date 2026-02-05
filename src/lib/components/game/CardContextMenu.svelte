@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { playlistStore } from "$lib/stores/playlistStore.svelte";
-	import { gameState } from "$lib/stores/gameState.svelte";
 	import { _ } from "svelte-i18n";
 	import { Heart, Bookmark, Volume2, AlertTriangle } from "lucide-svelte";
 	import { speakText } from "$lib/services/speechService";
-	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { scale, fade } from "svelte/transition";
 	import { PLAYLIST_ICONS_MAP } from "$lib/config/icons";
 
@@ -19,9 +17,6 @@
 	}
 	let { x, y, wordKey, language, text, onclose, onreport }: Props = $props();
 
-	let pair = $derived(
-		gameState.constructWordPair(wordKey, settingsStore.value),
-	);
 	let isFavorite = $derived(playlistStore.isFavorite(wordKey));
 	let isExtra = $derived(playlistStore.isExtra(wordKey));
 
