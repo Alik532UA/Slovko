@@ -22,6 +22,7 @@ import type { Playlist, CustomWord } from "../data/schemas";
  */
 export class GameController {
 	private lastInteractionTime = 0;
+	private isRefilling = false;
 
 	constructor(
 		private gameState: typeof GameStateType,
@@ -156,12 +157,15 @@ export class GameController {
 		);
 
 		this.gameState.setSelectedCard(null);
-		this.gameState.setProcessing(false);
-
-		setTimeout(() => this.checkAndRefill(), 1000);
+		
+		setTimeout(() => {
+			this.gameState.setProcessing(false);
+			this.checkAndRefill();
+		}, 500);
 	}
 
 	private handleMiss(card1: ActiveCard, card2: ActiveCard) {
+		this.gameState.setProcessing(true);
 		this.gameState.updateCardStatus(card1.id, "wrong");
 		this.gameState.updateCardStatus(card2.id, "wrong");
 
@@ -176,34 +180,42 @@ export class GameController {
 
 		setTimeout(() => {
 			this.gameState.resetWrongCards(card1.id, card2.id);
+			this.gameState.setProcessing(false);
 		}, 500);
 	}
 
 	private checkAndRefill() {
+		if (this.isRefilling) return;
+
 		const visibleCount = this.gameState.getVisiblePairCount();
 		const limit = this.gameState.getPairsLimit();
 
 		if (visibleCount <= 2) {
-			// REFILL_THRESHOLD
-			const newWords = this.gameState.getAvailableWords(limit - visibleCount);
-			if (newWords.length === 0) return;
+			this.isRefilling = true;
+			try {
+				// REFILL_THRESHOLD
+				const newWords = this.gameState.getAvailableWords(limit - visibleCount);
+				if (newWords.length === 0) return;
 
-			const { sourceLanguage, targetLanguage, interfaceLanguage } =
-				settingsStore.value;
-			const { source, target } = createCardsFromWordKeys(
-				newWords,
-				sourceLanguage,
-				targetLanguage,
-				interfaceLanguage,
-				this.gameState.getTranslations("source"),
-				this.gameState.getTranslations("target"),
-				this.gameState.getTranscriptions("source"),
-				this.gameState.getTranscriptions("target"),
-				this.gameState.totalCardsCount,
-			);
+				const { sourceLanguage, targetLanguage, interfaceLanguage } =
+					settingsStore.value;
+				const { source, target } = createCardsFromWordKeys(
+					newWords,
+					sourceLanguage,
+					targetLanguage,
+					interfaceLanguage,
+					this.gameState.getTranslations("source"),
+					this.gameState.getTranslations("target"),
+					this.gameState.getTranscriptions("source"),
+					this.gameState.getTranscriptions("target"),
+					this.gameState.totalCardsCount,
+				);
 
-			this.gameState.refillCards(source, target);
-			newWords.forEach((w) => this.gameState.markWordAsUsed(w));
+				this.gameState.refillCards(source, target);
+				newWords.forEach((w) => this.gameState.markWordAsUsed(w));
+			} finally {
+				this.isRefilling = false;
+			}
 		}
 	}
 

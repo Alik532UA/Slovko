@@ -24,6 +24,7 @@
 	} from "lucide-svelte";
 	import { FriendsService } from "$lib/firebase/FriendsService";
 	import { authStore } from "$lib/firebase/authStore.svelte";
+	import { progressStore } from "$lib/stores/progressStore.svelte";
 	import UserAvatar from "../friends/UserAvatar.svelte";
 
 	let selectedLevel = $state("all");
@@ -87,6 +88,29 @@
 			return photoURL.split(":")[2] || "var(--accent)";
 		}
 		return "transparent";
+	}
+
+	/**
+	 * Отримує актуальне значення метрики для поточного користувача з локального стору.
+	 * Це забезпечує Optimistic UI, поки Firestore не оновив індекси.
+	 */
+	function getLocalMetricValue(metric: string, level: string): number {
+		const p = progressStore.value;
+		if (level === "all") {
+			if (metric === "totalCorrect") return p.totalCorrect;
+			if (metric === "bestStreak") return p.bestStreak;
+			if (metric === "bestCorrectStreak") return p.bestCorrectStreak;
+			if (metric === "accuracy") return progressStore.getAccuracy();
+		} else {
+			const stats = progressStore.getLevelStats(level);
+			if (metric === "totalCorrect") return stats.totalCorrect;
+			if (metric === "bestCorrectStreak") return stats.bestCorrectStreak;
+			if (metric === "accuracy") {
+				return stats.totalAttempts > 0 
+					? Math.round((stats.totalCorrect / stats.totalAttempts) * 100) : 0;
+			}
+		}
+		return 0;
 	}
 </script>
 
@@ -181,6 +205,9 @@
 						: user.name}
 				{@const realPhoto =
 					user.isMe && authStore.photoURL ? authStore.photoURL : user.photoURL}
+				
+				{@const localValue = user.isMe ? getLocalMetricValue(selectedMetric, selectedLevel) : 0}
+				{@const displayScore = user.isMe ? Math.max(user.score, localValue) : user.score}
 
 				{@const Icon = getIconComponent(realPhoto)}
 				{@const avatarColor = getAvatarColor(realPhoto)}
@@ -223,7 +250,7 @@
 
 					<div class="col-score">
 						<span class="score-val">
-							{user.score}{selectedMetric === "accuracy" ? "%" : ""}
+							{displayScore}{selectedMetric === "accuracy" ? "%" : ""}
 						</span>
 					</div>
 				</div>
