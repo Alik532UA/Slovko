@@ -202,6 +202,11 @@ class PresenceServiceClass {
 			// Маркуємо як оброблений негайно, щоб запобігти повторним спробам
 			this.processedSignals.add(signalKey);
 
+			// Впроваджуємо TTL для ключа (1 хвилина), щоб запобігти витоку пам'яті (VULN_02)
+			setTimeout(() => {
+				this.processedSignals.delete(signalKey);
+			}, 60000);
+
 			// Захист від спаму: не обробляємо більше 10 активних сигналів одночасно
 			if (this.interactions.length > 10) {
 				logService.warn("interaction", "High volume of incoming signals detected, throttling...");
