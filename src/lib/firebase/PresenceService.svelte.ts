@@ -42,6 +42,11 @@ class PresenceServiceClass {
 	 * Встановлює статус користувача "online" та налаштовує автоматичний перехід в "offline".
 	 */
 	async init(uid: string) {
+		if (this.currentUid === uid && this.signalUnsubscribe) {
+			logService.log("presence", "PresenceService already initialized for this user, skipping.");
+			return;
+		}
+
 		this.currentUid = uid;
 		logService.log("presence", "Initializing PresenceService for:", uid);
 		

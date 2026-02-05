@@ -101,6 +101,15 @@ function createSettingsStore() {
 			return settings;
 		},
 
+		/** Internal update for SyncService to avoid infinite loops */
+		_internalUpdate(newData: Partial<AppSettings>) {
+			logService.log("settings", "Internal update received:", newData);
+			settings = { ...settings, ...newData };
+			if (browser) {
+				localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(settings));
+			}
+		},
+
 		update(partial: Partial<AppSettings>) {
 			logService.log("settings", "Public update requested:", partial);
 			isCorrupted = false; // Після ручного оновлення ми знову вважаємо дані валідними
