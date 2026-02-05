@@ -38,6 +38,7 @@ export class GameController {
 		this.gameState.setLoading(true);
 		this.gameState.setError(null);
 		this.gameState.setProcessing(false);
+		this.gameState.resetStats(); // Повне очищення статистики та карток перед стартом
 		this.lastInteractionTime = Date.now();
 
 		try {

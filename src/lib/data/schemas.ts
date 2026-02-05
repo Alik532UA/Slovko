@@ -44,9 +44,9 @@ export const SemanticsSchema = z.object({
 
 export const CustomWordSchema = z.object({
 	id: z.string(),
-	original: z.string(),
-	translation: z.string(),
-	transcription: z.string().optional(),
+	original: z.string().max(200, "Too long"),
+	translation: z.string().max(200, "Too long"),
+	transcription: z.string().max(200, "Too long").optional(),
 });
 
 export const PlaylistWordSchema = z.union([z.string(), CustomWordSchema]);

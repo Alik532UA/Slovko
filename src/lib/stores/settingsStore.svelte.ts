@@ -59,12 +59,19 @@ function createSettingsStore() {
 		return DEFAULT_SETTINGS;
 	}
 
+	let saveTimeout: ReturnType<typeof setTimeout>;
+
 	function saveSettings() {
 		if (browser) {
 			settings = { ...settings, updatedAt: Date.now() };
-			logService.log("settings", "Saving settings to storage:", settings);
+			logService.log("settings", "Saving settings to storage (immediate):", settings);
 			localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(settings));
-			SyncService.uploadAll();
+			
+			// Дебаунс для синхронізації з хмарою
+			if (saveTimeout) clearTimeout(saveTimeout);
+			saveTimeout = setTimeout(() => {
+				SyncService.uploadAll();
+			}, 1000); // 1 секунда затримки для налаштувань
 		}
 	}
 
