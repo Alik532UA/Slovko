@@ -19,6 +19,7 @@
 	import { authStore } from "$lib/firebase/authStore.svelte";
 	import { logService } from "$lib/services/logService";
 	import { base } from "$app/paths";
+	import AvatarInteractionMenu from "./AvatarInteractionMenu.svelte";
 
 	interface Props {
 		uid: string | null;
@@ -89,17 +90,17 @@
 	let isOnline = $derived(uid ? PresenceService.isOnline(uid) : false);
 	let isCurrentUser = $derived(uid === authStore.uid);
 
+	let showMenu = $state(false);
+	let anchorEl = $state<HTMLElement | null>(null);
+
 	function handleClick(e: MouseEvent) {
 		if (interactive && uid && !isCurrentUser) {
-			logService.log("interaction", `[UserAvatar] Opening menu for ${uid}`);
+			logService.log("interaction", `[UserAvatar] Toggle menu for ${uid}`);
+			e.preventDefault();
 			e.stopPropagation();
-			PresenceService.openInteractionMenu(
-				uid, 
-				{
-					name: displayName || "Користувач",
-					photoURL: photoURL
-				}
-			);
+			e.stopImmediatePropagation();
+			anchorEl = e.currentTarget as HTMLElement;
+			showMenu = !showMenu;
 		}
 	}
 </script>
@@ -109,6 +110,7 @@
 <div 
 	class="avatar-container {className}" 
 	class:interactive={interactive && uid && !isCurrentUser}
+	class:menu-open={showMenu}
 	style:width="{size * 1.6}px" 
 	style:height="{size * 1.6}px"
 	onclick={handleClick}
@@ -153,6 +155,16 @@
 	{/if}
 </div>
 
+{#if showMenu && uid && anchorEl}
+	<AvatarInteractionMenu
+		{uid}
+		displayName={displayName || "Користувач"}
+		{photoURL}
+		{anchorEl}
+		onclose={() => (showMenu = false)}
+	/>
+{/if}
+
 <style>
 	.avatar-container {
 		display: flex;
@@ -173,6 +185,10 @@
 
 	.avatar-container.interactive:active {
 		transform: scale(0.95);
+	}
+
+	.avatar-container.menu-open {
+		/* No longer disabling pointer-events because we have a portal backdrop */
 	}
 
 	.avatar-circle {

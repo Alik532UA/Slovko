@@ -248,6 +248,7 @@
 		"confirmUnfollow": "Deze gebruiker ontvolgen?",
 		"noFollowing": "Je volgt nog niemand",
 		"noFollowers": "Je hebt nog geen volgers",
+		"follow": "Volgen",
 		"unfollow": "Ontvolgen",
 		"followBack": "Terug volgen",
 		"mutual": "Wederzijds",
@@ -270,7 +271,7 @@
 		"wavingAtYou": "zwaait naar je!",
 		"followedYou": "volgt jou nu",
 		"onlineNow": "is nu online",
-		"waveBack": "terugzwaaien?",
+		"waveBack": "Terugzwaaien",
 		"followBack": "terug volgen"
 	},
 	"discovery": {

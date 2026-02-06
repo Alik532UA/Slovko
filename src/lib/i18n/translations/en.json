@@ -270,6 +270,7 @@
 		"confirmUnfollow": "Unfollow this user?",
 		"noFollowing": "You are not following anyone yet",
 		"noFollowers": "You don't have any followers yet",
+		"follow": "Follow",
 		"unfollow": "Unfollow",
 		"followBack": "Follow back",
 		"mutual": "Mutual",
@@ -292,7 +293,7 @@
 		"wavingAtYou": "is waving at you!",
 		"followedYou": "followed you",
 		"onlineNow": "is online now",
-		"waveBack": "wave back?",
+		"waveBack": "Wave back",
 		"followBack": "follow back"
 	},
 	"discovery": {

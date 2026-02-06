@@ -268,6 +268,7 @@
 		"confirmUnfollow": "Διακοπή παρακολούθησης;",
 		"noFollowing": "Δεν ακολουθείτε κανέναν ακόμα",
 		"noFollowers": "Δεν έχετε ακόλουθους ακόμα",
+		"follow": "Ακολουθήστε",
 		"unfollow": "Κατάργηση",
 		"followBack": "Ακολούθησε επίσης",
 		"mutual": "Αμοιβαία",
@@ -290,7 +291,7 @@
 		"wavingAtYou": "σας χαιρετάει!",
 		"followedYou": "σας ακολούθησε",
 		"onlineNow": "είναι online τώρα",
-		"waveBack": "να χαιρετήσω;",
+		"waveBack": "Χαιρετήστε πίσω",
 		"followBack": "ακολουθήστε επίσης"
 	},
 	"discovery": {

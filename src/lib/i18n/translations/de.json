@@ -248,6 +248,7 @@
 		"confirmUnfollow": "Vom Benutzer abmelden?",
 		"noFollowing": "Sie folgen noch niemandem",
 		"noFollowers": "Sie haben noch keine Follower",
+		"follow": "Folgen",
 		"unfollow": "Abmelden",
 		"followBack": "Ebenfalls folgen",
 		"mutual": "Gegenseitig",
@@ -270,7 +271,7 @@
 		"wavingAtYou": "winkt dir zu!",
 		"followedYou": "folgt dir jetzt",
 		"onlineNow": "ist jetzt online",
-		"waveBack": "zurückwinken?",
+		"waveBack": "Zurückwinken",
 		"followBack": "zurück folgen"
 	},
 	"discovery": {
