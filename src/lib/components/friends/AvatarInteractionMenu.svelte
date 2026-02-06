@@ -57,12 +57,11 @@
 		position = { top, left };
 	}
 
-	onMount(async () => {
-		await tick();
-		updatePosition();
-		
-		// Додатковий виклик через кадр для певності (якщо є анімації)
-		requestAnimationFrame(updatePosition);
+	onMount(() => {
+		tick().then(() => {
+			updatePosition();
+			requestAnimationFrame(updatePosition);
+		});
 
 		window.addEventListener('scroll', updatePosition, true);
 		window.addEventListener('resize', updatePosition);

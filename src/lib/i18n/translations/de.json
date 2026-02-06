@@ -30,7 +30,25 @@
 		"addToExtra": "Zu «Zusätzlichem Lernen» hinzufügen",
 		"removeFromExtra": "Aus «Zusätzlichem Lernen» entfernen",
 		"empty": "Diese Playlist ist leer, aber Sie können Karten hinzufügen. Drücken und halten Sie dazu eine Karte einige Sekunden lang, um das Kontextmenü zu öffnen.",
-		"emptyMistakes": "Diese Liste ist leer und wird mit Wörtern gefüllt, bei denen Sie Fehler machen."
+		"emptyMistakes": "Diese Liste ist leer und wird mit Wörtern gefüllt, bei denen Sie Fehler machen.",
+		"editTitle": "Liste bearbeiten",
+		"createTitle": "Neue Liste erstellen",
+		"createNew": "Neue Liste",
+		"import": "Importieren",
+		"name": "Name",
+		"namePlaceholder": "Listenname eingeben...",
+		"description": "Beschreibung",
+		"descPlaceholder": "Worum geht es in dieser Liste...",
+		"color": "Farbe",
+		"icon": "Symbol",
+		"wordsCount": "{count} Wörter",
+		"addCustomWord": "Eigenes Wort hinzufügen",
+		"wordPlaceholder": "Wort",
+		"translationPlaceholder": "Übersetzung",
+		"exportTitle": "Exportieren",
+		"addToPlaylist": "Zur Liste hinzufügen",
+		"confirmDelete": "Sind Sie sicher, dass Sie diese Liste löschen möchten?",
+		"importError": "Import fehlgeschlagen. Bitte überprüfen Sie das Dateiformat."
 	},
 	"topics": {
 		"title": "Themen",
@@ -71,8 +89,8 @@
 		"cardLanguages": "Kartensprachen",
 		"from": "Von",
 		"to": "Nach",
-		"sourceLanguage": "Linke Spalte",
-		"targetLanguage": "Rechte Spalte",
+		"columnLeft": "Kartensprache linke Spalte",
+		"columnRight": "Kartensprache rechte Spalte",
 		"transcription": "Transkription anzeigen",
 		"pronunciation": "Wörter aussprechen",
 		"theme": "Thema",
@@ -83,7 +101,9 @@
 		"allowFriendRequests": "Freundschaftsanfragen erlauben",
 		"allowFriendRequestsDesc": "Anderen erlauben, Ihnen Freundschaftsanfragen zu senden",
 		"shareStats": "Statistiken teilen",
-		"shareStatsDesc": "Freunden erlauben, Ihren Lernfortschritt zu sehen"
+		"shareStatsDesc": "Freunden erlauben, Ihren Lernfortschritt zu sehen",
+		"learningMode": "Lernmodus",
+		"hint": "Hinweis"
 	},
 	"theme": {
 		"dark-gray": "Dunkelgrau",
@@ -218,6 +238,8 @@
 		"backToLearning": "Zurück zum Lernen",
 		"retry": "Erneut versuchen",
 		"cancel": "Abbrechen",
+		"save": "Speichern",
+		"edit": "Bearbeiten",
 		"send": "Senden",
 		"copyReport": "Bericht kopieren",
 		"error": {

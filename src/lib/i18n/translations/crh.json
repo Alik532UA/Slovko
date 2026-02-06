@@ -89,8 +89,8 @@
 		"cardLanguages": "Kartaların tilleri",
 		"from": "...-den",
 		"to": "...-ge",
-		"sourceLanguage": "Sol sutun",
-		"targetLanguage": "Oñ sutun",
+		"columnLeft": "sol sutun kart tili",
+		"columnRight": "oñ sutun kart tili",
 		"transcription": "Transkriptsiya köster",
 		"pronunciation": "Sözlerni oqumaq",
 		"theme": "Tema",
@@ -101,7 +101,9 @@
 		"allowFriendRequests": "Dostluq muracaatları",
 		"allowFriendRequestsDesc": "Diger qullanıcılarğa size dostluq muracaatlarını yollamağa ruhset beriñiz",
 		"shareStats": "Statistikanı paylaşmaq",
-		"shareStatsDesc": "Dostlarıñızğa ilerlemeñizni körmege ruhset beriñiz"
+		"shareStatsDesc": "Dostlarıñızğa ilerlemeñizni körmege ruhset beriñiz",
+		"learningMode": "Ögrenüv rejimi",
+		"hint": "İpucu"
 	},
 	"theme": {
 		"dark-gray": "Qaranlıq",
@@ -298,7 +300,7 @@
 		"title": "Aktiv qıdırıv",
 		"enable": "Açmaq",
 		"disable": "Qapatmaq",
-		"hint": "Dostlarıñıznı bir saniyede tapmaq isteysiñizmi? Olardan da bu funktsiyanı açmağanlarını sorañız, isimleriñiz cedvelde öz-özünden peyda olur.",
+		"hint": "Dostlarıñıznı bir saniyede tapmaq isteysiñizmi? Olardan da bu funktsiyanı açмағанlarını sorañız, isimleriñiz cedvelde öz-özünden peyda olur.",
 		"active": "Aktiv",
 		"waiting": "Digerlerini bekleymiz...",
 		"paste": "Kopiyalanğanını kirtmek"

@@ -30,7 +30,25 @@
 		"addToExtra": "Toevoegen aan 'Extra studie'",
 		"removeFromExtra": "Verwijderen uit 'Extra studie'",
 		"empty": "Deze afspeellijst is leeg, maar je kunt er kaarten aan toevoegen. Houd hiervoor een kaart een paar seconden ingedrukt om het contextmenu te openen.",
-		"emptyMistakes": "Deze lijst is leeg en wordt gevuld met woorden waarin je fouten maakt."
+		"emptyMistakes": "Deze lijst is leeg en wordt gevuld met woorden waarin je fouten maakt.",
+		"editTitle": "Lijst bewerken",
+		"createTitle": "Nieuwe lijst maken",
+		"createNew": "Nieuwe lijst",
+		"import": "Importeren",
+		"name": "Naam",
+		"namePlaceholder": "Voer lijstnaam in...",
+		"description": "Beschrijving",
+		"descPlaceholder": "Waar gaat deze lijst over...",
+		"color": "Kleur",
+		"icon": "Icoon",
+		"wordsCount": "{count} woorden",
+		"addCustomWord": "Eigen woord toevoegen",
+		"wordPlaceholder": "Woord",
+		"translationPlaceholder": "Vertaling",
+		"exportTitle": "Exporteren",
+		"addToPlaylist": "Toevoegen aan lijst",
+		"confirmDelete": "Weet je zeker dat je deze lijst wilt verwijderen?",
+		"importError": "Importeren mislukt. Controleer het bestandsformaat."
 	},
 	"topics": {
 		"title": "Onderwerpen",
@@ -71,8 +89,8 @@
 		"cardLanguages": "Kaart talen",
 		"from": "Van",
 		"to": "Naar",
-		"sourceLanguage": "Linker kolom",
-		"targetLanguage": "Rechter kolom",
+		"columnLeft": "kaarttaal linker kolom",
+		"columnRight": "kaarttaal rechter kolom",
 		"transcription": "Toon transcriptie",
 		"pronunciation": "Spreek woorden uit",
 		"theme": "Thema",
@@ -83,7 +101,9 @@
 		"allowFriendRequests": "Vriendschapsverzoeken toestaan",
 		"allowFriendRequestsDesc": "Sta anderen toe je vriendschapsverzoeken te sturen",
 		"shareStats": "Statistieken delen",
-		"shareStatsDesc": "Sta vrienden toe je leervoortgang te zien"
+		"shareStatsDesc": "Sta vrienden toe je leervoortgang te zien",
+		"learningMode": "Leermodus",
+		"hint": "Hint"
 	},
 	"theme": {
 		"dark-gray": "Donkergrijs",
@@ -218,6 +238,8 @@
 		"backToLearning": "Terug naar leren",
 		"retry": "Opnieuw proberen",
 		"cancel": "Annuleren",
+		"save": "Opslaan",
+		"edit": "Bewerken",
 		"send": "Versturen",
 		"copyReport": "Rapport kopiëren",
 		"error": {
