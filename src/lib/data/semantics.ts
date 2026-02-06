@@ -52,6 +52,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "you_pronoun",
 		specific: ["you_informal", "you_formal", "you"],
 	},
+	affair: {
+		base: "affair",
+		specific: ["affair_matter", "affair_romance"],
+	},
 };
 
 /**
