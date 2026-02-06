@@ -3,7 +3,7 @@ import {
 	collection,
 	doc,
 	setDoc,
-	FirestoreError,
+	type FirestoreError,
 } from "firebase/firestore";
 import { db, auth } from "./config";
 import { AuthService } from "./AuthService";

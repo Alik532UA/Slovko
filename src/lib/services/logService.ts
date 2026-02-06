@@ -9,6 +9,7 @@ export const logConfig = {
 	interaction: true, // Включено для дебагу
 	presence: false,
 	stats: false,
+	ui: true,
 };
 
 const recentLogs: string[] = [];
