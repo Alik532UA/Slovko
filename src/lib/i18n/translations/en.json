@@ -299,7 +299,7 @@
 		"title": "Active Search",
 		"enable": "Enable",
 		"disable": "Disable",
-		"hint": "Enable to find friends nearby who have also opened this menu.",
+		"hint": "Want to find friends in an instant? Ask them to launch this feature too, and your names will automatically appear in the list.",
 		"active": "Active",
 		"waiting": "Waiting for others...",
 		"paste": "Paste from clipboard"
