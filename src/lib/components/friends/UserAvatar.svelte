@@ -98,8 +98,7 @@
 				{
 					name: displayName || "Користувач",
 					photoURL: photoURL
-				},
-				{ x: e.clientX, y: e.clientY }
+				}
 			);
 		}
 	}

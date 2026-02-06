@@ -4,12 +4,12 @@ export const logConfig = {
 	editor: false,
 	store: false,
 	game: false,
-	sync: true, // Включено для дебагу
-	settings: true, // Включено для дебагу
-	interaction: true, // Включено для дебагу
-	presence: false,
+	sync: false,
+	settings: false,
+	interaction: true,
+	presence: true,
 	stats: false,
-	ui: true,
+	ui: false,
 };
 
 const recentLogs: string[] = [];

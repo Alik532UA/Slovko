@@ -1,4 +1,4 @@
-import { ref, onValue, set, onDisconnect, serverTimestamp, onChildAdded, remove, query, orderByChild, limitToLast, type Unsubscribe } from "firebase/database";
+import { ref, onValue, set, onDisconnect, serverTimestamp, onChildAdded, remove, query, orderByChild, limitToLast, type Unsubscribe, push, startAt } from "firebase/database";
 import { rtdb, auth } from "./config";
 import { logService } from "../services/logService";
 
@@ -36,73 +36,216 @@ export interface InteractionEvent {
 
 /**
  * PresenceService — сервіс для відстеження онлайн-статусу та обміну сигналами.
+ * 
+ * Архітектурні принципи:
+ * 1. SSoT: Єдине джерело статусів та подій взаємодії.
+ * 2. UDF: Події додаються через addInteraction, видаляються через removeInteraction.
+ * 3. Надійність: Використання push() для сигналів та serverTimestamp для фільтрації.
  */
 class PresenceServiceClass {
-	// Реактивна карта статусів: [uid] -> UserStatus
-	// Використовуємо Svelte Map для кращої гранулярності реактивності
+	// Реактивні стани
 	friendsStatus = $state(new Map<string, UserStatus>());
-	
-	// Черга активних подій взаємодії
 	interactions = $state<InteractionEvent[]>([]);
 	
+	// Внутрішній стан управління підписками
 	private statusUnsubscribers: Map<string, { unsub: Unsubscribe, count: number }> = new Map();
 	private signalUnsubscribe: Unsubscribe | null = null;
-	private lastWaveSentAt: number = 0;
-	private lastSignalSentAt: number = 0;
+	private discoveryUnsubscribe: Unsubscribe | null = null;
+	private currentUid: string | null = null;
+	private isInitialized = false;
+	private isPaused = false;
+	
+	// Захист від дублювання та спаму
 	private processedSignals: Set<string> = new Set();
-		private isPaused = false;
-		private currentUid: string | null = null;
-		private initialStatusLoaded: Set<string> = new Set();
-		private boundHandleVisibilityChange: (() => void) | null = null;
-		private backgroundUnsubscribers: (() => void)[] = [];
-		private lastTrackedUids: string[] = [];
+	private lastSignalSentAt: Map<string, number> = new Map(); // [targetUid] -> timestamp
+	private initialStatusLoaded: Set<string> = new Set();
 	
-		/**
-		 * Налаштовує фонове відстеження статусів для обмеженої кількості друзів.
-		 * Це потрібно для роботи сповіщень про вхід друзів в онлайн.
-		 */
-		limitBackgroundTracking(uids: string[], limit = 20) {
-			const toTrack = uids.slice(0, limit);
-			
-			// Перевірка: чи змінився список UIDs?
-			if (this.lastTrackedUids.length === toTrack.length && 
-				this.lastTrackedUids.every((uid, i) => uid === toTrack[i])) {
-				return;
-			}
+	// Обробники подій
+	private boundHandleVisibilityChange: (() => void) | null = null;
+	private backgroundUnsubscribers: (() => void)[] = [];
+	private lastTrackedUids: string[] = [];
 
-			this.lastTrackedUids = toTrack;
-
-			// Спочатку відписуємося від попередніх фонових підписок
-			this.backgroundUnsubscribers.forEach(unsub => unsub());
-			this.backgroundUnsubscribers = [];
-	
-			if (this.isPaused) return;
-	
-			logService.log("presence", `Setting up background tracking for ${toTrack.length} friends (limit: ${limit})`);
-			
-			toTrack.forEach(uid => {
-				this.backgroundUnsubscribers.push(this.trackFriendStatus(uid));
-			});
+	/**
+	 * Налаштовує фонове відстеження статусів для обмеженої кількості друзів.
+	 * Це потрібно для роботи сповіщень про вхід друзів в онлайн.
+	 */
+	limitBackgroundTracking(uids: string[], limit = 20) {
+		const toTrack = uids.slice(0, limit);
+		
+		// Перевірка: чи змінився список UIDs?
+		if (this.lastTrackedUids.length === toTrack.length && 
+			this.lastTrackedUids.every((uid, i) => uid === toTrack[i])) {
+			return;
 		}
-	
-		/**
-		 * Додає подію в чергу	 */
-	private addInteraction(event: Omit<InteractionEvent, 'id' | 'timestamp' | 'state'> & { state?: InteractionEvent['state'] }) {
-		// Захист від дублювання: не додаємо 'online', якщо він вже є для цього юзера
+
+		this.lastTrackedUids = toTrack;
+
+		// Спочатку відписуємося від попередніх фонових підписок
+		this.backgroundUnsubscribers.forEach(unsub => unsub());
+		this.backgroundUnsubscribers = [];
+
+		if (this.isPaused) return;
+
+		logService.log("presence", `Setting up background tracking for ${toTrack.length} friends (limit: ${limit})`);
+		
+		toTrack.forEach(uid => {
+			this.backgroundUnsubscribers.push(this.trackFriendStatus(uid));
+		});
+	}
+
+	/**
+	 * Ініціалізація сервісу для конкретного користувача.
+	 * Гарантує SSoT та запобігає повторним ініціалізаціям.
+	 */
+	async init(uid: string) {
+		if (this.currentUid === uid && this.isInitialized) {
+			logService.log("presence", "PresenceService already initialized for this user");
+			return;
+		}
+
+		// Якщо UID змінився — спочатку очищуємо попередній стан
+		if (this.currentUid && this.currentUid !== uid) {
+			this.goOffline(this.currentUid);
+		}
+
+		this.currentUid = uid;
+		this.isInitialized = true;
+		logService.log("presence", "Initializing PresenceService for:", uid);
+		
+		// Налаштування відстеження видимості вкладки
+		if (typeof document !== "undefined") {
+			if (this.boundHandleVisibilityChange) {
+				document.removeEventListener("visibilitychange", this.boundHandleVisibilityChange);
+			}
+			this.boundHandleVisibilityChange = () => this.handleVisibilityChange();
+			document.addEventListener("visibilitychange", this.boundHandleVisibilityChange);
+		}
+
+		// Налаштування власного онлайн-статусу
+		this.setupOwnStatus(uid);
+		
+		// Починаємо слухати вхідні сигнали
+		this.listenForSignals(uid);
+	}
+
+	/**
+	 * Налаштовує онлайн-статус користувача в RTDB
+	 */
+	private setupOwnStatus(uid: string) {
+		const userStatusRef = ref(rtdb, `/status/${uid}`);
+		const isOfflineForDatabase = { state: "offline", lastChanged: serverTimestamp() };
+		const isOnlineForDatabase = { state: "online", lastChanged: serverTimestamp() };
+
+		onDisconnect(userStatusRef).set(isOfflineForDatabase).then(() => {
+			set(userStatusRef, isOnlineForDatabase)
+				.then(() => logService.log("presence", "User status set to online"))
+				.catch(err => logService.error("presence", "Failed to set online status", err));
+		});
+	}
+
+	/**
+	 * Слухає нові сигнали для користувача.
+	 * Використовує серверний запит для отримання лише нових повідомлень.
+	 */
+	private listenForSignals(uid: string) {
+		if (this.signalUnsubscribe) {
+			this.signalUnsubscribe();
+			this.signalUnsubscribe = null;
+		}
+
+		logService.log("interaction", "Setting up server-side signal listener for:", uid);
+		
+		// Фільтруємо на рівні сервера: тільки сигнали, створені після моменту підписки
+		// Додаємо невеликий буфер (10 сек) для компенсації десинхронізації годинників
+		const signalsQuery = query(
+			ref(rtdb, `/signals/${uid}`),
+			orderByChild("timestamp"),
+			startAt(Date.now() - 10000)
+		);
+
+		this.signalUnsubscribe = onChildAdded(signalsQuery, async (snapshot) => {
+			const signal = snapshot.val() as Signal;
+			const signalKey = snapshot.key;
+
+			if (!signal || !signalKey || this.processedSignals.has(signalKey)) return;
+
+			this.processedSignals.add(signalKey);
+			logService.log("interaction", `New signal [${signal.type}] from ${signal.fromUid}`);
+
+			this.addInteraction({
+				type: 'incoming_wave',
+				uid: signal.fromUid,
+				profile: { name: signal.fromName, photoURL: signal.fromPhoto }
+			});
+
+			// Видаляємо сигнал з бази після отримання (Consume pattern)
+			try {
+				await remove(ref(rtdb, `/signals/${uid}/${signalKey}`));
+			} catch (e) {
+				logService.error("interaction", "Failed to remove consumed signal", e);
+			}
+		});
+	}
+
+	/**
+	 * Надсилає сигнал іншому користувачу.
+	 * Використовує push() для унікальності та serverTimestamp для надійності.
+	 */
+	async sendWave(targetUid: string, senderProfile: { name: string; photoURL: string | null }, eventId?: string) {
+		const currentUser = auth.currentUser;
+		if (!currentUser) {
+			logService.error("interaction", "Cannot send wave: No authenticated user found in Firebase Auth");
+			return;
+		}
+
+		// Cooldown: 2 секунди для одного й того ж отримувача
+		const now = Date.now();
+		const lastSent = this.lastSignalSentAt.get(targetUid) || 0;
+		if (now - lastSent < 2000) {
+			logService.warn("interaction", "Wave throttled: too frequent for this user");
+			return;
+		}
+
+		this.lastSignalSentAt.set(targetUid, now);
+		logService.log("interaction", `Sending wave to: ${targetUid} from: ${currentUser.uid}`);
+
+		const signalsRef = ref(rtdb, `/signals/${targetUid}`);
+		
+		// Використовуємо об'єкт для запису, де timestamp буде встановлено сервером
+		const signalData = {
+			type: "wave",
+			fromUid: currentUser.uid,
+			fromName: senderProfile.name,
+			fromPhoto: senderProfile.photoURL,
+			timestamp: serverTimestamp()
+		};
+
+		logService.log("interaction", "Signal payload (with serverTimestamp):", signalData);
+
+		try {
+			if (eventId) this.updateInteractionState(eventId, 'sent');
+			
+			const newSignalRef = push(signalsRef);
+			await set(newSignalRef, signalData);
+			
+			logService.log("interaction", "Wave successfully sent");
+		} catch (error) {
+			logService.error("interaction", "Failed to send wave", error);
+		}
+	}
+
+	/**
+	 * Додає подію в чергу взаємодії (UDF)
+	 */
+	private addInteraction(event: Omit<InteractionEvent, 'id' | 'timestamp' | 'state'> & { id?: string, state?: InteractionEvent['state'] }) {
+		const id = event.id || crypto.randomUUID();
+		
+		// Захист від дублювання (особливо для 'online' сповіщень)
 		if (event.type === 'online') {
 			const exists = this.interactions.some(i => i.uid === event.uid && i.type === 'online');
 			if (exists) return;
 		}
 
-		// Захист від дублювання підписок
-		if (event.type === 'new_follower') {
-			const exists = this.interactions.some(i => i.uid === event.uid && i.type === 'new_follower');
-			if (exists) return;
-		}
-
-		// Використовуємо надійний UUID
-		const id = crypto.randomUUID();
-		
 		const newEvent: InteractionEvent = {
 			id,
 			timestamp: Date.now(),
@@ -114,25 +257,14 @@ class PresenceServiceClass {
 	}
 
 	/**
-	 * Публічний метод для сповіщення про нового підписника
-	 */
-	addFollowerNotification(uid: string, profile: { name: string; photoURL: string | null }) {
-		this.addInteraction({
-			type: 'new_follower',
-			uid,
-			profile
-		});
-	}
-
-	/**
-	 * Видаляє подію з черги
+	 * Видаляє подію з черги (UDF)
 	 */
 	removeInteraction(id: string) {
 		this.interactions = this.interactions.filter(i => i.id !== id);
 	}
 
 	/**
-	 * Оновлює стан події
+	 * Оновлює стан події (UDF)
 	 */
 	updateInteractionState(id: string, state: InteractionEvent['state']) {
 		const event = this.interactions.find(i => i.id === id);
@@ -140,119 +272,8 @@ class PresenceServiceClass {
 	}
 
 	/**
-	 * Увійти в режим "Активний пошук" (Discovery Mode)
-	 */
-	async enterDiscoveryMode(profile: { displayName: string; photoURL: string | null }) {
-		if (!this.currentUid) return;
-		
-		const discoveryRef = ref(rtdb, `/discovery/${this.currentUid}`);
-		const data = {
-			...profile,
-			timestamp: serverTimestamp()
-		};
-
-		// Встановлюємо дані та хук для видалення при втраті зв'язку
-		await onDisconnect(discoveryRef).remove();
-		await set(discoveryRef, data);
-		logService.log("presence", "Entered discovery mode");
-	}
-
-	/**
-	 * Вийти з режиму "Активний пошук"
-	 */
-	async leaveDiscoveryMode() {
-		if (!this.currentUid) return;
-		
-		// Скасовуємо onDisconnect (хоча remove все одно спрацює, але це good practice)
-		const discoveryRef = ref(rtdb, `/discovery/${this.currentUid}`);
-		await onDisconnect(discoveryRef).cancel();
-		await remove(discoveryRef);
-		
-		logService.log("presence", "Left discovery mode");
-	}
-
-	/**
-	 * Підписатися на список активних користувачів в пошуку
-	 * Повертає функцію для відписки
-	 */
-	subscribeToDiscovery(callback: (users: DiscoveryUser[]) => void): () => void {
-		const discoveryListRef = query(
-			ref(rtdb, 'discovery'),
-			orderByChild('timestamp'),
-			limitToLast(30) // Показуємо тільки останніх 30 активних
-		);
-
-		const unsub = onValue(discoveryListRef, (snapshot) => {
-			const users: DiscoveryUser[] = [];
-			snapshot.forEach((childSnapshot) => {
-				const val = childSnapshot.val();
-				// Не показуємо себе у списку
-				if (childSnapshot.key !== this.currentUid) {
-					users.push({
-						uid: childSnapshot.key as string,
-						displayName: val.displayName,
-						photoURL: val.photoURL,
-						timestamp: val.timestamp
-					});
-				}
-			});
-			// Сортуємо: найновіші зверху
-			callback(users.reverse());
-		});
-
-		return unsub;
-	}
-
-	/**
-	 * Встановлює статус користувача "online" та налаштовує автоматичний перехід в "offline".
-	 */
-	async init(uid: string) {
-		if (this.currentUid === uid && this.signalUnsubscribe) {
-			logService.log("presence", "PresenceService already initialized for this user, skipping.");
-			return;
-		}
-
-		this.currentUid = uid;
-		logService.log("presence", "Initializing PresenceService for:", uid);
-		
-		if (typeof document !== "undefined") {
-			if (this.boundHandleVisibilityChange) {
-				document.removeEventListener("visibilitychange", this.boundHandleVisibilityChange);
-			}
-			this.boundHandleVisibilityChange = () => this.handleVisibilityChange();
-			document.addEventListener("visibilitychange", this.boundHandleVisibilityChange);
-		}
-
-		const userStatusRef = ref(rtdb, `/status/${uid}`);
-
-		const isOfflineForDatabase = {
-			state: "offline",
-			lastChanged: serverTimestamp(),
-		};
-
-		const isOnlineForDatabase = {
-			state: "online",
-			lastChanged: serverTimestamp(),
-		};
-
-		// При втраті зв'язку (закриття вкладки) — ставимо offline
-		onDisconnect(userStatusRef).set(isOfflineForDatabase).then(() => {
-			logService.log("presence", "Presence onDisconnect hook set for:", uid);
-			// Встановлюємо online зараз
-			set(userStatusRef, isOnlineForDatabase).then(() => {
-				logService.log("presence", "User status set to online:", uid);
-			}).catch(err => {
-				logService.error("presence", "Failed to set user status to online:", err);
-			});
-		}).catch(err => {
-			logService.error("presence", "Failed to set onDisconnect hook:", err);
-		});
-
-		this.listenForSignals(uid);
-	}
-
-	/**
-	 * Обробка зміни видимості сторінки (Tab focus/blur)
+	 * Обробка зміни видимості сторінки.
+	 * Відновлює підписки тільки коли це необхідно.
 	 */
 	private handleVisibilityChange() {
 		if (!this.currentUid) return;
@@ -261,306 +282,181 @@ class PresenceServiceClass {
 		if (isHidden === this.isPaused) return;
 		
 		this.isPaused = isHidden;
-		logService.log("presence", `App visibility changed: ${isHidden ? "hidden" : "visible"}. Pausing RTDB listeners: ${isHidden}`);
+		logService.log("presence", `Visibility changed: ${isHidden ? "hidden" : "visible"}`);
 
 		if (this.isPaused) {
-			// Призупиняємо підписки на друзів та сигнали (але не власний статус!)
-			this.statusUnsubscribers.forEach(entry => entry.unsub());
-			if (this.signalUnsubscribe) {
-				this.signalUnsubscribe();
-				this.signalUnsubscribe = null;
-			}
+			this.stopListeners();
 		} else {
-			// Відновлюємо підписки
-			const uidsToTrack = Array.from(this.statusUnsubscribers.keys());
-			this.statusUnsubscribers.clear(); // Очищуємо карту, щоб trackFriendStatus створив нові
-			uidsToTrack.forEach(uid => this.trackFriendStatus(uid));
-			this.listenForSignals(this.currentUid);
+			this.resumeListeners();
 		}
 	}
 
-	/**
-	 * Слухає нові сигнали для користувача
-	 */
-	private listenForSignals(uid: string) {
-		logService.log("interaction", "Listening for signals at:", `/signals/${uid}`);
-		const signalsRef = ref(rtdb, `/signals/${uid}`);
-		
-		// Використовуємо onChildAdded, щоб ловити кожен новий сигнал
-		this.signalUnsubscribe = onChildAdded(signalsRef, async (snapshot) => {
-			if (!auth.currentUser || auth.currentUser.uid !== uid) return;
-			
-			const signal = snapshot.val() as Signal;
-			const signalKey = snapshot.key;
-
-			if (!signal || !signalKey || this.processedSignals.has(signalKey)) {
-				return;
-			}
-
-			// Маркуємо як оброблений негайно, щоб запобігти повторним спробам
-			this.processedSignals.add(signalKey);
-
-			// Впроваджуємо TTL для ключа (1 хвилина), щоб запобігти витоку пам'яті (VULN_02)
-			setTimeout(() => {
-				this.processedSignals.delete(signalKey);
-			}, 60000);
-
-			// Захист від спаму: не обробляємо більше 10 активних сигналів одночасно
-			if (this.interactions.length > 10) {
-				logService.warn("interaction", "High volume of incoming signals detected, throttling...");
-				return;
-			}
-
-			logService.log("interaction", "Received signal snapshot:", signalKey, signal);
-
-			if (signal && signalKey) {
-				const age = Date.now() - signal.timestamp;
-				logService.log("interaction", `Signal age: ${age}ms`);
-
-				// Ігноруємо старі сигнали (старше 30 секунд)
-				if (age < 30000) {
-					logService.log("interaction", "Signal is fresh, adding to interactions queue");
-					this.addInteraction({
-						type: 'incoming_wave',
-						uid: signal.fromUid,
-						profile: { name: signal.fromName, photoURL: signal.fromPhoto }
-					});
-				} else {
-					logService.log("interaction", "Signal is too old, ignoring");
-				}
-				
-				// Одразу видаляємо сигнал з бази, щоб не накопичувалися
-				if (auth.currentUser && auth.currentUser.uid === uid) {
-					logService.log("interaction", "Removing processed signal:", signalKey);
-					try {
-						await remove(ref(rtdb, `/signals/${uid}/${signalKey}`));
-					} catch (e) {
-						logService.error("interaction", "Failed to remove processed signal:", e);
-						// Ми НЕ видаляємо з processedSignals тут, щоб не пробувати знову
-					}
-				}
-			}
-		}, (error) => {
-			logService.error("interaction", "Error listening for signals:", error);
-		});
-	}
-
-	/**
-	 * Внутрішній метод для відправки сигналів з підтримкою різних лімітів (cooldown)
-	 */
-	private async sendSignalInternal(
-		targetUid: string, 
-		type: Signal["type"], 
-		senderProfile: { name: string; photoURL: string | null },
-		cooldown: number,
-		lastSentTimestampKey: "lastWaveSentAt" | "lastSignalSentAt",
-		eventId?: string // Опціональний ID події для оновлення стану
-	) {
-		if (!auth.currentUser) {
-			logService.error("interaction", `Cannot send ${type}: No current user`);
-			return;
-		}
-
-		const now = Date.now();
-		if (now - this[lastSentTimestampKey] < cooldown) {
-			logService.warn("interaction", `${type} throttled (${cooldown}ms cooldown)`);
-			return;
-		}
-		
-		logService.log("interaction", `Attempting to send ${type} to:`, targetUid);
-		this[lastSentTimestampKey] = now;
-
-		const signalRef = ref(rtdb, `/signals/${targetUid}/${auth.currentUser.uid}`);
-		const newSignal: Signal = {
-			type,
-			fromUid: auth.currentUser.uid,
-			fromName: senderProfile.name,
-			fromPhoto: senderProfile.photoURL,
-			timestamp: now
-		};
-
-		try {
-			// Оновлюємо стан конкретної капсули, якщо ID надано
-			if (eventId) {
-				this.updateInteractionState(eventId, 'sent');
-			}
-
-			await set(signalRef, newSignal);
-			logService.log("interaction", `${type} successfully sent to:`, targetUid);
-		} catch (error) {
-			logService.error("interaction", `Failed to send ${type}:`, error);
-		}
-	}
-
-	/**
-	 * Надсилає "привіт" (Wave) іншому користувачу.
-	 */
-	async sendWave(targetUid: string, senderProfile: { name: string; photoURL: string | null }, eventId?: string) {
-		return this.sendSignalInternal(targetUid, "wave", senderProfile, 100, "lastWaveSentAt", eventId);
-	}
-
-	/**
-	 * Зупиняє відстеження та очищує ресурси
-	 */
-		goOffline(uid: string) {
-			if (typeof document !== "undefined" && this.boundHandleVisibilityChange) {
-				document.removeEventListener("visibilitychange", this.boundHandleVisibilityChange);
-				this.boundHandleVisibilityChange = null;
-			}
-
-			const userStatusRef = ref(rtdb, `/status/${uid}`);
-			set(userStatusRef, {
-				state: "offline",
-				lastChanged: Date.now(),
-			});
-			
-			// Відписуємося від усіх статусів
-			this.statusUnsubscribers.forEach(entry => entry.unsub());
-			this.statusUnsubscribers.clear();
-			this.friendsStatus.clear();
-			this.initialStatusLoaded.clear();
-			this.interactions = [];
-		// Відписуємося від сигналів
+	private stopListeners() {
+		this.statusUnsubscribers.forEach(entry => entry.unsub());
 		if (this.signalUnsubscribe) {
 			this.signalUnsubscribe();
 			this.signalUnsubscribe = null;
 		}
+		if (this.discoveryUnsubscribe) {
+			this.discoveryUnsubscribe();
+			this.discoveryUnsubscribe = null;
+		}
+	}
+
+	private resumeListeners() {
+		if (!this.currentUid) return;
+		
+		// Відновлюємо відстеження статусів друзів
+		const uids = Array.from(this.statusUnsubscribers.keys());
+		this.statusUnsubscribers.clear();
+		uids.forEach(uid => this.trackFriendStatus(uid));
+		
+		// Відновлюємо сигнали
+		this.listenForSignals(this.currentUid);
+	}
+
+	/**
+	 * Перехід в офлайн та очищення ресурсів.
+	 */
+	goOffline(uid: string) {
+		logService.log("presence", "Going offline for:", uid);
+		
+		if (typeof document !== "undefined" && this.boundHandleVisibilityChange) {
+			document.removeEventListener("visibilitychange", this.boundHandleVisibilityChange);
+			this.boundHandleVisibilityChange = null;
+		}
+
+		const userStatusRef = ref(rtdb, `/status/${uid}`);
+		set(userStatusRef, { state: "offline", lastChanged: serverTimestamp() });
+		
+		this.stopListeners();
+		this.statusUnsubscribers.clear();
+		this.friendsStatus.clear();
+		this.initialStatusLoaded.clear();
+		this.interactions = [];
 		this.processedSignals.clear();
+		this.isInitialized = false;
 		this.currentUid = null;
 	}
 
 	/**
-	 * Підписатися на статус конкретного користувача (друга)
-	 * Повертає функцію для відписки
+	 * Discovery Mode (Активний пошук)
+	 */
+	async enterDiscoveryMode(profile: { displayName: string; photoURL: string | null }) {
+		if (!this.currentUid) return;
+		
+		const discoveryRef = ref(rtdb, `/discovery/${this.currentUid}`);
+		await onDisconnect(discoveryRef).remove();
+		await set(discoveryRef, { ...profile, timestamp: serverTimestamp() });
+		logService.log("presence", "Entered discovery mode");
+	}
+
+	async leaveDiscoveryMode() {
+		if (!this.currentUid) return;
+		const discoveryRef = ref(rtdb, `/discovery/${this.currentUid}`);
+		await onDisconnect(discoveryRef).cancel();
+		await remove(discoveryRef);
+		logService.log("presence", "Left discovery mode");
+	}
+
+	subscribeToDiscovery(callback: (users: DiscoveryUser[]) => void): () => void {
+		const discoveryListRef = query(ref(rtdb, 'discovery'), orderByChild('timestamp'), limitToLast(30));
+		this.discoveryUnsubscribe = onValue(discoveryListRef, (snapshot) => {
+			const users: DiscoveryUser[] = [];
+			snapshot.forEach((child) => {
+				if (child.key !== this.currentUid) {
+					const val = child.val();
+					users.push({ uid: child.key!, displayName: val.displayName, photoURL: val.photoURL, timestamp: val.timestamp });
+				}
+			});
+			callback(users.reverse());
+		});
+		return () => {
+			if (this.discoveryUnsubscribe) {
+				this.discoveryUnsubscribe();
+				this.discoveryUnsubscribe = null;
+			}
+		};
+	}
+
+	/**
+	 * Відстеження статусу друзів
 	 */
 	trackFriendStatus(uid: string): () => void {
+		if (uid === this.currentUid) return () => {};
+
 		const existing = this.statusUnsubscribers.get(uid);
 		if (existing) {
 			existing.count++;
 			return () => this.untrackFriendStatus(uid);
 		}
 
-		logService.log("presence", "Starting to track friend status for:", uid);
 		const statusRef = ref(rtdb, `/status/${uid}`);
 		const unsub = onValue(statusRef, (snapshot) => {
 			const data = snapshot.val() as UserStatus | null;
-			
-			const prevStatus = this.friendsStatus.get(uid);
+			if (!data) return;
 
-			// Захист від зайвих оновлень: якщо стан не змінився — нічого не робимо
-			if (prevStatus && data && prevStatus.state === data.state) {
-				return;
+			const prev = this.friendsStatus.get(uid);
+			if (prev?.state === data.state) return;
+
+			// Сповіщення про вхід в онлайн
+			if (data.state === "online") {
+				const isNew = !prev || prev.state !== "online";
+				const isRecent = (Date.now() - (data.lastChanged as number)) < 15000;
+				if (isNew && (this.initialStatusLoaded.has(uid) || isRecent)) {
+					this.handleFriendOnline(uid);
+				}
 			}
 			
-			if (data) {
-				// Логіка сповіщення про вхід в онлайн
-				if (data.state === "online") {
-					const isNewOnline = !prevStatus || prevStatus.state !== "online";
-					const isRecent = data.lastChanged && (Date.now() - (data.lastChanged as number)) < 15000;
-					
-					// Якщо ми вже завантажили початковий статус і це новий вхід,
-					// АБО якщо ми тільки завантажили і статус зовсім свіжий (< 15 сек)
-					if (isNewOnline && (this.initialStatusLoaded.has(uid) || isRecent)) {
-						this.handleFriendOnline(uid);
-					}
-				}
-				
-				this.friendsStatus.set(uid, data);
-				this.initialStatusLoaded.add(uid);
-			}
-		}, (error) => {
-			logService.error("presence", `Error tracking status for ${uid}:`, error);
+			this.friendsStatus.set(uid, data);
+			this.initialStatusLoaded.add(uid);
 		});
 
 		this.statusUnsubscribers.set(uid, { unsub, count: 1 });
 		return () => this.untrackFriendStatus(uid);
 	}
 
-	/**
-	 * Обробка входу друга в онлайн
-	 */
 	private async handleFriendOnline(uid: string) {
-		// Ми не хочемо показувати сповіщення про себе (хоча ми і не трекаємо себе зазвичай)
-		if (uid === this.currentUid) return;
-
-		// Отримуємо профіль друга з стору
 		const { friendsStore } = await import("../stores/friendsStore.svelte");
 		const profile = await friendsStore.getProfile(uid);
-		
 		if (profile) {
-			logService.log("presence", `Friend went online: ${profile.displayName}`);
 			this.addInteraction({
 				type: 'online',
-				uid: profile.uid,
-				profile: { name: profile.displayName, photoURL: profile.photoURL },
-				state: 'collapsed'
+				uid,
+				profile: { name: profile.displayName, photoURL: profile.photoURL }
 			});
 		}
 	}
 
-	/**
-	 * Скидає стан сповіщення про онлайн
-	 */
-	clearFriendOnline() {
-		this.interactions = this.interactions.filter(i => i.type !== 'online');
-	}
-
-	/**
-	 * Зменшує кількість посилань на підписку. 
-	 * Коли посилань 0 — реально відписується від Realtime Database.
-	 */
 	private untrackFriendStatus(uid: string) {
 		const entry = this.statusUnsubscribers.get(uid);
-		if (!entry) return;
-
-		entry.count--;
-		if (entry.count <= 0) {
-			logService.log("presence", "Stopping tracking status for (no more listeners):", uid);
-			entry.unsub();
-			this.statusUnsubscribers.delete(uid);
-			// Ми НЕ видаляємо initialStatusLoaded та friendsStatus тут, 
-			// щоб при повторній підписці (наприклад, через ліміт) ми знали попередній стан
+		if (entry) {
+			entry.count--;
+			if (entry.count <= 0) {
+				entry.unsub();
+				this.statusUnsubscribers.delete(uid);
+			}
 		}
 	}
 
 	/**
-	 * Перевірити, чи користувач онлайн
+	 * Перевірити, чи користувач онлайн (SSoT з friendsStatus map)
 	 */
 	isOnline(uid: string): boolean {
 		return this.friendsStatus.get(uid)?.state === "online";
 	}
-	
-	/**
-	 * Відкриває меню взаємодії
-	 */
-	openInteractionMenu(uid: string, profile: { name: string; photoURL: string | null }, _position = { x: 0, y: 0 }) {
-		logService.log("interaction", `Opening interaction menu for: ${uid}`, profile);
-		this.addInteraction({
-			type: 'manual_menu',
-			uid,
-			profile,
-			state: 'collapsed' // Початковий стан - тільки аватарка
-		});
-		
-		// Одразу розгортаємо її
-		setTimeout(() => {
-			this.updateInteractionState(`manual_menu-${uid}`, 'expanded');
-		}, 50);
-	}
 
 	/**
-	 * Закриває меню взаємодії
+	 * API для відкриття меню вручну
 	 */
-	closeInteractionMenu() {
-		logService.log("interaction", "Closing interaction menus");
-		this.interactions = this.interactions.filter(i => i.type !== 'manual_menu');
+	openInteractionMenu(uid: string, profile: { name: string; photoURL: string | null }) {
+		const id = `manual_menu-${uid}`;
+		this.addInteraction({ id, type: 'manual_menu', uid, profile, state: 'collapsed' });
+		setTimeout(() => this.updateInteractionState(id, 'expanded'), 50);
 	}
-	
-	/**
-	 * Скидає останній сигнал (після показу)
-	 */
-	clearSignal() {
-		this.interactions = this.interactions.filter(i => i.type !== 'incoming_wave');
+
+	addFollowerNotification(uid: string, profile: { name: string; photoURL: string | null }) {
+		this.addInteraction({ type: 'new_follower', uid, profile });
 	}
 }
 
