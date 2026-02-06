@@ -219,3 +219,25 @@ button {
 	white-space: nowrap;
 	border: 0;
 }
+
+/* Animations */
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.spin-slow {
+	display: inline-block;
+	animation: spin 3s linear infinite;
+	transform-origin: center;
+}
+
+.spin-fast {
+	display: inline-block;
+	animation: spin 1s linear infinite;
+	transform-origin: center;
+}

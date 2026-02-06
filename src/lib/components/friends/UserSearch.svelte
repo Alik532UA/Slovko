@@ -2,7 +2,7 @@
 	import { _ } from "svelte-i18n";
 	import {
 		Search,
-		Loader2,
+		Loader,
 		Clipboard,
 		Radio,
 		UserPlus
@@ -124,7 +124,7 @@
 		<div class="input-actions">
 			{#if isSearching}
 				<div class="spinner-wrapper">
-					<Loader2 size={16} />
+					<Loader size={16} class="spin-fast" />
 				</div>
 			{:else}
 				<button 
@@ -214,7 +214,7 @@
 			</div>
 		{:else if isDiscoveryMode}
 			<div class="discovery-waiting">
-				<Loader2 size={24} class="spin-slow" />
+				<Loader size={24} class="spin-slow" />
 				<span>{$_("discovery.waiting")}</span>
 			</div>
 		{/if}
@@ -273,15 +273,9 @@
 
 	.spinner-wrapper {
 		color: var(--text-secondary);
-		animation: spin 1s linear infinite;
 		padding: 0.5rem;
 		display: flex;
 		align-items: center;
-	}
-
-	@keyframes spin {
-		from { transform: rotate(0deg); }
-		to { transform: rotate(360deg); }
 	}
 
 	.search-input {
@@ -385,17 +379,6 @@
 		color: var(--text-primary);
 	}
 	
-	.pulse-icon {
-		color: #2ecc71;
-		animation: pulse 2s infinite;
-	}
-	
-	@keyframes pulse {
-		0% { transform: scale(1); opacity: 1; }
-		50% { transform: scale(1.2); opacity: 0.8; }
-		100% { transform: scale(1); opacity: 1; }
-	}
-	
 	.discovery-hint {
 		font-size: 0.8rem;
 		color: var(--text-secondary);
@@ -436,9 +419,5 @@
 		padding: 1rem;
 		color: var(--text-secondary);
 		font-size: 0.9rem;
-	}
-	
-	.spin-slow {
-		animation: spin 3s linear infinite;
 	}
 </style>
