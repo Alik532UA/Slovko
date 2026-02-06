@@ -56,6 +56,50 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "affair",
 		specific: ["affair_matter", "affair_romance"],
 	},
+	back: {
+		base: "back",
+		specific: ["back_body", "back_direction"],
+	},
+	fine: {
+		base: "fine",
+		specific: ["fine_good", "fine_penalty"],
+	},
+	time: {
+		base: "time",
+		specific: ["time_abstract", "time_clock"],
+	},
+	man: {
+		base: "man",
+		specific: ["man", "husband"],
+	},
+	woman: {
+		base: "woman",
+		specific: ["woman", "wife"],
+	},
+	warm_group: {
+		base: "warm",
+		specific: ["hot", "warm"],
+	},
+	get_take_group: {
+		base: "get",
+		specific: ["get", "take"],
+	},
+	watch: {
+		base: "watch",
+		specific: ["watch_verb", "watch_clock"],
+	},
+	right: {
+		base: "right",
+		specific: ["right_direction", "right_correct"],
+	},
+	hard: {
+		base: "hard",
+		specific: ["hard_difficult", "hard_solid"],
+	},
+	too: {
+		base: "too",
+		specific: ["too_also", "too_excessive"],
+	},
 };
 
 /**
