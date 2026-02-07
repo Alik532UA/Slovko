@@ -1,13 +1,13 @@
 <script lang="ts">
 	/**
 	 * LevelTopicModal — Вибір рівня або теми
-	 * Decomposed into specialized grid components
+	 * Використовує BaseModal для сучасного дизайну
 	 */
 	import { _ } from "svelte-i18n";
 	import { goto } from "$app/navigation";
-	import { X } from "lucide-svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import type { CEFRLevel, GameMode, PlaylistId } from "$lib/types";
+	import BaseModal from "../ui/BaseModal.svelte";
 
 	// Mode Components
 	import LevelGrid from "./modes/LevelGrid.svelte";
@@ -27,21 +27,45 @@
 		{ id: "playlists", label: "tabs.playlists", testId: "tab-playlists" },
 	];
 
-	// Initialize directly from store (SSoT)
+	// Initialize directly from store
 	let activeTab = $state<GameMode>(settingsStore.value.mode);
+	
+	// Local state for multi-selection
+	let selectedIds = $state<string[]>([]);
 
-	function selectLevel(level: CEFRLevel) {
-		goto(`?mode=levels&level=${level}`);
-		onclose();
+	// Sync local selection when tab changes or modal opens
+	$effect(() => {
+		if (activeTab === settingsStore.value.mode) {
+			if (activeTab === "topics") selectedIds = [...settingsStore.value.currentTopic];
+			else if (activeTab === "levels" || activeTab === "phrases") selectedIds = [...settingsStore.value.currentLevel];
+		} else {
+			selectedIds = [];
+		}
+	});
+
+	function toggleId(id: string) {
+		if (selectedIds.includes(id)) {
+			selectedIds = selectedIds.filter(i => i !== id);
+		} else {
+			selectedIds = [...selectedIds, id];
+		}
 	}
 
-	function selectPhrasesLevel(level: CEFRLevel) {
-		goto(`?mode=phrases&level=${level}`);
-		onclose();
+	function resetSelection() {
+		selectedIds = [];
 	}
 
-	function selectTopic(topicId: string) {
-		goto(`?mode=topics&topic=${topicId}`);
+	function startLearning() {
+		if (selectedIds.length === 0) return;
+
+		const idsStr = selectedIds.join(",");
+		if (activeTab === "levels") {
+			goto(`?mode=levels&level=${idsStr}`);
+		} else if (activeTab === "phrases") {
+			goto(`?mode=phrases&level=${idsStr}`);
+		} else if (activeTab === "topics") {
+			goto(`?mode=topics&topic=${idsStr}`);
+		}
 		onclose();
 	}
 
@@ -49,43 +73,10 @@
 		goto(`?mode=playlists&playlist=${playlistId}`);
 		onclose();
 	}
-
-	function handleBackdropClick(e: MouseEvent) {
-		if (e.target === e.currentTarget) {
-			onclose();
-		}
-	}
 </script>
 
-<div
-	class="modal-backdrop"
-	onclick={handleBackdropClick}
-	role="dialog"
-	aria-modal="true"
-	tabindex="-1"
-	onkeydown={(e) => {
-		if (e.key === "Escape") onclose();
-	}}
->
-	<!-- svelte-ignore a11y_click_events_have_key_events -->
-	<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-	<div
-		class="modal"
-		data-testid="level-topic-modal"
-		role="dialog"
-		aria-modal="true"
-		tabindex="-1"
-		onclick={(e) => e.stopPropagation()}
-	>
-		<button
-			class="close-btn"
-			onclick={onclose}
-			aria-label="Close"
-			data-testid="close-level-topic-modal-btn"
-		>
-			<X size={28} />
-		</button>
-
+<BaseModal {onclose} testid="level-topic-modal" maxWidth="640px">
+	<div class="modal-inner">
 		<!-- Tabs -->
 		<nav class="tabs">
 			{#each TABS as tab (tab.id)}
@@ -103,80 +94,71 @@
 		<!-- Content -->
 		<div class="content">
 			{#if activeTab === "levels"}
-				<LevelGrid mode="levels" onselect={selectLevel} />
+				<LevelGrid mode="levels" {selectedIds} onselect={toggleId} />
 			{:else if activeTab === "topics"}
-				<TopicGrid onselect={selectTopic} />
+				<TopicGrid {selectedIds} onselect={toggleId} />
 			{:else if activeTab === "phrases"}
-				<LevelGrid mode="phrases" onselect={selectPhrasesLevel} />
+				<LevelGrid mode="phrases" {selectedIds} onselect={toggleId} />
 			{:else if activeTab === "playlists"}
 				<PlaylistGrid onselect={selectPlaylist} />
 			{/if}
 		</div>
+
+		<!-- Actions -->
+		{#if activeTab !== "playlists"}
+			<div class="actions">
+				<button 
+					class="action-btn secondary" 
+					onclick={resetSelection}
+					disabled={selectedIds.length === 0}
+				>
+					{$_("common.reset")}
+				</button>
+				<button 
+					class="action-btn primary" 
+					onclick={startLearning}
+					disabled={selectedIds.length === 0}
+				>
+					{$_("common.learn")} ({selectedIds.length})
+				</button>
+			</div>
+		{/if}
 	</div>
-</div>
+</BaseModal>
 
 <style>
-	.modal-backdrop {
-		position: fixed;
-		inset: 0;
-		z-index: 10001;
-		background: rgba(0, 0, 0, 0.8);
-		backdrop-filter: blur(8px);
-		display: flex;
-		align-items: center;
-		padding: 1rem;
-		transition: background 0.3s;
-		overflow-y: auto;
-	}
-
-	.modal {
-		background: transparent;
-		max-width: 100%;
-		width: 100%;
-		position: relative;
+	.modal-inner {
 		display: flex;
 		flex-direction: column;
-		color: var(--text-primary);
-		margin: auto;
-	}
-
-	.close-btn {
-		position: absolute;
-		top: -40px;
-		right: 0;
-		background: transparent;
-		border: none;
-		color: var(--text-primary);
-		cursor: pointer;
-		padding: 0.5rem;
-		border-radius: 8px;
-		display: flex;
-		transition: all 0.2s;
-	}
-
-	.close-btn:hover {
-		transform: scale(1.1);
-		color: var(--accent);
+		width: 100%;
 	}
 
 	.tabs {
 		display: flex;
-		margin-bottom: 1rem;
-		gap: 0.5rem;
-		justify-content: center;
-		flex-wrap: wrap;
+		margin-bottom: 1.5rem;
+		gap: 0.25rem;
+		justify-content: flex-start;
+		overflow-x: auto;
+		padding-bottom: 0.5rem;
+		border-bottom: 1px solid var(--border);
+		scrollbar-width: none;
+	}
+
+	.tabs::-webkit-scrollbar {
+		display: none;
 	}
 
 	.tab {
-		padding: 0.5rem 1rem;
+		padding: 0.6rem 1.25rem;
 		background: transparent;
 		border: none;
 		color: var(--text-secondary);
-		font-size: 1rem;
-		font-weight: 500;
+		font-size: 0.95rem;
+		font-weight: 600;
 		cursor: pointer;
 		transition: all 0.2s;
-		border-radius: 8px;
+		border-radius: 12px;
+		white-space: nowrap;
 	}
 
 	.tab:hover {
@@ -185,16 +167,59 @@
 	}
 
 	.tab.active {
-		color: var(--text-primary);
-		font-weight: 700;
+		color: var(--accent);
 		background: var(--bg-secondary);
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 	}
 
 	.content {
-		padding: 0.5rem;
+		padding: 0.5rem 0;
+		max-height: 60vh;
 		overflow-y: auto;
 		scrollbar-width: thin;
 		scrollbar-color: var(--border) transparent;
+	}
+
+	.actions {
+		display: flex;
+		gap: 1rem;
+		margin-top: 1.5rem;
+		padding-top: 1rem;
+		border-top: 1px solid var(--border);
+	}
+
+	.action-btn {
+		flex: 1;
+		padding: 1rem;
+		border-radius: 16px;
+		font-weight: 700;
+		font-size: 1rem;
+		cursor: pointer;
+		transition: all 0.2s;
+		border: none;
+	}
+
+	.action-btn:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+		filter: grayscale(1);
+	}
+
+	.action-btn.primary {
+		background: var(--accent);
+		color: white;
+	}
+
+	.action-btn.primary:not(:disabled):hover {
+		transform: scale(1.02);
+		filter: brightness(1.1);
+	}
+
+	.action-btn.secondary {
+		background: var(--bg-secondary);
+		color: var(--text-primary);
+	}
+
+	.action-btn.secondary:not(:disabled):hover {
+		background: var(--border);
 	}
 </style>

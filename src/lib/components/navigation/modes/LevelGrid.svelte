@@ -1,25 +1,31 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
-	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { ALL_LEVELS, type CEFRLevel } from "$lib/types";
 	import { APP_ICONS } from "$lib/config/icons";
+	import { Check } from "lucide-svelte";
 
 	interface Props {
 		mode: "levels" | "phrases";
+		selectedIds: string[];
 		onselect: (level: CEFRLevel) => void;
 	}
 
-	let { mode, onselect }: Props = $props();
+	let { mode, selectedIds, onselect }: Props = $props();
 </script>
 
 <div class="grid">
 	{#each ALL_LEVELS as level (level)}
 		<button
 			class="item"
-			class:selected={settingsStore.value.mode === mode && settingsStore.value.currentLevel === level}
+			class:selected={selectedIds.includes(level)}
 			onclick={() => onselect(level)}
 			data-testid="{mode}-item-{level}"
 		>
+			<div class="check-indicator">
+				{#if selectedIds.includes(level)}
+					<Check size={16} />
+				{/if}
+			</div>
 			{#if mode === "phrases"}
 				<div class="item-icon">
 					<APP_ICONS.MessageSquare size={24} />
@@ -51,6 +57,28 @@
 		transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 		height: 100%;
+		position: relative;
+	}
+
+	.check-indicator {
+		position: absolute;
+		top: 8px;
+		right: 8px;
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		border: 2px solid var(--card-border);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: transparent;
+		transition: all 0.2s;
+	}
+
+	.item.selected .check-indicator {
+		background: var(--accent);
+		border-color: var(--accent);
+		color: white;
 	}
 
 	.item:hover {
@@ -62,7 +90,7 @@
 	.item.selected {
 		background: var(--selected-bg);
 		border-color: var(--selected-border);
-		box-shadow: 0 0 0 2px var(--selected-border);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 	}
 
 	.item-title {

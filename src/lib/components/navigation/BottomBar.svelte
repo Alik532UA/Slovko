@@ -18,14 +18,22 @@
 		const { mode, currentLevel, currentTopic, currentPlaylist } =
 			settingsStore.value;
 
+		const formatLabel = (ids: string[], i18nPrefix: string) => {
+			if (ids.length === 0) return "";
+			
+			// Пріоритет для 'ALL' (якщо він є в списку, він має бути першим у лейблі)
+			const displayId = ids.includes("ALL") ? "ALL" : ids[0];
+			const first = $_(`${i18nPrefix}.${displayId}`);
+			
+			return ids.length > 1 ? `${first} + ${ids.length - 1}` : first;
+		};
+
 		if (mode === "levels") {
-			return $_(`levels.${currentLevel}`);
+			return formatLabel(currentLevel, "levels");
 		} else if (mode === "topics") {
-			return $_(`topics.${currentTopic}`);
+			return formatLabel(currentTopic, "topics");
 		} else if (mode === "phrases") {
-			// Phrases use levels too (A1, A2...)
-			// Optional: add prefix like "Phrases: A1"? User didn't request it.
-			return $_(`levels.${currentLevel}`);
+			return formatLabel(currentLevel, "levels");
 		} else if (mode === "playlists" && currentPlaylist) {
 			const p = playlistStore.getPlaylist(currentPlaylist);
 			if (p) {
@@ -36,16 +44,15 @@
 		return "";
 	});
 
-	// Перевірка чи можна перемикати (залежить від режиму)
+	// Перевірка чи можна перемикати (тільки якщо вибрано 1 елемент)
 	const canGoPrev = $derived.by(() => {
 		const { mode, currentLevel, currentTopic } = settingsStore.value;
 
 		if (mode === "levels" || mode === "phrases") {
-			return currentLevel !== ALL_LEVELS[0];
+			return currentLevel.length === 1 && currentLevel[0] !== ALL_LEVELS[0];
 		} else if (mode === "topics") {
-			return currentTopic !== ALL_TOPICS[0].id;
+			return currentTopic.length === 1 && currentTopic[0] !== ALL_TOPICS[0].id;
 		}
-		// Playlists: disable navigation for now
 		return false;
 	});
 
@@ -53,9 +60,9 @@
 		const { mode, currentLevel, currentTopic } = settingsStore.value;
 
 		if (mode === "levels" || mode === "phrases") {
-			return currentLevel !== ALL_LEVELS[ALL_LEVELS.length - 1];
+			return currentLevel.length === 1 && currentLevel[0] !== ALL_LEVELS[ALL_LEVELS.length - 1];
 		} else if (mode === "topics") {
-			return currentTopic !== ALL_TOPICS[ALL_TOPICS.length - 1].id;
+			return currentTopic.length === 1 && currentTopic[0] !== ALL_TOPICS[ALL_TOPICS.length - 1].id;
 		}
 		return false;
 	});
@@ -63,14 +70,14 @@
 	function goNext() {
 		const { mode, currentLevel, currentTopic } = settingsStore.value;
 
-		if (mode === "levels" || mode === "phrases") {
-			const idx = ALL_LEVELS.indexOf(currentLevel);
+		if ((mode === "levels" || mode === "phrases") && currentLevel.length === 1) {
+			const idx = ALL_LEVELS.indexOf(currentLevel[0] as any);
 			if (idx < ALL_LEVELS.length - 1) {
 				const next = ALL_LEVELS[idx + 1];
 				goto(`?mode=${mode}&level=${next}`);
 			}
-		} else if (mode === "topics") {
-			const idx = ALL_TOPICS.findIndex((t) => t.id === currentTopic);
+		} else if (mode === "topics" && currentTopic.length === 1) {
+			const idx = ALL_TOPICS.findIndex((t) => t.id === currentTopic[0]);
 			if (idx !== -1 && idx < ALL_TOPICS.length - 1) {
 				const next = ALL_TOPICS[idx + 1].id;
 				goto(`?mode=${mode}&topic=${next}`);
@@ -81,14 +88,14 @@
 	function goPrev() {
 		const { mode, currentLevel, currentTopic } = settingsStore.value;
 
-		if (mode === "levels" || mode === "phrases") {
-			const idx = ALL_LEVELS.indexOf(currentLevel);
+		if ((mode === "levels" || mode === "phrases") && currentLevel.length === 1) {
+			const idx = ALL_LEVELS.indexOf(currentLevel[0] as any);
 			if (idx > 0) {
 				const prev = ALL_LEVELS[idx - 1];
 				goto(`?mode=${mode}&level=${prev}`);
 			}
-		} else if (mode === "topics") {
-			const idx = ALL_TOPICS.findIndex((t) => t.id === currentTopic);
+		} else if (mode === "topics" && currentTopic.length === 1) {
+			const idx = ALL_TOPICS.findIndex((t) => t.id === currentTopic[0]);
 			if (idx > 0) {
 				const prev = ALL_TOPICS[idx - 1].id;
 				goto(`?mode=${mode}&topic=${prev}`);

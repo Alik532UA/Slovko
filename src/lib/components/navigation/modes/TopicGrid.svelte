@@ -1,14 +1,15 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
-	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { ALL_TOPICS } from "$lib/types";
 	import { APP_ICONS } from "$lib/config/icons";
+	import { Check } from "lucide-svelte";
 
 	interface Props {
+		selectedIds: string[];
 		onselect: (topicId: string) => void;
 	}
 
-	let { onselect }: Props = $props();
+	let { selectedIds, onselect }: Props = $props();
 </script>
 
 <div class="grid topics-grid">
@@ -16,7 +17,7 @@
 		{@const Icon = (APP_ICONS as any)[topic.icon]}
 		<button
 			class="item topic-item"
-			class:selected={settingsStore.value.currentTopic === topic.id}
+			class:selected={selectedIds.includes(topic.id)}
 			onclick={() => onselect(topic.id)}
 			data-testid="topic-item-{topic.id}"
 		>
@@ -28,6 +29,12 @@
 				{/if}
 			</span>
 			<span class="item-title">{$_(`topics.${topic.id}`)}</span>
+			
+			<div class="check-indicator">
+				{#if selectedIds.includes(topic.id)}
+					<Check size={16} />
+				{/if}
+			</div>
 		</button>
 	{/each}
 </div>
@@ -55,6 +62,26 @@
 		min-height: 72px;
 		gap: 0.75rem;
 		text-align: left;
+		position: relative;
+	}
+
+	.check-indicator {
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		border: 2px solid var(--card-border);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: transparent;
+		transition: all 0.2s;
+		flex-shrink: 0;
+	}
+
+	.item.selected .check-indicator {
+		background: var(--accent);
+		border-color: var(--accent);
+		color: white;
 	}
 
 	.item:hover {
@@ -66,7 +93,7 @@
 	.item.selected {
 		background: var(--selected-bg);
 		border-color: var(--selected-border);
-		box-shadow: 0 0 0 2px var(--selected-border);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 	}
 
 	.item-icon {
