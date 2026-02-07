@@ -1,14 +1,15 @@
 {
-	"grandfather": "Großvater",
-	"grandmother": "Großmutter",
-	"marry": "heiraten",
-	"single": "einzeln",
-	"uncle": "Onkel",
-	"married": "verheiratet",
 	"aunt": "Tante",
+	"brother_male": "Bruder",
 	"colleague": "Kollege",
 	"cousin": "Cousin",
 	"granddaughter": "Enkelin",
+	"grandfather": "Großvater",
+	"grandmother": "Großmutter",
 	"grandson": "Enkel",
-	"partner": "Partner"
+	"married": "verheiratet",
+	"marry": "heiraten",
+	"partner": "Partner",
+	"single": "einzeln",
+	"uncle": "Onkel"
 }

@@ -1,14 +1,15 @@
 {
-	"grandfather": "grootvader",
-	"grandmother": "grootmoeder",
-	"marry": "trouwen",
-	"single": "enkel",
-	"uncle": "oom",
-	"married": "getrouwd",
 	"aunt": "tante",
+	"brother_male": "broer",
 	"colleague": "collega",
 	"cousin": "neef/nicht",
 	"granddaughter": "kleindochter",
+	"grandfather": "grootvader",
+	"grandmother": "grootmoeder",
 	"grandson": "kleinzoon",
-	"partner": "partner"
+	"married": "getrouwd",
+	"marry": "trouwen",
+	"partner": "partner",
+	"single": "enkel",
+	"uncle": "oom"
 }

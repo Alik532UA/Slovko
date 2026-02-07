@@ -1,14 +1,15 @@
 {
-	"grandfather": "παππούς",
-	"grandmother": "γιαγιά",
-	"marry": "παντρεύομαι",
-	"single": "μόνος",
-	"uncle": "θείος",
-	"married": "παντρεμένος",
 	"aunt": "θεία",
+	"brother_male": "αδελφός",
 	"colleague": "συνάδελφος",
 	"cousin": "ξάδελφος",
 	"granddaughter": "εγγονή",
+	"grandfather": "παππούς",
+	"grandmother": "γιαγιά",
 	"grandson": "εγγονός",
-	"partner": "σύντροφος"
+	"married": "παντρεμένος",
+	"marry": "παντρεύομαι",
+	"partner": "σύντροφος",
+	"single": "μόνος",
+	"uncle": "θείος"
 }

@@ -30,7 +30,6 @@
 	"estimate": "εκτιμώ",
 	"exist": "υπάρχω",
 	"generate": "παράγω",
-	"hide": "κρύβω",
 	"identify": "αναγνωρίζω",
 	"immediate": "άμεσος",
 	"indicate": "δείχνω",
@@ -38,7 +37,6 @@
 	"justify": "δικαιολογώ",
 	"locate": "εντοπίζω",
 	"measure_size": "μέτρηση",
-	"miss_sad": "μου λείπει",
 	"modify": "τροποποιώ",
 	"motivate": "παρακινώ",
 	"negotiate": "διαπραγματεύομαι",
@@ -60,14 +58,11 @@
 	"report_verb": "αναφέρω",
 	"require": "απαιτώ",
 	"safety_state": "ασφάλεια",
-	"save_rescue": "σώζω",
 	"serve_duty": "υπηρετώ",
 	"serve_service": "σερβίρω",
-	"smell_sense": "μυρίζω",
 	"stress_emphasize": "τονίζω",
 	"support": "υποστήριξη",
 	"translate": "μεταφράζω",
 	"trust_verb": "εμπιστεύομαι",
-	"unemployment_rate": "ποσοστό ανεργίας",
-	"wonder": "αναρωτιέμαι"
+	"unemployment_rate": "ποσοστό ανεργίας"
 }

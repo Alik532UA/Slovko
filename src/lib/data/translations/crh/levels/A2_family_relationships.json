@@ -1,13 +1,14 @@
 {
-	"grandfather": "qartbaba",
-	"grandmother": "bita",
-	"marry": "evlenmek",
-	"single": "tek",
-	"married": "evli",
 	"aunt": "ala / tize",
+	"brother_male": "qardaş",
 	"colleague": "işdaş",
 	"cousin": "emce-tize balası",
 	"granddaughter": "qız torun",
+	"grandfather": "qartbaba",
+	"grandmother": "bita",
 	"grandson": "oğul torun",
-	"partner": "ortaq"
+	"married": "evli",
+	"marry": "evlenmek",
+	"partner": "ortaq",
+	"single": "tek"
 }

@@ -30,7 +30,6 @@
 	"estimate": "estimate",
 	"exist": "exist",
 	"generate": "generate",
-	"hide": "hide",
 	"identify": "identify",
 	"immediate": "immediate",
 	"indicate": "indicate",
@@ -38,7 +37,6 @@
 	"justify": "justify",
 	"locate": "locate",
 	"measure_size": "measure",
-	"miss_sad": "miss",
 	"modify": "modify",
 	"motivate": "motivate",
 	"negotiate": "negotiate",
@@ -60,14 +58,11 @@
 	"report_verb": "report",
 	"require": "require",
 	"safety_state": "safety",
-	"save_rescue": "save",
 	"serve_duty": "serve",
 	"serve_service": "serve",
-	"smell_sense": "smell",
 	"stress_emphasize": "stress",
 	"support": "support",
 	"translate": "translate",
 	"trust_verb": "trust",
-	"unemployment_rate": "unemployment",
-	"wonder": "wonder"
+	"unemployment_rate": "unemployment"
 }
