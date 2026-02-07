@@ -165,18 +165,16 @@ function createSettingsStore() {
 		},
 
 		nextLevel() {
-			const currentIndex = ALL_LEVELS.indexOf(
-				settings.currentLevel as CEFRLevel,
-			);
+			const current = settings.currentLevel[0] || "A1";
+			const currentIndex = ALL_LEVELS.indexOf(current);
 			if (currentIndex < ALL_LEVELS.length - 1) {
 				this.setLevel(ALL_LEVELS[currentIndex + 1]);
 			}
 		},
 
 		prevLevel() {
-			const currentIndex = ALL_LEVELS.indexOf(
-				settings.currentLevel as CEFRLevel,
-			);
+			const current = settings.currentLevel[0] || "A1";
+			const currentIndex = ALL_LEVELS.indexOf(current);
 			if (currentIndex > 0) {
 				this.setLevel(ALL_LEVELS[currentIndex - 1]);
 			}

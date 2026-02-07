@@ -80,7 +80,7 @@
 
 		try {
 			const data = await gameDataService.loadGameData(
-				{ ...settingsStore.value, mode: "levels", currentLevel: "C2" },
+				{ ...settingsStore.value, mode: "levels", currentLevel: ["C2"] },
 				{ favorites: [], extra: [], mistakes: [], custom: [] },
 			);
 			translations = { ...translations, ...data.targetTranslations };

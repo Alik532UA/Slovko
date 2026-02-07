@@ -5,9 +5,12 @@ import { logService } from "../services/logService";
  * Анімує висоту до повного природного розміру контенту.
  * Скрол делеговано на бекдроп (BaseModal), що гарантує відсутність обрізаного контенту.
  */
-export function smoothHeight(node: HTMLElement, options = { duration: 300, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' }) {
+export function smoothHeight(node: HTMLElement, options: { duration?: number, easing?: string } = { duration: 300, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' }) {
     // Мінімальне логування тільки для ініціалізації
     logService.log("ui", "smoothHeight initialized");
+
+    const d = options.duration ?? 300;
+    const e = options.easing ?? 'cubic-bezier(0.4, 0, 0.2, 1)';
 
     let currentAnimation: Animation | null = null;
     let plannedTargetHeight = 0;
@@ -50,8 +53,8 @@ export function smoothHeight(node: HTMLElement, options = { duration: 300, easin
             { height: `${startHeight}px` },
             { height: `${targetHeight}px` }
         ], {
-            duration: options.duration,
-            easing: options.easing,
+            duration: d,
+            easing: e,
             fill: 'forwards'
         });
 
