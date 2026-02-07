@@ -329,7 +329,7 @@ export const PlaylistStateSchema = z.preprocess((val: unknown) => {
 // СХЕМИ НАЛАШТУВАНЬ (AppSettings)
 // ========================================
 
-export const AppSettingsSchema = z.object({
+const AppSettingsCoreSchema = z.object({
 	interfaceLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("uk"),
 	sourceLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("en"),
 	targetLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("uk"),
@@ -349,6 +349,31 @@ export const AppSettingsSchema = z.object({
 	lastSeenFollowerAt: z.number().default(0),
 	updatedAt: z.number().default(0),
 });
+
+export const AppSettingsSchema = z.preprocess((val: unknown) => {
+	if (!val || typeof val !== "object") return {};
+
+	const v = val as Record<string, any>;
+	const result = { ...v };
+
+	// Нормалізація currentLevel (може бути рядком "A1,A2" або поодиноким значенням)
+	if (typeof result.currentLevel === "string") {
+		result.currentLevel = result.currentLevel.split(",").filter(Boolean);
+	}
+	if (!Array.isArray(result.currentLevel)) {
+		result.currentLevel = undefined; // Дозволяємо дефолтному значенню Zod спрацювати
+	}
+
+	// Нормалізація currentTopic
+	if (typeof result.currentTopic === "string") {
+		result.currentTopic = result.currentTopic.split(",").filter(Boolean);
+	}
+	if (!Array.isArray(result.currentTopic)) {
+		result.currentTopic = undefined;
+	}
+
+	return result;
+}, AppSettingsCoreSchema);
 
 // ========================================
 // СХЕМИ ПРОГРЕСУ (UserProgress)

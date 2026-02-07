@@ -26,16 +26,22 @@ export interface UserProgressData {
 
 /** Налаштування додатку */
 export interface UserSettingsData {
+	interfaceLanguage: string;
 	sourceLanguage: string;
 	targetLanguage: string;
 	mode: "levels" | "topics" | "phrases" | "playlists";
-	currentLevel: string;
-	currentTopic: string;
+	currentLevel: string[];
+	currentTopic: string[];
 	currentPlaylist: string | null;
-	showTranscription: boolean;
+	hasCompletedOnboarding: boolean;
 	enablePronunciationSource: boolean;
 	enablePronunciationTarget: boolean;
+	showTranscriptionSource: boolean;
+	showTranscriptionTarget: boolean;
+	voicePreferences: Record<string, string>;
 	theme: string;
+	lastSeenFollowerAt: number;
+	updatedAt: number;
 }
 
 /** Пара слів у плейлісті */
