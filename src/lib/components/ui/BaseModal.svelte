@@ -103,12 +103,14 @@
 		border-radius: 50%;
 		transition: all 0.2s;
 		z-index: 10;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.close-btn:hover {
 		background: rgba(255, 255, 255, 0.1);
 		color: var(--text-primary);
-		transform: rotate(90deg);
 	}
 
 	.modal-content {
@@ -118,6 +120,10 @@
 	@media (max-width: 480px) {
 		.modal {
 			padding: 3rem 1rem 1.5rem;
+		}
+		.close-btn {
+			top: 0.5rem;
+			right: 0.5rem;
 		}
 	}
 </style>

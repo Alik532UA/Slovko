@@ -6,6 +6,7 @@
 	import { onMount } from "svelte";
 	import type { UserPrivacySettings } from "$lib/types";
 	import Toggle from "$lib/components/ui/Toggle.svelte";
+	import BaseModal from "$lib/components/ui/BaseModal.svelte";
 
 	let { onclose }: { onclose: () => void } = $props();
 
@@ -50,29 +51,10 @@
 			isSaving = false;
 		}
 	}
-
-	function handleKeydown(e: KeyboardEvent) {
-		if (e.key === "Escape") onclose();
-	}
 </script>
 
-<div
-	class="modal-backdrop"
-	onclick={onclose}
-	role="presentation"
-	onkeydown={handleKeydown}
->
-	<div
-		class="modal"
-		onclick={(e) => e.stopPropagation()}
-		onkeydown={(e) => {
-			if (e.key === "Escape") onclose();
-		}}
-		role="dialog"
-		aria-modal="true"
-		tabindex="-1"
-		data-testid="friends-settings-modal"
-	>
+<BaseModal {onclose} testid="friends-settings-modal" maxWidth="500px">
+	<div class="modal-inner">
 		<div class="modal-header">
 			<h2>
 				<Shield size={24} class="icon" />
@@ -145,7 +127,7 @@
 
 		<div class="modal-footer">
 			<button
-				class="save-btn"
+				class="save-btn primary-action-btn"
 				onclick={handleSave}
 				disabled={isSaving || isLoading}
 			>
@@ -158,38 +140,13 @@
 			</button>
 		</div>
 	</div>
-</div>
+</BaseModal>
 
 <style>
-	.modal-backdrop {
-		position: fixed;
-		inset: 0;
-		background: rgba(0, 0, 0, 0.8);
-		backdrop-filter: blur(8px);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		z-index: 10002;
-		padding: 1rem;
-		animation: fadeIn 0.3s ease-out;
-	}
-
-	/* Light theme override for backdrop */
-	:global([data-theme="light-gray"]) .modal-backdrop,
-	:global([data-theme="green"]) .modal-backdrop {
-		background: rgba(255, 255, 255, 0.9);
-	}
-
-	.modal {
-		background: transparent; /* Transparent container */
-		width: 100%;
-		max-width: 500px;
-		position: relative;
-		color: var(--text-primary);
+	.modal-inner {
 		display: flex;
 		flex-direction: column;
-		max-height: 85vh;
-		animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+		width: 100%;
 	}
 
 	.modal-header {
@@ -207,6 +164,7 @@
 		align-items: center;
 		gap: 0.75rem;
 		color: var(--text-primary);
+		font-weight: 600;
 	}
 
 	.modal-header h2 :global(.icon) {
@@ -221,7 +179,7 @@
 
 	.modal-body {
 		overflow-y: auto;
-		padding: 0 4px; /* Slight padding for focus rings/shadows */
+		padding: 0.25rem;
 		scrollbar-width: thin;
 		scrollbar-color: var(--border) transparent;
 	}
@@ -229,7 +187,7 @@
 	.settings-list {
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
+		gap: 0.75rem;
 		padding-bottom: 1rem;
 	}
 
@@ -239,17 +197,16 @@
 		align-items: center;
 		gap: 1rem;
 		padding: 1.25rem;
-		background: var(--bg-primary); /* Card background */
-		border: 2px solid var(--border);
+		background: var(--bg-secondary);
+		border: 1px solid var(--border);
 		border-radius: 16px;
-		transition:
-			transform 0.2s,
-			border-color 0.2s;
+		transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	.setting-item:hover {
 		transform: translateY(-2px);
 		border-color: var(--text-secondary);
+		background: var(--border);
 	}
 
 	.setting-info {
@@ -275,56 +232,13 @@
 		display: flex;
 		justify-content: center;
 		margin-top: 1rem;
+		padding-top: 1rem;
+		border-top: 1px solid var(--border);
 	}
 
 	.save-btn {
-		background: var(--accent);
-		border: none;
-		color: white;
-		padding: 0.8rem 2.5rem;
-		border-radius: 12px;
-		font-weight: 600;
-		font-size: 1.1rem;
-		cursor: pointer;
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-		transition: all 0.2s;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-	}
-
-	.save-btn:hover:not(:disabled) {
-		background: var(--accent-hover);
-		transform: translateY(-2px);
-	}
-
-	.save-btn:active {
-		transform: scale(0.98);
-	}
-
-	.save-btn:disabled {
-		opacity: 0.7;
-		cursor: not-allowed;
-	}
-
-	@keyframes fadeIn {
-		from {
-			opacity: 0;
-		}
-		to {
-			opacity: 1;
-		}
-	}
-
-	@keyframes scaleUp {
-		from {
-			transform: scale(0.95);
-			opacity: 0;
-		}
-		to {
-			transform: scale(1);
-			opacity: 1;
-		}
+		width: 100%;
+		max-width: 300px;
 	}
 
 	.loading {

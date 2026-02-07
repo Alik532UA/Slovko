@@ -371,6 +371,7 @@
 		Heart,
 		Zap,
 	} from "lucide-svelte";
+	import BaseModal from "../ui/BaseModal.svelte";
 
 	const AVATAR_ICONS: Record<string, any> = {
 		user: User,
@@ -394,351 +395,408 @@
 	}
 </script>
 
-<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-<div
-	class="modal-backdrop"
-	transition:fade={{ duration: 200 }}
-	onclick={onclose}
-	onkeydown={handleKeydown}
-	role="presentation"
->
-	<!-- svelte-ignore a11y_click_events_have_key_events -->
-	<div
-		class="modal"
-		data-testid="profile-modal"
-		transition:scale={{ duration: 300, start: 0.9 }}
-		onclick={(e) => e.stopPropagation()}
-		role="dialog"
-		aria-modal="true"
-		tabindex="-1"
-	>
-		{#if isEditingAvatar}
-			<AvatarEditor
-				initialIcon={avatarInitialIcon()}
-				initialColor={avatarInitialColor()}
-				onsave={saveAvatar}
-				oncancel={() => (isEditingAvatar = false)}
-			/>
-		{:else if loginMethod === null}
-			<!-- Close button -->
-			{#if !isEditingName}
+<BaseModal {onclose} testid="profile-modal">
+	{#if isEditingAvatar}
+		<AvatarEditor
+			initialIcon={avatarInitialIcon()}
+			initialColor={avatarInitialColor()}
+			onsave={saveAvatar}
+			oncancel={() => (isEditingAvatar = false)}
+		/>
+	{:else if loginMethod === null}
+		<!-- Header and Tabs -->
+		{#if authStore.isAnonymous || authStore.isGuest}
+			<div class="warning-box">
+				<ShieldAlert size={24} />
+				<p>
+					{authStore.isGuest
+						? $_("profile.guestWarning")
+						: $_("profile.tempAccountWarning")}
+				</p>
+			</div>
+			<button
+				class="login-btn"
+				data-testid="profile-login-btn"
+				onclick={() => (loginMethod = "auth")}
+				disabled={isLinking}
+				style="margin-bottom: 2rem;"
+			>
+				{authStore.isGuest ? $_("profile.login") : $_("profile.linkAccount")}
+			</button>
+		{:else}
+			<!-- LOGGED IN HEADER -->
+			<div class="header" data-testid="profile-header">
 				<button
-					class="close-btn"
-					data-testid="profile-close-btn"
-					onclick={onclose}
+					class="avatar-wrapper-btn"
+					onclick={startEditingAvatar}
+					type="button"
+					data-testid="edit-avatar-trigger"
 				>
-					<X size={24} />
+					{#if authStore.photoURL?.startsWith("internal:")}
+						{@const parts = authStore.photoURL.split(":")}
+						{@const iconId = parts[1]}
+						{@const rawColor = parts[2]}
+						{@const Icon = iconId === "none" ? null : getIconComponent(iconId)}
+						{@const isFlag = rawColor?.startsWith("flag-")}
+						<div
+							class="avatar email-user"
+							style:background-color={isFlag ? "transparent" : rawColor}
+							data-testid="profile-avatar-email"
+						>
+							{#if isFlag}
+								{@const lang = rawColor.replace("flag-", "")}
+								<div class="flag-bg-wrapper">
+									<img src="{base}/flags/{lang}.svg" alt={lang} class="flag-bg-img" />
+								</div>
+							{/if}
+							{#if Icon}
+								<Icon size={72} color="white" />
+							{/if}
+						</div>
+					{:else if authStore.photoURL}
+						<img
+							src={authStore.photoURL}
+							alt=""
+							class="avatar"
+							data-testid="profile-avatar-img"
+						/>
+					{:else}
+						<div
+							class="avatar email-user"
+							data-testid="profile-avatar-default"
+						>
+							<User size={72} />
+						</div>
+					{/if}
+					<div class="edit-overlay">
+						<Edit2 size={16} />
+					</div>
 				</button>
-			{/if}
 
-			{#if authStore.isAnonymous || authStore.isGuest}
-				<!-- GUEST / ANONYMOUS LAYOUT (Moved to top) -->
-				<div class="warning-box">
-					<ShieldAlert size={24} />
-					<p>
-						{authStore.isGuest
-							? $_("profile.guestWarning")
-							: $_("profile.tempAccountWarning")}
+				<div class="user-info">
+					{#if isEditingName}
+						<div class="edit-name-wrapper">
+							<input
+								type="text"
+								bind:value={editedName}
+								class="name-input"
+								data-testid="profile-name-input"
+								onkeydown={(e) => {
+									if (e.key === "Enter") saveName();
+									if (e.key === "Escape") isEditingName = false;
+								}}
+							/>
+							<div class="edit-actions">
+								<button
+									class="icon-action-btn save"
+									onclick={saveName}
+									data-testid="save-name-btn"
+								>
+									<Check size={20} />
+								</button>
+								<button
+									class="icon-action-btn cancel"
+									onclick={() => (isEditingName = false)}
+									data-testid="cancel-name-btn"
+								>
+									<X size={20} />
+								</button>
+							</div>
+						</div>
+					{:else}
+						<div class="name-row">
+							<h2>
+								{authStore.displayName ||
+									authStore.email?.split("@")[0] ||
+									"User"}
+							</h2>
+							<button
+								class="edit-name-btn"
+								onclick={startEditingName}
+								data-testid="start-edit-name-btn"
+							>
+								<Edit2 size={16} />
+							</button>
+						</div>
+					{/if}
+					<p>{authStore.email}</p>
+
+					<!-- Social Counts -->
+					<div class="social-counts" data-testid="profile-social-counts">
+						<span class="count-item" data-testid="following-count">
+							<span class="count-val">{followingCount}</span>
+							<span class="count-lbl"
+								>{$_("friends.following", {
+									default: "Підписки",
+								})}</span
+							>
+						</span>
+						<span class="divider">•</span>
+						<span class="count-item" data-testid="followers-count">
+							<span class="count-val">{followersCount}</span>
+							<span class="count-lbl"
+								>{$_("friends.followers", {
+									default: "Підписники",
+								})}</span
+							>
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- Tabs for logged in users -->
+			<div class="tabs-nav" data-testid="profile-tabs-nav">
+				<button
+					class:active={activeTab === "stats"}
+					onclick={() => (activeTab = "stats")}
+					data-testid="tab-stats"
+				>
+					<div class="tab-icon"><Target size={18} /></div>
+					<span>{$_("profile.tabs.stats")}</span>
+				</button>
+				<button
+					class:active={activeTab === "friends"}
+					onclick={() => (activeTab = "friends")}
+					data-testid="tab-friends"
+				>
+					<div class="tab-icon"><Users size={18} /></div>
+					<span>{$_("profile.tabs.friends")}</span>
+				</button>
+				<button
+					class:active={activeTab === "leaderboard"}
+					onclick={() => (activeTab = "leaderboard")}
+					data-testid="tab-leaderboard"
+				>
+					<div class="tab-icon"><Trophy size={18} /></div>
+					<span>{$_("profile.tabs.leaderboard")}</span>
+				</button>
+				<button
+					class:active={activeTab === "account"}
+					onclick={() => (activeTab = "account")}
+					data-testid="tab-account"
+				>
+					<div class="tab-icon"><LayoutGrid size={18} /></div>
+					<span>{$_("profile.tabs.account")}</span>
+				</button>
+			</div>
+		{/if}
+
+		<!-- Content -->
+		<div class="profile-content" data-testid="profile-content">
+			<ErrorBoundary>
+				{#if activeTab === "stats" || authStore.isAnonymous}
+					<ProfileStats
+						{totalCorrect}
+						{streak}
+						{daysInApp}
+						{accuracy}
+						{bestStreak}
+						{bestCorrectStreak}
+						{correctToday}
+						{dailyAverage}
+						{levelStats}
+					/>
+				{:else if activeTab === "friends" && !authStore.isAnonymous}
+					<div class="friends-layout" data-testid="friends-layout">
+						<div class="sub-tabs-container">
+							<div class="sub-tabs" data-testid="friends-sub-tabs">
+								<button
+									class:active={friendsSubTab === "following"}
+									onclick={() => (friendsSubTab = "following")}
+									data-testid="subtab-following"
+								>
+									{$_("friends.tabs.following")}
+								</button>
+								<button
+									class:active={friendsSubTab === "followers"}
+									onclick={() => (friendsSubTab = "followers")}
+									data-testid="subtab-followers"
+								>
+									{$_("friends.tabs.followers")}
+								</button>
+								<button
+									class:active={friendsSubTab === "search"}
+									onclick={() => (friendsSubTab = "search")}
+									data-testid="subtab-search"
+								>
+									{$_("friends.tabs.search")}
+								</button>
+							</div>
+							<div class="friends-actions">
+								<button
+									class="friends-settings-btn"
+									onclick={() => (showFriendsSettings = true)}
+									title={$_("settings.privacyTitle", {
+										default: "Privacy Settings",
+									})}
+									data-testid="friends-settings-btn"
+								>
+									<Settings size={18} />
+								</button>
+							</div>
+						</div>
+
+						<div
+							class="friends-content-area"
+							data-testid="friends-content-area"
+						>
+							{#if friendsSubTab === "search"}
+								<UserSearch />
+							{:else}
+								<FriendsList
+									activeTab={friendsSubTab}
+									shouldRefresh={shouldRefreshFriends}
+								/>
+							{/if}
+						</div>
+					</div>
+
+					{#if showFriendsSettings}
+						<FriendsSettingsModal
+							onclose={() => (showFriendsSettings = false)}
+						/>
+					{/if}
+				{:else if activeTab === "leaderboard" && !authStore.isAnonymous}
+					<Leaderboard />
+				{:else if activeTab === "account" && !authStore.isAnonymous}
+					<AccountActions
+						onchangePassword={() => {
+							loginMethod = "change-password";
+							resetForm();
+						}}
+						onlogout={handleLogout}
+						ondeleteAccount={() => {
+							loginMethod = "delete-account";
+							resetForm();
+						}}
+					/>
+				{/if}
+			</ErrorBoundary>
+		</div>
+	{:else if loginMethod === "auth" || loginMethod === "forgot-password"}
+		<EmailAuthForm
+			mode={loginMethod}
+			isLoading={isLinking}
+			{errorMessage}
+			{successMessage}
+			onsubmit={loginMethod === "forgot-password"
+				? handleForgotPassword
+				: handleEmailSignIn}
+			onregister={handleEmailRegister}
+			ongoogle={handleGoogleLogin}
+			onback={() => {
+				loginMethod = null;
+				resetForm();
+			}}
+			onforgotPassword={loginMethod === "auth"
+				? () => {
+						loginMethod = "forgot-password";
+						resetForm();
+					}
+				: undefined}
+		/>
+	{:else if loginMethod === "change-password"}
+		<div class="form-section" data-testid="change-password-section">
+			<p class="form-title" data-testid="change-password-title">
+				{$_("profile.changePasswordTitle", {
+					default: "Змінити пароль",
+				})}
+			</p>
+
+			{#if authStore.user.providerId === "google.com"}
+				<div class="info-box" data-testid="google-password-info">
+					<p class="form-subtitle">
+						{$_("profile.googlePasswordInfo", {
+							default: "Ви використовуєте Google-авторизацію для входу в систему. Пароль для вашого акаунта Slovko не встановлено, оскільки автентифікація керується вашим Google-профілем.",
+						})}
 					</p>
 				</div>
 				<button
-					class="login-btn"
-					data-testid="profile-login-btn"
-					onclick={() => (loginMethod = "auth")}
-					disabled={isLinking}
-					style="margin-bottom: 2rem;"
+					class="back-btn"
+					onclick={() => {
+						loginMethod = null;
+						resetForm();
+					}}
+					data-testid="change-password-back-btn"
 				>
-					{authStore.isGuest ? $_("profile.login") : $_("profile.linkAccount")}
+					<ArrowLeft size={16} />
+					{$_("profile.back", { default: "Назад" })}
 				</button>
 			{:else}
-				<!-- LOGGED IN HEADER -->
-				<div class="header" data-testid="profile-header">
-					<button
-						class="avatar-wrapper-btn"
-						onclick={startEditingAvatar}
-						type="button"
-						data-testid="edit-avatar-trigger"
-					>
-						{#if authStore.photoURL?.startsWith("internal:")}
-							{@const parts = authStore.photoURL.split(":")}
-							{@const iconId = parts[1]}
-							{@const rawColor = parts[2]}
-							{@const Icon = iconId === "none" ? null : getIconComponent(iconId)}
-							{@const isFlag = rawColor?.startsWith("flag-")}
-							<div
-								class="avatar email-user"
-								style:background-color={isFlag ? "transparent" : rawColor}
-								data-testid="profile-avatar-email"
-							>
-								{#if isFlag}
-									{@const lang = rawColor.replace("flag-", "")}
-									<div class="flag-bg-wrapper">
-										<img src="{base}/flags/{lang}.svg" alt={lang} class="flag-bg-img" />
-									</div>
-								{/if}
-								{#if Icon}
-									<Icon size={72} color="white" />
-								{/if}
-							</div>
-						{:else if authStore.photoURL}
-							<img
-								src={authStore.photoURL}
-								alt=""
-								class="avatar"
-								data-testid="profile-avatar-img"
-							/>
-						{:else}
-							<div
-								class="avatar email-user"
-								data-testid="profile-avatar-default"
-							>
-								<User size={72} />
-							</div>
-						{/if}
-						<div class="edit-overlay">
-							<Edit2 size={16} />
-						</div>
-					</button>
+				<form
+					class="email-form"
+					data-testid="change-password-form"
+					onsubmit={async (e) => {
+						e.preventDefault();
+						const target = e.target as any;
+						const current = target.currentPassword.value;
+						const newPass = target.newPassword.value;
+						const confirmPass = target.confirmPassword.value;
 
-					<div class="user-info">
-						{#if isEditingName}
-							<div class="edit-name-wrapper">
-								<input
-									type="text"
-									bind:value={editedName}
-									class="name-input"
-									data-testid="profile-name-input"
-									onkeydown={(e) => {
-										if (e.key === "Enter") saveName();
-										if (e.key === "Escape") isEditingName = false;
-									}}
-								/>
-								<div class="edit-actions">
-									<button
-										class="icon-action-btn save"
-										onclick={saveName}
-										data-testid="save-name-btn"
-									>
-										<Check size={20} />
-									</button>
-									<button
-										class="icon-action-btn cancel"
-										onclick={() => (isEditingName = false)}
-										data-testid="cancel-name-btn"
-									>
-										<X size={20} />
-									</button>
-								</div>
-							</div>
-						{:else}
-							<div class="name-row">
-								<h2>
-									{authStore.displayName ||
-										authStore.email?.split("@")[0] ||
-										"User"}
-								</h2>
-								<button
-									class="edit-name-btn"
-									onclick={startEditingName}
-									data-testid="start-edit-name-btn"
-								>
-									<Edit2 size={16} />
-								</button>
-							</div>
-						{/if}
-						<p>{authStore.email}</p>
-
-						<!-- Social Counts -->
-						<div class="social-counts" data-testid="profile-social-counts">
-							<span class="count-item" data-testid="following-count">
-								<span class="count-val">{followingCount}</span>
-								<span class="count-lbl"
-									>{$_("friends.following", {
-										default: "Підписки",
-									})}</span
-								>
-							</span>
-							<span class="divider">•</span>
-							<span class="count-item" data-testid="followers-count">
-								<span class="count-val">{followersCount}</span>
-								<span class="count-lbl"
-									>{$_("friends.followers", {
-										default: "Підписники",
-									})}</span
-								>
-							</span>
-						</div>
-					</div>
-				</div>
-
-				<!-- Tabs for logged in users -->
-				<div class="tabs-nav" data-testid="profile-tabs-nav">
-					<button
-						class:active={activeTab === "stats"}
-						onclick={() => (activeTab = "stats")}
-						data-testid="tab-stats"
-					>
-						<div class="tab-icon"><Target size={18} /></div>
-						<span>{$_("profile.tabs.stats")}</span>
-					</button>
-					<button
-						class:active={activeTab === "friends"}
-						onclick={() => (activeTab = "friends")}
-						data-testid="tab-friends"
-					>
-						<div class="tab-icon"><Users size={18} /></div>
-						<span>{$_("profile.tabs.friends")}</span>
-					</button>
-					<button
-						class:active={activeTab === "leaderboard"}
-						onclick={() => (activeTab = "leaderboard")}
-						data-testid="tab-leaderboard"
-					>
-						<div class="tab-icon"><Trophy size={18} /></div>
-						<span>{$_("profile.tabs.leaderboard")}</span>
-					</button>
-					<button
-						class:active={activeTab === "account"}
-						onclick={() => (activeTab = "account")}
-						data-testid="tab-account"
-					>
-						<div class="tab-icon"><LayoutGrid size={18} /></div>
-						<span>{$_("profile.tabs.account")}</span>
-					</button>
-				</div>
-			{/if}
-
-			<!-- Content -->
-			<div class="profile-content" data-testid="profile-content">
-				<ErrorBoundary>
-					{#if activeTab === "stats" || authStore.isAnonymous}
-						<ProfileStats
-							{totalCorrect}
-							{streak}
-							{daysInApp}
-							{accuracy}
-							{bestStreak}
-							{bestCorrectStreak}
-							{correctToday}
-							{dailyAverage}
-							{levelStats}
-						/>
-					{:else if activeTab === "friends" && !authStore.isAnonymous}
-						<div class="friends-layout" data-testid="friends-layout">
-							<div class="sub-tabs-container">
-								<div class="sub-tabs" data-testid="friends-sub-tabs">
-									<button
-										class:active={friendsSubTab === "following"}
-										onclick={() => (friendsSubTab = "following")}
-										data-testid="subtab-following"
-									>
-										{$_("friends.tabs.following")}
-									</button>
-									<button
-										class:active={friendsSubTab === "followers"}
-										onclick={() => (friendsSubTab = "followers")}
-										data-testid="subtab-followers"
-									>
-										{$_("friends.tabs.followers")}
-									</button>
-									<button
-										class:active={friendsSubTab === "search"}
-										onclick={() => (friendsSubTab = "search")}
-										data-testid="subtab-search"
-									>
-										{$_("friends.tabs.search")}
-									</button>
-								</div>
-								<div class="friends-actions">
-									<button
-										class="friends-settings-btn"
-										onclick={() => (showFriendsSettings = true)}
-										title={$_("settings.privacyTitle", {
-											default: "Privacy Settings",
-										})}
-										data-testid="friends-settings-btn"
-									>
-										<Settings size={18} />
-									</button>
-								</div>
-							</div>
-
-							<div
-								class="friends-content-area"
-								data-testid="friends-content-area"
-							>
-								{#if friendsSubTab === "search"}
-									<UserSearch />
-								{:else}
-									<FriendsList
-										activeTab={friendsSubTab}
-										shouldRefresh={shouldRefreshFriends}
-									/>
-								{/if}
-							</div>
-						</div>
-
-						{#if showFriendsSettings}
-							<FriendsSettingsModal
-								onclose={() => (showFriendsSettings = false)}
-							/>
-						{/if}
-					{:else if activeTab === "leaderboard" && !authStore.isAnonymous}
-						<Leaderboard />
-					{:else if activeTab === "account" && !authStore.isAnonymous}
-						<AccountActions
-							onchangePassword={() => {
-								loginMethod = "change-password";
-								resetForm();
-							}}
-							onlogout={handleLogout}
-							ondeleteAccount={() => {
-								loginMethod = "delete-account";
-								resetForm();
-							}}
-						/>
-					{/if}
-				</ErrorBoundary>
-			</div>
-		{:else if loginMethod === "auth" || loginMethod === "forgot-password"}
-			<EmailAuthForm
-				mode={loginMethod}
-				isLoading={isLinking}
-				{errorMessage}
-				{successMessage}
-				onsubmit={loginMethod === "forgot-password"
-					? handleForgotPassword
-					: handleEmailSignIn}
-				onregister={handleEmailRegister}
-				ongoogle={handleGoogleLogin}
-				onback={() => {
-					loginMethod = null;
-					resetForm();
-				}}
-				onforgotPassword={loginMethod === "auth"
-					? () => {
-							loginMethod = "forgot-password";
-							resetForm();
+						if (newPass !== confirmPass) {
+							errorMessage = $_("profile.errors.passwordsDoNotMatch");
+							return;
 						}
-					: undefined}
-			/>
-		{:else if loginMethod === "change-password"}
-			<div class="form-section" data-testid="change-password-section">
-				<p class="form-title" data-testid="change-password-title">
-					{$_("profile.changePasswordTitle", {
-						default: "Змінити пароль",
-					})}
-				</p>
 
-				{#if authStore.user.providerId === "google.com"}
-					<div class="info-box" data-testid="google-password-info">
-						<p class="form-subtitle">
-							{$_("profile.googlePasswordInfo", {
-								default: "Ви використовуєте Google-авторизацію для входу в систему. Пароль для вашого акаунта Slovko не встановлено, оскільки автентифікація керується вашим Google-профілем.",
-							})}
-						</p>
-					</div>
+						isLinking = true;
+						errorMessage = "";
+						try {
+							await authStore.changePassword(current, newPass);
+							successMessage = $_("profile.passwordChangedSuccess");
+							setTimeout(() => {
+								loginMethod = null;
+								resetForm();
+							}, 2000);
+						} catch (e: any) {
+							errorMessage = getAuthErrorMessage(e.code) || e.message;
+						} finally {
+							isLinking = false;
+						}
+					}}
+				>
+					<input
+						type="password"
+						name="currentPassword"
+						placeholder={$_("profile.currentPasswordPlaceholder", { default: "Поточний пароль" })}
+						class="input-field"
+						data-testid="current-password-input"
+						required
+					/>
+					<input
+						type="password"
+						name="newPassword"
+						placeholder={$_("profile.newPasswordPlaceholder", { default: "Новий пароль" })}
+						class="input-field"
+						data-testid="new-password-input"
+						required
+					/>
+					<input
+						type="password"
+						name="confirmPassword"
+						placeholder={$_("profile.confirmPasswordPlaceholder", { default: "Підтвердіть новий пароль" })}
+						class="input-field"
+						data-testid="confirm-password-input"
+						required
+					/>
+
+					{#if errorMessage}
+						<p class="error-msg">{errorMessage}</p>
+					{/if}
+					{#if successMessage}
+						<p class="success-msg">{successMessage}</p>
+					{/if}
+
 					<button
+						type="submit"
+						class="primary-btn"
+						disabled={isLinking}
+						data-testid="submit-change-password-btn"
+					>
+						{isLinking ? "..." : $_("profile.updatePasswordBtn", { default: "Оновити пароль" })}
+					</button>
+
+					<button
+						type="button"
 						class="back-btn"
 						onclick={() => {
 							loginMethod = null;
@@ -749,212 +807,81 @@
 						<ArrowLeft size={16} />
 						{$_("profile.back", { default: "Назад" })}
 					</button>
-				{:else}
-					<form
-						class="email-form"
-						data-testid="change-password-form"
-						onsubmit={async (e) => {
-							e.preventDefault();
-							const target = e.target as any;
-							const current = target.currentPassword.value;
-							const newPass = target.newPassword.value;
-							const confirmPass = target.confirmPassword.value;
-
-							if (newPass !== confirmPass) {
-								errorMessage = $_("profile.errors.passwordsDoNotMatch");
-								return;
-							}
-
-							isLinking = true;
-							errorMessage = "";
-							try {
-								await authStore.changePassword(current, newPass);
-								successMessage = $_("profile.passwordChangedSuccess");
-								setTimeout(() => {
-									loginMethod = null;
-									resetForm();
-								}, 2000);
-							} catch (e: any) {
-								errorMessage = getAuthErrorMessage(e.code) || e.message;
-							} finally {
-								isLinking = false;
-							}
-						}}
-					>
-						<input
-							type="password"
-							name="currentPassword"
-							placeholder={$_("profile.currentPasswordPlaceholder", { default: "Поточний пароль" })}
-							class="input-field"
-							data-testid="current-password-input"
-							required
-						/>
-						<input
-							type="password"
-							name="newPassword"
-							placeholder={$_("profile.newPasswordPlaceholder", { default: "Новий пароль" })}
-							class="input-field"
-							data-testid="new-password-input"
-							required
-						/>
-						<input
-							type="password"
-							name="confirmPassword"
-							placeholder={$_("profile.confirmPasswordPlaceholder", { default: "Підтвердіть новий пароль" })}
-							class="input-field"
-							data-testid="confirm-password-input"
-							required
-						/>
-
-						{#if errorMessage}
-							<p class="error-msg">{errorMessage}</p>
-						{/if}
-						{#if successMessage}
-							<p class="success-msg">{successMessage}</p>
-						{/if}
-
-						<button
-							type="submit"
-							class="primary-btn"
-							disabled={isLinking}
-							data-testid="submit-change-password-btn"
-						>
-							{isLinking ? "..." : $_("profile.updatePasswordBtn", { default: "Оновити пароль" })}
-						</button>
-
-						<button
-							type="button"
-							class="back-btn"
-							onclick={() => {
-								loginMethod = null;
-								resetForm();
-							}}
-							data-testid="change-password-back-btn"
-						>
-							<ArrowLeft size={16} />
-							{$_("profile.back", { default: "Назад" })}
-						</button>
-					</form>
-				{/if}
-			</div>
-		{:else if loginMethod === "delete-account"}
-			<div class="delete-warning" data-testid="delete-account-section">
-				<p class="warning-text" data-testid="delete-account-warning">
-					{$_("profile.deleteWarning", {
-						default: "Увага! Цю дію неможливо скасувати.",
-					})}
-				</p>
-				<form
-					class="email-form"
-					data-testid="delete-account-form"
-					onsubmit={(e) => {
-						e.preventDefault();
-						const password = (e.target as any).password?.value || "";
-						handlePasswordAction("", password);
-					}}
-				>
-					{#if authStore.user.providerId === "google.com"}
-						<p class="form-hint">
-							{$_("profile.deleteGoogleHint", {
-								default:
-									"Для підтвердження потрібно буде ще раз увійти через Google",
-							})}
-						</p>
-					{:else}
-						<input
-							type="password"
-							name="password"
-							placeholder={$_("profile.passwordPlaceholderShort", {
-								default: "Пароль",
-							})}
-							class="input-field"
-							autocomplete="current-password"
-							data-testid="delete-account-password-input"
-							required
-						/>
-					{/if}
-
-					{#if errorMessage}
-						<p class="error-msg">{errorMessage}</p>
-					{/if}
-
-					<button
-						type="submit"
-						class="delete-btn"
-						disabled={isLinking}
-						data-testid="confirm-delete-account-btn"
-					>
-						{#if isLinking}
-							"..."
-						{:else if authStore.user.providerId === "google.com"}
-							{$_("profile.deleteViaGoogle")}
-						{:else}
-							{$_("profile.confirmDelete")}
-						{/if}
-					</button>
-					<button
-						type="button"
-						class="back-btn"
-						onclick={() => {
-							loginMethod = null;
-							resetForm();
-						}}
-						data-testid="delete-account-cancel-btn"
-					>
-						{$_("profile.cancel")}
-					</button>
 				</form>
-			</div>
-		{/if}
-	</div>
-</div>
+			{/if}
+		</div>
+	{:else if loginMethod === "delete-account"}
+		<div class="delete-warning" data-testid="delete-account-section">
+			<p class="warning-text" data-testid="delete-account-warning">
+				{$_("profile.deleteWarning", {
+					default: "Увага! Цю дію неможливо скасувати.",
+				})}
+			</p>
+			<form
+				class="email-form"
+				data-testid="delete-account-form"
+				onsubmit={(e) => {
+					e.preventDefault();
+					const password = (e.target as any).password?.value || "";
+					handlePasswordAction("", password);
+				}}
+			>
+				{#if authStore.user.providerId === "google.com"}
+					<p class="form-hint">
+						{$_("profile.deleteGoogleHint", {
+							default:
+								"Для підтвердження потрібно буде ще раз увійти через Google",
+						})}
+					</p>
+				{:else}
+					<input
+						type="password"
+						name="password"
+						placeholder={$_("profile.passwordPlaceholderShort", {
+							default: "Пароль",
+						})}
+						class="input-field"
+						autocomplete="current-password"
+						data-testid="delete-account-password-input"
+						required
+					/>
+				{/if}
+
+				{#if errorMessage}
+					<p class="error-msg">{errorMessage}</p>
+				{/if}
+
+				<button
+					type="submit"
+					class="delete-btn"
+					disabled={isLinking}
+					data-testid="confirm-delete-account-btn"
+				>
+					{#if isLinking}
+						"..."
+					{:else if authStore.user.providerId === "google.com"}
+						{$_("profile.deleteViaGoogle")}
+					{:else}
+						{$_("profile.confirmDelete")}
+					{/if}
+				</button>
+				<button
+					type="button"
+					class="back-btn"
+					onclick={() => {
+						loginMethod = null;
+						resetForm();
+					}}
+					data-testid="delete-account-cancel-btn"
+				>
+					{$_("profile.cancel")}
+				</button>
+			</form>
+		</div>
+	{/if}
+</BaseModal>
 
 <style>
-	.modal-backdrop {
-		position: fixed;
-		inset: 0;
-		z-index: 10001;
-		background: rgba(0, 0, 0, 0.8);
-		backdrop-filter: blur(8px);
-		display: flex;
-		flex-direction: column;
-		/* justify-content: center; - Removed to fix scroll clipping */
-		align-items: center;
-		padding: 1.5rem 0;
-		overflow-y: auto;
-	}
-
-	:global([data-theme="light-gray"]) .modal-backdrop,
-	:global([data-theme="green"]) .modal-backdrop {
-		background: rgba(255, 255, 255, 0.9);
-	}
-
-	.modal {
-		background: transparent;
-		width: 100%;
-		max-width: 480px;
-		position: relative;
-		color: var(--text-primary);
-		margin: auto;
-		padding: 3.5rem 1.5rem 1.5rem; /* Added top padding to clear the close button */
-	}
-
-	.close-btn {
-		position: absolute;
-		top: 0.75rem;
-		right: 0.75rem;
-		background: transparent;
-		color: var(--text-secondary);
-		padding: 0.5rem;
-		border-radius: 50%;
-		transition: background 0.2s;
-		z-index: 10;
-	}
-
-	.close-btn:hover {
-		background: rgba(255, 255, 255, 0.1);
-	}
-
 	.header {
 		display: flex;
 		align-items: center;

@@ -2,6 +2,7 @@
 	/**
 	 * VoiceSelectionModal.svelte
 	 * Modal for selecting a specific system voice for pronunciation.
+	 * Now uses BaseModal for consistent modern design.
 	 */
 	import { _ } from "svelte-i18n";
 	import { Check } from "lucide-svelte";
@@ -9,6 +10,7 @@
 	import type { Language } from "$lib/types";
 	import { findBestVoice } from "$lib/services/speechService";
 	import { tick } from "svelte";
+	import BaseModal from "../ui/BaseModal.svelte";
 
 	interface Props {
 		onclose: () => void;
@@ -103,7 +105,6 @@
 				});
 
 			// Also apply refined sorting for secondary voices (English)
-			// Prioritize GB voices as requested
 			const secondaryRegion = PREFERRED_REGIONS["en"];
 			secondaryVoices = allVoices
 				.filter(
@@ -155,38 +156,10 @@
 		}
 		onclose();
 	}
-
-	function handleBackdropClick(e: MouseEvent) {
-		if (e.target === e.currentTarget) {
-			onclose();
-		}
-	}
-
-	function handleKeydown(e: KeyboardEvent) {
-		if (e.key === "Escape") {
-			onclose();
-		}
-	}
 </script>
 
-<div
-	class="modal-backdrop"
-	onclick={handleBackdropClick}
-	onkeydown={handleKeydown}
-	role="dialog"
-	aria-modal="true"
-	tabindex="-1"
->
-	<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-	<div
-		class="modal"
-		onclick={(e) => e.stopPropagation()}
-		onkeydown={(e) => e.stopPropagation()}
-		role="dialog"
-		aria-modal="true"
-		tabindex="-1"
-		data-testid="voice-selection-modal"
-	>
+<BaseModal {onclose} testid="voice-selection-modal" maxWidth="420px">
+	<div class="modal-inner">
 		<div class="header-content">
 			<h3>{$_("settings.pronunciation")}</h3>
 		</div>
@@ -253,7 +226,7 @@
 
 		<div class="footer">
 			<button
-				class="confirm-btn"
+				class="confirm-btn primary-action-btn"
 				onclick={handleConfirm}
 				data-testid="confirm-voice-btn"
 			>
@@ -261,40 +234,15 @@
 			</button>
 		</div>
 	</div>
-</div>
+</BaseModal>
 
 <style>
-	.modal-backdrop {
-		position: fixed;
-		inset: 0;
-		z-index: 10005;
-		background: rgba(0, 0, 0, 0.8);
-		backdrop-filter: blur(8px);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding: 1rem;
-		transition: background 0.3s;
-	}
-
-	/* Light theme override for backdrop */
-	:global([data-theme="light-gray"]) .modal-backdrop,
-	:global([data-theme="green"]) .modal-backdrop {
-		background: rgba(255, 255, 255, 0.85);
-	}
-
-	.modal {
-		background: transparent;
-		width: 100%;
-		max-width: 360px;
-		position: relative;
+	.modal-inner {
 		display: flex;
 		flex-direction: column;
-		max-height: 85vh;
-		color: var(--text-primary);
+		width: 100%;
 	}
 
-	/* Header removal - content flow */
 	.header-content {
 		text-align: center;
 		margin-bottom: 1.5rem;
@@ -303,34 +251,21 @@
 	h3 {
 		margin: 0;
 		font-size: 1.25rem;
-		font-weight: 500;
+		font-weight: 600;
 		color: var(--text-primary);
 	}
 
 	.voice-list {
 		overflow-y: auto;
-		padding: 0.5rem;
+		padding: 0.25rem;
 		display: flex;
 		flex-direction: column;
 		gap: 0.25rem;
 		flex: 1;
-		/* Custom scrollbar */
+		max-height: 50vh;
 		scrollbar-width: thin;
-		scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
-		margin-bottom: 0.5rem;
-	}
-
-	.voice-list::-webkit-scrollbar {
-		width: 6px;
-	}
-
-	.voice-list::-webkit-scrollbar-track {
-		background: transparent;
-	}
-
-	.voice-list::-webkit-scrollbar-thumb {
-		background-color: rgba(255, 255, 255, 0.2);
-		border-radius: 3px;
+		scrollbar-color: var(--border) transparent;
+		margin-bottom: 1rem;
 	}
 
 	.group-label {
@@ -339,7 +274,7 @@
 		padding: 0.75rem 0.5rem 0.25rem;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
-		font-weight: 600;
+		font-weight: 700;
 		opacity: 0.8;
 	}
 
@@ -348,23 +283,23 @@
 		justify-content: space-between;
 		align-items: center;
 		width: 100%;
-		padding: 0.75rem;
+		padding: 0.85rem 1rem;
 		background: transparent;
-		border: 1px solid transparent; /* Prepare for selected state */
-		border-radius: 12px;
-		color: var(--text-primary, white);
+		border: 1px solid transparent;
+		border-radius: 14px;
+		color: var(--text-primary);
 		text-align: left;
 		cursor: pointer;
-		transition: all 0.2s;
+		transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	.voice-item:hover {
-		background: rgba(255, 255, 255, 0.05);
+		background: var(--bg-secondary);
 	}
 
 	.voice-item.selected {
-		background: rgba(58, 143, 214, 0.15);
-		border-color: rgba(58, 143, 214, 0.3);
+		background: var(--selected-bg);
+		border-color: var(--selected-border);
 	}
 
 	.voice-info {
@@ -375,8 +310,8 @@
 	}
 
 	.voice-name {
-		font-size: 0.9rem;
-		font-weight: 500;
+		font-size: 0.95rem;
+		font-weight: 600;
 		line-height: 1.3;
 	}
 
@@ -386,7 +321,7 @@
 	}
 
 	.check-icon {
-		color: var(--accent, #3a8fd6);
+		color: var(--accent);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -395,8 +330,9 @@
 
 	.separator {
 		height: 1px;
-		background: rgba(255, 255, 255, 0.1);
-		margin: 1rem 0;
+		background: var(--border);
+		margin: 0.75rem 0;
+		opacity: 0.5;
 	}
 
 	.empty-state {
@@ -406,32 +342,11 @@
 	}
 
 	.footer {
-		padding: 0.5rem;
-		background: transparent;
-		border-top: none;
-		margin-top: auto;
+		padding-top: 1rem;
+		border-top: 1px solid var(--border);
 	}
 
 	.confirm-btn {
 		width: 100%;
-		padding: 1rem;
-		background: var(--accent, #3a8fd6);
-		color: white;
-		border: none;
-		border-radius: 14px;
-		font-weight: 600;
-		font-size: 1rem;
-		cursor: pointer;
-		transition: all 0.2s;
-		box-shadow: 0 4px 15px rgba(58, 143, 214, 0.3);
-	}
-
-	.confirm-btn:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 6px 20px rgba(58, 143, 214, 0.4);
-	}
-
-	.confirm-btn:active {
-		transform: scale(0.98);
 	}
 </style>

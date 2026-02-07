@@ -3,6 +3,7 @@
 	import type { AppTheme } from "$lib/types";
 	import { Check } from "lucide-svelte";
 	import { _ } from "svelte-i18n";
+	import BaseModal from "../ui/BaseModal.svelte";
 
 	let { onclose }: { onclose: () => void } = $props();
 
@@ -18,16 +19,8 @@
 	}
 </script>
 
-<div class="modal-backdrop" onclick={onclose} role="presentation">
-	<div
-		class="modal"
-		data-testid="theme-modal"
-		role="dialog"
-		aria-modal="true"
-		tabindex="-1"
-		onclick={(e) => e.stopPropagation()}
-		onkeydown={(e) => e.stopPropagation()}
-	>
+<BaseModal {onclose} testid="theme-modal" maxWidth="480px">
+	<div class="modal-inner">
 		<div class="modal-header">
 			<h2>{$_("settings.theme") || "Theme"}</h2>
 		</div>
@@ -60,7 +53,7 @@
 
 		<div class="modal-footer">
 			<button
-				class="confirm-btn"
+				class="confirm-btn primary-action-btn"
 				onclick={onclose}
 				data-testid="confirm-theme-btn"
 			>
@@ -68,76 +61,18 @@
 			</button>
 		</div>
 	</div>
-</div>
+</BaseModal>
 
 <style>
-	.modal-footer {
+	.modal-inner {
 		display: flex;
-		justify-content: center;
-		margin-top: 1.5rem;
-	}
-
-	.confirm-btn {
-		padding: 0.8rem 2.5rem;
-		font-size: 1.1rem;
-		font-weight: 600;
-		background: var(--accent);
-		color: white;
-		border: none;
-		border-radius: 12px;
-		cursor: pointer;
-		transition:
-			transform 0.2s,
-			background 0.2s;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-	}
-
-	.confirm-btn:hover {
-		background: var(--accent-hover);
-		transform: translateY(-2px);
-	}
-
-	.confirm-btn:active {
-		transform: scale(0.98);
-	}
-
-	.modal-backdrop {
-		position: fixed;
-		top: 0;
-		left: 0;
+		flex-direction: column;
 		width: 100%;
-		height: 100%;
-		background: rgba(0, 0, 0, 0.8);
-		display: flex;
-		flex-direction: column; /* Ensure vertical layout */
-		/* justify-content: center; - Removed to fix scroll clipping */
-		align-items: center;
-		z-index: 1000;
-		backdrop-filter: blur(5px);
-		transition: background 0.3s;
-		overflow-y: auto; /* Enable scroll */
-		padding: 1.5rem 0; /* Vertical padding */
-	}
-
-	/* Light theme override for backdrop */
-	:global([data-theme="light-gray"]) .modal-backdrop,
-	:global([data-theme="green"]) .modal-backdrop {
-		background: rgba(255, 255, 255, 0.9);
-	}
-
-	.modal {
-		background: transparent;
-		width: 100%;
-		max-width: 500px;
-		position: relative;
-		color: var(--text-primary);
-		padding: 0 1rem;
-		margin: auto; /* Center vertically if space exists */
 	}
 
 	.modal-header {
 		display: flex;
-		justify-content: center; /* Center the title */
+		justify-content: center;
 		align-items: center;
 		margin-bottom: 1.5rem;
 	}
@@ -145,6 +80,7 @@
 	.modal-header h2 {
 		margin: 0;
 		font-size: 1.5rem;
+		font-weight: 600;
 		color: var(--text-primary);
 	}
 
@@ -155,34 +91,34 @@
 	}
 
 	.theme-card {
-		background: var(--bg-primary);
-		border: 2px solid var(--border);
-		border-radius: 12px;
+		background: var(--bg-secondary);
+		border: 1px solid var(--border);
+		border-radius: 16px;
 		padding: 1rem;
 		cursor: pointer;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 0.5rem;
-		transition:
-			transform 0.2s,
-			border-color 0.2s;
+		gap: 0.75rem;
+		transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	.theme-card:hover {
-		transform: scale(1.02);
+		transform: translateY(-3px);
 		border-color: var(--text-secondary);
+		background: var(--border);
 	}
 
 	.theme-card.selected {
-		border-color: var(--accent);
-		box-shadow: 0 0 0 2px var(--accent);
+		background: var(--selected-bg);
+		border-color: var(--selected-border);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 	}
 
 	.theme-preview {
 		width: 100%;
-		height: 60px;
-		border-radius: 8px;
+		height: 64px;
+		border-radius: 10px;
 		background: var(--theme-preview-bg);
 		display: flex;
 		align-items: center;
@@ -192,8 +128,8 @@
 
 	.theme-name {
 		color: var(--text-primary);
-		font-weight: 500;
-		font-size: 0.9rem;
+		font-weight: 600;
+		font-size: 0.95rem;
 	}
 
 	.check-icon {
@@ -201,5 +137,18 @@
 		border-radius: 50%;
 		padding: 4px;
 		display: flex;
+	}
+
+	.modal-footer {
+		display: flex;
+		justify-content: center;
+		margin-top: 1.5rem;
+		padding-top: 1rem;
+		border-top: 1px solid var(--border);
+	}
+
+	.confirm-btn {
+		width: 100%;
+		max-width: 300px;
 	}
 </style>
