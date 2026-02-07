@@ -4,7 +4,7 @@
 	import { logService } from "$lib/services/logService";
 	import { _ } from "svelte-i18n";
 	import UserAvatar from "../friends/UserAvatar.svelte";
-	import { fade, slide, scale } from "svelte/transition";
+	import { slide, scale } from "svelte/transition";
 	import { Hand, Check } from "lucide-svelte";
 	import { dev } from "$app/environment";
 	import { onMount } from "svelte";
@@ -58,7 +58,17 @@
 	}
 
 	onMount(() => {
-		const displayTime = dev ? 55000 : 10000;
+		// Визначаємо час відображення на основі середовища та типу події
+		let displayTime = dev ? 55000 : 10000; // за замовчуванням 10с для продакшн
+
+		if (!dev) {
+			if (event.type === 'online') {
+				displayTime = 5000; // 5с для сповіщення про онлайн
+			} else if (event.type === 'incoming_wave' || event.type === 'manual_menu') {
+				displayTime = 10000; // 10с для махання
+			}
+		}
+
 		const id = event.id; // Фіксуємо ID для замикання
 		
 		timer = setTimeout(() => {
