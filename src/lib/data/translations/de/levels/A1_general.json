@@ -132,5 +132,7 @@
 	"word": "Wort",
 	"question": "Frage",
 	"answer": "Antwort",
-	"market": "Markt"
+	"market": "Markt",
+	"you_informal": "du",
+	"you_formal": "Sie"
 }

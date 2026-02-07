@@ -1,62 +1,51 @@
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ROOT_DIR = path.resolve(__dirname, '../..');
+const DATA_DIR = path.join(ROOT_DIR, 'src/lib/data');
 
-const BASE_DIR = path.resolve(__dirname, "src/lib/data");
-const WORDS_DIR = path.join(BASE_DIR, "words");
-const TRANSLATIONS_DIR = path.join(BASE_DIR, "translations");
-const LANGUAGES = ["en", "uk", "crh", "nl", "de"];
+/**
+ * Скрипт для аналізу розміру JSON-файлів словника.
+ * Допомагає знайти файли, які потребують розбиття.
+ */
 
-function getJson(filePath) {
-	if (!fs.existsSync(filePath)) return null;
-	return JSON.parse(fs.readFileSync(filePath, "utf-8"));
+function getAllJsonFiles(dir, fileList = []) {
+    const files = fs.readdirSync(dir);
+    for (const file of files) {
+        const name = path.join(dir, file);
+        if (fs.statSync(name).isDirectory()) {
+            getAllJsonFiles(name, fileList);
+        } else if (file.endsWith('.json')) {
+            fileList.push(name);
+        }
+    }
+    return fileList;
 }
 
-async function analyze() {
-	console.log("--- Analysis Start ---");
-	console.log(`Checking languages: ${LANGUAGES.join(", ")}`);
+function analyze() {
+    console.log('📊 Аналіз розміру файлів даних...\n');
+    
+    const files = getAllJsonFiles(DATA_DIR);
+    const results = files.map(file => {
+        const content = fs.readFileSync(file, 'utf8');
+        const lines = content.split('\n').length;
+        const relPath = path.relative(ROOT_DIR, file);
+        return { path: relPath, lines };
+    });
 
-	const categories = ["levels", "topics"];
-	let totalMissing = 0;
+    // Сортуємо за кількістю рядків (спадний порядок)
+    results.sort((a, b) => b.lines - a.lines);
 
-	for (const category of categories) {
-		const categoryPath = path.join(WORDS_DIR, category);
-		if (!fs.existsSync(categoryPath)) continue;
+    console.log('Рядки | Шлях до файлу');
+    console.log('---------------------');
+    results.forEach(res => {
+        const lineStr = String(res.lines).padEnd(5, ' ');
+        console.log(`${lineStr} | ${res.path}`);
+    });
 
-		const files = fs
-			.readdirSync(categoryPath)
-			.filter((f) => f.endsWith(".json"));
-
-		for (const file of files) {
-			const wordFile = path.join(categoryPath, file);
-			const data = getJson(wordFile);
-			const wordList = data.words || [];
-			const fileName = file.replace(".json", "");
-
-			console.log(
-				`\nCategory: ${category} | File: ${fileName} | Count: ${wordList.length}`,
-			);
-
-			for (const lang of LANGUAGES) {
-				const transPath = path.join(TRANSLATIONS_DIR, lang, category, file);
-				const transData = getJson(transPath) || {};
-
-				const missing = wordList.filter((w) => !transData[w]);
-				if (missing.length > 0) {
-					console.log(`  [MISSING] ${lang}: ${missing.length} words missing.`);
-					// console.log(`    Examples: ${missing.slice(0, 5).join(', ')}`);
-					totalMissing += missing.length;
-				} else {
-					console.log(`  [OK] ${lang}`);
-				}
-			}
-		}
-	}
-	console.log("--- Analysis End ---");
-	console.log(`Total missing translations: ${totalMissing}`);
+    console.log(`\n✅ Всього проаналізовано файлів: ${results.length}`);
 }
 
 analyze();
