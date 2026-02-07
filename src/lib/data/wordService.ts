@@ -5,6 +5,7 @@
 
 import { ALL_TOPICS } from "../types";
 import { getBaseKey } from "./semantics";
+import { logService } from "../services/logService";
 import type {
 	WordLevel,
 	WordTopic,
@@ -43,6 +44,10 @@ const transcriptionCache = new Map<string, TranscriptionDictionary>();
 const translationCache = new Map<string, TranslationDictionary>();
 const semanticsCache = new Map<string, LocalSemantics>();
 
+// Динамічний імпорт усіх модулів перекладів та транскрипцій через Vite glob
+const translationModules = import.meta.glob("./translations/**/*.json");
+const transcriptionModules = import.meta.glob("./transcriptions/**/*.json");
+
 /**
  * Завантажити локальну семантику для мови
  */
@@ -51,11 +56,15 @@ async function loadLocalSemantics(language: Language): Promise<LocalSemantics> {
 		return semanticsCache.get(language)!;
 	}
 	try {
-		const module = await import(`./translations/${language}/semantics.json`);
-		const parsed = SemanticsSchema.parse(module.default);
-		const data = parsed as LocalSemantics;
-		semanticsCache.set(language, data);
-		return data;
+		const path = `./translations/${language}/semantics.json`;
+		if (translationModules[path]) {
+			const module: any = await translationModules[path]();
+			const parsed = SemanticsSchema.parse(module.default || module);
+			const data = parsed as LocalSemantics;
+			semanticsCache.set(language, data);
+			return data;
+		}
+		return { labels: {} };
 	} catch (e) {
 		if (import.meta.env.DEV)
 			console.error(`Failed to load semantics for ${language}`, e);
@@ -125,50 +134,70 @@ export async function loadTranslations(
 
 	try {
 		if (category === "levels") {
+			logService.log("i18n", `Loading level translations for ${language}/${id}...`);
 			// SSoT: Load all levels up to the current one and merge them.
-			// This ensures words from A1/A2 are available in B1/B2.
 			const levels: CEFRLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 			const currentIdx = levels.indexOf(id as CEFRLevel);
 			const levelsToLoad =
 				currentIdx !== -1 ? levels.slice(0, currentIdx + 1) : [id as CEFRLevel];
 
-			const levelPromises = levelsToLoad.map((l) =>
-				import(`./translations/${language}/levels/${l}.json`)
-					.then((m) => DictionarySchema.parse(m.default))
-					.catch((e) => {
-						if (import.meta.env.DEV)
-							console.warn(`Failed validation/load ${language}/${l}`, e);
-						return {};
-					}),
-			);
+			logService.log("i18n", `Levels to merge: ${levelsToLoad.join(", ")}`);
 
-			const allLevelsData = await Promise.all(levelPromises);
-			const mergedDict = Object.assign({}, ...allLevelsData);
+			// Знаходимо всі модулі для кожного рівня
+			const allPromises: Promise<any>[] = [];
+
+			for (const l of levelsToLoad) {
+				const levelPattern = `/levels/${l.toLowerCase()}_`;
+				const langPattern = `/${language.toLowerCase()}/`;
+				
+				const matchingPaths = Object.keys(translationModules).filter((path) => {
+					const normalizedPath = path.toLowerCase().replace(/\\/g, "/");
+					return normalizedPath.includes(levelPattern) && normalizedPath.includes(langPattern);
+				});
+
+				logService.log("i18n", `Level ${l} (${language}): found ${matchingPaths.length} modules`);
+
+				matchingPaths.forEach((path) => {
+					allPromises.push(
+						translationModules[path]().then((m: any) =>
+							DictionarySchema.parse(m.default || m),
+						).catch(e => {
+							logService.error("i18n", `Failed to load module ${path}`, e);
+							return {};
+						})
+					);
+				});
+			}
+
+			const allDicts = await Promise.all(allPromises);
+			const mergedDict = Object.assign({}, ...allDicts);
+
+			logService.log("i18n", `Successfully merged ${allDicts.length} modules. Total keys: ${Object.keys(mergedDict).length}`);
 
 			translationCache.set(cacheKey, mergedDict);
 			return mergedDict;
 		} else if (category === "topics") {
-			// SSoT Refactoring: Topics don't have own translation files.
-			// We assemble them from levels.
-
-			// 1. Get keys
+			// Assemble from all levels to ensure we find everything
 			const topic = await loadTopic(id);
-
-			// 2. Load all levels
-			// We load them all to ensure we find the word wherever it is.
 			const levels: CEFRLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
-			const levelPromises = levels.map((l) =>
-				import(`./translations/${language}/levels/${l}.json`)
-					.then((m) => DictionarySchema.parse(m.default))
-					.catch(() => ({})),
-			);
 
-			const allLevelsData = await Promise.all(levelPromises);
+			const allPromises: Promise<any>[] = [];
+			levels.forEach((l) => {
+				const prefix = `./translations/${language}/levels/${l}_`;
+				Object.keys(translationModules)
+					.filter((p) => p.startsWith(prefix))
+					.forEach((p) => {
+						allPromises.push(
+							translationModules[p]().then((m: any) =>
+								DictionarySchema.parse(m.default || m),
+							),
+						);
+					});
+			});
 
-			// 3. Merge all dictionaries
-			const megaDict = Object.assign({}, ...allLevelsData);
+			const allDicts = await Promise.all(allPromises);
+			const megaDict = Object.assign({}, ...allDicts);
 
-			// 4. Filter for this topic
 			const topicDict: TranslationDictionary = {};
 			topic.words.forEach((key) => {
 				if (megaDict[key]) {
@@ -178,19 +207,21 @@ export async function loadTranslations(
 						console.warn(
 							`Missing translation for ${key} in ${language} (Topic: ${id})`,
 						);
-					topicDict[key] = key; // Fallback
+					topicDict[key] = key;
 				}
 			});
 
 			translationCache.set(cacheKey, topicDict);
 			return topicDict;
 		} else {
-			const module = await import(
-				`./translations/${language}/phrases/${id}.json`
-			);
-			const data = DictionarySchema.parse(module.default);
-			translationCache.set(cacheKey, data);
-			return data;
+			const path = `./translations/${language}/phrases/${id}.json`;
+			if (translationModules[path]) {
+				const module: any = await translationModules[path]();
+				const data = DictionarySchema.parse(module.default || module);
+				translationCache.set(cacheKey, data);
+				return data;
+			}
+			return {};
 		}
 	} catch (e) {
 		console.warn(`Translations not found for ${language}/${category}/${id}`, e);
@@ -207,22 +238,39 @@ export async function loadTranscriptions(
 	language: Language = "en",
 ): Promise<TranscriptionDictionary> {
 	try {
-		let module;
 		if (category === "levels") {
-			module = await import(
-				`$lib/data/transcriptions/${language}/levels/${id}.json`
+			const prefix = `./transcriptions/${language}/levels/${id}_`;
+			const matchingPaths = Object.keys(transcriptionModules).filter((path) =>
+				path.startsWith(prefix),
 			);
-			return DictionarySchema.parse(module.default);
+
+			const allDicts = await Promise.all(
+				matchingPaths.map((path) =>
+					transcriptionModules[path]().then((m: any) =>
+						DictionarySchema.parse(m.default || m),
+					),
+				),
+			);
+			return Object.assign({}, ...allDicts);
 		} else if (category === "topics") {
-			// SSoT for Transcriptions
 			const topic = await loadTopic(id);
 			const levels = ["A1", "A2", "B1", "B2", "C1", "C2"] as const;
-			const promises = levels.map((l) =>
-				import(`$lib/data/transcriptions/${language}/levels/${l}.json`)
-					.then((m) => DictionarySchema.parse(m.default))
-					.catch(() => ({})),
-			);
-			const allData = await Promise.all(promises);
+
+			const allPromises: Promise<any>[] = [];
+			levels.forEach((l) => {
+				const prefix = `./transcriptions/${language}/levels/${l}_`;
+				Object.keys(transcriptionModules)
+					.filter((p) => p.startsWith(prefix))
+					.forEach((p) => {
+						allPromises.push(
+							transcriptionModules[p]().then((m: any) =>
+								DictionarySchema.parse(m.default || m),
+							),
+						);
+					});
+			});
+
+			const allData = await Promise.all(allPromises);
 			const megaDict = Object.assign({}, ...allData);
 
 			const topicDict: TranscriptionDictionary = {};
@@ -231,11 +279,9 @@ export async function loadTranscriptions(
 			});
 			return topicDict;
 		} else {
-			// Phrases currently don't have static transcriptions (mostly generative)
 			return {};
 		}
 	} catch (e) {
-		// Normal if some languages/levels don't have static transcriptions
 		return {};
 	}
 }
@@ -264,6 +310,61 @@ export async function loadPhrasesLevel(levelId: CEFRLevel): Promise<WordLevel> {
 		console.error(`Phrases for level ${levelId} not found or invalid`, e);
 		return { id: levelId, name: levelId, words: [] };
 	}
+}
+
+/**
+ * Завантажити ВСІ переклади для мови (для плейлистів та пошуку)
+ */
+export async function loadAllTranslations(language: Language): Promise<TranslationDictionary> {
+	const cacheKey = `${language}:all`;
+	if (translationCache.has(cacheKey)) {
+		return translationCache.get(cacheKey)!;
+	}
+
+	const levels: CEFRLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
+	const allPromises: Promise<any>[] = [];
+
+	levels.forEach((l) => {
+		const prefix = `./translations/${language}/levels/${l}_`;
+		Object.keys(translationModules)
+			.filter((p) => p.startsWith(prefix))
+			.forEach((p) => {
+				allPromises.push(
+					translationModules[p]().then((m: any) =>
+						DictionarySchema.parse(m.default || m),
+					),
+				);
+			});
+	});
+
+	const allDicts = await Promise.all(allPromises);
+	const mergedDict = Object.assign({}, ...allDicts);
+	translationCache.set(cacheKey, mergedDict);
+	return mergedDict;
+}
+
+/**
+ * Завантажити ВСІ транскрипції для мови
+ */
+export async function loadAllTranscriptions(language: Language = "en"): Promise<TranscriptionDictionary> {
+	const levels: CEFRLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
+	const allPromises: Promise<any>[] = [];
+
+	levels.forEach((l) => {
+		const prefix = `./transcriptions/${language}/levels/${l}_`;
+		Object.keys(transcriptionModules)
+			.filter((p) => p.startsWith(prefix))
+			.forEach((p) => {
+				allPromises.push(
+					transcriptionModules[p]().then((m: any) =>
+						DictionarySchema.parse(m.default || m),
+					),
+				);
+			});
+	});
+
+	const allDicts = await Promise.all(allPromises);
+	return Object.assign({}, ...allDicts);
 }
 
 /**
@@ -315,11 +416,15 @@ export function getTranscription(
 	suppressWarning: boolean = false,
 ): string | undefined {
 	const transcription = transcriptions[word];
+	
 	if (!transcription) {
 		if (import.meta.env.DEV && !suppressWarning) {
-			console.warn(`[Missing Transcription] Word: "${word}"`);
+			logService.warn("i18n", `[Missing Transcription] Word: "${word}"`);
 		}
+		// Системний fallback: якщо транскрипції немає, ми не повертаємо нічого (або могли б генерувати)
+		// UI сам вирішить, чи показувати щось.
 	}
+	
 	return transcription;
 }
 

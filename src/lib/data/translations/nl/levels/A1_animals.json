@@ -1,0 +1,21 @@
+{
+	"cat": "kat",
+	"dog": "hond",
+	"chicken": "kip",
+	"pig": "varken",
+	"fly": "vliegen",
+	"animal": "dier",
+	"bird": "vogel",
+	"fish": "vis",
+	"horse": "paard",
+	"cow": "koe",
+	"tiger": "tijger",
+	"wolf": "wolf",
+	"fox": "vos",
+	"rabbit": "konijn",
+	"goat": "geit",
+	"duck": "eend",
+	"spider": "spin",
+	"elephant": "olifant",
+	"monkey": "aap"
+}

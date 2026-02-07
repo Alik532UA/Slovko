@@ -1,0 +1,18 @@
+{
+	"business": "επιχείρηση",
+	"career": "καριέρα",
+	"course": "μάθημα",
+	"office": "γραφείο",
+	"professor": "καθηγητής",
+	"school": "σχολείο",
+	"skill": "δεξιότητα",
+	"student": "μαθητής",
+	"teacher": "δάσκαλος",
+	"test": "τεστ",
+	"employee": "υπάλληλος",
+	"employer": "εργοδότης",
+	"interview_job": "συνέντευξη",
+	"training_course": "σεμινάριο εκπαίδευσης",
+	"salary": "μισθός",
+	"profession": "επάγγελμα"
+}

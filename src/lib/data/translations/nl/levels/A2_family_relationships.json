@@ -1,0 +1,23 @@
+{
+	"family": "familie",
+	"friend": "vriend",
+	"grandfather": "grootvader",
+	"grandmother": "grootmoeder",
+	"husband": "echtgenoot",
+	"marry": "trouwen",
+	"single": "enkel",
+	"sister": "zus",
+	"son": "zoon",
+	"uncle": "oom",
+	"wife": "vrouw",
+	"married": "getrouwd",
+	"aunt": "tante",
+	"colleague": "collega",
+	"cousin": "neef/nicht",
+	"granddaughter": "kleindochter",
+	"grandson": "kleinzoon",
+	"child": "kind",
+	"father": "vader",
+	"mother": "moeder",
+	"partner": "partner"
+}

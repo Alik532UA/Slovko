@@ -187,10 +187,6 @@
 		transform: scale(0.95);
 	}
 
-	.avatar-container.menu-open {
-		/* No longer disabling pointer-events because we have a portal backdrop */
-	}
-
 	.avatar-circle {
 		width: 100%;
 		height: 100%;

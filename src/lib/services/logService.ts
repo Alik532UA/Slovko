@@ -6,10 +6,12 @@ export const logConfig = {
 	game: false,
 	sync: false,
 	settings: false,
-	interaction: true,
-	presence: true,
+	interaction: false,
+	presence: false,
 	stats: false,
 	ui: false,
+	data: true,
+	i18n: true,
 };
 
 const recentLogs: string[] = [];

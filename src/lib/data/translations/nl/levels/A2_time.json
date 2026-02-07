@@ -1,0 +1,20 @@
+{
+	"hour": "uur",
+	"minute": "minuut",
+	"month": "maand",
+	"morning": "ochtend",
+	"night": "nacht",
+	"now": "nu",
+	"second_time": "seconde",
+	"soon": "binnenkort",
+	"time": "tijd",
+	"today": "vandaag",
+	"tomorrow": "morgen",
+	"week": "week",
+	"weekend": "weekend",
+	"year": "jaar",
+	"yesterday": "gisteren",
+	"afternoon": "middag",
+	"day": "dag",
+	"evening": "avond"
+}

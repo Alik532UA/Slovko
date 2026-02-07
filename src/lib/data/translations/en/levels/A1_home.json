@@ -1,0 +1,20 @@
+{
+	"table": "table",
+	"chair": "chair",
+	"bed": "bed",
+	"bathroom": "bathroom",
+	"bedroom": "bedroom",
+	"wall": "wall",
+	"computer": "computer",
+	"cup": "cup",
+	"knife": "knife",
+	"fork": "fork",
+	"spoon": "spoon",
+	"clock": "clock",
+	"living_room": "living room",
+	"glass": "glass",
+	"plate": "plate",
+	"stove": "stove",
+	"sink": "sink",
+	"balcony": "balcony"
+}

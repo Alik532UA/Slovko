@@ -1,0 +1,23 @@
+{
+	"family": "Familie",
+	"friend": "Freund",
+	"grandfather": "Großvater",
+	"grandmother": "Großmutter",
+	"husband": "Ehemann",
+	"marry": "heiraten",
+	"single": "einzeln",
+	"sister": "Schwester",
+	"son": "Sohn",
+	"uncle": "Onkel",
+	"wife": "Ehefrau",
+	"married": "verheiratet",
+	"aunt": "Tante",
+	"colleague": "Kollege",
+	"cousin": "Cousin",
+	"granddaughter": "Enkelin",
+	"grandson": "Enkel",
+	"child": "Kind",
+	"father": "Vater",
+	"mother": "Mutter",
+	"partner": "Partner"
+}

@@ -1,7 +1,7 @@
 {
 	"name": "slovko",
 	"private": true,
-	"version": "0.6.217",
+	"version": "0.6.218",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
@@ -15,7 +15,9 @@
 		"deploy": "npm run build && npx gh-pages -d build -t true",
 		"fix:b2": "node scripts/maintenance/fix_b2_gaps_from_other_levels.js",
 		"check:missing": "node scripts/analysis/find_missing_all.js",
+		"check:missing:full": "node scripts/analysis/find_missing_comprehensive.js",
 		"check:duplicates": "node scripts/analysis/check_duplicates.js",
+		"check:transcriptions": "node scripts/analysis/check_transcriptions.js",
 		"i18n:check": "node scripts/maintenance/check_translations.js"
 	},
 	"devDependencies": {

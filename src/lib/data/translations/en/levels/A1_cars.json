@@ -1,0 +1,13 @@
+{
+	"car": "car",
+	"street": "street",
+	"door": "door",
+	"window": "window",
+	"key": "key",
+	"light": "light",
+	"road": "road",
+	"train": "train",
+	"bus": "bus",
+	"plane": "plane",
+	"taxi": "taxi"
+}

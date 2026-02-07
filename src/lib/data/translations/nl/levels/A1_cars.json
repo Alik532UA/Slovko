@@ -1,0 +1,13 @@
+{
+	"bus": "bus",
+	"car": "auto",
+	"street": "straat",
+	"door": "deur",
+	"window": "raam",
+	"key": "sleutel",
+	"light": "licht",
+	"road": "weg",
+	"train": "trein",
+	"plane": "vliegtuig",
+	"taxi": "taxi"
+}

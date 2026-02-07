@@ -4,6 +4,7 @@ import {
 	loadTranslations,
 	loadTranscriptions,
 	loadPhrasesLevel,
+	loadAllTranslations,
 } from "../data/wordService";
 import { logService } from "./logService";
 import { SUPPORTED_LEVELS } from "../config";
@@ -103,6 +104,8 @@ export class GameDataService {
 			currentPlaylist,
 		} = settings;
 
+		logService.log("data", `Loading game data for mode: ${mode}, level: ${currentLevel}`);
+
 		let sourceTranslations: TranslationDictionary = {};
 		let targetTranslations: TranslationDictionary = {};
 		let sourceTranscriptions: TranscriptionDictionary = {};
@@ -112,45 +115,12 @@ export class GameDataService {
 		try {
 			// 1. Load Translations & Transcriptions
 			if (mode === "playlists" && currentPlaylist) {
-				// SSoT: For playlists, we load all levels to find translations for any word
+				logService.log("data", "Loading playlist translations...");
+				// SSoT: Use centralized loadAllTranslations
 				const [sourceAll, targetAll] = await Promise.all([
-					Promise.all(
-						SUPPORTED_LEVELS.map((l) =>
-							import(`../data/translations/${sourceLanguage}/levels/${l}.json`)
-								.then((m) => DictionarySchema.parse(m.default))
-								.catch((e) => {
-									logService.warn(
-										"game",
-										`Failed to load ${sourceLanguage} level ${l}`,
-										e,
-									);
-									return {};
-								}),
-						),
-					),
-					Promise.all(
-						SUPPORTED_LEVELS.map((l) =>
-							import(`../data/translations/${targetLanguage}/levels/${l}.json`)
-								.then((m) => DictionarySchema.parse(m.default))
-								.catch((e) => {
-									logService.warn(
-										"game",
-										`Failed to load ${targetLanguage} level ${l}`,
-										e,
-									);
-									return {};
-								}),
-						),
-					),
+					loadAllTranslations(sourceLanguage),
+					loadAllTranslations(targetLanguage),
 				]);
-
-				// Helper to find translation in multiple dictionaries
-				const findInDicts = (key: string, dicts: TranslationDictionary[]) => {
-					for (const dict of dicts) {
-						if (dict[key]) return dict[key];
-					}
-					return null;
-				};
 
 				let playlistWords: (string | any)[] = [];
 				if (currentPlaylist === "mistakes") {
@@ -170,8 +140,8 @@ export class GameDataService {
 				playlistWords.forEach((w) => {
 					if (typeof w === "string") {
 						// Standard word key
-						const srcVal = findInDicts(w, sourceAll);
-						const tgtVal = findInDicts(w, targetAll);
+						const srcVal = sourceAll[w];
+						const tgtVal = targetAll[w];
 
 						// Тільки якщо слово знайдено хоча б в одному словнику
 						if (srcVal || tgtVal) {

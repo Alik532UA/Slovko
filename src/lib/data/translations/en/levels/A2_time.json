@@ -1,0 +1,20 @@
+{
+	"hour": "hour",
+	"minute": "minute",
+	"month": "month",
+	"morning": "morning",
+	"night": "night",
+	"now": "now",
+	"second_time": "second",
+	"soon": "soon",
+	"time": "time",
+	"today": "today",
+	"tomorrow": "tomorrow",
+	"week": "week",
+	"weekend": "weekend",
+	"year": "year",
+	"yesterday": "yesterday",
+	"afternoon": "afternoon",
+	"day": "day",
+	"evening": "evening"
+}

@@ -254,12 +254,20 @@
 		background: rgba(46, 204, 113, 0.1);
 	}
 
-	.spinner {
-		animation: spin 1s linear infinite;
-	}
+		@keyframes spin {
 
-	@keyframes spin {
-		from { transform: rotate(0deg); }
-		to { transform: rotate(360deg); }
-	}
-</style>
+			from {
+
+				transform: rotate(0deg);
+
+			}
+
+			to {
+
+				transform: rotate(360deg);
+
+			}
+
+		}
+
+	</style>

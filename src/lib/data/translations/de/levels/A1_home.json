@@ -1,0 +1,20 @@
+{
+	"table": "Tisch",
+	"chair": "Stuhl",
+	"bed": "Bett",
+	"bathroom": "Badezimmer",
+	"bedroom": "Schlafzimmer",
+	"wall": "Wand",
+	"computer": "Computer",
+	"cup": "Tasse",
+	"knife": "Messer",
+	"fork": "Gabel",
+	"spoon": "Löffel",
+	"clock": "Uhr",
+	"living_room": "Wohnzimmer",
+	"glass": "Glas",
+	"plate": "Teller",
+	"stove": "Herd",
+	"sink": "Spüle",
+	"balcony": "Balkon"
+}

@@ -1,0 +1,13 @@
+{
+	"bus": "Bus",
+	"car": "Auto",
+	"street": "Straße",
+	"door": "Tür",
+	"window": "Fenster",
+	"key": "Schlüssel",
+	"light": "hell",
+	"road": "Straße",
+	"train": "Zug",
+	"plane": "Flugzeug",
+	"taxi": "Taxi"
+}

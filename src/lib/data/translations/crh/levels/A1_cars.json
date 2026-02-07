@@ -1,0 +1,13 @@
+{
+	"bus": "avtobus",
+	"car": "araba",
+	"street": "soqaq",
+	"door": "qapı",
+	"window": "pencere",
+	"key": "anahtar",
+	"light": "aydın",
+	"road": "yol",
+	"train": "tren",
+	"plane": "uçaq",
+	"taxi": "taksi"
+}

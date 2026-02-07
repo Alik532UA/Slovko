@@ -1,0 +1,18 @@
+{
+	"business": "business",
+	"career": "career",
+	"course": "course",
+	"office": "office",
+	"professor": "professor",
+	"school": "school",
+	"skill": "skill",
+	"student": "student",
+	"teacher": "teacher",
+	"test": "test",
+	"employee": "employee",
+	"employer": "employer",
+	"interview_job": "interview",
+	"training_course": "training",
+	"salary": "salary",
+	"profession": "profession"
+}

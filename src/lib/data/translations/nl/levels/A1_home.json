@@ -1,0 +1,20 @@
+{
+	"table": "tafel",
+	"chair": "stoel",
+	"bed": "bed",
+	"bathroom": "badkamer",
+	"bedroom": "slaapkamer",
+	"wall": "muur",
+	"computer": "computer",
+	"cup": "kopje",
+	"knife": "mes",
+	"fork": "vork",
+	"spoon": "lepel",
+	"clock": "klok",
+	"living_room": "woonkamer",
+	"glass": "glas",
+	"plate": "bord",
+	"stove": "fornuis",
+	"sink": "gootsteen",
+	"balcony": "balkon"
+}

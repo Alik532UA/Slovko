@@ -1,0 +1,19 @@
+{
+	"boss": "baas",
+	"business": "zaken",
+	"career": "carrière",
+	"course": "cursus",
+	"office": "kantoor",
+	"professor": "hoogleraar",
+	"school": "school",
+	"skill": "vaardigheid",
+	"student": "student",
+	"teacher": "leraar",
+	"test": "test",
+	"employee": "werknemer",
+	"employer": "werkgever",
+	"interview_job": "sollicitatiegesprek",
+	"training_course": "training,",
+	"salary": "salaris",
+	"profession": "beroep"
+}

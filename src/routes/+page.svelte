@@ -20,22 +20,47 @@
 
 	let { data }: { data: PageData } = $props();
 
-	// 1. Синхронізуємо стор з даними, що прийшли з URL (URL -> Store)
+	let isSyncing = false;
+
+	// Синхронізація стану (URL -> Store)
 	$effect(() => {
 		if (data.gameSettings) {
-			UrlSyncService.syncStoreWithUrl(data.gameSettings);
+			const current = settingsStore.value;
+			const incoming = data.gameSettings;
+
+			// Перевіряємо чи є реальна різниця, щоб не тригерити зайві оновлення
+			const hasChanged = 
+				current.mode !== incoming.mode ||
+				current.currentLevel !== incoming.currentLevel ||
+				current.currentTopic !== incoming.currentTopic ||
+				current.currentPlaylist !== incoming.currentPlaylist ||
+				current.sourceLanguage !== incoming.sourceLanguage ||
+				current.targetLanguage !== incoming.targetLanguage;
+
+			if (hasChanged) {
+				isSyncing = true;
+				untrack(() => {
+					UrlSyncService.syncStoreWithUrl(incoming);
+					// Скидаємо прапорець після тіку мікрозавдання
+					setTimeout(() => isSyncing = false, 0);
+				});
+			}
 		}
 	});
 
-	// 2. Синхронізуємо URL зі стором (Store -> URL)
+	// Синхронізація стану (Store -> URL)
 	$effect(() => {
 		const s = settingsStore.value;
-		const url = untrack(() => $page.url);
-		const newUrl = UrlSyncService.getUpdatedUrl(url, s);
+		if (isSyncing) return; // Не оновлюємо URL, якщо ми щойно взяли дані з нього
 
-		if (newUrl) {
-			goto(newUrl, { replaceState: true, noScroll: true, keepFocus: true });
-		}
+		const url = untrack(() => $page.url);
+		
+		untrack(() => {
+			const newUrl = UrlSyncService.getUpdatedUrl(url, s);
+			if (newUrl && newUrl.toString() !== url.toString()) {
+				goto(newUrl, { replaceState: true, noScroll: true, keepFocus: true });
+			}
+		});
 	});
 </script>
 
