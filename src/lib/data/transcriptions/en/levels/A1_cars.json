@@ -1,13 +1,13 @@
 {
-	"bus": "bʌs",
-	"car": "kɑːr",
-	"street": "striːt",
-	"door": "dɔːr",
-	"window": "ˈwɪndəʊ",
-	"key": "kiː",
-	"light": "laɪt",
-	"road": "rəʊd",
-	"train": "treɪn",
-	"plane": "pleɪn",
-	"taxi": "ˈtæksi"
+	"bus": "/bʌs/",
+	"car": "/kɑːr/",
+	"street": "/striːt/",
+	"door": "/dɔːr/",
+	"window": "/ˈwɪndəʊ/",
+	"key": "/kiː/",
+	"light": "/laɪt/",
+	"road": "/rəʊd/",
+	"train": "/treɪn/",
+	"plane": "/pleɪn/",
+	"taxi": "/ˈtæksi/"
 }

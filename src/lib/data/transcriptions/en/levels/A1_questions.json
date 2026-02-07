@@ -1,14 +1,14 @@
 {
-	"excuse_me": "ɪkˈskjuːz mi",
-	"mean": "miːn",
-	"understand": "ˌʌndəˈstænd",
-	"explain": "ɪkˈspleɪn",
-	"right": "raɪt",
-	"what": "wɒt",
-	"who": "huː",
-	"when": "wen",
-	"why": "waɪ",
-	"how": "haʊ",
-	"really": "ˈrɪəli",
-	"maybe": "ˈmeɪbi"
+	"excuse_me": "/ɪkˈskjuːz mi/",
+	"mean": "/miːn/",
+	"understand": "/ˌʌndəˈstænd/",
+	"explain": "/ɪkˈspleɪn/",
+	"right": "/raɪt/",
+	"what": "/wɒt/",
+	"who": "/huː/",
+	"when": "/wɛn/",
+	"why": "/waɪ/",
+	"how": "/haʊ/",
+	"really": "/ˈrɪəli/",
+	"maybe": "/ˈmeɪbi/"
 }

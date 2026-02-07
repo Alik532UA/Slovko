@@ -1,12 +1,12 @@
 {
-	"red": "red",
-	"blue": "bluː",
-	"green": "ɡriːn",
-	"yellow": "ˈjeləʊ",
-	"black": "blæk",
-	"white": "waɪt",
-	"brown": "braʊn",
-	"purple": "ˈpɜːpl",
-	"color": "ˈkʌlər",
-	"pink": "pɪŋk"
+	"red": "/rɛd/",
+	"blue": "/bluː/",
+	"green": "/ɡriːn/",
+	"yellow": "/ˈjɛləʊ/",
+	"black": "/blæk/",
+	"white": "/waɪt/",
+	"brown": "/braʊn/",
+	"purple": "/ˈpɜːpl/",
+	"color": "/ˈkʌlər/",
+	"pink": "/pɪŋk/"
 }

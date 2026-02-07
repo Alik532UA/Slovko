@@ -1,12 +1,12 @@
 {
 	"college": "/ˈkɒl.ɪdʒ/",
 	"course": "/kɔːs/",
-	"employee": "ɪmˈplɔɪiː",
-	"employer": "ɪmˈplɔɪər",
-	"interview_job": "ˈɪntərvjuː",
-	"profession": "/prəˈfeʃ.ən/",
-	"professor": "prəˈfesər",
+	"employee": "/ɪmˈplɔɪiː/",
+	"employer": "/ɪmˈplɔɪər/",
+	"interview_job": "/ˈɪntərvjuː/",
+	"profession": "/prəˈfɛʃ.ən/",
+	"professor": "/prəˈfɛsər/",
 	"salary": "/ˈsæl.ər.i/",
-	"subject_school": "/ˈsʌb.dʒekt/",
-	"training_course": "ˈtreɪnɪŋ"
+	"subject_school": "/ˈsʌb.dʒɛkt/",
+	"training_course": "/ˈtreɪnɪŋ/"
 }

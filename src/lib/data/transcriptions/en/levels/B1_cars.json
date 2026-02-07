@@ -1,9 +1,9 @@
 {
-	"battery_life": "ˈbætəri",
-	"engine_motor": "/ˈen.dʒɪn/",
-	"fuel": "fjʊəl",
-	"fuel_energy": "ˈfjuːəl",
+	"battery_life": "/ˈbætəri/",
+	"engine_motor": "/ˈɛn.dʒɪn/",
+	"fuel": "/fjʊəl/",
+	"fuel_energy": "/ˈfjuːəl/",
 	"machine_car": "/məˈʃiːn/",
-	"signal": "ˈsɪɡn(ə)l",
-	"signal_phone": "ˈsɪɡnəl"
+	"signal": "/ˈsɪɡn(ə)l/",
+	"signal_phone": "/ˈsɪɡnəl/"
 }
