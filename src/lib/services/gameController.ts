@@ -102,7 +102,7 @@ export class GameController {
 	selectCard(card: ActiveCard): void {
 		this.updateTimers();
 
-		if (this.gameState.isProcessing || !card.isVisible) return;
+		if (!card.isVisible) return;
 
 		const selectedCard = this.gameState.selectedCard;
 
