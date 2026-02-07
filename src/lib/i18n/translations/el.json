@@ -87,6 +87,8 @@
 	"settings": {
 		"interfaceLanguage": "Γλώσσα διεπαφής",
 		"cardLanguages": "Γλώσσες καρτών",
+		"sourceLanguage": "Γλώσσα πηγής",
+		"targetLanguage": "Γλώσσα στόχος",
 		"from": "Από",
 		"to": "Προς",
 		"columnLeft": "γλώσσα κάρτας αριστερή στήλη",

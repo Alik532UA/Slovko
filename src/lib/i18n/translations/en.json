@@ -87,6 +87,8 @@
 	"settings": {
 		"interfaceLanguage": "Interface language",
 		"cardLanguages": "Card languages",
+		"sourceLanguage": "Source language",
+		"targetLanguage": "Target language",
 		"from": "From",
 		"to": "To",
 		"columnLeft": "left column card language",

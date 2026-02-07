@@ -87,6 +87,8 @@
 	"settings": {
 		"interfaceLanguage": "Arayüz tili",
 		"cardLanguages": "Kartaların tilleri",
+		"sourceLanguage": "Asıl til",
+		"targetLanguage": "Ögrenilgen til",
 		"from": "...-den",
 		"to": "...-ge",
 		"columnLeft": "sol sutun kart tili",

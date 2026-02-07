@@ -87,6 +87,8 @@
 	"settings": {
 		"interfaceLanguage": "Interface taal",
 		"cardLanguages": "Kaart talen",
+		"sourceLanguage": "Brontaal",
+		"targetLanguage": "Doeltaal",
 		"from": "Van",
 		"to": "Naar",
 		"columnLeft": "kaarttaal linker kolom",

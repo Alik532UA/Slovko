@@ -87,6 +87,8 @@
 	"settings": {
 		"interfaceLanguage": "Мова інтерфейсу",
 		"cardLanguages": "Мови карток",
+		"sourceLanguage": "Рідна мова",
+		"targetLanguage": "Мова вивчення",
 		"from": "З",
 		"to": "На",
 		"columnLeft": "мова карток що ліворуч",

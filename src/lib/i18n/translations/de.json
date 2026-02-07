@@ -87,6 +87,8 @@
 	"settings": {
 		"interfaceLanguage": "Sprache der Benutzeroberfläche",
 		"cardLanguages": "Kartensprachen",
+		"sourceLanguage": "Quellsprache",
+		"targetLanguage": "Zielsprache",
 		"from": "Von",
 		"to": "Nach",
 		"columnLeft": "Kartensprache linke Spalte",
