@@ -3,7 +3,10 @@ import { base } from "$app/paths";
 
 const VERSION_URL = `${base}/app-version.json`;
 const CACHE_VERSION_KEY = "app_cache_version";
-const AVAILABLE_VERSION_KEY = "app_available_version";
+const REFUSED_VERSION_KEY = "app_update_refused_version";
+const REFUSED_AT_KEY = "app_update_refused_at";
+
+const FIVE_DAYS_MS = 5 * 24 * 60 * 60 * 1000;
 
 /**
  * Сервіс для перевірки оновлень
@@ -17,17 +20,32 @@ export async function checkForUpdates() {
 		const serverVersion = data.version;
 
 		const cacheVersion = localStorage.getItem(CACHE_VERSION_KEY);
-		const skippedVersion = localStorage.getItem(AVAILABLE_VERSION_KEY);
+		const refusedVersion = localStorage.getItem(REFUSED_VERSION_KEY);
+		const refusedAt = parseInt(localStorage.getItem(REFUSED_AT_KEY) || "0");
 
 		versionStore.setVersion(serverVersion);
+		if (refusedVersion) {
+			versionStore.setRefusal(refusedVersion, refusedAt);
+		}
 
 		if (!cacheVersion) {
 			// Перший візит — фіксуємо поточну версію як кешовану
 			localStorage.setItem(CACHE_VERSION_KEY, serverVersion);
-		} else if (cacheVersion !== serverVersion) {
+			return;
+		}
+
+		if (cacheVersion !== serverVersion) {
 			// Є новіша версія на сервері.
-			// Показуємо банер, якщо користувач ще не пропустив саме цю версію.
-			if (skippedVersion !== serverVersion) {
+			const now = Date.now();
+			
+			// Умови показу сповіщення:
+			// 1. Користувач ще не відмовлявся від оновлення
+			// 2. АБО версія на сервері НОВІША за ту, від якої він відмовився
+			// 3. АБО пройшло більше 5 днів з моменту останньої відмови
+			const hasNewerVersionThanRefused = serverVersion !== refusedVersion;
+			const isCooldownOver = now - refusedAt > FIVE_DAYS_MS;
+
+			if (!refusedVersion || hasNewerVersionThanRefused || isCooldownOver) {
 				versionStore.setUpdate(true);
 			}
 		}
@@ -49,22 +67,27 @@ export async function applyUpdate() {
 			console.error("Failed to clear caches:", e);
 		}
 
-		// 3. Очищення localStorage
-		localStorage.clear();
+		// Оновлюємо маркер версії
 		localStorage.setItem(CACHE_VERSION_KEY, nextVersion);
-		// Обов'язково видаляємо маркер доступної версії, бо ми на неї оновилися
-		localStorage.removeItem(AVAILABLE_VERSION_KEY);
+		
+		// Очищаємо дані про відмову, бо ми оновилися
+		localStorage.removeItem(REFUSED_VERSION_KEY);
+		localStorage.removeItem(REFUSED_AT_KEY);
 
 		window.location.reload();
 	}
 }
 
 /**
- * Пропускає оновлення, запам'ятовує версію як "доступну, але пропущену"
+ * Пропускає оновлення, запам'ятовує версію та час відмови
  */
 export function skipUpdate() {
 	if (versionStore.currentVersion) {
-		localStorage.setItem(AVAILABLE_VERSION_KEY, versionStore.currentVersion);
+		const now = Date.now();
+		localStorage.setItem(REFUSED_VERSION_KEY, versionStore.currentVersion);
+		localStorage.setItem(REFUSED_AT_KEY, now.toString());
+		
+		versionStore.setRefusal(versionStore.currentVersion, now);
 		versionStore.setUpdate(false);
 	}
 }
