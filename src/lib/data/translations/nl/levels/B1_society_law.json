@@ -4,13 +4,11 @@
 	"crime": "misdaad",
 	"criminal": "crimineel",
 	"nation": "natie",
-	"police": "politie",
 	"politics": "politiek",
 	"president": "president",
 	"society": "maatschappij",
 	"soldier": "soldaat",
 	"vote": "stemmen",
 	"army": "leger",
-	"government": "regering",
-	"law": "wet"
+	"government": "regering"
 }

@@ -1,16 +1,8 @@
 {
-	"animal": "animal",
-	"bird": "bird",
-	"fish": "fish",
-	"horse": "horse",
 	"lion": "lion",
 	"mouse": "mouse",
 	"sheep": "sheep",
 	"snake": "snake",
-	"chicken": "chicken",
-	"cat": "cat",
-	"cow": "cow",
-	"dog": "dog",
 	"goose": "goose",
 	"eagle": "eagle",
 	"hawk": "hawk",
@@ -47,6 +39,5 @@
 	"seal": "seal",
 	"walrus": "walrus",
 	"jellyfish": "jellyfish",
-	"starfish": "starfish",
-	"fly": "fly"
+	"starfish": "starfish"
 }

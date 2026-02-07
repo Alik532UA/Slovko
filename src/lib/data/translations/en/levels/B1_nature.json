@@ -1,19 +1,8 @@
 {
-	"ocean": "ocean",
-	"rock_stone": "rock",
-	"sea": "sea",
-	"season": "season",
-	"spring": "spring",
-	"star": "star",
-	"summer": "summer",
-	"tree": "tree",
-	"wind": "wind",
 	"flood": "flood",
 	"jungle": "jungle",
 	"valley": "valley",
 	"earth_planet": "earth",
-	"insect": "insect",
-	"storm": "storm",
 	"landscape": "landscape",
 	"scenery": "scenery"
 }

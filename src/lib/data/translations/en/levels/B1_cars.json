@@ -1,16 +1,9 @@
 {
-	"belt": "belt",
-	"road": "road",
-	"seat": "seat",
-	"street": "street",
-	"window": "window",
 	"battery_life": "battery",
 	"fuel_energy": "fuel",
 	"signal_phone": "signal",
 	"insurance": "insurance",
 	"engine_motor": "engine",
 	"fuel": "fuel",
-	"signal": "signal",
-	"train": "train",
-	"traffic": "traffic"
+	"signal": "signal"
 }

@@ -1,16 +1,8 @@
 {
-	"animal": "Tier",
-	"bird": "Vogel",
-	"fish": "Fisch",
-	"horse": "Pferd",
 	"lion": "Löwe",
 	"mouse": "Maus",
 	"sheep": "Schaf",
 	"snake": "Schlange",
-	"chicken": "Hähnchen",
-	"cat": "Katze",
-	"cow": "Kuh",
-	"dog": "Hund",
 	"goose": "Gans",
 	"eagle": "Adler",
 	"hawk": "Falke",
@@ -48,6 +40,5 @@
 	"walrus": "Walross",
 	"jellyfish": "Qualle",
 	"starfish": "Seestern",
-	"bear_bear": "tragen",
-	"fly": "fliegen"
+	"bear_bear": "tragen"
 }

@@ -1,21 +1,12 @@
 {
-	"bathroom": "ванна кімната",
 	"toilet": "туалет",
-	"wall": "стіна",
 	"ceiling": "стеля",
 	"lamp": "лампа",
-	"clock": "годинник (настінний)",
-	"computer": "комп'ютер",
-	"fork": "виделка",
 	"glass_material": "скло",
 	"hall": "зал",
-	"knife": "ніж",
 	"plant": "рослина",
-	"plate": "тарілка",
 	"roof": "дах",
 	"soap": "мило",
-	"spoon": "ложка",
-	"table": "стіл",
 	"bath": "ванна",
 	"blanket": "ковдра",
 	"carpet": "килим",
@@ -27,7 +18,6 @@
 	"shower": "душ",
 	"sofa": "диван",
 	"stairs": "сходи",
-	"cup": "чашка",
 	"plastic": "пластик",
 	"iron_verb": "прасувати",
 	"kitchen_room": "кухня",
@@ -49,6 +39,5 @@
 	"armchair": "крісло",
 	"fireplace_hearth": "камін",
 	"vase": "ваза",
-	"basement": "підвал",
-	"glass": "скло"
+	"basement": "підвал"
 }

@@ -1,9 +1,3 @@
 {
-	"blood": "Blut",
-	"body": "Körper",
-	"brain": "Gehirn",
-	"medicine_field": "Medizin",
-	"shoulder": "Schulter",
-	"voice": "Stimme",
-	"face": "Gesicht"
+	"medicine_field": "Medizin"
 }

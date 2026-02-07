@@ -1,19 +1,8 @@
 {
-	"ocean": "okean",
-	"rock_stone": "taş",
-	"sea": "deñiz",
-	"season": "mevsim",
-	"spring": "baar",
-	"star": "yıldız",
-	"summer": "yaz",
-	"tree": "terek",
-	"wind": "yel",
 	"flood": "suv basuv",
 	"jungle": "orman",
 	"valley": "dere",
 	"earth_planet": "Dünya",
-	"insect": "böcek",
-	"storm": "fırtına",
 	"landscape": "manzara",
 	"scenery": "manzara"
 }

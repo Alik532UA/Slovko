@@ -1,10 +1,6 @@
 {
-	"copy": "copy",
 	"code": "code",
-	"memory": "memory",
 	"network": "network",
-	"program": "program",
-	"save_rescue": "save",
 	"security": "security",
 	"link": "link",
 	"monitor": "monitor",
@@ -25,7 +21,6 @@
 	"wifi_connection": "wifi",
 	"error": "error",
 	"document": "document",
-	"screen": "screen",
 	"video": "video",
 	"app": "app",
 	"cable": "cable",

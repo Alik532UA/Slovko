@@ -1,16 +1,8 @@
 {
-	"animal": "ayvan",
-	"bird": "quş",
-	"fish": "balıq",
-	"horse": "at",
 	"lion": "arslan",
 	"mouse": "sıçan",
 	"sheep": "qoy",
 	"snake": "yılan",
-	"chicken": "tavuq",
-	"cat": "pisik",
-	"cow": "sığır",
-	"dog": "köpek",
 	"goose": "qaz",
 	"eagle": "qartal",
 	"hawk": "atmaca",
@@ -48,6 +40,5 @@
 	"walrus": "morj",
 	"jellyfish": "meduza",
 	"starfish": "deñiz yıldızı",
-	"bear_bear": "ayı",
-	"fly": "uçmaq"
+	"bear_bear": "ayı"
 }

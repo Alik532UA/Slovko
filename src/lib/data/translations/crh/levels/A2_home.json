@@ -1,21 +1,12 @@
 {
-	"bathroom": "yunuv hanesi",
 	"toilet": "hacethane",
-	"wall": "divar",
 	"ceiling": "tavan",
 	"lamp": "lampa",
-	"clock": "saat",
-	"computer": "bilgisayar",
-	"fork": "sançqı",
 	"glass_material": "cam",
 	"hall": "salon",
-	"knife": "pıçaq",
 	"plant": "ösimlik",
-	"plate": "tabaq",
 	"roof": "tav",
 	"soap": "sabun",
-	"spoon": "qaşıq",
-	"table": "masa",
 	"bath": "yuvunuv",
 	"blanket": "yorğan",
 	"carpet": "halı",
@@ -28,7 +19,6 @@
 	"sofa": "sofa",
 	"stairs": "merdiven",
 	"towel_cloth": "havlu",
-	"cup": "fincan",
 	"plastic": "plastik",
 	"iron_verb": "ütilemek",
 	"kitchen_room": "mutfaq",
@@ -47,6 +37,5 @@
 	"pan": "tava",
 	"armchair": "qoltuk",
 	"vase": "vaza",
-	"basement": "zemin qat",
-	"glass": "cam"
+	"basement": "zemin qat"
 }

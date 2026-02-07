@@ -1,21 +1,12 @@
 {
-	"bathroom": "badkamer",
 	"toilet": "wc",
-	"wall": "muur",
 	"ceiling": "plafond",
 	"lamp": "lamp",
-	"clock": "klok",
-	"computer": "computer",
-	"fork": "vork",
 	"glass_material": "glas",
 	"hall": "hal",
-	"knife": "mes",
 	"plant": "plant",
-	"plate": "bord",
 	"roof": "dak",
 	"soap": "zeep",
-	"spoon": "lepel",
-	"table": "tafel",
 	"bath": "bad",
 	"blanket": "deken",
 	"carpet": "tapijt",
@@ -28,7 +19,6 @@
 	"sofa": "bank",
 	"stairs": "trap",
 	"towel_cloth": "handdoek",
-	"cup": "kopje",
 	"plastic": "kunststof",
 	"iron_verb": "strijken",
 	"kitchen_room": "keuken",
@@ -47,6 +37,5 @@
 	"pan": "pannen",
 	"armchair": "fauteuil",
 	"vase": "vaas",
-	"basement": "kelder",
-	"glass": "glas"
+	"basement": "kelder"
 }

@@ -4,13 +4,11 @@
 	"crime": "злочин",
 	"criminal": "злочинець",
 	"nation": "нація",
-	"police": "поліція",
 	"politics": "політика",
 	"president": "президент",
 	"society": "суспільство",
 	"soldier": "солдат",
 	"vote": "голосувати",
 	"army": "армія",
-	"government": "уряд",
-	"law": "закон"
+	"government": "уряд"
 }

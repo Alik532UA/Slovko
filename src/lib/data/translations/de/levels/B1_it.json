@@ -1,10 +1,6 @@
 {
-	"copy": "kopieren",
 	"code": "Code",
-	"memory": "Gedächtnis",
 	"network": "Netzwerk",
-	"program": "Programm",
-	"save_rescue": "retten",
 	"security": "Sicherheit",
 	"link": "verknüpfen",
 	"monitor": "überwachen",
@@ -25,7 +21,6 @@
 	"wifi_connection": "WLAN",
 	"error": "Fehler",
 	"document": "Dokument",
-	"screen": "Bildschirm",
 	"video": "Video",
 	"app": "App",
 	"cable": "Kabel",

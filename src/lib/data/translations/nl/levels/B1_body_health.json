@@ -1,9 +1,3 @@
 {
-	"blood": "bloed",
-	"body": "lichaam",
-	"brain": "hersenen",
-	"medicine_field": "medicijn",
-	"shoulder": "schouder",
-	"voice": "stem",
-	"face": "gezicht"
+	"medicine_field": "medicijn"
 }

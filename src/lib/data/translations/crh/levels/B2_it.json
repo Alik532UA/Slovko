@@ -1,12 +1,4 @@
 {
 	"scan_look": "közden keçirmek",
-	"monitor": "közetmek",
-	"scan": "skanerlemek",
-	"data": "malümat",
-	"database": "malümat bazası",
-	"hardware": "donanım",
-	"network": "ağ",
-	"software": "yazılım",
-	"virus": "virüs",
-	"program": "programma"
+	"scan": "skanerlemek"
 }

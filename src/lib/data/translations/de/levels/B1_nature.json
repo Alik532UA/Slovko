@@ -1,19 +1,8 @@
 {
-	"ocean": "Ozean",
-	"rock_stone": "Fels",
-	"sea": "Meer",
-	"season": "Jahreszeit",
-	"spring": "Frühling",
-	"star": "Stern",
-	"summer": "Sommer",
-	"tree": "Baum",
-	"wind": "Wind",
 	"flood": "Flut",
 	"jungle": "Dschungel",
 	"valley": "Tal",
 	"earth_planet": "Erde",
-	"insect": "Insekt",
-	"storm": "Sturm",
 	"landscape": "Landschaft",
 	"scenery": "Landschaft"
 }

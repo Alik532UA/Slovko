@@ -1,12 +1,4 @@
 {
 	"scan_look": "scan",
-	"monitor": "monitor",
-	"scan": "scan",
-	"data": "data",
-	"database": "database",
-	"hardware": "hardware",
-	"network": "network",
-	"software": "software",
-	"virus": "virus",
-	"program": "program"
+	"scan": "scan"
 }

@@ -4,13 +4,11 @@
 	"crime": "Verbrechen",
 	"criminal": "Verbrecher",
 	"nation": "Nation",
-	"police": "Polizei",
 	"politics": "Politik",
 	"president": "Präsident",
 	"society": "Gesellschaft",
 	"soldier": "Soldat",
 	"vote": "wählen",
 	"army": "Armee",
-	"government": "Regierung",
-	"law": "Gesetz"
+	"government": "Regierung"
 }

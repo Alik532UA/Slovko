@@ -1,23 +1,14 @@
 {
-	"family": "οικογένεια",
-	"friend": "φίλος",
 	"grandfather": "παππούς",
 	"grandmother": "γιαγιά",
-	"husband": "σύζυγος",
 	"marry": "παντρεύομαι",
 	"single": "μόνος",
-	"sister": "αδελφή",
-	"son": "γιος",
 	"uncle": "θείος",
-	"wife": "σύζυγος",
 	"married": "παντρεμένος",
 	"aunt": "θεία",
 	"colleague": "συνάδελφος",
 	"cousin": "ξάδελφος",
 	"granddaughter": "εγγονή",
 	"grandson": "εγγονός",
-	"child": "παιδί",
-	"father": "πατέρας",
-	"mother": "μητέρα",
 	"partner": "σύντροφος"
 }

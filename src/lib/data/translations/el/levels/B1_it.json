@@ -1,10 +1,6 @@
 {
-	"copy": "αντιγράφω",
 	"code": "κώδικας",
-	"memory": "μνήμη",
 	"network": "δίκτυο",
-	"program": "πρόγραμμα",
-	"save_rescue": "σώζω",
 	"security": "ασφάλεια",
 	"link": "συνδέω",
 	"monitor": "παρακολουθώ",
@@ -25,7 +21,6 @@
 	"wifi_connection": "σύνδεση wifi",
 	"error": "σφάλμα",
 	"document": "έγγραφο",
-	"screen": "οθόνη",
 	"video": "βίντεο",
 	"app": "εφαρμογή",
 	"cable": "καλώδιο",

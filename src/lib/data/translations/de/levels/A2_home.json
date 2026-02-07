@@ -1,21 +1,12 @@
 {
-	"bathroom": "Badezimmer",
 	"toilet": "Toilette",
-	"wall": "Wand",
 	"ceiling": "Decke",
 	"lamp": "Lampe",
-	"clock": "Uhr",
-	"computer": "Computer",
-	"fork": "Gabel",
 	"glass_material": "Glas",
 	"hall": "Halle",
-	"knife": "Messer",
 	"plant": "Pflanze",
-	"plate": "Teller",
 	"roof": "Dach",
 	"soap": "Seife",
-	"spoon": "Löffel",
-	"table": "Tisch",
 	"bath": "Bad",
 	"blanket": "Decke",
 	"carpet": "Teppich",
@@ -28,7 +19,6 @@
 	"sofa": "Sofa",
 	"stairs": "Treppe",
 	"towel_cloth": "Handtuch",
-	"cup": "Tasse",
 	"plastic": "Plastik",
 	"iron_verb": "bügeln",
 	"kitchen_room": "Küche",
@@ -47,6 +37,5 @@
 	"pan": "Pfanne",
 	"armchair": "Sessel",
 	"vase": "Vase",
-	"basement": "Keller",
-	"glass": "Glas"
+	"basement": "Keller"
 }

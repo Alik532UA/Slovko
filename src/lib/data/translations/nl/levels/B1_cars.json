@@ -1,17 +1,9 @@
 {
-	"belt": "riem",
-	"boat": "boot",
-	"road": "weg",
-	"seat": "stoel",
-	"street": "straat",
-	"window": "raam",
 	"battery_life": "batterij",
 	"fuel_energy": "brandstof",
 	"signal_phone": "signaal",
 	"insurance": "verzekering",
 	"engine_motor": "motor",
 	"fuel": "brandstof",
-	"signal": "signaal",
-	"train": "trein",
-	"traffic": "verkeer"
+	"signal": "signaal"
 }

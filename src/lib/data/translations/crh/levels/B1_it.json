@@ -1,10 +1,6 @@
 {
-	"copy": "kopya etmek",
 	"code": "kod",
-	"memory": "hafıza",
 	"network": "ağ",
-	"program": "programma",
-	"save_rescue": "qurtarmaq",
 	"security": "emniyet",
 	"link": "bağlamaq",
 	"monitor": "közetmek",
@@ -25,7 +21,6 @@
 	"wifi_connection": "wifi",
 	"error": "hata",
 	"document": "vesiqa",
-	"screen": "ekran",
 	"video": "video",
 	"app": "uyğulama",
 	"cable": "kabel",

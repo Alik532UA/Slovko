@@ -1,7 +1,3 @@
 {
-	"arrival": "άφιξη",
-	"departure_leave": "αναχώρηση",
-	"departure": "αναχώρηση",
-	"delay": "καθυστερώ",
-	"terminal": "τερματικός σταθμός"
+	"departure_leave": "αναχώρηση"
 }

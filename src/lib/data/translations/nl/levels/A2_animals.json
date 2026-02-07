@@ -1,16 +1,8 @@
 {
-	"animal": "dier",
-	"bird": "vogel",
-	"fish": "vis",
-	"horse": "paard",
 	"lion": "leeuw",
 	"mouse": "muis",
 	"sheep": "schaap",
 	"snake": "slang",
-	"chicken": "kip",
-	"cat": "kat",
-	"cow": "koe",
-	"dog": "hond",
 	"goose": "gans",
 	"eagle": "arend",
 	"hawk": "havik",
@@ -48,6 +40,5 @@
 	"walrus": "walrus",
 	"jellyfish": "kwal",
 	"starfish": "zeester",
-	"bear_bear": "dragen",
-	"fly": "vliegen"
+	"bear_bear": "dragen"
 }

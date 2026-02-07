@@ -1,9 +1,3 @@
 {
-	"blood": "qan",
-	"body": "vücut",
-	"brain": "miy",
-	"medicine_field": "tibbiyet",
-	"shoulder": "omuz",
-	"voice": "ses",
-	"face": "yüz"
+	"medicine_field": "tibbiyet"
 }

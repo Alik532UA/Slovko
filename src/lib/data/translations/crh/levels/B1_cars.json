@@ -1,17 +1,9 @@
 {
-	"belt": "qayış",
-	"boat": "qayıq",
-	"road": "yol",
-	"seat": "yer",
-	"street": "soqaq",
-	"window": "pencere",
 	"battery_life": "batareya",
 	"fuel_energy": "yaqıt",
 	"signal_phone": "işaret",
 	"insurance": "sigorta",
 	"engine_motor": "motor",
 	"fuel": "yaqıt",
-	"signal": "işaret",
-	"train": "tren",
-	"traffic": "trafik"
+	"signal": "işaret"
 }

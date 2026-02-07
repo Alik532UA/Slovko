@@ -4,13 +4,11 @@
 	"crime": "cinayet",
 	"criminal": "cinayetçi",
 	"nation": "millet",
-	"police": "polis",
 	"politics": "siyaset",
 	"president": "prezident",
 	"society": "cemiyet",
 	"soldier": "asker",
 	"vote": "rey bermek",
 	"army": "ordu",
-	"government": "ükümet",
-	"law": "qanun"
+	"government": "ükümet"
 }

@@ -1,17 +1,9 @@
 {
-	"belt": "Gürtel",
-	"boat": "Boot",
-	"road": "Straße",
-	"seat": "Sitz",
-	"street": "Straße",
-	"window": "Fenster",
 	"battery_life": "Batterie",
 	"fuel_energy": "Kraftstoff",
 	"signal_phone": "Signal",
 	"insurance": "Versicherung",
 	"engine_motor": "Motor",
 	"fuel": "Treibstoff",
-	"signal": "Signal",
-	"train": "Zug",
-	"traffic": "Verkehr"
+	"signal": "Signal"
 }

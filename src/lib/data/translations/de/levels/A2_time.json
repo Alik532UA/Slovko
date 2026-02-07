@@ -1,20 +1,3 @@
 {
-	"hour": "Stunde",
-	"minute": "Minute",
-	"month": "Monat",
-	"morning": "Morgen",
-	"night": "Nacht",
-	"now": "jetzt",
-	"second_time": "Sekunde",
-	"soon": "bald",
-	"time": "Zeit",
-	"today": "heute",
-	"tomorrow": "morgen",
-	"week": "Woche",
-	"weekend": "Wochenende",
-	"year": "Jahr",
-	"yesterday": "gestern",
-	"afternoon": "Nachmittag",
-	"day": "Tag",
-	"evening": "Abend"
+	"time": "Zeit"
 }

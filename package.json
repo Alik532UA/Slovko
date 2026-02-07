@@ -1,7 +1,7 @@
 {
 	"name": "slovko",
 	"private": true,
-	"version": "0.6.220",
+	"version": "0.6.221",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
@@ -17,6 +17,7 @@
 		"check:missing": "node scripts/analysis/find_missing_all.js",
 		"check:missing:full": "node scripts/analysis/find_missing_comprehensive.js",
 		"check:duplicates": "node scripts/analysis/check_duplicates.js",
+		"analyze:duplicates:global": "node scripts/analysis/check_global_duplicates.js",
 		"check:transcriptions": "node scripts/analysis/check_transcriptions.js",
 		"analyze:vocab": "node scripts/analysis/vocab_analysis.js",
 		"i18n:check": "node scripts/maintenance/check_translations.js"

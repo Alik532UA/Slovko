@@ -1,9 +1,4 @@
 {
-	"carpet": "carpet",
-	"computer": "computer",
 	"painting": "painting",
-	"table": "table",
-	"tv": "tv",
-	"wall": "wall",
-	"plant": "plant"
+	"tv": "tv"
 }
