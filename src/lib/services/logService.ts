@@ -12,6 +12,7 @@ export const logConfig = {
 	ui: false,
 	data: false,
 	i18n: false,
+	version: true,
 };
 
 const recentLogs: string[] = [];

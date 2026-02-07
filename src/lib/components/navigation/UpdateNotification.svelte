@@ -2,6 +2,8 @@
 	import { _ } from "svelte-i18n";
 	import { RefreshCw, ShieldCheck, AlertTriangle } from "lucide-svelte";
 	import { applyUpdate, skipUpdate } from "$lib/services/versionService";
+	import { versionStore } from "$lib/stores/versionStore.svelte";
+	import { logService } from "$lib/services/logService";
 	import { fade, scale } from "svelte/transition";
 	import { onMount } from "svelte";
 
@@ -13,22 +15,32 @@
 	let localVersion = $state<string | null>(null);
 
 	onMount(() => {
+		logService.log("version", "UpdateNotification mounted on screen.");
 		localVersion = localStorage.getItem("app_cache_version");
 	});
 
 	async function handleUpdate() {
+		logService.log("version", "User clicked 'Update' button.");
 		if (isUpdating) return;
 		isUpdating = true;
 		await applyUpdate();
 	}
 
-	function handleSkip() {
+	/** Ручна відмова — переносить на 5 днів */
+	function handlePostpone() {
+		logService.log("version", "User manually postponed the update (5-day delay activated).");
 		skipUpdate();
+	}
+
+	/** Тимчасове закриття — з'явиться знову при наступному релоаді */
+	function handleDismiss() {
+		logService.log("version", "Update notification dismissed temporarily (session-only).");
+		versionStore.setUpdate(false);
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
 		if (e.key === "Escape") {
-			handleSkip();
+			handleDismiss();
 		}
 	}
 </script>
@@ -37,7 +49,7 @@
 <div
 	class="modal-backdrop"
 	transition:fade={{ duration: 200 }}
-	onclick={handleSkip}
+	onclick={handleDismiss}
 	onkeydown={handleKeydown}
 	role="presentation"
 >
@@ -86,7 +98,7 @@
 
 				<button
 					class="update-btn outline"
-					onclick={handleSkip}
+					onclick={handlePostpone}
 					disabled={isUpdating}
 					data-testid="skip-update-btn"
 				>

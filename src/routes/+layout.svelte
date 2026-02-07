@@ -13,6 +13,7 @@
 	import InteractionSystem from "$lib/components/interaction/InteractionSystem.svelte";
 	import OnboardingModal from "$lib/components/onboarding/OnboardingModal.svelte";
 	import { authStore } from "$lib/firebase/authStore.svelte";
+	import { logService } from "$lib/services/logService";
 	import DebugListener from "$lib/components/debug/DebugListener.svelte";
 	import {
 		initGA,
@@ -56,11 +57,15 @@
 	};
 
 	onMount(() => {
+		logService.log("version", "Root layout onMount started");
 		const init = async () => {
+			logService.log("version", "Initializing i18n...");
 			await initializeI18n();
+			logService.log("version", "i18n initialized, setting ready=true");
 			ready = true;
 
 			// Перевірка оновлень після ініціалізації
+			logService.log("version", "Calling checkForUpdates()...");
 			checkForUpdates();
 
 			if (!dev && "serviceWorker" in navigator) {
