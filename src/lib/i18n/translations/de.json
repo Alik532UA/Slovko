@@ -13,7 +13,8 @@
 		"B2": "Obere Mittelstufe",
 		"C1": "Fortgeschritten",
 		"C2": "Kompetent",
-		"underConstruction": "Diese Stufe ist in Entwicklung, bitte wählen Sie eine andere Stufe"
+		"underConstruction": "Diese Stufe ist in Entwicklung, bitte wählen Sie eine andere Stufe",
+		"ALL": "Alle Niveaus"
 	},
 	"tabs": {
 		"levels": "Niveaus",
@@ -247,7 +248,9 @@
 		"error": {
 			"oops": "Hoppla! Etwas ist schief gelaufen"
 		},
-		"or": "oder"
+		"or": "oder",
+		"learn": "Lernen",
+		"reset": "Zurücksetzen"
 	},
 	"wordReport": {
 		"title": "Einen Fehler melden",

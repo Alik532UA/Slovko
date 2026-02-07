@@ -323,11 +323,15 @@ export async function loadAllTranslations(language: Language): Promise<Translati
 
 	const levels: CEFRLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 	const allPromises: Promise<any>[] = [];
+	const langPattern = `/${language.toLowerCase()}/`;
 
 	levels.forEach((l) => {
-		const prefix = `./translations/${language}/levels/${l}_`;
+		const levelPattern = `/levels/${l.toLowerCase()}_`;
 		Object.keys(translationModules)
-			.filter((p) => p.startsWith(prefix))
+			.filter((p) => {
+				const np = p.toLowerCase().replace(/\\/g, "/");
+				return np.includes(levelPattern) && np.includes(langPattern);
+			})
 			.forEach((p) => {
 				allPromises.push(
 					translationModules[p]().then((m: any) =>
@@ -347,13 +351,22 @@ export async function loadAllTranslations(language: Language): Promise<Translati
  * Завантажити ВСІ транскрипції для мови
  */
 export async function loadAllTranscriptions(language: Language = "en"): Promise<TranscriptionDictionary> {
+	const cacheKey = `${language}:tscr:all`;
+	if (transcriptionCache.has(cacheKey)) {
+		return transcriptionCache.get(cacheKey)!;
+	}
+
 	const levels: CEFRLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 	const allPromises: Promise<any>[] = [];
+	const langPattern = `/${language.toLowerCase()}/`;
 
 	levels.forEach((l) => {
-		const prefix = `./transcriptions/${language}/levels/${l}_`;
+		const levelPattern = `/levels/${l.toLowerCase()}_`;
 		Object.keys(transcriptionModules)
-			.filter((p) => p.startsWith(prefix))
+			.filter((p) => {
+				const np = p.toLowerCase().replace(/\\/g, "/");
+				return np.includes(levelPattern) && np.includes(langPattern);
+			})
 			.forEach((p) => {
 				allPromises.push(
 					transcriptionModules[p]().then((m: any) =>
@@ -364,7 +377,9 @@ export async function loadAllTranscriptions(language: Language = "en"): Promise<
 	});
 
 	const allDicts = await Promise.all(allPromises);
-	return Object.assign({}, ...allDicts);
+	const mergedDict = Object.assign({}, ...allDicts);
+	transcriptionCache.set(cacheKey, mergedDict);
+	return mergedDict;
 }
 
 /**

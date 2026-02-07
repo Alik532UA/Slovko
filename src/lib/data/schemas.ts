@@ -334,8 +334,8 @@ export const AppSettingsSchema = z.object({
 	sourceLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("en"),
 	targetLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("uk"),
 	mode: z.enum(["levels", "topics", "phrases", "playlists"]).default("levels"),
-	currentLevel: z.enum(["A1", "A2", "B1", "B2", "C1", "C2"]).default("A1"),
-	currentTopic: z.string().default("basic_verbs"),
+	currentLevel: z.array(z.enum(["A1", "A2", "B1", "B2", "C1", "C2", "ALL"])).default(["A1"]),
+	currentTopic: z.array(z.string()).default(["nature"]),
 	currentPlaylist: z.string().nullable().default(null),
 	hasCompletedOnboarding: z.boolean().default(false),
 	enablePronunciationSource: z.boolean().default(true),
@@ -432,10 +432,16 @@ export type RestorationRecord = z.infer<typeof RestorationRecordSchema>;
 // СХЕМИ URL (Параметри сторінки)
 // ========================================
 
+const commaStringToArray = z.preprocess((val) => {
+	if (typeof val === "string" && val.length > 0) return val.split(",");
+	if (Array.isArray(val)) return val;
+	return undefined;
+}, z.array(z.string()).optional());
+
 export const UrlParamsSchema = z.object({
 	mode: z.enum(["levels", "topics", "phrases", "playlists"]).optional(),
-	level: z.enum(["A1", "A2", "B1", "B2", "C1", "C2"]).optional(),
-	topic: z.string().optional(),
+	level: commaStringToArray,
+	topic: commaStringToArray,
 	playlist: z.string().optional(),
 	source: z.enum(["en", "uk", "nl", "de", "el", "crh"]).optional(),
 	target: z.enum(["en", "uk", "nl", "de", "el", "crh"]).optional(),

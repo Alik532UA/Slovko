@@ -13,7 +13,8 @@
 		"B2": "Boven gemiddeld",
 		"C1": "Gevorderd",
 		"C2": "Vloeiend",
-		"underConstruction": "Dit niveau is in ontwikkeling, kies een ander niveau"
+		"underConstruction": "Dit niveau is in ontwikkeling, kies een ander niveau",
+		"ALL": "Alle niveaus"
 	},
 	"tabs": {
 		"levels": "Niveaus",
@@ -247,7 +248,9 @@
 		"error": {
 			"oops": "Oeps! Er ging iets mis"
 		},
-		"or": "of"
+		"or": "of",
+		"learn": "Leren",
+		"reset": "Resetten"
 	},
 	"wordReport": {
 		"title": "Een fout melden",

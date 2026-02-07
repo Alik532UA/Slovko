@@ -133,21 +133,24 @@ function createSettingsStore() {
 			saveSettings();
 		},
 
-		setLevel(level: CEFRLevel) {
+		setLevel(level: CEFRLevel | CEFRLevel[]) {
 			logService.log("settings", "setLevel:", level);
-			settings = { ...settings, currentLevel: level, mode: "levels" };
+			const levels = Array.isArray(level) ? level : [level];
+			settings = { ...settings, currentLevel: levels, mode: "levels" };
 			saveSettings();
 		},
 
-		setPhrasesLevel(level: CEFRLevel) {
+		setPhrasesLevel(level: CEFRLevel | CEFRLevel[]) {
 			logService.log("settings", "setPhrasesLevel:", level);
-			settings = { ...settings, currentLevel: level, mode: "phrases" };
+			const levels = Array.isArray(level) ? level : [level];
+			settings = { ...settings, currentLevel: levels, mode: "phrases" };
 			saveSettings();
 		},
 
-		setTopic(topicId: string) {
+		setTopic(topicId: string | string[]) {
 			logService.log("settings", "setTopic:", topicId);
-			settings = { ...settings, currentTopic: topicId, mode: "topics" };
+			const topics = Array.isArray(topicId) ? topicId : [topicId];
+			settings = { ...settings, currentTopic: topics, mode: "topics" };
 			saveSettings();
 		},
 

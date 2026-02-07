@@ -5,9 +5,9 @@ import {
 	loadTranscriptions,
 	loadPhrasesLevel,
 	loadAllTranslations,
+	loadAllTranscriptions,
 } from "../data/wordService";
 import { logService } from "./logService";
-import { SUPPORTED_LEVELS } from "../config";
 import type { AppSettings } from "../data/schemas";
 import type {
 	TranslationDictionary,
@@ -15,7 +15,6 @@ import type {
 	WordPair,
 	WordKey,
 } from "../types";
-import { DictionarySchema } from "../data/schemas";
 import { getSemanticGroup } from "../data/semantics";
 
 export interface GameData {
@@ -104,7 +103,7 @@ export class GameDataService {
 			currentPlaylist,
 		} = settings;
 
-		logService.log("data", `Loading game data for mode: ${mode}, level: ${currentLevel}`);
+		logService.log("data", "Loading game data", { mode, currentLevel, currentTopic });
 
 		let sourceTranslations: TranslationDictionary = {};
 		let targetTranslations: TranslationDictionary = {};
@@ -113,15 +112,21 @@ export class GameDataService {
 		let words: string[] = [];
 
 		try {
-			// 1. Load Translations & Transcriptions
-			if (mode === "playlists" && currentPlaylist) {
-				logService.log("data", "Loading playlist translations...");
-				// SSoT: Use centralized loadAllTranslations
-				const [sourceAll, targetAll] = await Promise.all([
-					loadAllTranslations(sourceLanguage),
-					loadAllTranslations(targetLanguage),
-				]);
+			// 1. Load Dictionaries (always load everything for multi-select support)
+			const [srcTrans, tgtTrans, srcTscr, tgtTscr] = await Promise.all([
+				loadAllTranslations(sourceLanguage),
+				loadAllTranslations(targetLanguage),
+				loadAllTranscriptions(sourceLanguage),
+				loadAllTranscriptions(targetLanguage),
+			]);
 
+			sourceTranslations = srcTrans;
+			targetTranslations = tgtTrans;
+			sourceTranscriptions = srcTscr;
+			targetTranscriptions = tgtTscr;
+
+			// 2. Load Words Pool
+			if (mode === "playlists" && currentPlaylist) {
 				let playlistWords: (string | any)[] = [];
 				if (currentPlaylist === "mistakes") {
 					playlistWords = playlists.mistakes.map((m) => m.pair.id);
@@ -130,83 +135,60 @@ export class GameDataService {
 				} else if (currentPlaylist === "extra") {
 					playlistWords = playlists.extra.map((p) => p.id);
 				} else {
-					const customP = playlists.custom.find(
-						(p) => p.id === currentPlaylist,
-					);
+					const customP = playlists.custom.find((p) => p.id === currentPlaylist);
 					if (customP) playlistWords = customP.words;
 				}
 
-				// Process words and populate translations
 				playlistWords.forEach((w) => {
 					if (typeof w === "string") {
-						// Standard word key
-						const srcVal = sourceAll[w];
-						const tgtVal = targetAll[w];
-
-						// Тільки якщо слово знайдено хоча б в одному словнику
-						if (srcVal || tgtVal) {
-							sourceTranslations[w] = srcVal || w;
-							targetTranslations[w] = tgtVal || w;
+						if (sourceTranslations[w] || targetTranslations[w]) {
 							words.push(w);
-						} else {
-							logService.warn("game", `Ghost word detected in playlist: ${w}. Skipping.`);
 						}
 					} else if (w && typeof w === "object") {
-						// Custom word object
 						const id = w.id || `custom-${Date.now()}`;
 						sourceTranslations[id] = w.original;
 						targetTranslations[id] = w.translation;
-						if (w.transcription) {
-							sourceTranscriptions[id] = w.transcription;
-						}
+						if (w.transcription) sourceTranscriptions[id] = w.transcription;
 						words.push(id);
 					}
 				});
 			} else {
-				// Normal modes (levels, topics, phrases)
-				let category: "levels" | "topics" | "phrases" = "levels";
-				if (mode === "topics") category = "topics";
-				else if (mode === "phrases") category = "phrases";
+				const ids = mode === "topics" ? currentTopic : currentLevel;
 
-				const id = mode === "topics" ? currentTopic : currentLevel;
-
-				if (id) {
-					// Parallel loading
-					const [srcTrans, tgtTrans, srcTscr, tgtTscr] = await Promise.all([
-						loadTranslations(sourceLanguage, category, id),
-						loadTranslations(targetLanguage, category, id),
-						loadTranscriptions(category, id, sourceLanguage),
-						loadTranscriptions(category, id, targetLanguage),
-					]);
-
-					sourceTranslations = srcTrans;
-					targetTranslations = tgtTrans;
-					sourceTranscriptions = srcTscr;
-					targetTranscriptions = tgtTscr;
-
-					// Load words
+				if (ids && ids.length > 0) {
 					if (mode === "levels") {
-						const level = await loadLevel(currentLevel);
-						words = level.words;
-					} else if (mode === "topics" && currentTopic) {
-						const topic = await loadTopic(currentTopic);
-						words = topic.words;
+						for (const levelId of ids) {
+							if (levelId === "ALL") {
+								const allLevels = ["A1", "A2", "B1", "B2", "C1", "C2"];
+								for (const l of allLevels) {
+									const lvl = await loadLevel(l as any);
+									words.push(...lvl.words);
+								}
+							} else {
+								const lvl = await loadLevel(levelId as any);
+								words.push(...lvl.words);
+							}
+						}
+					} else if (mode === "topics") {
+						for (const topicId of ids) {
+							const topic = await loadTopic(topicId);
+							words.push(...topic.words);
+						}
 					} else if (mode === "phrases") {
-						const phrases = await loadPhrasesLevel(currentLevel);
-						words = phrases.words;
+						for (const levelId of ids) {
+							const phrases = await loadPhrasesLevel(levelId as any);
+							words.push(...phrases.words);
+						}
 					}
-
-					// Виконуємо розширення списку слів (Expansion Logic)
-					words = this.expandWordList(
-						words,
-						sourceTranslations,
-						targetTranslations,
-					);
 				}
 			}
+
+			// 3. Expansion Logic
+			words = this.expandWordList(words, sourceTranslations, targetTranslations);
+			
 		} catch (e) {
-			console.error(`Failed to load game data for ${mode}`, e);
-			throw e; // Re-throw to allow GameController to handle it
+			logService.error("data", `Failed to load game data for ${mode}`, e);
+			throw e;
 		}
 
 		return {

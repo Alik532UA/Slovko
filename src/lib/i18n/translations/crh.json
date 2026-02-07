@@ -13,7 +13,8 @@
 		"B2": "Orta üstü",
 		"C1": "İleri",
 		"C2": "Serbest",
-		"underConstruction": "Bu seviye işlenmekte, lütfen başqa bir seviye saylañız"
+		"underConstruction": "Bu seviye işlenmekte, lütfen başqa bir seviye saylañız",
+		"ALL": "Episi seviyeler"
 	},
 	"tabs": {
 		"levels": "Seviyeler",
@@ -247,7 +248,9 @@
 		"error": {
 			"oops": "Vay! Bir şey yañlış ketti"
 		},
-		"or": "ya da"
+		"or": "ya da",
+		"learn": "Ögrenmek",
+		"reset": "Sıfırlama"
 	},
 	"wordReport": {
 		"title": "Hata aqqında bildirmek",

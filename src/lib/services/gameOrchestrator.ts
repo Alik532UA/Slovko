@@ -72,10 +72,10 @@ class GameOrchestratorClass {
 		if (validated.mode && validated.mode !== settings.mode) {
 			settings.mode = validated.mode;
 		}
-		if (validated.level && validated.level !== settings.currentLevel) {
-			settings.currentLevel = validated.level;
+		if (validated.level && JSON.stringify(validated.level) !== JSON.stringify(settings.currentLevel)) {
+			settings.currentLevel = validated.level as any;
 		}
-		if (validated.topic && validated.topic !== settings.currentTopic) {
+		if (validated.topic && JSON.stringify(validated.topic) !== JSON.stringify(settings.currentTopic)) {
 			settings.currentTopic = validated.topic;
 		}
 		if (validated.playlist && validated.playlist !== settings.currentPlaylist) {

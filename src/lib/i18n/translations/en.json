@@ -13,7 +13,8 @@
 		"B2": "Upper-Intermediate",
 		"C1": "Advanced",
 		"C2": "Proficient",
-		"underConstruction": "This level is under development, please choose another level"
+		"underConstruction": "This level is under development, please choose another level",
+		"ALL": "All levels"
 	},
 	"tabs": {
 		"levels": "Levels",
@@ -247,7 +248,9 @@
 		"error": {
 			"oops": "Oops! Something went wrong"
 		},
-		"or": "or"
+		"or": "or",
+		"learn": "Learn",
+		"reset": "Reset"
 	},
 	"wordReport": {
 		"title": "Report an Error",

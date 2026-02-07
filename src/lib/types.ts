@@ -34,10 +34,10 @@ export const LANGUAGE_FLAGS: Record<Language, string> = {
 export type AppTheme = "dark-gray" | "light-gray" | "orange" | "green";
 
 /** Мовний CEFR рівень */
-export type CEFRLevel = "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
+export type CEFRLevel = "A1" | "A2" | "B1" | "B2" | "C1" | "C2" | "ALL";
 
 /** Всі рівні */
-export const ALL_LEVELS: CEFRLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
+export const ALL_LEVELS: CEFRLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2", "ALL"];
 
 // ========================================
 // СТРУКТУРА ДАНИХ СЛІВ

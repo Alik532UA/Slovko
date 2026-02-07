@@ -14,8 +14,8 @@ export class UrlSyncService {
 	static syncStoreWithUrl(dataSettings: AppSettings) {
 		const current = settingsStore.value;
 		logService.log("sync", "syncStoreWithUrl check:", {
-			urlSource: dataSettings.sourceLanguage,
-			storeSource: current.sourceLanguage,
+			urlLevels: dataSettings.currentLevel,
+			storeLevels: current.currentLevel,
 			urlUpdated: dataSettings.updatedAt,
 			storeUpdated: current.updatedAt,
 			hasCompletedOnboarding: current.hasCompletedOnboarding
@@ -24,22 +24,23 @@ export class UrlSyncService {
 		// КРИТИЧНО: Якщо онбординг не завершено, ми НЕ дозволяємо URL перезаписувати вибір користувача.
 		if (!current.hasCompletedOnboarding) return;
 
-		// ЗАХИСТ ВІД СТАРИХ ДАНИХ (Race Condition):
-		// Якщо дані з URL старіші за дані в сторі — ігноруємо їх.
-		// Це запобігає "відкату" налаштувань під час переходу між сторінками.
+		// ЗАХИСТ ВІД СТАРИХ ДАНИХ (Race Condition)
 		const urlTime = dataSettings.updatedAt || 0;
 		const storeTime = current.updatedAt || 0;
 
 		if (storeTime > urlTime) {
-			logService.log("sync", "URL data is stale (older than store). Skipping sync.", { urlTime, storeTime });
+			logService.log("sync", "URL data is stale. Skipping sync.");
 			return;
 		}
 
-		// Перевіряємо чи є реальна різниця між даними з URL та Store
+		// Порівнюємо масиви через JSON.stringify
+		const levelsChanged = JSON.stringify(current.currentLevel) !== JSON.stringify(dataSettings.currentLevel);
+		const topicsChanged = JSON.stringify(current.currentTopic) !== JSON.stringify(dataSettings.currentTopic);
+
 		if (
 			current.mode !== dataSettings.mode ||
-			current.currentLevel !== dataSettings.currentLevel ||
-			current.currentTopic !== dataSettings.currentTopic ||
+			levelsChanged ||
+			topicsChanged ||
 			current.currentPlaylist !== dataSettings.currentPlaylist ||
 			current.sourceLanguage !== dataSettings.sourceLanguage ||
 			current.targetLanguage !== dataSettings.targetLanguage
@@ -64,14 +65,17 @@ export class UrlSyncService {
 		const url = new URL(currentUrl);
 		const s = settings;
 
+		const levelsStr = s.currentLevel.join(",");
+		const topicsStr = s.currentTopic.join(",");
+
 		// Перевіряємо чи потрібно оновлювати
 		const needsUpdate =
 			url.searchParams.toString() === "" ||
 			url.searchParams.get("source") !== s.sourceLanguage ||
 			url.searchParams.get("target") !== s.targetLanguage ||
 			url.searchParams.get("mode") !== s.mode ||
-			((s.mode === "levels" || s.mode === "phrases") && url.searchParams.get("level") !== s.currentLevel) ||
-			(s.mode === "topics" && url.searchParams.get("topic") !== s.currentTopic) ||
+			((s.mode === "levels" || s.mode === "phrases") && url.searchParams.get("level") !== levelsStr) ||
+			(s.mode === "topics" && url.searchParams.get("topic") !== topicsStr) ||
 			(s.mode === "playlists" && s.currentPlaylist && url.searchParams.get("playlist") !== s.currentPlaylist);
 
 		if (!needsUpdate) return null;
@@ -84,11 +88,11 @@ export class UrlSyncService {
 		url.searchParams.set("target", s.targetLanguage);
 
 		if (s.mode === "levels" || s.mode === "phrases") {
-			url.searchParams.set("level", s.currentLevel);
+			url.searchParams.set("level", levelsStr);
 			url.searchParams.delete("topic");
 			url.searchParams.delete("playlist");
 		} else if (s.mode === "topics") {
-			url.searchParams.set("topic", s.currentTopic);
+			url.searchParams.set("topic", topicsStr);
 			url.searchParams.delete("level");
 			url.searchParams.delete("playlist");
 		} else if (s.mode === "playlists" && s.currentPlaylist) {
