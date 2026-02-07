@@ -10,8 +10,8 @@ export const logConfig = {
 	presence: false,
 	stats: false,
 	ui: false,
-	data: true,
-	i18n: true,
+	data: false,
+	i18n: false,
 };
 
 const recentLogs: string[] = [];

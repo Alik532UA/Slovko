@@ -4,10 +4,12 @@
 	 * Використовує BaseModal для сучасного дизайну
 	 */
 	import { _ } from "svelte-i18n";
+	import { fade } from "svelte/transition";
 	import { goto } from "$app/navigation";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import type { CEFRLevel, GameMode, PlaylistId } from "$lib/types";
 	import BaseModal from "../ui/BaseModal.svelte";
+	import { smoothHeight } from "$lib/actions/smoothHeight";
 
 	// Mode Components
 	import LevelGrid from "./modes/LevelGrid.svelte";
@@ -76,57 +78,78 @@
 </script>
 
 <BaseModal {onclose} testid="level-topic-modal" maxWidth="640px">
-	<div class="modal-inner">
-		<!-- Tabs -->
-		<nav class="tabs">
-			{#each TABS as tab (tab.id)}
-				<button
-					class="tab"
-					class:active={activeTab === tab.id}
-					onclick={() => (activeTab = tab.id)}
-					data-testid={tab.testId}
-				>
-					{$_(tab.label)}
-				</button>
-			{/each}
-		</nav>
-
-		<!-- Content -->
-		<div class="content">
-			{#if activeTab === "levels"}
-				<LevelGrid mode="levels" {selectedIds} onselect={toggleId} />
-			{:else if activeTab === "topics"}
-				<TopicGrid {selectedIds} onselect={toggleId} />
-			{:else if activeTab === "phrases"}
-				<LevelGrid mode="phrases" {selectedIds} onselect={toggleId} />
-			{:else if activeTab === "playlists"}
-				<PlaylistGrid onselect={selectPlaylist} />
-			{/if}
-		</div>
-
-		<!-- Actions -->
-		{#if activeTab !== "playlists"}
-			<div class="actions">
-				<button 
-					class="action-btn secondary" 
-					onclick={resetSelection}
-					disabled={selectedIds.length === 0}
-				>
-					{$_("common.reset")}
-				</button>
-				<button 
-					class="action-btn primary" 
-					onclick={startLearning}
-					disabled={selectedIds.length === 0}
-				>
-					{$_("common.learn")} ({selectedIds.length})
-				</button>
+	<div class="modal-internal-wrapper" use:smoothHeight={{ duration: 300 }}>
+		<div class="modal-content-measure">
+			<div class="modal-inner">
+						<!-- Tabs -->
+						<nav class="tabs" data-testid="level-topic-tabs">
+							{#each TABS as tab (tab.id)}
+								<button
+									class="tab"
+									class:active={activeTab === tab.id}
+									onclick={() => (activeTab = tab.id)}
+									data-testid={tab.testId}
+								>
+									{$_(tab.label)}
+								</button>
+							{/each}
+						</nav>
+				
+						<!-- Content -->
+						<div class="content-wrapper" data-testid="level-topic-modal-content">
+							{#key activeTab}
+								<div in:fade={{ duration: 250, delay: 50 }} out:fade={{ duration: 150 }} class="content" data-testid="level-topic-scroll-area">
+									{#if activeTab === "levels"}
+										<LevelGrid mode="levels" {selectedIds} onselect={toggleId} />
+									{:else if activeTab === "topics"}
+										<TopicGrid {selectedIds} onselect={toggleId} />
+									{:else if activeTab === "phrases"}
+										<LevelGrid mode="phrases" {selectedIds} onselect={toggleId} />
+									{:else if activeTab === "playlists"}
+										<PlaylistGrid onselect={selectPlaylist} />
+									{/if}
+								</div>
+							{/key}
+						</div>
+				
+						<!-- Actions -->
+						{#if activeTab !== "playlists"}
+							<div class="actions" data-testid="level-topic-actions">
+								<button 
+									class="action-btn secondary" 
+									onclick={resetSelection}
+									disabled={selectedIds.length === 0}
+									data-testid="level-topic-reset-btn"
+								>
+									{$_("common.reset")}
+								</button>
+								<button 
+									class="action-btn primary" 
+									onclick={startLearning}
+									disabled={selectedIds.length === 0}
+									data-testid="level-topic-learn-btn"
+								>
+									{$_("common.learn")} ({selectedIds.length})
+								</button>
+							</div>
+						{/if}
+				
 			</div>
-		{/if}
+		</div>
 	</div>
 </BaseModal>
 
 <style>
+	.modal-internal-wrapper {
+		display: block;
+	}
+
+	.modal-content-measure {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
 	.modal-inner {
 		display: flex;
 		flex-direction: column;
@@ -135,17 +158,12 @@
 
 	.tabs {
 		display: flex;
+		flex-wrap: wrap; /* Дозволяємо перенесення на новий рядок */
 		margin-bottom: 1.5rem;
 		gap: 0.25rem;
 		justify-content: flex-start;
-		overflow-x: auto;
 		padding-bottom: 0.5rem;
 		border-bottom: 1px solid var(--border);
-		scrollbar-width: none;
-	}
-
-	.tabs::-webkit-scrollbar {
-		display: none;
 	}
 
 	.tab {
@@ -171,12 +189,16 @@
 		background: var(--bg-secondary);
 	}
 
+	.content-wrapper {
+		display: grid;
+		grid-template-columns: 100%;
+		grid-template-rows: 1fr;
+		width: 100%;
+	}
+
 	.content {
+		grid-area: 1 / 1 / 2 / 2;
 		padding: 0.5rem 0;
-		max-height: 60vh;
-		overflow-y: auto;
-		scrollbar-width: thin;
-		scrollbar-color: var(--border) transparent;
 	}
 
 	.actions {

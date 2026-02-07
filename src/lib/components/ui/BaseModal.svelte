@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fade, scale } from "svelte/transition";
 	import { X } from "lucide-svelte";
+	import { onMount, onDestroy } from "svelte";
 
 	interface Props {
 		onclose: () => void;
@@ -17,6 +18,14 @@
 		maxWidth = "480px",
 		showCloseButton = true,
 	}: Props = $props();
+
+	onMount(() => {
+		document.body.style.overflow = "hidden";
+	});
+
+	onDestroy(() => {
+		document.body.style.overflow = "";
+	});
 
 	function handleBackdropClick(e: MouseEvent) {
 		if (e.target === e.currentTarget) onclose();
@@ -59,7 +68,7 @@
 			</button>
 		{/if}
 
-		<div class="modal-content">
+		<div class="modal-content" data-testid="{testid}-content">
 			{@render children()}
 		</div>
 	</div>
@@ -75,7 +84,8 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		padding: 1.5rem 0;
+		justify-content: flex-start;
+		padding: 5vh 1.5rem;
 		overflow-y: auto;
 	}
 
@@ -89,8 +99,9 @@
 		width: 100%;
 		position: relative;
 		color: var(--text-primary);
-		margin: auto;
 		padding: 3.5rem 1.5rem 1.5rem;
+		margin: 0 auto;
+		box-sizing: border-box;
 	}
 
 	.close-btn {

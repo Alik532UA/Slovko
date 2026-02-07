@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
+	import { fade } from "svelte/transition";
 	import { ALL_LEVELS } from "$lib/types";
 	import {
 		Medal,
@@ -138,76 +139,80 @@
 	</div>
 
 	<!-- List -->
-	<div class="leaderboard-list" data-testid="leaderboard-list" role="list">
-		{#if isLoading}
-			<div class="loading-state">
-				<Loader2 size={32} class="spinner" />
-				<p>{$_("leaderboard.loading")}</p>
+	<div class="leaderboard-list-wrapper">
+		{#key [selectedLevel, selectedMetric]}
+			<div in:fade={{ duration: 250, delay: 50 }} out:fade={{ duration: 150 }} class="leaderboard-list" data-testid="leaderboard-list" role="list">
+				{#if isLoading}
+					<div class="loading-state">
+						<Loader2 size={32} class="spinner" />
+						<p>{$_("leaderboard.loading")}</p>
+					</div>
+				{:else if leaderboardData.length === 0}
+					<div class="empty-state">
+						<p>{$_("leaderboard.noData")}</p>
+					</div>
+				{:else}
+					{#each leaderboardData as user (user.uid)}
+						<!-- 
+						   Якщо це ми (user.isMe), беремо дані прямо з authStore для миттєвого відображення змін.
+						   Для інших — з даних лідерборду.
+						-->
+						{@const realName =
+							user.isMe && authStore.displayName
+								? authStore.displayName
+								: user.name}
+						{@const realPhoto =
+							user.isMe && authStore.photoURL ? authStore.photoURL : user.photoURL}
+						
+						{@const localValue = user.isMe ? getLocalMetricValue(selectedMetric, selectedLevel) : 0}
+						{@const displayScore = user.isMe ? Math.max(user.score, localValue) : user.score}
+
+						<!-- Додаємо рівень до testid, якщо ми на вкладці "Всі" -->
+						{@const levelSuffix =
+							selectedLevel === "all" && user.bestCorrectStreakLevel
+								? `-${user.bestCorrectStreakLevel}`
+								: ""}
+
+						<div
+							class="leaderboard-item"
+							class:me={user.isMe}
+							data-testid="leaderboard-item-{user.rank}{levelSuffix}"
+							role="listitem"
+						>
+							<div class="col-rank">
+								{#if user.rank === 1}
+									<Crown size={20} color="#FFD700" fill="#FFD700" />
+								{:else if user.rank === 2}
+									<Medal size={20} color="#C0C0C0" />
+								{:else if user.rank === 3}
+									<Medal size={20} color="#CD7F32" />
+								{:else}
+									<span class="rank-num">{user.rank}</span>
+								{/if}
+							</div>
+
+																	<div class="col-user">
+																			<UserAvatar uid={user.uid} photoURL={realPhoto} displayName={realName} size={24} />
+																			<span class="username">{realName}</span>
+													{#if selectedLevel === "all" && user.bestCorrectStreakLevel}
+									<span class="level-badge">{user.bestCorrectStreakLevel}</span>
+								{/if}
+
+								{#if user.isMe}
+									<span class="me-badge">You</span>
+								{/if}
+							</div>
+
+							<div class="col-score">
+								<span class="score-val">
+									{displayScore}{selectedMetric === "accuracy" ? "%" : ""}
+								</span>
+							</div>
+						</div>
+					{/each}
+				{/if}
 			</div>
-		{:else if leaderboardData.length === 0}
-			<div class="empty-state">
-				<p>{$_("leaderboard.noData")}</p>
-			</div>
-		{:else}
-			{#each leaderboardData as user (user.uid)}
-				<!-- 
-                   Якщо це ми (user.isMe), беремо дані прямо з authStore для миттєвого відображення змін.
-                   Для інших — з даних лідерборду.
-                -->
-				{@const realName =
-					user.isMe && authStore.displayName
-						? authStore.displayName
-						: user.name}
-				{@const realPhoto =
-					user.isMe && authStore.photoURL ? authStore.photoURL : user.photoURL}
-				
-				{@const localValue = user.isMe ? getLocalMetricValue(selectedMetric, selectedLevel) : 0}
-				{@const displayScore = user.isMe ? Math.max(user.score, localValue) : user.score}
-
-				<!-- Додаємо рівень до testid, якщо ми на вкладці "Всі" -->
-				{@const levelSuffix =
-					selectedLevel === "all" && user.bestCorrectStreakLevel
-						? `-${user.bestCorrectStreakLevel}`
-						: ""}
-
-				<div
-					class="leaderboard-item"
-					class:me={user.isMe}
-					data-testid="leaderboard-item-{user.rank}{levelSuffix}"
-					role="listitem"
-				>
-					<div class="col-rank">
-						{#if user.rank === 1}
-							<Crown size={20} color="#FFD700" fill="#FFD700" />
-						{:else if user.rank === 2}
-							<Medal size={20} color="#C0C0C0" />
-						{:else if user.rank === 3}
-							<Medal size={20} color="#CD7F32" />
-						{:else}
-							<span class="rank-num">{user.rank}</span>
-						{/if}
-					</div>
-
-															<div class="col-user">
-																	<UserAvatar uid={user.uid} photoURL={realPhoto} displayName={realName} size={24} />
-																	<span class="username">{realName}</span>
-											{#if selectedLevel === "all" && user.bestCorrectStreakLevel}
-							<span class="level-badge">{user.bestCorrectStreakLevel}</span>
-						{/if}
-
-						{#if user.isMe}
-							<span class="me-badge">You</span>
-						{/if}
-					</div>
-
-					<div class="col-score">
-						<span class="score-val">
-							{displayScore}{selectedMetric === "accuracy" ? "%" : ""}
-						</span>
-					</div>
-				</div>
-			{/each}
-		{/if}
+		{/key}
 	</div>
 
 	{#if authStore.isGuest}
@@ -371,10 +376,39 @@
 		margin-left: 0.5rem; /* Smaller gap */
 	}
 
+	.leaderboard-list-wrapper {
+		display: grid;
+		grid-template-columns: 100%;
+		grid-template-rows: 1fr;
+		width: 100%;
+	}
+
 	.leaderboard-list {
+		grid-area: 1 / 1 / 2 / 2;
 		display: flex;
 		flex-direction: column;
 		gap: 0.65rem;
+		width: 100%;
+	}
+
+	.loading-state {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 3rem 1rem;
+		gap: 1rem;
+		color: var(--text-secondary);
+	}
+
+	.spinner {
+		animation: spin 1s linear infinite;
+		color: var(--accent);
+	}
+
+	@keyframes spin {
+		from { transform: rotate(0deg); }
+		to { transform: rotate(360deg); }
 	}
 
 	.leaderboard-item {

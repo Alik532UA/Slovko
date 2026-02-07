@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
+	import { fade } from "svelte/transition";
 	import {
 		Target,
 		Flame,
@@ -105,28 +106,32 @@
 			{/each}
 		</div>
 
-		<div class="stats-grid" data-testid="level-stats-grid">
-			<button class="stat-card level-stat" data-testid="level-stat-correct" onclick={() => playLabel("correct")}>
-				<div class="stat-icon-box"><Target size={20} /></div>
-				<div class="stat-content">
-					<span class="value">{currentLevelStats.totalCorrect}</span>
-					<span class="label">{$_("profile.stats.correct")}</span>
+		<div class="stats-grid-wrapper">
+			{#key selectedLevel}
+				<div in:fade={{ duration: 250, delay: 50 }} out:fade={{ duration: 150 }} class="stats-grid" data-testid="level-stats-grid">
+					<button class="stat-card level-stat" data-testid="level-stat-correct" onclick={() => playLabel("correct")}>
+						<div class="stat-icon-box"><Target size={20} /></div>
+						<div class="stat-content">
+							<span class="value">{currentLevelStats.totalCorrect}</span>
+							<span class="label">{$_("profile.stats.correct")}</span>
+						</div>
+					</button>
+					<button class="stat-card level-stat" data-testid="level-stat-streak" onclick={() => playLabel("bestCorrectStreak")}>
+						<div class="stat-icon-box"><Medal size={20} /></div>
+						<div class="stat-content">
+							<span class="value">{currentLevelStats.bestCorrectStreak}</span>
+							<span class="label">{$_("profile.stats.bestCorrectStreak")}</span>
+						</div>
+					</button>
+					<button class="stat-card level-stat" data-testid="level-stat-accuracy" onclick={() => playLabel("accuracy")}>
+						<div class="stat-icon-box"><Percent size={20} /></div>
+						<div class="stat-content">
+							<span class="value">{levelAccuracy}%</span>
+							<span class="label">{$_("profile.stats.accuracy")}</span>
+						</div>
+					</button>
 				</div>
-			</button>
-			<button class="stat-card level-stat" data-testid="level-stat-streak" onclick={() => playLabel("bestCorrectStreak")}>
-				<div class="stat-icon-box"><Medal size={20} /></div>
-				<div class="stat-content">
-					<span class="value">{currentLevelStats.bestCorrectStreak}</span>
-					<span class="label">{$_("profile.stats.bestCorrectStreak")}</span>
-				</div>
-			</button>
-			<button class="stat-card level-stat" data-testid="level-stat-accuracy" onclick={() => playLabel("accuracy")}>
-				<div class="stat-icon-box"><Percent size={20} /></div>
-				<div class="stat-content">
-					<span class="value">{levelAccuracy}%</span>
-					<span class="label">{$_("profile.stats.accuracy")}</span>
-				</div>
-			</button>
+			{/key}
 		</div>
 	</div>
 
@@ -214,12 +219,21 @@
 </div>
 
 <style>
+	.stats-grid-wrapper {
+		display: grid;
+		grid-template-columns: 100%;
+		grid-template-rows: 1fr;
+		width: 100%;
+	}
+
 	.stats-grid {
+		grid-area: 1 / 1 / 2 / 2;
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
 		margin-bottom: 1rem;
 		transition: all 0.3s ease;
+		width: 100%;
 	}
 
 	.extra-stats-container {
