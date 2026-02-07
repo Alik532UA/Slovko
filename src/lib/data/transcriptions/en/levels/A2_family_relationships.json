@@ -1,14 +1,15 @@
 {
-	"marry": "ˈmæri",
-	"single": "ˈsɪŋɡl",
-	"uncle": "ˈʌŋkl",
-	"married": "ˈmærid",
 	"aunt": "ɑːnt",
+	"brother_male": "/ˈbrʌð.ə/",
 	"colleague": "ˈkɒliːɡ",
 	"cousin": "ˈkʌzn",
 	"granddaughter": "ˈɡrændɔːtər",
-	"grandson": "ˈɡrændsʌn",
-	"partner": "ˈpɑːtnə",
 	"grandfather": "ˈɡrænfɑːðər",
-	"grandmother": "ˈɡrænmʌðər"
+	"grandmother": "ˈɡrænmʌðər",
+	"grandson": "ˈɡrændsʌn",
+	"married": "ˈmærid",
+	"marry": "ˈmæri",
+	"partner": "ˈpɑːtnə",
+	"single": "ˈsɪŋɡl",
+	"uncle": "ˈʌŋkl"
 }
