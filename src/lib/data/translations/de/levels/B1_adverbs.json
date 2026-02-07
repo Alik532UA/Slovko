@@ -1,8 +1,12 @@
 {
+	"actually": "eigentlich",
 	"apply": "anwenden",
 	"certainly": "sicherlich",
-	"simply": "einfach",
+	"definitely": "definitiv",
 	"rely": "sich verlassen",
+	"simply": "einfach",
 	"supply": "liefern",
-	"wage_hourly": "Lohn"
+	"unfortunately": "leider",
+	"wage_hourly": "Lohn",
+	"yet": "noch"
 }
