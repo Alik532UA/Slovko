@@ -94,9 +94,14 @@
 		// Ігноруємо якщо вже йде процес або картка в "фінальному" стані
 		if (card.status === "correct" || card.status === "wrong") return;
 
-		// Вибираємо картку (стандартна логіка кліку також спрацює, але це ок)
-		// gameController.selectCard(card); // Можливо, варто викликати це одразу? 
-		// Ні, нехай selectCard викликається в кінці або окремо, щоб не плутати логіку
+		// Скидаємо попередній вибір (тапом), щоб не було конфлікту синього та помаранчевого кольорів
+		if (gameState.selectedCard) {
+			// Якщо це не та сама картка, просто скидаємо її в idle
+			if (gameState.selectedCard.id !== card.id) {
+				gameState.updateCardStatus(gameState.selectedCard.id, "idle");
+			}
+			gameState.setSelectedCard(null);
+		}
 		
 		dragState = {
 			active: true,
