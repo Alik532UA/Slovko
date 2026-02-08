@@ -112,6 +112,7 @@
 
 	// Google Login
 	async function handleGoogleLogin() {
+		if (isLinking) return;
 		isLinking = true;
 		errorMessage = "";
 		try {
@@ -159,6 +160,7 @@
 	}
 
 	async function handleEmailSignIn(email: string, password: string) {
+		if (isLinking) return;
 		if (!email || !password) {
 			errorMessage = $_("profile.errors.fillFields");
 			return;
@@ -183,6 +185,7 @@
 	}
 
 	async function handleEmailRegister(email: string, password: string) {
+		if (isLinking) return;
 		if (!email || !password) {
 			errorMessage = $_("profile.errors.fillFields");
 			return;
