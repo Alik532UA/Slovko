@@ -695,4 +695,12 @@ export const FriendsService = {
 			return false;
 		}
 	},
+
+	/**
+	 * Очистити кеш лідерборду
+	 */
+	clearCache(): void {
+		Object.keys(LEADERBOARD_CACHE).forEach(key => delete LEADERBOARD_CACHE[key]);
+		logService.log("presence", "Leaderboard cache cleared");
+	}
 };

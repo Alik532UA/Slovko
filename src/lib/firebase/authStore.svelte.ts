@@ -1,6 +1,7 @@
 import { AuthService } from "./AuthService";
 import { SyncService } from "./SyncService.svelte";
 import { PresenceService } from "./PresenceService.svelte";
+import { FriendsService } from "./FriendsService";
 import { friendsStore } from "../stores/friendsStore.svelte";
 import type { User } from "firebase/auth";
 
@@ -76,6 +77,10 @@ function createAuthStore() {
 	function updateState(user: User | null) {
 		const oldUid = state.uid;
 		firebaseUser = user;
+
+		// Завжди очищаємо кеш лідерборду при зміні користувача, 
+		// щоб уникнути фантомних акаунтів (isMe)
+		FriendsService.clearCache();
 
 		if (user) {
 			state = serializeUser(user);

@@ -154,18 +154,20 @@
 				{:else}
 					{#each leaderboardData as user (user.uid)}
 						<!-- 
-						   Якщо це ми (user.isMe), беремо дані прямо з authStore для миттєвого відображення змін.
-						   Для інших — з даних лідерборду.
+						   Визначаємо чи це поточний користувач на основі актуального UID з authStore.
+						   Це надійніше, ніж використовувати запечене в кеш значення isMe.
 						-->
+						{@const isMe = user.uid === authStore.uid}
+						
 						{@const realName =
-							user.isMe && authStore.displayName
+							isMe && authStore.displayName
 								? authStore.displayName
 								: user.name}
 						{@const realPhoto =
-							user.isMe && authStore.photoURL ? authStore.photoURL : user.photoURL}
+							isMe && authStore.photoURL ? authStore.photoURL : user.photoURL}
 						
-						{@const localValue = user.isMe ? getLocalMetricValue(selectedMetric, selectedLevel) : 0}
-						{@const displayScore = user.isMe ? Math.max(user.score, localValue) : user.score}
+						{@const localValue = isMe ? getLocalMetricValue(selectedMetric, selectedLevel) : 0}
+						{@const displayScore = isMe ? Math.max(user.score, localValue) : user.score}
 
 						<!-- Додаємо рівень до testid, якщо ми на вкладці "Всі" -->
 						{@const levelSuffix =
@@ -175,7 +177,7 @@
 
 						<div
 							class="leaderboard-item"
-							class:me={user.isMe}
+							class:me={isMe}
 							data-testid="leaderboard-item-{user.rank}{levelSuffix}"
 							role="listitem"
 						>
@@ -198,7 +200,7 @@
 									<span class="level-badge">{user.bestCorrectStreakLevel}</span>
 								{/if}
 
-								{#if user.isMe}
+								{#if isMe}
 									<span class="me-badge">You</span>
 								{/if}
 							</div>
