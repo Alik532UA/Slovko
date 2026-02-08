@@ -3,6 +3,9 @@ import { SyncService } from "./SyncService.svelte";
 import { PresenceService } from "./PresenceService.svelte";
 import { FriendsService } from "./FriendsService";
 import { friendsStore } from "../stores/friendsStore.svelte";
+import { statisticsService } from "../services/statisticsService.svelte";
+import { notificationStore } from "../stores/notificationStore.svelte";
+import { settingsStore } from "../stores/settingsStore.svelte";
 import type { User } from "firebase/auth";
 
 /**
@@ -78,9 +81,12 @@ function createAuthStore() {
 		const oldUid = state.uid;
 		firebaseUser = user;
 
-		// Завжди очищаємо кеш лідерборду при зміні користувача, 
-		// щоб уникнути фантомних акаунтів (isMe)
+		// Завжди очищаємо кеш лідерборду та інші сервіси при зміні користувача, 
+		// щоб уникнути фантомних даних
 		FriendsService.clearCache();
+		statisticsService.clearCache();
+		notificationStore.clear();
+		settingsStore.resetUserSpecificData();
 
 		if (user) {
 			state = serializeUser(user);
@@ -222,7 +228,11 @@ function createAuthStore() {
 			console.log("[AuthStore] Logging out...");
 			
 			// Примусово зберігаємо останні дані перед виходом
-			await SyncService.uploadAll(true);
+			try {
+				await SyncService.uploadAll(true);
+			} catch (e) {
+				console.error("[AuthStore] Final sync failed, proceeding with logout", e);
+			}
 			
 			// Офіційний логаут Firebase. updateState(null) буде викликано через listener
 			await AuthService.logout();

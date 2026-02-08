@@ -229,6 +229,22 @@ function createSettingsStore() {
 			settings = { ...settings, hasCompletedOnboarding: true };
 			saveSettings();
 		},
+
+		/**
+		 * Скидає метадані, специфічні для конкретного користувача.
+		 * Викликається при зміні акаунта.
+		 */
+		resetUserSpecificData() {
+			logService.log("settings", "Resetting user-specific metadata");
+			settings = {
+				...settings,
+				lastSeenFollowerAt: 0,
+				// Тут можна додати інші поля, які не мають "перетікати" між акаунтами
+			};
+			if (browser) {
+				localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(settings));
+			}
+		},
 	};
 }
 

@@ -199,7 +199,7 @@ class SyncServiceClass {
 	/**
 	 * Вивантажити локальні зміни в хмару (з дебаунсом або примусово)
 	 */
-	uploadAll(force = false) {
+	async uploadAll(force = false) {
 		if (!auth.currentUser || !this.isOnline) return;
 
 		this.pendingUpload = true;
@@ -207,7 +207,7 @@ class SyncServiceClass {
 		if (this.uploadTimeout) clearTimeout(this.uploadTimeout);
 
 		if (force) {
-			this.performUpload();
+			return await this.performUpload();
 		} else {
 			this.uploadTimeout = setTimeout(() => {
 				this.performUpload();
@@ -283,6 +283,12 @@ class SyncServiceClass {
 			batch.set(profileRef, profileUpdate, { merge: true });
 			batch.set(historyRef, localActivity, { merge: true });
 
+			// Double check auth right before commit to avoid Permission Denied during logout
+			if (!auth.currentUser) {
+				logService.warn("sync", "Auth lost right before commit, aborting upload");
+				return;
+			}
+
 			try {
 				await batch.commit();
 			} catch (err) {
@@ -304,8 +310,13 @@ class SyncServiceClass {
 				logService.log("sync", "Processing queued cloud update after upload");
 				this.handleCloudUpdate(dataToProcess);
 			}
-		} catch (e) {
-			logService.error("sync", "Sync Upload Error:", e);
+		} catch (e: any) {
+			// Якщо помилка доступу сталася під час логауту — ігноруємо її (вона очікувана)
+			if (e?.code === 'permission-denied' && !auth.currentUser) {
+				logService.log("sync", "Sync aborted: user logged out during upload");
+			} else {
+				logService.error("sync", "Sync Upload Error:", e);
+			}
 			this.status = "error";
 			this.isUploading = false; // Важливо: дозволити наступні спроби
 			this.scheduleRetry();

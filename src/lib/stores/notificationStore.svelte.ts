@@ -32,12 +32,17 @@ function createNotificationStore() {
 		notifications = notifications.filter((n) => n.id !== id);
 	}
 
+	function clear() {
+		notifications = [];
+	}
+
 	return {
 		get value() {
 			return notifications;
 		},
 		add,
 		remove,
+		clear,
 		info: (msg: string, timeout?: number) => add("info", msg, timeout),
 		success: (msg: string, timeout?: number) => add("success", msg, timeout),
 		warning: (msg: string, timeout?: number) => add("warning", msg, timeout),

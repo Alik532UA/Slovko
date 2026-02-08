@@ -325,9 +325,6 @@ class PresenceServiceClass {
 			document.removeEventListener("visibilitychange", this.boundHandleVisibilityChange);
 			this.boundHandleVisibilityChange = null;
 		}
-
-		const userStatusRef = ref(rtdb, `/status/${uid}`);
-		set(userStatusRef, { state: "offline", lastChanged: serverTimestamp() });
 		
 		this.stopListeners();
 		this.statusUnsubscribers.clear();
@@ -335,6 +332,8 @@ class PresenceServiceClass {
 		this.initialStatusLoaded.clear();
 		this.interactions = [];
 		this.processedSignals.clear();
+		this.lastSignalSentAt.clear();
+		this.lastTrackedUids = [];
 		this.isInitialized = false;
 		this.currentUid = null;
 	}
