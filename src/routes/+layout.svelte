@@ -91,10 +91,22 @@
 		window.addEventListener("orientationchange", updateVh);
 		window.addEventListener("click", handleGlobalClick);
 
+		// Перевірка оновлень при поверненні в додаток
+		const handleVisibilityChange = () => {
+			if (document.visibilityState === "visible") {
+				logService.log("version", "App visible again, checking for updates...");
+				checkForUpdates();
+			}
+		};
+		window.addEventListener("visibilitychange", handleVisibilityChange);
+		window.addEventListener("focus", handleVisibilityChange);
+
 		return () => {
 			window.removeEventListener("resize", updateVh);
 			window.removeEventListener("orientationchange", updateVh);
 			window.removeEventListener("click", handleGlobalClick);
+			window.removeEventListener("visibilitychange", handleVisibilityChange);
+			window.removeEventListener("focus", handleVisibilityChange);
 		};
 	});
 

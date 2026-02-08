@@ -10,6 +10,23 @@ const REFUSED_AT_KEY = "app_update_refused_at";
 const FIVE_DAYS_MS = 5 * 24 * 60 * 60 * 1000;
 
 /**
+ * Порівнює дві версії (v1 < v2 ?)
+ * Повертає true, якщо v1 менша за v2
+ */
+function isVersionOlder(v1: string, v2: string): boolean {
+	const p1 = v1.split('.').map(Number);
+	const p2 = v2.split('.').map(Number);
+	
+	for (let i = 0; i < Math.max(p1.length, p2.length); i++) {
+		const part1 = p1[i] || 0;
+		const part2 = p2[i] || 0;
+		if (part1 < part2) return true;
+		if (part1 > part2) return false;
+	}
+	return false;
+}
+
+/**
  * Сервіс для перевірки оновлень
  */
 export async function checkForUpdates() {
@@ -31,16 +48,17 @@ export async function checkForUpdates() {
 
 		const data = await response.json();
 		const serverVersion = data.version;
+		const minVersion = data.minVersion || "0.0.0";
 
-		const cacheVersion = localStorage.getItem(CACHE_VERSION_KEY);
+		const cacheVersion = localStorage.getItem(CACHE_VERSION_KEY) || "0.0.0";
 		const refusedVersion = localStorage.getItem(REFUSED_VERSION_KEY);
 		const refusedAt = parseInt(localStorage.getItem(REFUSED_AT_KEY) || "0");
 
 		logService.log("version", "Version comparison:", {
 			server: serverVersion,
+			minRequired: minVersion,
 			local: cacheVersion,
 			refused: refusedVersion,
-			isMatch: cacheVersion === serverVersion
 		});
 
 		versionStore.setVersion(serverVersion);
@@ -48,7 +66,16 @@ export async function checkForUpdates() {
 			versionStore.setRefusal(refusedVersion, refusedAt);
 		}
 
-		if (!cacheVersion) {
+		// ПЕРЕВІРКА НА КРИТИЧНУ ВЕРСІЮ
+		// Якщо поточна версія менша або рівна критичній — оновлюємо миттєво
+		const isCritical = cacheVersion === minVersion || isVersionOlder(cacheVersion, minVersion);
+		if (isCritical && cacheVersion !== "0.0.0" && cacheVersion !== serverVersion) {
+			logService.warn("version", "CRITICAL UPDATE REQUIRED. Forcing reload...");
+			await applyUpdate();
+			return;
+		}
+
+		if (cacheVersion === "0.0.0") {
 			logService.log("version", "First visit: setting initial cache version.");
 			localStorage.setItem(CACHE_VERSION_KEY, serverVersion);
 			return;
@@ -62,7 +89,6 @@ export async function checkForUpdates() {
 			logService.log("version", "Conditions for showing update banner:", {
 				isNewerThanRefused,
 				isCooldownOver,
-				timeSinceRefusal: refusedAt > 0 ? Math.round((now - refusedAt) / 1000 / 60) + " min" : "N/A"
 			});
 
 			if (!refusedVersion || isNewerThanRefused || isCooldownOver) {
