@@ -94,15 +94,6 @@
 		// Ігноруємо якщо вже йде процес або картка в "фінальному" стані
 		if (card.status === "correct" || card.status === "wrong") return;
 
-		// Скидаємо попередній вибір (тапом), щоб не було конфлікту синього та помаранчевого кольорів
-		if (gameState.selectedCard) {
-			// Якщо це не та сама картка, просто скидаємо її в idle
-			if (gameState.selectedCard.id !== card.id) {
-				gameState.updateCardStatus(gameState.selectedCard.id, "idle");
-			}
-			gameState.setSelectedCard(null);
-		}
-		
 		dragState = {
 			active: true,
 			startPoint: { x: e.clientX, y: e.clientY },
@@ -113,9 +104,23 @@
 	}
 
 	function handleDragMove(e: PointerEvent) {
-		if (!dragState.active) return;
+		if (!dragState.active || !dragState.startPoint) return;
 
 		dragState.currentPoint = { x: e.clientX, y: e.clientY };
+
+		// Якщо ми почали реальний рух (більше 5px), скидаємо старий вибір (тапом),
+		// щоб не було конфлікту візуалів (синій vs помаранчевий)
+		const dist = Math.hypot(
+			e.clientX - dragState.startPoint.x,
+			e.clientY - dragState.startPoint.y
+		);
+		
+		if (dist > 5 && gameState.selectedCard) {
+			if (gameState.selectedCard.id !== dragState.sourceCard?.id) {
+				gameState.updateCardStatus(gameState.selectedCard.id, "idle");
+			}
+			gameState.setSelectedCard(null);
+		}
 
 		// Hit testing для підсвічування
 		const elements = document.elementsFromPoint(e.clientX, e.clientY);
