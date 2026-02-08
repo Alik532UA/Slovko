@@ -10,14 +10,15 @@
 	let kKeyPressTimer: ReturnType<typeof setTimeout>;
 
 	function handleGlobalKeydown(e: KeyboardEvent) {
-		if (!e.key) return; // Ігноруємо події без key (наприклад, автозаповнення)
-
-		if (e.key.toLowerCase() === "к") {
+		// Використовуємо e.code для ігнорування мовної розкладки (KeyR = 'R' або 'К')
+		if (e.code === "KeyR") {
 			kKeyPressCount++;
 			clearTimeout(kKeyPressTimer);
 
-			if (kKeyPressCount >= 5) {
-				hardReset(true);
+			const threshold = dev ? 5 : 50;
+
+			if (kKeyPressCount >= threshold) {
+				hardReset(false);
 				kKeyPressCount = 0;
 			} else {
 				kKeyPressTimer = setTimeout(() => {
