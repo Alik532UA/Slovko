@@ -33,29 +33,66 @@
 		pair: WordPair;
 	} | null>(null);
 
+	// Службові змінні для відстеження попереднього стану (не реактивні)
+	let lastDataKey = "";
+	let lastPlaylistHash = "";
+
 	/**
 	 * Реактивна ініціалізація та перезавантаження гри.
-	 * Це єдина точка входу, яка гарантує, що ігрове поле 
-	 * завжди відповідає поточним налаштуванням стору.
+	 * Використовує точкові залежності (fine-grained reactivity).
 	 */
 	$effect(() => {
-		const settings = settingsStore.value;
+		// Підписуємось лише на необхідні сигнали
+		const mode = settingsStore.value.mode;
+		const playlistId = settingsStore.value.currentPlaylist;
+		const data = gameData;
 		
-		// Створюємо залежність від усіх важливих параметрів
-		const trigger = {
-			mode: settings.mode,
-			level: settings.currentLevel.join(','),
-			topic: settings.currentTopic.join(','),
-			playlist: settings.currentPlaylist,
-			// Для плейлістів також важливо знати кількість слів (реактивність на додавання/видалення)
-			wordsCount: settings.mode === 'playlists' && settings.currentPlaylist 
-				? playlistStore.getPlaylist(settings.currentPlaylist)?.words.length 
-				: 0
-		};
+		// Отримуємо актуальний список слів для плейлиста
+		const currentPlaylistWords = (mode === 'playlists' && playlistId)
+			? (playlistStore.getPlaylist(playlistId)?.words || [])
+			: [];
+		
+		// Використовуємо хеш для перевірки змін
+		// (для об'єктів CustomWord використовуємо JSON, для рядків - просто join)
+		const playlistWordsHash = currentPlaylistWords.map(w => typeof w === 'string' ? w : w.id).join(',');
 
 		untrack(() => {
-			logService.log("game", "Settings changed, re-initializing game board", trigger);
-			gameController.initGame();
+			if (!data) return;
+
+			// Створюємо унікальний ключ конфігурації на основі даних
+			const currentDataKey = JSON.stringify(data.settings);
+			
+			const isNewData = currentDataKey !== lastDataKey;
+			const isPlaylistChanged = mode === 'playlists' && playlistWordsHash !== lastPlaylistHash;
+
+			if (isNewData) {
+				// Сценарій 1: Прийшли абсолютно нові дані (навігація, зміна URL)
+				lastDataKey = currentDataKey;
+				lastPlaylistHash = playlistWordsHash;
+
+				logService.log("game", "Initializing game board (New Data)", { 
+					mode: data.settings.mode, 
+					playlistId: data.settings.currentPlaylist 
+				});
+				gameController.initGame(data);
+			} else if (isPlaylistChanged) {
+				// Сценарій 2: Дані ті самі, але локально змінився плейлист
+				
+				if (lastPlaylistHash) {
+					const oldList = lastPlaylistHash.split(',').filter(Boolean);
+					const newList = playlistWordsHash.split(',').filter(Boolean);
+					const removed = oldList.filter(x => !newList.includes(x));
+					const added = newList.filter(x => !oldList.includes(x));
+					
+					if (removed.length) logService.log("game", "PLAYLIST UPDATE: Removing words:", removed);
+					if (added.length) logService.log("game", "PLAYLIST UPDATE: Adding words:", added);
+				}
+
+				lastPlaylistHash = playlistWordsHash;
+
+				logService.log("game", "Refreshing game board due to playlist change");
+				gameController.initGame();
+			}
 		});
 	});
 

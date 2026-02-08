@@ -2,17 +2,17 @@ export const logConfig = {
 	auth: false,
 	profile: false,
 	editor: false,
-	store: false,
-	game: false,
+	store: true,
+	game: true,
 	sync: false,
 	settings: false,
 	interaction: false,
 	presence: false,
 	stats: false,
-	ui: true,
-	data: false,
+	ui: false,
+	data: true,
 	i18n: false,
-	version: true,
+	version: false,
 };
 
 const recentLogs: string[] = [];

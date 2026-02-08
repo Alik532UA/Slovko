@@ -36,47 +36,35 @@ export class GameController {
 	 * @param preloadedData - Опціонально: попередньо завантажені дані (наприклад, з SSR/load function)
 	 */
 	async initGame(preloadedData?: GameData): Promise<void> {
-		const currentMode = settingsStore.value.mode;
-		const currentPlaylist = settingsStore.value.currentPlaylist;
+		// Використовуємо налаштування з даних, якщо вони є, інакше зі стору
+		const activeSettings = preloadedData?.settings || settingsStore.value;
+		const currentMode = activeSettings.mode;
+		const currentPlaylist = activeSettings.currentPlaylist;
 		
 		logService.log("game", "initGame starting", { mode: currentMode, playlist: currentPlaylist });
 
 		this.gameState.setLoading(true);
 		this.gameState.setError(null);
 		this.gameState.setProcessing(false);
-		this.gameState.resetStats(); // Повне очищення статистики та карток перед стартом
+		this.gameState.resetStats(); 
 		this.lastInteractionTime = Date.now();
 
 		try {
 			let data = preloadedData;
 
-			// Якщо даних немає, завантажуємо їх (fallback)
 			if (!data) {
 				const playlistsData = playlistStore.getSnapshot();
 				data = await this.dataService.loadGameData(
 					settingsStore.value,
 					playlistsData,
 				);
-			} else {
-				// В деяких випадках нам потрібно примусово перевантажити дані
-				// (наприклад, якщо ми в режимі English і транскрипції відсутні)
-				const { sourceLanguage } = settingsStore.value;
-				if (
-					sourceLanguage === "en" &&
-					Object.keys(data.sourceTranscriptions).length === 0
-				) {
-					const playlistsData = playlistStore.getSnapshot();
-					data = await this.dataService.loadGameData(
-						settingsStore.value,
-						playlistsData,
-					);
-				}
 			}
 
 			this.gameState.setData(data);
 
-			const { sourceLanguage, targetLanguage, interfaceLanguage } =
-				settingsStore.value;
+			const { sourceLanguage, targetLanguage } = activeSettings;
+			const interfaceLanguage = settingsStore.value.interfaceLanguage;
+			
 			const initialWords = this.gameState.getAvailableWords(
 				this.gameState.getPairsLimit(),
 			);

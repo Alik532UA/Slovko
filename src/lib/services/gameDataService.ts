@@ -23,6 +23,15 @@ export interface GameData {
 	sourceTranscriptions: TranscriptionDictionary;
 	targetTranscriptions: TranscriptionDictionary;
 	words: WordKey[];
+	/** Snapshot of settings used to generate this data */
+	settings: {
+		mode: string;
+		currentLevel: string[];
+		currentTopic: string[];
+		currentPlaylist: string | null;
+		sourceLanguage: string;
+		targetLanguage: string;
+	};
 }
 
 export interface PlaylistData {
@@ -205,6 +214,14 @@ export class GameDataService {
 			sourceTranscriptions,
 			targetTranscriptions,
 			words,
+			settings: {
+				mode,
+				currentLevel: [...currentLevel],
+				currentTopic: [...currentTopic],
+				currentPlaylist,
+				sourceLanguage,
+				targetLanguage,
+			},
 		};
 	}
 }

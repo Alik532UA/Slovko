@@ -39,9 +39,20 @@ function createSettingsStore() {
 
 				if (result.success) {
 					let validated = result.data as AppSettings;
+					
+					// Якщо в браузері є версія додатку, вважаємо що онбординг вже було пройдено раніше
 					if (hasAppVersion) {
 						validated.hasCompletedOnboarding = true;
 					}
+
+					// КРИТИЧНО: Якщо онбординг не завершено, ми ГАРАНТУЄМО, що користувач 
+					// почне з дефолтного рівня A1, а не з порожніх плейлістів.
+					if (!validated.hasCompletedOnboarding) {
+						validated.mode = "levels";
+						validated.currentLevel = ["A1"];
+						validated.currentPlaylist = null;
+					}
+
 					logService.log("settings", "Validated settings:", validated);
 					return validated;
 				} else {

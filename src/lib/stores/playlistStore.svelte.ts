@@ -5,6 +5,7 @@
 import { browser } from "$app/environment";
 import { SyncService } from "../firebase/SyncService.svelte";
 import { settingsStore } from "./settingsStore.svelte";
+import { logService } from "../services/logService";
 import type { WordPair, PlaylistId, CustomWord, WordKey } from "../types";
 import {
 	PlaylistStateSchema,
@@ -254,6 +255,8 @@ function createPlaylistStore() {
 		removeWordFromPlaylist(playlistId: PlaylistId, wordId: string) {
 			const playlist = this.getPlaylist(playlistId);
 			if (!playlist) return;
+
+			logService.log("store", `Removing word "${wordId}" from playlist "${playlistId}"`);
 
 			const updatedWords = playlist.words.filter(
 				(w) => (typeof w === "string" ? w : w.id) !== wordId,

@@ -42,6 +42,13 @@ class GameOrchestratorClass {
 			logService.warn("settings", "Invalid URL parameters, ignoring:", result.error.format());
 		}
 
+		// КРИТИЧНИЙ ЗАХИСТ: Якщо онбординг не завершено, ми ігноруємо URL і форсуємо A1
+		if (!currentSettings.hasCompletedOnboarding) {
+			requestSettings.mode = "levels";
+			requestSettings.currentLevel = ["A1"];
+			requestSettings.currentPlaylist = null;
+		}
+
 		// 2. Збираємо snapshot плейлістів зі стору
 		const playlistData = playlistStore.getSnapshot();
 
