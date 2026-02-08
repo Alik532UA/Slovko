@@ -44,14 +44,15 @@ self.addEventListener("fetch", (event) => {
 		(async () => {
 			const cache = await caches.open(CACHE);
 			const isAsset = ASSETS.includes(url.pathname);
+			const isVersionFile = url.pathname.endsWith('app-version.json');
 
-			// Для файлів збірки використовуємо Cache First
-			if (isAsset) {
+			// Для файлів збірки використовуємо Cache First (але НЕ для файлу версії)
+			if (isAsset && !isVersionFile) {
 				const cachedResponse = await cache.match(url.pathname);
 				if (cachedResponse) return cachedResponse;
 			}
 
-			// Для всього іншого намагаємось отримати з мережі
+			// Для всього іншого (включаючи файл версії) намагаємось отримати з мережі
 			try {
 				const response = await fetch(event.request);
 

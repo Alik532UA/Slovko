@@ -222,7 +222,7 @@
 		"message": "Update available!",
 		"button": "Full update (reset cache)",
 		"buttonSkip": "Keep old cache and continue",
-		"warning": "For stable operation, it is recommended to update. This will reset all settings and playlists (as there is no authorization yet). If skipped, errors may occur.",
+		"warning": "For stable operation, it is recommended to update the version. This will reset local settings. If you are authenticated — your progress and playlists are securely saved in the cloud. Skipping may cause errors.",
 		"yourVersion": "Your version",
 		"availableVersion": "Available version"
 	},
