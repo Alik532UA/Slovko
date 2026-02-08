@@ -14,6 +14,7 @@
 		enablePronunciation?: boolean;
 		isDimmed?: boolean;
 		onclick: () => void;
+		onpointerdown?: (e: PointerEvent) => void;
 		onlongpress?: (e: PointerEvent) => void;
 		wordSnippet?: Snippet<[string]>;
 		transcriptionSnippet?: Snippet<[string]>;
@@ -25,6 +26,7 @@
 		enablePronunciation = false,
 		isDimmed = false,
 		onclick,
+		onpointerdown,
 		onlongpress,
 		wordSnippet,
 		transcriptionSnippet,
@@ -34,6 +36,9 @@
 	let isLongPress = false;
 
 	function handlePointerDown(e: PointerEvent) {
+		// Якщо передано зовнішній обробник (для драгу), викликаємо його
+		if (onpointerdown) onpointerdown(e);
+
 		isLongPress = false;
 		longPressTimer = setTimeout(() => {
 			isLongPress = true;
@@ -155,7 +160,8 @@
 		justify-content: center;
 		gap: 0.2rem;
 		overflow: hidden; /* Запобігаємо виходу за межі */
-		touch-action: none; /* Prevent browser zoom/scroll on long press? Maybe manipulation. */
+		touch-action: none; /* Забороняємо скрол браузера при свайпі з картки (для малювання ліній) */
+		-webkit-user-select: none; /* iOS Safari fix */
 	}
 
 	.word-text {

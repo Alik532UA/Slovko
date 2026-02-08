@@ -74,7 +74,143 @@
 			reportingData = { wordKey, pair };
 		}
 	}
+
+	// --- Drag & Drop Logic ---
+	let dragState = $state<{
+		active: boolean;
+		startPoint: { x: number; y: number } | null;
+		currentPoint: { x: number; y: number } | null;
+		sourceCard: ActiveCard | null;
+		hoveredCardId: string | null;
+	}>({
+		active: false,
+		startPoint: null,
+		currentPoint: null,
+		sourceCard: null,
+		hoveredCardId: null,
+	});
+
+	function handleDragStart(e: PointerEvent, card: ActiveCard) {
+		// Ігноруємо якщо вже йде процес або картка в "фінальному" стані
+		if (card.status === "correct" || card.status === "wrong") return;
+
+		// Вибираємо картку (стандартна логіка кліку також спрацює, але це ок)
+		// gameController.selectCard(card); // Можливо, варто викликати це одразу? 
+		// Ні, нехай selectCard викликається в кінці або окремо, щоб не плутати логіку
+		
+		dragState = {
+			active: true,
+			startPoint: { x: e.clientX, y: e.clientY },
+			currentPoint: { x: e.clientX, y: e.clientY },
+			sourceCard: card,
+			hoveredCardId: null,
+		};
+	}
+
+	function handleDragMove(e: PointerEvent) {
+		if (!dragState.active) return;
+
+		dragState.currentPoint = { x: e.clientX, y: e.clientY };
+
+		// Hit testing для підсвічування
+		const elements = document.elementsFromPoint(e.clientX, e.clientY);
+		// Шукаємо елемент, який є WordCard (має data-testid починаючий з word-card-)
+		// Або батьківський враппер.
+		// Найпростіше: ми передамо data-card-id в WordCard (через враппер або сам компонент)
+		// Але оскільки WordCard - це кнопка, ми шукаємо кнопку з певним атрибутом.
+		
+		let foundCardId: string | null = null;
+		for (const el of elements) {
+			const testId = el.getAttribute("data-testid");
+			if (testId && testId.startsWith("word-card-")) {
+				foundCardId = testId.replace("word-card-", "");
+				break;
+			}
+			// Також перевіримо батьків, якщо elementsFromPoint повернув child
+			const closest = el.closest('[data-testid^="word-card-"]');
+			if (closest) {
+				foundCardId = closest.getAttribute("data-testid")!.replace("word-card-", "");
+				break;
+			}
+		}
+
+		// Не підсвічуємо, якщо це та сама картка або з тієї ж колонки
+		if (foundCardId) {
+			const isSource = foundCardId === dragState.sourceCard?.id;
+			// Тут ми не маємо прямого доступу до об'єкта картки за ID швидко, 
+			// але можемо перевірити в sourceCards/targetCards
+			const targetCard = [...gameState.sourceCards, ...gameState.targetCards].find(c => c.id === foundCardId);
+			
+			if (targetCard && targetCard.language !== dragState.sourceCard?.language && targetCard.status !== "correct") {
+				dragState.hoveredCardId = foundCardId;
+			} else {
+				dragState.hoveredCardId = null;
+			}
+		} else {
+			dragState.hoveredCardId = null;
+		}
+	}
+
+	function handleDragEnd() {
+		if (!dragState.active) return;
+
+		// Якщо ми відпустили над валідною ціллю
+		if (dragState.hoveredCardId && dragState.sourceCard) {
+			const targetCard = [...gameState.sourceCards, ...gameState.targetCards].find(c => c.id === dragState.hoveredCardId);
+			if (targetCard) {
+				// Виконуємо послідовний вибір: спочатку джерело (якщо ще не вибране), потім ціль
+				// Але gameController.selectCard має логіку "toggle".
+				// Тому надійніше:
+				// 1. Якщо джерело ще не вибране -> вибрати.
+				// 2. Вибрати ціль.
+				
+				// Важливо: selectCard перевіряє gameState.selectedCard.
+				// Якщо нічого не вибрано - вибирає. Якщо вибрано - матчить.
+				
+				// Сценарій 1: Нічого не вибрано. Drag A -> B.
+				// selectCard(A) -> A selected. selectCard(B) -> Match attempt.
+				
+				// Сценарій 2: Вибрано C. Drag A -> B.
+				// selectCard(A) -> C deselect, A selected. selectCard(B) -> Match attempt.
+				
+				// Сценарій 3: Вибрано A. Drag A -> B.
+				// selectCard(A) -> A deselected (Toggle logic!). PROBLEM.
+				
+				// Тому нам треба перевірити поточний стан.
+				const currentSelected = gameState.selectedCard;
+				
+				if (currentSelected?.id === dragState.sourceCard.id) {
+					// Вже вибрана, просто вибираємо другу
+					gameController.selectCard(targetCard);
+				} else {
+					// Не вибрана (або вибрана інша).
+					gameController.selectCard(dragState.sourceCard);
+					// Невелика затримка або синхронно? selectCard синхронний (окрім анімацій).
+					// Але якщо ми викликаємо підряд, стан може не встигнути оновитись в сторі, якщо там є асинхронність?
+					// В Svelte 5 runes стан миттєвий.
+					gameController.selectCard(targetCard);
+				}
+			}
+		} else {
+			// Якщо відпустили в порожнечу - нічого не робимо, або можна вибирати картку (як клік)
+			// Але клік і так спрацює через onclick, якщо рух був малий.
+			// Якщо рух великий -> це скасування.
+			
+			// Можна додати логіку: якщо drag був дуже коротким (< 10px), то це клік, і нехай onclick обробить.
+			// Якщо довгий - то це спроба драгу, яка провалилась -> нічого не робимо.
+		}
+
+		dragState = {
+			active: false,
+			startPoint: null,
+			currentPoint: null,
+			sourceCard: null,
+			hoveredCardId: null,
+		};
+	}
 </script>
+
+<svelte:window onpointermove={handleDragMove} onpointerup={handleDragEnd} onpointercancel={handleDragEnd} />
 
 {#if gameState.isLoading}
 	<div class="loading-overlay" in:fade>
@@ -92,13 +228,30 @@
 		</div>
 	</div>
 {:else}
+	<!-- SVG Overlay for Drag Line -->
+	{#if dragState.active && dragState.startPoint && dragState.currentPoint}
+		<svg class="drag-overlay">
+			<line 
+				x1={dragState.startPoint.x} 
+				y1={dragState.startPoint.y} 
+				x2={dragState.currentPoint.x} 
+				y2={dragState.currentPoint.y} 
+				stroke="var(--accent)" 
+				stroke-width="4" 
+				stroke-linecap="round"
+				opacity="0.6"
+			/>
+		</svg>
+	{/if}
+
 	<div
 		class="game-board"
-		onclick={() => gameState.setSelectedCard(null)}
-		onkeydown={(e) => e.key === "Escape" && gameState.setSelectedCard(null)}
-		role="button"
-		tabindex="0"
-		aria-label="Clear selection"
+		onclick={(e) => {
+			// Очищаємо вибір тільки якщо клікнули саме по фону, а не по картці
+			if (e.target === e.currentTarget) {
+				gameState.setSelectedCard(null);
+			}
+		}}
 		data-testid="game-board"
 	>
 		{#if gameState.sourceCards.length === 0}
@@ -130,8 +283,12 @@
 										.enablePronunciationSource}
 									isDimmed={contextMenu !== null && contextMenu.cardId !== card.id}
 									onclick={() => gameController.selectCard(card)}
+									onpointerdown={(e) => handleDragStart(e, card)}
 									onlongpress={(e) => handleLongPress(e, card)}
 								/>
+								{#if dragState.hoveredCardId === card.id || dragState.sourceCard?.id === card.id}
+									<div class="card-hover-highlight"></div>
+								{/if}
 							</div>
 						{/key}
 					</div>
@@ -156,8 +313,12 @@
 										.enablePronunciationTarget}
 									isDimmed={contextMenu !== null && contextMenu.cardId !== card.id}
 									onclick={() => gameController.selectCard(card)}
+									onpointerdown={(e) => handleDragStart(e, card)}
 									onlongpress={(e) => handleLongPress(e, card)}
 								/>
+								{#if dragState.hoveredCardId === card.id || dragState.sourceCard?.id === card.id}
+									<div class="card-hover-highlight"></div>
+								{/if}
 							</div>
 						{/key}
 					</div>
@@ -187,6 +348,33 @@
 {/if}
 
 <style>
+	.drag-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+		z-index: 9999;
+	}
+
+	.card-hover-highlight {
+		position: absolute;
+		inset: 0; /* Align perfectly with card edges */
+		border: 2px solid var(--accent);
+		border-radius: 12px; /* Match WordCard border-radius */
+		pointer-events: none;
+		z-index: 10;
+		box-shadow: 0 0 10px rgba(233, 84, 32, 0.3);
+		animation: pulse-highlight 2s infinite ease-in-out;
+	}
+	
+	@keyframes pulse-highlight {
+		0% { opacity: 0.5; transform: scale(1); }
+		50% { opacity: 1; transform: scale(1.004); }
+		100% { opacity: 0.5; transform: scale(1); }
+	}
+
 	.game-board {
 		display: flex;
 		gap: 1rem;
@@ -196,6 +384,10 @@
 		max-height: 1000px;
 		margin: 0 auto;
 		padding: 1rem;
+		position: relative;
+		outline: none;
+		-webkit-tap-highlight-color: transparent;
+		user-select: none;
 	}
 
 	.column {
@@ -218,6 +410,7 @@
 		width: 100%;
 		height: 100%;
 		display: flex;
+		position: relative;
 	}
 
 	.empty-state-message {
