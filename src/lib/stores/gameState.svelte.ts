@@ -146,6 +146,16 @@ function createGameState() {
 			if (tc) tc.status = status;
 		},
 
+		clearColumnSelection(language: string) {
+			const reset = (c: ActiveCard) => {
+				if (c.language === language && c.status === "selected") {
+					c.status = "idle";
+				}
+			};
+			sourceCards.forEach(reset);
+			targetCards.forEach(reset);
+		},
+
 		setSelectedCard(card: ActiveCard | null) {
 			selectedCard = card;
 		},

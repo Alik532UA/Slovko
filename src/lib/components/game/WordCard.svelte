@@ -81,8 +81,14 @@
 			return;
 		}
 
-		// Якщо картка вже "правильна", ігноруємо клік (емулюємо disabled)
-		if (card.status === "correct") return;
+		// Якщо картка вже в особливому стані, ігноруємо клік (емулюємо disabled)
+		if (
+			card.status === "correct" ||
+			card.status === "wrong" ||
+			card.status === "hint" ||
+			card.status === "hint-slow"
+		)
+			return;
 
 		// Speak only if selecting (not deselecting)
 		if (enablePronunciation && card.status !== "selected") {

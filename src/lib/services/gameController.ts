@@ -110,44 +110,47 @@ export class GameController {
 	selectCard(card: ActiveCard): void {
 		this.updateTimers();
 
+		// Захист тільки від невидимих карток
 		if (!card.isVisible) return;
 
 		const selectedCard = this.gameState.selectedCard;
 
-		// Перший вибір або скасування
-		if (!selectedCard) {
-			this.gameState.updateCardStatus(card.id, "selected");
-			this.gameState.setSelectedCard(card);
-			return;
-		}
-
-		if (selectedCard.id === card.id) {
+		// Якщо натиснули на вже вибрану картку — знімаємо виділення
+		if (selectedCard?.id === card.id) {
 			this.gameState.updateCardStatus(card.id, "idle");
 			this.gameState.setSelectedCard(null);
 			return;
 		}
 
-		// Перемикання мови в межах однієї сторони
-		if (selectedCard.language === card.language) {
-			this.gameState.updateCardStatus(selectedCard.id, "idle");
+		// Якщо вибрана картка з ТІЄЇ Ж КОЛОНКИ (мови) — "перемикаємо" вибір
+		if (selectedCard && selectedCard.language === card.language) {
+			this.gameState.clearColumnSelection(card.language);
 			this.gameState.updateCardStatus(card.id, "selected");
 			this.gameState.setSelectedCard(card);
 			return;
 		}
 
-		// Другий вибір — перевірка матчу
-		this.gameState.updateCardStatus(card.id, "selected");
-		const isMatch = selectedCard.wordKey === card.wordKey;
+		// Якщо вже є вибір з ІНШОЇ колонки — перевіряємо матч
+		if (selectedCard && selectedCard.language !== card.language) {
+			this.gameState.updateCardStatus(card.id, "selected");
+			const isMatch = selectedCard.wordKey === card.wordKey;
 
-		if (isMatch) {
-			this.handleMatch(selectedCard, card);
-		} else {
-			this.handleMiss(selectedCard, card);
+			if (isMatch) {
+				this.handleMatch(selectedCard, card);
+			} else {
+				this.handleMiss(selectedCard, card);
+			}
+			return;
 		}
+
+		// Якщо вибору ще немає — просто виділяємо картку, попередньо очистивши колонку
+		this.gameState.clearColumnSelection(card.language);
+		this.gameState.updateCardStatus(card.id, "selected");
+		this.gameState.setSelectedCard(card);
 	}
 
 	private handleMatch(card1: ActiveCard, card2: ActiveCard) {
-		this.gameState.setProcessing(true);
+		// Вже setProcessing(true) в selectCard
 		this.gameState.updateCardStatus(card1.id, "correct");
 		this.gameState.updateCardStatus(card2.id, "correct");
 
