@@ -222,7 +222,7 @@
 		"message": "Update verfügbar!",
 		"button": "Vollständig aktualisieren (Cache leeren)",
 		"buttonSkip": "Alten Cache behalten und fortfahren",
-		"warning": "Für einen stabilen Betrieb wird empfohlen, die Version zu aktualisieren. Das Update setzt alle Einstellungen und Playlists zurück. Bei Ablehnung können Fehler auftreten.",
+		"warning": "Für einen stabilen Betrieb wird empfohlen, die Version zu aktualisieren. Dies setzt lokale Einstellungen zurück. Wenn Sie angemeldet sind, werden Ihr Fortschritt und Ihre Playlists sicher in der Cloud gespeichert. Ablehnung kann zu Fehlern führen.",
 		"yourVersion": "Ihre Version",
 		"availableVersion": "Verfügbare Version"
 	},

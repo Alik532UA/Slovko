@@ -222,7 +222,7 @@
 		"message": "Update beschikbaar!",
 		"button": "Volledig bijwerken (cache wissen)",
 		"buttonSkip": "Oude cache behouden en doorgaan",
-		"warning": "Voor een stabiele werking is het raadzaam om de versie bij te werken. De update herstelt alle instellingen en afspeellijsten. Indien overgeslagen, kunnen er fouten optreden.",
+		"warning": "Voor een stabiele werking wordt aanbevolen de versie bij te werken. Dit herstelt lokale instellingen. Als u bent ingelogd, worden uw voortgang en afspeellijsten veilig in de cloud opgeslagen. Overslaan kan fouten verooraken.",
 		"yourVersion": "Uw versie",
 		"availableVersion": "Beschikbare versie"
 	},
