@@ -449,12 +449,27 @@ class SyncServiceClass {
 		// Total Correct = Сума по рівнях + відновлені бали
 		const validatedTotalCorrect = Math.max(baseTotalCorrect, sumLevelCorrect + restored);
 
+		// Монотонний мердж для стріків та дат
+		const validatedStreak = Math.max(local.streak || 0, cloud.streak || 0);
+		const validatedDailyCorrect = Math.max(local.dailyCorrect || 0, cloud.dailyCorrect || 0);
+		
+		// Вибираємо пізнішу дату (YYYY-MM-DD порівнюється як рядки коректно)
+		const validatedLastCorrectDate = (local.lastCorrectDate || "") > (cloud.lastCorrectDate || "") 
+			? local.lastCorrectDate : cloud.lastCorrectDate;
+		
+		const validatedLastStreakUpdateDate = (local.lastStreakUpdateDate || "") > (cloud.lastStreakUpdateDate || "")
+			? local.lastStreakUpdateDate : cloud.lastStreakUpdateDate;
+
 		const merged: ProgressState = {
 			...local,
 			...cloud,
 			totalCorrect: validatedTotalCorrect,
 			totalAttempts: Math.max(local.totalAttempts, cloud.totalAttempts || 0),
 			restoredPoints: restored,
+			streak: validatedStreak,
+			dailyCorrect: validatedDailyCorrect,
+			lastCorrectDate: validatedLastCorrectDate,
+			lastStreakUpdateDate: validatedLastStreakUpdateDate,
 			restorationHistory: this.mergeArrays(local.restorationHistory || [], cloud.restorationHistory || [], (i) => i.timestamp + i.reason),
 			bestStreak: Math.max(local.bestStreak, cloud.bestStreak || 0),
 			bestCorrectStreak: Math.max(local.bestCorrectStreak, cloud.bestCorrectStreak || 0),

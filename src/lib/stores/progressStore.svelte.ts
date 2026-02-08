@@ -6,6 +6,7 @@
 import { browser } from "$app/environment";
 import { SyncService } from "../firebase/SyncService.svelte";
 import { streakService } from "../services/streakService";
+import { logService } from "../services/logService";
 import {
 	ProgressStateSchema,
 	DailyActivitySchema,
@@ -66,6 +67,12 @@ function createProgressStore() {
 
 	function saveProgress(): void {
 		if (browser) {
+			// 1. Оновлюємо localStorage миттєво (SSoT для поточної сесії та UI)
+			progress.lastUpdated = Date.now();
+			localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+			localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(dailyActivity));
+
+			// 2. Дебаунсимо тільки завантаження в хмару та важкі операції очищення
 			if (saveTimeout) clearTimeout(saveTimeout);
 			
 			saveTimeout = setTimeout(() => {
@@ -85,16 +92,11 @@ function createProgressStore() {
 				
 				if (hasCleanup) {
 					progress.words = cleanedWords;
+					localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
 				}
 
-				progress.lastUpdated = now;
-				localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-				
-				dailyActivity.updatedAt = now;
-				localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(dailyActivity));
-				
 				SyncService.uploadAll();
-			}, 3000); // 3 секунди дебаунсу для прогресу (економія квот)
+			}, 2000); // 2 секунди дебаунсу для хмари
 		}
 	}
 
@@ -228,6 +230,14 @@ function createProgressStore() {
 				bestCorrectStreak: newBestCorrectStreak,
 				...streakUpdate,
 			};
+
+			logService.log("stats", `Progress Store updated`, {
+				totalCorrect: progress.totalCorrect,
+				streak: progress.streak,
+				bestStreak: progress.bestStreak,
+				dailyCorrect: progress.dailyCorrect,
+				lastStreakUpdateDate: progress.lastStreakUpdateDate
+			});
 
 			saveProgress();
 		},
