@@ -110,8 +110,8 @@
 				{#if Icon}<Icon size={24} />{/if}
 			</span>
 			<div class="item-info">
-				<span class="item-title">{$_(p.name)}</span>
-				<span class="word-count"
+				<span class="item-title" data-testid="playlist-title-{p.id}">{$_(p.name)}</span>
+				<span class="word-count" data-testid="playlist-count-{p.id}"
 					>{$_("playlists.wordsCount", { values: { count: p.words.length } })}</span
 				>
 			</div>
@@ -148,8 +148,8 @@
 				<Icon size={24} />
 			</span>
 			<div class="item-info">
-				<span class="item-title">{p.name}</span>
-				<span class="word-count"
+				<span class="item-title" data-testid="playlist-custom-title-{p.id}">{p.name}</span>
+				<span class="word-count" data-testid="playlist-custom-count-{p.id}"
 					>{$_("playlists.wordsCount", { values: { count: p.words.length } })}</span
 				>
 			</div>
@@ -160,12 +160,14 @@
 						e.stopPropagation();
 						openPlaylistModal(p.id);
 					}}
+					data-testid="playlist-edit-{p.id}"
 				>
 					<Settings2 size={18} />
 				</button>
 				<button
 					class="action-btn danger"
 					onclick={(e) => deletePlaylist(p.id, e)}
+					data-testid="playlist-delete-{p.id}"
 				>
 					<Trash2 size={18} />
 				</button>
@@ -182,12 +184,13 @@
 			onkeydown={(e) => e.key === "Enter" && openPlaylistModal()}
 			role="button"
 			tabindex="0"
+			data-testid="playlist-create-new"
 		>
 			<Plus size={24} />
 			<span>{$_("playlists.createNew")}</span>
 		</div>
 
-		<label class="item topic-item import-playlist">
+		<label class="item topic-item import-playlist" data-testid="playlist-import-label">
 			<Upload size={24} />
 			<span>{$_("playlists.import")}</span>
 			<input
@@ -195,6 +198,7 @@
 				accept=".json,.txt"
 				onchange={handleImport}
 				class="sr-only"
+				data-testid="playlist-import-input"
 			/>
 		</label>
 	</div>

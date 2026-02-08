@@ -139,10 +139,17 @@ export class GameDataService {
 					if (customP) playlistWords = customP.words;
 				}
 
+				logService.log("data", `Extracting words from playlist "${currentPlaylist}":`, playlistWords);
+
 				playlistWords.forEach((w) => {
 					if (typeof w === "string") {
-						if (sourceTranslations[w] || targetTranslations[w]) {
+						const hasSource = !!sourceTranslations[w];
+						const hasTarget = !!targetTranslations[w];
+						
+						if (hasSource || hasTarget) {
 							words.push(w);
+						} else {
+							logService.warn("data", `Word "${w}" from playlist not found in any dictionary. Filtering out.`);
 						}
 					} else if (w && typeof w === "object") {
 						const id = w.id || `custom-${Date.now()}`;
@@ -186,6 +193,7 @@ export class GameDataService {
 			// 3. Expansion Logic
 			words = this.expandWordList(words, sourceTranslations, targetTranslations);
 			
+			logService.log("data", `Game data prepared with ${words.length} words total.`);
 		} catch (e) {
 			logService.error("data", `Failed to load game data for ${mode}`, e);
 			throw e;

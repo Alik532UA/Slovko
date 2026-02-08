@@ -53,11 +53,13 @@
 	tabindex="-1"
 	onkeydown={(e) => e.key === "Escape" && onclose()}
 	in:fade={{ duration: 150 }}
+	data-testid="context-menu-backdrop"
 ></div>
 <div
 	class="menu"
 	style="top: {y}px; left: {x}px"
 	in:scale={{ duration: 200, start: 0.9, opacity: 0 }}
+	data-testid="context-menu-container"
 >
 	<button onclick={playSound} data-testid="context-menu-listen">
 		<span class="icon">
@@ -88,10 +90,14 @@
 
 	{#if playlistStore.customPlaylists.length > 0}
 		<div class="divider"></div>
-		<div class="submenu-label">{$_("playlists.addToPlaylist")}</div>
+		<div class="submenu-label" data-testid="context-menu-playlists-label">{$_("playlists.addToPlaylist")}</div>
 		{#each playlistStore.customPlaylists as p (p.id)}
 			{@const Icon = (PLAYLIST_ICONS_MAP as any)[p.icon || "Bookmark"] || Bookmark}
-			<button onclick={() => addToPlaylist(p.id)} class="custom-playlist-btn">
+			<button 
+				onclick={() => addToPlaylist(p.id)} 
+				class="custom-playlist-btn"
+				data-testid="context-menu-playlist-{p.id}"
+			>
 				<span class="icon" style="color: {p.color}">
 					<Icon size={18} fill={p.words.includes(wordKey) ? p.color : "none"} />
 				</span>

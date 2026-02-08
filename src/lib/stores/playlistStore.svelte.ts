@@ -115,6 +115,7 @@ function createPlaylistStore() {
 
 	function saveState() {
 		if (browser) {
+			state = { ...state, updatedAt: Date.now() };
 			localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 			SyncService.uploadAll();
 		}
@@ -194,16 +195,25 @@ function createPlaylistStore() {
 			if (id === "favorites" || id === "mistakes" || id === "extra") {
 				// Only allow updating words/metadata for system playlists
 				const key = id as keyof typeof state.systemPlaylists;
-				state.systemPlaylists[key] = {
-					...state.systemPlaylists[key],
-					...data,
-					isSystem: true,
-					id,
+				state = {
+					...state,
+					systemPlaylists: {
+						...state.systemPlaylists,
+						[key]: {
+							...state.systemPlaylists[key],
+							...data,
+							isSystem: true,
+							id,
+						}
+					}
 				};
 			} else {
-				state.customPlaylists = state.customPlaylists.map((p: Playlist) =>
-					p.id === id ? { ...p, ...data, isSystem: false, id } : p,
-				);
+				state = {
+					...state,
+					customPlaylists: state.customPlaylists.map((p: Playlist) =>
+						p.id === id ? { ...p, ...data, isSystem: false, id } : p,
+					)
+				};
 			}
 			saveState();
 		},
@@ -216,9 +226,12 @@ function createPlaylistStore() {
 				settingsStore.setLevel("A1");
 			}
 
-			state.customPlaylists = state.customPlaylists.filter(
-				(p: Playlist) => p.id !== id,
-			);
+			state = {
+				...state,
+				customPlaylists: state.customPlaylists.filter(
+					(p: Playlist) => p.id !== id,
+				)
+			};
 			saveState();
 		},
 
@@ -287,7 +300,13 @@ function createPlaylistStore() {
 			if (!state.systemPlaylists.mistakes.words.includes(wordKey)) {
 				this.addWordToPlaylist("mistakes", wordKey);
 			}
-			state.mistakeMetadata[wordKey] = 0;
+			state = {
+				...state,
+				mistakeMetadata: {
+					...state.mistakeMetadata,
+					[wordKey]: 0
+				}
+			};
 			saveState();
 		},
 
@@ -296,9 +315,17 @@ function createPlaylistStore() {
 				const currentStreak = (state.mistakeMetadata[wordKey] || 0) + 1;
 				if (currentStreak >= MISTAKE_REMOVAL_THRESHOLD) {
 					this.removeWordFromPlaylist("mistakes", wordKey);
-					delete state.mistakeMetadata[wordKey];
+					const newMetadata = { ...state.mistakeMetadata };
+					delete newMetadata[wordKey];
+					state = { ...state, mistakeMetadata: newMetadata };
 				} else {
-					state.mistakeMetadata[wordKey] = currentStreak;
+					state = {
+						...state,
+						mistakeMetadata: {
+							...state.mistakeMetadata,
+							[wordKey]: currentStreak
+						}
+					};
 				}
 				saveState();
 				return true;
@@ -343,6 +370,11 @@ function createPlaylistStore() {
 					words: p.words,
 				})),
 			};
+		},
+
+		/** Отримати повний об'єкт стану для синхронізації */
+		getSnapshotState(): PlaylistState {
+			return { ...state };
 		},
 	};
 }

@@ -1,6 +1,7 @@
 import type { gameState as GameStateType } from "../stores/gameState.svelte";
 import { settingsStore } from "../stores/settingsStore.svelte";
 import { playlistStore } from "../stores/playlistStore.svelte";
+import { logService } from "./logService";
 import {
 	gameDataService,
 	type GameDataService,
@@ -35,6 +36,11 @@ export class GameController {
 	 * @param preloadedData - Опціонально: попередньо завантажені дані (наприклад, з SSR/load function)
 	 */
 	async initGame(preloadedData?: GameData): Promise<void> {
+		const currentMode = settingsStore.value.mode;
+		const currentPlaylist = settingsStore.value.currentPlaylist;
+		
+		logService.log("game", "initGame starting", { mode: currentMode, playlist: currentPlaylist });
+
 		this.gameState.setLoading(true);
 		this.gameState.setError(null);
 		this.gameState.setProcessing(false);
@@ -74,6 +80,8 @@ export class GameController {
 			const initialWords = this.gameState.getAvailableWords(
 				this.gameState.getPairsLimit(),
 			);
+
+			logService.log("game", "Initial words selected:", initialWords);
 
 			const { source, target } = createCardsFromWordKeys(
 				initialWords,

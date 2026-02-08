@@ -128,9 +128,12 @@ function createGameState() {
 			data = newData;
 			currentWords = shuffle(newData.words);
 			usedWordKeys.clear();
+			sourceCards = [];
+			targetCards = [];
 		},
 
 		setCards(source: ActiveCard[], target: ActiveCard[]) {
+			logService.log("game", `Setting cards: source=${source.length}, target=${target.length}`);
 			sourceCards = source;
 			targetCards = target;
 			selectedCard = null;
@@ -173,6 +176,8 @@ function createGameState() {
 			correctAnswersHistory = [];
 			ignoredTime = 0;
 			usedWordKeys.clear();
+			sourceCards = [];
+			targetCards = [];
 		},
 
 		addIgnoredTime(time: number) {

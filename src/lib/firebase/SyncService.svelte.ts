@@ -376,8 +376,15 @@ class SyncServiceClass {
 			}
 
 			if (cloudData.playlists) {
-				// playlistStore._internalSet вже має вбудовану валідацію через Zod
-				playlistStore._internalSet(cloudData.playlists);
+				const localPlaylists = playlistStore.allPlaylists; // Force reactive access if needed
+				const merged = this.mergePlaylists(playlistStore.getSnapshotState(), cloudData.playlists);
+				
+				// Порівнюємо результат з поточним локальним станом
+				// (Ми використовуємо JSON.stringify для швидкої перевірки змін об'єктів)
+				if (merged.updatedAt > (playlistStore.getSnapshotState().updatedAt || 0)) {
+					logService.log("sync", "Cloud playlists merged into local state");
+					playlistStore._internalSet(merged);
+				}
 			}
 
 			// Після завантаження налаштувань перевіряємо сповіщення про підписників
@@ -547,18 +554,39 @@ class SyncServiceClass {
 	}
 
 	private mergePlaylists(local: PlaylistState, cloud: any): PlaylistState {
-		// Тут використовуємо логіку нормалізації через Zod для хмарних даних
-		const validCloud = PlaylistStateSchema.parse(cloud);
-		
-		return {
-			customPlaylists: this.mergeArrays(local.customPlaylists, validCloud.customPlaylists),
-			systemPlaylists: {
-				favorites: this.mergePlaylistObjects(local.systemPlaylists.favorites, validCloud.systemPlaylists.favorites),
-				extra: this.mergePlaylistObjects(local.systemPlaylists.extra, validCloud.systemPlaylists.extra),
-				mistakes: this.mergePlaylistObjects(local.systemPlaylists.mistakes, validCloud.systemPlaylists.mistakes),
-			},
-			mistakeMetadata: { ...validCloud.mistakeMetadata, ...local.mistakeMetadata }
-		};
+		if (!cloud) return local;
+
+		try {
+			const validCloud = PlaylistStateSchema.parse(cloud);
+			const cloudTime = validCloud.updatedAt || 0;
+			const localTime = local.updatedAt || 0;
+
+			// LWW (Last Write Wins) на рівні всього об'єкта плейлістів
+			// Це найнадійніший спосіб дозволити видалення слів (VULN_03)
+			if (cloudTime > localTime) {
+				logService.log("sync", "Cloud playlists are newer, accepting cloud state");
+				return validCloud;
+			} else if (localTime > cloudTime) {
+				logService.log("sync", "Local playlists are newer, keeping local state");
+				return local;
+			}
+
+			// Якщо часи однакові (напр. 0), робимо безпечне злиття масивів (Union)
+			return {
+				...local,
+				customPlaylists: this.mergeArrays(local.customPlaylists, validCloud.customPlaylists),
+				systemPlaylists: {
+					favorites: this.mergePlaylistObjects(local.systemPlaylists.favorites, validCloud.systemPlaylists.favorites),
+					extra: this.mergePlaylistObjects(local.systemPlaylists.extra, validCloud.systemPlaylists.extra),
+					mistakes: this.mergePlaylistObjects(local.systemPlaylists.mistakes, validCloud.systemPlaylists.mistakes),
+				},
+				mistakeMetadata: { ...validCloud.mistakeMetadata, ...local.mistakeMetadata },
+				updatedAt: localTime
+			};
+		} catch (e) {
+			logService.error("sync", "Failed to parse cloud playlists during merge", e);
+			return local;
+		}
 	}
 
 	private mergePlaylistObjects(local: any, cloud: any) {

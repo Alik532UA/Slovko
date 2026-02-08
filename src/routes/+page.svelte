@@ -85,10 +85,8 @@
 					error={data.error}
 					reset={() => window.location.reload()}
 				/>
-			{:else if data.gameData && data.gameSettings}
-				{#key data.gameSettings.mode + (data.gameSettings.currentLevel || "") + (data.gameSettings.currentTopic || "") + (data.gameSettings.currentPlaylist || "") + data.gameSettings.sourceLanguage + data.gameSettings.targetLanguage}
-					<GameBoard gameData={data.gameData} />
-				{/key}
+			{:else if data.gameSettings}
+				<GameBoard gameData={data.gameData} />
 			{:else}
 				<!-- Loading state handled by SvelteKit usually -->
 				<div class="loading">Loading...</div>

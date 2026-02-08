@@ -7,10 +7,12 @@
 	import { gameState } from "$lib/stores/gameState.svelte";
 	import { getGameController } from "$lib/context/gameContext";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
+	import { playlistStore } from "$lib/stores/playlistStore.svelte";
+	import { logService } from "$lib/services/logService";
 	import WordCard from "./WordCard.svelte";
 	import CardContextMenu from "./CardContextMenu.svelte";
 	import WordReportModal from "./WordReportModal.svelte";
-	import { onMount } from "svelte";
+	import { onMount, untrack } from "svelte";
 	import { fade } from "svelte/transition";
 	import { _ } from "svelte-i18n";
 	import type { ActiveCard, WordPair } from "$lib/types";
@@ -32,8 +34,30 @@
 		pair: WordPair;
 	} | null>(null);
 
-	onMount(() => {
-		gameController.initGame(gameData);
+	/**
+	 * Реактивна ініціалізація та перезавантаження гри.
+	 * Це єдина точка входу, яка гарантує, що ігрове поле 
+	 * завжди відповідає поточним налаштуванням стору.
+	 */
+	$effect(() => {
+		const settings = settingsStore.value;
+		
+		// Створюємо залежність від усіх важливих параметрів
+		const trigger = {
+			mode: settings.mode,
+			level: settings.currentLevel.join(','),
+			topic: settings.currentTopic.join(','),
+			playlist: settings.currentPlaylist,
+			// Для плейлістів також важливо знати кількість слів (реактивність на додавання/видалення)
+			wordsCount: settings.mode === 'playlists' && settings.currentPlaylist 
+				? playlistStore.getPlaylist(settings.currentPlaylist)?.words.length 
+				: 0
+		};
+
+		untrack(() => {
+			logService.log("game", "Settings changed, re-initializing game board", trigger);
+			gameController.initGame();
+		});
 	});
 
 	function handleLongPress(e: PointerEvent, card: ActiveCard) {
@@ -87,9 +111,10 @@
 		role="button"
 		tabindex="0"
 		aria-label="Clear selection"
+		data-testid="game-board"
 	>
 		{#if gameState.sourceCards.length === 0}
-			<div class="empty-state-message">
+			<div class="empty-state-message" data-testid="game-empty-message">
 				<p>
 					{settingsStore.value.mode === "playlists"
 						? settingsStore.value.currentPlaylist === "mistakes"
@@ -99,7 +124,7 @@
 				</p>
 			</div>
 		{:else}
-			<div class="column source" aria-label="Source words">
+			<div class="column source" aria-label="Source words" data-testid="column-source">
 				{#each gameState.sourceCards as card, i (i)}
 					<div class="card-slot">
 						{#key card.id}
@@ -107,6 +132,7 @@
 								class="card-wrapper"
 								in:fade={{ duration: 400, delay: 200 }}
 								out:fade={{ duration: 300 }}
+								data-testid="card-slot-source-{i}"
 							>
 								<WordCard
 									{card}
@@ -123,7 +149,7 @@
 				{/each}
 			</div>
 
-			<div class="column target" aria-label="Target translations">
+			<div class="column target" aria-label="Target translations" data-testid="column-target">
 				{#each gameState.targetCards as card, i (i)}
 					<div class="card-slot">
 						{#key card.id}
@@ -131,6 +157,7 @@
 								class="card-wrapper"
 								in:fade={{ duration: 400, delay: 200 }}
 								out:fade={{ duration: 300 }}
+								data-testid="card-slot-target-{i}"
 							>
 								<WordCard
 									{card}
