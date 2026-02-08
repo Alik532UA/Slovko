@@ -34,16 +34,29 @@
 
 	let longPressTimer: ReturnType<typeof setTimeout> | null = null;
 	let isLongPress = false;
+	let startPos = { x: 0, y: 0 };
 
 	function handlePointerDown(e: PointerEvent) {
 		// Якщо передано зовнішній обробник (для драгу), викликаємо його
 		if (onpointerdown) onpointerdown(e);
 
+		startPos = { x: e.clientX, y: e.clientY };
 		isLongPress = false;
 		longPressTimer = setTimeout(() => {
 			isLongPress = true;
 			if (onlongpress) onlongpress(e);
 		}, 500);
+	}
+
+	function handlePointerMove(e: PointerEvent) {
+		if (longPressTimer) {
+			const dist = Math.hypot(e.clientX - startPos.x, e.clientY - startPos.y);
+			// Якщо зміщення більше 10px, вважаємо це початком руху і скасовуємо лонг-прес
+			if (dist > 10) {
+				clearTimeout(longPressTimer);
+				longPressTimer = null;
+			}
+		}
 	}
 
 	function handlePointerUp(e: PointerEvent) {
@@ -113,6 +126,7 @@
 	class:hint-slow={card.status === "hint-slow"}
 	class:dimmed={isDimmed}
 	onpointerdown={handlePointerDown}
+	onpointermove={handlePointerMove}
 	onpointerup={handlePointerUp}
 	onpointerleave={handlePointerLeave}
 	oncontextmenu={handleContextMenu}
