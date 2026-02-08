@@ -15,7 +15,12 @@ const FIVE_DAYS_MS = 5 * 24 * 60 * 60 * 1000;
 export async function checkForUpdates() {
 	logService.log("version", "Checking for updates...");
 	try {
-		const response = await fetch(`${VERSION_URL}?v=${Date.now()}`);
+		const response = await fetch(`${VERSION_URL}?v=${Date.now()}`, {
+			headers: {
+				'Cache-Control': 'no-cache',
+				'Pragma': 'no-cache'
+			}
+		});
 		if (!response.ok) {
 			logService.error("version", `Failed to fetch version info: ${response.status}`);
 			return;
@@ -51,19 +56,27 @@ export async function checkForUpdates() {
 			const now = Date.now();
 			const hasNewerVersionThanRefused = serverVersion !== refusedVersion;
 			const isCooldownOver = now - refusedAt > FIVE_DAYS_MS;
-
+			
+			// Ми показуємо оновлення, якщо:
+			// 1. Користувач ще не відмовлявся від цієї версії
+			// 2. АБО вийшла версія, новіша за ту, від якої він відмовився
+			// 3. АБО пройшов кулдаун 5 днів
+			// 4. АБО це початкове завантаження (refusedAt === 0 або ми ігноруємо для рефрешу)
+			
 			logService.log("version", "Update check conditions:", {
 				versionMismatch: true,
-				hasNewerThanRefused: hasNewerVersionThanRefused,
-				isCooldownOver: isCooldownOver,
-				cooldownRemaining: refusedAt > 0 ? Math.max(0, FIVE_DAYS_MS - (now - refusedAt)) : 0
+				hasNewerThanRefused,
+				isCooldownOver,
+				cacheVersion,
+				serverVersion,
+				refusedVersion
 			});
 
 			if (!refusedVersion || hasNewerVersionThanRefused || isCooldownOver) {
 				logService.log("version", "Triggering update proposal banner.");
 				versionStore.setUpdate(true);
 			} else {
-				logService.log("version", "Update proposal suppressed by active cooldown/postponement.");
+				logService.log("version", "Update proposal suppressed by active cooldown.");
 			}
 		} else {
 			logService.log("version", "App is up to date.");

@@ -109,6 +109,10 @@
 	</script>
 <DebugListener />
 
+{#if versionStore.hasUpdate && versionStore.currentVersion}
+	<UpdateNotification version={versionStore.currentVersion} />
+{/if}
+
 {#if ready && !$isLoading && authStore.isDataReady}
 	{@render children()}
 
@@ -116,9 +120,6 @@
 		<OnboardingModal />
 	{/if}
 
-	{#if versionStore.hasUpdate && versionStore.currentVersion}
-		<UpdateNotification version={versionStore.currentVersion} />
-	{/if}
 	<ToastContainer />
 	<InteractionSystem />
 {:else}
