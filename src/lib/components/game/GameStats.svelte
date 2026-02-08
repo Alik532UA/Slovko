@@ -5,7 +5,7 @@
 	import { _ } from "svelte-i18n";
 	import { gameState } from "$lib/stores/gameState.svelte";
 	import { getGameController } from "$lib/context/gameContext";
-	import { Flame, Target, Lightbulb, GraduationCap } from "lucide-svelte";
+	import { Flame, Percent, Lightbulb, GraduationCap } from "lucide-svelte";
 
 	const gameController = getGameController();
 
@@ -30,7 +30,7 @@
 
 	// Accuracy display logic
 	const accuracyDisplay = $derived(
-		gameState.totalAttempts > 0 ? gameState.accuracy : "%",
+		gameState.totalAttempts > 0 ? gameState.accuracy : "",
 	);
 
 	// Accuracy background color interpolation (1% to 100%)
@@ -79,14 +79,12 @@
 			: ''}"
 		data-testid="stat-accuracy"
 	>
+		{#if accuracyDisplay !== ""}
+			<span class="value">{accuracyDisplay}</span>
+		{/if}
 		<div class="icon-wrapper">
-			<Target size={20} />
+			<Percent size={20} />
 		</div>
-		<span class="value"
-			>{accuracyDisplay}{#if gameState.totalAttempts > 0}<span class="unit"
-					>%</span
-				>{/if}</span
-		>
 	</div>
 
 	<div class="buttons-group">
