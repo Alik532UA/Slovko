@@ -96,7 +96,6 @@ function createAuthStore() {
 		} else {
 			if (oldUid) PresenceService.goOffline(oldUid);
 			SyncService.stop();
-			SyncService.resetLocalData();
 			friendsStore.stop();
 			friendsStore.reset();
 			state = serializeUser(null);
@@ -234,6 +233,9 @@ function createAuthStore() {
 				console.error("[AuthStore] Final sync failed, proceeding with logout", e);
 			}
 			
+			// Очищаємо локальні дані перед виходом, щоб наступний користувач не бачив "чужих" слів
+			SyncService.resetLocalData();
+
 			// Офіційний логаут Firebase. updateState(null) буде викликано через listener
 			await AuthService.logout();
 		},
