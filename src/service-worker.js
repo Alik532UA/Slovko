@@ -56,8 +56,11 @@ self.addEventListener("fetch", (event) => {
 				const response = await fetch(event.request);
 
 				if (response.status === 200) {
-					// Кешуємо успішні відповіді, яких ще немає в списку ASSETS
-					if (!isAsset) {
+					// КАТЕГОРИЧНО НЕ кешуємо файл версії, щоб перевірка оновлень завжди була актуальною
+					const isVersionFile = url.pathname.endsWith('app-version.json');
+					
+					// Кешуємо успішні відповіді, яких ще немає в списку ASSETS і це не файл версії
+					if (!isAsset && !isVersionFile) {
 						cache.put(event.request, response.clone());
 					}
 				}

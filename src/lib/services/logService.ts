@@ -9,10 +9,10 @@ export const logConfig = {
 	interaction: false,
 	presence: false,
 	stats: false,
-	ui: false,
+	ui: true,
 	data: false,
 	i18n: false,
-	version: false,
+	version: true,
 };
 
 const recentLogs: string[] = [];

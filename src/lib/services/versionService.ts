@@ -15,10 +15,13 @@ const FIVE_DAYS_MS = 5 * 24 * 60 * 60 * 1000;
 export async function checkForUpdates() {
 	logService.log("version", "Checking for updates...");
 	try {
-		const response = await fetch(`${VERSION_URL}?v=${Date.now()}`, {
+		// Примусово обходимо будь-яке кешування (SW, CDN, Browser)
+		const response = await fetch(`${VERSION_URL}?t=${Date.now()}`, {
+			cache: "no-store",
 			headers: {
-				'Cache-Control': 'no-cache',
-				'Pragma': 'no-cache'
+				'Cache-Control': 'no-cache, no-store, must-revalidate',
+				'Pragma': 'no-cache',
+				'Expires': '0'
 			}
 		});
 		if (!response.ok) {
@@ -27,18 +30,17 @@ export async function checkForUpdates() {
 		}
 
 		const data = await response.json();
-		logService.log("version", "Raw server response data:", data);
 		const serverVersion = data.version;
 
 		const cacheVersion = localStorage.getItem(CACHE_VERSION_KEY);
 		const refusedVersion = localStorage.getItem(REFUSED_VERSION_KEY);
 		const refusedAt = parseInt(localStorage.getItem(REFUSED_AT_KEY) || "0");
 
-		logService.log("version", "Version data comparison:", {
+		logService.log("version", "Version comparison:", {
 			server: serverVersion,
-			localCache: cacheVersion,
-			lastRefused: refusedVersion,
-			refusedAt: refusedAt > 0 ? new Date(refusedAt).toISOString() : "never"
+			local: cacheVersion,
+			refused: refusedVersion,
+			isMatch: cacheVersion === serverVersion
 		});
 
 		versionStore.setVersion(serverVersion);
@@ -54,35 +56,26 @@ export async function checkForUpdates() {
 
 		if (cacheVersion !== serverVersion) {
 			const now = Date.now();
-			const hasNewerVersionThanRefused = serverVersion !== refusedVersion;
+			const isNewerThanRefused = serverVersion !== refusedVersion;
 			const isCooldownOver = now - refusedAt > FIVE_DAYS_MS;
 			
-			// Ми показуємо оновлення, якщо:
-			// 1. Користувач ще не відмовлявся від цієї версії
-			// 2. АБО вийшла версія, новіша за ту, від якої він відмовився
-			// 3. АБО пройшов кулдаун 5 днів
-			// 4. АБО це початкове завантаження (refusedAt === 0 або ми ігноруємо для рефрешу)
-			
-			logService.log("version", "Update check conditions:", {
-				versionMismatch: true,
-				hasNewerThanRefused,
+			logService.log("version", "Conditions for showing update banner:", {
+				isNewerThanRefused,
 				isCooldownOver,
-				cacheVersion,
-				serverVersion,
-				refusedVersion
+				timeSinceRefusal: refusedAt > 0 ? Math.round((now - refusedAt) / 1000 / 60) + " min" : "N/A"
 			});
 
-			if (!refusedVersion || hasNewerVersionThanRefused || isCooldownOver) {
-				logService.log("version", "Triggering update proposal banner.");
+			if (!refusedVersion || isNewerThanRefused || isCooldownOver) {
+				logService.log("version", "Action: Triggering update proposal banner.");
 				versionStore.setUpdate(true);
 			} else {
-				logService.log("version", "Update proposal suppressed by active cooldown.");
+				logService.log("version", "Action: Update proposal suppressed (cooldown/refused).");
 			}
 		} else {
-			logService.log("version", "App is up to date.");
+			logService.log("version", "App is already running the latest version.");
 		}
 	} catch (error) {
-		logService.error("version", "Failed to check for updates:", error);
+		logService.error("version", "Error during update check:", error);
 	}
 }
 

@@ -58,15 +58,18 @@
 
 	onMount(() => {
 		logService.log("version", "Root layout onMount started");
+		
+		// 1. Запускаємо перевірку оновлень ОДРАЗУ паралельно
+		// Додаємо мікро-затримку, щоб не забивати потік при старті
+		setTimeout(() => {
+			checkForUpdates();
+		}, 300);
+
 		const init = async () => {
 			logService.log("version", "Initializing i18n...");
 			await initializeI18n();
 			logService.log("version", "i18n initialized, setting ready=true");
 			ready = true;
-
-			// Перевірка оновлень після ініціалізації
-			logService.log("version", "Calling checkForUpdates()...");
-			checkForUpdates();
 
 			if (!dev && "serviceWorker" in navigator) {
 				navigator.serviceWorker.register(`${base}/service-worker.js`);
