@@ -454,11 +454,12 @@ class SyncServiceClass {
 		const validatedDailyCorrect = Math.max(local.dailyCorrect || 0, cloud.dailyCorrect || 0);
 		
 		// Вибираємо пізнішу дату (YYYY-MM-DD порівнюється як рядки коректно)
-		const validatedLastCorrectDate = (local.lastCorrectDate || "") > (cloud.lastCorrectDate || "") 
-			? local.lastCorrectDate : cloud.lastCorrectDate;
+		// Гарантуємо null замість undefined для Firebase (VULN_08)
+		const validatedLastCorrectDate = (local.lastCorrectDate || "") >= (cloud.lastCorrectDate || "") 
+			? (local.lastCorrectDate || null) : (cloud.lastCorrectDate || null);
 		
-		const validatedLastStreakUpdateDate = (local.lastStreakUpdateDate || "") > (cloud.lastStreakUpdateDate || "")
-			? local.lastStreakUpdateDate : cloud.lastStreakUpdateDate;
+		const validatedLastStreakUpdateDate = (local.lastStreakUpdateDate || "") >= (cloud.lastStreakUpdateDate || "")
+			? (local.lastStreakUpdateDate || null) : (cloud.lastStreakUpdateDate || null);
 
 		const merged: ProgressState = {
 			...local,

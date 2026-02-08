@@ -21,7 +21,7 @@ export const streakService = {
 		const today = new Date().toLocaleDateString('en-CA');
 		let newStreak = currentStreak;
 		let newDailyCorrect = dailyCorrect;
-		let newLastStreakUpdateDate = lastStreakUpdateDate;
+		let newLastStreakUpdateDate = lastStreakUpdateDate || null;
 
 		logService.log("stats", `Streak calculation started`, {
 			today,
