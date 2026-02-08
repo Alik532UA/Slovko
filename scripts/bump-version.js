@@ -19,7 +19,18 @@ try {
 
 	// 3. Update static/app-version.json
 	const staticVersionPath = path.resolve("static/app-version.json");
-	const staticVersionData = { version: newVersion };
+	let staticVersionData = {};
+	if (fs.existsSync(staticVersionPath)) {
+		try {
+			staticVersionData = JSON.parse(
+				fs.readFileSync(staticVersionPath, "utf8"),
+			);
+		} catch (e) {
+			console.warn("⚠️ Could not parse existing app-version.json, creating new.");
+		}
+	}
+	staticVersionData.version = newVersion;
+
 	fs.writeFileSync(
 		staticVersionPath,
 		JSON.stringify(staticVersionData, null, 4),
