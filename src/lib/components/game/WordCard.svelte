@@ -12,6 +12,7 @@
 		card: ActiveCard;
 		showTranscription?: boolean;
 		enablePronunciation?: boolean;
+		isDimmed?: boolean;
 		onclick: () => void;
 		onlongpress?: (e: PointerEvent) => void;
 		wordSnippet?: Snippet<[string]>;
@@ -22,6 +23,7 @@
 		card,
 		showTranscription = false,
 		enablePronunciation = false,
+		isDimmed = false,
 		onclick,
 		onlongpress,
 		wordSnippet,
@@ -98,6 +100,7 @@
 	class:wrong={card.status === "wrong"}
 	class:hint={card.status === "hint"}
 	class:hint-slow={card.status === "hint-slow"}
+	class:dimmed={isDimmed}
 	onpointerdown={handlePointerDown}
 	onpointerup={handlePointerUp}
 	onpointerleave={handlePointerLeave}
@@ -191,6 +194,12 @@
 		background: var(--selected-bg);
 		border-color: var(--selected-border);
 		animation: selectedPulse 2s infinite ease-in-out;
+	}
+
+	.word-card.dimmed {
+		filter: brightness(0.4) blur(2px);
+		pointer-events: none;
+		opacity: 0.8;
 	}
 
 	@keyframes selectedPulse {

@@ -22,8 +22,7 @@
 	const gameController = getGameController();
 
 	let contextMenu = $state<{
-		x: number;
-		y: number;
+		cardId: string;
 		wordKey: string;
 		language: string;
 		text: string;
@@ -61,19 +60,8 @@
 	});
 
 	function handleLongPress(e: PointerEvent, card: ActiveCard) {
-		// Adjust position to keep menu on screen
-		let x = e.clientX;
-		let y = e.clientY;
-
-		const w = window.innerWidth;
-		const h = window.innerHeight;
-
-		if (x + 220 > w) x = w - 230;
-		if (y + 120 > h) y = h - 130;
-
 		contextMenu = {
-			x,
-			y,
+			cardId: card.id,
 			wordKey: card.wordKey,
 			language: card.language,
 			text: card.text,
@@ -140,6 +128,7 @@
 										.showTranscriptionSource}
 									enablePronunciation={settingsStore.value
 										.enablePronunciationSource}
+									isDimmed={contextMenu !== null && contextMenu.cardId !== card.id}
 									onclick={() => gameController.selectCard(card)}
 									onlongpress={(e) => handleLongPress(e, card)}
 								/>
@@ -165,6 +154,7 @@
 										.showTranscriptionTarget}
 									enablePronunciation={settingsStore.value
 										.enablePronunciationTarget}
+									isDimmed={contextMenu !== null && contextMenu.cardId !== card.id}
 									onclick={() => gameController.selectCard(card)}
 									onlongpress={(e) => handleLongPress(e, card)}
 								/>
@@ -178,8 +168,6 @@
 
 	{#if contextMenu}
 		<CardContextMenu
-			x={contextMenu.x}
-			y={contextMenu.y}
 			wordKey={contextMenu.wordKey}
 			language={contextMenu.language}
 			text={contextMenu.text}

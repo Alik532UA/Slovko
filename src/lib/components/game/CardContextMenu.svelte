@@ -1,21 +1,19 @@
 <script lang="ts">
 	import { playlistStore } from "$lib/stores/playlistStore.svelte";
 	import { _ } from "svelte-i18n";
-	import { Heart, Bookmark, Volume2, AlertTriangle } from "lucide-svelte";
+	import { Heart, Bookmark, Volume2, AlertTriangle, X } from "lucide-svelte";
 	import { speakText } from "$lib/services/speechService";
 	import { scale, fade } from "svelte/transition";
 	import { PLAYLIST_ICONS_MAP } from "$lib/config/icons";
 
 	interface Props {
-		x: number;
-		y: number;
 		wordKey: string;
 		language: string; // New prop to know which language to speak
 		text: string; // New prop to know what to speak
 		onclose: () => void;
 		onreport: () => void;
 	}
-	let { x, y, wordKey, language, text, onclose, onreport }: Props = $props();
+	let { wordKey, language, text, onclose, onreport }: Props = $props();
 
 	let isFavorite = $derived(playlistStore.isFavorite(wordKey));
 	let isExtra = $derived(playlistStore.isExtra(wordKey));
@@ -57,10 +55,23 @@
 ></div>
 <div
 	class="menu"
-	style="top: {y}px; left: {x}px"
 	in:scale={{ duration: 200, start: 0.9, opacity: 0 }}
 	data-testid="context-menu-container"
 >
+	<div class="menu-header" data-testid="context-menu-header">
+		<span class="word-title">{text}</span>
+		<button 
+			class="close-btn" 
+			onclick={onclose} 
+			aria-label="Close" 
+			data-testid="context-menu-close"
+		>
+			<X size={18} />
+		</button>
+	</div>
+
+	<div class="divider"></div>
+
 	<button onclick={playSound} data-testid="context-menu-listen">
 		<span class="icon">
 			<Volume2 size={20} />
@@ -129,6 +140,9 @@
 	}
 	.menu {
 		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 		z-index: 20001;
 		background: var(--card-bg); /* Use theme card bg */
 		border: 1px solid var(--border);
@@ -138,8 +152,51 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.25rem;
-		min-width: 220px;
+		min-width: 240px;
+		max-width: 90vw;
 		backdrop-filter: blur(10px);
+	}
+
+	.menu-header {
+		padding: 0.5rem 1rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		min-height: 40px;
+	}
+
+	.word-title {
+		font-weight: 800;
+		font-size: 1.1rem;
+		color: var(--accent);
+		text-align: center;
+		word-break: break-word;
+		padding: 0 1.5rem;
+	}
+
+	.close-btn {
+		position: absolute;
+		right: 0.25rem;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 32px;
+		height: 32px;
+		padding: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--text-secondary);
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		border-radius: 50%;
+		transition: all 0.2s;
+	}
+
+	.close-btn:hover {
+		background: rgba(255, 255, 255, 0.1);
+		color: var(--text-primary);
 	}
 
 	button {
