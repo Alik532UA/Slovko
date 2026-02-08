@@ -9,43 +9,44 @@ export const streakService = {
 		currentStreak: number,
 		lastCorrectDate: string | null,
 		dailyCorrect: number,
+		lastStreakUpdateDate: string | null = null,
 	): {
 		streak: number;
 		dailyCorrect: number;
 		lastCorrectDate: string;
+		lastStreakUpdateDate: string | null;
 	} {
-		// ПОПЕРЕДЖЕННЯ: Використання клієнтської дати є вразливим до маніпуляцій.
-		// Ми використовуємо локальну дату (YYYY-MM-DD), щоб стрік відповідав реальному дню користувача.
-		const today = new Date().toLocaleDateString('en-CA'); // Формат YYYY-MM-DD у локальному часі
+		const today = new Date().toLocaleDateString('en-CA');
 		let newStreak = currentStreak;
 		let newDailyCorrect = dailyCorrect;
+		let newLastStreakUpdateDate = lastStreakUpdateDate;
 
 		if (!lastCorrectDate || lastCorrectDate !== today) {
-			// Перша відповідь за весь час або новий день
 			newDailyCorrect = 1;
 		} else {
-			// Продовжуємо сьогоднішні відповіді
 			newDailyCorrect++;
 		}
 
-		// Якщо сьогодні досягли межі вперше за день
-		if (newDailyCorrect === 10) {
+		// Якщо сьогодні ще не оновлювали стрік і досягли мети
+		if (newDailyCorrect >= 10 && lastStreakUpdateDate !== today) {
 			const yesterday = new Date();
 			yesterday.setDate(yesterday.getDate() - 1);
-			const yesterdayStr = yesterday.toISOString().split("T")[0];
+			const yesterdayStr = yesterday.toLocaleDateString('en-CA');
 
-			if (lastCorrectDate === yesterdayStr) {
+			if (lastStreakUpdateDate === yesterdayStr) {
 				newStreak++;
 			} else {
-				// Якщо це перший день (null) або був пропуск
+				// Якщо це перший стрік або був пропуск
 				newStreak = 1;
 			}
+			newLastStreakUpdateDate = today;
 		}
 
 		return {
 			streak: newStreak,
 			dailyCorrect: newDailyCorrect,
 			lastCorrectDate: today,
+			lastStreakUpdateDate: newLastStreakUpdateDate
 		};
 	},
 };

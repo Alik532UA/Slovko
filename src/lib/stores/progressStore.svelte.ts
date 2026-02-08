@@ -182,6 +182,7 @@ function createProgressStore() {
 				progress.streak,
 				progress.lastCorrectDate,
 				progress.dailyCorrect,
+				progress.lastStreakUpdateDate,
 			);
 
 			// Логіка серії правильних відповідей (підряд) - Глобальна

@@ -414,6 +414,7 @@ export const ProgressStateSchema = z.object({
 	currentCorrectStreak: z.number().default(0),
 	bestCorrectStreak: z.number().default(0),
 	lastCorrectDate: z.string().nullable().default(null),
+	lastStreakUpdateDate: z.string().nullable().default(null),
 	dailyCorrect: z.number().default(0),
 	firstSeenDate: z.number().default(() => Date.now()),
 });
