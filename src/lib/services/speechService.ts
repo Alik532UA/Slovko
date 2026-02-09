@@ -90,27 +90,34 @@ export function findBestVoice(
  * Озвучити текст — FIRE AND FORGET (Synchronous for iOS)
  */
 export function speakText(text: string, lang: string): void {
-	if (!browser || !window.speechSynthesis) return;
-
-	// Critical for iOS: Do not await anything here!
-	
-	// Don't cancel immediately, it might bug out on cold start. 
-	// Only cancel if we are interrupting.
-	if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
-		window.speechSynthesis.cancel();
+	if (!browser || !window.speechSynthesis) {
+		logService.error("ui", "Speech synthesis not available in window");
+		return;
 	}
 
-	// Try to get voices immediately (might be empty on first load)
+	const ss = window.speechSynthesis;
+	logService.log("ui", "speakText call", { 
+		text: text.substring(0, 10), 
+		lang, 
+		speaking: ss.speaking, 
+		pending: ss.pending, 
+		paused: ss.paused 
+	});
+	
+	if (ss.speaking || ss.pending) {
+		ss.cancel();
+	}
+
+	// Try to get voices immediately
 	let currentVoices = voices;
 	if (currentVoices.length === 0) {
-		currentVoices = window.speechSynthesis.getVoices();
+		currentVoices = ss.getVoices();
+		logService.log("ui", "Fresh voices check", { count: currentVoices.length });
 		if (currentVoices.length > 0) {
 			voices = currentVoices;
 			voicesLoaded = true;
 		} else {
-			// Trigger background load for NEXT time
 			preloadVoices();
-			logService.warn("ui", "Speaking blind (no voices loaded yet)");
 		}
 	}
 

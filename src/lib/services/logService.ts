@@ -16,7 +16,7 @@ export const logConfig = {
 };
 
 const recentLogs: string[] = [];
-const MAX_RECENT_LOGS = 100;
+const MAX_RECENT_LOGS = 1000;
 
 export const logService = {
 	log(category: keyof typeof logConfig, message: string, ...args: unknown[]) {
@@ -37,9 +37,11 @@ export const logService = {
 		console.warn(logMsg, ...args);
 	},
 	addToRecent(msg: string, args: unknown[]) {
-		const fullMsg = `${new Date().toISOString().split('T')[1].split('.')[0]} ${msg} ${args.map(a => {
+		const time = new Date().toISOString();
+		const fullMsg = `${time} ${msg} ${args.map(a => {
 			try {
-				return JSON.stringify(a);
+				if (typeof a === 'object') return JSON.stringify(a);
+				return String(a);
 			} catch {
 				return String(a);
 			}
@@ -52,12 +54,14 @@ export const logService = {
 	},
 	async copyLogsToClipboard() {
 		const logs = this.getRecentLogs();
-		const info = `UA: ${navigator.userAgent}\nURL: ${window.location.href}\n---\n${logs}`;
+		const info = `VERSION: 0.6.284\nUA: ${navigator.userAgent}\nURL: ${window.location.href}\n---\n${logs}`;
 		try {
 			await navigator.clipboard.writeText(info);
 			return true;
 		} catch (err) {
 			console.error("Failed to copy logs:", err);
+			// Fallback alert for very old browsers
+			alert("Could not copy automatically. See console.");
 			return false;
 		}
 	},

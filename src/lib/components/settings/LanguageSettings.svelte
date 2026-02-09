@@ -333,11 +333,53 @@
 			>
 				{$_("common.confirm")}
 			</button>
+
+			<!-- Debug Section -->
+			<div class="debug-section">
+				<button 
+					class="debug-btn" 
+					title="Copy Debug Info"
+					onclick={async (e) => {
+						const btn = e.currentTarget as HTMLButtonElement;
+						const ok = await logService.copyLogsToClipboard();
+						if (ok) {
+							const oldText = btn.innerText;
+							btn.innerText = "COPIED ✅";
+							setTimeout(() => btn.innerText = oldText, 2000);
+						}
+					}}
+				>
+					Copy Debug Info 📋
+				</button>
+			</div>
 		</div>
 	</div>
 </div>
 
 <style>
+	.debug-section {
+		margin-top: 2rem;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		padding-bottom: 1rem;
+	}
+
+	.debug-btn {
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		color: var(--text-secondary);
+		padding: 0.5rem 1rem;
+		border-radius: 8px;
+		font-size: 0.75rem;
+		cursor: pointer;
+		transition: all 0.2s;
+	}
+
+	.debug-btn:hover {
+		background: rgba(255, 255, 255, 0.1);
+		color: var(--text-primary);
+	}
 	.modal-backdrop {
 		position: fixed;
 		inset: 0;
