@@ -38,8 +38,9 @@
 	let currentSide = $state<"source" | "target" | null>(null);
 
 	async function handlePointerDown(e: PointerEvent, side: "source" | "target") {
+		if (showVoiceSelection) return; // Ігноруємо, якщо модалка вже відкрита
+		
 		logService.log("settings", "PointerDown", { side, pointerType: e.pointerType });
-		// Only handle primary button
 		if (e.button !== 0 && e.pointerType === 'mouse') return;
 		
 		isLongPress = false;
@@ -47,40 +48,56 @@
 		
 		if (pressTimer) clearTimeout(pressTimer);
 
-		pressTimer = setTimeout(async () => {
+		pressTimer = setTimeout(() => {
+			if (showVoiceSelection) return;
 			logService.log("settings", "LongPress triggered", { side });
 			isLongPress = true;
-			await tick();
-			showVoiceSelection = true;
+			
+			// Повна ізоляція від поточного тач-циклу
+			setTimeout(() => {
+				showVoiceSelection = true;
+			}, 10);
+			
 			pressTimer = null;
 		}, 600);
 	}
 
-	async function handleContextMenu(e: MouseEvent, side: "source" | "target") {
+	function handleContextMenu(e: MouseEvent, side: "source" | "target") {
+		if (showVoiceSelection) return;
 		logService.log("settings", "ContextMenu triggered", { side });
 		e.preventDefault();
 		e.stopPropagation();
 		currentSide = side;
-		await tick();
 		showVoiceSelection = true;
 	}
 
 	function handlePointerUp(e: PointerEvent) {
 		logService.log("settings", "PointerUp", { isLongPress, showVoiceSelection });
+		
 		if (pressTimer) {
 			clearTimeout(pressTimer);
 			pressTimer = null;
 		}
 
-		if (!isLongPress && !showVoiceSelection && currentSide) {
+		// Якщо ми вже в процесі відкриття модалки вибору голосу — нічого не робимо
+		if (showVoiceSelection) {
+			return;
+		}
+
+		if (!isLongPress && currentSide) {
 			logService.log("settings", "Simple click - toggling pronunciation", { currentSide });
-			if (currentSide === "source") {
-				settingsStore.togglePronunciationSource();
-			} else {
-				settingsStore.togglePronunciationTarget();
+			try {
+				if (currentSide === "source") {
+					settingsStore.togglePronunciationSource();
+				} else {
+					settingsStore.togglePronunciationTarget();
+				}
+			} catch (err) {
+				logService.error("settings", "Toggle pronunciation error", err);
 			}
 		}
 
+		// Скидаємо стани тільки якщо модалка не відкрилася
 		if (!showVoiceSelection) {
 			currentSide = null;
 			isLongPress = false;

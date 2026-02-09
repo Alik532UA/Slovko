@@ -29,9 +29,15 @@
 
 	// 1. Initial sync from store (run once on mount or simple effect)
 	$effect(() => {
-		const pref = (settingsStore.value.voicePreferences as Record<string, string>)[language];
-		if (pref && !selectedVoiceURI) {
-			selectedVoiceURI = pref;
+		try {
+			const prefs = settingsStore?.value?.voicePreferences;
+			if (!prefs) return;
+			const pref = (prefs as Record<string, string>)[language];
+			if (pref && !selectedVoiceURI) {
+				selectedVoiceURI = pref;
+			}
+		} catch (e) {
+			logService.error("settings", "Error in voice preference effect", e);
 		}
 	});
 
@@ -41,13 +47,17 @@
 	let voiceListElement = $state<HTMLElement | null>(null);
 
 	async function scrollToSelected() {
-		await tick();
-		if (voiceListElement) {
-			const selected = voiceListElement.querySelector(".voice-item.selected");
-			if (selected) {
-				logService.log("settings", "Scrolling to selected voice");
-				selected.scrollIntoView({ block: "center", behavior: "smooth" });
+		try {
+			await tick();
+			if (voiceListElement) {
+				const selected = voiceListElement.querySelector(".voice-item.selected");
+				if (selected) {
+					logService.log("settings", "Scrolling to selected voice");
+					selected.scrollIntoView({ block: "center", behavior: "smooth" });
+				}
 			}
+		} catch (e) {
+			// Ignore scroll errors
 		}
 	}
 
@@ -70,60 +80,66 @@
 	};
 
 	function getPreviewText(lang: string, voiceLang: string): string {
-		if (voiceLang.startsWith("tr")) return PREVIEW_TEXTS.tr;
+		if (!voiceLang) return "Hello";
+		if (voiceLang.startsWith("tr")) return PREVIEW_TEXTS.tr || "Merhaba";
 		return PREVIEW_TEXTS[lang] || "Hello";
 	}
 
 	function processVoices() {
-		logService.log("settings", "Processing voices...");
-		if (typeof window === 'undefined' || !window.speechSynthesis) return;
+		try {
+			logService.log("settings", "Processing voices...");
+			if (typeof window === 'undefined' || !window.speechSynthesis) return;
 
-		const allVoices = window.speechSynthesis.getVoices();
-		if (!allVoices || allVoices.length === 0) return;
-		
-		voices = allVoices;
-
-		// Select best voice if none selected
-		if (!selectedVoiceURI && language) {
-			const best = findBestVoice(allVoices, language);
-			if (best) {
-				selectedVoiceURI = best.voiceURI;
+			const allVoices = window.speechSynthesis.getVoices();
+			if (!allVoices || allVoices.length === 0) {
+				logService.log("settings", "No voices available yet");
+				return;
 			}
-		}
-
-		// Filter Logic
-		let targetLangPrefix: string = language || "en";
-		if (language === "crh") targetLangPrefix = "tr"; 
-
-		const region = PREFERRED_REGIONS[targetLangPrefix];
-
-		primaryVoices = allVoices
-			.filter((v) => v && v.lang && v.lang.startsWith(targetLangPrefix))
-			.sort((a, b) => {
-				if (region) {
-					const aPref = a.lang.includes(`-${region}`);
-					const bPref = b.lang.includes(`-${region}`);
-					if (aPref && !bPref) return -1;
-					if (!aPref && bPref) return 1;
-				}
-				return a.name.localeCompare(b.name);
-			});
-
-		const secondaryRegion = PREFERRED_REGIONS["en"];
-		secondaryVoices = allVoices
-			.filter((v) => v && v.lang && !v.lang.startsWith(targetLangPrefix) && v.lang.startsWith("en"))
-			.sort((a, b) => {
-				if (secondaryRegion) {
-					const aPref = a.lang.includes(`-${secondaryRegion}`);
-					const bPref = b.lang.includes(`-${secondaryRegion}`);
-					if (aPref && !bPref) return -1;
-					if (!aPref && bPref) return 1;
-				}
-				return a.name.localeCompare(b.name);
-			});
 			
-		logService.log("settings", "Voices processed", { primary: primaryVoices.length, secondary: secondaryVoices.length });
-		scrollToSelected();
+			voices = allVoices;
+
+			// Select best voice if none selected
+			if (!selectedVoiceURI && language) {
+				const best = findBestVoice(allVoices, language);
+				if (best) {
+					selectedVoiceURI = best.voiceURI;
+				}
+			}
+
+			// Filter Logic
+			const targetLangPrefix: string = language === "crh" ? "tr" : (language || "en");
+			const region = PREFERRED_REGIONS[targetLangPrefix];
+
+			primaryVoices = allVoices
+				.filter((v) => v && v.lang && v.lang.startsWith(targetLangPrefix))
+				.sort((a, b) => {
+					if (region) {
+						const aPref = a.lang.includes(`-${region}`);
+						const bPref = b.lang.includes(`-${region}`);
+						if (aPref && !bPref) return -1;
+						if (!aPref && bPref) return 1;
+					}
+					return (a.name || "").localeCompare(b.name || "");
+				});
+
+			const secondaryRegion = PREFERRED_REGIONS["en"];
+			secondaryVoices = allVoices
+				.filter((v) => v && v.lang && !v.lang.startsWith(targetLangPrefix) && v.lang.startsWith("en"))
+				.sort((a, b) => {
+					if (secondaryRegion) {
+						const aPref = a.lang.includes(`-${secondaryRegion}`);
+						const bPref = b.lang.includes(`-${secondaryRegion}`);
+						if (aPref && !bPref) return -1;
+						if (!aPref && bPref) return 1;
+					}
+					return (a.name || "").localeCompare(b.name || "");
+				});
+				
+			logService.log("settings", "Voices processed", { primary: primaryVoices.length, secondary: secondaryVoices.length });
+			scrollToSelected();
+		} catch (err) {
+			logService.error("settings", "Fatal error in processVoices", err);
+		}
 	}
 
 	onMount(() => {
