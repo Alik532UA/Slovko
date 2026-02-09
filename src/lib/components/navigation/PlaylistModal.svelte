@@ -89,8 +89,8 @@
 		}
 	}
 
-	let newWordOriginal = $state("");
-	let newWordTranslation = $state("");
+	let newWordLeft = $state("");
+	let newWordRight = $state("");
 
 	function handleSave() {
 		if (!name.trim()) return;
@@ -116,17 +116,17 @@
 	}
 
 	function addCustomWord() {
-		if (!newWordOriginal.trim() || !newWordTranslation.trim()) return;
+		if (!newWordLeft.trim() || !newWordRight.trim()) return;
 
 		const custom: CustomWord = {
 			id: `custom-${Date.now()}`,
-			original: newWordOriginal.trim(),
-			translation: newWordTranslation.trim(),
+			left: newWordLeft.trim(),
+			right: newWordRight.trim(),
 		};
 
 		words = [...words, custom];
-		newWordOriginal = "";
-		newWordTranslation = "";
+		newWordLeft = "";
+		newWordRight = "";
 	}
 
 	function removeWord(index: number) {
@@ -147,18 +147,32 @@
 
 	function exportJSON() {
 		if (!existingPlaylist) return;
-		const data = JSON.stringify({ ...existingPlaylist, words }, null, 2);
+		const data = JSON.stringify(
+			{
+				id: existingPlaylist.id,
+				app: "Slovko",
+				name: existingPlaylist.name,
+				description: existingPlaylist.description,
+				color: existingPlaylist.color,
+				icon: existingPlaylist.icon,
+				isSystem: existingPlaylist.isSystem,
+				words,
+				createdAt: existingPlaylist.createdAt,
+			},
+			null,
+			2,
+		);
 		downloadFile(`${name}.json`, data);
 	}
 
 	function exportTXT() {
 		if (!existingPlaylist) return;
-		let content = `Name: ${name}\nDescription: ${description}\nColor: ${color}\nIcon: ${selectedIcon}\n---\n`;
+		let content = `App: Slovko\nName: ${name}\nDescription: ${description}\nColor: ${color}\nIcon: ${selectedIcon}\n---\n`;
 		words.forEach((w) => {
 			if (typeof w === "string") {
 				content += `${w}\n`;
 			} else {
-				content += `${w.original}|${w.translation}\n`;
+				content += `${w.left}|${w.right}\n`;
 			}
 		});
 		downloadFile(`${name}.txt`, content);
@@ -273,27 +287,27 @@
 						>
 							<div class="word-info">
 								{#if typeof word === "string"}
-									<div class="word-pill source" data-testid="word-key-{word}">
+									<div class="word-pill" data-testid="word-left-{word}">
 										{word}
 									</div>
 									<div
-										class="word-pill target"
-										data-testid="word-target-{word}"
+										class="word-pill"
+										data-testid="word-right-{word}"
 									>
 										{translations[word] || "..."}
 									</div>
 								{:else}
 									<div
-										class="word-pill source"
-										data-testid="word-original-{word.id}"
+										class="word-pill"
+										data-testid="word-left-custom-{word.id}"
 									>
-										{word.original}
+										{word.left}
 									</div>
 									<div
-										class="word-pill target"
-										data-testid="word-translation-{word.id}"
+										class="word-pill"
+										data-testid="word-right-custom-{word.id}"
 									>
-										{word.translation}
+										{word.right}
 									</div>
 								{/if}
 							</div>
@@ -336,15 +350,15 @@
 						<div class="custom-word-inputs">
 							<input
 								type="text"
-								bind:value={newWordOriginal}
-								placeholder={$_("settings.sourceLanguage")}
-								data-testid="new-word-original-input"
+								bind:value={newWordLeft}
+								placeholder={$_("playlists.leftColumn")}
+								data-testid="new-word-left-input"
 							/>
 							<input
 								type="text"
-								bind:value={newWordTranslation}
-								placeholder={$_("settings.targetLanguage")}
-								data-testid="new-word-translation-input"
+								bind:value={newWordRight}
+								placeholder={$_("playlists.rightColumn")}
+								data-testid="new-word-right-input"
 							/>
 							<button
 								class="add-btn"
@@ -546,18 +560,10 @@
 		text-overflow: ellipsis;
 		flex: 1;
 		max-width: 50%;
-		border: 1px solid transparent;
+		border: 1px solid rgba(255, 255, 255, 0.1);
 		text-align: center;
-	}
-	.word-pill.source {
 		background: rgba(255, 255, 255, 0.08);
 		color: var(--text-primary);
-		border-color: rgba(255, 255, 255, 0.1);
-	}
-	.word-pill.target {
-		background: rgba(233, 84, 32, 0.1);
-		color: var(--accent);
-		border-color: rgba(233, 84, 32, 0.2);
 	}
 	.word-actions {
 		display: flex;

@@ -60,6 +60,7 @@ const DEFAULT_STATE: PlaylistState = {
 	customPlaylists: [],
 	systemPlaylists: { ...DEFAULT_SYSTEM_PLAYLISTS },
 	mistakeMetadata: {},
+	updatedAt: 0,
 };
 
 function createPlaylistStore() {
@@ -271,6 +272,139 @@ function createPlaylistStore() {
 			return state.customPlaylists.find((p: Playlist) => p.id === id);
 		},
 
+		/**
+		 * Експортувати плейліст у JSON
+		 */
+		exportToJSON(id: PlaylistId): string {
+			const playlist = this.getPlaylist(id);
+			if (!playlist) return "";
+			return JSON.stringify({
+				id: playlist.id,
+				app: "Slovko",
+				name: playlist.name,
+				description: playlist.description,
+				color: playlist.color,
+				icon: playlist.icon,
+				isSystem: playlist.isSystem,
+				words: playlist.words,
+				createdAt: playlist.createdAt
+			}, null, 2);
+		},
+
+		/**
+		 * Експортувати плейліст у текстовий формат
+		 */
+		exportToText(id: PlaylistId): string {
+			const playlist = this.getPlaylist(id);
+			if (!playlist) return "";
+
+			let text = `App: Slovko\n`;
+			text += `Name: ${playlist.name}\n`;
+			if (playlist.description) text += `Description: ${playlist.description}\n`;
+			text += `Color: ${playlist.color}\n`;
+			text += `Icon: ${playlist.icon}\n`;
+			text += "---\n";
+
+			playlist.words.forEach((w) => {
+				if (typeof w === "string") {
+					text += `${w}\n`;
+				} else {
+					text += `${w.left}|${w.right}\n`;
+				}
+			});
+
+			return text;
+		},
+
+		/**
+		 * Імпортувати плейліст з об'єкта або рядка
+		 */
+		importFromData(input: any): Playlist | null {
+			try {
+				let data: any;
+				if (typeof input === "string") {
+					const trimmed = input.trim();
+					if (trimmed.startsWith("{")) {
+						data = JSON.parse(trimmed);
+						// Сувора перевірка JSON
+						if (data.app !== "Slovko") return null;
+					} else {
+						// Parse custom text format
+						const lines = trimmed.split("\n");
+						
+						// Сувора перевірка першого рядка TXT
+						if (!lines[0].startsWith("App: Slovko")) return null;
+
+						let name = "Imported Playlist";
+						let desc = "";
+						let color = "#3a8fd6";
+						let icon = "Bookmark";
+						let words: any[] = [];
+						
+						// Якщо немає роздільника, вважаємо що все це слова
+						let parsingWords = !trimmed.includes("---");
+
+						for (let i = 1; i < lines.length; i++) {
+							let line = lines[i].trim();
+							if (!line) continue;
+							if (line === "---") {
+								parsingWords = true;
+								continue;
+							}
+							if (!parsingWords) {
+								if (line.startsWith("Name:")) name = line.replace("Name:", "").trim();
+								else if (line.startsWith("Description:")) desc = line.replace("Description:", "").trim();
+								else if (line.startsWith("Color:")) color = line.replace("Color:", "").trim();
+								else if (line.startsWith("Icon:")) icon = line.replace("Icon:", "").trim();
+							} else {
+								if (line.includes("|")) {
+									const [left, right] = line.split("|");
+									words.push({
+										id: `custom-${Date.now()}-${Math.random()}`,
+										left,
+										right,
+									});
+								} else {
+									words.push(line);
+								}
+							}
+						}
+						data = { name, description: desc, color, icon, words };
+					}
+				} else {
+					data = input;
+					// Перевірка об'єкта, якщо він прийшов не як рядок
+					if (data.app !== "Slovko" && !data._legacy) return null;
+				}
+
+				if (!data.name || !Array.isArray(data.words)) {
+					throw new Error("Invalid playlist data");
+				}
+
+				// Перевірка на конфлікт імен
+				let finalName = data.name;
+				const exists = this.allPlaylists.some(p => p.name === finalName);
+				if (exists) {
+					finalName = `${finalName} (Import)`;
+				}
+
+				const newPlaylist = this.createPlaylist(
+					finalName,
+					data.description || "",
+					data.color || "#3a8fd6",
+					data.icon || "Bookmark"
+				);
+
+				if (newPlaylist) {
+					this.updatePlaylist(newPlaylist.id, { words: data.words });
+					return this.getPlaylist(newPlaylist.id) || null;
+				}
+			} catch (e) {
+				console.error("Failed to import playlist", e);
+			}
+			return null;
+		},
+
 		// System specific helpers (Legacy compatibility)
 		toggleFavorite(wordKey: WordKey) {
 			const isFav = state.systemPlaylists.favorites.words.includes(wordKey);
@@ -370,7 +504,15 @@ function createPlaylistStore() {
 				custom: state.customPlaylists.map((p: Playlist) => ({
 					id: p.id,
 					name: p.name,
-					words: p.words,
+					words: p.words.map(w => {
+						if (typeof w === "string") return w;
+						return {
+							id: w.id,
+							left: w.left,
+							right: w.right,
+							transcription: w.transcription
+						};
+					}),
 				})),
 			};
 		},

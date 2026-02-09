@@ -162,8 +162,9 @@ export class GameDataService {
 						}
 					} else if (w && typeof w === "object") {
 						const id = w.id || `custom-${Date.now()}`;
-						sourceTranslations[id] = w.original;
-						targetTranslations[id] = w.translation;
+						// Map neutral left/right to game dictionaries
+						sourceTranslations[id] = w.left || w.original || "";
+						targetTranslations[id] = w.right || w.translation || "";
 						if (w.transcription) sourceTranscriptions[id] = w.transcription;
 						words.push(id);
 					}

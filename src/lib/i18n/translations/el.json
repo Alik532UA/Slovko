@@ -46,10 +46,17 @@
 		"addCustomWord": "Προσθήκη δικής σας λέξης",
 		"wordPlaceholder": "Λέξη",
 		"translationPlaceholder": "Μετάφραση",
+		"leftColumn": "Αριστερή στήλη",
+		"rightColumn": "Δεξιά στήλη",
 		"exportTitle": "Εξαγωγή",
 		"addToPlaylist": "Προσθήκη στη λίστα",
 		"confirmDelete": "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή τη λίστα;",
-		"importError": "Σφάλμα εισαγωγής. Ελέγξτε τη μορφή του αρχείου."
+		"importError": "Σφάλμα εισαγωγής. Ελέγξτε τη μορφή του αρχείου.",
+		"importInvalidFormat": "Αυτό δεν φαίνεται να είναι λίστα του Slovko ή η μορφή είναι παρωχημένη.",
+		"importSuccess": "Η λίστα εισήχθη με επιτυχία!",
+		"importFile": "Αρχείο",
+		"importClipboard": "Πρόχειρο",
+		"clipboardError": "Αποτυχία ανάγνωσης από το πρόχειρο"
 	},
 	"topics": {
 		"title": "Θέματα",

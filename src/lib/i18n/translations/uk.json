@@ -46,10 +46,17 @@
 		"addCustomWord": "Створити своє слово",
 		"wordPlaceholder": "Слово (English)",
 		"translationPlaceholder": "Переклад",
+		"leftColumn": "Ліва колонка",
+		"rightColumn": "Права колонка",
 		"exportTitle": "Експорт",
 		"addToPlaylist": "Додати в плейліст",
 		"confirmDelete": "Ви впевнені, що хочете видалити цей плейліст?",
-		"importError": "Помилка імпорту. Перевірте формат файлу."
+		"importError": "Помилка імпорту. Перевірте формат файлу.",
+		"importInvalidFormat": "Це не схоже на плейліст Slovko або формат застарів.",
+		"importSuccess": "Плейліст успішно імпортовано!",
+		"importFile": "Файл",
+		"importClipboard": "Буфер обміну",
+		"clipboardError": "Помилка читання з буферу обміну"
 	},
 	"topics": {
 		"title": "Теми",

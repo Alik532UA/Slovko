@@ -142,13 +142,6 @@
 		white-space: nowrap; /* Забороняємо перенос тексту */
 	}
 
-	/* Ховаємо текст "слів/хв" на вузьких екранах */
-	@media (max-width: 400px) {
-		.stat-item .unit {
-			display: none;
-		}
-	}
-
 	.hint-btn {
 		cursor: pointer;
 		background: rgba(255, 255, 255, 0.1);
@@ -186,13 +179,6 @@
 		font-weight: 700;
 		font-size: 1.1rem;
 		font-variant-numeric: tabular-nums;
-	}
-
-	.unit {
-		font-size: 0.8rem;
-		font-weight: 400;
-		opacity: 0.8;
-		margin-left: 2px;
 	}
 
 	/* Анімація для вогню, коли великий стрік */

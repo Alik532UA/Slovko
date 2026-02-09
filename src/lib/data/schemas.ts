@@ -44,8 +44,8 @@ export const SemanticsSchema = z.object({
 
 export const CustomWordSchema = z.object({
 	id: z.string(),
-	original: z.string().max(200, "Too long"),
-	translation: z.string().max(200, "Too long"),
+	left: z.string().max(200, "Too long"),
+	right: z.string().max(200, "Too long"),
 	transcription: z.string().max(200, "Too long").optional(),
 });
 
@@ -200,15 +200,26 @@ export const PlaylistStateSchema = z.preprocess((val: unknown) => {
 
 
 
-						if (w.id && !w.original && !w.translation) return w.id;
+						if (w.id && !w.original && !w.translation && !w.term && !w.definition && !w.left && !w.right) return w.id;
 
 
 
-						// Якщо це схоже на CustomWord (id, original, translation) — залишаємо як є
+						// Legacy migration: original/term -> left, translation/definition -> right
+
+						if (w.id && (w.original || w.translation || w.term || w.definition)) {
+							return {
+								id: w.id,
+								left: w.left || w.term || w.original || "",
+								right: w.right || w.definition || w.translation || "",
+								transcription: w.transcription
+							};
+						}
+
+						// Якщо це схоже на CustomWord (id, left, right) — залишаємо як є
 
 
 
-						if (w.id && w.original && w.translation) return w;
+						if (w.id && w.left && w.right) return w;
 
 
 
@@ -304,26 +315,21 @@ export const PlaylistStateSchema = z.preprocess((val: unknown) => {
 
 	const extra = normalize(systemPlaylists.extra || v.extra, DEFAULT_EXTRA);
 
-
+	// Міграція для кастомних плейлістів
+	const customPlaylists = Array.isArray(v.customPlaylists) 
+		? v.customPlaylists.map((p: any) => normalize(p, {}))
+		: [];
 
 	return {
-
 		...v,
-
 		systemPlaylists: {
-
 			favorites,
-
 			mistakes,
-
 			extra,
-
 		},
-
+		customPlaylists,
 		mistakeMetadata: v.mistakeMetadata || {},
-
 	};
-
 }, PlaylistStateCoreSchema);
 
 // ========================================

@@ -4,18 +4,20 @@
 	import { fade, fly } from "svelte/transition";
 </script>
 
-<div class="toast-container">
+<div class="toast-container" data-testid="toast-container">
 	{#each notificationStore.value as note (note.id)}
 		<div
 			class="toast {note.type}"
 			in:fly={{ y: 20, duration: 300 }}
 			out:fade={{ duration: 200 }}
 			role="alert"
+			data-testid="toast-{note.type}"
 		>
-			<span>{note.message}</span>
+			<span data-testid="toast-message">{note.message}</span>
 			<button
 				class="close-btn"
 				onclick={() => notificationStore.remove(note.id)}
+				data-testid="toast-close-btn"
 			>
 				<X size={16} />
 			</button>
@@ -31,7 +33,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
-		z-index: 9999;
+		z-index: 20000;
 		pointer-events: none;
 	}
 

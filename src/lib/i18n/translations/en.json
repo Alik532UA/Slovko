@@ -46,10 +46,17 @@
 		"addCustomWord": "Add Custom Word",
 		"wordPlaceholder": "Word",
 		"translationPlaceholder": "Translation",
+		"leftColumn": "Left column",
+		"rightColumn": "Right column",
 		"exportTitle": "Export",
 		"addToPlaylist": "Add to playlist",
 		"confirmDelete": "Are you sure you want to delete this playlist?",
-		"importError": "Import failed. Please check the file format."
+		"importError": "Import failed. Please check the file format.",
+		"importInvalidFormat": "This doesn't look like a Slovko playlist or the format is outdated.",
+		"importSuccess": "Playlist imported successfully!",
+		"importFile": "File",
+		"importClipboard": "Clipboard",
+		"clipboardError": "Failed to read from clipboard"
 	},
 	"topics": {
 		"title": "Topics",

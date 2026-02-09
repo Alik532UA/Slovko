@@ -2,6 +2,7 @@
 	import { _ } from "svelte-i18n";
 	import {
 		Bookmark,
+		Copy,
 		Plus,
 		Settings2,
 		Trash2,
@@ -9,6 +10,7 @@
 	} from "lucide-svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { playlistStore } from "$lib/stores/playlistStore.svelte";
+	import { notificationStore } from "$lib/stores/notificationStore.svelte";
 	import PlaylistModal from "../PlaylistModal.svelte";
 	import { PLAYLIST_ICONS_MAP } from "$lib/config/icons";
 	import type { PlaylistId } from "$lib/types";
@@ -21,6 +23,7 @@
 
 	let showPlaylistModal = $state(false);
 	let editingPlaylistId = $state<PlaylistId | undefined>(undefined);
+	let showImportOptions = $state(false);
 
 	function openPlaylistModal(id?: PlaylistId) {
 		editingPlaylistId = id;
@@ -40,55 +43,39 @@
 
 		const text = await file.text();
 		try {
-			if (file.name.endsWith(".json")) {
-				const data = JSON.parse(text);
-				if (data.name && Array.isArray(data.words)) {
-					const p = playlistStore.createPlaylist(
-						data.name,
-						data.description || "",
-						data.color || "#FF5733",
-					);
-					if (p) playlistStore.updatePlaylist(p.id, { words: data.words });
-				}
+			const p = playlistStore.importFromData(text);
+			if (p) {
+				showImportOptions = false;
+				notificationStore.success($_("playlists.importSuccess") || "Playlist imported!");
 			} else {
-				const lines = text.split("\n");
-				let name = "Imported Playlist";
-				let desc = "";
-				let color = "#FF5733";
-				let words: any[] = [];
-				let parsingWords = false;
-
-				for (let line of lines) {
-					line = line.trim();
-					if (line === "---") {
-						parsingWords = true;
-						continue;
-					}
-					if (!parsingWords) {
-						if (line.startsWith("Name:")) name = line.replace("Name:", "").trim();
-						if (line.startsWith("Description:")) desc = line.replace("Description:", "").trim();
-						if (line.startsWith("Color:")) color = line.replace("Color:", "").trim();
-					} else if (line) {
-						if (line.includes("|")) {
-							const [original, translation] = line.split("|");
-							words.push({
-								id: `custom-${Date.now()}-${Math.random()}`,
-								original,
-								translation,
-							});
-						} else {
-							words.push(line);
-						}
-					}
-				}
-				const p = playlistStore.createPlaylist(name, desc, color);
-				if (p) playlistStore.updatePlaylist(p.id, { words });
+				notificationStore.error($_("playlists.importInvalidFormat"));
 			}
 		} catch (err) {
 			console.error("Import failed", err);
-			alert($_("playlists.importError"));
+			notificationStore.error($_("playlists.importError"));
 		}
 		(e.target as HTMLInputElement).value = "";
+	}
+
+	async function importFromClipboard() {
+		try {
+			const text = await navigator.clipboard.readText();
+			if (!text) {
+				notificationStore.warning($_("playlists.clipboardEmpty") || "Clipboard is empty");
+				return;
+			}
+			
+			const p = playlistStore.importFromData(text);
+			if (p) {
+				showImportOptions = false;
+				notificationStore.success($_("playlists.importSuccess") || "Playlist imported!");
+			} else {
+				notificationStore.error($_("playlists.importInvalidFormat"));
+			}
+		} catch (err) {
+			console.error("Clipboard access failed", err);
+			notificationStore.error($_("playlists.clipboardError"));
+		}
 	}
 </script>
 
@@ -123,6 +110,7 @@
 						openPlaylistModal(p.id);
 					}}
 					title={$_("common.edit")}
+					data-testid="playlist-edit-{p.id}"
 				>
 					<Settings2 size={18} />
 				</button>
@@ -190,17 +178,54 @@
 			<span>{$_("playlists.createNew")}</span>
 		</div>
 
-		<label class="item topic-item import-playlist" data-testid="playlist-import-label">
-			<Upload size={24} />
-			<span>{$_("playlists.import")}</span>
-			<input
-				type="file"
-				accept=".json,.txt"
-				onchange={handleImport}
-				class="sr-only"
-				data-testid="playlist-import-input"
-			/>
-		</label>
+		{#if !showImportOptions}
+			<!-- svelte-ignore a11y_click_events_have_key_events -->
+			<div 
+				class="item topic-item import-playlist" 
+				data-testid="playlist-import-label"
+				onclick={() => showImportOptions = true}
+				role="button"
+				tabindex="0"
+			>
+				<Upload size={24} />
+				<span>{$_("playlists.import")}</span>
+			</div>
+		{:else}
+			<div class="import-choice-container" data-testid="playlist-io-section">
+				<label class="item topic-item import-choice-btn" data-testid="playlist-import-file">
+					<Upload size={20} />
+					<span>{$_("playlists.importFile") || "File"}</span>
+					<input
+						type="file"
+						accept=".json,.txt"
+						onchange={handleImport}
+						class="sr-only"
+						data-testid="playlist-import-input"
+					/>
+				</label>
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
+				<div 
+					class="item topic-item import-choice-btn" 
+					onclick={importFromClipboard}
+					role="button"
+					tabindex="0"
+					data-testid="playlist-import-clipboard"
+				>
+					<Copy size={20} />
+					<span>{$_("playlists.importClipboard") || "Clipboard"}</span>
+				</div>
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
+				<div 
+					class="cancel-import" 
+					onclick={() => showImportOptions = false}
+					role="button"
+					tabindex="0"
+					data-testid="playlist-import-cancel"
+				>
+					<Plus size={18} style="transform: rotate(45deg)" />
+				</div>
+			</div>
+		{/if}
 	</div>
 </div>
 
@@ -311,6 +336,39 @@
 
 	.playlist-controls {
 		display: contents;
+	}
+
+	.import-choice-container {
+		display: flex;
+		gap: 0.5rem;
+		align-items: center;
+	}
+
+	.import-choice-btn {
+		flex: 1;
+		padding: 0.5rem 0.75rem;
+		min-height: 72px;
+		font-size: 0.9rem;
+		border-style: dashed;
+		background: rgba(255, 255, 255, 0.05);
+	}
+
+	.cancel-import {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		border-radius: 50%;
+		background: rgba(255, 255, 255, 0.1);
+		cursor: pointer;
+		transition: all 0.2s;
+		flex-shrink: 0;
+	}
+
+	.cancel-import:hover {
+		background: rgba(255, 255, 255, 0.2);
+		color: var(--toast-error);
 	}
 
 	.add-playlist,

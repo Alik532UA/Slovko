@@ -46,6 +46,7 @@ function createGameState() {
 		sourceTranscriptions: {},
 		targetTranscriptions: {},
 		words: [],
+		settings: {} as any, // Initialized when data is loaded
 	});
 
 	// Похідний стан (Derived)

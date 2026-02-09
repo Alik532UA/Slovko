@@ -70,11 +70,11 @@
 
 			<div class="word-info">
 				<div class="mini-card source-card">
-					<span class="lang-label">{$_("settings.sourceLanguage")}</span>
+					<span class="lang-label">{$_("playlists.leftColumn")}</span>
 					<span class="word-val">{sourceTranslation}</span>
 				</div>
 				<div class="mini-card target-card">
-					<span class="lang-label">{$_("settings.targetLanguage")}</span>
+					<span class="lang-label">{$_("playlists.rightColumn")}</span>
 					<span class="word-val">{targetTranslation}</span>
 				</div>
 			</div>

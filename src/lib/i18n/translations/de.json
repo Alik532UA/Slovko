@@ -46,10 +46,17 @@
 		"addCustomWord": "Eigenes Wort hinzufügen",
 		"wordPlaceholder": "Wort",
 		"translationPlaceholder": "Übersetzung",
+		"leftColumn": "Linke Spalte",
+		"rightColumn": "Rechte Spalte",
 		"exportTitle": "Exportieren",
 		"addToPlaylist": "Zur Liste hinzufügen",
 		"confirmDelete": "Sind Sie sicher, dass Sie diese Liste löschen möchten?",
-		"importError": "Import fehlgeschlagen. Bitte überprüfen Sie das Dateiformat."
+		"importError": "Import fehlgeschlagen. Bitte überprüfen Sie das Dateiformat.",
+		"importInvalidFormat": "Dies sieht nicht nach einer Slovko-Playlist aus oder das Format ist veraltet.",
+		"importSuccess": "Playlist erfolgreich importiert!",
+		"importFile": "Datei",
+		"importClipboard": "Zwischenablage",
+		"clipboardError": "Fehler beim Lesen aus der Zwischenablage"
 	},
 	"topics": {
 		"title": "Themen",

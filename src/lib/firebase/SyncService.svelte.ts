@@ -244,11 +244,7 @@ class SyncServiceClass {
 			const localProgress = progressStore.value;
 			const localSettings = settingsStore.value;
 			const localActivity = progressStore.todayActivity;
-			const localPlaylists: PlaylistState = {
-				customPlaylists: playlistStore.customPlaylists,
-				systemPlaylists: playlistStore.systemPlaylists,
-				mistakeMetadata: (playlistStore as any).mistakeMetadata || {},
-			};
+			const localPlaylists: PlaylistState = playlistStore.getSnapshotState();
 
 			// Smart Merge: Замість повної відмови від завантаження, ми об'єднуємо дані
 			// Бали беремо найбільші (хмара vs локально), налаштування - найновіші

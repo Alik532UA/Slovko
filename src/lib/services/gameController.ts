@@ -13,7 +13,7 @@ import {
 	type GameFeedbackHandler,
 } from "./gameFeedbackHandler";
 import { createCardsFromWordKeys } from "./gameCardFactory";
-import type { ActiveCard, CardStatus, WordPair } from "../types";
+import type { ActiveCard, CardStatus, WordPair, Language } from "../types";
 
 /**
  * GameController — сервіс для координації ігрової логіки.
@@ -62,7 +62,8 @@ export class GameController {
 
 			this.gameState.setData(data);
 
-			const { sourceLanguage, targetLanguage } = activeSettings;
+			const sourceLanguage = activeSettings.sourceLanguage as Language;
+			const targetLanguage = activeSettings.targetLanguage as Language;
 			const interfaceLanguage = settingsStore.value.interfaceLanguage;
 			
 			const initialWords = this.gameState.getAvailableWords(
@@ -195,8 +196,9 @@ export class GameController {
 				const newWords = this.gameState.getAvailableWords(limit - visibleCount);
 				if (newWords.length === 0) return;
 
-				const { sourceLanguage, targetLanguage, interfaceLanguage } =
-					settingsStore.value;
+				const sourceLanguage = settingsStore.value.sourceLanguage as Language;
+				const targetLanguage = settingsStore.value.targetLanguage as Language;
+				const interfaceLanguage = settingsStore.value.interfaceLanguage;
 				const { source, target } = createCardsFromWordKeys(
 					newWords,
 					sourceLanguage,

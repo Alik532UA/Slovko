@@ -46,10 +46,17 @@
 		"addCustomWord": "Öz sözüñizni qoşuñız",
 		"wordPlaceholder": "Söz",
 		"translationPlaceholder": "Tercime",
+		"leftColumn": "Sol sutun",
+		"rightColumn": "Oñ sutun",
 		"exportTitle": "Eksport",
 		"addToPlaylist": "Playlistke qoşmaq",
 		"confirmDelete": "Bu playlistni silmege isteysiñizmi?",
-		"importError": "İmport hatası. Fayl formatını teşkeriñiz."
+		"importError": "İmport hatası. Fayl formatını teşkeriñiz.",
+		"importInvalidFormat": "Bu Slovko playlistine uşamay ya da formatı eskirdi.",
+		"importSuccess": "Playlist muvaffaqiyetli import etildi!",
+		"importFile": "Fayl",
+		"importClipboard": "Kopiyalanğan",
+		"clipboardError": "Kopiyalanğanından oquv hatası"
 	},
 	"topics": {
 		"title": "Temalar",

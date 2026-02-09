@@ -86,7 +86,7 @@
 					reset={() => window.location.reload()}
 				/>
 			{:else if data.gameSettings}
-				<GameBoard gameData={data.gameData} />
+				<GameBoard gameData={data.gameData || undefined} />
 			{:else}
 				<!-- Loading state handled by SvelteKit usually -->
 				<div class="loading">Loading...</div>

@@ -299,6 +299,10 @@
 				gameState.setSelectedCard(null);
 			}
 		}}
+		onkeydown={(e) => {
+			if (e.key === "Escape") gameState.setSelectedCard(null);
+		}}
+		role="presentation"
 		data-testid="game-board"
 	>
 		{#if gameState.sourceCards.length === 0}

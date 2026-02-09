@@ -124,8 +124,8 @@ export type PlaylistId = SystemPlaylistId | string;
 /** Кастомне слово, створене користувачем */
 export interface CustomWord {
 	id: string;
-	original: string;
-	translation: string;
+	left: string; // Ліва колонка
+	right: string; // Права колонка
 	transcription?: string;
 }
 

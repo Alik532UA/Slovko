@@ -46,10 +46,17 @@
 		"addCustomWord": "Eigen woord toevoegen",
 		"wordPlaceholder": "Woord",
 		"translationPlaceholder": "Vertaling",
+		"leftColumn": "Linkerkolom",
+		"rightColumn": "Rechterkolom",
 		"exportTitle": "Exporteren",
 		"addToPlaylist": "Toevoegen aan lijst",
 		"confirmDelete": "Weet je zeker dat je deze lijst wilt verwijderen?",
-		"importError": "Importeren mislukt. Controleer het bestandsformaat."
+		"importError": "Importeren mislukt. Controleer het bestandsformaat.",
+		"importInvalidFormat": "Dit lijkt niet op een Slovko-lijst of het formaat is verouderd.",
+		"importSuccess": "Afspeellijst succesvol geïmporteerd!",
+		"importFile": "Bestand",
+		"importClipboard": "Klembord",
+		"clipboardError": "Fout bij het lezen van het klembord"
 	},
 	"topics": {
 		"title": "Onderwerpen",
