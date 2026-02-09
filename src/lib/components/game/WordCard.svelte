@@ -35,9 +35,10 @@
 	let longPressTimer: ReturnType<typeof setTimeout> | null = null;
 	let isLongPress = false;
 	let startPos = { x: 0, y: 0 };
+	let wasSpoken = false;
 
 	function handlePointerDown(e: PointerEvent) {
-		// Якщо картка вже в особливому стані, ігноруємо (емулюємо disabled)
+		// Якщо картка вже в особливому стані, ігноруємо
 		if (
 			card.status === "correct" ||
 			card.status === "wrong" ||
@@ -46,9 +47,12 @@
 		)
 			return;
 
-		// Озвучуємо при натисканні (працює і для кліку, і для початку драгу)
+		wasSpoken = false;
+
+		// Спроба озвучити при натисканні (важливо для початку драгу)
 		if (enablePronunciation && card.status !== "selected") {
 			speakText(card.text, card.language);
+			wasSpoken = true;
 		}
 
 		// Якщо передано зовнішній обробник (для драгу), викликаємо його
@@ -121,6 +125,12 @@
 			card.status === "hint-slow"
 		)
 			return;
+
+		// Для iOS: якщо в pointerdown звук не спрацював (через блокування Safari),
+		// то handleClick — наш останній шанс, він точно має спрацювати.
+		if (enablePronunciation && card.status !== "selected" && !wasSpoken) {
+			speakText(card.text, card.language);
+		}
 
 		onclick();
 	}

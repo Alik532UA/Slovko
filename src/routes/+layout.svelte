@@ -59,6 +59,18 @@
 	onMount(() => {
 		logService.log("version", "Root layout onMount started");
 		
+		// Audio Unlock for iOS
+		const unlockAudio = () => {
+			if (window.speechSynthesis) {
+				const utterance = new SpeechSynthesisUtterance("");
+				utterance.volume = 0;
+				window.speechSynthesis.speak(utterance);
+				logService.log("ui", "Audio engine unlocked via touch");
+				window.removeEventListener("touchstart", unlockAudio);
+			}
+		};
+		window.addEventListener("touchstart", unlockAudio, { passive: true });
+
 		// 1. Запускаємо перевірку оновлень ОДРАЗУ паралельно
 		// Додаємо мікро-затримку, щоб не забивати потік при старті
 		setTimeout(() => {
