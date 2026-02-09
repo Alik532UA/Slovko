@@ -35,7 +35,6 @@
 	let longPressTimer: ReturnType<typeof setTimeout> | null = null;
 	let isLongPress = false;
 	let startPos = { x: 0, y: 0 };
-	let wasSpoken = false;
 
 	function isInteractable(): boolean {
 		return (
@@ -46,34 +45,13 @@
 		);
 	}
 
-	/**
-	 * iOS fix: touchstart є "trusted gesture" на iOS, на відміну від pointerdown.
-	 * speechSynthesis.speak() працює надійно саме з touchstart.
-	 * На iOS порядок подій: pointerdown → touchstart, але ми використовуємо
-	 * обидва з прапорцем wasSpoken для уникнення подвійного озвучення.
-	 */
-	function handleTouchStart() {
-		if (!isInteractable()) return;
-
-		if (enablePronunciation && card.status !== "selected" && !wasSpoken) {
-			speakText(card.text, card.language);
-			wasSpoken = true;
-			setTimeout(() => {
-				wasSpoken = false;
-			}, 500);
-		}
-	}
-
 	function handlePointerDown(e: PointerEvent) {
 		if (!isInteractable()) return;
 
-		// Desktop fallback: якщо touchstart не спрацював (десктоп), озвучуємо тут
-		if (enablePronunciation && card.status !== "selected" && !wasSpoken) {
+		// Озвучуємо слово одразу при натисканні (працює на всіх платформах).
+		// iOS unlock відбувається централізовано в +layout.svelte (capture-phase click).
+		if (enablePronunciation && card.status !== "selected") {
 			speakText(card.text, card.language);
-			wasSpoken = true;
-			setTimeout(() => {
-				wasSpoken = false;
-			}, 500);
 		}
 
 		// Зовнішній обробник для драгу
@@ -147,13 +125,6 @@
 		)
 			return;
 
-		// Fallback: якщо touchstart/pointerdown не озвучили (напр. engine ще заблокований)
-		// click є trusted gesture на iOS і спрацює. wasSpoken запобігає подвійному звуку.
-		if (enablePronunciation && card.status !== "selected" && !wasSpoken) {
-			speakText(card.text, card.language);
-		}
-		wasSpoken = false;
-
 		onclick();
 	}
 </script>
@@ -166,7 +137,6 @@
 	class:hint={card.status === "hint"}
 	class:hint-slow={card.status === "hint-slow"}
 	class:dimmed={isDimmed}
-	ontouchstart={handleTouchStart}
 	onpointerdown={handlePointerDown}
 	onpointermove={handlePointerMove}
 	onpointerup={handlePointerUp}
