@@ -54,9 +54,8 @@
 	 */
 	function handleTouchStart() {
 		if (!isInteractable()) return;
-		wasSpoken = false;
 
-		if (enablePronunciation && card.status !== "selected") {
+		if (enablePronunciation && card.status !== "selected" && !wasSpoken) {
 			speakText(card.text, card.language);
 			wasSpoken = true;
 			setTimeout(() => {
