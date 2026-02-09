@@ -126,6 +126,7 @@
 					return (a.name || "").localeCompare(b.name || "");
 				});
 
+			const secondaryRegion = PREFERRED_REGIONS["en"];
 			const filteredSecondary = allVoices
 				.filter((v) => v && v.lang && !v.lang.startsWith(targetLangPrefix) && v.lang.startsWith("en"))
 				.sort((a, b) => {
