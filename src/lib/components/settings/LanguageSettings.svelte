@@ -7,11 +7,12 @@
 	import { goto } from "$app/navigation";
 	import { Speech, Captions, Volume2 } from "lucide-svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
+	import { logService } from "$lib/services/logService";
 	import VoiceSelectionModal from "./VoiceSelectionModal.svelte";
 	import { setInterfaceLanguage, LANGUAGES } from "$lib/i18n/init";
 	import { LANGUAGE_NAMES, type Language } from "$lib/types";
 	import { base } from "$app/paths";
-	import { onMount, onDestroy } from "svelte";
+	import { onMount, onDestroy, tick } from "svelte";
 	import { fade } from "svelte/transition";
 
 	interface Props {
@@ -36,41 +37,43 @@
 
 	let currentSide = $state<"source" | "target" | null>(null);
 
-	function handlePointerDown(e: PointerEvent, side: "source" | "target") {
+	async function handlePointerDown(e: PointerEvent, side: "source" | "target") {
+		logService.log("settings", "PointerDown", { side, pointerType: e.pointerType });
 		// Only handle primary button
 		if (e.button !== 0 && e.pointerType === 'mouse') return;
 		
 		isLongPress = false;
 		currentSide = side;
 		
-		// Important for iOS to prevent system context menu or selection
-		if (e.pointerType === 'touch') {
-			// e.preventDefault(); // Don't prevent default on pointerdown as it might block clicks
-		}
+		if (pressTimer) clearTimeout(pressTimer);
 
-		pressTimer = setTimeout(() => {
+		pressTimer = setTimeout(async () => {
+			logService.log("settings", "LongPress triggered", { side });
 			isLongPress = true;
+			await tick();
 			showVoiceSelection = true;
-			// Clear timer after triggering
 			pressTimer = null;
-		}, 600); // 0.6s is often enough for long press
+		}, 600);
 	}
 
-	function handleContextMenu(e: MouseEvent, side: "source" | "target") {
+	async function handleContextMenu(e: MouseEvent, side: "source" | "target") {
+		logService.log("settings", "ContextMenu triggered", { side });
 		e.preventDefault();
 		e.stopPropagation();
 		currentSide = side;
+		await tick();
 		showVoiceSelection = true;
 	}
 
 	function handlePointerUp(e: PointerEvent) {
+		logService.log("settings", "PointerUp", { isLongPress, showVoiceSelection });
 		if (pressTimer) {
 			clearTimeout(pressTimer);
 			pressTimer = null;
 		}
 
-		// Toggle only if it wasn't a long press and modal didn't open
 		if (!isLongPress && !showVoiceSelection && currentSide) {
+			logService.log("settings", "Simple click - toggling pronunciation", { currentSide });
 			if (currentSide === "source") {
 				settingsStore.togglePronunciationSource();
 			} else {
@@ -78,7 +81,6 @@
 			}
 		}
 
-		// Reset state only if modal didn't open
 		if (!showVoiceSelection) {
 			currentSide = null;
 			isLongPress = false;
@@ -86,6 +88,7 @@
 	}
 
 	function handlePointerCancel() {
+		logService.log("settings", "PointerCancel");
 		if (pressTimer) {
 			clearTimeout(pressTimer);
 			pressTimer = null;

@@ -7,9 +7,10 @@
 	import { _ } from "svelte-i18n";
 	import { Check } from "lucide-svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
+	import { logService } from "$lib/services/logService";
 	import type { Language } from "$lib/types";
 	import { findBestVoice } from "$lib/services/speechService";
-	import { tick } from "svelte";
+	import { tick, onMount } from "svelte";
 	import BaseModal from "../ui/BaseModal.svelte";
 
 	interface Props {
@@ -18,11 +19,16 @@
 	}
 	let { onclose, language }: Props = $props();
 
+	onMount(() => {
+		logService.log("settings", "VoiceSelectionModal mounted", { language });
+	});
+
 	let voices: SpeechSynthesisVoice[] = $state([]);
 	// Initialize with stored preference
 	let selectedVoiceURI = $state("");
 
 	$effect(() => {
+		logService.log("settings", "VoiceSelectionModal effect: update selectedVoiceURI", { language });
 		// Оновлюємо вибраний голос при зміні мови або початковому завантаженні
 		selectedVoiceURI =
 			(settingsStore.value.voicePreferences as Record<string, string>)[
@@ -40,6 +46,7 @@
 		if (voiceListElement) {
 			const selected = voiceListElement.querySelector(".voice-item.selected");
 			if (selected) {
+				logService.log("settings", "Scrolling to selected voice");
 				selected.scrollIntoView({ block: "center", behavior: "smooth" });
 			}
 		}
@@ -71,9 +78,14 @@
 
 	$effect(() => {
 		const loadVoices = () => {
-			if (typeof window === 'undefined' || !window.speechSynthesis) return;
+			logService.log("settings", "loadVoices called");
+			if (typeof window === 'undefined' || !window.speechSynthesis) {
+				logService.warn("settings", "speechSynthesis not available");
+				return;
+			}
 			
 			const allVoices = window.speechSynthesis.getVoices();
+			logService.log("settings", "Total voices found", { count: allVoices.length });
 			if (!allVoices || allVoices.length === 0) return;
 
 			voices = allVoices;
@@ -81,6 +93,7 @@
 			// 1. If no preference saved, find what speakText would use
 			if (!selectedVoiceURI && language) {
 				const best = findBestVoice(allVoices, language);
+				logService.log("settings", "Finding best voice", { best: best?.name });
 				if (best) {
 					selectedVoiceURI = best.voiceURI;
 				}
@@ -124,6 +137,11 @@
 					return a.name.localeCompare(b.name);
 				});
 
+			logService.log("settings", "Voices filtered", { 
+				primary: primaryVoices.length, 
+				secondary: secondaryVoices.length 
+			});
+
 			// Scroll to selected after filtering is done
 			scrollToSelected();
 		};
@@ -135,6 +153,7 @@
 		}
 
 		return () => {
+			logService.log("settings", "VoiceSelectionModal effect cleanup");
 			if (typeof window !== 'undefined' && window.speechSynthesis) {
 				window.speechSynthesis.removeEventListener('voiceschanged', loadVoices);
 			}
