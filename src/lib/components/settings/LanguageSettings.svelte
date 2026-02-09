@@ -14,6 +14,7 @@
 	import { base } from "$app/paths";
 	import { onMount, onDestroy, tick } from "svelte";
 	import { fade } from "svelte/transition";
+	import { dev } from "$app/environment";
 
 	interface Props {
 		onclose: () => void;
@@ -39,25 +40,28 @@
 
 	async function handlePointerDown(e: PointerEvent, side: "source" | "target") {
 		if (showVoiceSelection) return; // Ігноруємо, якщо модалка вже відкрита
-		
-		logService.log("settings", "PointerDown", { side, pointerType: e.pointerType });
-		if (e.button !== 0 && e.pointerType === 'mouse') return;
-		
+
+		logService.log("settings", "PointerDown", {
+			side,
+			pointerType: e.pointerType,
+		});
+		if (e.button !== 0 && e.pointerType === "mouse") return;
+
 		isLongPress = false;
 		currentSide = side;
-		
+
 		if (pressTimer) clearTimeout(pressTimer);
 
 		pressTimer = setTimeout(() => {
 			if (showVoiceSelection) return;
 			logService.log("settings", "LongPress triggered", { side });
 			isLongPress = true;
-			
+
 			// Повна ізоляція від поточного тач-циклу
 			setTimeout(() => {
 				showVoiceSelection = true;
 			}, 10);
-			
+
 			pressTimer = null;
 		}, 600);
 	}
@@ -72,8 +76,11 @@
 	}
 
 	function handlePointerUp(e: PointerEvent) {
-		logService.log("settings", "PointerUp", { isLongPress, showVoiceSelection });
-		
+		logService.log("settings", "PointerUp", {
+			isLongPress,
+			showVoiceSelection,
+		});
+
 		if (pressTimer) {
 			clearTimeout(pressTimer);
 			pressTimer = null;
@@ -85,7 +92,9 @@
 		}
 
 		if (!isLongPress && currentSide) {
-			logService.log("settings", "Simple click - toggling pronunciation", { currentSide });
+			logService.log("settings", "Simple click - toggling pronunciation", {
+				currentSide,
+			});
 			try {
 				if (currentSide === "source") {
 					settingsStore.togglePronunciationSource();
@@ -334,24 +343,26 @@
 				{$_("common.confirm")}
 			</button>
 
-			<!-- Debug Section -->
-			<div class="debug-section">
-				<button 
-					class="debug-btn" 
-					title="Copy Debug Info"
-					onclick={async (e) => {
-						const btn = e.currentTarget as HTMLButtonElement;
-						const ok = await logService.copyLogsToClipboard();
-						if (ok) {
-							const oldText = btn.innerText;
-							btn.innerText = "COPIED ✅";
-							setTimeout(() => btn.innerText = oldText, 2000);
-						}
-					}}
-				>
-					Copy Debug Info 📋
-				</button>
-			</div>
+			{#if dev}
+				<!-- Debug Section -->
+				<div class="debug-section">
+					<button
+						class="debug-btn"
+						title="Copy Debug Info"
+						onclick={async (e) => {
+							const btn = e.currentTarget as HTMLButtonElement;
+							const ok = await logService.copyLogsToClipboard();
+							if (ok) {
+								const oldText = btn.innerText;
+								btn.innerText = "COPIED ✅";
+								setTimeout(() => (btn.innerText = oldText), 2000);
+							}
+						}}
+					>
+						Copy Debug Info 📋
+					</button>
+				</div>
+			{/if}
 		</div>
 	</div>
 </div>
