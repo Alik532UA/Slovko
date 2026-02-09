@@ -9,7 +9,6 @@ export const logConfig = {
 	interaction: false,
 	presence: false,
 	stats: false,
-	ui: false,
 	data: true,
 	i18n: false,
 	version: false,
@@ -73,7 +72,7 @@ export const logService = {
 	sanitizeDetails(details: Record<string, unknown>): Record<string, unknown> {
 		const SENSITIVE_KEYS = ['password', 'token', 'email', 'credential', 'secret', 'key'];
 		const sanitized = { ...details };
-		
+
 		Object.keys(sanitized).forEach(key => {
 			const lowerKey = key.toLowerCase();
 			if (SENSITIVE_KEYS.some(k => lowerKey.includes(k))) {
@@ -82,10 +81,10 @@ export const logService = {
 				sanitized[key] = this.sanitizeDetails(sanitized[key] as Record<string, unknown>);
 			}
 		});
-		
+
 		return sanitized;
 	},
-	
+
 	/**
 	 * Записує важливі події у Firestore для аналізу
 	 */
@@ -94,9 +93,9 @@ export const logService = {
 			const sanitizedDetails = this.sanitizeDetails(details);
 			const { db, auth } = await import("../firebase/config");
 			const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
-			
+
 			const uid = auth.currentUser?.uid || "anonymous";
-			
+
 			await addDoc(collection(db, "system_logs"), {
 				timestamp: serverTimestamp(),
 				uid,

@@ -59,27 +59,17 @@
 	onMount(() => {
 		logService.log("version", "Root layout onMount started");
 
-		// Audio Unlock for iOS — robust mechanism
-		let audioFullyUnlocked = false;
+		// Audio Unlock for iOS — dual strategy
+		// 1. touchstart: AudioContext unlock (permanent) + speech resume (warming)
+		// 2. click: SpeechSynthesis unlock (iOS ONLY allows speech from click!)
+		let audioCtxUnlocked = false;
 
-		const unlockAudio = () => {
-			if (!window.speechSynthesis) return;
+		const warmAudioOnTouch = () => {
+			// Keep speech engine warm on every touch
+			if (window.speechSynthesis) window.speechSynthesis.resume();
 
-			// Always resume to keep engine warm
-			window.speechSynthesis.resume();
-
-			if (!audioFullyUnlocked) {
-				// First touch: full unlock
-				window.speechSynthesis.getVoices();
-
-				// Speak a real word (not space!) silently — iOS ignores empty utterances
-				const utterance = new SpeechSynthesisUtterance(".");
-				utterance.volume = 0.01;
-				utterance.rate = 2;
-				utterance.lang = "en";
-				window.speechSynthesis.speak(utterance);
-
-				// Also unlock AudioContext for permanent audio access
+			if (!audioCtxUnlocked) {
+				// AudioContext permanently unlocks from touchstart
 				try {
 					const AudioCtx =
 						window.AudioContext ||
@@ -97,15 +87,27 @@
 				} catch (_e) {
 					/* AudioContext not available */
 				}
-
-				audioFullyUnlocked = true;
-				logService.log("ui", "Audio engine unlocked via touch (full)");
+				audioCtxUnlocked = true;
+				logService.log("ui", "AudioContext unlocked via touch ✅");
 			}
 		};
 
-		// Keep listener permanently — don't remove after first touch!
-		// Each touch does resume() to keep speech engine warm
-		window.addEventListener("touchstart", unlockAudio, { passive: true });
+		// SpeechSynthesis unlock — MUST use click event on iOS!
+		// touchstart/pointerdown are NOT trusted gestures for speech on iOS
+		const unlockSpeechViaClick = () => {
+			if (!window.speechSynthesis) return;
+			window.speechSynthesis.resume();
+			const u = new SpeechSynthesisUtterance(".");
+			u.volume = 0.01;
+			u.rate = 2;
+			u.lang = "en";
+			window.speechSynthesis.speak(u);
+			logService.log("ui", "SpeechSynthesis unlocked via click ✅");
+			window.removeEventListener("click", unlockSpeechViaClick);
+		};
+
+		window.addEventListener("touchstart", warmAudioOnTouch, { passive: true });
+		window.addEventListener("click", unlockSpeechViaClick, { passive: true });
 
 		// 1. Запускаємо перевірку оновлень ОДРАЗУ паралельно
 		// Додаємо мікро-затримку, щоб не забивати потік при старті
@@ -176,7 +178,8 @@
 			window.removeEventListener("click", handleGlobalClick);
 			window.removeEventListener("visibilitychange", handleVisibilityChange);
 			window.removeEventListener("focus", handleVisibilityChange);
-			window.removeEventListener("touchstart", unlockAudio);
+			window.removeEventListener("touchstart", warmAudioOnTouch);
+			window.removeEventListener("click", unlockSpeechViaClick);
 		};
 	});
 
