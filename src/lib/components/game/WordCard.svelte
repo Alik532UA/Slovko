@@ -148,13 +148,10 @@
 		)
 			return;
 
-		// iOS fix: перевіряємо чи попередні спроби (touchstart/pointerdown) РЕАЛЬНО запустили мовлення.
-		// Якщо ні (iOS заблокував) — click є trusted gesture і спрацює.
-		if (enablePronunciation && card.status !== "selected") {
-			const ss = window.speechSynthesis;
-			if (!ss?.speaking) {
-				speakText(card.text, card.language);
-			}
+		// Fallback: якщо touchstart/pointerdown не озвучили (напр. engine ще заблокований)
+		// click є trusted gesture на iOS і спрацює. wasSpoken запобігає подвійному звуку.
+		if (enablePronunciation && card.status !== "selected" && !wasSpoken) {
+			speakText(card.text, card.language);
 		}
 		wasSpoken = false;
 
