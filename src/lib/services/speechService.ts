@@ -118,24 +118,40 @@ export function speakText(text: string, lang: string): void {
 
 	currentUtterance = new SpeechSynthesisUtterance(text);
 	let selectedVoice: SpeechSynthesisVoice | undefined;
+	let hasUserPreference = false;
 
-	if (currentVoices.length > 0) {
+	try {
+		const prefs = settingsStore.value.voicePreferences as Record<string, string>;
+		if (prefs && prefs[lang]) {
+			selectedVoice = currentVoices.find(v => v.voiceURI === prefs[lang]);
+			if (selectedVoice) hasUserPreference = true;
+		}
+	} catch (e) {
+		logService.warn("ui", "Error reading prefs");
+	}
+
+	if (!selectedVoice && currentVoices.length > 0) {
 		const searchLang = lang === "crh" ? "tr" : lang;
 		selectedVoice = findBestVoice(currentVoices, searchLang);
 	}
 
-	if (selectedVoice) {
+	// КРИТИЧНО ДЛЯ iOS: Якщо користувач не вибрав голос сам, краще НЕ встановлювати 
+	// властивість .voice, а дати Safari вибрати дефолтний голос за кодом .lang
+	if (hasUserPreference && selectedVoice) {
 		currentUtterance.voice = selectedVoice;
 		currentUtterance.lang = selectedVoice.lang;
 	} else {
 		currentUtterance.lang = DEFAULT_LOCALES[lang] || lang;
+		if (lang === "crh") currentUtterance.lang = "tr-TR";
 	}
 
 	currentUtterance.rate = 0.9;
+	currentUtterance.volume = 1.0;
 
 	logService.log("ui", "Utterance prepared", { 
 		finalLang: currentUtterance.lang,
-		voiceName: selectedVoice?.name || "System Default"
+		voiceName: hasUserPreference ? selectedVoice?.name : "System Auto-Select",
+		hasPref: hasUserPreference
 	});
 
 	currentUtterance.onerror = (e) => {
@@ -147,11 +163,16 @@ export function speakText(text: string, lang: string): void {
 	};
 
 	try {
+		// "Струшуємо" рушій перед кожним викликом
+		ss.pause();
+		ss.resume();
 		ss.speak(currentUtterance);
-		logService.log("ui", "ss.speak() call executed");
+		logService.log("ui", "ss.speak() called", { pending: ss.pending });
 		
-		// Ще один "штовхач" для Safari
-		if (ss.paused) ss.resume();
+		// Обов'язковий resume() після speak() для iOS
+		setTimeout(() => {
+			if (ss.paused) ss.resume();
+		}, 50);
 	} catch (err) {
 		logService.error("ui", "ss.speak() crash", err);
 	}
