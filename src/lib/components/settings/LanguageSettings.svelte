@@ -11,7 +11,7 @@
 	import { setInterfaceLanguage, LANGUAGES } from "$lib/i18n/init";
 	import { LANGUAGE_NAMES, type Language } from "$lib/types";
 	import { base } from "$app/paths";
-	import { onMount } from "svelte";
+	import { onMount, onDestroy } from "svelte";
 	import { fade } from "svelte/transition";
 
 	interface Props {
@@ -23,6 +23,12 @@
 	let isLongPress = false;
 	let showVoiceSelection = $state(false);
 
+	onDestroy(() => {
+		if (pressTimer) {
+			clearTimeout(pressTimer);
+		}
+	});
+
 	function handleInterfaceLanguage(lang: Language) {
 		settingsStore.setInterfaceLanguage(lang);
 		setInterfaceLanguage(lang);
@@ -31,21 +37,33 @@
 	let currentSide = $state<"source" | "target" | null>(null);
 
 	function handlePointerDown(e: PointerEvent, side: "source" | "target") {
+		// Only handle primary button
+		if (e.button !== 0 && e.pointerType === 'mouse') return;
+		
 		isLongPress = false;
 		currentSide = side;
+		
+		// Important for iOS to prevent system context menu or selection
+		if (e.pointerType === 'touch') {
+			// e.preventDefault(); // Don't prevent default on pointerdown as it might block clicks
+		}
+
 		pressTimer = setTimeout(() => {
 			isLongPress = true;
 			showVoiceSelection = true;
-		}, 800); // 0.8s long press for better UX
+			// Clear timer after triggering
+			pressTimer = null;
+		}, 600); // 0.6s is often enough for long press
 	}
 
 	function handleContextMenu(e: MouseEvent, side: "source" | "target") {
 		e.preventDefault();
+		e.stopPropagation();
 		currentSide = side;
 		showVoiceSelection = true;
 	}
 
-	function handlePointerUp() {
+	function handlePointerUp(e: PointerEvent) {
 		if (pressTimer) {
 			clearTimeout(pressTimer);
 			pressTimer = null;
@@ -60,7 +78,18 @@
 			}
 		}
 
-		// Reset state
+		// Reset state only if modal didn't open
+		if (!showVoiceSelection) {
+			currentSide = null;
+			isLongPress = false;
+		}
+	}
+
+	function handlePointerCancel() {
+		if (pressTimer) {
+			clearTimeout(pressTimer);
+			pressTimer = null;
+		}
 		if (!showVoiceSelection) {
 			currentSide = null;
 		}
@@ -72,7 +101,8 @@
 			clearTimeout(pressTimer);
 			pressTimer = null;
 		}
-		if (!showVoiceSelection) {
+		// On mobile, leave can happen during press, don't reset if we are waiting for long press
+		if (!isLongPress && !showVoiceSelection) {
 			currentSide = null;
 		}
 	}
@@ -198,6 +228,7 @@
 								class:active={settingsStore.value.enablePronunciationSource}
 								onpointerdown={(e) => handlePointerDown(e, "source")}
 								onpointerup={handlePointerUp}
+								onpointercancel={handlePointerCancel}
 								onpointerleave={handlePointerLeave}
 								oncontextmenu={(e) => handleContextMenu(e, "source")}
 								title={$_("settings.pronunciation")}
@@ -262,6 +293,7 @@
 								class:active={settingsStore.value.enablePronunciationTarget}
 								onpointerdown={(e) => handlePointerDown(e, "target")}
 								onpointerup={handlePointerUp}
+								onpointercancel={handlePointerCancel}
 								onpointerleave={handlePointerLeave}
 								oncontextmenu={(e) => handleContextMenu(e, "target")}
 								title={$_("settings.pronunciation")}

@@ -71,13 +71,15 @@
 
 	$effect(() => {
 		const loadVoices = () => {
+			if (typeof window === 'undefined' || !window.speechSynthesis) return;
+			
 			const allVoices = window.speechSynthesis.getVoices();
-			if (allVoices.length === 0) return;
+			if (!allVoices || allVoices.length === 0) return;
 
 			voices = allVoices;
 
 			// 1. If no preference saved, find what speakText would use
-			if (!selectedVoiceURI) {
+			if (!selectedVoiceURI && language) {
 				const best = findBestVoice(allVoices, language);
 				if (best) {
 					selectedVoiceURI = best.voiceURI;
@@ -85,13 +87,13 @@
 			}
 
 			// Filter logic
-			let targetLangPrefix: string = language;
+			let targetLangPrefix: string = language || "en";
 			if (language === "crh") targetLangPrefix = "tr"; // Use Turkish voices for Crimean Tatar
 
 			const region = PREFERRED_REGIONS[targetLangPrefix];
 
 			primaryVoices = allVoices
-				.filter((v) => v.lang.startsWith(targetLangPrefix))
+				.filter((v) => v && v.lang && v.lang.startsWith(targetLangPrefix))
 				.sort((a, b) => {
 					// 1. Prioritize preferred region (e.g. nl-NL over nl-BE)
 					if (region) {
@@ -109,7 +111,7 @@
 			secondaryVoices = allVoices
 				.filter(
 					(v) =>
-						!v.lang.startsWith(targetLangPrefix) && v.lang.startsWith("en"),
+						v && v.lang && !v.lang.startsWith(targetLangPrefix) && v.lang.startsWith("en"),
 				)
 				.sort((a, b) => {
 					// 1. Prioritize GB
@@ -127,13 +129,14 @@
 		};
 
 		loadVoices();
-		if (window.speechSynthesis.onvoiceschanged !== undefined) {
-			window.speechSynthesis.onvoiceschanged = loadVoices;
+		
+		if (typeof window !== 'undefined' && window.speechSynthesis) {
+			window.speechSynthesis.addEventListener('voiceschanged', loadVoices);
 		}
 
 		return () => {
-			if (window.speechSynthesis.onvoiceschanged === loadVoices) {
-				window.speechSynthesis.onvoiceschanged = null;
+			if (typeof window !== 'undefined' && window.speechSynthesis) {
+				window.speechSynthesis.removeEventListener('voiceschanged', loadVoices);
 			}
 		};
 	});
