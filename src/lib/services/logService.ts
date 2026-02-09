@@ -13,6 +13,7 @@ export const logConfig = {
 	data: true,
 	i18n: false,
 	version: false,
+	ui: true,
 };
 
 const recentLogs: string[] = [];
@@ -54,7 +55,7 @@ export const logService = {
 	},
 	async copyLogsToClipboard() {
 		const logs = this.getRecentLogs();
-		const info = `VERSION: 0.6.289\nUA: ${navigator.userAgent}\nURL: ${window.location.href}\n---\n${logs}`;
+		const info = `VERSION: 0.6.290\nUA: ${navigator.userAgent}\nURL: ${window.location.href}\n---\n${logs}`;
 		try {
 			await navigator.clipboard.writeText(info);
 			return true;

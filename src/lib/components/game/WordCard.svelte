@@ -51,11 +51,7 @@
 
 		// Спроба озвучити при натисканні (важливо для початку драгу)
 		if (enablePronunciation && card.status !== "selected") {
-			const text = card.text;
-			const lang = card.language;
-			setTimeout(() => {
-				speakText(text, lang);
-			}, 0);
+			speakText(card.text, card.language);
 			wasSpoken = true;
 			// Скидаємо прапорець через короткий час
 			setTimeout(() => { wasSpoken = false; }, 300);
@@ -135,11 +131,7 @@
 		// Для iOS: якщо в pointerdown звук не спрацював (через блокування Safari),
 		// то handleClick — наш останній шанс, він точно має спрацювати.
 		if (enablePronunciation && card.status !== "selected" && !wasSpoken) {
-			const text = card.text;
-			const lang = card.language;
-			setTimeout(() => {
-				speakText(text, lang);
-			}, 0);
+			speakText(card.text, card.language);
 		}
 
 		onclick();
