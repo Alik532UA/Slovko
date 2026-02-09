@@ -54,7 +54,7 @@ export const logService = {
 	},
 	async copyLogsToClipboard() {
 		const logs = this.getRecentLogs();
-		const info = `VERSION: 0.6.286\nUA: ${navigator.userAgent}\nURL: ${window.location.href}\n---\n${logs}`;
+		const info = `VERSION: 0.6.287\nUA: ${navigator.userAgent}\nURL: ${window.location.href}\n---\n${logs}`;
 		try {
 			await navigator.clipboard.writeText(info);
 			return true;

@@ -37,6 +37,7 @@ const LANGUAGE_PRIORITIES: Record<string, string[]> = {
 
 let voices: SpeechSynthesisVoice[] = [];
 let voicesLoaded = false;
+let currentUtterance: SpeechSynthesisUtterance | null = null; // Запобігає Garbage Collection на iOS
 
 /**
  * Trigger voice loading in background without blocking
@@ -115,7 +116,7 @@ export function speakText(text: string, lang: string): void {
 		ss.cancel();
 	}
 
-	const utterance = new SpeechSynthesisUtterance(text);
+	currentUtterance = new SpeechSynthesisUtterance(text);
 	let selectedVoice: SpeechSynthesisVoice | undefined;
 
 	if (currentVoices.length > 0) {
@@ -124,24 +125,29 @@ export function speakText(text: string, lang: string): void {
 	}
 
 	if (selectedVoice) {
-		utterance.voice = selectedVoice;
-		utterance.lang = selectedVoice.lang;
+		currentUtterance.voice = selectedVoice;
+		currentUtterance.lang = selectedVoice.lang;
 	} else {
-		utterance.lang = DEFAULT_LOCALES[lang] || lang;
+		currentUtterance.lang = DEFAULT_LOCALES[lang] || lang;
 	}
 
-	utterance.rate = 0.9;
+	currentUtterance.rate = 0.9;
 
-	utterance.onerror = (e) => {
+	logService.log("ui", "Utterance prepared", { 
+		finalLang: currentUtterance.lang,
+		voiceName: selectedVoice?.name || "System Default"
+	});
+
+	currentUtterance.onerror = (e) => {
 		logService.error("ui", "Speech error event", { error: e.error });
 	};
 
-	utterance.onstart = () => {
+	currentUtterance.onstart = () => {
 		logService.log("ui", "Speech started callback ✅");
 	};
 
 	try {
-		ss.speak(utterance);
+		ss.speak(currentUtterance);
 		logService.log("ui", "ss.speak() call executed");
 		
 		// Ще один "штовхач" для Safari
