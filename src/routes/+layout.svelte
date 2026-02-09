@@ -62,8 +62,9 @@
 		// Audio Unlock for iOS
 		const unlockAudio = () => {
 			if (window.speechSynthesis) {
-				const utterance = new SpeechSynthesisUtterance("");
-				utterance.volume = 0;
+				const utterance = new SpeechSynthesisUtterance(" "); // Пробіл, щоб точно було що грати
+				utterance.volume = 0.1; // Мінімальна гучність, щоб iOS не ігнорував
+				utterance.rate = 10; // Максимальна швидкість
 				window.speechSynthesis.speak(utterance);
 				logService.log("ui", "Audio engine unlocked via touch");
 				window.removeEventListener("touchstart", unlockAudio);

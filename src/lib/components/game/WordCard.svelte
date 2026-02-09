@@ -53,6 +53,9 @@
 		if (enablePronunciation && card.status !== "selected") {
 			speakText(card.text, card.language);
 			wasSpoken = true;
+			// Скидаємо прапорець через короткий час, щоб дозволити повторне озвучування
+			// якщо це був довгий тап або драг, який не спрацював як клік
+			setTimeout(() => { wasSpoken = false; }, 300);
 		}
 
 		// Якщо передано зовнішній обробник (для драгу), викликаємо його

@@ -93,9 +93,12 @@ export function speakText(text: string, lang: string): void {
 	if (!browser || !window.speechSynthesis) return;
 
 	// Critical for iOS: Do not await anything here!
-	// Must run in the same tick as the user interaction.
-
-	window.speechSynthesis.cancel(); // Stop previous
+	
+	// Don't cancel immediately, it might bug out on cold start. 
+	// Only cancel if we are interrupting.
+	if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+		window.speechSynthesis.cancel();
+	}
 
 	// Try to get voices immediately (might be empty on first load)
 	let currentVoices = voices;
@@ -105,8 +108,9 @@ export function speakText(text: string, lang: string): void {
 			voices = currentVoices;
 			voicesLoaded = true;
 		} else {
-			// Trigger background load for NEXT time, but don't wait now
+			// Trigger background load for NEXT time
 			preloadVoices();
+			logService.warn("ui", "Speaking blind (no voices loaded yet)");
 		}
 	}
 
