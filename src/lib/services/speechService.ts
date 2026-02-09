@@ -93,25 +93,31 @@ export function speakText(text: string, lang: string): void {
 	if (!browser || !window.speechSynthesis) return;
 
 	const ss = window.speechSynthesis;
-	logService.log("ui", "speakText start", { text: text.substring(0, 10), lang });
 	
-	// На iOS Safari cancel() може "завішувати" рушій, якщо викликається занадто часто.
-	// Спробуємо без нього або тільки якщо реально говоримо.
-	try {
-		if (ss.speaking) {
-			ss.cancel();
-		}
-	} catch (e) {
-		logService.warn("ui", "Speech cancel failed", e);
+	// Отримуємо голоси безпосередньо зараз
+	const currentVoices = ss.getVoices();
+	
+	logService.log("ui", "speakText start", { 
+		text: text.substring(0, 10), 
+		lang,
+		voicesAvailable: currentVoices.length,
+		paused: ss.paused,
+		speaking: ss.speaking
+	});
+	
+	// На iOS Safari важливо викликати resume(), якщо рушій "заснув"
+	if (ss.paused) {
+		ss.resume();
+	}
+
+	// cancel() на iOS може працювати нестабільно, спробуємо мінімізувати його
+	if (ss.speaking) {
+		ss.cancel();
 	}
 
 	const utterance = new SpeechSynthesisUtterance(text);
-	
-	// Отримуємо актуальні голоси
-	const currentVoices = ss.getVoices();
 	let selectedVoice: SpeechSynthesisVoice | undefined;
 
-	// 1. Пошук голосу (без рун)
 	if (currentVoices.length > 0) {
 		const searchLang = lang === "crh" ? "tr" : lang;
 		selectedVoice = findBestVoice(currentVoices, searchLang);
@@ -131,12 +137,15 @@ export function speakText(text: string, lang: string): void {
 	};
 
 	utterance.onstart = () => {
-		logService.log("ui", "Speech started callback");
+		logService.log("ui", "Speech started callback ✅");
 	};
 
 	try {
 		ss.speak(utterance);
-		logService.log("ui", "ss.speak() executed");
+		logService.log("ui", "ss.speak() call executed");
+		
+		// Ще один "штовхач" для Safari
+		if (ss.paused) ss.resume();
 	} catch (err) {
 		logService.error("ui", "ss.speak() crash", err);
 	}
