@@ -1,7 +1,18 @@
 <script lang="ts">
 	import { notificationStore } from "$lib/stores/notificationStore.svelte";
-	import { X } from "lucide-svelte";
+	import { logService } from "$lib/services/logService";
+	import { X, ClipboardCopy } from "lucide-svelte";
 	import { fade, fly } from "svelte/transition";
+
+	let copiedId = $state<string | null>(null);
+
+	async function handleCopyLogs(id: string) {
+		const ok = await logService.copyLogsToClipboard();
+		if (ok) {
+			copiedId = id;
+			setTimeout(() => { if (copiedId === id) copiedId = null; }, 2000);
+		}
+	}
 </script>
 
 <div class="toast-container" data-testid="toast-container">
@@ -13,7 +24,19 @@
 			role="alert"
 			data-testid="toast-{note.type}"
 		>
-			<span data-testid="toast-message">{note.message}</span>
+			<div class="toast-content">
+				<span data-testid="toast-message">{note.message}</span>
+				{#if note.type === 'error'}
+					<button 
+						class="copy-logs-btn" 
+						onclick={() => handleCopyLogs(note.id)}
+						title="Copy debug logs"
+					>
+						<ClipboardCopy size={14} />
+						{copiedId === note.id ? "COPIED" : "LOGS"}
+					</button>
+				{/if}
+			</div>
 			<button
 				class="close-btn"
 				onclick={() => notificationStore.remove(note.id)}
@@ -42,15 +65,42 @@
 		background: var(--bg-secondary);
 		color: var(--text-primary);
 		padding: 12px 16px;
-		border-radius: 8px;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+		border-radius: 12px;
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 		display: flex;
 		align-items: center;
 		gap: 12px;
 		min-width: 250px;
-		max-width: 400px;
+		max-width: 90vw;
 		border-left: 4px solid transparent;
 		font-size: 0.9rem;
+	}
+
+	.toast-content {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		flex: 1;
+	}
+
+	.copy-logs-btn {
+		background: rgba(255, 255, 255, 0.1);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		color: var(--text-primary);
+		padding: 4px 8px;
+		border-radius: 6px;
+		font-size: 0.7rem;
+		font-weight: bold;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		align-self: flex-start;
+		transition: all 0.2s;
+	}
+
+	.copy-logs-btn:hover {
+		background: rgba(255, 255, 255, 0.2);
 	}
 
 	.toast.info {

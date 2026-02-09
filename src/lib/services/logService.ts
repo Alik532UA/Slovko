@@ -50,6 +50,17 @@ export const logService = {
 	getRecentLogs() {
 		return recentLogs.join('\n');
 	},
+	async copyLogsToClipboard() {
+		const logs = this.getRecentLogs();
+		const info = `UA: ${navigator.userAgent}\nURL: ${window.location.href}\n---\n${logs}`;
+		try {
+			await navigator.clipboard.writeText(info);
+			return true;
+		} catch (err) {
+			console.error("Failed to copy logs:", err);
+			return false;
+		}
+	},
 
 	/**
 	 * Очищує об'єкт від чутливих даних перед відправкою

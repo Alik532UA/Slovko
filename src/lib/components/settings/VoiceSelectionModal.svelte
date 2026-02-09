@@ -26,9 +26,11 @@
 	let voices: SpeechSynthesisVoice[] = $state([]);
 	// Initialize with stored preference
 	let selectedVoiceURI = $state("");
+	let isDestroyed = false;
 
 	// 1. Initial sync from store (run once on mount or simple effect)
 	$effect(() => {
+		if (isDestroyed) return;
 		try {
 			const prefs = settingsStore?.value?.voicePreferences;
 			if (!prefs) return;
@@ -86,6 +88,7 @@
 	}
 
 	function processVoices() {
+		if (isDestroyed) return;
 		try {
 			logService.log("settings", "Processing voices...");
 			if (typeof window === 'undefined' || !window.speechSynthesis) return;
@@ -96,12 +99,13 @@
 				return;
 			}
 			
+			if (isDestroyed) return;
 			voices = allVoices;
 
 			// Select best voice if none selected
 			if (!selectedVoiceURI && language) {
 				const best = findBestVoice(allVoices, language);
-				if (best) {
+				if (best && !isDestroyed) {
 					selectedVoiceURI = best.voiceURI;
 				}
 			}
@@ -110,7 +114,7 @@
 			const targetLangPrefix: string = language === "crh" ? "tr" : (language || "en");
 			const region = PREFERRED_REGIONS[targetLangPrefix];
 
-			primaryVoices = allVoices
+			const filteredPrimary = allVoices
 				.filter((v) => v && v.lang && v.lang.startsWith(targetLangPrefix))
 				.sort((a, b) => {
 					if (region) {
@@ -122,8 +126,7 @@
 					return (a.name || "").localeCompare(b.name || "");
 				});
 
-			const secondaryRegion = PREFERRED_REGIONS["en"];
-			secondaryVoices = allVoices
+			const filteredSecondary = allVoices
 				.filter((v) => v && v.lang && !v.lang.startsWith(targetLangPrefix) && v.lang.startsWith("en"))
 				.sort((a, b) => {
 					if (secondaryRegion) {
@@ -135,8 +138,12 @@
 					return (a.name || "").localeCompare(b.name || "");
 				});
 				
-			logService.log("settings", "Voices processed", { primary: primaryVoices.length, secondary: secondaryVoices.length });
-			scrollToSelected();
+			if (!isDestroyed) {
+				primaryVoices = filteredPrimary;
+				secondaryVoices = filteredSecondary;
+				logService.log("settings", "Voices processed", { primary: primaryVoices.length, secondary: secondaryVoices.length });
+				scrollToSelected();
+			}
 		} catch (err) {
 			logService.error("settings", "Fatal error in processVoices", err);
 		}
@@ -149,13 +156,19 @@
 		processVoices();
 		
 		// Setup listener
+		const voicesChangedHandler = () => {
+			if (!isDestroyed) processVoices();
+		};
+
 		if (typeof window !== 'undefined' && window.speechSynthesis) {
-			window.speechSynthesis.addEventListener('voiceschanged', processVoices);
+			window.speechSynthesis.addEventListener('voiceschanged', voicesChangedHandler);
 		}
 
 		return () => {
+			logService.log("settings", "VoiceSelectionModal destroying...");
+			isDestroyed = true;
 			if (typeof window !== 'undefined' && window.speechSynthesis) {
-				window.speechSynthesis.removeEventListener('voiceschanged', processVoices);
+				window.speechSynthesis.removeEventListener('voiceschanged', voicesChangedHandler);
 			}
 		};
 	});
