@@ -59,55 +59,90 @@
 	onMount(() => {
 		logService.log("version", "Root layout onMount started");
 
-		// Audio Unlock for iOS — dual strategy
-		// 1. touchstart: AudioContext unlock (permanent) + speech resume (warming)
-		// 2. click: SpeechSynthesis unlock (iOS ONLY allows speech from click!)
+		// Audio Unlock for iOS — comprehensive strategy
+		// iOS blocks speechSynthesis.speak() until a trusted user gesture.
+		// Problem: WordCard.handleClick() calls e.stopPropagation(), so 'click'
+		// on window never fires if user only taps cards. Fix: use capture phase.
+		// Also try to unlock from touchstart as iOS sometimes accepts it.
+		let speechUnlocked = false;
 		let audioCtxUnlocked = false;
 
-		const warmAudioOnTouch = () => {
-			// Keep speech engine warm on every touch
-			if (window.speechSynthesis) window.speechSynthesis.resume();
-
-			if (!audioCtxUnlocked) {
-				// AudioContext permanently unlocks from touchstart
-				try {
-					const AudioCtx =
-						window.AudioContext ||
-						(window as unknown as { webkitAudioContext: typeof AudioContext })
-							.webkitAudioContext;
-					if (AudioCtx) {
-						const ctx = new AudioCtx();
-						const buffer = ctx.createBuffer(1, 1, 22050);
-						const source = ctx.createBufferSource();
-						source.buffer = buffer;
-						source.connect(ctx.destination);
-						source.start(0);
-						ctx.resume();
+		const tryUnlockSpeech = (eventType: string) => {
+			if (speechUnlocked) return;
+			if (!window.speechSynthesis) return;
+			try {
+				window.speechSynthesis.cancel();
+				window.speechSynthesis.resume();
+				const u = new SpeechSynthesisUtterance(" ");
+				u.volume = 0.01;
+				u.rate = 10;
+				u.lang = "en";
+				u.onend = () => {
+					speechUnlocked = true;
+					logService.log(
+						"ui",
+						`SpeechSynthesis confirmed unlocked via ${eventType} ✅`,
+					);
+				};
+				u.onerror = (e) => {
+					if (e.error !== "interrupted" && e.error !== "canceled") {
+						logService.log(
+							"ui",
+							`SpeechSynthesis unlock attempt via ${eventType} failed: ${e.error}`,
+						);
 					}
-				} catch (_e) {
-					/* AudioContext not available */
-				}
-				audioCtxUnlocked = true;
-				logService.log("ui", "AudioContext unlocked via touch ✅");
+				};
+				window.speechSynthesis.speak(u);
+				logService.log(
+					"ui",
+					`SpeechSynthesis unlock attempted via ${eventType}`,
+				);
+			} catch (_e) {
+				/* ignore */
 			}
 		};
 
-		// SpeechSynthesis unlock — MUST use click event on iOS!
-		// touchstart/pointerdown are NOT trusted gestures for speech on iOS
-		const unlockSpeechViaClick = () => {
-			if (!window.speechSynthesis) return;
-			window.speechSynthesis.resume();
-			const u = new SpeechSynthesisUtterance(".");
-			u.volume = 0.01;
-			u.rate = 2;
-			u.lang = "en";
-			window.speechSynthesis.speak(u);
-			logService.log("ui", "SpeechSynthesis unlocked via click ✅");
-			window.removeEventListener("click", unlockSpeechViaClick);
+		const unlockAudioContext = () => {
+			if (audioCtxUnlocked) return;
+			try {
+				const AudioCtx =
+					window.AudioContext ||
+					(window as unknown as { webkitAudioContext: typeof AudioContext })
+						.webkitAudioContext;
+				if (AudioCtx) {
+					const ctx = new AudioCtx();
+					const buffer = ctx.createBuffer(1, 1, 22050);
+					const source = ctx.createBufferSource();
+					source.buffer = buffer;
+					source.connect(ctx.destination);
+					source.start(0);
+					ctx.resume();
+				}
+			} catch (_e) {
+				/* AudioContext not available */
+			}
+			audioCtxUnlocked = true;
+			logService.log("ui", "AudioContext unlocked ✅");
 		};
 
-		window.addEventListener("touchstart", warmAudioOnTouch, { passive: true });
-		window.addEventListener("click", unlockSpeechViaClick, { passive: true });
+		// touchstart: unlock AudioContext + attempt speech unlock
+		const handleFirstTouch = () => {
+			unlockAudioContext();
+			tryUnlockSpeech("touchstart");
+		};
+
+		// click (capture phase!): guaranteed speech unlock on iOS
+		// Using capture:true so it fires BEFORE WordCard's stopPropagation
+		const handleFirstClick = () => {
+			unlockAudioContext();
+			tryUnlockSpeech("click");
+		};
+
+		window.addEventListener("touchstart", handleFirstTouch, { passive: true });
+		window.addEventListener("click", handleFirstClick, {
+			capture: true,
+			passive: true,
+		});
 
 		// 1. Запускаємо перевірку оновлень ОДРАЗУ паралельно
 		// Додаємо мікро-затримку, щоб не забивати потік при старті
@@ -178,8 +213,10 @@
 			window.removeEventListener("click", handleGlobalClick);
 			window.removeEventListener("visibilitychange", handleVisibilityChange);
 			window.removeEventListener("focus", handleVisibilityChange);
-			window.removeEventListener("touchstart", warmAudioOnTouch);
-			window.removeEventListener("click", unlockSpeechViaClick);
+			window.removeEventListener("touchstart", handleFirstTouch);
+			window.removeEventListener("click", handleFirstClick, {
+				capture: true,
+			} as EventListenerOptions);
 		};
 	});
 
