@@ -1,6 +1,6 @@
 ﻿node_modules
 .firebase
-.temp
+# .temp
 .private
 .private/notes.txt
 .agent/rules

@@ -325,12 +325,30 @@ export async function loadAllTranslations(language: Language): Promise<Translati
 	const allPromises: Promise<any>[] = [];
 	const langPattern = `/${language.toLowerCase()}/`;
 
+	// 1. Levels
 	levels.forEach((l) => {
 		const levelPattern = `/levels/${l.toLowerCase()}_`;
 		Object.keys(translationModules)
 			.filter((p) => {
 				const np = p.toLowerCase().replace(/\\/g, "/");
 				return np.includes(levelPattern) && np.includes(langPattern);
+			})
+			.forEach((p) => {
+				allPromises.push(
+					translationModules[p]().then((m: any) =>
+						DictionarySchema.parse(m.default || m),
+					),
+				);
+			});
+	});
+
+	// 2. Phrases
+	levels.forEach((l) => {
+		const phrasesPattern = `/phrases/${l.toUpperCase()}.json`;
+		Object.keys(translationModules)
+			.filter((p) => {
+				const np = p.replace(/\\/g, "/");
+				return np.includes(phrasesPattern) && np.includes(langPattern);
 			})
 			.forEach((p) => {
 				allPromises.push(
@@ -360,12 +378,30 @@ export async function loadAllTranscriptions(language: Language = "en"): Promise<
 	const allPromises: Promise<any>[] = [];
 	const langPattern = `/${language.toLowerCase()}/`;
 
+	// 1. Levels
 	levels.forEach((l) => {
 		const levelPattern = `/levels/${l.toLowerCase()}_`;
 		Object.keys(transcriptionModules)
 			.filter((p) => {
 				const np = p.toLowerCase().replace(/\\/g, "/");
 				return np.includes(levelPattern) && np.includes(langPattern);
+			})
+			.forEach((p) => {
+				allPromises.push(
+					transcriptionModules[p]().then((m: any) =>
+						DictionarySchema.parse(m.default || m),
+					),
+				);
+			});
+	});
+
+	// 2. Phrases (if any transcriptions exist for them)
+	levels.forEach((l) => {
+		const phrasesPattern = `/phrases/${l.toUpperCase()}.json`;
+		Object.keys(transcriptionModules)
+			.filter((p) => {
+				const np = p.replace(/\\/g, "/");
+				return np.includes(phrasesPattern) && np.includes(langPattern);
 			})
 			.forEach((p) => {
 				allPromises.push(
