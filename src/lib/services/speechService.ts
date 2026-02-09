@@ -90,89 +90,56 @@ export function findBestVoice(
  * Озвучити текст — FIRE AND FORGET (Synchronous for iOS)
  */
 export function speakText(text: string, lang: string): void {
-	if (!browser || !window.speechSynthesis) {
-		logService.error("ui", "Speech synthesis not available in window");
-		return;
-	}
+	if (!browser || !window.speechSynthesis) return;
 
 	const ss = window.speechSynthesis;
-	logService.log("ui", "speakText call", { 
-		text: text.substring(0, 10), 
-		lang, 
-		speaking: ss.speaking, 
-		pending: ss.pending, 
-		paused: ss.paused 
-	});
+	logService.log("ui", "speakText start", { text: text.substring(0, 10), lang });
 	
-	if (ss.speaking || ss.pending) {
-		ss.cancel();
-	}
-
-	// Try to get voices immediately
-	let currentVoices = voices;
-	if (currentVoices.length === 0) {
-		currentVoices = ss.getVoices();
-		logService.log("ui", "Fresh voices check", { count: currentVoices.length });
-		if (currentVoices.length > 0) {
-			voices = currentVoices;
-			voicesLoaded = true;
-		} else {
-			preloadVoices();
+	// На iOS Safari cancel() може "завішувати" рушій, якщо викликається занадто часто.
+	// Спробуємо без нього або тільки якщо реально говоримо.
+	try {
+		if (ss.speaking) {
+			ss.cancel();
 		}
+	} catch (e) {
+		logService.warn("ui", "Speech cancel failed", e);
 	}
 
 	const utterance = new SpeechSynthesisUtterance(text);
+	
+	// Отримуємо актуальні голоси
+	const currentVoices = ss.getVoices();
 	let selectedVoice: SpeechSynthesisVoice | undefined;
 
-	// 1. User Preference
-	try {
-		const prefs = settingsStore.value.voicePreferences as Record<string, string>;
-		if (prefs && prefs[lang]) {
-			selectedVoice = currentVoices.find(v => v.voiceURI === prefs[lang]);
-		}
-	} catch (e) {
-		// ignore
+	// 1. Пошук голосу (без рун)
+	if (currentVoices.length > 0) {
+		const searchLang = lang === "crh" ? "tr" : lang;
+		selectedVoice = findBestVoice(currentVoices, searchLang);
 	}
 
-	// 2. Auto-detect
-	if (!selectedVoice && currentVoices.length > 0) {
-		// CRH logic
-		if (lang === "crh") {
-			selectedVoice = findBestVoice(currentVoices, "tr");
-		} else {
-			selectedVoice = findBestVoice(currentVoices, lang);
-		}
-	}
-
-	// 3. Setup Utterance
 	if (selectedVoice) {
 		utterance.voice = selectedVoice;
 		utterance.lang = selectedVoice.lang;
 	} else {
-		// FALLBACK for "Empty Voices" scenario (iOS first run)
-		// We set a hardcoded valid BCP 47 language tag.
-		// iOS Safari is more likely to speak if we give it 'uk-UA' than just 'uk'.
-		
-		let fallbackLang = DEFAULT_LOCALES[lang] || lang;
-		
-		if (lang === "crh") fallbackLang = "tr-TR"; // Hard force Turkish for CRH
-
-		utterance.lang = fallbackLang;
-		
-		// Log this case so we know we are running "blind"
-		logService.log("ui", "Speaking with fallback locale (no voice obj)", { lang: fallbackLang });
+		utterance.lang = DEFAULT_LOCALES[lang] || lang;
 	}
 
 	utterance.rate = 0.9;
 
-	// Debug
-	// console.log(`Speaking: ${text} (${utterance.lang}) Voice: ${selectedVoice?.name || 'System'}`);
-
 	utterance.onerror = (e) => {
-		logService.error("ui", "Speech error", { error: e.error, elapsed: e.elapsedTime });
+		logService.error("ui", "Speech error event", { error: e.error });
 	};
 
-	window.speechSynthesis.speak(utterance);
+	utterance.onstart = () => {
+		logService.log("ui", "Speech started callback");
+	};
+
+	try {
+		ss.speak(utterance);
+		logService.log("ui", "ss.speak() executed");
+	} catch (err) {
+		logService.error("ui", "ss.speak() crash", err);
+	}
 }
 
 /**
