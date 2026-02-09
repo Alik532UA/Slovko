@@ -37,27 +37,47 @@
 	let startPos = { x: 0, y: 0 };
 	let wasSpoken = false;
 
-	function handlePointerDown(e: PointerEvent) {
-		// Якщо картка вже в особливому стані, ігноруємо
-		if (
-			card.status === "correct" ||
-			card.status === "wrong" ||
-			card.status === "hint" ||
-			card.status === "hint-slow"
-		)
-			return;
+	function isInteractable(): boolean {
+		return (
+			card.status !== "correct" &&
+			card.status !== "wrong" &&
+			card.status !== "hint" &&
+			card.status !== "hint-slow"
+		);
+	}
 
+	/**
+	 * iOS fix: touchstart є "trusted gesture" на iOS, на відміну від pointerdown.
+	 * speechSynthesis.speak() працює надійно саме з touchstart.
+	 * На iOS порядок подій: pointerdown → touchstart, але ми використовуємо
+	 * обидва з прапорцем wasSpoken для уникнення подвійного озвучення.
+	 */
+	function handleTouchStart() {
+		if (!isInteractable()) return;
 		wasSpoken = false;
 
-		// Спроба озвучити при натисканні (важливо для початку драгу)
 		if (enablePronunciation && card.status !== "selected") {
 			speakText(card.text, card.language);
 			wasSpoken = true;
-			// Скидаємо прапорець через короткий час
-			setTimeout(() => { wasSpoken = false; }, 300);
+			setTimeout(() => {
+				wasSpoken = false;
+			}, 500);
+		}
+	}
+
+	function handlePointerDown(e: PointerEvent) {
+		if (!isInteractable()) return;
+
+		// Desktop fallback: якщо touchstart не спрацював (десктоп), озвучуємо тут
+		if (enablePronunciation && card.status !== "selected" && !wasSpoken) {
+			speakText(card.text, card.language);
+			wasSpoken = true;
+			setTimeout(() => {
+				wasSpoken = false;
+			}, 500);
 		}
 
-		// Якщо передано зовнішній обробник (для драгу), викликаємо його
+		// Зовнішній обробник для драгу
 		if (onpointerdown) onpointerdown(e);
 
 		startPos = { x: e.clientX, y: e.clientY };
@@ -128,11 +148,11 @@
 		)
 			return;
 
-		// Для iOS: якщо в pointerdown звук не спрацював (через блокування Safari),
-		// то handleClick — наш останній шанс, він точно має спрацювати.
+		// Останній fallback: якщо ні touchstart, ні pointerdown не озвучили
 		if (enablePronunciation && card.status !== "selected" && !wasSpoken) {
 			speakText(card.text, card.language);
 		}
+		wasSpoken = false;
 
 		onclick();
 	}
@@ -146,6 +166,7 @@
 	class:hint={card.status === "hint"}
 	class:hint-slow={card.status === "hint-slow"}
 	class:dimmed={isDimmed}
+	ontouchstart={handleTouchStart}
 	onpointerdown={handlePointerDown}
 	onpointermove={handlePointerMove}
 	onpointerup={handlePointerUp}

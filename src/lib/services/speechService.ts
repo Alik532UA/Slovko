@@ -13,7 +13,7 @@ function normalizeLocale(locale: string): string {
 
 const DEFAULT_LOCALES: Record<string, string> = {
 	uk: "uk-UA",
-	en: "en-GB", 
+	en: "en-GB",
 	nl: "nl-NL",
 	de: "de-DE",
 	el: "el-GR",
@@ -58,7 +58,7 @@ export function speakText(text: string, lang: string): void {
 	if (!browser || !window.speechSynthesis) return;
 
 	const ss = window.speechSynthesis;
-	
+
 	// 1. Одразу скасовуємо все старе (синхронно)
 	ss.cancel();
 
@@ -67,7 +67,7 @@ export function speakText(text: string, lang: string): void {
 
 	// 3. Створюємо новий запит
 	currentUtterance = new SpeechSynthesisUtterance(text);
-	
+
 	let selectedVoice: SpeechSynthesisVoice | undefined;
 	let hasUserPref = false;
 
@@ -77,7 +77,7 @@ export function speakText(text: string, lang: string): void {
 			selectedVoice = currentVoices.find(v => v.voiceURI === prefs[lang]);
 			if (selectedVoice) hasUserPref = true;
 		}
-	} catch (e) {}
+	} catch (e) { }
 
 	if (!selectedVoice) {
 		selectedVoice = findBestVoice(currentVoices, lang === "crh" ? "tr" : lang);
@@ -101,7 +101,8 @@ export function speakText(text: string, lang: string): void {
 
 	// 4. Відтворюємо
 	try {
-		if (ss.paused) ss.resume();
+		// Always resume — iOS може бути "locked" без стану "paused"
+		ss.resume();
 		ss.speak(currentUtterance);
 	} catch (err) {
 		logService.error("ui", "Speak crash", err);

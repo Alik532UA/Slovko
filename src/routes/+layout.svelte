@@ -58,20 +58,53 @@
 
 	onMount(() => {
 		logService.log("version", "Root layout onMount started");
-		
-		// Audio Unlock for iOS
+
+		// Audio Unlock for iOS — robust mechanism
+		let audioFullyUnlocked = false;
+
 		const unlockAudio = () => {
-			if (window.speechSynthesis) {
-				window.speechSynthesis.getVoices(); // "Прогрів" голосів
-				window.speechSynthesis.resume(); // Важливо для Safari
-				const utterance = new SpeechSynthesisUtterance(" ");
-				utterance.volume = 0.1;
-				utterance.rate = 10;
+			if (!window.speechSynthesis) return;
+
+			// Always resume to keep engine warm
+			window.speechSynthesis.resume();
+
+			if (!audioFullyUnlocked) {
+				// First touch: full unlock
+				window.speechSynthesis.getVoices();
+
+				// Speak a real word (not space!) silently — iOS ignores empty utterances
+				const utterance = new SpeechSynthesisUtterance(".");
+				utterance.volume = 0.01;
+				utterance.rate = 2;
+				utterance.lang = "en";
 				window.speechSynthesis.speak(utterance);
-				logService.log("ui", "Audio engine unlocked via touch");
-				window.removeEventListener("touchstart", unlockAudio);
+
+				// Also unlock AudioContext for permanent audio access
+				try {
+					const AudioCtx =
+						window.AudioContext ||
+						(window as unknown as { webkitAudioContext: typeof AudioContext })
+							.webkitAudioContext;
+					if (AudioCtx) {
+						const ctx = new AudioCtx();
+						const buffer = ctx.createBuffer(1, 1, 22050);
+						const source = ctx.createBufferSource();
+						source.buffer = buffer;
+						source.connect(ctx.destination);
+						source.start(0);
+						ctx.resume();
+					}
+				} catch (_e) {
+					/* AudioContext not available */
+				}
+
+				audioFullyUnlocked = true;
+				logService.log("ui", "Audio engine unlocked via touch (full)");
 			}
 		};
+
+		// Keep listener permanently — don't remove after first touch!
+		// Each touch does resume() to keep speech engine warm
 		window.addEventListener("touchstart", unlockAudio, { passive: true });
 
 		// 1. Запускаємо перевірку оновлень ОДРАЗУ паралельно
@@ -87,15 +120,23 @@
 			ready = true;
 
 			if (!dev && "serviceWorker" in navigator) {
-				const registration = await navigator.serviceWorker.register(`${base}/service-worker.js`);
-				
+				const registration = await navigator.serviceWorker.register(
+					`${base}/service-worker.js`,
+				);
+
 				// Слухаємо оновлення Service Worker
 				registration.addEventListener("updatefound", () => {
 					const newWorker = registration.installing;
 					if (newWorker) {
 						newWorker.addEventListener("statechange", () => {
-							if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
-								logService.log("version", "New Service Worker found and installed. Triggering banner.");
+							if (
+								newWorker.state === "installed" &&
+								navigator.serviceWorker.controller
+							) {
+								logService.log(
+									"version",
+									"New Service Worker found and installed. Triggering banner.",
+								);
 								versionStore.setUpdate(true);
 							}
 						});
@@ -135,6 +176,7 @@
 			window.removeEventListener("click", handleGlobalClick);
 			window.removeEventListener("visibilitychange", handleVisibilityChange);
 			window.removeEventListener("focus", handleVisibilityChange);
+			window.removeEventListener("touchstart", unlockAudio);
 		};
 	});
 
@@ -146,10 +188,11 @@
 	});
 
 	// Відстеження зміни сторінок
-		$effect(() => {
-			trackPageView($page.url.pathname);
-		});
-	</script>
+	$effect(() => {
+		trackPageView($page.url.pathname);
+	});
+</script>
+
 <DebugListener />
 
 {#if versionStore.hasUpdate && versionStore.currentVersion}
