@@ -27,13 +27,12 @@
 	// Initialize with stored preference
 	let selectedVoiceURI = $state("");
 
+	// 1. Initial sync from store (run once on mount or simple effect)
 	$effect(() => {
-		logService.log("settings", "VoiceSelectionModal effect: update selectedVoiceURI", { language });
-		// Оновлюємо вибраний голос при зміні мови або початковому завантаженні
-		selectedVoiceURI =
-			(settingsStore.value.voicePreferences as Record<string, string>)[
-				language
-			] || "";
+		const pref = (settingsStore.value.voicePreferences as Record<string, string>)[language];
+		if (pref && !selectedVoiceURI) {
+			selectedVoiceURI = pref;
+		}
 	});
 
 	let primaryVoices: SpeechSynthesisVoice[] = $state([]);
@@ -71,91 +70,76 @@
 	};
 
 	function getPreviewText(lang: string, voiceLang: string): string {
-		// If voice is Turkish (fallback for crh), use Turkish greeting
 		if (voiceLang.startsWith("tr")) return PREVIEW_TEXTS.tr;
 		return PREVIEW_TEXTS[lang] || "Hello";
 	}
 
-	$effect(() => {
-		const loadVoices = () => {
-			logService.log("settings", "loadVoices called");
-			if (typeof window === 'undefined' || !window.speechSynthesis) {
-				logService.warn("settings", "speechSynthesis not available");
-				return;
+	function processVoices() {
+		logService.log("settings", "Processing voices...");
+		if (typeof window === 'undefined' || !window.speechSynthesis) return;
+
+		const allVoices = window.speechSynthesis.getVoices();
+		if (!allVoices || allVoices.length === 0) return;
+		
+		voices = allVoices;
+
+		// Select best voice if none selected
+		if (!selectedVoiceURI && language) {
+			const best = findBestVoice(allVoices, language);
+			if (best) {
+				selectedVoiceURI = best.voiceURI;
 			}
-			
-			const allVoices = window.speechSynthesis.getVoices();
-			logService.log("settings", "Total voices found", { count: allVoices.length });
-			if (!allVoices || allVoices.length === 0) return;
+		}
 
-			voices = allVoices;
+		// Filter Logic
+		let targetLangPrefix: string = language || "en";
+		if (language === "crh") targetLangPrefix = "tr"; 
 
-			// 1. If no preference saved, find what speakText would use
-			if (!selectedVoiceURI && language) {
-				const best = findBestVoice(allVoices, language);
-				logService.log("settings", "Finding best voice", { best: best?.name });
-				if (best) {
-					selectedVoiceURI = best.voiceURI;
+		const region = PREFERRED_REGIONS[targetLangPrefix];
+
+		primaryVoices = allVoices
+			.filter((v) => v && v.lang && v.lang.startsWith(targetLangPrefix))
+			.sort((a, b) => {
+				if (region) {
+					const aPref = a.lang.includes(`-${region}`);
+					const bPref = b.lang.includes(`-${region}`);
+					if (aPref && !bPref) return -1;
+					if (!aPref && bPref) return 1;
 				}
-			}
-
-			// Filter logic
-			let targetLangPrefix: string = language || "en";
-			if (language === "crh") targetLangPrefix = "tr"; // Use Turkish voices for Crimean Tatar
-
-			const region = PREFERRED_REGIONS[targetLangPrefix];
-
-			primaryVoices = allVoices
-				.filter((v) => v && v.lang && v.lang.startsWith(targetLangPrefix))
-				.sort((a, b) => {
-					// 1. Prioritize preferred region (e.g. nl-NL over nl-BE)
-					if (region) {
-						const aPref = a.lang.includes(`-${region}`);
-						const bPref = b.lang.includes(`-${region}`);
-						if (aPref && !bPref) return -1;
-						if (!aPref && bPref) return 1;
-					}
-					// 2. Sort by name for consistency
-					return a.name.localeCompare(b.name);
-				});
-
-			// Also apply refined sorting for secondary voices (English)
-			const secondaryRegion = PREFERRED_REGIONS["en"];
-			secondaryVoices = allVoices
-				.filter(
-					(v) =>
-						v && v.lang && !v.lang.startsWith(targetLangPrefix) && v.lang.startsWith("en"),
-				)
-				.sort((a, b) => {
-					// 1. Prioritize GB
-					if (secondaryRegion) {
-						const aPref = a.lang.includes(`-${secondaryRegion}`);
-						const bPref = b.lang.includes(`-${secondaryRegion}`);
-						if (aPref && !bPref) return -1;
-						if (!aPref && bPref) return 1;
-					}
-					return a.name.localeCompare(b.name);
-				});
-
-			logService.log("settings", "Voices filtered", { 
-				primary: primaryVoices.length, 
-				secondary: secondaryVoices.length 
+				return a.name.localeCompare(b.name);
 			});
 
-			// Scroll to selected after filtering is done
-			scrollToSelected();
-		};
+		const secondaryRegion = PREFERRED_REGIONS["en"];
+		secondaryVoices = allVoices
+			.filter((v) => v && v.lang && !v.lang.startsWith(targetLangPrefix) && v.lang.startsWith("en"))
+			.sort((a, b) => {
+				if (secondaryRegion) {
+					const aPref = a.lang.includes(`-${secondaryRegion}`);
+					const bPref = b.lang.includes(`-${secondaryRegion}`);
+					if (aPref && !bPref) return -1;
+					if (!aPref && bPref) return 1;
+				}
+				return a.name.localeCompare(b.name);
+			});
+			
+		logService.log("settings", "Voices processed", { primary: primaryVoices.length, secondary: secondaryVoices.length });
+		scrollToSelected();
+	}
 
-		loadVoices();
+	onMount(() => {
+		logService.log("settings", "VoiceSelectionModal mounted", { language });
 		
+		// Initial load
+		processVoices();
+		
+		// Setup listener
 		if (typeof window !== 'undefined' && window.speechSynthesis) {
-			window.speechSynthesis.addEventListener('voiceschanged', loadVoices);
+			window.speechSynthesis.addEventListener('voiceschanged', processVoices);
 		}
 
 		return () => {
-			logService.log("settings", "VoiceSelectionModal effect cleanup");
 			if (typeof window !== 'undefined' && window.speechSynthesis) {
-				window.speechSynthesis.removeEventListener('voiceschanged', loadVoices);
+				window.speechSynthesis.removeEventListener('voiceschanged', processVoices);
 			}
 		};
 	});
