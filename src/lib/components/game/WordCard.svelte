@@ -37,6 +37,20 @@
 	let startPos = { x: 0, y: 0 };
 
 	function handlePointerDown(e: PointerEvent) {
+		// Якщо картка вже в особливому стані, ігноруємо (емулюємо disabled)
+		if (
+			card.status === "correct" ||
+			card.status === "wrong" ||
+			card.status === "hint" ||
+			card.status === "hint-slow"
+		)
+			return;
+
+		// Озвучуємо при натисканні (працює і для кліку, і для початку драгу)
+		if (enablePronunciation && card.status !== "selected") {
+			speakText(card.text, card.language);
+		}
+
 		// Якщо передано зовнішній обробник (для драгу), викликаємо його
 		if (onpointerdown) onpointerdown(e);
 
@@ -99,7 +113,7 @@
 			return;
 		}
 
-		// Якщо картка вже в особливому стані, ігноруємо клік (емулюємо disabled)
+		// Якщо картка вже в особливому стані, ігноруємо клік
 		if (
 			card.status === "correct" ||
 			card.status === "wrong" ||
@@ -107,11 +121,6 @@
 			card.status === "hint-slow"
 		)
 			return;
-
-		// Speak only if selecting (not deselecting)
-		if (enablePronunciation && card.status !== "selected") {
-			speakText(card.text, card.language);
-		}
 
 		onclick();
 	}
