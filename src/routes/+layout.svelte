@@ -72,7 +72,20 @@
 			ready = true;
 
 			if (!dev && "serviceWorker" in navigator) {
-				navigator.serviceWorker.register(`${base}/service-worker.js`);
+				const registration = await navigator.serviceWorker.register(`${base}/service-worker.js`);
+				
+				// Слухаємо оновлення Service Worker
+				registration.addEventListener("updatefound", () => {
+					const newWorker = registration.installing;
+					if (newWorker) {
+						newWorker.addEventListener("statechange", () => {
+							if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+								logService.log("version", "New Service Worker found and installed. Triggering banner.");
+								versionStore.setUpdate(true);
+							}
+						});
+					}
+				});
 			}
 
 			// Analytics

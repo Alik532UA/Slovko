@@ -40,6 +40,11 @@ self.addEventListener("fetch", (event) => {
 	// Ігноруємо запити не по http (наприклад, розширення браузера)
 	if (!url.protocol.startsWith("http")) return;
 
+	// СПЕЦІАЛЬНИЙ ОБХІД: якщо в URL є параметр оновлення, йдемо в мережу
+	if (url.searchParams.has('upd')) {
+		return event.respondWith(fetch(event.request));
+	}
+
 	event.respondWith(
 		(async () => {
 			const cache = await caches.open(CACHE);

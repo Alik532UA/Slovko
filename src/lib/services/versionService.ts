@@ -110,28 +110,29 @@ export async function checkForUpdates() {
  */
 export async function applyUpdate() {
 	logService.log("version", "applyUpdate called. Starting update process...");
-	if (versionStore.currentVersion) {
-		const nextVersion = versionStore.currentVersion;
+	const nextVersion = versionStore.currentVersion || "latest";
 
-		try {
-			logService.log("version", "Clearing caches...");
-			await clearCaches();
-		} catch (e) {
-			logService.error("version", "Failed to clear caches:", e);
-		}
-
-		// Оновлюємо маркер версії
-		logService.log("version", `Setting new cache version in localStorage: ${nextVersion}`);
-		localStorage.setItem(CACHE_VERSION_KEY, nextVersion);
+	try {
+		logService.log("version", "Clearing caches and unregistering SW...");
+		await clearCaches();
 		
-		// Очищаємо дані про відмову, бо ми оновилися
+		// Оновлюємо маркер версії
+		localStorage.setItem(CACHE_VERSION_KEY, nextVersion);
 		localStorage.removeItem(REFUSED_VERSION_KEY);
 		localStorage.removeItem(REFUSED_AT_KEY);
 
-		logService.log("version", "Reloading page...");
+		logService.log("version", "Performing HARD reload with cache buster...");
+		
+		// Створюємо URL з параметром для обходу HTTP-кешу браузера
+		const url = new URL(window.location.origin + base);
+		url.searchParams.set('upd', Date.now().toString());
+		
+		// Використовуємо replace, щоб не засмічувати історію переходів
+		window.location.replace(url.toString());
+	} catch (e) {
+		logService.error("version", "Failed to perform clean update:", e);
+		// Fallback до звичайного релоаду
 		window.location.reload();
-	} else {
-		logService.warn("version", "applyUpdate called but currentVersion is missing in store.");
 	}
 }
 
@@ -155,19 +156,25 @@ export function skipUpdate() {
 }
 
 async function clearCaches() {
-	// 1. Очищення Service Workers
+	// 1. Очищення Service Workers (важливо дочекатися завершення)
 	if ("serviceWorker" in navigator) {
-		const registrations = await navigator.serviceWorker.getRegistrations();
-		for (let registration of registrations) {
-			await registration.unregister();
+		try {
+			const registrations = await navigator.serviceWorker.getRegistrations();
+			await Promise.all(registrations.map(reg => reg.unregister()));
+			logService.log("version", "Service workers unregistered.");
+		} catch (e) {
+			logService.error("version", "SW unregistration failed:", e);
 		}
 	}
 
 	// 2. Очищення Cache API
 	if ("caches" in window) {
-		const keys = await caches.keys();
-		for (let key of keys) {
-			await caches.delete(key);
+		try {
+			const keys = await caches.keys();
+			await Promise.all(keys.map(key => caches.delete(key)));
+			logService.log("version", "Cache Storage cleared.");
+		} catch (e) {
+			logService.error("version", "Cache deletion failed:", e);
 		}
 	}
 }
