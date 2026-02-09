@@ -69,6 +69,7 @@
 		en: "Hello, how are you?",
 		nl: "Hallo, hoe gaat het?",
 		de: "Hallo, wie geht's?",
+		el: "Γεια σας, τι κάνετε;",
 		crh: "Selâm, alesıñız nasıl?", // Using generic greeting
 		tr: "Merhaba, nasılsın?", // Fallback for Turkish voices
 	};
@@ -78,6 +79,7 @@
 		de: "DE",
 		en: "GB",
 		uk: "UA",
+		el: "GR",
 		tr: "TR",
 	};
 
