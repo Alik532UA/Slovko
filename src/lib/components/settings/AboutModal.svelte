@@ -5,7 +5,10 @@
 	import { _ } from "svelte-i18n";
 	import { versionStore } from "$lib/stores/versionStore.svelte";
 	import { hardReset } from "$lib/services/resetService";
+	import { pwaStore } from "$lib/stores/pwaStore.svelte";
+	import { Download } from "lucide-svelte";
 	import FeedbackModal from "./FeedbackModal.svelte";
+	import InstallGuide from "../pwa/InstallGuide.svelte";
 	import BaseModal from "../ui/BaseModal.svelte";
 
 	interface Props {
@@ -14,6 +17,7 @@
 	let { onclose }: Props = $props();
 
 	let showFeedback = $state(false);
+	let showInstallGuide = $state(false);
 
 	async function handleHardReset() {
 		await hardReset(true);
@@ -21,10 +25,30 @@
 </script>
 
 <BaseModal {onclose} testid="about-modal">
-	<div class="content">
-		<p class="description">{$_("about.description")}</p>
+	<div class="content" data-testid="about-modal-content">
+		<p class="description" data-testid="about-description">{$_("about.description")}</p>
 
-		<div class="links">
+		<div class="links" data-testid="about-links-container">
+			{#if pwaStore.canInstall}
+				<button
+					class="link-btn install-btn"
+					onclick={async () => {
+						const result = await pwaStore.install();
+						if (result === "ios" || result === "manual") {
+							showInstallGuide = true;
+						}
+					}}
+					data-testid="about-install-btn"
+				>
+					<Download size={20} />
+					{#if pwaStore.isIOS || pwaStore.isAndroid}
+						{$_("pwa.install") || "Застосунок для телефону"}
+					{:else}
+						{$_("pwa.install_desktop") || "Застосунок для комп'ютера"}
+					{/if}
+				</button>
+			{/if}
+
 			<a
 				href="https://send.monobank.ua/jar/7sCsydhJnR"
 				target="_blank"
@@ -62,8 +86,8 @@
 			</button>
 		</div>
 
-		<div class="version-wrapper">
-			<span class="version-text">
+		<div class="version-wrapper" data-testid="about-version-wrapper">
+			<span class="version-text" data-testid="about-version-text">
 				{$_("about.version")}: {versionStore.currentVersion || "0.1"}
 			</span>
 		</div>
@@ -80,6 +104,10 @@
 
 {#if showFeedback}
 	<FeedbackModal onclose={() => (showFeedback = false)} />
+{/if}
+
+{#if showInstallGuide}
+	<InstallGuide onclose={() => (showInstallGuide = false)} />
 {/if}
 
 <style>
@@ -108,7 +136,9 @@
 	}
 
 	.link-btn {
-		display: inline-block;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
 		padding: 0.75rem 1.5rem;
 		border-radius: 12px;
 		text-decoration: none;
@@ -120,6 +150,7 @@
 		cursor: pointer;
 		font-size: 1rem;
 		font-family: inherit;
+		gap: 0.5rem;
 	}
 
 	.donate {
@@ -131,6 +162,17 @@
 	.donate:hover {
 		transform: translateY(-2px);
 		box-shadow: 0 6px 16px rgba(58, 143, 214, 0.4);
+	}
+
+	.install-btn {
+		background: rgba(255, 255, 255, 0.1);
+		color: var(--text-primary);
+		border: 1px solid var(--accent);
+	}
+
+	.install-btn:hover {
+		background: rgba(233, 84, 32, 0.1); /* accent color with opacity */
+		transform: translateY(-2px);
 	}
 
 	.cv,
@@ -171,7 +213,7 @@
 
 	.confirm-btn {
 		width: 100%;
-		max-width: 320px;
+		max-width: 280px;
 		align-self: center;
 	}
 </style>

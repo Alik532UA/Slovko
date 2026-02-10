@@ -20,6 +20,7 @@
 		trackPageView,
 		trackEvent,
 	} from "$lib/services/analyticsService";
+	import { pwaStore } from "$lib/stores/pwaStore.svelte";
 	import { page } from "$app/stores";
 	import "../app.css";
 
@@ -166,6 +167,9 @@
 			await initializeI18n();
 			logService.log("version", "i18n initialized, setting ready=true");
 			ready = true;
+			
+			// Initialize PWA Store
+			pwaStore.init();
 
 			if (!dev && "serviceWorker" in navigator) {
 				const registration = await navigator.serviceWorker.register(

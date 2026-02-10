@@ -178,9 +178,9 @@
 	>
 		<div class="content">
 			<!-- Мова інтерфейсу -->
-			<section>
+			<section data-testid="interface-language-section">
 				<h3>{$_("settings.interfaceLanguage")}</h3>
-				<div class="flags-row">
+				<div class="flags-row" data-testid="interface-flags-row">
 					{#each LANGUAGES as lang (lang)}
 						<button
 							class="flag-btn"
@@ -199,19 +199,19 @@
 				</div>
 			</section>
 
-			<div class="separator"></div>
+			<div class="separator" data-testid="settings-separator"></div>
 
 			<!-- Мови карток -->
-			<section>
-				<div class="card-langs">
+			<section data-testid="card-language-section">
+				<div class="card-langs" data-testid="card-langs-container">
 					<!-- З мови (Ліва колонка) -->
-					<div class="lang-column">
+					<div class="lang-column" data-testid="source-lang-column">
 						<div class="column-header">
 							<h4 class="column-title">
 								{$_("settings.columnLeft")}
 							</h4>
 						</div>
-						<div class="flags-column">
+						<div class="flags-column" data-testid="source-flags-column">
 							{#each LANGUAGES as lang (lang)}
 								<button
 									class="flag-btn small"
@@ -239,7 +239,7 @@
 							{/each}
 						</div>
 
-						<div class="controls-wrapper">
+						<div class="controls-wrapper" data-testid="source-controls-wrapper">
 							<!-- Transcription Toggle -->
 							<button
 								class="icon-btn small"
@@ -269,14 +269,14 @@
 					</div>
 
 					<!-- На мову (Права колонка) -->
-					<div class="lang-column">
+					<div class="lang-column" data-testid="target-lang-column">
 						<div class="column-header">
 							<h4 class="column-title">
 								{$_("settings.columnRight")}
 							</h4>
 						</div>
 
-						<div class="flags-column">
+						<div class="flags-column" data-testid="target-flags-column">
 							{#each LANGUAGES as lang (lang)}
 								<button
 									class="flag-btn small"
@@ -304,7 +304,7 @@
 							{/each}
 						</div>
 
-						<div class="controls-wrapper">
+						<div class="controls-wrapper" data-testid="target-controls-wrapper">
 							<!-- Transcription Toggle -->
 							<button
 								class="icon-btn small"
@@ -340,7 +340,7 @@
 				onclick={onclose}
 				data-testid="confirm-language-settings-btn"
 			>
-				{$_("common.confirm")}
+				{$_("common.backToLearning")}
 			</button>
 		</div>
 	</div>

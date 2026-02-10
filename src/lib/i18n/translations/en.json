@@ -130,6 +130,28 @@
 		"languages": "Languages",
 		"about": "About"
 	},
+	"pwa": {
+		"install": "Install App",
+		"install_desktop": "Install on Desktop",
+		"ios": {
+			"title": "Install on iPhone",
+			"subtitle": "iPhone blocks automatic installation. Please follow these simple steps:",
+			"step1": "Tap the 'Share' button at the bottom",
+			"step2": "Select 'Add to Home Screen' from the menu"
+		},
+		"android": {
+			"title": "Install on Android",
+			"step1": "Tap the three dots in the browser corner",
+			"step2": "Select 'Install app'"
+		},
+		"desktop": {
+			"title": "Install on Desktop",
+			"step1": "Click the install icon in the address bar, to the right of the URL"
+		},
+		"manual": {
+			"subtitle": "Your browser doesn't support one-click installation. You can add it manually:"
+		}
+	},
 	"about": {
 		"title": "About",
 		"description": "Slovko is the result of existing similar apps having intrusive ads. That's why the idea arose to make our own, completely ad-free. Learn languages by matching word pairs without distractions.",
@@ -263,7 +285,8 @@
 		},
 		"or": "or",
 		"learn": "Learn",
-		"reset": "Reset"
+		"reset": "Reset",
+		"ok": "Got it"
 	},
 	"sync": {
 		"status": {

@@ -130,6 +130,28 @@
 		"languages": "Tiller",
 		"about": "Aqqında"
 	},
+	"pwa": {
+		"install": "Telefon içün ilova",
+		"install_desktop": "Kompüter içün ilova",
+		"ios": {
+			"title": "iPhone-ğa qurmaq",
+			"subtitle": "iPhone avtomatik quruvnı blok ete. Lütfen, bu basit adımlarnı yapıñız:",
+			"step1": "Ekran tübündeki «Paylaş» dögmesine basıñız",
+			"step2": "Menüde «Ana ekranğa» saylañız"
+		},
+		"android": {
+			"title": "Android-ğa qurmaq",
+			"step1": "Brauzer köşesindegi üç noqtağa basıñız",
+			"step2": "«Ilovanı qurmaq» saylañız"
+		},
+		"desktop": {
+			"title": "Kompüterge qurmaq",
+			"step1": "Adres satırında, url adresiniñ oñundaki quruv işaretine basıñız"
+		},
+		"manual": {
+			"subtitle": "Brauzeriñiz bir basuvda quruvnı desteklemey. Ilovanı elnen qoşa bilirsiñiz:"
+		}
+	},
 	"about": {
 		"title": "Slovko aqqında",
 		"description": "Slovko — assotsiatsiya oyunu vastasınen yañı sözlerni ögrenmek içün ilova. Sözlerni ve olarnıñ tercimelerini birleştirerek daa tez ezberleñiz!",
@@ -263,7 +285,8 @@
 		},
 		"or": "ya da",
 		"learn": "Ögrenmek",
-		"reset": "Sıfırlama"
+		"reset": "Sıfırlama",
+		"ok": "Anlaşıldı"
 	},
 	"sync": {
 		"status": {

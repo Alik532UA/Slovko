@@ -130,6 +130,28 @@
 		"languages": "Talen",
 		"about": "Over"
 	},
+	"pwa": {
+		"install": "App voor telefoon",
+		"install_desktop": "App voor computer",
+		"ios": {
+			"title": "Installeren op iPhone",
+			"subtitle": "iPhone blokkeert automatische installatie. Volg deze eenvoudige stappen:",
+			"step1": "Tik op de knop «Delen» onderaan",
+			"step2": "Selecteer «Zet op beginscherm» in het menu"
+		},
+		"android": {
+			"title": "Installeren op Android",
+			"step1": "Tik на de drie puntjes in de hoek van de browser",
+			"step2": "Selecteer «App installeren»"
+		},
+		"desktop": {
+			"title": "Installeren op computer",
+			"step1": "Klik op het installatie-icoon in de adresbalk, rechts van de url"
+		},
+		"manual": {
+			"subtitle": "Uw browser ondersteunt geen installatie met één klik. U kunt deze handmatig toevoegen:"
+		}
+	},
 	"about": {
 		"title": "Over Slovko",
 		"description": "Slovko is het resultaat van irritatie over opdringerige advertenties in soortgelijke apps. Daarom ontstond het idee om er zelf een te maken, volledig advertentievrij. Leer talen door woordparen te verbinden zonder afleiding.",
@@ -262,7 +284,8 @@
 		},
 		"or": "of",
 		"learn": "Leren",
-		"reset": "Resetten"
+		"reset": "Resetten",
+		"ok": "Begrepen"
 	},
 	"sync": {
 		"status": {
