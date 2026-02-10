@@ -136,13 +136,19 @@
 		"ios": {
 			"title": "Install on iPhone",
 			"subtitle": "iPhone blocks automatic installation. Please follow these simple steps:",
+			"subtitle_chrome": "Chrome browser on iPhone has installation specifics:",
 			"step1": "Tap the 'Share' button at the bottom",
 			"step2": "Select 'Add to Home Screen' from the menu"
 		},
 		"android": {
 			"title": "Install on Android",
 			"step1": "Tap the three dots in the browser corner",
-			"step2": "Select 'Install app'"
+			"step2": "Select 'Add to Home Screen'"
+		},
+		"ios_chrome": {
+			"step1": "Tap the three dots in the browser corner",
+			"step2": "Tap the 'Share' button in settings",
+			"step3": "Select 'Add to Home Screen'"
 		},
 		"desktop": {
 			"title": "Install on Desktop",

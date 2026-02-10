@@ -16,6 +16,8 @@
 		return "desktop";
 	});
 
+	const isIosChrome = $derived(pwaStore.isIosChrome);
+
 	const isEdge = $derived.by(() => {
 		if (!browser) return false;
 		return window.navigator.userAgent.indexOf("Edg/") > -1;
@@ -33,7 +35,11 @@
 			</h3>
 			<p class="subtitle">
 				{#if mode === 'ios'}
-					{$_("pwa.ios.subtitle") || "iPhone блокує автоматичне встановлення. Будь ласка, виконайте ці кроки:"}
+					{#if isIosChrome}
+						{$_("pwa.ios.subtitle_chrome") || "Браузер Chrome на iPhone має особливості встановлення:"}
+					{:else}
+						{$_("pwa.ios.subtitle") || "iPhone блокує автоматичне встановлення. Будь ласка, виконайте ці кроки:"}
+					{/if}
 				{:else}
 					{$_("pwa.manual.subtitle") || "Ваш браузер не підтримує встановлення в один клік. Ви можете додати додаток вручну:"}
 				{/if}
@@ -42,21 +48,49 @@
 
 		<div class="steps">
 			{#if mode === 'ios'}
-				<div class="step">
-					<span class="step-num">1</span>
-					<div class="step-icon"><Share size={24} /></div>
-					<div class="step-text">
-						<p>{$_("pwa.ios.step1") || "Натисніть кнопку «Поділитися» внизу екрана"}</p>
+				{#if isIosChrome}
+					<!-- iOS Chrome (3 steps) -->
+					<div class="step">
+						<span class="step-num">1</span>
+						<div class="step-icon"><MoreVertical size={24} /></div>
+						<div class="step-text">
+							<p>{$_("pwa.ios_chrome.step1") || "Натисніть на три крапки в кутку браузера"}</p>
+						</div>
 					</div>
-				</div>
-				<div class="line"></div>
-				<div class="step">
-					<span class="step-num">2</span>
-					<div class="step-icon"><PlusSquare size={24} /></div>
-					<div class="step-text">
-						<p>{$_("pwa.ios.step2") || "Виберіть «На початковий екран» у меню"}</p>
+					<div class="line"></div>
+					<div class="step">
+						<span class="step-num">2</span>
+						<div class="step-icon"><Share size={24} /></div>
+						<div class="step-text">
+							<p>{$_("pwa.ios_chrome.step2") || "Натисніть на кнопку «Поділитися» в налаштуваннях"}</p>
+						</div>
 					</div>
-				</div>
+					<div class="line"></div>
+					<div class="step">
+						<span class="step-num">3</span>
+						<div class="step-icon"><PlusSquare size={24} /></div>
+						<div class="step-text">
+							<p>{$_("pwa.ios_chrome.step3") || "Виберіть «Додати на початковий екран»"}</p>
+						</div>
+					</div>
+				{:else}
+					<!-- iOS Safari (2 steps) -->
+					<div class="step">
+						<span class="step-num">1</span>
+						<div class="step-icon"><Share size={24} /></div>
+						<div class="step-text">
+							<p>{$_("pwa.ios.step1") || "Натисніть кнопку «Поділитися» внизу екрана"}</p>
+						</div>
+					</div>
+					<div class="line"></div>
+					<div class="step">
+						<span class="step-num">2</span>
+						<div class="step-icon"><PlusSquare size={24} /></div>
+						<div class="step-text">
+							<p>{$_("pwa.ios.step2") || "Виберіть «На початковий екран» у меню"}</p>
+						</div>
+					</div>
+				{/if}
 			{:else if mode === 'android'}
 				<div class="step">
 					<span class="step-num">1</span>
@@ -68,9 +102,9 @@
 				<div class="line"></div>
 				<div class="step">
 					<span class="step-num">2</span>
-					<div class="step-icon"><Download size={24} /></div>
+					<div class="step-icon"><MonitorDown size={24} /></div>
 					<div class="step-text">
-						<p>{$_("pwa.android.step2") || "Виберіть «Встановити додаток»"}</p>
+						<p>{$_("pwa.android.step2") || "Виберіть «Додати на головний екран»"}</p>
 					</div>
 				</div>
 			{:else}
@@ -83,7 +117,7 @@
 						{/if}
 					</div>
 					<div class="step-text">
-						<p>{$_("pwa.desktop.step1") || "Натисніть на іконку встановлення в адресному рядку зверху"}</p>
+						<p>{$_("pwa.desktop.step1") || "Натисніть на іконку встановлення в адресному рядку, праворуч від адреси url"}</p>
 					</div>
 				</div>
 			{/if}
@@ -98,7 +132,7 @@
 <style>
 	.edge-icon {
 		transform: rotate(-90deg);
-		color: #0078d4; /* Optional: Edge-like blue color for better recognition */
+		color: #0078d4;
 	}
 
 	.content {

@@ -15,6 +15,7 @@ function createPwaStore() {
 	let deferredPrompt = $state<BeforeInstallPromptEvent | null>(null);
 	let isInstalled = $state(false);
 	let isIOS = $state(false);
+	let isIosChrome = $state(false);
 	let isAndroid = $state(false);
 	
 	// Тепер кнопка доступна завжди, якщо додаток не встановлено
@@ -25,6 +26,7 @@ function createPwaStore() {
 
 		const ua = window.navigator.userAgent;
 		isIOS = /iPad|iPhone|iPod/.test(ua) && !(window as any).MSStream;
+		isIosChrome = isIOS && ua.indexOf('CriOS') > -1;
 		isAndroid = /Android/.test(ua);
 		
 		// Перевірка, чи вже встановлено
@@ -64,6 +66,7 @@ function createPwaStore() {
 	return {
 		get isInstalled() { return isInstalled; },
 		get isIOS() { return isIOS; },
+		get isIosChrome() { return isIosChrome; },
 		get isAndroid() { return isAndroid; },
 		get canInstall() { return canInstall; },
 		get hasNativePrompt() { return !!deferredPrompt; },
