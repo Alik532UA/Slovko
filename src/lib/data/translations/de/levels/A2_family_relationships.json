@@ -1,5 +1,7 @@
 {
 	"aunt": "Tante",
+	"aunt_paternal": "Tante",
+	"aunt_maternal": "Tante",
 	"brother_male": "Bruder",
 	"colleague": "Kollege",
 	"cousin": "Cousin",
@@ -10,6 +12,8 @@
 	"married": "verheiratet",
 	"marry": "heiraten",
 	"partner": "Partner",
-	"single": "einzeln",
-	"uncle": "Onkel"
+	"single": "ledig",
+	"uncle": "Onkel",
+	"uncle_paternal": "Onkel",
+	"uncle_maternal": "Onkel"
 }

@@ -1,5 +1,7 @@
 {
 	"aunt": "tante",
+	"aunt_paternal": "tante",
+	"aunt_maternal": "tante",
 	"brother_male": "broer",
 	"colleague": "collega",
 	"cousin": "neef/nicht",
@@ -11,5 +13,7 @@
 	"marry": "trouwen",
 	"partner": "partner",
 	"single": "enkel",
-	"uncle": "oom"
+	"uncle": "oom",
+	"uncle_paternal": "oom",
+	"uncle_maternal": "oom"
 }

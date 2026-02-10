@@ -1,5 +1,10 @@
 {
 	"aunt": "ala / tize",
+	"aunt_paternal": "ala",
+	"aunt_maternal": "tize",
+	"uncle": "emce",
+	"uncle_paternal": "amca",
+	"uncle_maternal": "dayı",
 	"brother_male": "qardaş",
 	"colleague": "işdaş",
 	"cousin": "emce-tize balası",

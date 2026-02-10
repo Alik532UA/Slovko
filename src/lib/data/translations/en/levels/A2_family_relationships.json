@@ -1,15 +1,19 @@
 {
-	"grandfather": "grandfather",
-	"grandmother": "grandmother",
-	"marry": "marry",
-	"single": "single",
-	"uncle": "uncle",
-	"married": "married",
 	"aunt": "aunt",
+	"aunt_paternal": "aunt",
+	"aunt_maternal": "aunt",
+	"brother_male": "brother",
 	"colleague": "colleague",
 	"cousin": "cousin",
 	"granddaughter": "granddaughter",
+	"grandfather": "grandfather",
+	"grandmother": "grandmother",
 	"grandson": "grandson",
+	"married": "married",
+	"marry": "marry",
 	"partner": "partner",
-	"brother_male": "brother"
+	"single": "single",
+	"uncle": "uncle",
+	"uncle_paternal": "uncle",
+	"uncle_maternal": "uncle"
 }
