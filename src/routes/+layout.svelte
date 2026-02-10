@@ -236,6 +236,7 @@
 			"data-theme",
 			settingsStore.value.theme,
 		);
+		document.documentElement.lang = settingsStore.value.interfaceLanguage;
 	});
 
 	// Відстеження зміни сторінок
