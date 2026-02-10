@@ -95,6 +95,7 @@
 	"settings": {
 		"interfaceLanguage": "Γλώσσα διεπαφής",
 		"cardLanguages": "Γλώσσες καρτών",
+		"languages": "Γλώσσες",
 		"sourceLanguage": "Γλώσσα πηγής",
 		"targetLanguage": "Γλώσσα στόχος",
 		"from": "Από",
@@ -113,7 +114,10 @@
 		"shareStats": "Κοινοποίηση στατιστικών",
 		"shareStatsDesc": "Επιτρέψτε στους φίλους να βλέπουν την πρόοδό σας",
 		"learningMode": "Λειτουργία μάθησης",
-		"hint": "Υπόδειξη"
+		"hint": "Υπόδειξη",
+		"dangerZone": {
+			"hardReset": "Επαναφορά όλων των δεδομένων"
+		}
 	},
 	"theme": {
 		"dark-gray": "Σκούρο",
@@ -242,6 +246,8 @@
 		"voices": "φωνές"
 	},
 	"common": {
+		"menu": "Μενού",
+		"profile": "Προφίλ",
 		"all": "Όλα",
 		"confirm": "Επιβεβαίωση",
 		"listen": "Άκουσε",
@@ -258,6 +264,15 @@
 		"or": "ή",
 		"learn": "Μάθηση",
 		"reset": "Επαναφορά"
+	},
+	"sync": {
+		"status": {
+			"synced": "Συνδεδεμένο",
+			"syncing": "Συγχρονισμός...",
+			"error": "Σφάλμα",
+			"offline": "Εκτός σύνδεσης",
+			"notLoggedIn": "⚠️ δεν έχετε συνδεθεί"
+		}
 	},
 	"wordReport": {
 		"title": "Αναφορά σφάλματος",

@@ -29,62 +29,9 @@
 			kKeyPressCount = 0;
 		}
 	}
-
-	async function copyDebugInfo() {
-		try {
-			const following = await FriendsService.getFollowing();
-			const followers = await FriendsService.getFollowers();
-			const counts = await FriendsService.getCounts();
-
-			const debugData = {
-				timestamp: new Date().toISOString(),
-				uid: authStore.uid,
-				displayName: authStore.displayName,
-				isAnonymous: authStore.isAnonymous,
-				counts,
-				following: following.map(f => f.uid),
-				followers: followers.map(f => f.uid),
-				logs: logService.getRecentLogs()
-			};
-
-			await navigator.clipboard.writeText(JSON.stringify(debugData, null, 2));
-			alert("Debug info copied to clipboard!");
-		} catch (err) {
-			console.error("Failed to copy debug info:", err);
-			alert("Failed to copy debug info");
-		}
-	}
 </script>
 
 <svelte:window onkeydown={handleGlobalKeydown} />
 
-{#if dev}
-	<button class="debug-copy-btn" onclick={copyDebugInfo} title="Copy Debug Info">
-		<Copy size={16} />
-	</button>
-{/if}
-
 <style>
-	.debug-copy-btn {
-		position: fixed;
-		top: 10px;
-		left: 10px;
-		z-index: 99999;
-		background: rgba(0, 0, 0, 0.5);
-		color: white;
-		border: 1px solid rgba(255, 255, 255, 0.3);
-		padding: 5px;
-		border-radius: 4px;
-		cursor: pointer;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		opacity: 0.3;
-		transition: opacity 0.2s;
-	}
-
-	.debug-copy-btn:hover {
-		opacity: 1;
-		background: rgba(0, 0, 0, 0.8);
-	}
 </style>

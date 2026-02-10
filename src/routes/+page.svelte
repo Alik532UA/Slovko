@@ -29,7 +29,7 @@
 			const incoming = data.gameSettings;
 
 			// Перевіряємо чи є реальна різниця, щоб не тригерити зайві оновлення
-			const hasChanged = 
+			const hasChanged =
 				current.mode !== incoming.mode ||
 				current.currentLevel !== incoming.currentLevel ||
 				current.currentTopic !== incoming.currentTopic ||
@@ -42,7 +42,7 @@
 				untrack(() => {
 					UrlSyncService.syncStoreWithUrl(incoming);
 					// Скидаємо прапорець після тіку мікрозавдання
-					setTimeout(() => isSyncing = false, 0);
+					setTimeout(() => (isSyncing = false), 0);
 				});
 			}
 		}
@@ -54,7 +54,7 @@
 		if (isSyncing) return; // Не оновлюємо URL, якщо ми щойно взяли дані з нього
 
 		const url = untrack(() => $page.url);
-		
+
 		untrack(() => {
 			const newUrl = UrlSyncService.getUpdatedUrl(url, s);
 			if (newUrl && newUrl.toString() !== url.toString()) {
@@ -69,12 +69,12 @@
 	<meta name="description" content={$_("about.description")} />
 </svelte:head>
 
-<div class="app-container">
+<div class="app-container" data-testid="app-root-container">
 	<ErrorBoundary compact>
 		<TopBar />
 	</ErrorBoundary>
 
-	<main>
+	<main data-testid="main-content">
 		<ErrorBoundary>
 			<GameStats />
 		</ErrorBoundary>
@@ -114,7 +114,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		padding: 70px 1rem 0px;
+		padding: 32px 1rem 0px;
 		gap: 1rem;
 		overflow-y: auto; /* Allow scrolling within main if content overflows */
 		width: 100%;

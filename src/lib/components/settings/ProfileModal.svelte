@@ -32,10 +32,13 @@
 
 	interface Props {
 		onclose: () => void;
+		mode?: "stats" | "profile" | "full";
+		initialTab?: "stats" | "account" | "friends" | "leaderboard";
 	}
-	let { onclose }: Props = $props();
+	let { onclose, mode = "full", initialTab }: Props = $props();
 
 	// UI State
+	type TabType = "stats" | "account" | "friends" | "leaderboard";
 	type LoginMethod =
 		| "auth"
 		| "forgot-password"
@@ -48,19 +51,57 @@
 	let showFriendsSettings = $state(false);
 	let errorMessage = $state("");
 	let successMessage = $state("");
-	let activeTab = $state<"stats" | "account" | "friends" | "leaderboard">(
-		"stats",
-	);
+	
+	// Визначаємо початкову вкладку залежно від режиму
+	const defaultTab = $derived.by(() => {
+		if (initialTab) return initialTab;
+		if (mode === "stats") return "stats";
+		if (mode === "profile") return "friends";
+		return "stats";
+	});
 
-	function setActiveTab(tab: typeof activeTab) {
+	let activeTab = $state<TabType>("stats");
+
+	// Фільтрація доступних табів
+	const availableTabs = $derived.by(() => {
+		if (mode === "stats") return ["stats", "leaderboard"];
+		if (mode === "profile") return ["friends", "account"];
+		return ["stats", "friends", "leaderboard", "account"];
+	});
+
+	function setActiveTab(tab: TabType) {
 		logService.log("profile", `Switching tab to: ${tab}`);
 		activeTab = tab;
 	}
 
-	// Auto-reset tab on logout/auth change
+	// Синхронізація активної вкладки при зміні пропсів або ініціалізації
 	$effect(() => {
-		if (authStore.isAnonymous || authStore.isGuest) {
-			if (activeTab !== "stats") setActiveTab("stats");
+		if (initialTab) {
+			activeTab = initialTab;
+		} else {
+			// Якщо початкова вкладка не задана, вибираємо дефолтну для режиму
+			activeTab = mode === "profile" ? "account" : "stats";
+		}
+	});
+
+	// Корекція вкладки при зміні стану авторизації або режиму
+	$effect(() => {
+		const isGuest = authStore.isAnonymous || authStore.isGuest;
+		
+		if (isGuest) {
+			// Для гостя в режимі профілю дозволяємо лише account (вхід)
+			if (mode === "profile" && activeTab !== "account") {
+				activeTab = "account";
+			} 
+			// В режимі статистики — лише stats
+			else if (mode === "stats" && activeTab !== "stats") {
+				activeTab = "stats";
+			}
+		} else {
+			// Для авторизованого користувача перевіряємо чи вкладка доступна в поточному режимі
+			if (!availableTabs.includes(activeTab)) {
+				activeTab = availableTabs[0] as TabType;
+			}
 		}
 	});
 
@@ -328,53 +369,65 @@
 			/>
 		{:else if loginMethod === null}
 			<!-- Header and Tabs -->
-			{#if authStore.isAnonymous || authStore.isGuest}
-				<GuestProfileView {isLinking} onlogin={() => (loginMethod = "auth")} />
-			{:else}
+			{#if !authStore.isGuest}
 				<ProfileHeader oneditAvatar={startEditingAvatar} />
 
 				<!-- Tabs for logged in users -->
 				<div class="tabs-nav" data-testid="profile-tabs-nav">
-					<button
-						class:active={activeTab === "stats"}
-						onclick={() => setActiveTab("stats")}
-						data-testid="tab-stats"
-					>
-						<div class="tab-icon"><Target size={18} /></div>
-						<span>{$_("profile.tabs.stats")}</span>
-					</button>
-					<button
-						class:active={activeTab === "friends"}
-						onclick={() => setActiveTab("friends")}
-						data-testid="tab-friends"
-					>
-						<div class="tab-icon"><Users size={18} /></div>
-						<span>{$_("profile.tabs.friends")}</span>
-					</button>
-					<button
-						class:active={activeTab === "leaderboard"}
-						onclick={() => setActiveTab("leaderboard")}
-						data-testid="tab-leaderboard"
-					>
-						<div class="tab-icon"><Trophy size={18} /></div>
-						<span>{$_("profile.tabs.leaderboard")}</span>
-					</button>
-					<button
-						class:active={activeTab === "account"}
-						onclick={() => setActiveTab("account")}
-						data-testid="tab-account"
-					>
-						<div class="tab-icon"><LayoutGrid size={18} /></div>
-						<span>{$_("profile.tabs.account")}</span>
-					</button>
+					{#if availableTabs.includes("stats")}
+						<button
+							class:active={activeTab === "stats"}
+							onclick={() => setActiveTab("stats")}
+							data-testid="tab-stats"
+						>
+							<div class="tab-icon"><Target size={18} /></div>
+							<span>{$_("profile.tabs.stats")}</span>
+						</button>
+					{/if}
+
+					{#if availableTabs.includes("friends")}
+						<button
+							class:active={activeTab === "friends"}
+							onclick={() => setActiveTab("friends")}
+							data-testid="tab-friends"
+						>
+							<div class="tab-icon"><Users size={18} /></div>
+							<span>{$_("profile.tabs.friends")}</span>
+						</button>
+					{/if}
+
+					{#if availableTabs.includes("leaderboard")}
+						<button
+							class:active={activeTab === "leaderboard"}
+							onclick={() => setActiveTab("leaderboard")}
+							data-testid="tab-leaderboard"
+						>
+							<div class="tab-icon"><Trophy size={18} /></div>
+							<span>{$_("profile.tabs.leaderboard")}</span>
+						</button>
+					{/if}
+
+					{#if availableTabs.includes("account")}
+						<button
+							class:active={activeTab === "account"}
+							onclick={() => setActiveTab("account")}
+							data-testid="tab-account"
+						>
+							<div class="tab-icon"><LayoutGrid size={18} /></div>
+							<span>{$_("profile.tabs.account")}</span>
+						</button>
+					{/if}
 				</div>
+			{:else if activeTab !== "stats"}
+				<!-- Якщо гість і НЕ на вкладці статистики — показуємо форму входу -->
+				<GuestProfileView {isLinking} onlogin={() => (loginMethod = "auth")} />
 			{/if}
 
 			<div class="profile-content" data-testid="profile-content">
 				<ErrorBoundary>
 					{#key activeTab}
 						<div in:fade={{ duration: 250, delay: 50 }} out:fade={{ duration: 150 }} class="tab-content-wrapper" data-testid="tab-content-{activeTab}">
-						{#if activeTab === "stats" || authStore.isAnonymous}
+						{#if activeTab === "stats"}
 							<ProfileStats
 								{totalCorrect}
 								{streak}
@@ -386,7 +439,7 @@
 								{dailyAverage}
 								{levelStats}
 							/>
-						{:else if activeTab === "friends" && !authStore.isAnonymous}
+						{:else if activeTab === "friends" && !authStore.isGuest}
 							<div class="friends-layout" data-testid="friends-layout">
 								<div class="sub-tabs-container">
 									<div class="sub-tabs" data-testid="friends-sub-tabs">
@@ -452,7 +505,7 @@
 							{/if}
 						{:else if activeTab === "leaderboard" && !authStore.isAnonymous}
 							<Leaderboard />
-						{:else if activeTab === "account" && !authStore.isAnonymous}
+						{:else if activeTab === "account" && !authStore.isGuest}
 							<AccountActions
 								onchangePassword={() => {
 									loginMethod = "change-password";

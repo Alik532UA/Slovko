@@ -95,6 +95,7 @@
 	"settings": {
 		"interfaceLanguage": "Interface taal",
 		"cardLanguages": "Kaart talen",
+		"languages": "Talen",
 		"sourceLanguage": "Brontaal",
 		"targetLanguage": "Doeltaal",
 		"from": "Van",
@@ -113,7 +114,10 @@
 		"shareStats": "Statistieken delen",
 		"shareStatsDesc": "Sta vrienden toe je leervoortgang te zien",
 		"learningMode": "Leermodus",
-		"hint": "Hint"
+		"hint": "Hint",
+		"dangerZone": {
+			"hardReset": "Alle gegevens wissen"
+		}
 	},
 	"theme": {
 		"dark-gray": "Donkergrijs",
@@ -241,9 +245,10 @@
 		"crh": "Krim-Tataars",
 		"voices": "stemmen"
 	},
-	"common": {
-		"all": "Alle",
-		"confirm": "Bevestigen",
+		"common": {
+			"menu": "Menu",
+			"profile": "Profiel",
+			"all": "Alle",		"confirm": "Bevestigen",
 		"listen": "Luisteren",
 		"backToLearning": "Terug naar leren",
 		"retry": "Opnieuw proberen",
@@ -258,6 +263,15 @@
 		"or": "of",
 		"learn": "Leren",
 		"reset": "Resetten"
+	},
+	"sync": {
+		"status": {
+			"synced": "Verbonden",
+			"syncing": "Synchroniseren...",
+			"error": "Fout",
+			"offline": "Offline",
+			"notLoggedIn": "⚠️ niet ingelogd"
+		}
 	},
 	"wordReport": {
 		"title": "Een fout melden",

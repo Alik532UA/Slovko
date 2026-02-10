@@ -95,6 +95,7 @@
 	"settings": {
 		"interfaceLanguage": "Sprache der Benutzeroberfläche",
 		"cardLanguages": "Kartensprachen",
+		"languages": "Sprachen",
 		"sourceLanguage": "Quellsprache",
 		"targetLanguage": "Zielsprache",
 		"from": "Von",
@@ -113,7 +114,10 @@
 		"shareStats": "Statistiken teilen",
 		"shareStatsDesc": "Freunden erlauben, Ihren Lernfortschritt zu sehen",
 		"learningMode": "Lernmodus",
-		"hint": "Hinweis"
+		"hint": "Hinweis",
+		"dangerZone": {
+			"hardReset": "Alle Daten zurücksetzen"
+		}
 	},
 	"theme": {
 		"dark-gray": "Dunkelgrau",
@@ -242,6 +246,8 @@
 		"voices": "Stimmen"
 	},
 	"common": {
+		"menu": "Menü",
+		"profile": "Profil",
 		"all": "Alle",
 		"confirm": "Bestätigen",
 		"listen": "Hören",
@@ -258,6 +264,15 @@
 		"or": "oder",
 		"learn": "Lernen",
 		"reset": "Zurücksetzen"
+	},
+	"sync": {
+		"status": {
+			"synced": "Verbunden",
+			"syncing": "Synchronisierung...",
+			"error": "Fehler",
+			"offline": "Offline",
+			"notLoggedIn": "⚠️ nicht angemeldet"
+		}
 	},
 	"wordReport": {
 		"title": "Einen Fehler melden",

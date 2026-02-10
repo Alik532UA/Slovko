@@ -60,7 +60,9 @@
 		logService.log("version", "Root layout onMount started");
 
 		// Signal to the global error diagnostics that Svelte has mounted
+		// @ts-ignore
 		if (typeof window.__markAppRendered === "function") {
+			// @ts-ignore
 			window.__markAppRendered();
 		}
 
