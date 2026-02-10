@@ -59,6 +59,11 @@
 	onMount(() => {
 		logService.log("version", "Root layout onMount started");
 
+		// Signal to the global error diagnostics that Svelte has mounted
+		if (typeof window.__markAppRendered === "function") {
+			window.__markAppRendered();
+		}
+
 		// Audio Unlock for iOS ONLY
 		// iOS blocks speechSynthesis.speak() until a trusted user gesture.
 		// On Android/Windows speech works without unlock — no need to waste first click.

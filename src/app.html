@@ -34,6 +34,182 @@
 				} catch (e) {}
 			})();
 		</script>
+		<script>
+			// ============================================
+			// GLOBAL ERROR DIAGNOSTICS (before Svelte loads)
+			// Catches crashes that prevent the app from rendering
+			// ============================================
+			(function() {
+				var errors = [];
+				var overlayShown = false;
+				var appRendered = false;
+
+				function showOverlay() {
+					if (overlayShown) return;
+					overlayShown = true;
+
+					var overlay = document.createElement('div');
+					overlay.id = 'error-diagnostics';
+					overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:999999;' +
+						'background:rgba(20,20,40,0.97);color:#e0e0e0;font-family:system-ui,-apple-system,sans-serif;' +
+						'padding:1rem;overflow-y:auto;display:flex;flex-direction:column;align-items:center;';
+
+					var content = '<div style="max-width:500px;width:100%;text-align:center;padding-top:2rem;">' +
+						'<div style="font-size:3rem;margin-bottom:1rem;">⚠️</div>' +
+						'<h2 style="color:#fff;margin:0 0 0.5rem;">Помилка завантаження</h2>' +
+						'<p style="color:#a0a0a0;margin:0 0 1.5rem;font-size:0.9rem;">Додаток не зміг завантажитися. Скопіюйте інформацію нижче та надішліть розробнику.</p>' +
+						'<div style="display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.5rem;">' +
+						'<button id="err-copy-btn" style="padding:0.8rem 1.5rem;border-radius:8px;border:none;' +
+						'background:#3a8fd6;color:white;font-weight:600;font-size:1rem;cursor:pointer;">📋 Копіювати діагностику</button>' +
+						'<button id="err-clear-btn" style="padding:0.8rem 1.5rem;border-radius:8px;border:1px solid rgba(255,255,255,0.2);' +
+						'background:rgba(255,255,255,0.1);color:#ccc;font-weight:600;font-size:1rem;cursor:pointer;">🧹 Очистити кеш і перезавантажити</button>' +
+						'<button id="err-reload-btn" style="padding:0.8rem 1.5rem;border-radius:8px;border:1px solid rgba(255,255,255,0.2);' +
+						'background:rgba(255,255,255,0.1);color:#ccc;font-weight:600;font-size:1rem;cursor:pointer;">🔄 Просто перезавантажити</button>' +
+						'</div>' +
+						'<details open style="text-align:left;width:100%;">' +
+						'<summary style="cursor:pointer;color:#a0a0a0;margin-bottom:0.5rem;">Технічні деталі</summary>' +
+						'<pre id="err-details" style="background:rgba(0,0,0,0.3);padding:0.75rem;border-radius:8px;' +
+						'font-size:0.75rem;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word;max-height:300px;overflow-y:auto;color:#ccc;">' +
+						'</pre></details></div>';
+
+					overlay.innerHTML = content;
+					document.body.appendChild(overlay);
+
+					var diagText = getDiagnosticText();
+					document.getElementById('err-details').textContent = diagText;
+
+					document.getElementById('err-copy-btn').addEventListener('click', function() {
+						var btn = this;
+						try {
+							navigator.clipboard.writeText(diagText).then(function() {
+								btn.textContent = '✅ Скопійовано!';
+								setTimeout(function() { btn.textContent = '📋 Копіювати діагностику'; }, 2000);
+							});
+						} catch(e) {
+							// Fallback: select text
+							var pre = document.getElementById('err-details');
+							var range = document.createRange();
+							range.selectNodeContents(pre);
+							var sel = window.getSelection();
+							sel.removeAllRanges();
+							sel.addRange(range);
+							btn.textContent = '⚠️ Виділено — скопіюйте вручну';
+						}
+					});
+
+					document.getElementById('err-clear-btn').addEventListener('click', function() {
+						this.textContent = '⏳ Очищення...';
+						// Clear SW + Cache API
+						Promise.resolve()
+							.then(function() {
+								if ('serviceWorker' in navigator) {
+									return navigator.serviceWorker.getRegistrations()
+										.then(function(regs) { return Promise.all(regs.map(function(r) { return r.unregister(); })); });
+								}
+							})
+							.then(function() {
+								if ('caches' in window) {
+									return caches.keys().then(function(keys) { return Promise.all(keys.map(function(k) { return caches.delete(k); })); });
+								}
+							})
+							.then(function() {
+								window.location.reload();
+							})
+							.catch(function() {
+								window.location.reload();
+							});
+					});
+
+					document.getElementById('err-reload-btn').addEventListener('click', function() {
+						window.location.reload();
+					});
+				}
+
+				function getDiagnosticText() {
+					var lines = [
+						'=== SLOVKO CRASH DIAGNOSTICS ===',
+						'Time: ' + new Date().toISOString(),
+						'URL: ' + window.location.href,
+						'UA: ' + navigator.userAgent,
+						'Screen: ' + screen.width + 'x' + screen.height,
+						'Viewport: ' + window.innerWidth + 'x' + window.innerHeight,
+						'Online: ' + navigator.onLine,
+						'SW: ' + ('serviceWorker' in navigator ? 'supported' : 'no'),
+						'',
+						'=== ERRORS (' + errors.length + ') ==='
+					];
+					errors.forEach(function(err, i) {
+						lines.push('[' + i + '] ' + err.type + ': ' + err.message);
+						if (err.source) lines.push('    File: ' + err.source + ':' + err.line + ':' + err.col);
+						if (err.stack) lines.push('    Stack: ' + err.stack.substring(0, 500));
+					});
+
+					// Try to get localStorage info
+					try {
+						var cacheVer = localStorage.getItem('app_cache_version') || 'none';
+						lines.push('');
+						lines.push('=== CACHE ===');
+						lines.push('app_cache_version: ' + cacheVer);
+
+						var settingsRaw = localStorage.getItem('wordApp_settings');
+						if (settingsRaw) {
+							var s = JSON.parse(settingsRaw);
+							lines.push('settings.mode: ' + (s.mode || 'undefined'));
+							lines.push('settings.theme: ' + (s.theme || 'undefined'));
+							lines.push('settings.hasCompletedOnboarding: ' + s.hasCompletedOnboarding);
+						} else {
+							lines.push('settings: NOT FOUND');
+						}
+					} catch(e) {
+						lines.push('localStorage read error: ' + e.message);
+					}
+
+					return lines.join('\n');
+				}
+
+				// Catch synchronous errors
+				window.onerror = function(message, source, line, col, error) {
+					errors.push({
+						type: 'onerror',
+						message: String(message),
+						source: source,
+						line: line,
+						col: col,
+						stack: error ? error.stack : ''
+					});
+					showOverlay();
+				};
+
+				// Catch unhandled promise rejections
+				window.addEventListener('unhandledrejection', function(event) {
+					var reason = event.reason;
+					errors.push({
+						type: 'unhandledrejection',
+						message: reason ? (reason.message || String(reason)) : 'Unknown rejection',
+						stack: reason ? reason.stack : ''
+					});
+					showOverlay();
+				});
+
+				// Blank screen detector: if nothing renders within 15s, show diagnostics
+				setTimeout(function() {
+					if (appRendered) return;
+					// Check if the app actually rendered something
+					var appContainer = document.querySelector('.app-container');
+					var loadingSpinner = document.querySelector('.loading-spinner');
+					if (!appContainer && !loadingSpinner) {
+						errors.push({
+							type: 'timeout',
+							message: 'App did not render within 15 seconds. Possible silent crash or infinite loading.'
+						});
+						showOverlay();
+					}
+				}, 15000);
+
+				// Mark app as rendered when Svelte mounts
+				window.__markAppRendered = function() { appRendered = true; };
+			})();
+		</script>
 		%sveltekit.head%
 	</head>
 
