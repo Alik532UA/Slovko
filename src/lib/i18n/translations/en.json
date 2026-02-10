@@ -146,9 +146,9 @@
 			"step2": "Select 'Add to Home Screen'"
 		},
 		"ios_chrome": {
-			"step1": "Tap the three dots in the browser corner",
-			"step2": "Tap the 'Share' button in settings",
-			"step3": "Select 'Add to Home Screen'"
+			"step1": "Tap the 'Share' icon in the address bar, to the right of the URL",
+			"step2": "Select 'Add to Home Screen'",
+			"warning": "Note: Installation only works via the 'Share' icon in the address bar. It is not available through the 'three dots' menu."
 		},
 		"desktop": {
 			"title": "Install on Desktop",

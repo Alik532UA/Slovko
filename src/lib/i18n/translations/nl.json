@@ -136,6 +136,7 @@
 		"ios": {
 			"title": "Installeren op iPhone",
 			"subtitle": "iPhone blokkeert automatische installatie. Volg deze eenvoudige stappen:",
+			"subtitle_chrome": "De Chrome-browser op de iPhone heeft installatiespecificaties:",
 			"step1": "Tik op de knop «Delen» onderaan",
 			"step2": "Selecteer «Zet op beginscherm» in het menu"
 		},
@@ -143,6 +144,11 @@
 			"title": "Installeren op Android",
 			"step1": "Tik на de drie puntjes in de hoek van de browser",
 			"step2": "Selecteer «Zet op beginscherm»"
+		},
+		"ios_chrome": {
+			"step1": "Tik op het delen-icoon in de adresbalk, rechts van de url",
+			"step2": "Selecteer «Zet op beginscherm»",
+			"warning": "Opmerking: installatie werkt alleen via het delen-icoon in de adresbalk. Via het 'drie puntjes'-menu is deze functie niet beschikbaar."
 		},
 		"desktop": {
 			"title": "Installeren op computer",

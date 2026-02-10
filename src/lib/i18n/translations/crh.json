@@ -136,13 +136,19 @@
 		"ios": {
 			"title": "iPhone-ğa qurmaq",
 			"subtitle": "iPhone avtomatik quruvnı blok ete. Lütfen, bu basit adımlarnı yapıñız:",
-			"step1": "Ekran tübündeki «Paylaş» dögmesine basıñız",
+			"subtitle_chrome": "iPhone-da Chrome brauzeriniñ quruv özellikleri bar:",
+			"step1": "Ekран tübündeki «Paylaş» dögmesine basıñız",
 			"step2": "Menüde «Ana ekranğa» saylañız"
 		},
 		"android": {
 			"title": "Android-ğa qurmaq",
 			"step1": "Brauzer köşesindegi üç noqtağa basıñız",
 			"step2": "«Ana ekranğa» saylañız"
+		},
+		"ios_chrome": {
+			"step1": "Adres satırında, url adresiniñ oñundaki «Paylaş» işaretine basıñız",
+			"step2": "Menüde «Ana ekranğa» saylañız",
+			"warning": "Qeyd: quruv tek adres satırındaki «Paylaş» işareti vastasınen çalışa. «Üç noqta» menüsi vastasınen bu funktsiya yoq."
 		},
 		"desktop": {
 			"title": "Kompüterge qurmaq",

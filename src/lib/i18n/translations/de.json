@@ -136,6 +136,7 @@
 		"ios": {
 			"title": "Auf iPhone installieren",
 			"subtitle": "iPhone blockiert die automatische Installation. Bitte folgen Sie diesen Schritten:",
+			"subtitle_chrome": "Der Chrome-Browser auf dem iPhone hat Installationsbesonderheiten:",
 			"step1": "Tippen Sie auf die Schaltfläche «Teilen» unten",
 			"step2": "Wählen Sie «Zum Home-Bildschirm» im Menü"
 		},
@@ -143,6 +144,11 @@
 			"title": "Auf Android installieren",
 			"step1": "Tippen Sie auf die drei Punkte in der Browserecke",
 			"step2": "Wählen Sie «Zum Home-Bildschirm»"
+		},
+		"ios_chrome": {
+			"step1": "Tippen Sie auf das Teilen-Symbol in der Adressleiste, rechts neben der URL",
+			"step2": "Wählen Sie «Zum Home-Bildschirm»",
+			"warning": "Hinweis: Die Installation funktioniert nur über das Teilen-Symbol in der Adressleiste. Über das Drei-Punkte-Menü ist diese Funktion nicht verfügbar."
 		},
 		"desktop": {
 			"title": "Auf Computer installieren",

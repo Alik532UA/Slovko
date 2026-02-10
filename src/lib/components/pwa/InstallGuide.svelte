@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
-	import { Share, PlusSquare, MoreVertical, MonitorDown, Download, Grid2X2Plus } from "lucide-svelte";
+	import { Share, PlusSquare, MoreVertical, MonitorDown, Download, Grid2X2Plus, AlertCircle } from "lucide-svelte";
 	import BaseModal from "../ui/BaseModal.svelte";
 	import { pwaStore } from "../../stores/pwaStore.svelte";
 	import { browser } from "$app/environment";
@@ -49,30 +49,29 @@
 		<div class="steps">
 			{#if mode === 'ios'}
 				{#if isIosChrome}
-					<!-- iOS Chrome (3 steps) -->
+					<!-- iOS Chrome (2 steps) -->
 					<div class="step">
 						<span class="step-num">1</span>
-						<div class="step-icon"><MoreVertical size={24} /></div>
+						<div class="step-icon"><Share size={24} /></div>
 						<div class="step-text">
-							<p>{$_("pwa.ios_chrome.step1") || "Натисніть на три крапки в кутку браузера"}</p>
+							<p>{$_("pwa.ios_chrome.step1") || "Натисніть на іконку «Поділитися» в адресному рядку, праворуч від адреси url"}</p>
 						</div>
 					</div>
 					<div class="line"></div>
 					<div class="step">
 						<span class="step-num">2</span>
-						<div class="step-icon"><Share size={24} /></div>
-						<div class="step-text">
-							<p>{$_("pwa.ios_chrome.step2") || "Натисніть на кнопку «Поділитися» в налаштуваннях"}</p>
-						</div>
-					</div>
-					<div class="line"></div>
-					<div class="step">
-						<span class="step-num">3</span>
 						<div class="step-icon"><PlusSquare size={24} /></div>
 						<div class="step-text">
-							<p>{$_("pwa.ios_chrome.step3") || "Виберіть «Додати на початковий екран»"}</p>
+							<p>{$_("pwa.ios_chrome.step2") || "Виберіть «Додати на початковий екран»"}</p>
 						</div>
 					</div>
+
+					{#if $_("pwa.ios_chrome.warning")}
+						<div class="warning-note">
+							<AlertCircle size={16} />
+							<p>{$_("pwa.ios_chrome.warning")}</p>
+						</div>
+					{/if}
 				{:else}
 					<!-- iOS Safari (2 steps) -->
 					<div class="step">
@@ -217,6 +216,26 @@
 		background: var(--border);
 		margin-left: 63px; 
 		opacity: 0.3;
+	}
+
+	.warning-note {
+		display: flex;
+		gap: 0.75rem;
+		padding: 1rem;
+		background: rgba(245, 158, 11, 0.1); /* warning color with opacity */
+		border-radius: 12px;
+		border: 1px solid rgba(245, 158, 11, 0.3);
+		margin-top: 1rem;
+		color: #f59e0b;
+		text-align: left;
+		align-items: flex-start;
+	}
+
+	.warning-note p {
+		margin: 0;
+		font-size: 0.85rem;
+		line-height: 1.4;
+		font-style: italic;
 	}
 
 	.confirm-btn {
