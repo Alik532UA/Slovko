@@ -14,7 +14,8 @@
 		RefreshCcw, 
 		CloudOff, 
 		AlertCircle, 
-		BarChart3
+		BarChart3,
+		TriangleAlert
 	} from "lucide-svelte";
 	import { SyncService } from "$lib/firebase/SyncService.svelte";
 	import { authStore } from "$lib/firebase/authStore.svelte";
@@ -109,7 +110,8 @@
 				<span class="label">{$_("common.profile") || "Profile"}</span>
 				<span class="sub-label">
 					{#if authStore.isGuest}
-						{$_("sync.status.notLoggedIn") || "⚠️ not signed in"}
+						<span class="warning-icon-wrapper"><TriangleAlert size={12} /></span>
+						{$_("sync.status.notLoggedIn") || "not signed in"}
 					{:else if syncStatus === "syncing"}
 						{$_("sync.status.syncing") || "Syncing..."}
 					{:else if syncStatus === "error"}
@@ -201,6 +203,16 @@
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
+		display: flex;
+		align-items: center;
+		gap: 4px;
+	}
+
+	.warning-icon-wrapper {
+		display: inline-flex;
+		align-items: center;
+		color: #f1c40f;
+		flex-shrink: 0;
 	}
 
 	.divider {

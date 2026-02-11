@@ -86,11 +86,23 @@
 	"onboarding": {
 		"whatToLearn": "Welke taal wil je leren?",
 		"yourLanguage": "Jouw taal",
-		"explanation": "Je kunt interface- и kaarttalen wijzigen in de instellingen",
-		"explanationPart1": "Daar kun je ook de uitspraak aan- of uitzetten",
+		"explanation": "Je kunt de interface- en kaarttalen wijzigen in de instellingen",
+		"explanationPart1": "Daar kun je ook de uitspraak aan- або uitzetten",
 		"explanationPart2": "of de transcriptie",
 		"explanationPart3": "voor elke kolom afzonderlijk.",
-		"startBtn": "Starten"
+		"startBtn": "Beginnen",
+		"nextHint": "Volgende tip",
+		"prevHint": "Vorige tip",
+		"step1_part1": "Je kunt de interface- en kaarttalen wijzigen in de instellingen",
+		"step1_part2": "Daar kun je kaar ook de uitspraak",
+		"step1_part3": "en transcriptie",
+		"step1_part4": "voor elke kolom afzonderlijk in- of uitschakelen",
+		"step2_part1": "Gebruik de speciale leermodus",
+		"step2_part2": "en hulpmiddelen",
+		"step2_part3": "voor effectiever memoriseren",
+		"step3": "Log in om je voortgang in de cloud op te slaan en onafhankelijk te blijven van de browsercache",
+		"step4": "Je kunt Slovko installeren als een app op je mobiele apparaat of computer voor snelle toegang",
+		"step5": "Het project is volledig gratis en reclamevrij. Je kunt de ontwikkelaar steunen in het menu"
 	},
 	"settings": {
 		"interfaceLanguage": "Interface taal",
@@ -142,7 +154,7 @@
 		},
 		"android": {
 			"title": "Installeren op Android",
-			"step1": "Tik на de drie puntjes in de hoek van de browser",
+			"step1": "Tik op de drie puntjes in de hoek van de browser",
 			"step2": "Selecteer «Zet op beginscherm»"
 		},
 		"ios_chrome": {
@@ -199,7 +211,7 @@
 		"spamWarning": "De e-mail kan in de map Ongewenst terechtkomen omdat de app nieuw is.",
 		"sendResetEmail": "Herstelmail verzenden",
 		"backToSignin": "Terug naar inloggen",
-		"passwordResetSent": "Herstelmail verzonden",
+		"passwordResetSent": "Herstelmail verzenden",
 		"linkAccount": "Account koppelen",
 		"editAvatarTitle": "Avatar bewerken",
 		"errors": {
@@ -214,7 +226,7 @@
 			"invalidCredentials": "Ongeldig e-mailadres of wachtwoord.",
 			"accountUsesGoogle": "Dit account gebruikt Google-login. Gebruik de Google-knop hieronder.",
 			"popupClosed": "Autorisatievenster is gesloten. Probeer het opnieuw.",
-			"accountExistsEmail": "Er bestaat al een account met dit e-mailadres. Log eerst in via e-mail en koppel Google in de instellingen.",
+			"accountExistsEmail": "Er bestaat al een account with dit e-mailadres. Log eerst in via e-mail en koppel Google in de instellingen.",
 			"googleAlreadyLinked": "Dit Google-account is al gekoppeld aan een andere Slovko-gebruiker.",
 			"waitingGoogle": "Wachten op antwoord van Google... Als je het venster hebt gesloten, wacht dan een paar seconden.",
 			"unknownError": "Er is een fout opgetreden",
@@ -273,10 +285,11 @@
 		"crh": "Krim-Tataars",
 		"voices": "stemmen"
 	},
-		"common": {
-			"menu": "Menu",
-			"profile": "Profiel",
-			"all": "Alle",		"confirm": "Bevestigen",
+	"common": {
+		"menu": "Menu",
+		"profile": "Profiel",
+		"all": "Alle",
+		"confirm": "Bevestigen",
 		"listen": "Luisteren",
 		"backToLearning": "Terug naar leren",
 		"retry": "Opnieuw proberen",
@@ -299,7 +312,7 @@
 			"syncing": "Synchroniseren...",
 			"error": "Fout",
 			"offline": "Offline",
-			"notLoggedIn": "⚠️ niet ingelogd"
+			"notLoggedIn": "niet ingelogd"
 		}
 	},
 	"wordReport": {

@@ -3,7 +3,7 @@
 		"title": "Slovko"
 	},
 	"errors": {
-		"loadFailed": "Malümat yüklenip olamadı"
+		"loadFailed": "Malümat yücklenip olamadı"
 	},
 	"levels": {
 		"title": "Seviyeler",
@@ -31,7 +31,7 @@
 		"addToExtra": "«İlaveten» ekle",
 		"removeFromExtra": "«İlaveten» sil",
 		"empty": "Bu liste boş, lâkin oña kartlar ekleybilirsiñiz. Bunuñ içün kartqa bir qaç saniye basıp tutıñız ve listelerge ekleme menüsini açıñız.",
-		"emptyMistakes": "Bu liste boş ve hata yapqan sözleriñiznen toldurılacaq.",
+		"emptyMistakes": "Bu liste boş ve hata yapqan sözleriñiznen toldırılacaq.",
 		"editTitle": "Playlistni tüzetüv",
 		"createTitle": "Yañı playlist",
 		"createNew": "Yañı playlist",
@@ -39,7 +39,7 @@
 		"name": "Ad",
 		"namePlaceholder": "Playlist adını kirtiñiz...",
 		"description": "Tasvir",
-		"descPlaceholder": "Bu playlist ne aqqında...",
+		"descPlaceholder": "Bu playlist aqqında...",
 		"color": "Renk",
 		"icon": "İkonka",
 		"wordsCount": "{count} söz",
@@ -90,7 +90,19 @@
 		"explanationPart1": "Anda daa sözlerniñ seslendirmesini açıp-qapatabilirsiñiz",
 		"explanationPart2": "ya da transkriptsiyanı açıp-qapatabilirsiñiz",
 		"explanationPart3": "er bir sutun içün ayrı-ayrı.",
-		"startBtn": "Başlamaq"
+		"startBtn": "Başlamaq",
+		"nextHint": "Nevbetteki tevsiye",
+		"prevHint": "Evvelki tevsiye",
+		"step1_part1": "İnterfeys ve kart tilini sazlamalarda deñiştirebilirsiñiz",
+		"step1_part2": "Anda seslendirme",
+		"step1_part3": "ve transkriptsiyanı",
+		"step1_part4": "er bir sutun içün ayırıca idare etmek mümkin",
+		"step2_part1": "Effektivce ezberlemek içün mahsus ögrenüv usulı",
+		"step2_part2": "ve yardım vesiitlerini",
+		"step2_part3": "qullanıñız",
+		"step3": "İlerlemeñizni bulutqa saqlamaq ve brauzer keşine bağlı olmamaq içün kiriñiz",
+		"step4": "Tez irişim içün Slovko-nı mobil cihaz ya da bilgisayarğa ilave olaraq qurabilirsiñiz",
+		"step5": "Leyha tamamen bedava ve reklamsızdır. Menüde programcığa maliyeviy qoltutabilirsiñiz"
 	},
 	"settings": {
 		"interfaceLanguage": "Arayüz tili",
@@ -137,7 +149,7 @@
 			"title": "iPhone-ğa qurmaq",
 			"subtitle": "iPhone avtomatik quruvnı blok ete. Lütfen, bu basit adımlarnı yapıñız:",
 			"subtitle_chrome": "iPhone-da Chrome brauzeriniñ quruv özellikleri bar:",
-			"step1": "Ekран tübündeki «Paylaş» dögmesine basıñız",
+			"step1": "Ekran tübündeki «Paylaş» dögmesine basıñız",
 			"step2": "Menüde «Ana ekranğa» saylañız"
 		},
 		"android": {
@@ -155,7 +167,7 @@
 			"step1": "Adres satırında, url adresiniñ oñundaki quruv işaretine basıñız"
 		},
 		"manual": {
-			"subtitle": "Brauzeriñiz bir basuvda quruvnı desteklemey. Ilovanı elnen qoşa bilirsiñiz:"
+			"subtitle": "Brauzeriñiz bir basuvda quruvnı desteklemey. İlovanı elnen qoşa bilirsiñiz:"
 		}
 	},
 	"about": {
@@ -183,7 +195,7 @@
 		"anonymousSub": "İlerleme sin hronizatsiya etilmedi",
 		"syncWarning": "İlerlemeñizni bulutqa saqlamaq ve farqlı cihazlarda qorumaq içün kiriñiz.",
 		"guestWarning": "Siz musafir olaraq oynaysıñız. İlerlemeni saqlamaq ve digerlernen yarışmaq içün kiriñiz.",
-		"tempAccountWarning": "Siz vaqtınca esap qullanaysıñız. İlerlemeñizni coymamaq içün email bañlañız.",
+		"tempAccountWarning": "Siz vaqtınca esap qullanaysıñız. İlerlemeñizni coymamaq için email bağlañız.",
 		"login": "Kirmege",
 		"logout": "Çıqmaq",
 		"back": "Artqa",
@@ -196,7 +208,7 @@
 		"forgotPasswordTitle": "Parolni yañartuv",
 		"forgotPasswordSubtitle": "Esa-bıñızğa bağlı emailni kirsetiñiz",
 		"forgotPasswordGoogleInfo": "Esabıñız Google vastasınen bağlanğan. İdentifikatsiya Google-profiliñiznen idare etilgeni içün, bu adres içün Slovko paroli belgilenmegen. Lütfen, Google vastasınen kiriñiz.",
-		"spamWarning": "Mektüp \"Spam\" qutusına tüşebilir, çünki uyğulama yañıdır.",
+		"spamWarning": "Mektüp \"Spam\" qutusına tüşebilir, çünkü uyğulama yañıdır.",
 		"sendResetEmail": "Yollamaq",
 		"backToSignin": "Kirişke qaytmaq",
 		"passwordResetSent": "Yañartuv mektübi yollandı",
@@ -206,7 +218,7 @@
 			"enterEmail": "Emailni kirsetiñiz",
 			"userNotFound": "Bu emailge sahip qullanıcı tapılmadı",
 			"invalidEmail": "Email formatı yañlış",
-			"fillFields": "Tüm meydanlarnı doldurıñız",
+			"fillFields": "Tüm meydanlarnı doldırıñız",
 			"passwordMismatch": "Parollar eşleşmey",
 			"weakPassword": "Parol çoq zayıf (eñ az 6 belgi)",
 			"emailInUse": "Bu email endi qullanıla",
@@ -222,14 +234,14 @@
 			"passwordsDoNotMatch": "Yañı parollar bir-birine uymay"
 		},
 		"changePasswordTitle": "Parolni deñiştirmek",
-		"googlePasswordInfo": "Siz sitemge kirüv içün Google-avtorizatsiyanı qullanasıñız. Slovko hesabınız içün parol belgilenmegen, çünki avtorizatsiya Google-profilıñız vastasınen idare etile.",
+		"googlePasswordInfo": "Siz sitemge kirüv içün Google-avtorizatsiyanı qullanasıñız. Slovko hesabıñız içün parol belgilenmegen, çünkü avtorizatsiya Google-profilıñız vastasınen idare etile.",
 		"currentPasswordPlaceholder": "Şimdiki parol",
 		"newPasswordPlaceholder": "Yañı parol",
 		"confirmPasswordPlaceholder": "Yañı parolni tasdıqlañız",
 		"updatePasswordBtn": "Parolni yañartmaq",
 		"passwordChangedSuccess": "Parol muvaffaqiyetli deñiştirildi!",
 		"deleteWarning": "Diqqat! Bu areketni keri qaytarıp olamazsıñız.",
-		"deleteAccount": "Esapnı silmek",
+		"deleteAccount": "Esapni silmek",
 		"confirmDelete": "Silüvni tasdıqlamaq",
 		"cancel": "Vazgeçmek",
 		"passwordPlaceholderShort": "Parol",
@@ -300,7 +312,7 @@
 			"syncing": "Sinxronizatsiya...",
 			"error": "Hata",
 			"offline": "Oflayn",
-			"notLoggedIn": "⚠️ kiriş yapılmadı"
+			"notLoggedIn": "kiriş yapılmadı"
 		}
 	},
 	"wordReport": {
@@ -356,7 +368,7 @@
 		"title": "Aktiv qıdırıv",
 		"enable": "Açmaq",
 		"disable": "Qapatmaq",
-		"hint": "Dostlarıñıznı bir saniyede tapmaq isteysiñizmi? Olardan da bu funktsiyanı açмағанlarını sorañız, isimleriñiz cedvelde öz-özünden peyda olur.",
+		"hint": "Dostlarıñıznı bir saniyede tapmaq isteysiñizmi? Olardan da bu funktsiyanı açqanlarını sorañız, isimleriñiz cedvelde öz-özünden peyda olur.",
 		"active": "Aktiv",
 		"waiting": "Digerlerini bekleymiz...",
 		"paste": "Kopiyalanğanını kirtmek"

@@ -6,27 +6,15 @@
 	import { setInterfaceLanguage, LANGUAGES } from "$lib/i18n/init";
 	import { LANGUAGE_NAMES, type Language } from "$lib/types";
 	import { base } from "$app/paths";
-	import { Languages, Speech, Captions } from "lucide-svelte";
+	import { Languages, Speech, Captions, Download, UserCheck, Heart, GraduationCap, Lightbulb } from "lucide-svelte";
+	import BaseModal from "$lib/components/ui/BaseModal.svelte";
 
 	let step = $state(1);
+	let hintStep = $state(1);
 	let detectedLang = $state("en");
 	let isVisible = $state(true);
 	let isFinalizing = $state(false);
 	let showExplanation = $state(false);
-	let isFlyingTriggered = $state(false);
-	let selectedFlags = $state<Language[]>([]);
-
-	// Координати для анімації
-	let flyingFlags = $state<
-		{
-			lang: Language;
-			x: number;
-			y: number;
-			tx: number;
-			ty: number;
-			delay: number;
-		}[]
-	>([]);
 
 	const titles: Record<string, string> = {
 		uk: "Твоя мова",
@@ -55,7 +43,6 @@
 		});
 		setInterfaceLanguage(lang);
 		await waitLocale(lang);
-		selectedFlags.push(lang);
 		step = 2;
 	}
 
@@ -65,60 +52,24 @@
 		} else {
 			settingsStore.update({ sourceLanguage: lang });
 		}
-		selectedFlags.push(lang);
 
 		await waitLocale();
-
-		// ПІДГОТОВКА ПРАПОРІВ ЗАЗДАЛЕГІДЬ
-		const settingsBtn = document.querySelector(
-			'[data-testid="language-settings-btn"]',
-		);
-		const targetRect = settingsBtn?.getBoundingClientRect();
-		const tx = targetRect
-			? targetRect.left + targetRect.width / 2
-			: window.innerWidth * 0.9;
-		const ty = targetRect ? targetRect.top + targetRect.height / 2 : 40;
-
-		const newFlyingFlags: any[] = [];
-		const centerX = window.innerWidth / 2;
-		const centerY = window.innerHeight / 2;
-
-		LANGUAGES.forEach((l, index) => {
-			newFlyingFlags.push({
-				lang: l,
-				x: centerX + (Math.random() - 0.5) * window.innerWidth * 0.9,
-				y: centerY + (Math.random() - 0.5) * window.innerHeight * 0.8,
-				tx,
-				ty,
-				delay: index * 0.08,
-			});
-		});
-		flyingFlags = newFlyingFlags;
-
 		showExplanation = true;
 		isFinalizing = true;
 	}
 
-	async function startAnimations() {
-		setTimeout(() => {
-			const btn = document.querySelector(
-				'[data-testid="language-settings-btn"]',
-			);
-			if (btn) {
-				btn.classList.add("settings-btn-blink");
-				setTimeout(() => btn.classList.remove("settings-btn-blink"), 2000);
-			}
-		}, 1500);
-
-		setTimeout(() => {
+	function handleNextHint() {
+		if (hintStep < 5) {
+			hintStep++;
+		} else {
 			finishOnboarding();
-		}, 3000);
+		}
 	}
 
-	function handleFinish() {
-		showExplanation = false;
-		isFlyingTriggered = true;
-		startAnimations();
+	function handlePrevHint() {
+		if (hintStep > 1) {
+			hintStep--;
+		}
 	}
 
 	function finishOnboarding() {
@@ -144,24 +95,6 @@
 		transition:fade
 		data-testid="onboarding-modal"
 	>
-		<!-- Прапори на фоні -->
-		{#if isFinalizing}
-			<div class="flying-container" class:is-running={isFlyingTriggered}>
-				{#each flyingFlags as flag (flag.lang)}
-					<div
-						class="flying-flag"
-						style:--start-x="{flag.x}px"
-						style:--start-y="{flag.y}px"
-						style:--target-x="{flag.tx}px"
-						style:--target-y="{flag.ty}px"
-						style:--delay="{flag.delay}s"
-					>
-						<img src="{base}/flags/{flag.lang}.svg" alt="" />
-					</div>
-				{/each}
-			</div>
-		{/if}
-
 		<div class="step-wrapper">
 			{#if !showExplanation}
 				<div
@@ -209,7 +142,6 @@
 
 					<div
 						class="flags-grid"
-						class:hidden={flyingFlags.length > 0}
 						data-testid="onboarding-flags-grid"
 					>
 						{#each LANGUAGES as lang (lang)}
@@ -232,18 +164,41 @@
 					</div>
 				</div>
 			{:else}
-				<div
-					class="step-container"
-					in:fly={transitionParams.in}
-					out:fly={transitionParams.out}
+				<BaseModal
+					onclose={finishOnboarding}
+					testid="onboarding-hints-modal"
+					showCloseButton={false}
 				>
 					<div
-						class="explanation-card"
+						class="explanation-card-inner"
 						data-testid="onboarding-explanation-card"
 					>
+						<div class="progress-bar" data-testid="onboarding-progress-bar">
+							{#each Array(5) as _, i}
+								<button
+									class="progress-segment"
+									class:active={hintStep === i + 1}
+									class:completed={hintStep > i + 1}
+									onclick={() => hintStep = i + 1}
+									aria-label="Step {i + 1}"
+									data-testid="onboarding-progress-step-{i + 1}"
+								></button>
+							{/each}
+						</div>
+
 						<div class="icon-header">
 							<div class="icon-circle">
-								<Languages size={32} />
+								{#if hintStep === 1}
+									<Languages size={32} />
+								{:else if hintStep === 2}
+									<GraduationCap size={32} />
+								{:else if hintStep === 3}
+									<UserCheck size={32} />
+								{:else if hintStep === 4}
+									<Download size={32} />
+								{:else}
+									<Heart size={32} />
+								{/if}
 							</div>
 						</div>
 
@@ -251,28 +206,91 @@
 							class="explanation-text"
 							data-testid="onboarding-explanation-text"
 						>
-							<p>
-								{$_("onboarding.explanation")}
-								<span class="inline-icon"><Languages size={18} /></span>
-							</p>
-							<p class="detail" data-testid="onboarding-explanation-detail">
-								{$_("onboarding.explanationPart1")}
-								<span class="inline-icon"><Speech size={16} /></span>,
-								{$_("onboarding.explanationPart2")}
-								<span class="inline-icon"><Captions size={16} /></span>
-								{$_("onboarding.explanationPart3")}
-							</p>
+							{#if hintStep === 1}
+								<p>
+									{$_("onboarding.step1_part1")}
+									<span class="inline-icon"><Languages size={18} /></span>.
+									{$_("onboarding.step1_part2")}
+									<span class="inline-icon"><Speech size={18} /></span>
+									{$_("onboarding.step1_part3")}
+									<span class="inline-icon"><Captions size={18} /></span>
+									{$_("onboarding.step1_part4")}
+								</p>
+							{:else if hintStep === 2}
+								<p>
+									{$_("onboarding.step2_part1")}
+									<span class="inline-icon"><GraduationCap size={18} /></span>
+									{$_("onboarding.step2_part2")}
+									<span class="inline-icon"><Lightbulb size={18} /></span>
+									{$_("onboarding.step2_part3")}
+								</p>
+							{:else if hintStep === 3}
+								<p>{$_("onboarding.step3")}</p>
+							{:else if hintStep === 4}
+								<div class="step-content-wrapper">
+									<p>{$_("onboarding.step4")}</p>
+									<button 
+										class="action-btn-secondary" 
+										data-testid="about-install-btn"
+										onclick={() => {
+											window.dispatchEvent(new CustomEvent('open-install-modal'));
+										}}
+									>
+										<Download size={18} />
+										<span>{$_("pwa.install")}</span>
+									</button>
+								</div>
+							{:else}
+								<div class="step-content-wrapper">
+									<p>{$_("onboarding.step5")}</p>
+									<a 
+										href="https://send.monobank.ua/jar/7sCsydhJnR"
+										target="_blank"
+										rel="noopener noreferrer"
+										class="action-btn-accent" 
+										data-testid="about-donate-link"
+										onclick={finishOnboarding}
+									>
+										<Heart size={18} />
+										<span>{$_("about.support")}</span>
+									</a>
+								</div>
+							{/if}
 						</div>
 
-						<button
-							class="start-btn"
-							onclick={handleFinish}
-							data-testid="onboarding-finish-btn"
-						>
-							<span>{$_("onboarding.startBtn")}</span>
-						</button>
+						<div class="modal-actions-wrapper">
+							<div class="nav-buttons">
+								{#if hintStep > 1}
+									<button
+										class="nav-btn prev"
+										onclick={handlePrevHint}
+										data-testid="onboarding-prev-btn"
+									>
+										<span>{$_("onboarding.prevHint")}</span>
+									</button>
+								{/if}
+								
+								{#if hintStep < 5}
+									<button
+										class="nav-btn next"
+										onclick={handleNextHint}
+										data-testid="onboarding-next-btn"
+									>
+										<span>{$_("onboarding.nextHint")}</span>
+									</button>
+								{/if}
+							</div>
+
+							<button
+								class="skip-all-btn"
+								onclick={finishOnboarding}
+								data-testid={hintStep === 5 ? "onboarding-next-btn" : "onboarding-skip-btn"}
+							>
+								{$_("onboarding.startBtn")}
+							</button>
+						</div>
 					</div>
-				</div>
+				</BaseModal>
 			{/if}
 		</div>
 	</div>
@@ -312,44 +330,44 @@
 		align-items: center;
 	}
 
-	.onboarding-overlay.transparent {
-		background: rgba(0, 0, 0, 0);
-		backdrop-filter: blur(0px);
-		pointer-events: none;
-	}
-
-	.onboarding-overlay.transparent .step-wrapper {
-		opacity: 0;
-		pointer-events: none;
-		transition: opacity 0.6s ease;
-	}
-
-	.explanation-card {
-		background: rgba(255, 255, 255, 0.05);
-		backdrop-filter: blur(25px);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		border-radius: 32px;
-		padding: 2.5rem 2rem;
-		max-width: 450px;
-		width: 100%;
+	.explanation-card-inner {
 		text-align: center;
-		pointer-events: auto;
-		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
 		display: flex;
 		flex-direction: column;
-		gap: 1.5rem;
+		gap: 2rem;
+		padding: 1rem 0;
 	}
 
-	.inline-icon {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		background: rgba(255, 255, 255, 0.1);
-		padding: 4px;
-		border-radius: 6px;
-		margin: 0 2px;
-		vertical-align: middle;
-		color: var(--accent);
+	.progress-bar {
+		display: flex;
+		gap: 6px;
+		width: 100%;
+		margin-bottom: 0.5rem;
+	}
+
+	.progress-segment {
+		flex: 1;
+		height: 6px;
+		border-radius: 10px;
+		background: rgba(255, 255, 255, 0.15);
+		border: none;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		padding: 0;
+	}
+
+	.progress-segment:hover {
+		background: rgba(255, 255, 255, 0.3);
+	}
+
+	.progress-segment.active {
+		background: var(--accent);
+		box-shadow: 0 0 10px rgba(var(--accent-rgb, 58, 143, 214), 0.5);
+	}
+
+	.progress-segment.completed {
+		background: var(--accent);
+		opacity: 0.5;
 	}
 
 	.icon-header {
@@ -369,46 +387,148 @@
 		box-shadow: 0 8px 20px rgba(var(--accent-rgb, 58, 143, 214), 0.3);
 	}
 
-	.explanation-text {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
-
 	.explanation-text p {
-		font-size: 1.15rem;
+		font-size: 1.2rem;
 		color: white;
-		line-height: 1.4;
+		line-height: 1.5;
 		margin: 0;
 		font-weight: 500;
 	}
 
-	.explanation-text .detail {
-		font-size: 0.95rem;
-		opacity: 0.7;
-		font-weight: 400;
+	.step-content-wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		align-items: center;
 	}
 
-	.start-btn {
+	.action-btn-secondary, .action-btn-accent {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.8rem;
+		padding: 0.8rem 1.5rem;
+		border-radius: 14px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.2s;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		text-decoration: none;
+	}
+
+	.action-btn-secondary {
+		background: rgba(255, 255, 255, 0.1);
+		color: white;
+	}
+
+	.action-btn-accent {
+		background: var(--accent);
+		color: white;
+		border-color: rgba(255, 255, 255, 0.2);
+	}
+
+	.action-btn-secondary:hover, .action-btn-accent:hover {
+		transform: translateY(-2px);
+		filter: brightness(1.1);
+	}
+
+	.modal-actions-wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		width: 100%;
+		margin-top: 1rem;
+	}
+
+	.nav-buttons {
+		display: flex;
+		gap: 0.75rem;
+		width: 100%;
+		container-type: inline-size;
+	}
+
+	.nav-btn {
+		flex: 1;
+		padding: 1.1rem 0.2rem;
+		font-size: clamp(0.5rem, 3.6cqw, 1rem);
+		font-weight: 700;
+		border-radius: 16px;
+		cursor: pointer;
+		transition: all 0.2s;
+		border: none;
+		white-space: nowrap;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 0;
+		letter-spacing: -0.02em;
+	}
+
+	.nav-btn span {
+		display: block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-width: 100%;
+	}
+
+	.nav-btn.next {
 		background: white;
 		color: black;
-		border: none;
-		border-radius: 16px;
-		padding: 1rem;
+	}
+
+	.nav-btn.prev {
+		background: rgba(255, 255, 255, 0.1);
+		color: white;
+		border: 1px solid rgba(255, 255, 255, 0.15);
+	}
+
+	.skip-all-btn {
+		background: #27ae60;
+		color: white;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		padding: 1.1rem;
+		border-radius: 18px;
 		font-size: 1.1rem;
 		font-weight: 700;
 		cursor: pointer;
 		transition: all 0.2s;
-		margin-top: 0.5rem;
+		box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
-	.start-btn:hover {
-		transform: scale(1.02);
-		background: #f0f0f0;
+	.skip-all-btn:hover {
+		background: #2ecc71;
+		transform: translateY(-2px);
+		box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+		border-color: rgba(255, 255, 255, 0.3);
 	}
 
-	.start-btn:active {
-		transform: scale(0.98);
+	.skip-all-btn:active {
+		transform: translateY(0);
+	}
+
+	.nav-btn:hover { transform: translateY(-2px); }
+	.nav-btn:active { transform: translateY(0); }
+
+	@media (max-width: 360px) {
+		.nav-btn {
+			font-size: 0.85rem;
+		}
+	}
+
+	.inline-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(255, 255, 255, 0.1);
+		padding: 4px;
+		border-radius: 6px;
+		margin: 0 4px;
+		vertical-align: middle;
+		color: var(--accent);
 	}
 
 	.header-area {
@@ -455,11 +575,6 @@
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: 1.5rem;
-	}
-
-	.flags-grid.hidden {
-		opacity: 0;
-		pointer-events: none;
 	}
 
 	@media (max-width: 480px) {
@@ -518,87 +633,5 @@
 
 	.flag-btn span {
 		font-size: 1rem;
-	}
-
-	.flying-container {
-		position: fixed;
-		inset: 0;
-		pointer-events: none;
-		z-index: 10;
-	}
-
-	.flying-flag {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 80px;
-		height: 54px;
-		pointer-events: none;
-		transform: translate(var(--start-x), var(--start-y)) translate(-50%, -50%);
-		opacity: 0;
-		/* Анімація появи: стає ледь помітним (0.15) */
-		animation: flag-materialize 5s forwards ease-out;
-		animation-delay: 0.8s;
-	}
-
-	.flying-flag img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		border-radius: 10px;
-		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-	}
-
-	/* Перехід до польоту */
-	.is-running .flying-flag {
-		opacity: 0.05;
-		animation: fly-to-settings 2s both cubic-bezier(0.4, 0, 0.2, 1);
-		animation-delay: var(--delay);
-	}
-
-	@keyframes flag-materialize {
-		from {
-			opacity: 0;
-		}
-		to {
-			opacity: 0.15;
-		}
-	}
-
-	@keyframes fly-to-settings {
-		0% {
-			transform: translate(var(--start-x), var(--start-y)) translate(-50%, -50%)
-				scale(1);
-			opacity: 0.15;
-		}
-		15% {
-			opacity: 1;
-			transform: translate(var(--start-x), var(--start-y)) translate(-50%, -50%)
-				scale(1.1);
-		}
-		100% {
-			transform: translate(var(--target-x), var(--target-y))
-				translate(-50%, -50%) scale(0.1);
-			opacity: 0;
-		}
-	}
-
-	:global(.settings-btn-blink) {
-		animation: settings-blink-pulse 1.5s ease-in-out;
-	}
-
-	@keyframes settings-blink-pulse {
-		0% {
-			box-shadow: 0 0 0 0 rgba(58, 143, 214, 0);
-			transform: scale(1);
-		}
-		50% {
-			box-shadow: 0 0 15px 2px rgba(58, 143, 214, 0.4);
-			transform: scale(1.1);
-		}
-		100% {
-			box-shadow: 0 0 0 0 rgba(58, 143, 214, 0);
-			transform: scale(1);
-		}
 	}
 </style>
