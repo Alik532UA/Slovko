@@ -14,9 +14,11 @@ interface BeforeInstallPromptEvent extends Event {
 function createPwaStore() {
 	let deferredPrompt = $state<BeforeInstallPromptEvent | null>(null);
 	let isInstalled = $state(false);
-	let isIOS = $state(false);
-	let isIosChrome = $state(false);
-	let isAndroid = $state(false);
+	
+	const ua = browser ? window.navigator.userAgent : "";
+	let isIOS = $state(/iPad|iPhone|iPod/.test(ua) && !(window as any).MSStream);
+	let isIosChrome = $state(isIOS && ua.indexOf('CriOS') > -1);
+	let isAndroid = $state(/Android/.test(ua));
 	
 	// Тепер кнопка доступна завжди, якщо додаток не встановлено
 	let canInstall = $derived(!isInstalled);
@@ -24,11 +26,6 @@ function createPwaStore() {
 	function init() {
 		if (!browser) return;
 
-		const ua = window.navigator.userAgent;
-		isIOS = /iPad|iPhone|iPod/.test(ua) && !(window as any).MSStream;
-		isIosChrome = isIOS && ua.indexOf('CriOS') > -1;
-		isAndroid = /Android/.test(ua);
-		
 		// Перевірка, чи вже встановлено
 		const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
 							 (window.navigator as any).standalone === true;

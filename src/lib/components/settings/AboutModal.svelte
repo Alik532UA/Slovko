@@ -38,7 +38,7 @@
 							showInstallGuide = true;
 						}
 					}}
-					data-testid="about-install-btn"
+					data-testid="about-modal-install-btn"
 				>
 					<Download size={20} />
 					{#if pwaStore.isIOS || pwaStore.isAndroid}
@@ -54,7 +54,7 @@
 				target="_blank"
 				rel="noopener noreferrer"
 				class="link-btn donate"
-				data-testid="about-donate-link"
+				data-testid="about-modal-donate-link"
 			>
 				{$_("about.support")}
 			</a>

@@ -8,6 +8,8 @@
 	import { base } from "$app/paths";
 	import { Languages, Speech, Captions, Download, UserCheck, Heart, GraduationCap, Lightbulb } from "lucide-svelte";
 	import BaseModal from "$lib/components/ui/BaseModal.svelte";
+	import { pwaStore } from "$lib/stores/pwaStore.svelte";
+	import InstallGuide from "../pwa/InstallGuide.svelte";
 
 	let step = $state(1);
 	let hintStep = $state(1);
@@ -15,6 +17,19 @@
 	let isVisible = $state(true);
 	let isFinalizing = $state(false);
 	let showExplanation = $state(false);
+	let showInstallGuide = $state(false);
+
+	// Визначаємо список активних кроків залежно від стану PWA
+	const activeSteps = $derived.by(() => {
+		const steps = [1, 2, 3, 4, 5];
+		if (pwaStore.isInstalled) {
+			return steps.filter(s => s !== 4);
+		}
+		return steps;
+	});
+
+	// Поточний ID поради (1, 2, 3, 4 або 5)
+	const currentTipId = $derived(activeSteps[hintStep - 1]);
 
 	const titles: Record<string, string> = {
 		uk: "Твоя мова",
@@ -59,7 +74,7 @@
 	}
 
 	function handleNextHint() {
-		if (hintStep < 5) {
+		if (hintStep < activeSteps.length) {
 			hintStep++;
 		} else {
 			finishOnboarding();
@@ -174,7 +189,7 @@
 						data-testid="onboarding-explanation-card"
 					>
 						<div class="progress-bar" data-testid="onboarding-progress-bar">
-							{#each Array(5) as _, i}
+							{#each activeSteps as _, i}
 								<button
 									class="progress-segment"
 									class:active={hintStep === i + 1}
@@ -188,13 +203,13 @@
 
 						<div class="icon-header">
 							<div class="icon-circle">
-								{#if hintStep === 1}
+								{#if currentTipId === 1}
 									<Languages size={32} />
-								{:else if hintStep === 2}
+								{:else if currentTipId === 2}
 									<GraduationCap size={32} />
-								{:else if hintStep === 3}
+								{:else if currentTipId === 3}
 									<UserCheck size={32} />
-								{:else if hintStep === 4}
+								{:else if currentTipId === 4}
 									<Download size={32} />
 								{:else}
 									<Heart size={32} />
@@ -206,38 +221,47 @@
 							class="explanation-text"
 							data-testid="onboarding-explanation-text"
 						>
-							{#if hintStep === 1}
+							{#if currentTipId === 1}
 								<p>
 									{$_("onboarding.step1_part1")}
-									<span class="inline-icon"><Languages size={18} /></span>.
+									<span class="inline-icon" data-testid="onboarding-icon-languages"><Languages size={18} /></span>.
 									{$_("onboarding.step1_part2")}
-									<span class="inline-icon"><Speech size={18} /></span>
+									<span class="inline-icon" data-testid="onboarding-icon-speech"><Speech size={18} /></span>
 									{$_("onboarding.step1_part3")}
-									<span class="inline-icon"><Captions size={18} /></span>
+									<span class="inline-icon" data-testid="onboarding-icon-captions"><Captions size={18} /></span>
 									{$_("onboarding.step1_part4")}
 								</p>
-							{:else if hintStep === 2}
+							{:else if currentTipId === 2}
 								<p>
 									{$_("onboarding.step2_part1")}
-									<span class="inline-icon"><GraduationCap size={18} /></span>
+									<span class="inline-icon" data-testid="onboarding-icon-gradcap"><GraduationCap size={18} /></span>
 									{$_("onboarding.step2_part2")}
-									<span class="inline-icon"><Lightbulb size={18} /></span>
+									<span class="inline-icon" data-testid="onboarding-icon-lightbulb"><Lightbulb size={18} /></span>
 									{$_("onboarding.step2_part3")}
 								</p>
-							{:else if hintStep === 3}
+							{:else if currentTipId === 3}
 								<p>{$_("onboarding.step3")}</p>
-							{:else if hintStep === 4}
+							{:else if currentTipId === 4}
 								<div class="step-content-wrapper">
 									<p>{$_("onboarding.step4")}</p>
 									<button 
 										class="action-btn-secondary" 
-										data-testid="about-install-btn"
-										onclick={() => {
-											window.dispatchEvent(new CustomEvent('open-install-modal'));
+										data-testid="onboarding-install-btn"
+										onclick={async () => {
+											const result = await pwaStore.install();
+											if (result === "ios" || result === "manual") {
+												showInstallGuide = true;
+											}
 										}}
 									>
 										<Download size={18} />
-										<span>{$_("pwa.install")}</span>
+										<span>
+											{#if pwaStore.isIOS || pwaStore.isAndroid}
+												{$_("pwa.install")}
+											{:else}
+												{$_("pwa.install_desktop")}
+											{/if}
+										</span>
 									</button>
 								</div>
 							{:else}
@@ -248,7 +272,7 @@
 										target="_blank"
 										rel="noopener noreferrer"
 										class="action-btn-accent" 
-										data-testid="about-donate-link"
+										data-testid="onboarding-donate-link"
 										onclick={finishOnboarding}
 									>
 										<Heart size={18} />
@@ -270,7 +294,7 @@
 									</button>
 								{/if}
 								
-								{#if hintStep < 5}
+								{#if hintStep < activeSteps.length}
 									<button
 										class="nav-btn next"
 										onclick={handleNextHint}
@@ -284,7 +308,7 @@
 							<button
 								class="skip-all-btn"
 								onclick={finishOnboarding}
-								data-testid={hintStep === 5 ? "onboarding-next-btn" : "onboarding-skip-btn"}
+								data-testid={hintStep === activeSteps.length ? "onboarding-next-btn" : "onboarding-skip-btn"}
 							>
 								{$_("onboarding.startBtn")}
 							</button>
@@ -296,11 +320,15 @@
 	</div>
 {/if}
 
+{#if showInstallGuide}
+	<InstallGuide onclose={() => (showInstallGuide = false)} />
+{/if}
+
 <style>
 	.onboarding-overlay {
 		position: fixed;
 		inset: 0;
-		z-index: 20000;
+		z-index: 10000;
 		background: rgba(0, 0, 0, 0.92);
 		backdrop-filter: blur(15px);
 		display: grid;
