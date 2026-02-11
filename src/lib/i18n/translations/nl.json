@@ -304,7 +304,14 @@
 		"or": "of",
 		"learn": "Leren",
 		"reset": "Resetten",
-		"ok": "Begrepen"
+		"ok": "Begrepen",
+		"tooltips": {
+			"streak": "Reeks goede antwoorden",
+			"accuracy": "Antwoord nauwkeurigheid",
+			"selectLevel": "Selecteer niveau of onderwerp",
+			"prev": "Vorig niveau",
+			"next": "Volgend niveau"
+		}
 	},
 	"sync": {
 		"status": {

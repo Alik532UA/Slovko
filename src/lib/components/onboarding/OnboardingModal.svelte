@@ -10,6 +10,7 @@
 	import BaseModal from "$lib/components/ui/BaseModal.svelte";
 	import { pwaStore } from "$lib/stores/pwaStore.svelte";
 	import InstallGuide from "../pwa/InstallGuide.svelte";
+	import { gameController } from "$lib/services/gameController";
 
 	let step = $state(1);
 	let hintStep = $state(1);
@@ -91,6 +92,9 @@
 		isVisible = false;
 		settingsStore.completeOnboarding();
 		window.dispatchEvent(new Event("resize"));
+
+		// Запуск циклу підказок, поки користувач не почне взаємодіяти
+		gameController.startTutorialMode();
 	}
 
 	const detectedTitle = $derived(

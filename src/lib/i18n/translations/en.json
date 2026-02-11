@@ -304,7 +304,14 @@
 		"or": "or",
 		"learn": "Learn",
 		"reset": "Reset",
-		"ok": "Got it"
+		"ok": "Got it",
+		"tooltips": {
+			"streak": "Match streak",
+			"accuracy": "Answer accuracy",
+			"selectLevel": "Select level or topic",
+			"prev": "Previous level",
+			"next": "Next level"
+		}
 	},
 	"sync": {
 		"status": {

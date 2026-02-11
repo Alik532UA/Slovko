@@ -283,7 +283,7 @@
 				y1={dragState.startPoint.y} 
 				x2={dragState.currentPoint.x} 
 				y2={dragState.currentPoint.y} 
-				stroke="var(--accent)" 
+				stroke="var(--selected-border)" 
 				stroke-width="4" 
 				stroke-linecap="round"
 				opacity="0.6"
@@ -412,11 +412,11 @@
 	.card-hover-highlight {
 		position: absolute;
 		inset: 0; /* Align perfectly with card edges */
-		border: 2px solid var(--accent);
+		border: 2px solid var(--selected-border);
 		border-radius: 12px; /* Match WordCard border-radius */
 		pointer-events: none;
 		z-index: 10;
-		box-shadow: 0 0 10px rgba(233, 84, 32, 0.3);
+		box-shadow: 0 0 10px rgba(58, 143, 214, 0.3);
 		animation: pulse-highlight 2s infinite ease-in-out;
 	}
 	

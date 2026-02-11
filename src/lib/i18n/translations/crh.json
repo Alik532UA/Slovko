@@ -304,7 +304,14 @@
 		"or": "ya da",
 		"learn": "Ögrenmek",
 		"reset": "Sıfırlama",
-		"ok": "Anlaşıldı"
+		"ok": "Anlaşıldı",
+		"tooltips": {
+			"streak": "Doğru cevaplar serisi",
+			"accuracy": "Doğruluk",
+			"selectLevel": "Seviye ya da tema saylav",
+			"prev": "Evelki seviye",
+			"next": "Nevbetteki seviye"
+		}
 	},
 	"sync": {
 		"status": {

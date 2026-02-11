@@ -10,6 +10,7 @@
 	import { ALL_LEVELS, ALL_TOPICS } from "$lib/types";
 	import LevelTopicModal from "./LevelTopicModal.svelte";
 	import { playlistStore } from "$lib/stores/playlistStore.svelte";
+	import BaseTooltip from "../ui/BaseTooltip.svelte";
 
 	let showModal = $state(false);
 
@@ -121,31 +122,40 @@
 <svelte:window onkeydown={handleKeydown} />
 
 <div class="bottom-bar">
-	<button
-		class="nav-btn"
-		onclick={() => goPrev()}
-		disabled={!canGoPrev}
-		data-testid="prev-level-btn"
-	>
-		<ChevronLeft size={32} />
-	</button>
+	<BaseTooltip text={$_("common.tooltips.prev")}>
+		<button
+			class="nav-btn"
+			onclick={() => goPrev()}
+			disabled={!canGoPrev}
+			data-testid="prev-level-btn"
+			title=""
+		>
+			<ChevronLeft size={32} />
+		</button>
+	</BaseTooltip>
 
-	<button
-		class="level-btn"
-		onclick={() => (showModal = true)}
-		data-testid="level-topic-selector-btn"
-	>
-		{currentLabel}
-	</button>
+	<BaseTooltip text={$_("common.tooltips.selectLevel")}>
+		<button
+			class="level-btn"
+			onclick={() => (showModal = true)}
+			data-testid="level-topic-selector-btn"
+			title=""
+		>
+			{currentLabel}
+		</button>
+	</BaseTooltip>
 
-	<button
-		class="nav-btn"
-		onclick={() => goNext()}
-		disabled={!canGoNext}
-		data-testid="next-level-btn"
-	>
-		<ChevronRight size={32} />
-	</button>
+	<BaseTooltip text={$_("common.tooltips.next")}>
+		<button
+			class="nav-btn"
+			onclick={() => goNext()}
+			disabled={!canGoNext}
+			data-testid="next-level-btn"
+			title=""
+		>
+			<ChevronRight size={32} />
+		</button>
+	</BaseTooltip>
 </div>
 
 {#if showModal}

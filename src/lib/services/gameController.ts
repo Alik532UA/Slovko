@@ -23,6 +23,7 @@ import type { ActiveCard, CardStatus, WordPair, Language } from "../types";
 export class GameController {
 	private lastInteractionTime = 0;
 	private isRefilling = false;
+	private tutorialActive = false;
 
 	constructor(
 		private gameState: typeof GameStateType,
@@ -98,6 +99,7 @@ export class GameController {
 	 */
 	selectCard(card: ActiveCard): void {
 		this.updateTimers();
+		this.tutorialActive = false; // Будь-яка взаємодія вимикає навчання
 
 		// Захист тільки від невидимих карток
 		if (!card.isVisible) return;
@@ -256,7 +258,7 @@ export class GameController {
 			() => {
 				this.gameState.clearHint(src.id, tgt.id, status);
 			},
-			isSlow ? 5000 : 1000,
+			isSlow ? 5000 : 2000,
 		);
 
 		return true;
@@ -279,6 +281,27 @@ export class GameController {
 
 		const success = this.useHint(true);
 		setTimeout(() => this.runLearningLoop(), success ? 5500 : 1000);
+	}
+
+	startTutorialMode(): void {
+		this.tutorialActive = true;
+		// Перша підказка через 2 секунди
+		setTimeout(() => this.tutorialTick(), 2000);
+	}
+
+	private tutorialTick(): void {
+		if (!this.tutorialActive) return;
+
+		// Якщо користувач вже щось вибрав або вже є правильні відповіді — зупиняємось
+		if (this.gameState.selectedCard || this.gameState.totalAttempts > 0 || this.gameState.isLearningMode) {
+			this.tutorialActive = false;
+			return;
+		}
+
+		this.useHint();
+
+		// Наступна підказка через 5 секунд
+		setTimeout(() => this.tutorialTick(), 5000);
 	}
 }
 

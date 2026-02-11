@@ -18,6 +18,7 @@
 	import ThemeModal from "../settings/ThemeModal.svelte";
 	import ProfileModal from "../settings/ProfileModal.svelte";
 	import { fade } from "svelte/transition";
+	import BaseTooltip from "../ui/BaseTooltip.svelte";
 
 	const gameController = getGameController();
 
@@ -80,68 +81,78 @@
 </script>
 
 <div class="stats-bar">
-	<div
-		class="stat-item streak"
-		style="color: {streakColor}; border-color: {gameState.streak > 0
-			? streakColor
-			: ''}; transform: scale({streakScale});"
-		data-testid="stat-streak"
-	>
+	<BaseTooltip text={$_("common.tooltips.streak")}>
 		<div
-			class="icon-wrapper"
-			style="animation-duration: {streakAnimationSpeed}; animation-name: {gameState.streak >
-			5
-				? 'pulse-fire'
-				: 'none'}"
+			class="stat-item streak"
+			style="color: {streakColor}; border-color: {gameState.streak > 0
+				? streakColor
+				: ''}; transform: scale({streakScale});"
+			data-testid="stat-streak"
+			title=""
 		>
-			<Flame size={20} fill={gameState.streak > 10 ? streakColor : "none"} />
+			<div
+				class="icon-wrapper"
+				style="animation-duration: {streakAnimationSpeed}; animation-name: {gameState.streak >
+				5
+					? 'pulse-fire'
+					: 'none'}"
+			>
+				<Flame size={20} fill={gameState.streak > 10 ? streakColor : "none"} />
+			</div>
+			<span class="value">{gameState.streak}</span>
 		</div>
-		<span class="value">{gameState.streak}</span>
-	</div>
+	</BaseTooltip>
 
-	<div
-		class="stat-item accuracy"
-		style="background: {accBgColor}; border-color: {accBorderColor}; color: {accProgress >
-		0.7
-			? '#2ecc71'
-			: ''}"
-		data-testid="stat-accuracy"
-	>
-		{#if accuracyDisplay !== ""}
-			<span class="value">{accuracyDisplay}</span>
-		{/if}
-		<div class="icon-wrapper">
-			<Percent size={20} />
+	<BaseTooltip text={$_("common.tooltips.accuracy")}>
+		<div
+			class="stat-item accuracy"
+			style="background: {accBgColor}; border-color: {accBorderColor}; color: {accProgress >
+			0.7
+				? '#2ecc71'
+				: ''}"
+			data-testid="stat-accuracy"
+			title=""
+		>
+			{#if accuracyDisplay !== ""}
+				<span class="value">{accuracyDisplay}</span>
+			{/if}
+			<div class="icon-wrapper">
+				<Percent size={20} />
+			</div>
 		</div>
-	</div>
+	</BaseTooltip>
 
 	<div class="buttons-group">
-		<button
-			class="stat-item hint-btn"
-			class:active-mode={gameState.isLearningMode}
-			onclick={() => gameController.toggleLearningMode()}
-			disabled={gameState.isProcessing && !gameState.isLearningMode}
-			title={$_("settings.learningMode")}
-			aria-label={$_("settings.learningMode")}
-			data-testid="learning-mode-btn"
-		>
-			<div class="icon-wrapper">
-				<GraduationCap size={20} />
-			</div>
-		</button>
+		<BaseTooltip text={$_("settings.learningMode")}>
+			<button
+				class="stat-item hint-btn"
+				class:active-mode={gameState.isLearningMode}
+				onclick={() => gameController.toggleLearningMode()}
+				disabled={gameState.isProcessing && !gameState.isLearningMode}
+				aria-label={$_("settings.learningMode")}
+				data-testid="learning-mode-btn"
+				title=""
+			>
+				<div class="icon-wrapper">
+					<GraduationCap size={20} />
+				</div>
+			</button>
+		</BaseTooltip>
 
-		<button
-			class="stat-item hint-btn"
-			onclick={() => gameController.useHint()}
-			disabled={gameState.isProcessing || gameState.isLearningMode}
-			title={$_("settings.hint")}
-			aria-label={$_("settings.hint")}
-			data-testid="hint-btn"
-		>
-			<div class="icon-wrapper">
-				<Lightbulb size={20} />
-			</div>
-		</button>
+		<BaseTooltip text={$_("settings.hint")}>
+			<button
+				class="stat-item hint-btn"
+				onclick={() => gameController.useHint()}
+				disabled={gameState.isProcessing || gameState.isLearningMode}
+				aria-label={$_("settings.hint")}
+				data-testid="hint-btn"
+				title=""
+			>
+				<div class="icon-wrapper">
+					<Lightbulb size={20} />
+				</div>
+			</button>
+		</BaseTooltip>
 
 		<div class="menu-container" class:menu-active={showMenu}>
 			{#if showMenu}
@@ -154,17 +165,19 @@
 				></div>
 			{/if}
 
-			<button
-				class="stat-item menu-btn"
-				onclick={() => (showMenu = !showMenu)}
-				title={$_("common.menu") || "Menu"}
-				aria-label={$_("common.menu") || "Menu"}
-				data-testid="main-menu-btn"
-			>
-				<div class="icon-wrapper">
-					<Menu size={20} />
-				</div>
-			</button>
+			<BaseTooltip text={$_("common.menu") || "Menu"}>
+				<button
+					class="stat-item menu-btn"
+					onclick={() => (showMenu = !showMenu)}
+					aria-label={$_("common.menu") || "Menu"}
+					data-testid="main-menu-btn"
+					title=""
+				>
+					<div class="icon-wrapper">
+						<Menu size={20} />
+					</div>
+				</button>
+			</BaseTooltip>
 
 			{#if showMenu}
 				<MenuModal

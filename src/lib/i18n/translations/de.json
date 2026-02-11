@@ -304,7 +304,14 @@
 		"or": "oder",
 		"learn": "Lernen",
 		"reset": "Zurücksetzen",
-		"ok": "Verstanden"
+		"ok": "Verstanden",
+		"tooltips": {
+			"streak": "Serie richtiger Antworten",
+			"accuracy": "Antwortgenauigkeit",
+			"selectLevel": "Niveau oder Thema auswählen",
+			"prev": "Vorheriges Niveau",
+			"next": "Nächstes Niveau"
+		}
 	},
 	"sync": {
 		"status": {

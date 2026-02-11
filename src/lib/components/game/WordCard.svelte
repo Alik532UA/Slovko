@@ -39,9 +39,7 @@
 	function isInteractable(): boolean {
 		return (
 			card.status !== "correct" &&
-			card.status !== "wrong" &&
-			card.status !== "hint" &&
-			card.status !== "hint-slow"
+			card.status !== "wrong"
 		);
 	}
 
@@ -119,9 +117,7 @@
 		// Якщо картка вже в особливому стані, ігноруємо клік
 		if (
 			card.status === "correct" ||
-			card.status === "wrong" ||
-			card.status === "hint" ||
-			card.status === "hint-slow"
+			card.status === "wrong"
 		)
 			return;
 
@@ -175,8 +171,9 @@
 		cursor: pointer;
 		transition:
 			transform 0.15s ease,
-			background-color 0.2s ease,
-			border-color 0.2s ease,
+			background-color 0.4s ease,
+			border-color 0.4s ease,
+			box-shadow 0.4s ease,
 			opacity 0.3s ease,
 			scale 0.3s ease;
 		user-select: none;
@@ -277,10 +274,12 @@
 	/* Підказка — плавне блимання */
 	.word-card.hint {
 		animation: hintPulse 2s ease-in-out infinite;
+		will-change: transform, background-color, border-color, box-shadow;
 	}
 
 	.word-card.hint-slow {
 		animation: hintPulse 5s ease-in-out infinite;
+		will-change: transform, background-color, border-color, box-shadow;
 	}
 
 	@keyframes hintPulse {
@@ -288,19 +287,19 @@
 			transform: scale(1);
 			background-color: var(--card-bg);
 			border-color: var(--card-border);
-			box-shadow: 0 0 0 rgba(58, 143, 214, 0);
+			box-shadow: 0 0 0 rgba(233, 84, 32, 0);
 		}
 		50% {
 			transform: scale(1.03);
-			background-color: rgba(58, 143, 214, 0.15);
-			border-color: #3a8fd6;
-			box-shadow: 0 0 25px rgba(58, 143, 214, 0.4);
+			background-color: rgba(233, 84, 32, 0.18);
+			border-color: var(--accent);
+			box-shadow: 0 0 30px rgba(233, 84, 32, 0.45);
 		}
 		100% {
 			transform: scale(1);
 			background-color: var(--card-bg);
 			border-color: var(--card-border);
-			box-shadow: 0 0 0 rgba(58, 143, 214, 0);
+			box-shadow: 0 0 0 rgba(233, 84, 32, 0);
 		}
 	}
 
