@@ -7,7 +7,7 @@
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { goto } from "$app/navigation";
 	import { _ } from "svelte-i18n";
-	import { ALL_LEVELS, ALL_TOPICS } from "$lib/types";
+	import { ALL_LEVELS, ALL_TOPICS, ALL_TENSES } from "$lib/types";
 	import LevelTopicModal from "./LevelTopicModal.svelte";
 	import { playlistStore } from "$lib/stores/playlistStore.svelte";
 	import BaseTooltip from "../ui/BaseTooltip.svelte";
@@ -16,7 +16,7 @@
 
 	// Отримати поточний лейбл
 	const currentLabel = $derived.by(() => {
-		const { mode, currentLevel, currentTopic, currentPlaylist } =
+		const { mode, currentLevel, currentTopic, currentTenses, currentPlaylist } =
 			settingsStore.value;
 
 		const formatLabel = (ids: string[], i18nPrefix: string) => {
@@ -35,6 +35,8 @@
 			return formatLabel(currentTopic, "topics");
 		} else if (mode === "phrases") {
 			return formatLabel(currentLevel, "levels");
+		} else if (mode === "tenses") {
+			return formatLabel(currentTenses, "tenses");
 		} else if (mode === "playlists" && currentPlaylist) {
 			const p = playlistStore.getPlaylist(currentPlaylist);
 			if (p) {
@@ -47,29 +49,33 @@
 
 	// Перевірка чи можна перемикати (тільки якщо вибрано 1 елемент)
 	const canGoPrev = $derived.by(() => {
-		const { mode, currentLevel, currentTopic } = settingsStore.value;
+		const { mode, currentLevel, currentTopic, currentTenses } = settingsStore.value;
 
 		if (mode === "levels" || mode === "phrases") {
 			return currentLevel.length === 1 && currentLevel[0] !== ALL_LEVELS[0];
 		} else if (mode === "topics") {
 			return currentTopic.length === 1 && currentTopic[0] !== ALL_TOPICS[0].id;
+		} else if (mode === "tenses") {
+			return currentTenses.length === 1 && currentTenses[0] !== ALL_TENSES[0].id;
 		}
 		return false;
 	});
 
 	const canGoNext = $derived.by(() => {
-		const { mode, currentLevel, currentTopic } = settingsStore.value;
+		const { mode, currentLevel, currentTopic, currentTenses } = settingsStore.value;
 
 		if (mode === "levels" || mode === "phrases") {
 			return currentLevel.length === 1 && currentLevel[0] !== ALL_LEVELS[ALL_LEVELS.length - 1];
 		} else if (mode === "topics") {
 			return currentTopic.length === 1 && currentTopic[0] !== ALL_TOPICS[ALL_TOPICS.length - 1].id;
+		} else if (mode === "tenses") {
+			return currentTenses.length === 1 && currentTenses[0] !== ALL_TENSES[ALL_TENSES.length - 1].id;
 		}
 		return false;
 	});
 
 	function goNext() {
-		const { mode, currentLevel, currentTopic } = settingsStore.value;
+		const { mode, currentLevel, currentTopic, currentTenses } = settingsStore.value;
 
 		if ((mode === "levels" || mode === "phrases") && currentLevel.length === 1) {
 			const idx = ALL_LEVELS.indexOf(currentLevel[0] as any);
@@ -83,11 +89,17 @@
 				const next = ALL_TOPICS[idx + 1].id;
 				goto(`?mode=${mode}&topic=${next}`);
 			}
+		} else if (mode === "tenses" && currentTenses.length === 1) {
+			const idx = ALL_TENSES.findIndex((t) => t.id === currentTenses[0]);
+			if (idx !== -1 && idx < ALL_TENSES.length - 1) {
+				const next = ALL_TENSES[idx + 1].id;
+				goto(`?mode=${mode}&tense=${next}`);
+			}
 		}
 	}
 
 	function goPrev() {
-		const { mode, currentLevel, currentTopic } = settingsStore.value;
+		const { mode, currentLevel, currentTopic, currentTenses } = settingsStore.value;
 
 		if ((mode === "levels" || mode === "phrases") && currentLevel.length === 1) {
 			const idx = ALL_LEVELS.indexOf(currentLevel[0] as any);
@@ -100,6 +112,12 @@
 			if (idx > 0) {
 				const prev = ALL_TOPICS[idx - 1].id;
 				goto(`?mode=${mode}&topic=${prev}`);
+			}
+		} else if (mode === "tenses" && currentTenses.length === 1) {
+			const idx = ALL_TENSES.findIndex((t) => t.id === currentTenses[0]);
+			if (idx > 0) {
+				const prev = ALL_TENSES[idx - 1].id;
+				goto(`?mode=${mode}&tense=${prev}`);
 			}
 		}
 	}

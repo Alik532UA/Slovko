@@ -19,6 +19,14 @@ import {
 	Globe,
 	Smile,
 	Eye,
+	History,
+	Timer,
+	Activity,
+	StepBack,
+	SkipBack,
+	StepForward,
+	CheckSquare,
+	Repeat,
 	// Topic Icons
 	Leaf,
 	PawPrint,
@@ -45,6 +53,7 @@ import {
 	Trash2,
 	Upload,
 	Plus,
+	Minus,
 	MessageSquare,
 	ChevronLeft,
 	ChevronRight,
@@ -96,6 +105,14 @@ export const APP_ICONS = {
 	Globe,
 	Smile,
 	Eye,
+	History,
+	Timer,
+	Activity,
+	StepBack,
+	SkipBack,
+	StepForward,
+	CheckSquare,
+	Repeat,
 	// Topics
 	Leaf,
 	PawPrint,
@@ -122,6 +139,7 @@ export const APP_ICONS = {
 	Trash2,
 	Upload,
 	Plus,
+	Minus,
 	MessageSquare,
 	ChevronLeft,
 	ChevronRight,
@@ -153,4 +171,3 @@ export type AppIconId = keyof typeof APP_ICONS;
 
 // Legacy compatibility
 export const PLAYLIST_ICONS_MAP = APP_ICONS;
-

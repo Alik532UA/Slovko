@@ -1,0 +1,62 @@
+{
+  "present_simple": {
+    "aff": "Er arbeitet hart",
+    "neg": "Er arbeitet nicht hart",
+    "ques": "Arbeitet er hart?"
+  },
+  "past_simple": {
+    "aff": "Er arbeitete hart",
+    "neg": "Er arbeitete nicht hart",
+    "ques": "Arbeitete er hart?"
+  },
+  "future_simple": {
+    "aff": "Er wird hart arbeiten",
+    "neg": "Er wird nicht hart arbeiten",
+    "ques": "Wird er hart arbeiten?"
+  },
+  "present_continuous": {
+    "aff": "Er arbeitet gerade hart",
+    "neg": "Er arbeitet gerade nicht hart",
+    "ques": "Arbeitet er gerade hart?"
+  },
+  "past_continuous": {
+    "aff": "Er arbeitete gerade hart",
+    "neg": "Er arbeitete gerade nicht hart",
+    "ques": "Arbeitete er gerade hart?"
+  },
+  "future_continuous": {
+    "aff": "Er wird gerade hart arbeiten",
+    "neg": "Er wird gerade nicht hart arbeiten",
+    "ques": "Wird er gerade hart arbeiten?"
+  },
+  "present_perfect": {
+    "aff": "Er hat hart gearbeitet",
+    "neg": "Er hat nicht hart gearbeitet",
+    "ques": "Hat er hart gearbeitet?"
+  },
+  "past_perfect": {
+    "aff": "Er hatte hart gearbeitet",
+    "neg": "Er hatte nicht hart gearbeitet",
+    "ques": "Hatte er hart gearbeitet?"
+  },
+  "future_perfect": {
+    "aff": "Er wird hart gearbeitet haben",
+    "neg": "Er wird nicht hart gearbeitet haben",
+    "ques": "Wird er hart gearbeitet haben?"
+  },
+  "present_perfect_continuous": {
+    "aff": "Er arbeitet schon lange hart",
+    "neg": "Er arbeitet schon lange nicht hart",
+    "ques": "Arbeitet er schon lange hart?"
+  },
+  "past_perfect_continuous": {
+    "aff": "Er hatte lange hart gearbeitet",
+    "neg": "Er hatte lange nicht hart gearbeitet",
+    "ques": "Hatte lange er hart gearbeitet?"
+  },
+  "future_perfect_continuous": {
+    "aff": "Er wird lange hart gearbeitet haben",
+    "neg": "Er wird lange nicht hart gearbeitet haben",
+    "ques": "Wird er lange hart gearbeitet haben?"
+  }
+}

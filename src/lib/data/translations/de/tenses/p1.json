@@ -1,0 +1,62 @@
+{
+  "present_simple": {
+    "aff": "Ich gehe zur Schule",
+    "neg": "Ich gehe nicht zur Schule",
+    "ques": "Gehe ich zur Schule?"
+  },
+  "past_simple": {
+    "aff": "Ich ging zur Schule",
+    "neg": "Ich ging nicht zur Schule",
+    "ques": "Ging ich zur Schule?"
+  },
+  "future_simple": {
+    "aff": "Ich werde zur Schule gehen",
+    "neg": "Ich werde nicht zur Schule gehen",
+    "ques": "Werde ich zur Schule gehen?"
+  },
+  "present_continuous": {
+    "aff": "Ich gehe gerade zur Schule",
+    "neg": "Ich gehe gerade nicht zur Schule",
+    "ques": "Gehe ich gerade zur Schule?"
+  },
+  "past_continuous": {
+    "aff": "Ich ging gerade zur Schule",
+    "neg": "Ich ging gerade nicht zur Schule",
+    "ques": "Ging ich gerade zur Schule?"
+  },
+  "future_continuous": {
+    "aff": "Ich werde gerade zur Schule gehen",
+    "neg": "Ich werde gerade nicht zur Schule gehen",
+    "ques": "Werde ich gerade zur Schule gehen?"
+  },
+  "present_perfect": {
+    "aff": "Ich bin zur Schule gegangen",
+    "neg": "Ich bin nicht zur Schule gegangen",
+    "ques": "Bin ich zur Schule gegangen?"
+  },
+  "past_perfect": {
+    "aff": "Ich war zur Schule gegangen",
+    "neg": "Ich war nicht zur Schule gegangen",
+    "ques": "War ich zur Schule gegangen?"
+  },
+  "future_perfect": {
+    "aff": "Ich werde zur Schule gegangen sein",
+    "neg": "Ich werde nicht zur Schule gegangen sein",
+    "ques": "Werde ich zur Schule gegangen sein?"
+  },
+  "present_perfect_continuous": {
+    "aff": "Ich gehe schon lange zur Schule",
+    "neg": "Ich gehe schon lange nicht zur Schule",
+    "ques": "Gehe ich schon lange zur Schule?"
+  },
+  "past_perfect_continuous": {
+    "aff": "Ich war lange zur Schule gegangen",
+    "neg": "Ich war lange nicht zur Schule gegangen",
+    "ques": "War ich lange zur Schule gegangen?"
+  },
+  "future_perfect_continuous": {
+    "aff": "Ich werde lange zur Schule gegangen sein",
+    "neg": "Ich werde lange nicht zur Schule gegangen sein",
+    "ques": "Werde ich lange zur Schule gegangen sein?"
+  }
+}

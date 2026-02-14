@@ -99,6 +99,9 @@
 	onmouseleave={hide}
 	onfocusin={show}
 	onfocusout={hide}
+	role="button"
+	tabindex="0"
+	aria-label={text}
 >
 	{@render children()}
 </div>

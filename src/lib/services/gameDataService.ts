@@ -6,6 +6,7 @@ import {
 	loadPhrasesLevel,
 	loadAllTranslations,
 	loadAllTranscriptions,
+	loadTenseRegistry,
 } from "../data/wordService";
 import { logService } from "./logService";
 import type { AppSettings } from "../data/schemas";
@@ -28,6 +29,9 @@ export interface GameData {
 		mode: string;
 		currentLevel: string[];
 		currentTopic: string[];
+		currentTenses: string[];
+		currentForms: string[];
+		tenseQuantity: string;
 		currentPlaylist: string | null;
 		sourceLanguage: string;
 		targetLanguage: string;
@@ -109,10 +113,13 @@ export class GameDataService {
 			mode,
 			currentLevel,
 			currentTopic,
+			currentTenses,
+			currentForms,
+			tenseQuantity,
 			currentPlaylist,
 		} = settings;
 
-		logService.log("data", "Loading game data", { mode, currentLevel, currentTopic });
+		logService.log("data", "Loading game data", { mode, currentLevel, currentTopic, currentTenses });
 
 		let sourceTranslations: TranslationDictionary = {};
 		let targetTranslations: TranslationDictionary = {};
@@ -174,27 +181,56 @@ export class GameDataService {
 
 				if (ids && ids.length > 0) {
 					if (mode === "levels") {
-						for (const levelId of ids) {
-							if (levelId === "ALL") {
-								const allLevels = ["A1", "A2", "B1", "B2", "C1", "C2"];
-								for (const l of allLevels) {
-									const lvl = await loadLevel(l as any);
-									words.push(...lvl.words);
+						const levelResults = await Promise.all(
+							ids.map(async (levelId) => {
+								if (levelId === "ALL") {
+									const allLevels = ["A1", "A2", "B1", "B2", "C1", "C2"];
+									const results = await Promise.all(allLevels.map((l) => loadLevel(l as any)));
+									return results.flatMap((r) => r.words);
+								} else {
+									const lvl = await loadLevel(levelId as any);
+									return lvl.words;
 								}
-							} else {
-								const lvl = await loadLevel(levelId as any);
-								words.push(...lvl.words);
-							}
-						}
+							}),
+						);
+						words.push(...levelResults.flat());
 					} else if (mode === "topics") {
-						for (const topicId of ids) {
-							const topic = await loadTopic(topicId);
-							words.push(...topic.words);
-						}
+						const topicResults = await Promise.all(ids.map((id) => loadTopic(id)));
+						words.push(...topicResults.flatMap((t) => t.words));
 					} else if (mode === "phrases") {
-						for (const levelId of ids) {
-							const phrases = await loadPhrasesLevel(levelId as any);
-							words.push(...phrases.words);
+						const phraseResults = await Promise.all(ids.map((id) => loadPhrasesLevel(id as any)));
+						words.push(...phraseResults.flatMap((p) => p.words));
+					}
+				}
+			}
+
+			if (mode === "tenses") {
+				const registry = await loadTenseRegistry();
+				const phraseIds = tenseQuantity === "3" ? registry.packs["3"] : registry.all_phrases;
+
+				// Завантажуємо матриці для кожної фрази паралельно
+				const translationResults = await Promise.all(
+					phraseIds.map(async (pId) => {
+						const [srcDict, tgtDict] = await Promise.all([
+							loadTranslations(sourceLanguage, "tenses", pId),
+							loadTranslations(targetLanguage, "tenses", pId),
+						]);
+						return { pId, srcDict, tgtDict };
+					}),
+				);
+
+				for (const { pId, srcDict, tgtDict } of translationResults) {
+					// Мержимо в основні словники
+					Object.assign(sourceTranslations, srcDict);
+					Object.assign(targetTranslations, tgtDict);
+
+					// Генеруємо ключі для обраних часів та форм
+					for (const tenseId of currentTenses) {
+						for (const form of currentForms) {
+							const key = `t.${pId}.${tenseId}.${form}`;
+							if (sourceTranslations[key] && targetTranslations[key]) {
+								words.push(key);
+							}
 						}
 					}
 				}
@@ -219,6 +255,9 @@ export class GameDataService {
 				mode,
 				currentLevel: [...currentLevel],
 				currentTopic: [...currentTopic],
+				currentTenses: [...currentTenses],
+				currentForms: [...currentForms],
+				tenseQuantity,
 				currentPlaylist,
 				sourceLanguage,
 				targetLanguage,

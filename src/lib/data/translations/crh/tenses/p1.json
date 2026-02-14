@@ -1,0 +1,62 @@
+{
+  "present_simple": {
+    "aff": "Men mektepke baram",
+    "neg": "Men mektepke barmayım",
+    "ques": "Men mektepke barammı?"
+  },
+  "past_simple": {
+    "aff": "Men mektepke bardım",
+    "neg": "Men mektepke barmadım",
+    "ques": "Men mektepke bardımmı?"
+  },
+  "future_simple": {
+    "aff": "Men mektepke barırım",
+    "neg": "Men mektepke barmazman",
+    "ques": "Men mektepke barırımmı?"
+  },
+  "present_continuous": {
+    "aff": "Men mektepke barayatırm",
+    "neg": "Men mektepke barayatırmayım",
+    "ques": "Men mektepke barayatırmmı?"
+  },
+  "past_continuous": {
+    "aff": "Men mektepke barayatır edim",
+    "neg": "Men mektepke barayatır degil edim",
+    "ques": "Men mektepke barayatır edimmi?"
+  },
+  "future_continuous": {
+    "aff": "Men mektepke barayatır olurım",
+    "neg": "Men mektepke barayatır olmazman",
+    "ques": "Men mektepke barayatır olurımmı?"
+  },
+  "present_perfect": {
+    "aff": "Men mektepke barıp keldim",
+    "neg": "Men mektepke barıp kelmedim",
+    "ques": "Men mektepke barıp keldimmi?"
+  },
+  "past_perfect": {
+    "aff": "Men mektepke barğan edim",
+    "neg": "Men mektepke barmağan edim",
+    "ques": "Men mektepke barğan edimmi?"
+  },
+  "future_perfect": {
+    "aff": "Men mektepke barğan olurım",
+    "neg": "Men mektepke barmağan olurım",
+    "ques": "Men mektepke barğan olurımmı?"
+  },
+  "present_perfect_continuous": {
+    "aff": "Men çoqtan berli mektepke baram",
+    "neg": "Men çoqtan berli mektepke barmayım",
+    "ques": "Men çoqtan berli mektepke barammı?"
+  },
+  "past_perfect_continuous": {
+    "aff": "Men çoqtan berli mektepke bara edim",
+    "neg": "Men çoqtan berli mektepke barmay edim",
+    "ques": "Men çoqtan berli mektepke bara edimmi?"
+  },
+  "future_perfect_continuous": {
+    "aff": "Men çoqtan berli mektepke bara olurım",
+    "neg": "Men çoqtan berli mektepke barmay olurım",
+    "ques": "Men çoqtan berli mektepke bara olurımmı?"
+  }
+}

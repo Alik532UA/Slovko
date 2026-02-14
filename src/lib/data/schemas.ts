@@ -340,9 +340,12 @@ const AppSettingsCoreSchema = z.object({
 	interfaceLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("uk"),
 	sourceLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("en"),
 	targetLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("uk"),
-	mode: z.enum(["levels", "topics", "phrases", "playlists"]).default("levels"),
+	mode: z.enum(["levels", "topics", "phrases", "tenses", "playlists"]).default("levels"),
 	currentLevel: z.array(z.enum(["A1", "A2", "B1", "B2", "C1", "C2", "ALL"])).default(["A1"]),
 	currentTopic: z.array(z.string()).default(["nature"]),
+	currentTenses: z.array(z.string()).default(["present_simple"]),
+	currentForms: z.array(z.enum(["aff", "neg", "ques"])).default(["aff", "neg", "ques"]),
+	tenseQuantity: z.enum(["1", "3", "many"]).default("3"),
 	currentPlaylist: z.string().nullable().default(null),
 	hasCompletedOnboarding: z.boolean().default(false),
 	enablePronunciationSource: z.boolean().default(true),
@@ -377,6 +380,22 @@ export const AppSettingsSchema = z.preprocess((val: unknown) => {
 	}
 	if (!Array.isArray(result.currentTopic)) {
 		result.currentTopic = undefined;
+	}
+
+	// Нормалізація currentTenses
+	if (typeof result.currentTenses === "string") {
+		result.currentTenses = result.currentTenses.split(",").filter(Boolean);
+	}
+	if (!Array.isArray(result.currentTenses)) {
+		result.currentTenses = undefined;
+	}
+
+	// Нормалізація currentForms
+	if (typeof result.currentForms === "string") {
+		result.currentForms = result.currentForms.split(",").filter(Boolean);
+	}
+	if (!Array.isArray(result.currentForms)) {
+		result.currentForms = undefined;
 	}
 
 	return result;
@@ -472,9 +491,12 @@ const commaStringToArray = z.preprocess((val) => {
 }, z.array(z.string()).optional());
 
 export const UrlParamsSchema = z.object({
-	mode: z.enum(["levels", "topics", "phrases", "playlists"]).optional(),
+	mode: z.enum(["levels", "topics", "phrases", "tenses", "playlists"]).optional(),
 	level: commaStringToArray,
 	topic: commaStringToArray,
+	tense: commaStringToArray,
+	forms: commaStringToArray,
+	qty: z.enum(["1", "3", "many"]).optional(),
 	playlist: z.string().optional(),
 	source: z.enum(["en", "uk", "nl", "de", "el", "crh"]).optional(),
 	target: z.enum(["en", "uk", "nl", "de", "el", "crh"]).optional(),

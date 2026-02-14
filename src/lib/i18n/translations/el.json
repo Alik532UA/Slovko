@@ -1,4 +1,4 @@
-{
+﻿{
 	"app": {
 		"title": "Slovko"
 	},
@@ -20,7 +20,8 @@
 		"levels": "Επίπεδα",
 		"topics": "Θέματα",
 		"phrases": "Φράσεις",
-		"playlists": "Λίστες"
+		"playlists": "Λίστες",
+		"tenses": "Tenses"
 	},
 	"playlists": {
 		"favorites": "Αγαπημένα",
@@ -379,5 +380,36 @@
 		"active": "Ενεργός",
 		"waiting": "Αναμονή για άλλους...",
 		"paste": "Επικόλληση από το πρόχειρο"
+	},
+	"tenses": {
+		"title": "Grammar Tenses",
+		"filterForms": "Sentence Forms",
+		"filterQuantity": "Phrases Quantity",
+		"qty1": "1 phrase",
+		"qty3": "3 phrases",
+		"qtyMany": "Many phrases",
+		"underConstruction": "This option will be available later",
+		"forms": {
+			"aff": "Affirmative",
+			"neg": "Negative",
+			"ques": "Question"
+		},
+		"groups": {
+			"present": "Present",
+			"past": "Past",
+			"future": "Future"
+		},
+		"present_simple": "Present Simple",
+		"present_continuous": "Present Continuous",
+		"present_perfect": "Present Perfect",
+		"present_perfect_continuous": "Present Perfect Continuous",
+		"past_simple": "Past Simple",
+		"past_continuous": "Past Continuous",
+		"past_perfect": "Past Perfect",
+		"past_perfect_continuous": "Past Perfect Continuous",
+		"future_simple": "Future Simple",
+		"future_continuous": "Future Continuous",
+		"future_perfect": "Future Perfect",
+		"future_perfect_continuous": "Future Perfect Continuous"
 	}
 }

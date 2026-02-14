@@ -1,0 +1,62 @@
+{
+  "present_simple": {
+    "aff": "Zij spreken Engels",
+    "neg": "Zij spreken geen Engels",
+    "ques": "Spreken zij Engels?"
+  },
+  "past_simple": {
+    "aff": "Zij spraken Engels",
+    "neg": "Zij spraken geen Engels",
+    "ques": "Spraken zij Engels?"
+  },
+  "future_simple": {
+    "aff": "Zij zullen Engels spreken",
+    "neg": "Zij zullen geen Engels spreken",
+    "ques": "Zullen zij Engels spreken?"
+  },
+  "present_continuous": {
+    "aff": "Zij zijn Engels aan het spreken",
+    "neg": "Zij zijn geen Engels aan het spreken",
+    "ques": "Zijn zij Engels aan het spreken?"
+  },
+  "past_continuous": {
+    "aff": "Zij waren Engels aan het spreken",
+    "neg": "Zij waren geen Engels aan het spreken",
+    "ques": "Waren zij Engels aan het spreken?"
+  },
+  "future_continuous": {
+    "aff": "Zij zullen Engels aan het spreken zijn",
+    "neg": "Zij zullen geen Engels aan het spreken zijn",
+    "ques": "Zullen zij Engels aan het spreken zijn?"
+  },
+  "present_perfect": {
+    "aff": "Zij hebben Engels gesproken",
+    "neg": "Zij hebben geen Engels gesproken",
+    "ques": "Hebben zij Engels gesproken?"
+  },
+  "past_perfect": {
+    "aff": "Zij hadden Engels gesproken",
+    "neg": "Zij hadden geen Engels gesproken",
+    "ques": "Hadden zij Engels gesproken?"
+  },
+  "future_perfect": {
+    "aff": "Zij zullen Engels gesproken hebben",
+    "neg": "Zij zullen geen Engels gesproken hebben",
+    "ques": "Zullen zij Engels gesproken hebben?"
+  },
+  "present_perfect_continuous": {
+    "aff": "Zij spreken al lang Engels",
+    "neg": "Zij spreken al lang geen Engels",
+    "ques": "Spreken zij al lang Engels?"
+  },
+  "past_perfect_continuous": {
+    "aff": "Zij hadden al lang Engels gesproken",
+    "neg": "Zij hadden al lang geen Engels gesproken",
+    "ques": "Hadden zij al lang Engels gesproken?"
+  },
+  "future_perfect_continuous": {
+    "aff": "Zij zullen al lang Engels gesproken hebben",
+    "neg": "Zij zullen al lang geen Engels gesproken hebben",
+    "ques": "Zullen zij al lang Engels gesproken hebben?"
+  }
+}

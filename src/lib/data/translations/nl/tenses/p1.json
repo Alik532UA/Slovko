@@ -1,0 +1,62 @@
+{
+  "present_simple": {
+    "aff": "Ik ga naar school",
+    "neg": "Ik ga niet naar school",
+    "ques": "Ga ik naar school?"
+  },
+  "past_simple": {
+    "aff": "Ik ging naar school",
+    "neg": "Ik ging niet naar school",
+    "ques": "Ging ik naar school?"
+  },
+  "future_simple": {
+    "aff": "Ik zal naar school gaan",
+    "neg": "Ik zal niet naar school gaan",
+    "ques": "Zal ik naar school gaan?"
+  },
+  "present_continuous": {
+    "aff": "Ik ben naar school aan het gaan",
+    "neg": "Ik ben niet naar school aan het gaan",
+    "ques": "Ben ik naar school aan het gaan?"
+  },
+  "past_continuous": {
+    "aff": "Ik was naar school aan het gaan",
+    "neg": "Ik was niet naar school aan het gaan",
+    "ques": "Was ik naar school aan het gaan?"
+  },
+  "future_continuous": {
+    "aff": "Ik zal naar school aan het gaan zijn",
+    "neg": "Ik zal niet naar school aan het gaan zijn",
+    "ques": "Zal ik naar school aan het gaan zijn?"
+  },
+  "present_perfect": {
+    "aff": "Ik ben naar school gegaan",
+    "neg": "Ik ben niet naar school gegaan",
+    "ques": "Ben ik naar school gegaan?"
+  },
+  "past_perfect": {
+    "aff": "Ik was naar school gegaan",
+    "neg": "Ik was niet naar school gegaan",
+    "ques": "Was ik naar school gegaan?"
+  },
+  "future_perfect": {
+    "aff": "Ik zal naar school gegaan zijn",
+    "neg": "Ik zal niet naar school gegaan zijn",
+    "ques": "Zal ik naar school gegaan zijn?"
+  },
+  "present_perfect_continuous": {
+    "aff": "Ik ga al lang naar school",
+    "neg": "Ik ga al lang niet naar school",
+    "ques": "Ga ik al lang naar school?"
+  },
+  "past_perfect_continuous": {
+    "aff": "Ik was al lang naar school gegaan",
+    "neg": "Ik was al lang niet naar school gegaan",
+    "ques": "Was ik al lang naar school gegaan?"
+  },
+  "future_perfect_continuous": {
+    "aff": "Ik zal al lang naar school gegaan zijn",
+    "neg": "Ik zal al lang niet naar school gegaan zijn",
+    "ques": "Zal ik al lang naar school gegaan zijn?"
+  }
+}

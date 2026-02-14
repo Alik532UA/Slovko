@@ -15,6 +15,7 @@ const MODE_CONFIG: Record<GameMode, { pairsPerPage: number }> = {
 	levels: { pairsPerPage: 6 },
 	topics: { pairsPerPage: 6 },
 	phrases: { pairsPerPage: 6 },
+	tenses: { pairsPerPage: 6 },
 	playlists: { pairsPerPage: 6 },
 };
 

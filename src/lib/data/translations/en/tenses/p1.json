@@ -1,0 +1,62 @@
+{
+  "present_simple": {
+    "aff": "I go to school",
+    "neg": "I don't go to school",
+    "ques": "Do I go to school?"
+  },
+  "past_simple": {
+    "aff": "I went to school",
+    "neg": "I didn't go to school",
+    "ques": "Did I go to school?"
+  },
+  "future_simple": {
+    "aff": "I will go to school",
+    "neg": "I won't go to school",
+    "ques": "Will I go to school?"
+  },
+  "present_continuous": {
+    "aff": "I am going to school",
+    "neg": "I am not going to school",
+    "ques": "Am I going to school?"
+  },
+  "past_continuous": {
+    "aff": "I was going to school",
+    "neg": "I wasn't going to school",
+    "ques": "Was I going to school?"
+  },
+  "future_continuous": {
+    "aff": "I will be going to school",
+    "neg": "I won't be going to school",
+    "ques": "Will I be going to school?"
+  },
+  "present_perfect": {
+    "aff": "I have gone to school",
+    "neg": "I haven't gone to school",
+    "ques": "Have I gone to school?"
+  },
+  "past_perfect": {
+    "aff": "I had gone to school",
+    "neg": "I hadn't gone to school",
+    "ques": "Had I gone to school?"
+  },
+  "future_perfect": {
+    "aff": "I will have gone to school",
+    "neg": "I won't have gone to school",
+    "ques": "Will I have gone to school?"
+  },
+  "present_perfect_continuous": {
+    "aff": "I have been going to school",
+    "neg": "I haven't been going to school",
+    "ques": "Have I been going to school?"
+  },
+  "past_perfect_continuous": {
+    "aff": "I had been going to school",
+    "neg": "I hadn't been going to school",
+    "ques": "Had I been going to school?"
+  },
+  "future_perfect_continuous": {
+    "aff": "I will have been going to school",
+    "neg": "I won't have been going to school",
+    "ques": "Will I have been going to school?"
+  }
+}

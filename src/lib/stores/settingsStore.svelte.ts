@@ -13,6 +13,7 @@ import {
 	type CEFRLevel,
 	type AppTheme,
 	type PlaylistId,
+	type TenseForm,
 } from "../types";
 import { AppSettingsSchema, type AppSettings } from "../data/schemas";
 
@@ -162,6 +163,25 @@ function createSettingsStore() {
 			logService.log("settings", "setTopic:", topicId);
 			const topics = Array.isArray(topicId) ? topicId : [topicId];
 			settings = { ...settings, currentTopic: topics, mode: "topics" };
+			saveSettings();
+		},
+
+		setTenses(tenseIds: string | string[]) {
+			logService.log("settings", "setTenses:", tenseIds);
+			const tenses = Array.isArray(tenseIds) ? tenseIds : [tenseIds];
+			settings = { ...settings, currentTenses: tenses, mode: "tenses" };
+			saveSettings();
+		},
+
+		setTenseForms(forms: TenseForm[]) {
+			logService.log("settings", "setTenseForms:", forms);
+			settings = { ...settings, currentForms: forms };
+			saveSettings();
+		},
+
+		setTenseQuantity(qty: "1" | "3" | "many") {
+			logService.log("settings", "setTenseQuantity:", qty);
+			settings = { ...settings, tenseQuantity: qty };
 			saveSettings();
 		},
 

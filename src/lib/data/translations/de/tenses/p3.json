@@ -1,0 +1,62 @@
+{
+  "present_simple": {
+    "aff": "Sie sprechen Englisch",
+    "neg": "Sie sprechen kein Englisch",
+    "ques": "Sprechen sie Englisch?"
+  },
+  "past_simple": {
+    "aff": "Sie sprachen Englisch",
+    "neg": "Sie sprachen kein Englisch",
+    "ques": "Sprachen sie Englisch?"
+  },
+  "future_simple": {
+    "aff": "Sie werden Englisch sprechen",
+    "neg": "Sie werden kein Englisch sprechen",
+    "ques": "Werden sie Englisch sprechen?"
+  },
+  "present_continuous": {
+    "aff": "Sie sprechen gerade Englisch",
+    "neg": "Sie sprechen gerade kein Englisch",
+    "ques": "Sprechen sie gerade Englisch?"
+  },
+  "past_continuous": {
+    "aff": "Sie sprachen gerade Englisch",
+    "neg": "Sie sprachen gerade kein Englisch",
+    "ques": "Sprachen sie gerade Englisch?"
+  },
+  "future_continuous": {
+    "aff": "Sie werden gerade Englisch sprechen",
+    "neg": "Sie werden gerade kein Englisch sprechen",
+    "ques": "Werden sie gerade Englisch sprechen?"
+  },
+  "present_perfect": {
+    "aff": "Sie haben Englisch gesprochen",
+    "neg": "Sie haben kein Englisch gesprochen",
+    "ques": "Haben sie Englisch gesprochen?"
+  },
+  "past_perfect": {
+    "aff": "Sie hatten Englisch gesprochen",
+    "neg": "Sie hatten kein Englisch gesprochen",
+    "ques": "Hatten sie Englisch gesprochen?"
+  },
+  "future_perfect": {
+    "aff": "Sie werden Englisch gesprochen haben",
+    "neg": "Sie werden kein Englisch gesprochen haben",
+    "ques": "Werden sie Englisch gesprochen haben?"
+  },
+  "present_perfect_continuous": {
+    "aff": "Sie sprechen schon lange Englisch",
+    "neg": "Sie sprechen schon lange kein Englisch",
+    "ques": "Sprechen sie schon lange Englisch?"
+  },
+  "past_perfect_continuous": {
+    "aff": "Sie hatten lange Englisch gesprochen",
+    "neg": "Sie hatten lange kein Englisch gesprochen",
+    "ques": "Hatten sie lange Englisch gesprochen?"
+  },
+  "future_perfect_continuous": {
+    "aff": "Sie werden lange Englisch gesprochen haben",
+    "neg": "Sie werden lange kein Englisch gesprochen haben",
+    "ques": "Werden sie lange Englisch gesprochen haben?"
+  }
+}

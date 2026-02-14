@@ -222,9 +222,10 @@ export class GameController {
 	}
 
 	private getCurrentContextId(): string {
-		const { mode, currentLevel, currentTopic, currentPlaylist } =
+		const { mode, currentLevel, currentTopic, currentTenses, currentPlaylist } =
 			settingsStore.value;
 		if (mode === "topics") return currentTopic.join(",");
+		if (mode === "tenses") return currentTenses.join(",");
 		if (mode === "playlists") return currentPlaylist || "mixed";
 		return currentLevel.join(","); // levels or phrases
 	}

@@ -1,0 +1,62 @@
+{
+  "present_simple": {
+    "aff": "They speak English",
+    "neg": "They don't speak English",
+    "ques": "Do they speak English?"
+  },
+  "past_simple": {
+    "aff": "They spoke English",
+    "neg": "They didn't speak English",
+    "ques": "Did they speak English?"
+  },
+  "future_simple": {
+    "aff": "They will speak English",
+    "neg": "They won't speak English",
+    "ques": "Will they speak English?"
+  },
+  "present_continuous": {
+    "aff": "They are speaking English",
+    "neg": "They are not speaking English",
+    "ques": "Are they speaking English?"
+  },
+  "past_continuous": {
+    "aff": "They were speaking English",
+    "neg": "They weren't speaking English",
+    "ques": "Were they speaking English?"
+  },
+  "future_continuous": {
+    "aff": "They will be speaking English",
+    "neg": "They won't be speaking English",
+    "ques": "Will they be speaking English?"
+  },
+  "present_perfect": {
+    "aff": "They have spoken English",
+    "neg": "They haven't spoken English",
+    "ques": "Have they spoken English?"
+  },
+  "past_perfect": {
+    "aff": "They had spoken English",
+    "neg": "They hadn't spoken English",
+    "ques": "Had they spoken English?"
+  },
+  "future_perfect": {
+    "aff": "They will have spoken English",
+    "neg": "They won't have spoken English",
+    "ques": "Will they have spoken English?"
+  },
+  "present_perfect_continuous": {
+    "aff": "They have been speaking English",
+    "neg": "They haven't been speaking English",
+    "ques": "Have they been speaking English?"
+  },
+  "past_perfect_continuous": {
+    "aff": "They had been speaking English",
+    "neg": "They hadn't been speaking English",
+    "ques": "Had they been speaking English?"
+  },
+  "future_perfect_continuous": {
+    "aff": "They will have been speaking English",
+    "neg": "They won't have been speaking English",
+    "ques": "Will they have been speaking English?"
+  }
+}

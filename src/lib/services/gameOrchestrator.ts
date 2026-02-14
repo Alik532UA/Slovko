@@ -28,6 +28,9 @@ class GameOrchestratorClass {
 			mode: url.searchParams.get("mode") || undefined,
 			level: url.searchParams.get("level") || undefined,
 			topic: url.searchParams.get("topic") || undefined,
+			tense: url.searchParams.get("tense") || undefined,
+			forms: url.searchParams.get("forms") || undefined,
+			qty: url.searchParams.get("qty") || undefined,
 			playlist: url.searchParams.get("playlist") || undefined,
 			source: url.searchParams.get("source") || undefined,
 			target: url.searchParams.get("target") || undefined,
@@ -84,6 +87,15 @@ class GameOrchestratorClass {
 		}
 		if (validated.topic && JSON.stringify(validated.topic) !== JSON.stringify(settings.currentTopic)) {
 			settings.currentTopic = validated.topic;
+		}
+		if (validated.tense && JSON.stringify(validated.tense) !== JSON.stringify(settings.currentTenses)) {
+			settings.currentTenses = validated.tense;
+		}
+		if (validated.forms && JSON.stringify(validated.forms) !== JSON.stringify(settings.currentForms)) {
+			settings.currentForms = validated.forms as any;
+		}
+		if (validated.qty && validated.qty !== settings.tenseQuantity) {
+			settings.tenseQuantity = validated.qty;
 		}
 		if (validated.playlist && validated.playlist !== settings.currentPlaylist) {
 			settings.currentPlaylist = validated.playlist;

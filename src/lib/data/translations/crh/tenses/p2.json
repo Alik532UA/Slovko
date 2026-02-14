@@ -1,0 +1,62 @@
+{
+  "present_simple": {
+    "aff": "O ağır çalışa",
+    "neg": "O ağır çalışmay",
+    "ques": "O ağır çalışamı?"
+  },
+  "past_simple": {
+    "aff": "O ağır çalıştı",
+    "neg": "O ağır çalışmadı",
+    "ques": "O ağır çalışтımı?"
+  },
+  "future_simple": {
+    "aff": "O ağır çalışır",
+    "neg": "O ağır çalışmaz",
+    "ques": "O ağır çalışırmı?"
+  },
+  "present_continuous": {
+    "aff": "O ağır çalışayatır",
+    "neg": "O ağır çalışayatırmay",
+    "ques": "O ağır çalışayatırmı?"
+  },
+  "past_continuous": {
+    "aff": "O ağır çalışayatır edi",
+    "neg": "O ağır çalışayatır degil edi",
+    "ques": "O ağır çalışayatır edimi?"
+  },
+  "future_continuous": {
+    "aff": "O ağır çalışayatır olur",
+    "neg": "O ağır çalışayatır olmaz",
+    "ques": "O ağır çalışayatır olurmı?"
+  },
+  "present_perfect": {
+    "aff": "O ağır çalışıp bitti",
+    "neg": "O ağır çalışıp bitmedi",
+    "ques": "O ağır çalışıp bittimi?"
+  },
+  "past_perfect": {
+    "aff": "O ağır çalışqan edi",
+    "neg": "O ağır çalışmağan edi",
+    "ques": "O ağır çalışqan edimi?"
+  },
+  "future_perfect": {
+    "aff": "O ağır çalışqan olur",
+    "neg": "O ağır çalışmağan olur",
+    "ques": "O ağır çalışqan olurmı?"
+  },
+  "present_perfect_continuous": {
+    "aff": "O çoqtan berli ağır çalışa",
+    "neg": "O çoqtan berli ağır çalışmay",
+    "ques": "O çoqtan berli ağır çalışamı?"
+  },
+  "past_perfect_continuous": {
+    "aff": "O çoqtan berli ağır çalışa edi",
+    "neg": "O çoqtan berli ağır çalışmay edi",
+    "ques": "O çoqtan berli ağır çalışa edimi?"
+  },
+  "future_perfect_continuous": {
+    "aff": "O çoqtan berli ağır çalışa olur",
+    "neg": "O çoqtan berli ağır çalışmay olur",
+    "ques": "O çoqtan berli ağır çalışa olurmı?"
+  }
+}

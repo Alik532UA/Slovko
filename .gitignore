@@ -2,6 +2,7 @@
 .firebase
 .temp
 .private
+.private/notes
 .private/notes.txt
 .agent/rules
 README-source.md

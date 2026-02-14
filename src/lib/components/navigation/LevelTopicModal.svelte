@@ -14,6 +14,8 @@
 	// Mode Components
 	import LevelGrid from "./modes/LevelGrid.svelte";
 	import TopicGrid from "./modes/TopicGrid.svelte";
+	import TenseGrid from "./modes/TenseGrid.svelte";
+	import TenseFilters from "./modes/TenseFilters.svelte";
 	import PlaylistGrid from "./modes/PlaylistGrid.svelte";
 
 	interface Props {
@@ -26,6 +28,7 @@
 		{ id: "levels", label: "tabs.levels", testId: "tab-levels" },
 		{ id: "topics", label: "tabs.topics", testId: "tab-topics" },
 		{ id: "phrases", label: "tabs.phrases", testId: "tab-phrases" },
+		{ id: "tenses", label: "tabs.tenses", testId: "tab-tenses" },
 		{ id: "playlists", label: "tabs.playlists", testId: "tab-playlists" },
 	];
 
@@ -34,12 +37,25 @@
 	
 	// Local state for multi-selection
 	let selectedIds = $state<string[]>([]);
+	let selectedForms = $state(settingsStore.value.currentForms);
+	let tenseQuantity = $state(settingsStore.value.tenseQuantity);
 
 	// Sync local selection when tab changes or modal opens
 	$effect(() => {
 		if (activeTab === settingsStore.value.mode) {
 			if (activeTab === "topics") selectedIds = [...settingsStore.value.currentTopic];
+			else if (activeTab === "tenses") {
+				selectedIds = [...settingsStore.value.currentTenses];
+				selectedForms = [...settingsStore.value.currentForms];
+				tenseQuantity = settingsStore.value.tenseQuantity;
+			}
 			else if (activeTab === "levels" || activeTab === "phrases") selectedIds = [...settingsStore.value.currentLevel];
+		} else if (activeTab === "tenses") {
+			// Якщо ми перейшли на вкладку "Часи", але це не поточний режим гри,
+			// завантажуємо останні збережені налаштування для цієї вкладки
+			selectedIds = [...settingsStore.value.currentTenses];
+			selectedForms = [...settingsStore.value.currentForms];
+			tenseQuantity = settingsStore.value.tenseQuantity;
 		} else {
 			selectedIds = [];
 		}
@@ -51,6 +67,27 @@
 		} else {
 			selectedIds = [...selectedIds, id];
 		}
+		
+		// Відразу зберігаємо вибір у стор, щоб він не зникав
+		if (activeTab === "tenses") {
+			settingsStore.setTenses(selectedIds);
+		}
+	}
+
+	function toggleForm(form: any) {
+		if (selectedForms.includes(form)) {
+			if (selectedForms.length > 1) {
+				selectedForms = selectedForms.filter(f => f !== form);
+			}
+		} else {
+			selectedForms = [...selectedForms, form];
+		}
+		settingsStore.setTenseForms(selectedForms);
+	}
+
+	function updateQuantity(qty: "1" | "3" | "many") {
+		tenseQuantity = qty;
+		settingsStore.setTenseQuantity(qty);
 	}
 
 	function resetSelection() {
@@ -67,6 +104,9 @@
 			goto(`?mode=phrases&level=${idsStr}`);
 		} else if (activeTab === "topics") {
 			goto(`?mode=topics&topic=${idsStr}`);
+		} else if (activeTab === "tenses") {
+			const formsStr = selectedForms.join(",");
+			goto(`?mode=tenses&tense=${idsStr}&forms=${formsStr}&qty=${tenseQuantity}`);
 		}
 		onclose();
 	}
@@ -105,6 +145,14 @@
 										<TopicGrid {selectedIds} onselect={toggleId} />
 									{:else if activeTab === "phrases"}
 										<LevelGrid mode="phrases" {selectedIds} onselect={toggleId} />
+									{:else if activeTab === "tenses"}
+										<TenseFilters 
+											selectedForms={selectedForms} 
+											quantity={tenseQuantity} 
+											onToggleForm={toggleForm}
+											onChangeQuantity={updateQuantity}
+										/>
+										<TenseGrid {selectedIds} onselect={toggleId} />
 									{:else if activeTab === "playlists"}
 										<PlaylistGrid onselect={selectPlaylist} />
 									{/if}

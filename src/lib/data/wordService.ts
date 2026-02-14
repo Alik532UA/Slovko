@@ -121,7 +121,7 @@ export async function loadTopic(topicId: string): Promise<WordTopic> {
  */
 export async function loadTranslations(
 	language: Language,
-	category: "levels" | "topics" | "phrases",
+	category: "levels" | "topics" | "phrases" | "tenses",
 	id: string,
 ): Promise<TranslationDictionary> {
 	// Завантажуємо семантику паралельно
@@ -213,6 +213,25 @@ export async function loadTranslations(
 
 			translationCache.set(cacheKey, topicDict);
 			return topicDict;
+		} else if (category === "tenses") {
+			// id тут - це phraseId (напр. "p1")
+			const path = `./translations/${language}/tenses/${id}.json`;
+			if (translationModules[path]) {
+				const module: any = await translationModules[path]();
+				const rawData = module.default || module;
+				
+				// Трансформуємо матрицю фрази у плаский словник ключів
+				// t.p1.present_simple.aff -> "I go to school"
+				const dict: TranslationDictionary = {};
+				for (const [tenseId, forms] of Object.entries(rawData)) {
+					for (const [form, text] of Object.entries(forms as any)) {
+						dict[`t.${id}.${tenseId}.${form}`] = text as string;
+					}
+				}
+				translationCache.set(cacheKey, dict);
+				return dict;
+			}
+			return {};
 		} else {
 			const path = `./translations/${language}/phrases/${id}.json`;
 			if (translationModules[path]) {
@@ -283,6 +302,19 @@ export async function loadTranscriptions(
 		}
 	} catch (e) {
 		return {};
+	}
+}
+
+/**
+ * Завантажити реєстр часів (списки фраз для пакетів)
+ */
+export async function loadTenseRegistry(): Promise<{ packs: Record<string, string[]>, all_phrases: string[] }> {
+	try {
+		const module = await import("./phrases/tenses.json");
+		return module.default;
+	} catch (e) {
+		console.error("Failed to load tense registry", e);
+		return { packs: { "3": [] }, all_phrases: [] };
 	}
 }
 

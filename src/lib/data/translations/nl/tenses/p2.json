@@ -1,0 +1,62 @@
+{
+  "present_simple": {
+    "aff": "Hij werkt hard",
+    "neg": "Hij werkt niet hard",
+    "ques": "Werkt hij hard?"
+  },
+  "past_simple": {
+    "aff": "Hij werkte hard",
+    "neg": "Hij werkte niet hard",
+    "ques": "Werkte hij hard?"
+  },
+  "future_simple": {
+    "aff": "Hij zal hard werken",
+    "neg": "Hij zal niet hard werken",
+    "ques": "Zal hij hard werken?"
+  },
+  "present_continuous": {
+    "aff": "Hij is hard aan het werken",
+    "neg": "Hij is niet hard aan het werken",
+    "ques": "Is hij hard aan het werken?"
+  },
+  "past_continuous": {
+    "aff": "Hij was hard aan het werken",
+    "neg": "Hij was niet hard aan het werken",
+    "ques": "Was hij hard aan het werken?"
+  },
+  "future_continuous": {
+    "aff": "Hij zal hard aan het werken zijn",
+    "neg": "Hij zal niet hard aan het працювати zijn",
+    "ques": "Zal hij hard aan het працювати zijn?"
+  },
+  "present_perfect": {
+    "aff": "Hij heeft hard gewerkt",
+    "neg": "Hij heeft niet hard gewerkt",
+    "ques": "Heeft hij hard gewerkt?"
+  },
+  "past_perfect": {
+    "aff": "Hij had hard gewerkt",
+    "neg": "Hij had niet hard gewerkt",
+    "ques": "Had hij hard gewerkt?"
+  },
+  "future_perfect": {
+    "aff": "Hij zal hard gewerkt hebben",
+    "neg": "Hij zal niet hard gewerkt hebben",
+    "ques": "Zal hij hard gewerkt hebben?"
+  },
+  "present_perfect_continuous": {
+    "aff": "Hij werkt al lang hard",
+    "neg": "Hij werkt al lang niet hard",
+    "ques": "Werkt hij al lang hard?"
+  },
+  "past_perfect_continuous": {
+    "aff": "Hij had al lang hard gewerkt",
+    "neg": "Hij had al lang niet hard gewerkt",
+    "ques": "Had hij al lang hard gewerkt?"
+  },
+  "future_perfect_continuous": {
+    "aff": "Hij zal al lang hard gewerkt hebben",
+    "neg": "Hij zal al lang не буде hard gewerkt hebben",
+    "ques": "Zal hij al lang hard gewerkt hebben?"
+  }
+}

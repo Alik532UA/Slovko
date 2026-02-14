@@ -1,0 +1,62 @@
+{
+  "present_simple": {
+    "aff": "He works hard",
+    "neg": "He doesn't work hard",
+    "ques": "Does he work hard?"
+  },
+  "past_simple": {
+    "aff": "He worked hard",
+    "neg": "He didn't work hard",
+    "ques": "Did he work hard?"
+  },
+  "future_simple": {
+    "aff": "He will work hard",
+    "neg": "He won't work hard",
+    "ques": "Will he work hard?"
+  },
+  "present_continuous": {
+    "aff": "He is working hard",
+    "neg": "He is not working hard",
+    "ques": "Is he working hard?"
+  },
+  "past_continuous": {
+    "aff": "He was working hard",
+    "neg": "He wasn't working hard",
+    "ques": "Was he working hard?"
+  },
+  "future_continuous": {
+    "aff": "He will be working hard",
+    "neg": "He won't be working hard",
+    "ques": "Will he be working hard?"
+  },
+  "present_perfect": {
+    "aff": "He has worked hard",
+    "neg": "He hasn't worked hard",
+    "ques": "Has he worked hard?"
+  },
+  "past_perfect": {
+    "aff": "He had worked hard",
+    "neg": "He hadn't worked hard",
+    "ques": "Had he worked hard?"
+  },
+  "future_perfect": {
+    "aff": "He will have worked hard",
+    "neg": "He won't have worked hard",
+    "ques": "Will he have worked hard?"
+  },
+  "present_perfect_continuous": {
+    "aff": "He has been working hard",
+    "neg": "He hasn't been working hard",
+    "ques": "Has he been working hard?"
+  },
+  "past_perfect_continuous": {
+    "aff": "He had been working hard",
+    "neg": "He hadn't been working hard",
+    "ques": "Had he been working hard?"
+  },
+  "future_perfect_continuous": {
+    "aff": "He will have been working hard",
+    "neg": "He won't have been working hard",
+    "ques": "Will he have been working hard?"
+  }
+}

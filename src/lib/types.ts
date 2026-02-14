@@ -107,9 +107,13 @@ export interface LocalSemantics {
  * - 'levels': Sequential progression (A1 -> A2 -> ...)
  * - 'topics': Thematic learning (Food, Travel, etc.)
  * - 'phrases': Learning phrases by level
+ * - 'tenses': Grammar tenses learning
  * - 'playlists': Custom collections (Favorites, Mistakes, etc.)
  */
-export type GameMode = "levels" | "topics" | "phrases" | "playlists";
+export type GameMode = "levels" | "topics" | "phrases" | "tenses" | "playlists";
+
+/** Grammar Tense Forms */
+export type TenseForm = "aff" | "neg" | "ques";
 
 // ========================================
 // ПЛЕЙЛИСТИ
@@ -210,3 +214,28 @@ export const ALL_TOPICS = [
 ] as const;
 
 export type TopicId = (typeof ALL_TOPICS)[number]["id"];
+
+// ========================================
+// ГРАМАТИЧНІ ЧАСИ
+// ========================================
+
+/** Всі 12 граматичних часів з іконками */
+export const ALL_TENSES = [
+	// Present
+	{ id: "present_simple", icon: "Clock", group: "present" },
+	{ id: "present_continuous", icon: "Activity", group: "present" },
+	{ id: "present_perfect", icon: "CheckCircle", group: "present" },
+	{ id: "present_perfect_continuous", icon: "Timer", group: "present" },
+	// Past
+	{ id: "past_simple", icon: "History", group: "past" },
+	{ id: "past_continuous", icon: "StepBack", group: "past" },
+	{ id: "past_perfect", icon: "SkipBack", group: "past" },
+	{ id: "past_perfect_continuous", icon: "RotateCcw", group: "past" },
+	// Future
+	{ id: "future_simple", icon: "TrendingUp", group: "future" },
+	{ id: "future_continuous", icon: "StepForward", group: "future" },
+	{ id: "future_perfect", icon: "CheckSquare", group: "future" },
+	{ id: "future_perfect_continuous", icon: "Repeat", group: "future" },
+] as const;
+
+export type TenseId = (typeof ALL_TENSES)[number]["id"];

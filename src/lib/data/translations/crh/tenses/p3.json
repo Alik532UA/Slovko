@@ -1,0 +1,62 @@
+{
+  "present_simple": {
+    "aff": "Olar inglizce laf eteler",
+    "neg": "Olar inglizce laf etmeyler",
+    "ques": "Olar inglizce laf etelermi?"
+  },
+  "past_simple": {
+    "aff": "Olar inglizce laf ettiler",
+    "neg": "Olar inglizce laf etmediler",
+    "ques": "Olar inglizce laf ettilermi?"
+  },
+  "future_simple": {
+    "aff": "Olar inglizce laf eterler",
+    "neg": "Olar inglizce laf etmezler",
+    "ques": "Olar inglizce laf eterlermi?"
+  },
+  "present_continuous": {
+    "aff": "Olar inglizce laf eteyatırlar",
+    "neg": "Olar inglizce laf eteyatırmaylar",
+    "ques": "Olar inglizce laf eteyatırlarmı?"
+  },
+  "past_continuous": {
+    "aff": "Olar inglizce laf eteyatır ediler",
+    "neg": "Olar inglizce laf eteyatır degil ediler",
+    "ques": "Olar inglizce laf eteyatır edilermi?"
+  },
+  "future_continuous": {
+    "aff": "Olar inglizce laf eteyatır olurylar",
+    "neg": "Olar inglizce laf eteyatır olmazlar",
+    "ques": "Olar inglizce laf eteyatır olurylarmı?"
+  },
+  "present_perfect": {
+    "aff": "Olar inglizce laf etip bitirdiler",
+    "neg": "Olar inglizce laf etip bitirmediler",
+    "ques": "Olar inglizce laf etip bitirdilermi?"
+  },
+  "past_perfect": {
+    "aff": "Olar inglizce laf etken ediler",
+    "neg": "Olar inglizce laf etmegen ediler",
+    "ques": "Olar inglizce laf etken edilermi?"
+  },
+  "future_perfect": {
+    "aff": "Olar inglizce laf etken olurylar",
+    "neg": "Olar inglizce laf etmegen olurlar",
+    "ques": "Olar inglizce laf etken olurylarmı?"
+  },
+  "present_perfect_continuous": {
+    "aff": "Olar çoqtan berli inglizce laf eteler",
+    "neg": "Olar çoqtan berli inglizce laf etmeyler",
+    "ques": "Olar çoqtan berli inglizce laf etelermi?"
+  },
+  "past_perfect_continuous": {
+    "aff": "Olar çoqtan berli inglizce laf ete ediler",
+    "neg": "Olar çoqtan berli inglizce laf etmey ediler",
+    "ques": "Olar çoqtan berli inglizce laf ete edilermi?"
+  },
+  "future_perfect_continuous": {
+    "aff": "Olar çoqtan berli inglizce laf ete olurylar",
+    "neg": "Olar çoqtan berli inglizce laf etmey olurlar",
+    "ques": "Olar çoqtan berli inglizce laf ete olurylarmı?"
+  }
+}

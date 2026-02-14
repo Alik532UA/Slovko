@@ -1,4 +1,4 @@
-{
+﻿{
 	"app": {
 		"title": "Slovko"
 	},
@@ -20,7 +20,39 @@
 		"levels": "Рівні",
 		"topics": "Теми",
 		"phrases": "Фрази",
+		"tenses": "Часи",
 		"playlists": "Плейлісти"
+	},
+	"tenses": {
+		"title": "Граматичні часи",
+		"filterForms": "Форми речень",
+		"filterQuantity": "Кількість фраз",
+		"qty1": "1 фраза",
+		"qty3": "3 фрази",
+		"qtyMany": "Багато фраз",
+		"underConstruction": "Ця опція буде доступна згодом",
+		"forms": {
+			"aff": "Ствердження",
+			"neg": "Заперечення",
+			"ques": "Питання"
+		},
+		"groups": {
+			"present": "Теперішній",
+			"past": "Минулий",
+			"future": "Майбутній"
+		},
+		"present_simple": "Present Simple",
+		"present_continuous": "Present Continuous",
+		"present_perfect": "Present Perfect",
+		"present_perfect_continuous": "Present Perfect Continuous",
+		"past_simple": "Past Simple",
+		"past_continuous": "Past Continuous",
+		"past_perfect": "Past Perfect",
+		"past_perfect_continuous": "Past Perfect Continuous",
+		"future_simple": "Future Simple",
+		"future_continuous": "Future Continuous",
+		"future_perfect": "Future Perfect",
+		"future_perfect_continuous": "Future Perfect Continuous"
 	},
 	"playlists": {
 		"favorites": "Обране",
