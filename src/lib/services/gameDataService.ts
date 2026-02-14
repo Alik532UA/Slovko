@@ -206,7 +206,7 @@ export class GameDataService {
 
 			if (mode === "tenses") {
 				const registry = await loadTenseRegistry();
-				const phraseIds = tenseQuantity === "3" ? registry.packs["3"] : registry.all_phrases;
+				const phraseIds = registry.packs[tenseQuantity as keyof typeof registry.packs] || registry.packs["3"];
 
 				// Завантажуємо матриці для кожної фрази паралельно
 				const translationResults = await Promise.all(
