@@ -125,20 +125,35 @@ function createProgressStore() {
 		}
 
 		// ПЕРЕВІРКА ТА КОРЕКЦІЯ ЦІЛІСНОСТІ (Завжди!)
-		// totalCorrect МАЄ дорівнювати сумі всіх значень у levelStats + restoredPoints.
-		// totalAttempts МАЄ дорівнювати сумі всіх значень у levelStats.
+		// Ми НІКОЛИ не зменшуємо загальний результат користувача.
+		// Якщо totalCorrect > sum(levelStats), ми зберігаємо різницю як 'legacy', 
+		// щоб сума рівнів завжди збігалася з загальним результатом.
+		const currentLevelsSum = Object.values(newState.levelStats).reduce((a, b) => a + (b.totalCorrect || 0), 0);
+		const currentAttemptsSum = Object.values(newState.levelStats).reduce((a, b) => a + (b.totalAttempts || 0), 0);
+		
+		const baseTotalCorrect = newState.totalCorrect || 0;
+		const restored = newState.restoredPoints || 0;
+		
+		// Якщо загальний результат більший за суму рівнів (включаючи відновлені)
+		if (baseTotalCorrect > (currentLevelsSum + restored)) {
+			const diff = baseTotalCorrect - (currentLevelsSum + restored);
+			logService.warn("stats", `Found ${diff} orphaned points. Moving to 'legacy' category.`);
+			
+			if (!newState.levelStats["legacy"]) {
+				newState.levelStats["legacy"] = { totalCorrect: 0, totalAttempts: 0, bestCorrectStreak: 0, currentCorrectStreak: 0 };
+			}
+			newState.levelStats["legacy"].totalCorrect += diff;
+			// attempts теж коригуємо пропорційно або просто додаємо різницю
+			const attemptsDiff = Math.max(0, (newState.totalAttempts || 0) - currentAttemptsSum);
+			newState.levelStats["legacy"].totalAttempts += attemptsDiff;
+		}
+
+		// Тепер гарантуємо, що totalCorrect не менший за суму (Integrity Protection)
 		const finalCorrectSum = Object.values(newState.levelStats).reduce((a, b) => a + (b.totalCorrect || 0), 0);
 		const finalAttemptsSum = Object.values(newState.levelStats).reduce((a, b) => a + (b.totalAttempts || 0), 0);
-		const expectedTotalCorrect = finalCorrectSum + (newState.restoredPoints || 0);
-
-		if (expectedTotalCorrect !== newState.totalCorrect || finalAttemptsSum !== newState.totalAttempts) {
-			logService.warn("stats", `Correcting total counts to match level sums: 
-				Correct: ${newState.totalCorrect} -> ${expectedTotalCorrect} (sum: ${finalCorrectSum} + restored: ${newState.restoredPoints || 0}), 
-				Attempts: ${newState.totalAttempts} -> ${finalAttemptsSum}`);
-			
-			newState.totalCorrect = expectedTotalCorrect;
-			newState.totalAttempts = finalAttemptsSum;
-		}
+		
+		newState.totalCorrect = finalCorrectSum + (newState.restoredPoints || 0);
+		newState.totalAttempts = finalAttemptsSum;
 
 		return newState;
 	}
