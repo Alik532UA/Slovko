@@ -169,16 +169,10 @@
 						{@const localValue = isMe ? getLocalMetricValue(selectedMetric, selectedLevel) : 0}
 						{@const displayScore = isMe ? Math.max(user.score, localValue) : user.score}
 
-						<!-- Додаємо рівень до testid, якщо ми на вкладці "Всі" -->
-						{@const levelSuffix =
-							selectedLevel === "all" && user.bestCorrectStreakLevel
-								? `-${user.bestCorrectStreakLevel}`
-								: ""}
-
 						<div
 							class="leaderboard-item"
 							class:me={isMe}
-							data-testid="leaderboard-item-{user.rank}{levelSuffix}"
+							data-testid="leaderboard-item-{user.rank}"
 							role="listitem"
 						>
 							<div class="col-rank">
@@ -196,9 +190,6 @@
 																	<div class="col-user">
 																			<UserAvatar uid={user.uid} photoURL={realPhoto} displayName={realName} size={24} />
 																			<span class="username">{realName}</span>
-													{#if selectedLevel === "all" && user.bestCorrectStreakLevel}
-									<span class="level-badge">{user.bestCorrectStreakLevel}</span>
-								{/if}
 
 								{#if isMe}
 									<span class="me-badge">You</span>
@@ -451,8 +442,7 @@
 		flex-shrink: 1;
 	}
 
-	.me-badge,
-	.level-badge {
+	.me-badge {
 		font-size: 0.65rem;
 		padding: 0.15rem 0.45rem;
 		border-radius: 6px;
@@ -466,12 +456,6 @@
 		background: var(--accent);
 		color: white;
 		margin-left: 0.25rem;
-	}
-
-	.level-badge {
-		background: rgba(255, 255, 255, 0.1);
-		color: var(--text-secondary);
-		border: 1px solid var(--border);
 	}
 
 	.score-val {
