@@ -40,28 +40,27 @@
 		levelStats,
 	}: Props = $props();
 
-	let showMore = $state(false);
-	let selectedLevel = $state("all");
-
-	const currentLevelStats = $derived.by(() => {
-		if (selectedLevel === "all") {
-			return {
-				totalCorrect,
-				totalAttempts: 0, // Не використовується для 'all' прямо тут
-				bestCorrectStreak,
-				currentCorrectStreak: 0,
-			};
-		}
-		return (
-			levelStats[selectedLevel] || {
-				totalCorrect: 0,
-				totalAttempts: 0,
-				bestCorrectStreak: 0,
-				currentCorrectStreak: 0,
+		let showMore = $state(false);
+		let selectedLevel = $state("all");
+	
+		const currentLevelStats = $derived.by(() => {
+			if (selectedLevel === "all") {
+				return {
+					totalCorrect,
+					totalAttempts: 0, // Not used for 'all' directly here
+					bestCorrectStreak,
+					currentCorrectStreak: 0,
+				};
 			}
-		);
-	});
-
+			return (
+				levelStats[selectedLevel] || {
+					totalCorrect: 0,
+					totalAttempts: 0,
+					bestCorrectStreak: 0,
+					currentCorrectStreak: 0,
+				}
+			);
+		});
 	const levelAccuracy = $derived.by(() => {
 		if (selectedLevel === "all") return accuracy;
 		return currentLevelStats.totalAttempts > 0
@@ -111,11 +110,12 @@
 				<div in:fade={{ duration: 250, delay: 50 }} out:fade={{ duration: 150 }} class="stats-grid" data-testid="level-stats-grid">
 					<button class="stat-card level-stat" data-testid="level-stat-correct" onclick={() => playLabel("correct")}>
 						<div class="stat-icon-box"><Target size={20} /></div>
-						<div class="stat-content">
-							<span class="value">{currentLevelStats.totalCorrect}</span>
-							<span class="label">{$_("profile.stats.correct")}</span>
-						</div>
-					</button>
+																	<div class="stat-content">
+																		<span class="value">
+																			{currentLevelStats.totalCorrect}
+																		</span>
+																		<span class="label">{$_("profile.stats.correct")}</span>
+																	</div>					</button>
 					<button class="stat-card level-stat" data-testid="level-stat-streak" onclick={() => playLabel("bestCorrectStreak")}>
 						<div class="stat-icon-box"><Medal size={20} /></div>
 						<div class="stat-content">
@@ -304,7 +304,9 @@
 		font-size: 1.3rem;
 		font-weight: 800;
 		color: var(--text-primary);
-		line-height: 1;
+		line-height: 1.2;
+		display: flex;
+		align-items: center;
 	}
 
 	.stat-card .label {

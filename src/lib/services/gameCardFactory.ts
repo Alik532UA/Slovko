@@ -44,6 +44,7 @@ function createCardPair(
 	targetTranslations: TranslationDictionary,
 	sourceTranscriptions: TranscriptionDictionary,
 	targetTranscriptions: TranscriptionDictionary,
+	level?: string,
 ): { source: ActiveCard; target: ActiveCard } {
 	const sourceText = getTranslation(
 		wordKey,
@@ -85,6 +86,7 @@ function createCardPair(
 	const sourceCard: ActiveCard = {
 		id: `src-${generateId()}-${index}`,
 		wordKey,
+		level,
 		text: sourceText,
 		transcription: sourceTranscription,
 		language: sourceLanguage,
@@ -96,6 +98,7 @@ function createCardPair(
 	const targetCard: ActiveCard = {
 		id: `tgt-${generateId()}-${index}`,
 		wordKey,
+		level,
 		text: targetText,
 		transcription: targetTranscription,
 		language: targetLanguage,
@@ -114,10 +117,12 @@ function createCardPair(
  * @param wordKeys Масив унікальних ідентифікаторів слів
  * @param sourceLanguage Вихідна мова
  * @param targetLanguage Цільова мова
+ * @param interfaceLanguage Мова інтерфейсу
  * @param sourceTranslations Словник перекладів для вихідної мови
  * @param targetTranslations Словник перекладів для цільової мови
  * @param sourceTranscriptions Словник транскрипцій для вихідної мови
  * @param targetTranscriptions Словник транскрипцій для цільової мови
+ * @param wordLevels Мапа ключів слів до їх рівнів
  * @param startSlot Початковий номер слота для позиціонування
  */
 export function createCardsFromWordKeys(
@@ -129,6 +134,7 @@ export function createCardsFromWordKeys(
 	targetTranslations: TranslationDictionary,
 	sourceTranscriptions: TranscriptionDictionary,
 	targetTranscriptions: TranscriptionDictionary,
+	wordLevels: Record<string, string> = {},
 	startSlot: number = 0,
 ): { source: ActiveCard[]; target: ActiveCard[] } {
 	const sourceList: ActiveCard[] = [];
@@ -146,6 +152,7 @@ export function createCardsFromWordKeys(
 			targetTranslations,
 			sourceTranscriptions,
 			targetTranscriptions,
+			wordLevels[wordKey],
 		);
 		sourceList.push(source);
 		targetList.push(target);

@@ -37,12 +37,110 @@ function createProgressStore() {
 			const stored = localStorage.getItem(STORAGE_KEY);
 			if (stored) {
 				const parsed = JSON.parse(stored);
-				return ProgressStateSchema.parse(parsed);
+				const validated = ProgressStateSchema.parse(parsed);
+				return migrateStatistics(validated);
 			}
 		} catch (e) {
 			console.warn("Failed to load progress:", e);
 		}
 		return DEFAULT_PROGRESS;
+	}
+
+	function migrateStatistics(state: ProgressState): ProgressState {
+		// Працюємо з копією даних, щоб не мутувати стан напряму під час обробки
+		const newState: ProgressState = JSON.parse(JSON.stringify(state));
+		
+		const dirtyKeys = Object.keys(newState.levelStats).filter(
+			(k) => k.includes(",") || k === "ALL"
+		);
+
+		if (dirtyKeys.length > 0) {
+			logService.log("stats", `Starting statistics migration for keys: ${dirtyKeys.join(", ")}`);
+			
+			const allAvailableLevels = ["A1", "A2", "B1", "B2", "C1", "C2"];
+
+			for (const key of dirtyKeys) {
+				const stats = newState.levelStats[key];
+				if (!stats || stats.totalCorrect === 0) {
+					delete newState.levelStats[key];
+					continue;
+				}
+
+				let targetLevels: string[] = [];
+				if (key === "ALL") {
+					targetLevels = [...allAvailableLevels];
+				} else {
+					targetLevels = key.split(",").map(s => s.trim()).filter(Boolean);
+				}
+
+				if (targetLevels.length === 0) {
+					delete newState.levelStats[key];
+					continue;
+				}
+
+				logService.log("stats", `Migrating "${key}" (${stats.totalCorrect} correct) into [${targetLevels.join(", ")}]`);
+
+				const distributeMetric = (total: number, target: keyof LevelStats) => {
+					if (total <= 0) return;
+					const count = targetLevels.length;
+					const base = Math.floor(total / count);
+					const remainder = total % count;
+
+					// Додаємо базові значення
+					targetLevels.forEach(lvl => {
+						if (!newState.levelStats[lvl]) {
+							newState.levelStats[lvl] = {
+								totalCorrect: 0,
+								totalAttempts: 0,
+								bestCorrectStreak: 0,
+								currentCorrectStreak: 0,
+							};
+						}
+						(newState.levelStats[lvl][target] as number) += base;
+					});
+
+					// Випадково розподіляємо залишок
+					const shuffled = [...targetLevels].sort(() => Math.random() - 0.5);
+					for (let i = 0; i < remainder; i++) {
+						(newState.levelStats[shuffled[i]][target] as number) += 1;
+					}
+				};
+
+				distributeMetric(stats.totalCorrect, "totalCorrect");
+				distributeMetric(stats.totalAttempts, "totalAttempts");
+
+				// Максимальний стрік просто копіюємо
+				targetLevels.forEach(lvl => {
+					if (newState.levelStats[lvl]) {
+						newState.levelStats[lvl].bestCorrectStreak = Math.max(
+							newState.levelStats[lvl].bestCorrectStreak,
+							stats.bestCorrectStreak || 0
+						);
+					}
+				});
+
+				// ВИДАЛЯЄМО ключ відразу, щоб він не міг бути мігрований знову
+				delete newState.levelStats[key];
+			}
+		}
+
+		// ПЕРЕВІРКА ТА КОРЕКЦІЯ ЦІЛІСНОСТІ (Завжди!)
+		// totalCorrect МАЄ дорівнювати сумі всіх значень у levelStats + restoredPoints.
+		// totalAttempts МАЄ дорівнювати сумі всіх значень у levelStats.
+		const finalCorrectSum = Object.values(newState.levelStats).reduce((a, b) => a + (b.totalCorrect || 0), 0);
+		const finalAttemptsSum = Object.values(newState.levelStats).reduce((a, b) => a + (b.totalAttempts || 0), 0);
+		const expectedTotalCorrect = finalCorrectSum + (newState.restoredPoints || 0);
+
+		if (expectedTotalCorrect !== newState.totalCorrect || finalAttemptsSum !== newState.totalAttempts) {
+			logService.warn("stats", `Correcting total counts to match level sums: 
+				Correct: ${newState.totalCorrect} -> ${expectedTotalCorrect} (sum: ${finalCorrectSum} + restored: ${newState.restoredPoints || 0}), 
+				Attempts: ${newState.totalAttempts} -> ${finalAttemptsSum}`);
+			
+			newState.totalCorrect = expectedTotalCorrect;
+			newState.totalAttempts = finalAttemptsSum;
+		}
+
+		return newState;
 	}
 
 	function loadDailyActivity(): DailyActivity {
@@ -131,7 +229,9 @@ function createProgressStore() {
 		/** Internal set for SyncService to avoid infinite loops */
 		_internalSet(newData: unknown) {
 			try {
-				progress = ProgressStateSchema.parse(newData);
+				const validated = ProgressStateSchema.parse(newData);
+				progress = migrateStatistics(validated);
+				
 				if (browser) {
 					localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
 				}

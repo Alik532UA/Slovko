@@ -22,9 +22,7 @@
 		const formatLabel = (ids: string[], i18nPrefix: string) => {
 			if (ids.length === 0) return "";
 			
-			// Пріоритет для 'ALL' (якщо він є в списку, він має бути першим у лейблі)
-			const displayId = ids.includes("ALL") ? "ALL" : ids[0];
-			const first = $_(`${i18nPrefix}.${displayId}`);
+			const first = $_(`${i18nPrefix}.${ids[0]}`);
 			
 			return ids.length > 1 ? `${first} + ${ids.length - 1}` : first;
 		};

@@ -24,9 +24,10 @@ export interface GameData {
 	sourceTranscriptions: TranscriptionDictionary;
 	targetTranscriptions: TranscriptionDictionary;
 	words: WordKey[];
+	/** Map of word keys to their source levels */
+	wordLevels: Record<WordKey, string>;
 	/** Snapshot of settings used to generate this data */
-	settings: {
-		mode: string;
+	settings: {		mode: string;
 		currentLevel: string[];
 		currentTopic: string[];
 		currentTenses: string[];
@@ -126,6 +127,7 @@ export class GameDataService {
 		let sourceTranscriptions: TranscriptionDictionary = {};
 		let targetTranscriptions: TranscriptionDictionary = {};
 		let words: string[] = [];
+		const wordLevels: Record<WordKey, string> = {};
 
 		try {
 			// 1. Load Dictionaries (always load everything for multi-select support)
@@ -164,6 +166,7 @@ export class GameDataService {
 						
 						if (hasSource || hasTarget) {
 							words.push(w);
+							wordLevels[w] = currentPlaylist; // Tag as playlist ID
 						} else {
 							logService.warn("data", `Word "${w}" from playlist not found in any dictionary. Filtering out.`);
 						}
@@ -174,6 +177,7 @@ export class GameDataService {
 						targetTranslations[id] = w.right || w.translation || "";
 						if (w.transcription) sourceTranscriptions[id] = w.transcription;
 						words.push(id);
+						wordLevels[id] = currentPlaylist;
 					}
 				});
 			} else {
@@ -181,25 +185,50 @@ export class GameDataService {
 
 				if (ids && ids.length > 0) {
 					if (mode === "levels") {
-						const levelResults = await Promise.all(
+						await Promise.all(
 							ids.map(async (levelId) => {
 								if (levelId === "ALL") {
 									const allLevels = ["A1", "A2", "B1", "B2", "C1", "C2"];
-									const results = await Promise.all(allLevels.map((l) => loadLevel(l as any)));
-									return results.flatMap((r) => r.words);
+									await Promise.all(allLevels.map(async (l) => {
+										const lvl = await loadLevel(l as any);
+										lvl.words.forEach(w => {
+											if (!wordLevels[w]) {
+												wordLevels[w] = l;
+												words.push(w);
+											}
+										});
+									}));
 								} else {
 									const lvl = await loadLevel(levelId as any);
-									return lvl.words;
+									lvl.words.forEach(w => {
+										if (!wordLevels[w]) {
+											wordLevels[w] = levelId;
+											words.push(w);
+										}
+									});
 								}
 							}),
 						);
-						words.push(...levelResults.flat());
 					} else if (mode === "topics") {
-						const topicResults = await Promise.all(ids.map((id) => loadTopic(id)));
-						words.push(...topicResults.flatMap((t) => t.words));
+						await Promise.all(ids.map(async (id) => {
+							const topic = await loadTopic(id);
+							topic.words.forEach(w => {
+								if (!wordLevels[w]) {
+									wordLevels[w] = id;
+									words.push(w);
+								}
+							});
+						}));
 					} else if (mode === "phrases") {
-						const phraseResults = await Promise.all(ids.map((id) => loadPhrasesLevel(id as any)));
-						words.push(...phraseResults.flatMap((p) => p.words));
+						await Promise.all(ids.map(async (id) => {
+							const phraseLevel = await loadPhrasesLevel(id as any);
+							phraseLevel.words.forEach(w => {
+								if (!wordLevels[w]) {
+									wordLevels[w] = id;
+									words.push(w);
+								}
+							});
+						}));
 					}
 				}
 			}
@@ -230,6 +259,7 @@ export class GameDataService {
 							const key = `t.${pId}.${tenseId}.${form}`;
 							if (sourceTranslations[key] && targetTranslations[key]) {
 								words.push(key);
+								wordLevels[key] = pId; // Or tenseId if preferred
 							}
 						}
 					}
@@ -238,6 +268,15 @@ export class GameDataService {
 
 			// 3. Expansion Logic
 			words = this.expandWordList(words, sourceTranslations, targetTranslations);
+			// Propagate level to expanded words
+			// (Semantic groups usually belong to the same level as the root word)
+			for (const word of words) {
+				if (!wordLevels[word]) {
+					// Find the root word that might have the level
+					const root = Object.keys(wordLevels).find(k => word.startsWith(k));
+					if (root) wordLevels[word] = wordLevels[root];
+				}
+			}
 			
 			logService.log("data", `Game data prepared with ${words.length} words total.`);
 		} catch (e) {
@@ -251,6 +290,7 @@ export class GameDataService {
 			sourceTranscriptions,
 			targetTranscriptions,
 			words,
+			wordLevels,
 			settings: {
 				mode,
 				currentLevel: [...currentLevel],

@@ -497,13 +497,22 @@ class SyncServiceClass {
 
 	private mergeLevelStats(local: Record<string, LevelStats>, cloud: Record<string, any>) {
 		const merged = { ...cloud };
+		
+		// Видаляємо "брудні" ключі з хмарних даних перед злиттям,
+		// щоб вони не воскресли і не додали зайвих балів до суми.
+		for (const key of Object.keys(merged)) {
+			if (key.includes(",") || key === "ALL") {
+				logService.log("sync", `Ignoring dirty cloud key during merge: ${key}`);
+				delete merged[key];
+			}
+		}
+
 		for (const [lvl, l] of Object.entries(local)) {
-			const c = cloud[lvl] as LevelStats | undefined;
+			const c = merged[lvl] as LevelStats | undefined;
 			if (!c) {
 				merged[lvl] = l;
 			} else {
 				// Вибираємо об'єкт з більшим прогресом як основний (VULN_08)
-				// Це запобігає створенню неможливих станів (наприклад, 10/20 при реальних 10/10)
 				if (l.totalCorrect >= c.totalCorrect) {
 					merged[lvl] = l;
 				} else {

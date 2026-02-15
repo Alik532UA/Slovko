@@ -82,6 +82,7 @@ export class GameController {
 				data.targetTranslations,
 				data.sourceTranscriptions,
 				data.targetTranscriptions,
+				data.wordLevels,
 			);
 
 			this.gameState.setCards(source, target);
@@ -148,7 +149,7 @@ export class GameController {
 		this.audioHandler.playMatch(card1, card2);
 		this.gameState.recordMatch();
 
-		const levelId = this.getCurrentContextId();
+		const levelId = card1.level || card2.level || this.getCurrentContextId();
 		const isMistakesPlaylist =
 			settingsStore.value.currentPlaylist === "mistakes";
 		this.feedbackHandler.handleCorrect(
@@ -174,7 +175,7 @@ export class GameController {
 
 		const pair1 = this.constructWordPair(card1.wordKey);
 		const pair2 = this.constructWordPair(card2.wordKey);
-		const levelId = this.getCurrentContextId();
+		const levelId = card1.level || card2.level || this.getCurrentContextId();
 		this.feedbackHandler.handleWrong(pair1, pair2, levelId);
 
 		this.gameState.setSelectedCard(null);
@@ -210,6 +211,7 @@ export class GameController {
 					this.gameState.getTranslations("target"),
 					this.gameState.getTranscriptions("source"),
 					this.gameState.getTranscriptions("target"),
+					this.gameState.getData()?.wordLevels || {},
 					this.gameState.totalCardsCount,
 				);
 

@@ -37,7 +37,7 @@ export type AppTheme = "dark-gray" | "light-gray" | "orange" | "green";
 export type CEFRLevel = "A1" | "A2" | "B1" | "B2" | "C1" | "C2" | "ALL";
 
 /** Всі рівні */
-export const ALL_LEVELS: CEFRLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2", "ALL"];
+export const ALL_LEVELS: CEFRLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 // ========================================
 // СТРУКТУРА ДАНИХ СЛІВ
@@ -165,6 +165,7 @@ export type CardStatus =
 export interface ActiveCard {
 	id: string;
 	wordKey: string; // Original key from JSON data
+	level?: string; // Source level (e.g., "A1", "A2") or phrase ID
 	text: string; // Display text (Translation or Source word)
 	transcription?: string; // Only for Source language cards
 	language: Language;
