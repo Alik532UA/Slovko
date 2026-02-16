@@ -111,6 +111,12 @@ function createGameState() {
 		get isLearningMode() {
 			return isLearningMode;
 		},
+		get data() {
+			return data;
+		},
+		getData() {
+			return data;
+		},
 
 		// Методи оновлення (Setters/Actions)
 		setLoading(val: boolean) {

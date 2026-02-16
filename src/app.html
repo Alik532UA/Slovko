@@ -141,9 +141,22 @@
 					];
 					errors.forEach(function(err, i) {
 						lines.push('[' + i + '] ' + err.type + ': ' + err.message);
+						if (err.message === 'Script error.') {
+							lines.push('    (Hint: This usually means a cross-origin error. Check CORS headers or script origin.)');
+						}
 						if (err.source) lines.push('    File: ' + err.source + ':' + err.line + ':' + err.col);
 						if (err.stack) lines.push('    Stack: ' + err.stack.substring(0, 500));
 					});
+
+					// Include recent application logs if available
+					if (window.__recentLogs && window.__recentLogs.length > 0) {
+						lines.push('');
+						lines.push('=== RECENT LOGS (last 20) ===');
+						var logs = window.__recentLogs.slice(-20);
+						logs.forEach(function(log) {
+							lines.push(log);
+						});
+					}
 
 					// Try to get localStorage info
 					try {

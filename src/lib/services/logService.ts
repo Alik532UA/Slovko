@@ -48,6 +48,9 @@ export const logService = {
 		}).join(' ')}`;
 		recentLogs.push(fullMsg);
 		if (recentLogs.length > MAX_RECENT_LOGS) recentLogs.shift();
+		if (typeof window !== 'undefined') {
+			(window as any).__recentLogs = recentLogs;
+		}
 	},
 	getRecentLogs() {
 		return recentLogs.join('\n');
