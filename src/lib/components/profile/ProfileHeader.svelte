@@ -79,6 +79,7 @@
 		class="avatar-wrapper-btn"
 		onclick={oneditAvatar}
 		type="button"
+		aria-label={$_("profile.avatar.edit") || "Edit avatar"}
 		data-testid="edit-avatar-trigger"
 	>
 		{#if authStore.photoURL?.startsWith("internal:")}
@@ -90,12 +91,13 @@
 			<div
 				class="avatar email-user"
 				style:background-color={isFlag ? "transparent" : rawColor}
+				aria-hidden="true"
 				data-testid="profile-avatar-email"
 			>
 				{#if isFlag}
 					{@const lang = rawColor.replace("flag-", "")}
 					<div class="flag-bg-wrapper">
-						<img src="{base}/flags/{lang}.svg" alt={lang} class="flag-bg-img" />
+						<img src="{base}/flags/{lang}.svg" alt="" class="flag-bg-img" />
 					</div>
 				{/if}
 				{#if Icon}
@@ -107,25 +109,28 @@
 				src={authStore.photoURL}
 				alt=""
 				class="avatar"
+				aria-hidden="true"
 				data-testid="profile-avatar-img"
 			/>
 		{:else}
-			<div class="avatar email-user" data-testid="profile-avatar-default">
+			<div class="avatar email-user" aria-hidden="true" data-testid="profile-avatar-default">
 				<User size={72} />
 			</div>
 		{/if}
-		<div class="edit-overlay">
+		<div class="edit-overlay" aria-hidden="true">
 			<Edit2 size={16} />
 		</div>
 	</button>
 
 	<div class="user-info">
 		{#if isEditingName}
-			<div class="edit-name-wrapper">
+			<div class="edit-name-wrapper" role="group" aria-labelledby="edit-name-title">
+				<h3 id="edit-name-title" class="sr-only">Edit name</h3>
 				<input
 					type="text"
 					bind:value={editedName}
 					class="name-input"
+					aria-label="New display name"
 					data-testid="profile-name-input"
 					onkeydown={(e) => {
 						if (e.key === "Enter") saveName();
@@ -136,6 +141,7 @@
 					<button
 						class="icon-action-btn save"
 						onclick={saveName}
+						aria-label="Save name"
 						data-testid="save-name-btn"
 					>
 						<Check size={20} />
@@ -143,6 +149,7 @@
 					<button
 						class="icon-action-btn cancel"
 						onclick={() => (isEditingName = false)}
+						aria-label="Cancel editing"
 						data-testid="cancel-name-btn"
 					>
 						<X size={20} />
@@ -157,6 +164,7 @@
 				<button
 					class="edit-name-btn"
 					onclick={startEditingName}
+					aria-label="Edit display name"
 					data-testid="start-edit-name-btn"
 				>
 					<Edit2 size={16} />

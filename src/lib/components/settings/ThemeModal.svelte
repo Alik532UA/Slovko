@@ -25,12 +25,13 @@
 			<h2>{$_("settings.theme") || "Theme"}</h2>
 		</div>
 
-		<div class="themes-grid">
+		<div class="themes-grid" role="group" aria-label={$_("settings.theme") || "Select theme"}>
 			{#each themes as theme (theme.id)}
 				<button
 					class="theme-card"
 					class:selected={settingsStore.value.theme === theme.id}
 					onclick={() => selectTheme(theme.id)}
+					aria-pressed={settingsStore.value.theme === theme.id}
 					style="--theme-preview-bg: {theme.color}"
 					data-testid="theme-card-{theme.id}"
 				>

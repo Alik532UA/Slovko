@@ -126,6 +126,7 @@
 </script>
 
 <button
+	type="button"
 	class="word-card"
 	class:selected={card.status === "selected"}
 	class:correct={card.status === "correct"}
@@ -139,6 +140,9 @@
 	onpointerleave={handlePointerLeave}
 	oncontextmenu={handleContextMenu}
 	onclick={handleClick}
+	aria-label="{card.text}{card.transcription && showTranscription ? `, ${card.transcription}` : ''}"
+	aria-current={card.status === "selected" ? "true" : undefined}
+	aria-disabled={card.status === "correct" || card.status === "wrong"}
 	data-testid="word-card-{card.id}"
 >
 	{#if wordSnippet}

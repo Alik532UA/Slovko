@@ -158,20 +158,18 @@
 	/>
 {/if}
 
-<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <div
 	class="modal-backdrop"
 	onclick={handleBackdropClick}
 	onkeydown={handleKeydown}
-	role="dialog"
-	aria-modal="true"
-	tabindex="-1"
+	aria-hidden="true"
 >
 	<div
 		class="modal"
 		data-testid="language-settings-modal"
 		role="dialog"
 		aria-modal="true"
+		aria-label={$_("settings.languageSettings") || "Language Settings"}
 		tabindex="-1"
 		onclick={(e) => e.stopPropagation()}
 		onkeydown={(e) => e.stopPropagation()}
@@ -180,18 +178,20 @@
 			<!-- Мова інтерфейсу -->
 			<section data-testid="interface-language-section">
 				<h3>{$_("settings.interfaceLanguage")}</h3>
-				<div class="flags-row" data-testid="interface-flags-row">
+				<div class="flags-row" role="group" aria-label={$_("settings.interfaceLanguage")} data-testid="interface-flags-row">
 					{#each LANGUAGES as lang (lang)}
 						<button
+							type="button"
 							class="flag-btn"
 							class:selected={settingsStore.value.interfaceLanguage === lang}
 							onclick={() => handleInterfaceLanguage(lang)}
-							title={LANGUAGE_NAMES[lang]}
+							aria-label={LANGUAGE_NAMES[lang]}
+							aria-pressed={settingsStore.value.interfaceLanguage === lang}
 							data-testid="interface-lang-{lang}"
 						>
 							<img
 								src="{base}/flags/{lang}.svg"
-								alt={LANGUAGE_NAMES[lang]}
+								alt=""
 								class="flag-img"
 							/>
 						</button>
@@ -211,9 +211,10 @@
 								{$_("settings.columnLeft")}
 							</h4>
 						</div>
-						<div class="flags-column" data-testid="source-flags-column">
+						<div class="flags-column" role="group" aria-label={$_("settings.columnLeft")} data-testid="source-flags-column">
 							{#each LANGUAGES as lang (lang)}
 								<button
+									type="button"
 									class="flag-btn small"
 									class:selected={settingsStore.value.sourceLanguage === lang}
 									onclick={() => {
@@ -227,12 +228,13 @@
 										}
 										// Manual 'goto' removed to fix sync race condition
 									}}
-									title={LANGUAGE_NAMES[lang]}
+									aria-label={LANGUAGE_NAMES[lang]}
+									aria-pressed={settingsStore.value.sourceLanguage === lang}
 									data-testid="source-lang-{lang}"
 								>
 									<img
 										src="{base}/flags/{lang}.svg"
-										alt={LANGUAGE_NAMES[lang]}
+										alt=""
 										class="flag-img"
 									/>
 								</button>
@@ -242,10 +244,12 @@
 						<div class="controls-wrapper" data-testid="source-controls-wrapper">
 							<!-- Transcription Toggle -->
 							<button
+								type="button"
 								class="icon-btn small"
 								class:active={settingsStore.value.showTranscriptionSource}
 								onclick={() => settingsStore.toggleTranscriptionSource()}
-								title={$_("settings.transcription")}
+								aria-label={$_("settings.transcription")}
+								aria-pressed={settingsStore.value.showTranscriptionSource}
 								data-testid="transcription-left-btn"
 							>
 								<Captions size={16} />
@@ -253,6 +257,7 @@
 
 							<!-- Pronunciation Toggle -->
 							<button
+								type="button"
 								class="icon-btn small"
 								class:active={settingsStore.value.enablePronunciationSource}
 								onpointerdown={(e) => handlePointerDown(e, "source")}
@@ -260,7 +265,9 @@
 								onpointercancel={handlePointerCancel}
 								onpointerleave={handlePointerLeave}
 								oncontextmenu={(e) => handleContextMenu(e, "source")}
-								title={$_("settings.pronunciation")}
+								aria-label={$_("settings.pronunciation")}
+								aria-pressed={settingsStore.value.enablePronunciationSource}
+								aria-haspopup="dialog"
 								data-testid="pronunciation-left-btn"
 							>
 								<Speech size={16} />
@@ -276,9 +283,10 @@
 							</h4>
 						</div>
 
-						<div class="flags-column" data-testid="target-flags-column">
+						<div class="flags-column" role="group" aria-label={$_("settings.columnRight")} data-testid="target-flags-column">
 							{#each LANGUAGES as lang (lang)}
 								<button
+									type="button"
 									class="flag-btn small"
 									class:selected={settingsStore.value.targetLanguage === lang}
 									onclick={() => {
@@ -292,12 +300,13 @@
 										}
 										// Manual 'goto' removed to fix sync race condition
 									}}
-									title={LANGUAGE_NAMES[lang]}
+									aria-label={LANGUAGE_NAMES[lang]}
+									aria-pressed={settingsStore.value.targetLanguage === lang}
 									data-testid="target-lang-{lang}"
 								>
 									<img
 										src="{base}/flags/{lang}.svg"
-										alt={LANGUAGE_NAMES[lang]}
+										alt=""
 										class="flag-img"
 									/>
 								</button>
@@ -307,10 +316,12 @@
 						<div class="controls-wrapper" data-testid="target-controls-wrapper">
 							<!-- Transcription Toggle -->
 							<button
+								type="button"
 								class="icon-btn small"
 								class:active={settingsStore.value.showTranscriptionTarget}
 								onclick={() => settingsStore.toggleTranscriptionTarget()}
-								title={$_("settings.transcription")}
+								aria-label={$_("settings.transcription")}
+								aria-pressed={settingsStore.value.showTranscriptionTarget}
 								data-testid="transcription-right-btn"
 							>
 								<Captions size={16} />
@@ -318,6 +329,7 @@
 
 							<!-- Pronunciation Toggle -->
 							<button
+								type="button"
 								class="icon-btn small"
 								class:active={settingsStore.value.enablePronunciationTarget}
 								onpointerdown={(e) => handlePointerDown(e, "target")}
@@ -325,7 +337,9 @@
 								onpointercancel={handlePointerCancel}
 								onpointerleave={handlePointerLeave}
 								oncontextmenu={(e) => handleContextMenu(e, "target")}
-								title={$_("settings.pronunciation")}
+								aria-label={$_("settings.pronunciation")}
+								aria-pressed={settingsStore.value.enablePronunciationTarget}
+								aria-haspopup="dialog"
 								data-testid="pronunciation-right-btn"
 							>
 								<Speech size={16} />
@@ -336,6 +350,7 @@
 			</section>
 
 			<button
+				type="button"
 				class="confirm-btn"
 				onclick={onclose}
 				data-testid="confirm-language-settings-btn"

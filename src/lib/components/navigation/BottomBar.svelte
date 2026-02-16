@@ -137,12 +137,13 @@
 
 <svelte:window onkeydown={handleKeydown} />
 
-<div class="bottom-bar">
+<div class="bottom-bar" role="navigation" aria-label={$_("common.navigation") || "Level navigation"}>
 	<BaseTooltip text={$_("common.tooltips.prev")}>
 		<button
 			class="nav-btn"
 			onclick={() => goPrev()}
 			disabled={!canGoPrev}
+			aria-label={$_("common.tooltips.prev") || "Previous level"}
 			data-testid="prev-level-btn"
 			title=""
 		>
@@ -154,6 +155,9 @@
 		<button
 			class="level-btn"
 			onclick={() => (showModal = true)}
+			aria-label={$_("common.tooltips.selectLevel") || "Select level or topic"}
+			aria-haspopup="dialog"
+			aria-expanded={showModal}
 			data-testid="level-topic-selector-btn"
 			title=""
 		>
@@ -166,6 +170,7 @@
 			class="nav-btn"
 			onclick={() => goNext()}
 			disabled={!canGoNext}
+			aria-label={$_("common.tooltips.next") || "Next level"}
 			data-testid="next-level-btn"
 			title=""
 		>

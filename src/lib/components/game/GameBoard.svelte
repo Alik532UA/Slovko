@@ -260,16 +260,16 @@
 <svelte:window onpointermove={handleDragMove} onpointerup={handleDragEnd} onpointercancel={handleDragEnd} />
 
 {#if gameState.isLoading}
-	<div class="loading-overlay" in:fade>
-		<div class="loading-spinner"></div>
+	<div class="loading-overlay" in:fade aria-live="polite">
+		<div class="loading-spinner" aria-label={$_("leaderboard.loading")}></div>
 	</div>
 {:else if gameState.error}
-	<div class="error-overlay" in:fade>
+	<div class="error-overlay" in:fade aria-live="assertive">
 		<div class="error-content">
-			<span class="error-icon">⚠️</span>
+			<span class="error-icon" aria-hidden="true">⚠️</span>
 			<h3>{$_("errors.loadFailed")}</h3>
 			<p>{gameState.error}</p>
-			<button class="retry-button" onclick={() => gameController.initGame()}>
+			<button type="button" class="retry-button" onclick={() => gameController.initGame()}>
 				{$_("common.retry")}
 			</button>
 		</div>
@@ -277,7 +277,7 @@
 {:else}
 	<!-- SVG Overlay for Drag Line -->
 	{#if dragState.active && dragState.startPoint && dragState.currentPoint}
-		<svg class="drag-overlay">
+		<svg class="drag-overlay" aria-hidden="true">
 			<line 
 				x1={dragState.startPoint.x} 
 				y1={dragState.startPoint.y} 
@@ -302,11 +302,12 @@
 		onkeydown={(e) => {
 			if (e.key === "Escape") gameState.setSelectedCard(null);
 		}}
-		role="presentation"
+		role="main"
+		aria-label="Game Board"
 		data-testid="game-board"
 	>
 		{#if gameState.sourceCards.length === 0}
-			<div class="empty-state-message" data-testid="game-empty-message">
+			<div class="empty-state-message" role="status" data-testid="game-empty-message">
 				<p>
 					{settingsStore.value.mode === "playlists"
 						? settingsStore.value.currentPlaylist === "mistakes"
@@ -316,9 +317,9 @@
 				</p>
 			</div>
 		{:else}
-			<div class="column source" aria-label="Source words" data-testid="column-source">
+			<div class="column source" role="list" aria-label="Source words" data-testid="column-source">
 				{#each gameState.sourceCards as card, i (i)}
-					<div class="card-slot">
+					<div class="card-slot" role="listitem">
 						{#key card.id}
 							<div
 								class="card-wrapper"
@@ -338,7 +339,7 @@
 									onlongpress={(e) => handleLongPress(e, card)}
 								/>
 								{#if dragState.hoveredCardId === card.id || dragState.sourceCard?.id === card.id}
-									<div class="card-hover-highlight"></div>
+									<div class="card-hover-highlight" aria-hidden="true"></div>
 								{/if}
 							</div>
 						{/key}
@@ -346,9 +347,9 @@
 				{/each}
 			</div>
 
-			<div class="column target" aria-label="Target translations" data-testid="column-target">
+			<div class="column target" role="list" aria-label="Target translations" data-testid="column-target">
 				{#each gameState.targetCards as card, i (i)}
-					<div class="card-slot">
+					<div class="card-slot" role="listitem">
 						{#key card.id}
 							<div
 								class="card-wrapper"
@@ -368,7 +369,7 @@
 									onlongpress={(e) => handleLongPress(e, card)}
 								/>
 								{#if dragState.hoveredCardId === card.id || dragState.sourceCard?.id === card.id}
-									<div class="card-hover-highlight"></div>
+									<div class="card-hover-highlight" aria-hidden="true"></div>
 								{/if}
 							</div>
 						{/key}

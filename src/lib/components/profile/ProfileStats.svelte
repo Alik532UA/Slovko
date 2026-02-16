@@ -108,23 +108,41 @@
 		<div class="stats-grid-wrapper">
 			{#key selectedLevel}
 				<div in:fade={{ duration: 250, delay: 50 }} out:fade={{ duration: 150 }} class="stats-grid" data-testid="level-stats-grid">
-					<button class="stat-card level-stat" data-testid="level-stat-correct" onclick={() => playLabel("correct")}>
-						<div class="stat-icon-box"><Target size={20} /></div>
+					<button 
+						type="button"
+						class="stat-card level-stat" 
+						data-testid="level-stat-correct" 
+						onclick={() => playLabel("correct")}
+						aria-label={$_("profile.stats.correct")}
+					>
+						<div class="stat-icon-box" aria-hidden="true"><Target size={20} /></div>
 																	<div class="stat-content">
 																		<span class="value">
 																			{currentLevelStats.totalCorrect}
 																		</span>
 																		<span class="label">{$_("profile.stats.correct")}</span>
 																	</div>					</button>
-					<button class="stat-card level-stat" data-testid="level-stat-streak" onclick={() => playLabel("bestCorrectStreak")}>
-						<div class="stat-icon-box"><Medal size={20} /></div>
+					<button 
+						type="button"
+						class="stat-card level-stat" 
+						data-testid="level-stat-streak" 
+						onclick={() => playLabel("bestCorrectStreak")}
+						aria-label={$_("profile.stats.bestCorrectStreak")}
+					>
+						<div class="stat-icon-box" aria-hidden="true"><Medal size={20} /></div>
 						<div class="stat-content">
 							<span class="value">{currentLevelStats.bestCorrectStreak}</span>
 							<span class="label">{$_("profile.stats.bestCorrectStreak")}</span>
 						</div>
 					</button>
-					<button class="stat-card level-stat" data-testid="level-stat-accuracy" onclick={() => playLabel("accuracy")}>
-						<div class="stat-icon-box"><Percent size={20} /></div>
+					<button 
+						type="button"
+						class="stat-card level-stat" 
+						data-testid="level-stat-accuracy" 
+						onclick={() => playLabel("accuracy")}
+						aria-label={$_("profile.stats.accuracy")}
+					>
+						<div class="stat-icon-box" aria-hidden="true"><Percent size={20} /></div>
 						<div class="stat-content">
 							<span class="value">{levelAccuracy}%</span>
 							<span class="label">{$_("profile.stats.accuracy")}</span>
@@ -146,55 +164,65 @@
 				data-testid="profile-stats-grid"
 			>
 				<button
+					type="button"
 					class="stat-card"
 					data-testid="stat-card-days-streak"
 					onclick={() => playLabel("streak")}
+					aria-label={$_("profile.stats.streak")}
 				>
-					<div class="stat-icon-box"><Flame size={22} /></div>
+					<div class="stat-icon-box" aria-hidden="true"><Flame size={22} /></div>
 					<div class="stat-content">
 						<span class="value">{streak}</span>
 						<span class="label">{$_("profile.stats.streak")}</span>
 					</div>
 				</button>
 				<button
+					type="button"
 					class="stat-card"
 					data-testid="stat-card-days-streak-best"
 					onclick={() => playLabel("bestStreak")}
+					aria-label={$_("profile.stats.bestStreak")}
 				>
-					<div class="stat-icon-box"><Trophy size={22} /></div>
+					<div class="stat-icon-box" aria-hidden="true"><Trophy size={22} /></div>
 					<div class="stat-content">
 						<span class="value">{bestStreak}</span>
 						<span class="label">{$_("profile.stats.bestStreak")}</span>
 					</div>
 				</button>
 				<button
+					type="button"
 					class="stat-card"
 					data-testid="stat-card-correct-today"
 					onclick={() => playLabel("correctToday")}
+					aria-label={$_("profile.stats.correctToday")}
 				>
-					<div class="stat-icon-box"><CheckCircle size={20} /></div>
+					<div class="stat-icon-box" aria-hidden="true"><CheckCircle size={20} /></div>
 					<div class="stat-content">
 						<span class="value">{correctToday}</span>
 						<span class="label">{$_("profile.stats.correctToday")}</span>
 					</div>
 				</button>
 				<button
+					type="button"
 					class="stat-card"
 					data-testid="stat-card-correct-daily-avg"
 					onclick={() => playLabel("dailyAverage")}
+					aria-label={$_("profile.stats.dailyAverage")}
 				>
-					<div class="stat-icon-box"><TrendingUp size={20} /></div>
+					<div class="stat-icon-box" aria-hidden="true"><TrendingUp size={20} /></div>
 					<div class="stat-content">
 						<span class="value">{dailyAverage}</span>
 						<span class="label">{$_("profile.stats.dailyAverage")}</span>
 					</div>
 				</button>
 				<button
+					type="button"
 					class="stat-card"
 					data-testid="stat-card-days-total"
 					onclick={() => playLabel("days")}
+					aria-label={$_("profile.stats.days")}
 				>
-					<div class="stat-icon-box"><Calendar size={20} /></div>
+					<div class="stat-icon-box" aria-hidden="true"><Calendar size={20} /></div>
 					<div class="stat-content">
 						<span class="value">{daysInApp}</span>
 						<span class="label">{$_("profile.stats.days")}</span>
@@ -205,8 +233,10 @@
 	{/if}
 
 	<button
+		type="button"
 		class="toggle-stats-btn primary-action-btn"
 		onclick={() => (showMore = !showMore)}
+		aria-expanded={showMore}
 		data-testid="toggle-stats-btn"
 	>
 		<span

@@ -19,8 +19,12 @@
 		showCloseButton = true,
 	}: Props = $props();
 
+	let modalEl = $state<HTMLElement | null>(null);
+
 	onMount(() => {
 		document.body.style.overflow = "hidden";
+		// Фокусуємо модалку при відкритті
+		modalEl?.focus();
 	});
 
 	onDestroy(() => {
@@ -36,23 +40,20 @@
 	}
 </script>
 
-<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <div
 	class="modal-backdrop"
 	transition:fade={{ duration: 200 }}
 	onclick={handleBackdropClick}
-	onkeydown={handleKeydown}
-	role="presentation"
+	aria-hidden="true"
 >
 	<div
+		bind:this={modalEl}
 		class="modal"
 		style="max-width: {maxWidth}"
 		data-testid={testid}
 		transition:scale={{ duration: 300, start: 0.9 }}
 		onclick={(e) => e.stopPropagation()}
-		onkeydown={(e) => {
-			if (e.key === "Escape") onclose();
-		}}
+		onkeydown={handleKeydown}
 		role="dialog"
 		aria-modal="true"
 		tabindex="-1"

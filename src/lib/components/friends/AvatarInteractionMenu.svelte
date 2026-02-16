@@ -61,11 +61,20 @@
 		tick().then(() => {
 			updatePosition();
 			requestAnimationFrame(updatePosition);
+			// Фокусуємося на першому елементі меню для a11y
+			menuEl?.querySelector<HTMLButtonElement>('button:not(:disabled)')?.focus();
 		});
 
 		window.addEventListener('scroll', updatePosition, true);
 		window.addEventListener('resize', updatePosition);
 		
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') {
+				onclose();
+			}
+		};
+		window.addEventListener('keydown', handleKeyDown);
+
 		const timer = setTimeout(() => {
 			canClose = true;
 		}, 100);
@@ -73,6 +82,7 @@
 		return () => {
 			window.removeEventListener('scroll', updatePosition, true);
 			window.removeEventListener('resize', updatePosition);
+			window.removeEventListener('keydown', handleKeyDown);
 			clearTimeout(timer);
 		};
 	});
@@ -117,14 +127,20 @@
 	}
 </script>
 
-<!-- svelte-ignore a11y_click_events_have_key_events -->
-<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div use:portal>
-	<div class="menu-backdrop" onclick={handleBackdropClick} data-testid="avatar-menu-backdrop"></div>
+	<!-- Бекдроп невидимий для скрінрідерів, бо закриття є на Escape та кнопках -->
+	<div 
+		class="menu-backdrop" 
+		onclick={handleBackdropClick} 
+		aria-hidden="true"
+		data-testid="avatar-menu-backdrop"
+	></div>
 
 	<div 
 		bind:this={menuEl}
 		class="interaction-menu" 
+		role="dialog"
+		aria-label={$_("interaction.title") || "User actions"}
 		style:top="{position.top}px" 
 		style:left="{position.left}px"
 		style:visibility={position.top === -999 ? 'hidden' : 'visible'}
@@ -135,9 +151,10 @@
 			class="menu-item" 
 			onclick={handleWave} 
 			disabled={isWaved}
+			aria-label={isWaved ? $_("interaction.youWaved") : $_("interaction.waveBack")}
 			data-testid="avatar-menu-wave"
 		>
-			<div class="icon-wrapper" class:sent={isWaved}>
+			<div class="icon-wrapper" class:sent={isWaved} aria-hidden="true">
 				{#if isWaved}
 					<Hand size={18} fill="currentColor" />
 				{:else}
@@ -151,9 +168,10 @@
 			class="menu-item" 
 			onclick={handleFollow} 
 			disabled={isProcessing}
+			aria-busy={isProcessing}
 			data-testid="avatar-menu-follow"
 		>
-			<div class="icon-wrapper">
+			<div class="icon-wrapper" aria-hidden="true">
 				{#if isProcessing}
 					<Loader2 size={18} class="spinner" />
 				{:else if isFollowing}

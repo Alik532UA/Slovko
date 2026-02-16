@@ -93,36 +93,43 @@
 	let showMenu = $state(false);
 	let anchorEl = $state<HTMLElement | null>(null);
 
-	function handleClick(e: MouseEvent) {
+	function handleClick(e: MouseEvent | KeyboardEvent) {
 		if (interactive && uid && !isCurrentUser) {
+			if (e instanceof KeyboardEvent && e.key !== 'Enter' && e.key !== ' ') return;
+			
 			logService.log("interaction", `[UserAvatar] Toggle menu for ${uid}`);
 			e.preventDefault();
 			e.stopPropagation();
-			e.stopImmediatePropagation();
 			anchorEl = e.currentTarget as HTMLElement;
 			showMenu = !showMenu;
 		}
 	}
+
+	let avatarLabel = $derived(`${displayName || 'User'} avatar${isOnline ? ', online' : ''}`);
 </script>
 
-<!-- svelte-ignore a11y_click_events_have_key_events -->
-<!-- svelte-ignore a11y_no_static_element_interactions -->
-<div 
+<button 
+	type="button"
 	class="avatar-container {className}" 
 	class:interactive={interactive && uid && !isCurrentUser}
 	class:menu-open={showMenu}
 	style:width="{size * 1.6}px" 
 	style:height="{size * 1.6}px"
 	onclick={handleClick}
+	onkeydown={handleClick}
+	aria-label={avatarLabel}
+	aria-haspopup={interactive && uid && !isCurrentUser ? "dialog" : undefined}
+	aria-expanded={showMenu}
+	disabled={!(interactive && uid && !isCurrentUser)}
 	data-testid="user-avatar-container"
 	data-uid={uid}
 >
 	{#if isInternal}
-		<div class="avatar-circle" style:background-color={bgColor} data-testid="user-avatar-internal">
+		<div class="avatar-circle" style:background-color={bgColor} aria-hidden="true" data-testid="user-avatar-internal">
 			{#if isFlagColor}
 				{@const lang = rawColor.replace("flag-", "")}
 				<div class="flag-bg-wrapper">
-					<img src="{base}/flags/{lang}.svg" alt={lang} class="flag-bg-img" />
+					<img src="{base}/flags/{lang}.svg" alt="" class="flag-bg-img" />
 				</div>
 			{/if}
 			{#if Icon}
@@ -137,10 +144,11 @@
 			loading="lazy"
 			decoding="async"
 			referrerpolicy="no-referrer"
+			aria-hidden="true"
 			data-testid="user-avatar-img" 
 		/>
 	{:else}
-		<div class="avatar-circle fallback" data-testid="user-avatar-fallback">
+		<div class="avatar-circle fallback" aria-hidden="true" data-testid="user-avatar-fallback">
 			<UserIcon size={size} />
 		</div>
 	{/if}
@@ -150,10 +158,11 @@
 			class="online-indicator"
 			style:width="{size / 2.5}px"
 			style:height="{size / 2.5}px"
+			aria-label="Online"
 			data-testid="user-avatar-online-status"
 		></div>
 	{/if}
-</div>
+</button>
 
 {#if showMenu && uid && anchorEl}
 	<AvatarInteractionMenu
@@ -172,6 +181,16 @@
 		justify-content: center;
 		flex-shrink: 0;
 		position: relative;
+		background: transparent;
+		border: none;
+		padding: 0;
+		outline: none;
+	}
+
+	.avatar-container:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 4px;
+		border-radius: 12px;
 	}
 
 	.avatar-container.interactive {
