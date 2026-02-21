@@ -10,6 +10,8 @@
 	import type { CEFRLevel, GameMode, PlaylistId } from "$lib/types";
 	import BaseModal from "../ui/BaseModal.svelte";
 	import { smoothHeight } from "$lib/actions/smoothHeight";
+	import { page } from "$app/stores";
+	import { navigationState } from "$lib/services/navigationState.svelte";
 
 	// Mode Components
 	import LevelGrid from "./modes/LevelGrid.svelte";
@@ -32,9 +34,12 @@
 		{ id: "playlists", label: "tabs.playlists", testId: "tab-playlists" },
 	];
 
-	// Initialize directly from store
-	let activeTab = $state<GameMode>(settingsStore.value.mode);
-	
+	// Derive active tab from URL 'tab' param, fallback to current settings mode
+	const activeTabParam = $derived(
+		$page.url.searchParams.get("tab") as GameMode | null,
+	);
+	const activeTab = $derived(activeTabParam || settingsStore.value.mode);
+
 	// Local state for multi-selection
 	let selectedIds = $state<string[]>([]);
 	let selectedForms = $state(settingsStore.value.currentForms);
@@ -43,13 +48,14 @@
 	// Sync local selection when tab changes or modal opens
 	$effect(() => {
 		if (activeTab === settingsStore.value.mode) {
-			if (activeTab === "topics") selectedIds = [...settingsStore.value.currentTopic];
+			if (activeTab === "topics")
+				selectedIds = [...settingsStore.value.currentTopic];
 			else if (activeTab === "tenses") {
 				selectedIds = [...settingsStore.value.currentTenses];
 				selectedForms = [...settingsStore.value.currentForms];
 				tenseQuantity = settingsStore.value.tenseQuantity;
-			}
-			else if (activeTab === "levels" || activeTab === "phrases") selectedIds = [...settingsStore.value.currentLevel];
+			} else if (activeTab === "levels" || activeTab === "phrases")
+				selectedIds = [...settingsStore.value.currentLevel];
 		} else if (activeTab === "tenses") {
 			// Якщо ми перейшли на вкладку "Часи", але це не поточний режим гри,
 			// завантажуємо останні збережені налаштування для цієї вкладки
@@ -63,11 +69,11 @@
 
 	function toggleId(id: string) {
 		if (selectedIds.includes(id)) {
-			selectedIds = selectedIds.filter(i => i !== id);
+			selectedIds = selectedIds.filter((i) => i !== id);
 		} else {
 			selectedIds = [...selectedIds, id];
 		}
-		
+
 		// Відразу зберігаємо вибір у стор, щоб він не зникав
 		if (activeTab === "tenses") {
 			settingsStore.setTenses(selectedIds);
@@ -77,7 +83,7 @@
 	function toggleForm(form: any) {
 		if (selectedForms.includes(form)) {
 			if (selectedForms.length > 1) {
-				selectedForms = selectedForms.filter(f => f !== form);
+				selectedForms = selectedForms.filter((f) => f !== form);
 			}
 		} else {
 			selectedForms = [...selectedForms, form];
@@ -98,22 +104,50 @@
 		if (selectedIds.length === 0) return;
 
 		const idsStr = selectedIds.join(",");
+		const url = new URL($page.url);
+		url.searchParams.delete("modal");
+		url.searchParams.delete("tab");
+		url.searchParams.delete("subtab");
+
+		// Clear previous mode arguments
+		url.searchParams.delete("level");
+		url.searchParams.delete("topic");
+		url.searchParams.delete("playlist");
+		url.searchParams.delete("tense");
+		url.searchParams.delete("forms");
+		url.searchParams.delete("qty");
+
+		url.searchParams.set("mode", activeTab);
 		if (activeTab === "levels") {
-			goto(`?mode=levels&level=${idsStr}`);
+			url.searchParams.set("level", idsStr);
 		} else if (activeTab === "phrases") {
-			goto(`?mode=phrases&level=${idsStr}`);
+			url.searchParams.set("level", idsStr);
 		} else if (activeTab === "topics") {
-			goto(`?mode=topics&topic=${idsStr}`);
+			url.searchParams.set("topic", idsStr);
 		} else if (activeTab === "tenses") {
 			const formsStr = selectedForms.join(",");
-			goto(`?mode=tenses&tense=${idsStr}&forms=${formsStr}&qty=${tenseQuantity}`);
+			url.searchParams.set("tense", idsStr);
+			url.searchParams.set("forms", formsStr);
+			url.searchParams.set("qty", tenseQuantity);
 		}
-		onclose();
+		goto(url, { keepFocus: true, noScroll: true });
 	}
 
 	function selectPlaylist(playlistId: PlaylistId) {
-		goto(`?mode=playlists&playlist=${playlistId}`);
-		onclose();
+		const url = new URL($page.url);
+		url.searchParams.delete("modal");
+		url.searchParams.delete("tab");
+		url.searchParams.delete("subtab");
+
+		url.searchParams.delete("level");
+		url.searchParams.delete("topic");
+		url.searchParams.delete("tense");
+		url.searchParams.delete("forms");
+		url.searchParams.delete("qty");
+
+		url.searchParams.set("mode", "playlists");
+		url.searchParams.set("playlist", playlistId);
+		goto(url, { keepFocus: true, noScroll: true });
 	}
 </script>
 
@@ -121,67 +155,71 @@
 	<div class="modal-internal-wrapper" use:smoothHeight={{ duration: 300 }}>
 		<div class="modal-content-measure">
 			<div class="modal-inner">
-						<!-- Tabs -->
-						<nav class="tabs" data-testid="level-topic-tabs">
-							{#each TABS as tab (tab.id)}
-								<button
-									class="tab"
-									class:active={activeTab === tab.id}
-									onclick={() => (activeTab = tab.id)}
-									data-testid={tab.testId}
-								>
-									{$_(tab.label)}
-								</button>
-							{/each}
-						</nav>
-				
-						<!-- Content -->
-						<div class="content-wrapper" data-testid="level-topic-modal-content">
-							{#key activeTab}
-								<div in:fade={{ duration: 250, delay: 50 }} out:fade={{ duration: 150 }} class="content" data-testid="level-topic-scroll-area">
-									{#if activeTab === "levels"}
-										<LevelGrid mode="levels" {selectedIds} onselect={toggleId} />
-									{:else if activeTab === "topics"}
-										<TopicGrid {selectedIds} onselect={toggleId} />
-									{:else if activeTab === "phrases"}
-										<LevelGrid mode="phrases" {selectedIds} onselect={toggleId} />
-									{:else if activeTab === "tenses"}
-										<TenseFilters 
-											selectedForms={selectedForms} 
-											quantity={tenseQuantity} 
-											onToggleForm={toggleForm}
-											onChangeQuantity={updateQuantity}
-										/>
-										<TenseGrid {selectedIds} onselect={toggleId} />
-									{:else if activeTab === "playlists"}
-										<PlaylistGrid onselect={selectPlaylist} />
-									{/if}
-								</div>
-							{/key}
+				<!-- Tabs -->
+				<nav class="tabs" data-testid="level-topic-tabs">
+					{#each TABS as tab (tab.id)}
+						<button
+							class="tab"
+							class:active={activeTab === tab.id}
+							onclick={() => navigationState.setTab(tab.id)}
+							data-testid={tab.testId}
+						>
+							{$_(tab.label)}
+						</button>
+					{/each}
+				</nav>
+
+				<!-- Content -->
+				<div class="content-wrapper" data-testid="level-topic-modal-content">
+					{#key activeTab}
+						<div
+							in:fade={{ duration: 250, delay: 50 }}
+							out:fade={{ duration: 150 }}
+							class="content"
+							data-testid="level-topic-scroll-area"
+						>
+							{#if activeTab === "levels"}
+								<LevelGrid mode="levels" {selectedIds} onselect={toggleId} />
+							{:else if activeTab === "topics"}
+								<TopicGrid {selectedIds} onselect={toggleId} />
+							{:else if activeTab === "phrases"}
+								<LevelGrid mode="phrases" {selectedIds} onselect={toggleId} />
+							{:else if activeTab === "tenses"}
+								<TenseFilters
+									{selectedForms}
+									quantity={tenseQuantity}
+									onToggleForm={toggleForm}
+									onChangeQuantity={updateQuantity}
+								/>
+								<TenseGrid {selectedIds} onselect={toggleId} />
+							{:else if activeTab === "playlists"}
+								<PlaylistGrid onselect={selectPlaylist} />
+							{/if}
 						</div>
-				
-						<!-- Actions -->
-						{#if activeTab !== "playlists"}
-							<div class="actions" data-testid="level-topic-actions">
-								<button 
-									class="action-btn secondary" 
-									onclick={resetSelection}
-									disabled={selectedIds.length === 0}
-									data-testid="level-topic-reset-btn"
-								>
-									{$_("common.reset")}
-								</button>
-								<button 
-									class="action-btn primary" 
-									onclick={startLearning}
-									disabled={selectedIds.length === 0}
-									data-testid="level-topic-learn-btn"
-								>
-									{$_("common.learn")} ({selectedIds.length})
-								</button>
-							</div>
-						{/if}
-				
+					{/key}
+				</div>
+
+				<!-- Actions -->
+				{#if activeTab !== "playlists"}
+					<div class="actions" data-testid="level-topic-actions">
+						<button
+							class="action-btn secondary"
+							onclick={resetSelection}
+							disabled={selectedIds.length === 0}
+							data-testid="level-topic-reset-btn"
+						>
+							{$_("common.reset")}
+						</button>
+						<button
+							class="action-btn primary"
+							onclick={startLearning}
+							disabled={selectedIds.length === 0}
+							data-testid="level-topic-learn-btn"
+						>
+							{$_("common.learn")} ({selectedIds.length})
+						</button>
+					</div>
+				{/if}
 			</div>
 		</div>
 	</div>

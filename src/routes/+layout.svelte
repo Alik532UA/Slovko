@@ -23,6 +23,15 @@
 	} from "$lib/services/analyticsService";
 	import { pwaStore } from "$lib/stores/pwaStore.svelte";
 	import { page } from "$app/stores";
+	import { navigationState } from "$lib/services/navigationState.svelte";
+
+	// Modals
+	import LevelTopicModal from "$lib/components/navigation/LevelTopicModal.svelte";
+	import LanguageSettings from "$lib/components/settings/LanguageSettings.svelte";
+	import AboutModal from "$lib/components/settings/AboutModal.svelte";
+	import ThemeModal from "$lib/components/settings/ThemeModal.svelte";
+	import ProfileModal from "$lib/components/settings/ProfileModal.svelte";
+
 	import "../app.css";
 
 	// Services Context Setup
@@ -168,7 +177,7 @@
 			await initializeI18n();
 			logService.log("version", "i18n initialized, setting ready=true");
 			ready = true;
-			
+
 			// Initialize PWA Store
 			pwaStore.init();
 
@@ -263,6 +272,24 @@
 
 	{#if !settingsStore.value.hasCompletedOnboarding}
 		<OnboardingModal />
+	{/if}
+
+	{@const activeModal = $page.url.searchParams.get("modal")}
+
+	{#if activeModal === "levels"}
+		<LevelTopicModal onclose={() => navigationState.closeModal()} />
+	{:else if activeModal === "languages"}
+		<LanguageSettings onclose={() => navigationState.closeModal()} />
+	{:else if activeModal === "about"}
+		<AboutModal onclose={() => navigationState.closeModal()} />
+	{:else if activeModal === "themes"}
+		<ThemeModal onclose={() => navigationState.closeModal()} />
+	{:else if activeModal === "profile"}
+		<ProfileModal
+			mode="full"
+			initialTab={$page.url.searchParams.get("tab") as any}
+			onclose={() => navigationState.closeModal()}
+		/>
 	{/if}
 
 	<ToastContainer />

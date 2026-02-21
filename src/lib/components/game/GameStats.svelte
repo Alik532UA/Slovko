@@ -13,32 +13,24 @@
 		Menu,
 	} from "lucide-svelte";
 	import MenuModal from "../navigation/MenuModal.svelte";
-	import LanguageSettings from "../settings/LanguageSettings.svelte";
-	import AboutModal from "../settings/AboutModal.svelte";
-	import ThemeModal from "../settings/ThemeModal.svelte";
-	import ProfileModal from "../settings/ProfileModal.svelte";
 	import { fade } from "svelte/transition";
 	import BaseTooltip from "../ui/BaseTooltip.svelte";
+	import { navigationState } from "../../services/navigationState.svelte";
+	import { page } from "$app/stores";
 
 	const gameController = getGameController();
 
 	let showMenu = $state(false);
-	let showLanguageModal = $state(false);
-	let showAboutModal = $state(false);
-	let showThemeModal = $state(false);
-	let showProfileModal = $state(false);
-	let profileMode = $state<"stats" | "profile" | "full">("full");
-	let initialProfileTab = $state<
-		"stats" | "account" | "friends" | "leaderboard" | undefined
-	>(undefined);
+
+	// Retrieve active modal from URL
+	const activeModal = $derived($page.url.searchParams.get("modal"));
+	const initialProfileTab = $derived($page.url.searchParams.get("tab") as any);
 
 	function openProfile(
-		mode: typeof profileMode,
-		tab?: typeof initialProfileTab,
+		mode: "stats" | "profile" | "full",
+		tab?: "stats" | "account" | "friends" | "leaderboard",
 	) {
-		profileMode = mode;
-		initialProfileTab = tab;
-		showProfileModal = true;
+		navigationState.openModal("profile", tab);
 	}
 
 	// Streak color interpolation (1 to 30)
@@ -183,34 +175,23 @@
 				<MenuModal
 					onclose={() => (showMenu = false)}
 					onopenProfile={openProfile}
-					onopenLanguages={() => (showLanguageModal = true)}
-					onopenThemes={() => (showThemeModal = true)}
-					onopenAbout={() => (showAboutModal = true)}
+					onopenLanguages={() => {
+						showMenu = false;
+						navigationState.openModal("languages");
+					}}
+					onopenThemes={() => {
+						showMenu = false;
+						navigationState.openModal("themes");
+					}}
+					onopenAbout={() => {
+						showMenu = false;
+						navigationState.openModal("about");
+					}}
 				/>
 			{/if}
 		</div>
 	</div>
 </div>
-
-{#if showLanguageModal}
-	<LanguageSettings onclose={() => (showLanguageModal = false)} />
-{/if}
-
-{#if showAboutModal}
-	<AboutModal onclose={() => (showAboutModal = false)} />
-{/if}
-
-{#if showThemeModal}
-	<ThemeModal onclose={() => (showThemeModal = false)} />
-{/if}
-
-{#if showProfileModal}
-	<ProfileModal
-		mode={profileMode}
-		initialTab={initialProfileTab}
-		onclose={() => (showProfileModal = false)}
-	/>
-{/if}
 
 <style>
 	.menu-container {

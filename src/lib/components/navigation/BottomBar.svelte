@@ -8,11 +8,9 @@
 	import { goto } from "$app/navigation";
 	import { _ } from "svelte-i18n";
 	import { ALL_LEVELS, ALL_TOPICS, ALL_TENSES } from "$lib/types";
-	import LevelTopicModal from "./LevelTopicModal.svelte";
 	import { playlistStore } from "$lib/stores/playlistStore.svelte";
 	import BaseTooltip from "../ui/BaseTooltip.svelte";
-
-	let showModal = $state(false);
+	import { navigationState } from "$lib/services/navigationState.svelte";
 
 	// Отримати поточний лейбл
 	const currentLabel = $derived.by(() => {
@@ -21,9 +19,9 @@
 
 		const formatLabel = (ids: string[], i18nPrefix: string) => {
 			if (ids.length === 0) return "";
-			
+
 			const first = $_(`${i18nPrefix}.${ids[0]}`);
-			
+
 			return ids.length > 1 ? `${first} + ${ids.length - 1}` : first;
 		};
 
@@ -47,35 +45,52 @@
 
 	// Перевірка чи можна перемикати (тільки якщо вибрано 1 елемент)
 	const canGoPrev = $derived.by(() => {
-		const { mode, currentLevel, currentTopic, currentTenses } = settingsStore.value;
+		const { mode, currentLevel, currentTopic, currentTenses } =
+			settingsStore.value;
 
 		if (mode === "levels" || mode === "phrases") {
 			return currentLevel.length === 1 && currentLevel[0] !== ALL_LEVELS[0];
 		} else if (mode === "topics") {
 			return currentTopic.length === 1 && currentTopic[0] !== ALL_TOPICS[0].id;
 		} else if (mode === "tenses") {
-			return currentTenses.length === 1 && currentTenses[0] !== ALL_TENSES[0].id;
+			return (
+				currentTenses.length === 1 && currentTenses[0] !== ALL_TENSES[0].id
+			);
 		}
 		return false;
 	});
 
 	const canGoNext = $derived.by(() => {
-		const { mode, currentLevel, currentTopic, currentTenses } = settingsStore.value;
+		const { mode, currentLevel, currentTopic, currentTenses } =
+			settingsStore.value;
 
 		if (mode === "levels" || mode === "phrases") {
-			return currentLevel.length === 1 && currentLevel[0] !== ALL_LEVELS[ALL_LEVELS.length - 1];
+			return (
+				currentLevel.length === 1 &&
+				currentLevel[0] !== ALL_LEVELS[ALL_LEVELS.length - 1]
+			);
 		} else if (mode === "topics") {
-			return currentTopic.length === 1 && currentTopic[0] !== ALL_TOPICS[ALL_TOPICS.length - 1].id;
+			return (
+				currentTopic.length === 1 &&
+				currentTopic[0] !== ALL_TOPICS[ALL_TOPICS.length - 1].id
+			);
 		} else if (mode === "tenses") {
-			return currentTenses.length === 1 && currentTenses[0] !== ALL_TENSES[ALL_TENSES.length - 1].id;
+			return (
+				currentTenses.length === 1 &&
+				currentTenses[0] !== ALL_TENSES[ALL_TENSES.length - 1].id
+			);
 		}
 		return false;
 	});
 
 	function goNext() {
-		const { mode, currentLevel, currentTopic, currentTenses } = settingsStore.value;
+		const { mode, currentLevel, currentTopic, currentTenses } =
+			settingsStore.value;
 
-		if ((mode === "levels" || mode === "phrases") && currentLevel.length === 1) {
+		if (
+			(mode === "levels" || mode === "phrases") &&
+			currentLevel.length === 1
+		) {
 			const idx = ALL_LEVELS.indexOf(currentLevel[0] as any);
 			if (idx < ALL_LEVELS.length - 1) {
 				const next = ALL_LEVELS[idx + 1];
@@ -97,9 +112,13 @@
 	}
 
 	function goPrev() {
-		const { mode, currentLevel, currentTopic, currentTenses } = settingsStore.value;
+		const { mode, currentLevel, currentTopic, currentTenses } =
+			settingsStore.value;
 
-		if ((mode === "levels" || mode === "phrases") && currentLevel.length === 1) {
+		if (
+			(mode === "levels" || mode === "phrases") &&
+			currentLevel.length === 1
+		) {
 			const idx = ALL_LEVELS.indexOf(currentLevel[0] as any);
 			if (idx > 0) {
 				const prev = ALL_LEVELS[idx - 1];
@@ -137,7 +156,11 @@
 
 <svelte:window onkeydown={handleKeydown} />
 
-<div class="bottom-bar" role="navigation" aria-label={$_("common.navigation") || "Level navigation"}>
+<div
+	class="bottom-bar"
+	role="navigation"
+	aria-label={$_("common.navigation") || "Level navigation"}
+>
 	<BaseTooltip text={$_("common.tooltips.prev")}>
 		<button
 			class="nav-btn"
@@ -154,10 +177,9 @@
 	<BaseTooltip text={$_("common.tooltips.selectLevel")}>
 		<button
 			class="level-btn"
-			onclick={() => (showModal = true)}
+			onclick={() => navigationState.openModal("levels")}
 			aria-label={$_("common.tooltips.selectLevel") || "Select level or topic"}
 			aria-haspopup="dialog"
-			aria-expanded={showModal}
 			data-testid="level-topic-selector-btn"
 			title=""
 		>
@@ -178,10 +200,6 @@
 		</button>
 	</BaseTooltip>
 </div>
-
-{#if showModal}
-	<LevelTopicModal onclose={() => (showModal = false)} />
-{/if}
 
 <style>
 	.bottom-bar {

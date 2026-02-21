@@ -82,10 +82,18 @@ export class UrlSyncService {
 
 		logService.log("sync", "URL needs update based on Store state");
 
-		// Оновлюємо параметри
+		// Оновлюємо параметри (зберігаючи UI стан модалок)
+		const currentModal = url.searchParams.get("modal");
+		const currentTab = url.searchParams.get("tab");
+		const currentSubTab = url.searchParams.get("subtab");
+
 		url.searchParams.set("mode", s.mode);
 		url.searchParams.set("source", s.sourceLanguage);
 		url.searchParams.set("target", s.targetLanguage);
+
+		if (currentModal) url.searchParams.set("modal", currentModal);
+		if (currentTab) url.searchParams.set("tab", currentTab);
+		if (currentSubTab) url.searchParams.set("subtab", currentSubTab);
 
 		if (s.mode === "levels" || s.mode === "phrases") {
 			url.searchParams.set("level", levelsStr);

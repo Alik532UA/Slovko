@@ -14,6 +14,8 @@
 	import { friendsStore } from "../../stores/friendsStore.svelte";
 	import { AuthService } from "../../firebase/AuthService";
 	import { progressStore } from "../../stores/progressStore.svelte";
+	import { page } from "$app/stores";
+	import { navigationState } from "../../services/navigationState.svelte";
 
 	// Sub-components
 	import ProfileStats from "../profile/ProfileStats.svelte";
@@ -60,7 +62,8 @@
 		return "stats";
 	});
 
-	let activeTab = $state<TabType>("stats");
+	const urlTab = $derived($page.url.searchParams.get("tab") as TabType | null);
+	let activeTab = $derived(urlTab || defaultTab);
 
 	// Фільтрація доступних табів
 	const availableTabs = $derived.by(() => {
@@ -71,18 +74,8 @@
 
 	function setActiveTab(tab: TabType) {
 		logService.log("profile", `Switching tab to: ${tab}`);
-		activeTab = tab;
+		navigationState.setTab(tab);
 	}
-
-	// Синхронізація активної вкладки при зміні пропсів або ініціалізації
-	$effect(() => {
-		if (initialTab) {
-			activeTab = initialTab;
-		} else {
-			// Якщо початкова вкладка не задана, вибираємо дефолтну для режиму
-			activeTab = mode === "profile" ? "account" : "stats";
-		}
-	});
 
 	// Корекція вкладки при зміні стану авторизації або режиму
 	$effect(() => {
@@ -100,13 +93,20 @@
 		} else {
 			// Для авторизованого користувача перевіряємо чи вкладка доступна в поточному режимі
 			if (!availableTabs.includes(activeTab)) {
-				activeTab = availableTabs[0] as TabType;
+				navigationState.setTab(availableTabs[0] as TabType);
 			}
 		}
 	});
 
 	// Friends state
-	let friendsSubTab = $state<"following" | "followers" | "search">("following");
+	let urlSubTab = $derived(
+		$page.url.searchParams.get("subtab") as
+			| "following"
+			| "followers"
+			| "search"
+			| null,
+	);
+	let friendsSubTab = $derived(urlSubTab || "following");
 	let shouldRefreshFriends = $state(false);
 
 	// Derived stats from progress store
@@ -427,21 +427,21 @@
 				<div class="sub-tabs" data-testid="friends-sub-tabs">
 					<button
 						class:active={friendsSubTab === "following"}
-						onclick={() => (friendsSubTab = "following")}
+						onclick={() => navigationState.setSubTab("following")}
 						data-testid="subtab-following"
 					>
 						{$_("friends.tabs.following")}
 					</button>
 					<button
 						class:active={friendsSubTab === "followers"}
-						onclick={() => (friendsSubTab = "followers")}
+						onclick={() => navigationState.setSubTab("followers")}
 						data-testid="subtab-followers"
 					>
 						{$_("friends.tabs.followers")}
 					</button>
 					<button
 						class:active={friendsSubTab === "search"}
-						onclick={() => (friendsSubTab = "search")}
+						onclick={() => navigationState.setSubTab("search")}
 						data-testid="subtab-search"
 					>
 						{$_("friends.tabs.search")}
