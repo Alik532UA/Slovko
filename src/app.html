@@ -183,9 +183,20 @@
 
 				// Catch synchronous errors
 				window.onerror = function(message, source, line, col, error) {
+					var msg = String(message);
+					
+					// Ignore cross-origin / generic script errors (often from extensions/webviews)
+					if (msg === 'Script error.' && (!source || source === '') && line === 0) {
+						return;
+					}
+					// Ignore ResizeObserver harmless errors
+					if (msg.indexOf('ResizeObserver loop') !== -1) {
+						return;
+					}
+
 					errors.push({
 						type: 'onerror',
-						message: String(message),
+						message: msg,
 						source: source,
 						line: line,
 						col: col,
