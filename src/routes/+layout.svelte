@@ -9,6 +9,7 @@
 	import { versionStore } from "$lib/stores/versionStore.svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import UpdateNotification from "$lib/components/navigation/UpdateNotification.svelte";
+	import NetworkIndicator from "$lib/components/ui/NetworkIndicator.svelte";
 	import ToastContainer from "$lib/components/ui/ToastContainer.svelte";
 	import InteractionSystem from "$lib/components/interaction/InteractionSystem.svelte";
 	import OnboardingModal from "$lib/components/onboarding/OnboardingModal.svelte";
@@ -266,6 +267,7 @@
 
 	<ToastContainer />
 	<InteractionSystem />
+	<NetworkIndicator />
 {:else}
 	<div class="loading">
 		<div class="loading-spinner"></div>
