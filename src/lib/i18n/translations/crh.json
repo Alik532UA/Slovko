@@ -267,7 +267,11 @@
 			"dailyAverage": "küñlük ortalama",
 			"correctShort": "Doğru",
 			"showMore": "daa çoq statistika köster",
-			"showLess": "statistikani gizle"
+			"showLess": "statistikani gizle",
+			"day": "kün",
+			"days": "kün",
+			"daysGenitive": "kün",
+			"inARow": "sırasınen"
 		}
 	},
 	"updateNotification": {

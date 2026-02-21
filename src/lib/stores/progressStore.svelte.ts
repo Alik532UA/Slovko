@@ -7,6 +7,7 @@ import { browser } from "$app/environment";
 import { SyncService } from "../firebase/SyncService.svelte";
 import { streakService } from "../services/streakService";
 import { logService } from "../services/logService";
+import { localEventsStore } from "../stores/localEventsStore.svelte";
 import {
 	ProgressStateSchema,
 	DailyActivitySchema,
@@ -49,14 +50,14 @@ function createProgressStore() {
 	function migrateStatistics(state: ProgressState): ProgressState {
 		// Працюємо з копією даних, щоб не мутувати стан напряму під час обробки
 		const newState: ProgressState = JSON.parse(JSON.stringify(state));
-		
+
 		const dirtyKeys = Object.keys(newState.levelStats).filter(
 			(k) => k.includes(",") || k === "ALL"
 		);
 
 		if (dirtyKeys.length > 0) {
 			logService.log("stats", `Starting statistics migration for keys: ${dirtyKeys.join(", ")}`);
-			
+
 			const allAvailableLevels = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 			for (const key of dirtyKeys) {
@@ -130,15 +131,15 @@ function createProgressStore() {
 		// щоб сума рівнів завжди збігалася з загальним результатом.
 		const currentLevelsSum = Object.values(newState.levelStats).reduce((a, b) => a + (b.totalCorrect || 0), 0);
 		const currentAttemptsSum = Object.values(newState.levelStats).reduce((a, b) => a + (b.totalAttempts || 0), 0);
-		
+
 		const baseTotalCorrect = newState.totalCorrect || 0;
 		const restored = newState.restoredPoints || 0;
-		
+
 		// Якщо загальний результат більший за суму рівнів (включаючи відновлені)
 		if (baseTotalCorrect > (currentLevelsSum + restored)) {
 			const diff = baseTotalCorrect - (currentLevelsSum + restored);
 			logService.warn("stats", `Found ${diff} orphaned points. Moving to 'legacy' category.`);
-			
+
 			if (!newState.levelStats["legacy"]) {
 				newState.levelStats["legacy"] = { totalCorrect: 0, totalAttempts: 0, bestCorrectStreak: 0, currentCorrectStreak: 0 };
 			}
@@ -151,7 +152,7 @@ function createProgressStore() {
 		// Тепер гарантуємо, що totalCorrect не менший за суму (Integrity Protection)
 		const finalCorrectSum = Object.values(newState.levelStats).reduce((a, b) => a + (b.totalCorrect || 0), 0);
 		const finalAttemptsSum = Object.values(newState.levelStats).reduce((a, b) => a + (b.totalAttempts || 0), 0);
-		
+
 		newState.totalCorrect = finalCorrectSum + (newState.restoredPoints || 0);
 		newState.totalAttempts = finalAttemptsSum;
 
@@ -187,22 +188,22 @@ function createProgressStore() {
 
 			// 2. Дебаунсимо тільки завантаження в хмару та важкі операції очищення
 			if (saveTimeout) clearTimeout(saveTimeout);
-			
+
 			saveTimeout = setTimeout(() => {
 				// Garbage Collection: Видаляємо записи про слова, які давно не бачили
 				const now = Date.now();
 				const MAX_AGE = 180 * 24 * 60 * 60 * 1000;
-				
+
 				let hasCleanup = false;
 				const cleanedWords = { ...progress.words };
-				
+
 				for (const [key, word] of Object.entries(cleanedWords)) {
 					if (now - word.lastSeen > MAX_AGE && word.correctCount < 2) {
 						delete cleanedWords[key];
 						hasCleanup = true;
 					}
 				}
-				
+
 				if (hasCleanup) {
 					progress.words = cleanedWords;
 					localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
@@ -246,7 +247,7 @@ function createProgressStore() {
 			try {
 				const validated = ProgressStateSchema.parse(newData);
 				progress = migrateStatistics(validated);
-				
+
 				if (browser) {
 					localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
 				}
@@ -274,7 +275,7 @@ function createProgressStore() {
 			if (dailyActivity.date !== today) {
 				dailyActivity = DailyActivitySchema.parse({ date: today });
 			}
-			
+
 			dailyActivity.totalCorrect++;
 			dailyActivity.totalAttempts++;
 			if (!dailyActivity.levelStats[levelId]) {
@@ -295,12 +296,19 @@ function createProgressStore() {
 			progress.words[wordKey] = wordProgress;
 
 			// Логіка Streak (днів)
+			const oldStreakUpdateDate = progress.lastStreakUpdateDate;
 			const streakUpdate = streakService.calculateStreak(
 				progress.streak,
 				progress.lastCorrectDate,
 				progress.dailyCorrect,
 				progress.lastStreakUpdateDate,
 			);
+
+			// Перевірка досягнення цілі (10 пар)
+			if (streakUpdate.lastStreakUpdateDate === today && oldStreakUpdateDate !== today) {
+				logService.log("stats", "Daily goal reached! State updated.");
+				localEventsStore.addAchievement(streakUpdate.streak);
+			}
 
 			// Логіка серії правильних відповідей (підряд) - Глобальна
 			const newCurrentCorrectStreak = progress.currentCorrectStreak + 1;

@@ -27,7 +27,11 @@ function checkTranslations() {
 	const data = {};
 
 	files.forEach((file) => {
-		const content = fs.readFileSync(path.join(TRANSLATIONS_DIR, file), "utf8");
+		let content = fs.readFileSync(path.join(TRANSLATIONS_DIR, file), "utf8");
+		// Remove BOM (Byte Order Mark) if present
+		if (content.startsWith("\uFEFF")) {
+			content = content.slice(1);
+		}
 		data[file] = JSON.parse(content);
 	});
 

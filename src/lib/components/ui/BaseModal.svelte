@@ -44,7 +44,6 @@
 	class="modal-backdrop"
 	transition:fade={{ duration: 200 }}
 	onclick={handleBackdropClick}
-	aria-hidden="true"
 >
 	<div
 		bind:this={modalEl}

@@ -1,79 +1,81 @@
 <script lang="ts">
-	import { PresenceService, type InteractionEvent } from "$lib/firebase/PresenceService.svelte";
-	import { authStore } from "$lib/firebase/authStore.svelte";
-	import { logService } from "$lib/services/logService";
+	import type { InteractionEvent } from "$lib/firebase/PresenceService.svelte";
 	import { _ } from "svelte-i18n";
 	import UserAvatar from "../friends/UserAvatar.svelte";
 	import { slide, scale } from "svelte/transition";
-	import { Hand, Check } from "lucide-svelte";
+	import { Hand, Check, CheckCircle, TrendingUp } from "lucide-svelte";
 	import { dev } from "$app/environment";
 	import { onMount } from "svelte";
+	import { getPluralForm } from "$lib/utils/pluralize";
 
 	interface Props {
 		event: InteractionEvent;
+		onAction?: () => void;
+		onRemove: (id: string) => void;
+		onUpdateState: (
+			id: string,
+			state: "collapsed" | "expanded" | "sent",
+		) => void;
+		displayTimeOverrides?: Partial<Record<string, number>>;
 	}
 
-	let { event }: Props = $props();
+	let {
+		event,
+		onAction,
+		onRemove,
+		onUpdateState,
+		displayTimeOverrides = {},
+	}: Props = $props();
 	let timer: NodeJS.Timeout;
 
-	async function handleAction(e: MouseEvent) {
+	async function handleActionClick(e: MouseEvent) {
 		e.stopPropagation();
-		
-		if (event.type === 'new_follower') {
-			const { FriendsService } = await import("$lib/firebase/FriendsService");
-			const success = await FriendsService.follow(event.uid, {
-				displayName: event.profile.name,
-				photoURL: event.profile.photoURL
-			});
-			if (success) {
-				PresenceService.updateInteractionState(event.id, 'sent');
-				// Закриваємо через 2 секунди
-				if (timer) clearTimeout(timer);
-				timer = setTimeout(() => {
-					PresenceService.removeInteraction(event.id);
-				}, 2000);
-			}
-			return;
+
+		if (onAction) {
+			onAction();
 		}
 
-		const senderProfile = {
-			name: authStore.displayName || "Гравець",
-			photoURL: authStore.photoURL
-		};
-		PresenceService.sendWave(event.uid, senderProfile, event.id);
-		
-		// Закриваємо через 2 секунди після махання
+		if (event.type !== "daily_goal_reached") {
+			onUpdateState(event.id, "sent");
+		}
+
+		// Закриваємо капсулу з затримкою або миттєво
 		if (timer) clearTimeout(timer);
+
+		let delay = 2000;
+		if (event.type === "daily_goal_reached") delay = 0;
+
 		timer = setTimeout(() => {
-			PresenceService.removeInteraction(event.id);
-		}, 2000);
+			onRemove(event.id);
+		}, delay);
 	}
 
 	function toggleExpand() {
-		if (event.state === 'collapsed') {
-			PresenceService.updateInteractionState(event.id, 'expanded');
-		} else if (event.state === 'expanded' && (event.type === 'manual_menu' || event.type === 'new_follower')) {
-			PresenceService.updateInteractionState(event.id, 'collapsed');
+		if (event.state === "collapsed") {
+			onUpdateState(event.id, "expanded");
+		} else if (
+			event.state === "expanded" &&
+			(event.type === "manual_menu" || event.type === "new_follower")
+		) {
+			onUpdateState(event.id, "collapsed");
+		} else if (event.type === "daily_goal_reached") {
+			handleActionClick(new MouseEvent("click"));
 		}
 	}
 
 	onMount(() => {
 		// Визначаємо час відображення на основі середовища та типу події
-		let displayTime = dev ? 55000 : 10000; // за замовчуванням 10с для продакшн
+		let displayTime = dev ? 55000 : 5000; // 5с для продакшн
 
-		if (!dev) {
-			if (event.type === 'online') {
-				displayTime = 5000; // 5с для сповіщення про онлайн
-			} else if (event.type === 'incoming_wave' || event.type === 'manual_menu') {
-				displayTime = 10000; // 10с для махання
-			}
+		const override = displayTimeOverrides?.[event.type];
+		if (override !== undefined) {
+			displayTime = override;
 		}
 
 		const id = event.id; // Фіксуємо ID для замикання
-		
+
 		timer = setTimeout(() => {
-			logService.log("interaction", `Auto-removing interaction: ${id}`);
-			PresenceService.removeInteraction(id);
+			onRemove(id);
 		}, displayTime);
 
 		return () => {
@@ -82,49 +84,81 @@
 	});
 
 	const statusText = $derived(() => {
-		if (event.state === 'sent') {
-			return event.type === 'new_follower' ? $_('interaction.youFollowed') : $_('interaction.youWaved');
+		if (event.type === "daily_goal_reached") {
+			const streak = event.streak || 0;
+			const dayWord = getPluralForm(
+				streak,
+				$_("profile.stats.day"),
+				$_("profile.stats.daysGenitive"),
+				$_("profile.stats.days"),
+			);
+			return `${streak} ${dayWord} ${$_("profile.stats.inARow")}`;
 		}
-		if (event.type === 'incoming_wave') return $_('interaction.wavingAtYou');
-		if (event.type === 'new_follower') return $_('interaction.followedYou');
-		if (event.type === 'online') return $_('interaction.onlineNow');
-		return $_('interaction.waveBack');
+		if (event.state === "sent") {
+			return event.type === "new_follower"
+				? $_("interaction.youFollowed")
+				: $_("interaction.youWaved");
+		}
+		if (event.type === "incoming_wave") return $_("interaction.wavingAtYou");
+		if (event.type === "new_follower") return $_("interaction.followedYou");
+		if (event.type === "online") return $_("interaction.onlineNow");
+		return $_("interaction.waveBack");
 	});
 </script>
 
-<div 
-	class="capsule-container" 
-	class:expanded={event.state !== 'collapsed'}
-	class:sent={event.state === 'sent'}
+<div
+	class="capsule-container"
+	class:expanded={event.state !== "collapsed"}
+	class:sent={event.state === "sent"}
+	class:success={event.type === "daily_goal_reached"}
 	transition:scale={{ duration: 200, start: 0.8 }}
 	data-testid="interaction-capsule-{event.type}"
 >
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
-	<div 
-		class="interactive-area" 
+	<div
+		class="interactive-area"
 		onclick={toggleExpand}
 		data-testid="interaction-trigger-{event.uid}"
 	>
-		
-		{#if event.state !== 'collapsed'}
-			<div class="content-panel" transition:slide={{ axis: 'x', duration: 250 }} data-testid="interaction-content">
+		{#if event.state !== "collapsed"}
+			<div
+				class="content-panel"
+				transition:slide={{ axis: "x", duration: 250 }}
+				data-testid="interaction-content"
+			>
 				<div class="text-block">
-					<span class="nickname" data-testid="interaction-nickname">{event.profile.name}</span>
+					<span class="nickname" data-testid="interaction-nickname">
+						{#if event.type === "daily_goal_reached"}
+							+1 {$_("profile.stats.day")}
+						{:else}
+							{event.profile.name}
+						{/if}
+					</span>
 					<span class="status-text" data-testid="interaction-status-text">
 						{statusText()}
 					</span>
 				</div>
 
-				{#if event.state === 'sent'}
-					<div class="sent-indicator" transition:scale data-testid="interaction-sent-indicator">
+				{#if event.type === "daily_goal_reached"}
+					<div class="streak-badge" data-testid="stat-card-days-streak">
+						<TrendingUp size={16} />
+					</div>
+				{:else if event.state === "sent"}
+					<div
+						class="sent-indicator"
+						transition:scale
+						data-testid="interaction-sent-indicator"
+					>
 						<Check size={18} />
 					</div>
 				{:else}
-					<button 
-						class="wave-btn" 
-						onclick={handleAction} 
-						aria-label={event.type === 'new_follower' ? $_("interaction.followBack") : $_("interaction.waveBack")}
+					<button
+						class="wave-btn"
+						onclick={handleActionClick}
+						aria-label={event.type === "new_follower"
+							? $_("interaction.followBack")
+							: $_("interaction.waveBack")}
 						data-testid="interaction-action-btn"
 					>
 						<Hand size={18} />
@@ -134,13 +168,19 @@
 		{/if}
 
 		<div class="avatar-anchor" data-testid="interaction-avatar">
-			<UserAvatar 
-				uid={event.uid} 
-				photoURL={event.profile.photoURL} 
-				size={40} 
-				interactive={false}
-				showStatus={event.type === 'online' || event.state === 'collapsed'}
-			/>
+			{#if event.type === "daily_goal_reached"}
+				<div class="success-icon" transition:scale>
+					<CheckCircle size={40} strokeWidth={2.5} />
+				</div>
+			{:else}
+				<UserAvatar
+					uid={event.uid}
+					photoURL={event.profile.photoURL}
+					size={40}
+					interactive={false}
+					showStatus={event.type === "online" || event.state === "collapsed"}
+				/>
+			{/if}
 		</div>
 	</div>
 </div>
@@ -165,6 +205,30 @@
 		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 		max-width: fit-content;
+	}
+
+	.success .interactive-area {
+		background: rgba(16, 44, 31, 0.95);
+		border-color: rgba(46, 204, 113, 0.4);
+		box-shadow: 0 8px 20px rgba(46, 204, 113, 0.1);
+	}
+
+	.success-icon {
+		color: #2ecc71;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.streak-badge {
+		background: rgba(46, 204, 113, 0.2);
+		color: #2ecc71;
+		padding: 4px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
 	}
 
 	/* У згорнутому стані робимо фон мінімальним або взагалі прибираємо рамку */
@@ -218,7 +282,9 @@
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
-		transition: transform 0.2s, background 0.2s;
+		transition:
+			transform 0.2s,
+			background 0.2s;
 		flex-shrink: 0;
 	}
 

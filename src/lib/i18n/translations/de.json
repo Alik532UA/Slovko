@@ -267,7 +267,11 @@
 			"dailyAverage": "Durchschnitt pro Tag",
 			"correctShort": "Richtig",
 			"showMore": "mehr Statistiken anzeigen",
-			"showLess": "weniger Statistiken anzeigen"
+			"showLess": "weniger Statistiken anzeigen",
+			"day": "Tag",
+			"days": "Tage",
+			"daysGenitive": "Tage",
+			"inARow": "hintereinander"
 		}
 	},
 	"updateNotification": {

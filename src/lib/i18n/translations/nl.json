@@ -267,7 +267,11 @@
 			"dailyAverage": "gemiddeld per dag",
 			"correctShort": "Correct",
 			"showMore": "toon meer statistieken",
-			"showLess": "toon minder statistieken"
+			"showLess": "toon minder statistieken",
+			"day": "dag",
+			"days": "dagen",
+			"daysGenitive": "dagen",
+			"inARow": "op rij"
 		}
 	},
 	"updateNotification": {

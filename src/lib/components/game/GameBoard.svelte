@@ -291,7 +291,9 @@
 		</svg>
 	{/if}
 
-	<div
+	<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+	<!-- svelte-ignore a11y_click_events_have_key_events -->
+	<section
 		class="game-board"
 		onclick={(e) => {
 			// Очищаємо вибір тільки якщо клікнули саме по фону, а не по картці
@@ -303,6 +305,7 @@
 			if (e.key === "Escape") gameState.setSelectedCard(null);
 		}}
 		role="main"
+		tabindex="-1"
 		aria-label="Game Board"
 		data-testid="game-board"
 	>
@@ -377,7 +380,7 @@
 				{/each}
 			</div>
 		{/if}
-	</div>
+	</section>
 
 	{#if contextMenu}
 		<CardContextMenu

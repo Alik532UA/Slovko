@@ -51,7 +51,7 @@
 	let showFriendsSettings = $state(false);
 	let errorMessage = $state("");
 	let successMessage = $state("");
-	
+
 	// Визначаємо початкову вкладку залежно від режиму
 	const defaultTab = $derived.by(() => {
 		if (initialTab) return initialTab;
@@ -87,12 +87,12 @@
 	// Корекція вкладки при зміні стану авторизації або режиму
 	$effect(() => {
 		const isGuest = authStore.isAnonymous || authStore.isGuest;
-		
+
 		if (isGuest) {
 			// Для гостя в режимі профілю дозволяємо лише account (вхід)
 			if (mode === "profile" && activeTab !== "account") {
 				activeTab = "account";
-			} 
+			}
 			// В режимі статистики — лише stats
 			else if (mode === "stats" && activeTab !== "stats") {
 				activeTab = "stats";
@@ -257,10 +257,11 @@
 		try {
 			// Перевіряємо методи входу для цього email
 			const providers = await AuthService.getProvidersForEmail(email);
-			
+
 			if (providers.includes("google.com")) {
 				errorMessage = $_("profile.forgotPasswordGoogleInfo", {
-					default: "Ваш акаунт підключено через Google. Оскільки автентифікація керується вашим Google-профілем, окремий пароль Slovko для цієї адреси не встановлено. Будь ласка, увійдіть за допомогою Google."
+					default:
+						"Ваш акаунт підключено через Google. Оскільки автентифікація керується вашим Google-профілем, окремий пароль Slovko для цієї адреси не встановлено. Будь ласка, увійдіть за допомогою Google.",
 				});
 				isLinking = false;
 				return;
@@ -354,211 +355,217 @@
 	}
 
 	import BaseModal from "../ui/BaseModal.svelte";
-
 </script>
 
-<BaseModal {onclose} testid="profile-modal">
-	<div class="modal-internal-wrapper" use:smoothHeight={{ duration: 300 }}>
-		<div class="modal-content-measure">
-			{#if isEditingAvatar}
-			<AvatarEditor
-				initialIcon={avatarInitialIcon()}
-				initialColor={avatarInitialColor()}
-				onsave={saveAvatar}
-				oncancel={() => (isEditingAvatar = false)}
-			/>
-		{:else if loginMethod === null}
-			<!-- Header and Tabs -->
-			{#if !authStore.isGuest}
-				<ProfileHeader oneditAvatar={startEditingAvatar} />
+{#snippet tabsNav()}
+	{#if !authStore.isGuest}
+		<ProfileHeader oneditAvatar={startEditingAvatar} />
 
-				<!-- Tabs for logged in users -->
-				<div class="tabs-nav" data-testid="profile-tabs-nav">
-					{#if availableTabs.includes("stats")}
-						<button
-							class:active={activeTab === "stats"}
-							onclick={() => setActiveTab("stats")}
-							data-testid="tab-stats"
-						>
-							<div class="tab-icon"><Target size={18} /></div>
-							<span>{$_("profile.tabs.stats")}</span>
-						</button>
-					{/if}
-
-					{#if availableTabs.includes("friends")}
-						<button
-							class:active={activeTab === "friends"}
-							onclick={() => setActiveTab("friends")}
-							data-testid="tab-friends"
-						>
-							<div class="tab-icon"><Users size={18} /></div>
-							<span>{$_("profile.tabs.friends")}</span>
-						</button>
-					{/if}
-
-					{#if availableTabs.includes("leaderboard")}
-						<button
-							class:active={activeTab === "leaderboard"}
-							onclick={() => setActiveTab("leaderboard")}
-							data-testid="tab-leaderboard"
-						>
-							<div class="tab-icon"><Trophy size={18} /></div>
-							<span>{$_("profile.tabs.leaderboard")}</span>
-						</button>
-					{/if}
-
-					{#if availableTabs.includes("account")}
-						<button
-							class:active={activeTab === "account"}
-							onclick={() => setActiveTab("account")}
-							data-testid="tab-account"
-						>
-							<div class="tab-icon"><LayoutGrid size={18} /></div>
-							<span>{$_("profile.tabs.account")}</span>
-						</button>
-					{/if}
-				</div>
-			{:else if activeTab !== "stats"}
-				<!-- Якщо гість і НЕ на вкладці статистики — показуємо форму входу -->
-				<GuestProfileView {isLinking} onlogin={() => (loginMethod = "auth")} />
+		<div class="tabs-nav" data-testid="profile-tabs-nav">
+			{#if availableTabs.includes("stats")}
+				<button
+					class:active={activeTab === "stats"}
+					onclick={() => setActiveTab("stats")}
+					data-testid="tab-stats"
+				>
+					<div class="tab-icon"><Target size={18} /></div>
+					<span>{$_("profile.tabs.stats")}</span>
+				</button>
 			{/if}
+			{#if availableTabs.includes("friends")}
+				<button
+					class:active={activeTab === "friends"}
+					onclick={() => setActiveTab("friends")}
+					data-testid="tab-friends"
+				>
+					<div class="tab-icon"><Users size={18} /></div>
+					<span>{$_("profile.tabs.friends")}</span>
+				</button>
+			{/if}
+			{#if availableTabs.includes("leaderboard")}
+				<button
+					class:active={activeTab === "leaderboard"}
+					onclick={() => setActiveTab("leaderboard")}
+					data-testid="tab-leaderboard"
+				>
+					<div class="tab-icon"><Trophy size={18} /></div>
+					<span>{$_("profile.tabs.leaderboard")}</span>
+				</button>
+			{/if}
+			{#if availableTabs.includes("account")}
+				<button
+					class:active={activeTab === "account"}
+					onclick={() => setActiveTab("account")}
+					data-testid="tab-account"
+				>
+					<div class="tab-icon"><LayoutGrid size={18} /></div>
+					<span>{$_("profile.tabs.account")}</span>
+				</button>
+			{/if}
+		</div>
+	{:else if activeTab !== "stats"}
+		<GuestProfileView {isLinking} onlogin={() => (loginMethod = "auth")} />
+	{/if}
+{/snippet}
 
-			<div class="profile-content" data-testid="profile-content">
-				<ErrorBoundary>
-					{#key activeTab}
-						<div in:fade={{ duration: 250, delay: 50 }} out:fade={{ duration: 150 }} class="tab-content-wrapper" data-testid="tab-content-{activeTab}">
-						{#if activeTab === "stats"}
-							<ProfileStats
-								{totalCorrect}
-								{streak}
-								{daysInApp}
-								{accuracy}
-								{bestStreak}
-								{bestCorrectStreak}
-								{correctToday}
-								{dailyAverage}
-								{levelStats}
-							/>
-						{:else if activeTab === "friends" && !authStore.isGuest}
-							<div class="friends-layout" data-testid="friends-layout">
-								<div class="sub-tabs-container">
-									<div class="sub-tabs" data-testid="friends-sub-tabs">
-										<button
-											class:active={friendsSubTab === "following"}
-											onclick={() => (friendsSubTab = "following")}
-											data-testid="subtab-following"
-										>
-											{$_("friends.tabs.following")}
-										</button>
-										<button
-											class:active={friendsSubTab === "followers"}
-											onclick={() => (friendsSubTab = "followers")}
-											data-testid="subtab-followers"
-										>
-											{$_("friends.tabs.followers")}
-										</button>
-										<button
-											class:active={friendsSubTab === "search"}
-											onclick={() => (friendsSubTab = "search")}
-											data-testid="subtab-search"
-										>
-											{$_("friends.tabs.search")}
-										</button>
-									</div>
-									<div class="friends-actions">
-										<button
-											class="friends-settings-btn"
-											onclick={() => (showFriendsSettings = true)}
-											title={$_("settings.privacyTitle", {
-												default: "Privacy Settings",
-											})}
-											data-testid="friends-settings-btn"
-										>
-											<Settings size={18} />
-										</button>
-									</div>
-								</div>
+{#snippet tabContent()}
+	{#if activeTab === "stats"}
+		<ProfileStats
+			{totalCorrect}
+			{streak}
+			{daysInApp}
+			{accuracy}
+			{bestStreak}
+			{bestCorrectStreak}
+			{correctToday}
+			{dailyAverage}
+			{levelStats}
+		/>
+	{:else if activeTab === "friends" && !authStore.isGuest}
+		<div class="friends-layout" data-testid="friends-layout">
+			<div class="sub-tabs-container">
+				<div class="sub-tabs" data-testid="friends-sub-tabs">
+					<button
+						class:active={friendsSubTab === "following"}
+						onclick={() => (friendsSubTab = "following")}
+						data-testid="subtab-following"
+					>
+						{$_("friends.tabs.following")}
+					</button>
+					<button
+						class:active={friendsSubTab === "followers"}
+						onclick={() => (friendsSubTab = "followers")}
+						data-testid="subtab-followers"
+					>
+						{$_("friends.tabs.followers")}
+					</button>
+					<button
+						class:active={friendsSubTab === "search"}
+						onclick={() => (friendsSubTab = "search")}
+						data-testid="subtab-search"
+					>
+						{$_("friends.tabs.search")}
+					</button>
+				</div>
+				<div class="friends-actions">
+					<button
+						class="friends-settings-btn"
+						onclick={() => (showFriendsSettings = true)}
+						title={$_("settings.privacyTitle", { default: "Privacy Settings" })}
+						data-testid="friends-settings-btn"
+					>
+						<Settings size={18} />
+					</button>
+				</div>
+			</div>
 
-								<div
-									class="friends-content-area"
-									data-testid="friends-content-area"
-								>
-									{#key friendsSubTab}
-										<div in:fade={{ duration: 300, delay: 150 }} out:fade={{ duration: 150 }} class="friends-subtab-wrapper">
-											{#if friendsSubTab === "search"}
-												<UserSearch />
-											{:else}
-												<FriendsList
-													activeTab={friendsSubTab}
-													shouldRefresh={shouldRefreshFriends}
-												/>
-											{/if}
-										</div>
-									{/key}
-								</div>
-							</div>
-
-							{#if showFriendsSettings}
-								<FriendsSettingsModal
-									onclose={() => (showFriendsSettings = false)}
-								/>
-							{/if}
-						{:else if activeTab === "leaderboard" && !authStore.isAnonymous}
-							<Leaderboard />
-						{:else if activeTab === "account" && !authStore.isGuest}
-							<AccountActions
-								onchangePassword={() => {
-									loginMethod = "change-password";
-									resetForm();
-								}}
-								onlogout={handleLogout}
-								ondeleteAccount={() => {
-									loginMethod = "delete-account";
-									resetForm();
-								}}
+			<div class="friends-content-area" data-testid="friends-content-area">
+				{#key friendsSubTab}
+					<div
+						in:fade={{ duration: 300, delay: 150 }}
+						out:fade={{ duration: 150 }}
+						class="friends-subtab-wrapper"
+					>
+						{#if friendsSubTab === "search"}
+							<UserSearch />
+						{:else}
+							<FriendsList
+								activeTab={friendsSubTab}
+								shouldRefresh={shouldRefreshFriends}
 							/>
 						{/if}
 					</div>
 				{/key}
-			</ErrorBoundary>
+			</div>
 		</div>
-	{:else if loginMethod === "auth" || loginMethod === "forgot-password"}
-		<EmailAuthForm
-			mode={loginMethod}
-			isLoading={isLinking}
-			{errorMessage}
-			{successMessage}
-			onsubmit={loginMethod === "forgot-password"
-				? handleForgotPassword
-				: handleEmailSignIn}
-			onregister={handleEmailRegister}
-			ongoogle={handleGoogleLogin}
-			onback={() => {
-				loginMethod = null;
+
+		{#if showFriendsSettings}
+			<FriendsSettingsModal onclose={() => (showFriendsSettings = false)} />
+		{/if}
+	{:else if activeTab === "leaderboard" && !authStore.isAnonymous}
+		<Leaderboard />
+	{:else if activeTab === "account" && !authStore.isGuest}
+		<AccountActions
+			onchangePassword={() => {
+				loginMethod = "change-password";
 				resetForm();
 			}}
-			onforgotPassword={loginMethod === "auth"
-				? () => {
-						loginMethod = "forgot-password";
-						resetForm();
-					}
-				: undefined}
+			onlogout={handleLogout}
+			ondeleteAccount={() => {
+				loginMethod = "delete-account";
+				resetForm();
+			}}
 		/>
-	{:else if loginMethod === "change-password" || loginMethod === "delete-account"}
-								<SecuritySettings
-									mode={loginMethod}
-									onback={() => {
-										loginMethod = null;
-										resetForm();
-									}}
-									onclose={onclose}
-								/>
-							{/if}
+	{/if}
+{/snippet}
+
+<BaseModal
+	{onclose}
+	testid={mode === "stats" ? "stats-modal" : "profile-modal"}
+>
+	<div class="modal-internal-wrapper" use:smoothHeight={{ duration: 300 }}>
+		<div class="modal-content-measure">
+			{#if isEditingAvatar}
+				<AvatarEditor
+					initialIcon={avatarInitialIcon()}
+					initialColor={avatarInitialColor()}
+					onsave={saveAvatar}
+					oncancel={() => (isEditingAvatar = false)}
+				/>
+			{:else if loginMethod === null}
+				{@render tabsNav()}
+
+				<div class="profile-content" data-testid="profile-content">
+					<ErrorBoundary>
+						{#key activeTab}
+							<div
+								in:fade={{ duration: 250, delay: 50 }}
+								out:fade={{ duration: 150 }}
+								class="tab-content-wrapper"
+								data-testid="tab-content-{activeTab}"
+							>
+								{@render tabContent()}
 							</div>
-						</div>
-					</BaseModal>
-					
-		<style>
+						{/key}
+					</ErrorBoundary>
+				</div>
+			{:else if loginMethod === "auth" || loginMethod === "forgot-password"}
+				<EmailAuthForm
+					mode={loginMethod}
+					isLoading={isLinking}
+					{errorMessage}
+					{successMessage}
+					onsubmit={loginMethod === "forgot-password"
+						? handleForgotPassword
+						: handleEmailSignIn}
+					onregister={handleEmailRegister}
+					ongoogle={handleGoogleLogin}
+					onback={() => {
+						loginMethod = null;
+						resetForm();
+					}}
+					onforgotPassword={loginMethod === "auth"
+						? () => {
+								loginMethod = "forgot-password";
+								resetForm();
+							}
+						: undefined}
+				/>
+			{:else if loginMethod === "change-password" || loginMethod === "delete-account"}
+				<SecuritySettings
+					mode={loginMethod}
+					onback={() => {
+						loginMethod = null;
+						resetForm();
+					}}
+					{onclose}
+				/>
+			{/if}
+		</div>
+	</div>
+</BaseModal>
+
+<style>
 	.tabs-nav {
 		display: flex;
 		gap: 0.25rem;

@@ -298,7 +298,11 @@
 			"dailyAverage": "average answers per day",
 			"correctShort": "Correct",
 			"showMore": "show more statistics",
-			"showLess": "show less statistics"
+			"showLess": "show less statistics",
+			"day": "day",
+			"days": "days",
+			"daysGenitive": "days",
+			"inARow": "in a row"
 		}
 	},
 	"updateNotification": {

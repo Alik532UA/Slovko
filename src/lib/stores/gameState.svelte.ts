@@ -46,6 +46,7 @@ function createGameState() {
 		targetTranslations: {},
 		sourceTranscriptions: {},
 		targetTranscriptions: {},
+		wordLevels: {},
 		words: [],
 		settings: {} as any, // Initialized when data is loaded
 	});

@@ -1,18 +1,16 @@
 import { progressStore } from "../stores/progressStore.svelte";
 import { playlistStore } from "../stores/playlistStore.svelte";
+import { browser } from "$app/environment";
 import type { WordPair } from "../types";
 
 /**
- * Сервіс для обробки побічних ефектів ігрових подій.
- * Використовується як міст між ігровим двигуном та сховищами прогресу/плейлістів.
+ * Game Feedback Handler — Обробка ігрових подій (прогрес) та фідбек (звук/вібро)
  */
 export class GameFeedbackHandler {
+	private audioContext: AudioContext | null = null;
+
 	/**
 	 * Обробляє подію правильної відповіді.
-	 *
-	 * @param wordKey Унікальний ключ слова
-	 * @param levelId Поточний рівень (CEFR або ID теми)
-	 * @param fromMistakesPlaylist Чи була гра запущена з плейліста помилок
 	 */
 	handleCorrect(
 		wordKey: string,
@@ -30,10 +28,6 @@ export class GameFeedbackHandler {
 
 	/**
 	 * Обробляє подію неправильної відповіді.
-	 *
-	 * @param pair1 Перша пара слів (ID та тексти)
-	 * @param pair2 Друга пара слів (ID та тексти)
-	 * @param levelId Поточний рівень (CEFR або ID теми)
 	 */
 	handleWrong(pair1: WordPair, pair2: WordPair, levelId: string) {
 		// Record general mistake
@@ -42,6 +36,58 @@ export class GameFeedbackHandler {
 		// Add to mistakes playlist
 		playlistStore.recordMistake(pair1.id);
 		playlistStore.recordMistake(pair2.id);
+	}
+
+	/**
+	 * Відтворює звук "Успіху" через Web Audio API
+	 * @param volume Гучність (0.0 - 1.0)
+	 */
+	playSuccessSound(volume = 0.3) {
+		if (!browser) return;
+
+		try {
+			if (!this.audioContext) {
+				const AudioContextClass = (window as any).AudioContext || (window as any).webkitAudioContext;
+				if (!AudioContextClass) return;
+				this.audioContext = new AudioContextClass();
+			}
+
+			const ctx = this.audioContext;
+			if (!ctx) return;
+
+			if (ctx.state === 'suspended') {
+				ctx.resume();
+			}
+
+			const oscillator = ctx.createOscillator();
+			const gain = ctx.createGain();
+
+			oscillator.type = 'sine';
+			oscillator.frequency.setValueAtTime(523.25, ctx.currentTime); // До (C5)
+			oscillator.frequency.exponentialRampToValueAtTime(880.00, ctx.currentTime + 0.1); // Ля (A5)
+
+			gain.gain.setValueAtTime(volume, ctx.currentTime);
+			gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+
+			oscillator.connect(gain);
+			gain.connect(ctx.destination);
+
+			oscillator.start();
+			oscillator.stop(ctx.currentTime + 0.4);
+		} catch (e) {
+			console.warn("Failed to play success sound:", e);
+		}
+	}
+
+	/**
+	 * Тактильний відгук (якщо підтримується)
+	 */
+	vibrate(pattern = 50) {
+		if (browser && navigator.vibrate) {
+			try {
+				navigator.vibrate(pattern);
+			} catch (e) { /* ignore */ }
+		}
 	}
 }
 

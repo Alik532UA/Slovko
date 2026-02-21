@@ -208,9 +208,24 @@
 				// Catch unhandled promise rejections
 				window.addEventListener('unhandledrejection', function(event) {
 					var reason = event.reason;
+					var msg = reason ? (reason.message || String(reason)) : 'Unknown rejection';
+					
+					// SMART RECOVERY: If a chunk failed to load (version mismatch), auto-reload ONCE
+					if (msg.indexOf('Failed to fetch dynamically imported module') !== -1) {
+						var lastReload = sessionStorage.getItem('last_chunk_reload');
+						var now = Date.now();
+						// Only auto-reload if we haven't done so in the last 10 seconds (loop protection)
+						if (!lastReload || (now - parseInt(lastReload)) > 10000) {
+							sessionStorage.setItem('last_chunk_reload', now.toString());
+							console.warn('Chunk load failed. Auto-reloading for version sync...');
+							window.location.reload();
+							return;
+						}
+					}
+
 					errors.push({
 						type: 'unhandledrejection',
-						message: reason ? (reason.message || String(reason)) : 'Unknown rejection',
+						message: msg,
 						stack: reason ? reason.stack : ''
 					});
 					showOverlay();
