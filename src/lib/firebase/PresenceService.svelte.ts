@@ -401,8 +401,15 @@ class PresenceServiceClass {
 			// Сповіщення про вхід в онлайн
 			if (data.state === "online") {
 				const isNew = !prev || prev.state !== "online";
-				const isRecent = (Date.now() - (data.lastChanged as number)) < 15000;
-				if (isNew && (this.initialStatusLoaded.has(uid) || isRecent)) {
+				const now = Date.now();
+				const lastChanged = (data.lastChanged as number) || 0;
+				const isRecent = (now - lastChanged) < 10000;
+				
+				// Ми показуємо сповіщення ТІЛЬКИ якщо:
+				// 1. Статус змінився на 'online' (isNew)
+				// 2. Ми вже завантажили початковий статус цього користувача раніше (initialStatusLoaded)
+				// 3. Зміна відбулася не раніше ніж 10 секунд тому (isRecent)
+				if (isNew && this.initialStatusLoaded.has(uid) && isRecent) {
 					this.handleFriendOnline(uid);
 				}
 			}

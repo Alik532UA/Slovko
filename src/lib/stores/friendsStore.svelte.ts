@@ -39,31 +39,51 @@ class FriendsStoreClass {
 	 * 2. Налаштування з хмари завантажено (SyncService.hasInitialData = true)
 	 */
 	async checkFollowerNotifications() {
-		if (!this.isFirstFollowerLoad || !this.followersLoaded || this.isCheckingNotifications) return;
+		if (!this.followersLoaded || this.isCheckingNotifications) return;
 
 		this.isCheckingNotifications = true;
 
 		try {
-			// Додаткова перевірка: чи дійсно SyncService готовий?
+			// Гарантовано чекаємо, поки SyncService завантажить початкові налаштування з хмари
 			const { SyncService } = await import("../firebase/SyncService.svelte");
-			if (!SyncService.hasInitialData) return;
+			if (!SyncService.hasInitialData) {
+				logService.log("sync", "Postponing follower check: SyncService not ready");
+				return;
+			}
+
+			// Якщо це вже не перше завантаження і ми вже все перевірили — виходимо
+			if (!this.isFirstFollowerLoad) return;
 
 			const lastSeen = settingsStore.value.lastSeenFollowerAt || 0;
 			logService.log("sync", `Checking follower notifications. Last seen: ${lastSeen}, Followers: ${this.followers.length}`);
 			
 			// Сортуємо від найновіших до найстаріших
+			// Якщо lastSeen === 0 (новий пристрій), показуємо тільки підписки за останні 12 годин
+			const safetyCutoff = lastSeen === 0 ? Date.now() - (12 * 60 * 60 * 1000) : lastSeen;
+
 			const unseenFollowers = this.followers
-				.filter(f => f.followedAt && f.followedAt.toMillis() > lastSeen)
+				.filter(f => f.followedAt && f.followedAt.toMillis() > safetyCutoff)
 				.sort((a, b) => (b.followedAt?.toMillis() || 0) - (a.followedAt?.toMillis() || 0));
 
 			if (unseenFollowers.length > 0) {
-				// Показуємо тільки 3 найновіших
+				logService.log("sync", `Found ${unseenFollowers.length} unseen followers since ${new Date(safetyCutoff).toISOString()}`);
+				
+				// Показуємо тільки 3 найновіших, щоб не спамити
 				unseenFollowers.slice(0, 3).forEach(f => this.triggerFollowerNotification(f));
 
-				// Але помічаємо ВСІХ як прочитаних (використовуємо таймстамп найновішого)
+				// Оновлюємо таймстамп найновішого, щоб наступного разу не показувати
 				const latestMs = unseenFollowers[0].followedAt?.toMillis();
 				if (latestMs && latestMs > lastSeen) {
 					settingsStore.update({ lastSeenFollowerAt: latestMs });
+				}
+			} else {
+				// Навіть якщо нових немає, ми помічаємо, що перша перевірка пройшла успішно
+				// Це запобігає повторним перевіркам при кожному оновленні списку
+				if (this.followers.length > 0) {
+					const latestMs = Math.max(...this.followers.map(f => f.followedAt?.toMillis() || 0));
+					if (latestMs > lastSeen) {
+						settingsStore.update({ lastSeenFollowerAt: latestMs });
+					}
 				}
 			}
 			
