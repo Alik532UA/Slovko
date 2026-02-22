@@ -116,7 +116,7 @@
 	const bestCorrectStreak = $derived(
 		progressStore.value.bestCorrectStreak || 0,
 	);
-	const correctToday = $derived(progressStore.value.dailyCorrect || 0);
+	const correctToday = $derived(progressStore.todayActivity.totalCorrect || 0);
 	const dailyAverage = $derived(progressStore.getDailyAverage());
 	const accuracy = $derived(progressStore.getAccuracy());
 	const daysInApp = $derived(
