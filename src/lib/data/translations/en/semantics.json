@@ -33,6 +33,8 @@
 		"right_correct": "correct",
 		"hard_difficult": "difficult",
 		"hard_solid": "solid",
-		"hard_tough": "tough"
+		"hard_tough": "tough",
+		"fine_good": "good",
+		"fine_penalty": "penalty"
 	}
 }
