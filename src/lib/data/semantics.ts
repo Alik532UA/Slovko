@@ -116,6 +116,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "match",
 		specific: ["match_game", "match_fire"],
 	},
+	mean: {
+		base: "mean",
+		specific: ["mean_verb"],
+	},
 };
 
 /**
