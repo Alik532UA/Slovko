@@ -43,6 +43,8 @@
 		"match_fire": "lucifer",
 		"mean_verb": "werkwoord",
 		"kind_nice": "aardig",
-		"kind_type": "soort"
+		"kind_type": "soort",
+		"ring_jewel": "sieraad",
+		"ring_sound": "bellen"
 	}
 }

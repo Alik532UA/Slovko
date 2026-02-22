@@ -43,6 +43,8 @@
 		"match_fire": "fire",
 		"mean_verb": "verb",
 		"kind_nice": "nice",
-		"kind_type": "type"
+		"kind_type": "type",
+		"ring_jewel": "jewel",
+		"ring_sound": "sound"
 	}
 }

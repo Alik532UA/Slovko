@@ -43,6 +43,8 @@
 		"match_fire": "Streichholz",
 		"mean_verb": "Verb",
 		"kind_nice": "nett",
-		"kind_type": "Art"
+		"kind_type": "Art",
+		"ring_jewel": "Schmuck",
+		"ring_sound": "klingeln"
 	}
 }

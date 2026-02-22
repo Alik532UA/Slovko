@@ -124,6 +124,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "kind",
 		specific: ["kind_nice", "kind_type"],
 	},
+	ring: {
+		base: "ring",
+		specific: ["ring_jewel", "ring_sound"],
+	},
 };
 
 /**
