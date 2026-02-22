@@ -19,6 +19,8 @@
 		"back_body": "vücut",
 		"back_direction": "yön",
 		"watch_verb": "baqmaq",
-		"watch_clock": "saat"
+		"watch_clock": "saat",
+		"right_direction": "yön",
+		"right_correct": "doğru"
 	}
 }

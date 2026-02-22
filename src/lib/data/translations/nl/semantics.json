@@ -28,6 +28,8 @@
 		"back_body": "lichaam",
 		"back_direction": "richting",
 		"watch_verb": "kijken",
-		"watch_clock": "horloge"
+		"watch_clock": "horloge",
+		"right_direction": "richting",
+		"right_correct": "juist"
 	}
 }

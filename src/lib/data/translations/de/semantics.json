@@ -28,6 +28,8 @@
 		"back_body": "Körper",
 		"back_direction": "Richtung",
 		"watch_verb": "schauen",
-		"watch_clock": "Uhr"
+		"watch_clock": "Uhr",
+		"right_direction": "Richtung",
+		"right_correct": "richtig"
 	}
 }

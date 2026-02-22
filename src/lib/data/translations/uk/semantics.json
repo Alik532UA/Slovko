@@ -28,6 +28,8 @@
 		"back_body": "тіло",
 		"back_direction": "напрямок",
 		"watch_verb": "дивитися",
-		"watch_clock": "годинник"
+		"watch_clock": "годинник",
+		"right_direction": "напрямок",
+		"right_correct": "правильно"
 	}
 }

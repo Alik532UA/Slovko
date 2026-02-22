@@ -28,6 +28,8 @@
 		"back_body": "σώμα",
 		"back_direction": "κατεύθυνση",
 		"watch_verb": "παρακολουθώ",
-		"watch_clock": "ρολόι"
+		"watch_clock": "ρολόι",
+		"right_direction": "κατεύθυνση",
+		"right_correct": "σωστά"
 	}
 }

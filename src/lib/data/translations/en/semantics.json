@@ -28,6 +28,8 @@
 		"back_body": "body",
 		"back_direction": "direction",
 		"watch_verb": "verb",
-		"watch_clock": "clock"
+		"watch_clock": "clock",
+		"right_direction": "direction",
+		"right_correct": "correct"
 	}
 }
