@@ -53,6 +53,18 @@
 		"point_out": "hinweisen",
 		"light_brightness": "Helligkeit",
 		"light_weight": "Gewicht",
-		"light_color": "Farbe"
+		"light_color": "Farbe",
+		"affair_matter": "Angelegenheit",
+		"affair_romance": "Affäre",
+		"time_abstract": "Zeit",
+		"time_clock": "Uhrzeit",
+		"man": "Mann",
+		"husband": "Ehemann",
+		"woman": "Frau",
+		"wife": "Ehefrau",
+		"hot": "heiß",
+		"warm": "warm",
+		"get": "bekommen",
+		"take": "nehmen"
 	}
 }

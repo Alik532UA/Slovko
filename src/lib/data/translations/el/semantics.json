@@ -53,6 +53,18 @@
 		"point_out": "επισημαίνω",
 		"light_brightness": "φωτεινότητα",
 		"light_weight": "βάρος",
-		"light_color": "χρώμα"
+		"light_color": "χρώμα",
+		"affair_matter": "υπόθεση",
+		"affair_romance": "ειδύλλιο",
+		"time_abstract": "χρόνος",
+		"time_clock": "ώρα",
+		"man": "άνδρας",
+		"husband": "σύζυγος",
+		"woman": "γυναίκα",
+		"wife": "σύζυγος (γυναίκα)",
+		"hot": "ζεστό",
+		"warm": "χλιαρό",
+		"get": "παίρνω",
+		"take": "κρατάω"
 	}
 }

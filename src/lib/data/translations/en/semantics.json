@@ -53,6 +53,18 @@
 		"point_out": "out",
 		"light_brightness": "brightness",
 		"light_weight": "weight",
-		"light_color": "color"
+		"light_color": "color",
+		"affair_matter": "matter",
+		"affair_romance": "romance",
+		"time_abstract": "abstract",
+		"time_clock": "clock",
+		"man": "man",
+		"husband": "husband",
+		"woman": "woman",
+		"wife": "wife",
+		"hot": "hot",
+		"warm": "warm",
+		"get": "get",
+		"take": "take"
 	}
 }

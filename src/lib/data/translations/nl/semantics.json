@@ -53,6 +53,18 @@
 		"point_out": "aanwijzen",
 		"light_brightness": "helderheid",
 		"light_weight": "gewicht",
-		"light_color": "kleur"
+		"light_color": "kleur",
+		"affair_matter": "zaak",
+		"affair_romance": "affaire",
+		"time_abstract": "tijd",
+		"time_clock": "kloktijd",
+		"man": "man",
+		"husband": "echtgenoot",
+		"woman": "vrouw",
+		"wife": "echtgenote",
+		"hot": "heet",
+		"warm": "warm",
+		"get": "krijgen",
+		"take": "nemen"
 	}
 }

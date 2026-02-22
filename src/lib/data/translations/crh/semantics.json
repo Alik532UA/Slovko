@@ -44,6 +44,18 @@
 		"point_out": "köstermek",
 		"light_brightness": "yarıqlıq",
 		"light_weight": "yengillik",
-		"light_color": "tüs"
+		"light_color": "tüs",
+		"affair_matter": "iş",
+		"affair_romance": "eşq",
+		"time_abstract": "vaqıt",
+		"time_clock": "saat",
+		"man": "erkek",
+		"husband": "qoca",
+		"woman": "qadın",
+		"wife": "apay",
+		"hot": "sıcaq",
+		"warm": "ılıman",
+		"get": "almaq",
+		"take": "tutmaq"
 	}
 }

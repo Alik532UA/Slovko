@@ -53,6 +53,18 @@
 		"point_out": "вказувати",
 		"light_brightness": "світло",
 		"light_weight": "вага",
-		"light_color": "колір"
+		"light_color": "колір",
+		"affair_matter": "справа",
+		"affair_romance": "роман",
+		"time_abstract": "час",
+		"time_clock": "година",
+		"man": "чоловік",
+		"husband": "чоловік (заміжній)",
+		"woman": "жінка",
+		"wife": "дружина",
+		"hot": "гарячий",
+		"warm": "теплий",
+		"get": "отримувати",
+		"take": "брати"
 	}
 }
