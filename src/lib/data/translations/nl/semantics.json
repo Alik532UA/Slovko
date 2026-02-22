@@ -24,6 +24,10 @@
 		"blue_dark": "donker",
 		"blue_light": "licht",
 		"bear_animal": "dier",
-		"bear_endure": "verdragen"
+		"bear_endure": "verdragen",
+		"back_body": "lichaam",
+		"back_direction": "richting",
+		"watch_verb": "kijken",
+		"watch_clock": "horloge"
 	}
 }

@@ -24,6 +24,10 @@
 		"blue_dark": "dark",
 		"blue_light": "light",
 		"bear_animal": "animal",
-		"bear_endure": "endure"
+		"bear_endure": "endure",
+		"back_body": "body",
+		"back_direction": "direction",
+		"watch_verb": "verb",
+		"watch_clock": "clock"
 	}
 }

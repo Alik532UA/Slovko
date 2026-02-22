@@ -24,6 +24,10 @@
 		"blue_dark": "синій",
 		"blue_light": "блакитний",
 		"bear_animal": "тварина",
-		"bear_endure": "терпіти"
+		"bear_endure": "терпіти",
+		"back_body": "тіло",
+		"back_direction": "напрямок",
+		"watch_verb": "дивитися",
+		"watch_clock": "годинник"
 	}
 }

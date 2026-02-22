@@ -15,6 +15,10 @@
 		"blue_dark": "tünd",
 		"blue_light": "aciq",
 		"bear_animal": "ayvan",
-		"bear_endure": "çıdamaq"
+		"bear_endure": "çıdamaq",
+		"back_body": "vücut",
+		"back_direction": "yön",
+		"watch_verb": "baqmaq",
+		"watch_clock": "saat"
 	}
 }

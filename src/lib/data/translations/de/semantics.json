@@ -24,6 +24,10 @@
 		"blue_dark": "dunkel",
 		"blue_light": "hell",
 		"bear_animal": "Tier",
-		"bear_endure": "ertragen"
+		"bear_endure": "ertragen",
+		"back_body": "Körper",
+		"back_direction": "Richtung",
+		"watch_verb": "schauen",
+		"watch_clock": "Uhr"
 	}
 }

@@ -24,6 +24,10 @@
 		"blue_dark": "σκούρο",
 		"blue_light": "ανοιχτό",
 		"bear_animal": "ζώο",
-		"bear_endure": "υπομένω"
+		"bear_endure": "υπομένω",
+		"back_body": "σώμα",
+		"back_direction": "κατεύθυνση",
+		"watch_verb": "παρακολουθώ",
+		"watch_clock": "ρολόι"
 	}
 }
