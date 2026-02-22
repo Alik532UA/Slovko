@@ -148,6 +148,22 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "jam",
 		specific: ["jam_fruit", "jam_traffic"],
 	},
+	bat: {
+		base: "bat",
+		specific: ["bat_animal"],
+	},
+	park: {
+		base: "park",
+		specific: ["park_area"],
+	},
+	duck: {
+		base: "duck",
+		specific: ["duck_animal"],
+	},
+	letter: {
+		base: "letter",
+		specific: ["letter_mail"],
+	},
 };
 
 /**
