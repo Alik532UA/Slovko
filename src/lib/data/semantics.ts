@@ -132,6 +132,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "lie",
 		specific: ["lie_position", "lie_false"],
 	},
+	point: {
+		base: "point",
+		specific: ["point_dot", "point_essence", "point_out"],
+	},
 };
 
 /**

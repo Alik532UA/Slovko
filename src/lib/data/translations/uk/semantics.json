@@ -47,6 +47,9 @@
 		"ring_jewel": "прикраса",
 		"ring_sound": "дзвонити",
 		"lie_position": "положення",
-		"lie_false": "неправда"
+		"lie_false": "неправда",
+		"point_dot": "точка",
+		"point_essence": "суть",
+		"point_out": "вказувати"
 	}
 }

@@ -38,6 +38,9 @@
 		"ring_jewel": "yüzük",
 		"ring_sound": "çalmaq",
 		"lie_position": "yatmaq",
-		"lie_false": "yalan"
+		"lie_false": "yalan",
+		"point_dot": "noqta",
+		"point_essence": "asıl",
+		"point_out": "köstermek"
 	}
 }

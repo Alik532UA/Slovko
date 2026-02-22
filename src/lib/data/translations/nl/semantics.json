@@ -47,6 +47,9 @@
 		"ring_jewel": "sieraad",
 		"ring_sound": "bellen",
 		"lie_position": "liggen",
-		"lie_false": "liegen"
+		"lie_false": "liegen",
+		"point_dot": "punt",
+		"point_essence": "kern",
+		"point_out": "aanwijzen"
 	}
 }

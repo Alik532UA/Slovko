@@ -47,6 +47,9 @@
 		"ring_jewel": "jewel",
 		"ring_sound": "sound",
 		"lie_position": "position",
-		"lie_false": "false"
+		"lie_false": "false",
+		"point_dot": "dot",
+		"point_essence": "essence",
+		"point_out": "out"
 	}
 }
