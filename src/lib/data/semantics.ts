@@ -94,7 +94,7 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	},
 	hard: {
 		base: "hard",
-		specific: ["hard_difficult", "hard_solid"],
+		specific: ["hard_difficult", "hard_solid", "hard_tough"],
 	},
 	too: {
 		base: "too",

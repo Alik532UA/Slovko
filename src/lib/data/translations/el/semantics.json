@@ -30,6 +30,9 @@
 		"watch_verb": "παρακολουθώ",
 		"watch_clock": "ρολόι",
 		"right_direction": "κατεύθυνση",
-		"right_correct": "σωστά"
+		"right_correct": "σωστά",
+		"hard_difficult": "δύσκολο",
+		"hard_solid": "στερεό",
+		"hard_tough": "σκληρό"
 	}
 }

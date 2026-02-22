@@ -30,6 +30,9 @@
 		"watch_verb": "kijken",
 		"watch_clock": "horloge",
 		"right_direction": "richting",
-		"right_correct": "juist"
+		"right_correct": "juist",
+		"hard_difficult": "moeilijk",
+		"hard_solid": "vast",
+		"hard_tough": "taai"
 	}
 }

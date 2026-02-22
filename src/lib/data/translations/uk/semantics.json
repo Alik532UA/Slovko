@@ -30,6 +30,9 @@
 		"watch_verb": "дивитися",
 		"watch_clock": "годинник",
 		"right_direction": "напрямок",
-		"right_correct": "правильно"
+		"right_correct": "правильно",
+		"hard_difficult": "складний",
+		"hard_solid": "твердий",
+		"hard_tough": "стійкий"
 	}
 }

@@ -21,6 +21,9 @@
 		"watch_verb": "baqmaq",
 		"watch_clock": "saat",
 		"right_direction": "yön",
-		"right_correct": "doğru"
+		"right_correct": "doğru",
+		"hard_difficult": "qıyın",
+		"hard_solid": "berk",
+		"hard_tough": "qattı"
 	}
 }

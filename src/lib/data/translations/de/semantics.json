@@ -30,6 +30,9 @@
 		"watch_verb": "schauen",
 		"watch_clock": "Uhr",
 		"right_direction": "Richtung",
-		"right_correct": "richtig"
+		"right_correct": "richtig",
+		"hard_difficult": "schwierig",
+		"hard_solid": "fest",
+		"hard_tough": "zäh"
 	}
 }

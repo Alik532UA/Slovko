@@ -30,6 +30,9 @@
 		"watch_verb": "verb",
 		"watch_clock": "clock",
 		"right_direction": "direction",
-		"right_correct": "correct"
+		"right_correct": "correct",
+		"hard_difficult": "difficult",
+		"hard_solid": "solid",
+		"hard_tough": "tough"
 	}
 }
