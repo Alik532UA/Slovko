@@ -41,6 +41,8 @@
 		"cool_temp": "koel",
 		"match_game": "wedstrijd",
 		"match_fire": "lucifer",
-		"mean_verb": "werkwoord"
+		"mean_verb": "werkwoord",
+		"kind_nice": "aardig",
+		"kind_type": "soort"
 	}
 }

@@ -32,6 +32,8 @@
 		"cool_temp": "serin",
 		"match_game": "maç",
 		"match_fire": "sernik",
-		"mean_verb": "fiil"
+		"mean_verb": "fiil",
+		"kind_nice": "merhametli",
+		"kind_type": "tür"
 	}
 }

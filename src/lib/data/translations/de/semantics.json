@@ -41,6 +41,8 @@
 		"cool_temp": "kühl",
 		"match_game": "Spiel",
 		"match_fire": "Streichholz",
-		"mean_verb": "Verb"
+		"mean_verb": "Verb",
+		"kind_nice": "nett",
+		"kind_type": "Art"
 	}
 }

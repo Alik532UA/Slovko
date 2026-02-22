@@ -41,6 +41,8 @@
 		"cool_temp": "temp",
 		"match_game": "game",
 		"match_fire": "fire",
-		"mean_verb": "verb"
+		"mean_verb": "verb",
+		"kind_nice": "nice",
+		"kind_type": "type"
 	}
 }

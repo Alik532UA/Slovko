@@ -120,6 +120,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "mean",
 		specific: ["mean_verb"],
 	},
+	kind: {
+		base: "kind",
+		specific: ["kind_nice", "kind_type"],
+	},
 };
 
 /**

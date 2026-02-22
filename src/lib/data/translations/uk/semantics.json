@@ -41,6 +41,8 @@
 		"cool_temp": "температура",
 		"match_game": "матч",
 		"match_fire": "сірник",
-		"mean_verb": "дієслово"
+		"mean_verb": "дієслово",
+		"kind_nice": "добрий",
+		"kind_type": "вид"
 	}
 }
