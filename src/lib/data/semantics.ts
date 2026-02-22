@@ -100,6 +100,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "too",
 		specific: ["too_also", "too_excessive"],
 	},
+	bear: {
+		base: "bear",
+		specific: ["bear_animal", "bear_endure"],
+	},
 };
 
 /**

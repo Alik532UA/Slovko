@@ -22,6 +22,8 @@
 		"walk_action": "lopen",
 		"walk_pleasure": "wandelen",
 		"blue_dark": "donker",
-		"blue_light": "licht"
+		"blue_light": "licht",
+		"bear_animal": "dier",
+		"bear_endure": "verdragen"
 	}
 }
