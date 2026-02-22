@@ -1,6 +1,8 @@
 {
 	"red": "rood",
 	"blue": "blauw",
+	"blue_dark": "donkerblauw",
+	"blue_light": "lichtblauw",
 	"green": "groen",
 	"yellow": "geel",
 	"black": "zwart",

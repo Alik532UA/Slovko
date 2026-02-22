@@ -1,6 +1,8 @@
 {
 	"red": "rot",
 	"blue": "blau",
+	"blue_dark": "dunkelblau",
+	"blue_light": "hellblau",
 	"green": "grün",
 	"yellow": "gelb",
 	"black": "schwarz",

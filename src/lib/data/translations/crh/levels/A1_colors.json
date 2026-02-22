@@ -1,6 +1,8 @@
 {
 	"red": "qırmızı",
 	"blue": "mavı",
+	"blue_dark": "tünd mavı",
+	"blue_light": "aciq mavı",
 	"green": "yeşil",
 	"yellow": "sarı",
 	"black": "qara",
