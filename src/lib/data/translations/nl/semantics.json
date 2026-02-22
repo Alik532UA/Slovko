@@ -50,6 +50,9 @@
 		"lie_false": "liegen",
 		"point_dot": "punt",
 		"point_essence": "kern",
-		"point_out": "aanwijzen"
+		"point_out": "aanwijzen",
+		"light_brightness": "helderheid",
+		"light_weight": "gewicht",
+		"light_color": "kleur"
 	}
 }

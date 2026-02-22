@@ -5,7 +5,7 @@
 	"door": "qapı",
 	"window": "pencere",
 	"key": "anahtar",
-	"light": "aydın",
+	"light_color": "aydın",
 	"road": "yol",
 	"train": "tren",
 	"plane": "uçaq",

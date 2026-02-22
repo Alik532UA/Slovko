@@ -50,6 +50,9 @@
 		"lie_false": "неправда",
 		"point_dot": "точка",
 		"point_essence": "суть",
-		"point_out": "вказувати"
+		"point_out": "вказувати",
+		"light_brightness": "світло",
+		"light_weight": "вага",
+		"light_color": "колір"
 	}
 }

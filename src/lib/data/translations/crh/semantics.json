@@ -41,6 +41,9 @@
 		"lie_false": "yalan",
 		"point_dot": "noqta",
 		"point_essence": "asıl",
-		"point_out": "köstermek"
+		"point_out": "köstermek",
+		"light_brightness": "yarıqlıq",
+		"light_weight": "yengillik",
+		"light_color": "tüs"
 	}
 }

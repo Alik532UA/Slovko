@@ -50,6 +50,9 @@
 		"lie_false": "lügen",
 		"point_dot": "Punkt",
 		"point_essence": "Wesen",
-		"point_out": "hinweisen"
+		"point_out": "hinweisen",
+		"light_brightness": "Helligkeit",
+		"light_weight": "Gewicht",
+		"light_color": "Farbe"
 	}
 }

@@ -4,7 +4,7 @@
 	"door": "door",
 	"window": "window",
 	"key": "key",
-	"light": "light",
+	"light_color": "light",
 	"road": "road",
 	"train": "train",
 	"bus": "bus",

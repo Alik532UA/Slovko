@@ -50,6 +50,9 @@
 		"lie_false": "false",
 		"point_dot": "dot",
 		"point_essence": "essence",
-		"point_out": "out"
+		"point_out": "out",
+		"light_brightness": "brightness",
+		"light_weight": "weight",
+		"light_color": "color"
 	}
 }

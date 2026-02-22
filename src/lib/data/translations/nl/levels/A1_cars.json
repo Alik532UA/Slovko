@@ -5,7 +5,7 @@
 	"door": "deur",
 	"window": "raam",
 	"key": "sleutel",
-	"light": "licht",
+	"light_color": "licht",
 	"road": "weg",
 	"train": "trein",
 	"plane": "vliegtuig",

@@ -50,6 +50,9 @@
 		"lie_false": "ψέμα",
 		"point_dot": "σημείο",
 		"point_essence": "ουσία",
-		"point_out": "επισημαίνω"
+		"point_out": "επισημαίνω",
+		"light_brightness": "φωτεινότητα",
+		"light_weight": "βάρος",
+		"light_color": "χρώμα"
 	}
 }
