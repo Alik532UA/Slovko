@@ -104,6 +104,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "bear",
 		specific: ["bear_animal", "bear_endure"],
 	},
+	spring: {
+		base: "spring",
+		specific: ["spring_season"],
+	},
 };
 
 /**
