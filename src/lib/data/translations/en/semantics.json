@@ -45,6 +45,8 @@
 		"kind_nice": "nice",
 		"kind_type": "type",
 		"ring_jewel": "jewel",
-		"ring_sound": "sound"
+		"ring_sound": "sound",
+		"lie_position": "position",
+		"lie_false": "false"
 	}
 }

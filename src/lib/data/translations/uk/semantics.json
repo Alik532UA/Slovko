@@ -45,6 +45,8 @@
 		"kind_nice": "добрий",
 		"kind_type": "вид",
 		"ring_jewel": "прикраса",
-		"ring_sound": "дзвонити"
+		"ring_sound": "дзвонити",
+		"lie_position": "положення",
+		"lie_false": "неправда"
 	}
 }

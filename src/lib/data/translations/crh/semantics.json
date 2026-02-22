@@ -36,6 +36,8 @@
 		"kind_nice": "merhametli",
 		"kind_type": "tür",
 		"ring_jewel": "yüzük",
-		"ring_sound": "çalmaq"
+		"ring_sound": "çalmaq",
+		"lie_position": "yatmaq",
+		"lie_false": "yalan"
 	}
 }

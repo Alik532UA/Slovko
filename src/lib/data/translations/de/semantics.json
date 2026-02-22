@@ -45,6 +45,8 @@
 		"kind_nice": "nett",
 		"kind_type": "Art",
 		"ring_jewel": "Schmuck",
-		"ring_sound": "klingeln"
+		"ring_sound": "klingeln",
+		"lie_position": "liegen",
+		"lie_false": "lügen"
 	}
 }

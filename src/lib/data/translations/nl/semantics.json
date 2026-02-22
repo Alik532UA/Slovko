@@ -45,6 +45,8 @@
 		"kind_nice": "aardig",
 		"kind_type": "soort",
 		"ring_jewel": "sieraad",
-		"ring_sound": "bellen"
+		"ring_sound": "bellen",
+		"lie_position": "liggen",
+		"lie_false": "liegen"
 	}
 }

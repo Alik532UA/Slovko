@@ -128,6 +128,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "ring",
 		specific: ["ring_jewel", "ring_sound"],
 	},
+	lie: {
+		base: "lie",
+		specific: ["lie_position", "lie_false"],
+	},
 };
 
 /**
