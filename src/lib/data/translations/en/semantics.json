@@ -38,6 +38,8 @@
 		"fine_penalty": "penalty",
 		"spring_season": "season",
 		"cool_awesome": "awesome",
-		"cool_temp": "temp"
+		"cool_temp": "temp",
+		"match_game": "game",
+		"match_fire": "fire"
 	}
 }
