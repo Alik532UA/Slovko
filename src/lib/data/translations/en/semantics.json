@@ -36,6 +36,8 @@
 		"hard_tough": "tough",
 		"fine_good": "good",
 		"fine_penalty": "penalty",
-		"spring_season": "season"
+		"spring_season": "season",
+		"cool_awesome": "awesome",
+		"cool_temp": "temp"
 	}
 }
