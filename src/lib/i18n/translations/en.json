@@ -396,7 +396,12 @@
 	"leaderboard": {
 		"loading": "Loading top...",
 		"noData": "No data to display yet",
-		"authWarning": "Sign in to appear in the leaderboard and compete with others!"
+		"authWarning": "Sign in to appear in the leaderboard and compete with others!",
+		"limitHint": "To be seen by others, you need to reach {required} {unit}",
+		"unitDays": "days in a row",
+		"unitCorrect": "correct answers",
+		"unitAttempts": "answers",
+		"unitCorrectStreak": "correct answers in a row"
 	},
 	"interaction": {
 		"youFollowed": "You followed!",

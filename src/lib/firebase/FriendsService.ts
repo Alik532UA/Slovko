@@ -59,6 +59,14 @@ const LEADERBOARD_CACHE: Record<string, { data: any[], timestamp: number }> = {}
 const CACHE_TTL = 5 * 60 * 1000; // 5 хвилин
 const MAX_FOLLOWING = 500;
 
+/** Пороги для відображення в лідерборді (Global SSoT) */
+export const LEADERBOARD_THRESHOLDS = {
+	totalCorrect: 50,
+	bestStreak: 2,
+	bestCorrectStreak: 11, // Більше 10
+	accuracy: 100, // min totalAttempts
+};
+
 export const FriendsService = {
 	/**
 	 * Підписатися на користувача (Атомарно)
@@ -600,14 +608,15 @@ export const FriendsService = {
 
 		try {
 			const profilesRef = collection(db, COLLECTIONS.PROFILES);
-			// Для точності беремо більше записів, щоб відфільтрувати "читерів" та анонімів
-			const fetchLimit = metric === "accuracy" ? 100 : 50;
+			const currentUid = auth.currentUser?.uid;
+
+			// Беремо 100, щоб після фільтрації за порогами залишилось достатньо для TOP-20
+			const fetchLimit = 100;
 
 			// Визначаємо поле для сортування
 			let sortField: string = metric;
 			if (cefrLevel !== "all") {
 				if (metric === "bestStreak") {
-					// Рівневого 'bestStreak' (днів) немає, залишаємо глобальний
 					sortField = metric;
 				} else {
 					sortField = `level_${cefrLevel}_${metric}`;
@@ -629,51 +638,114 @@ export const FriendsService = {
 			const snapshot = await getDocs(q);
 			let results = snapshot.docs.map((doc) => {
 				const data = doc.data() as Record<string, any>;
-				// Робимо детекцію аноніма суворішою для легасі даних
 				const isAnonymous = data.isAnonymous === true || 
 					(data.isAnonymous === undefined && !data.searchableEmail);
+
+				// Перевірка порогу на основі ГЛОБАЛЬНИХ даних (SSoT)
+				let meetsThreshold = true;
+				const globalTotalCorrect = (data.totalCorrect as number) || 0;
+				const globalBestStreak = (data.bestStreak as number) || 0;
+				const globalBestCorrectStreak = (data.bestCorrectStreak as number) || 0;
+				const globalTotalAttempts = (data.totalAttempts as number) || 0;
+
+				if (metric === "totalCorrect") {
+					meetsThreshold = globalTotalCorrect >= LEADERBOARD_THRESHOLDS.totalCorrect;
+				} else if (metric === "bestStreak") {
+					meetsThreshold = globalBestStreak >= LEADERBOARD_THRESHOLDS.bestStreak;
+				} else if (metric === "bestCorrectStreak") {
+					meetsThreshold = globalBestCorrectStreak >= LEADERBOARD_THRESHOLDS.bestCorrectStreak;
+				} else if (metric === "accuracy") {
+					meetsThreshold = globalTotalAttempts >= LEADERBOARD_THRESHOLDS.accuracy;
+				}
 
 				return {
 					uid: doc.id,
 					name: (data.displayName as string) || "User",
 					score: (data[sortField] as number) || 0,
 					photoURL: data.photoURL as string | null,
-					isMe: doc.id === auth.currentUser?.uid,
+					isMe: doc.id === currentUid,
 					isAnonymous,
-					// Додаткові поля
-					totalAttempts: (data.totalAttempts as number) || 0,
-					bestCorrectStreakLevel: data.bestCorrectStreakLevel as string | undefined,
+					meetsThreshold,
+					// Додаткові поля для діагностики та UI
+					totalAttempts: globalTotalAttempts,
+					totalCorrect: globalTotalCorrect,
+					bestStreak: globalBestStreak,
+					bestCorrectStreak: globalBestCorrectStreak,
 				};
 			});
 
-			// Фільтрація: прибираємо анонімів
-			results = results.filter((u) => !u.isAnonymous);
+			// Якщо поточного користувача немає в ТОП-100, завантажуємо його окремо
+			if (currentUid && !results.find(u => u.uid === currentUid)) {
+				const myDoc = await getDoc(doc(db, COLLECTIONS.PROFILES, currentUid));
+				if (myDoc.exists()) {
+					const data = myDoc.data();
+					const globalTotalCorrect = (data.totalCorrect as number) || 0;
+					const globalBestStreak = (data.bestStreak as number) || 0;
+					const globalBestCorrectStreak = (data.bestCorrectStreak as number) || 0;
+					const globalTotalAttempts = (data.totalAttempts as number) || 0;
 
-			// Фільтрація для точності: прибираємо тих, хто має 100% але менше 100 спроб
-			if (metric === "accuracy") {
-				results = results.filter((u) => {
-					if (u.score === 100 && u.totalAttempts < 100) return false;
-					return true;
+					let meetsThreshold = true;
+					if (metric === "totalCorrect") meetsThreshold = globalTotalCorrect >= LEADERBOARD_THRESHOLDS.totalCorrect;
+					else if (metric === "bestStreak") meetsThreshold = globalBestStreak >= LEADERBOARD_THRESHOLDS.bestStreak;
+					else if (metric === "bestCorrectStreak") meetsThreshold = globalBestCorrectStreak >= LEADERBOARD_THRESHOLDS.bestCorrectStreak;
+					else if (metric === "accuracy") meetsThreshold = globalTotalAttempts >= LEADERBOARD_THRESHOLDS.accuracy;
+
+					// Детекція анонімності для себе
+					const isAnonymous = data.isAnonymous === true || 
+						(data.isAnonymous === undefined && !data.searchableEmail);
+
+					results.push({
+						uid: currentUid,
+						name: (data.displayName as string) || "User",
+						score: (data[sortField] as number) || 0,
+						photoURL: data.photoURL as string | null,
+						isMe: true,
+						isAnonymous,
+						meetsThreshold,
+						totalAttempts: globalTotalAttempts,
+						totalCorrect: globalTotalCorrect,
+						bestStreak: globalBestStreak,
+						bestCorrectStreak: globalBestCorrectStreak,
+					});
+				}
+			}
+
+			// Фільтрація: прибираємо анонімів (крім себе, якщо я анонім — я все одно маю бачити свій статус)
+			results = results.filter((u) => u.isMe || !u.isAnonymous);
+
+			// ПУБЛІЧНА Фільтрація: інші бачать тільки тих, хто пройшов поріг
+			// Поточний користувач ЗАВЖДИ бачить себе (навіть якщо не пройшов поріг)
+			results = results.filter((u) => u.isMe || u.meetsThreshold);
+
+			// Сортування результатів
+			results.sort((a, b) => b.score - a.score);
+
+			// Відображаємо лише ТОП (ті, хто пройшов поріг)
+			const topVisible = results.filter(u => u.meetsThreshold).slice(0, limitCount);
+			
+			// Додаємо ранг для тих, хто пройшов ліміт
+			let currentRank = 1;
+			const finalPublicResults = topVisible.map((u, index) => {
+				if (index > 0 && u.score !== topVisible[index - 1].score) {
+					currentRank = index + 1;
+				}
+				return { ...u, rank: currentRank };
+			});
+
+			// Якщо я не пройшов ліміт, або я пройшов, але не в ТОП-20 — додаю себе в кінець
+			const myEntry = results.find(u => u.isMe);
+			const alreadyInTop = topVisible.some(u => u.uid === currentUid && u.meetsThreshold);
+			
+			if (myEntry && !alreadyInTop) {
+				logService.log("score", `Adding current user to bottom. meetsThreshold: ${myEntry.meetsThreshold}`);
+				finalPublicResults.push({
+					...myEntry,
+					rank: null as any // Немає рангу для прихованих/не-топ
 				});
 			}
 
-			// Обрізаємо до запитаної кількості
-			const slicedResults = results.slice(0, limitCount);
-
-			// Додаємо ранг з логікою "shared rank" (однакові бали = однакове місце)
-			let currentRank = 1;
-			const finalResults = slicedResults.map((u, index) => {
-				if (index > 0 && u.score !== slicedResults[index - 1].score) {
-					currentRank = index + 1;
-				}
-				return {
-					...u,
-					rank: currentRank,
-				};
-			});
-
-			LEADERBOARD_CACHE[cacheKey] = { data: finalResults, timestamp: Date.now() };
-			return finalResults;
+			LEADERBOARD_CACHE[cacheKey] = { data: finalPublicResults, timestamp: Date.now() };
+			return finalPublicResults;
 		} catch (error: unknown) {
 			logService.error("sync", "Error getting leaderboard:", error);
 			return [];

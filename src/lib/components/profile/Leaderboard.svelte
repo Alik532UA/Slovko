@@ -9,8 +9,9 @@
 		CheckCircle,
 		Loader2,
 		Flame,
+		Lock,
 	} from "lucide-svelte";
-	import { FriendsService } from "$lib/firebase/FriendsService";
+	import { FriendsService, LEADERBOARD_THRESHOLDS } from "$lib/firebase/FriendsService";
 	import { authStore } from "$lib/firebase/authStore.svelte";
 	import { progressStore } from "$lib/stores/progressStore.svelte";
 	import UserAvatar from "../friends/UserAvatar.svelte";
@@ -37,10 +38,21 @@
 			if (!authStore.isGuest && authStore.user?.uid) {
 				FriendsService.updatePublicProfile().catch(console.error);
 			}
-			leaderboardData = await FriendsService.getLeaderboard(
+			const data = await FriendsService.getLeaderboard(
 				selectedMetric,
 				selectedLevel,
 			);
+
+			// System approach: shuffle users with identical scores on the client (Req 1B, 2A)
+			// We assign a temporary random weight to ensure the sort is stable but random for ties
+			leaderboardData = data
+				.map(u => ({ ...u, _shuffleWeight: Math.random() }))
+				.sort((a, b) => {
+					// Primary sort: score descending
+					if (a.score !== b.score) return b.score - a.score;
+					// Secondary sort: random weight (only for ties)
+					return a._shuffleWeight - b._shuffleWeight;
+				});
 		} finally {
 			isLoading = false;
 		}
@@ -68,7 +80,28 @@
 		}
 		return 0;
 	}
+
+	const thresholdMap = {
+		totalCorrect: { val: LEADERBOARD_THRESHOLDS.totalCorrect, unit: "unitCorrect" },
+		bestStreak: { val: LEADERBOARD_THRESHOLDS.bestStreak, unit: "unitDays" },
+		bestCorrectStreak: { val: LEADERBOARD_THRESHOLDS.bestCorrectStreak, unit: "unitCorrectStreak" },
+		accuracy: { val: LEADERBOARD_THRESHOLDS.accuracy, unit: "unitAttempts" }
+	};
 </script>
+
+{#snippet limitHint(metric: keyof typeof thresholdMap)}
+	{@const config = thresholdMap[metric]}
+	<div class="limit-hint" in:fade data-testid="leaderboard-limit-hint">
+		<span>
+			{$_("leaderboard.limitHint", { 
+				values: { 
+					required: config.val, 
+					unit: $_(`leaderboard.${config.unit}`) 
+				} 
+			})}
+		</span>
+	</div>
+{/snippet}
 
 <div class="leaderboard-container" data-testid="leaderboard-container">
 	<!-- Filters -->
@@ -157,7 +190,7 @@
 						   Визначаємо чи це поточний користувач на основі актуального UID з authStore.
 						   Це надійніше, ніж використовувати запечене в кеш значення isMe.
 						-->
-						{@const isMe = user.uid === authStore.uid}
+						{@const isMe = String(user.uid) === String(authStore.uid)}
 						
 						{@const realName =
 							isMe && authStore.displayName
@@ -172,27 +205,37 @@
 						<div
 							class="leaderboard-item"
 							class:me={isMe}
-							data-testid="leaderboard-item-{user.rank}"
+							class:below-threshold={user.meetsThreshold === false}
+							data-testid="leaderboard-item-{user.rank || 'none'}"
 							role="listitem"
 						>
 							<div class="col-rank">
-								{#if user.rank === 1}
+								{#if user.meetsThreshold === false}
+									<span class="lock-icon"><Lock size={16} /></span>
+								{:else if user.rank === 1}
 									<Crown size={20} color="#FFD700" fill="#FFD700" />
 								{:else if user.rank === 2}
 									<Medal size={20} color="#C0C0C0" />
 								{:else if user.rank === 3}
 									<Medal size={20} color="#CD7F32" />
-								{:else}
+								{:else if user.rank}
 									<span class="rank-num">{user.rank}</span>
+								{:else}
+									<span class="rank-num">-</span>
 								{/if}
 							</div>
 
-																	<div class="col-user">
-																			<UserAvatar uid={user.uid} photoURL={realPhoto} displayName={realName} size={24} />
-																			<span class="username">{realName}</span>
-
-								{#if isMe}
-									<span class="me-badge">You</span>
+							<div class="col-user">
+								<div class="user-info-row">
+									<UserAvatar uid={user.uid} photoURL={realPhoto} displayName={realName} size={24} />
+									<span class="username">{realName}</span>
+									{#if isMe}
+										<span class="me-badge">You</span>
+									{/if}
+								</div>
+								
+								{#if isMe && user.meetsThreshold === false}
+									{@render limitHint(selectedMetric)}
 								{/if}
 							</div>
 
@@ -209,7 +252,7 @@
 	</div>
 
 	{#if authStore.isGuest}
-		<div class="guest-cta">
+		<div class="guest-cta" data-testid="leaderboard-guest-cta">
 			<p>
 				{$_("leaderboard.authWarning")}
 			</p>
@@ -355,12 +398,9 @@
 	.col-user {
 		flex: 1;
 		display: flex;
-		align-items: center;
-		gap: 0.5rem;
+		flex-direction: column;
+		justify-content: center;
 		min-width: 0;
-		flex-wrap: wrap;
-		max-height: 2.8rem; /* Increased to accommodate 38px avatar */
-		overflow: hidden;
 	}
 	.col-score {
 		min-width: 50px;
@@ -462,5 +502,44 @@
 		font-weight: 800;
 		color: var(--text-primary);
 		font-size: 1rem;
+	}
+
+	/* New Styles for Thresholds */
+	.leaderboard-item.below-threshold {
+		opacity: 0.8;
+		background: rgba(255, 255, 255, 0.02);
+		border-style: dashed;
+	}
+
+	.user-info-row {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		width: 100%;
+	}
+
+	.limit-hint {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		margin-top: 0.35rem;
+		padding-left: 1.75rem; /* Offset for avatar */
+		color: var(--accent);
+		font-size: 0.75rem;
+		font-weight: 500;
+		line-height: 1.2;
+	}
+
+	.lock-icon {
+		opacity: 0.8;
+		color: var(--accent);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.leaderboard-item.me.below-threshold {
+		background: rgba(var(--accent-rgb), 0.05);
+		border: 1px dashed var(--accent);
 	}
 </style>
