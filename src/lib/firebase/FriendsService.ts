@@ -657,11 +657,20 @@ export const FriendsService = {
 				});
 			}
 
-			// Обрізаємо до запитаної кількості і додаємо ранг
-			const finalResults = results.slice(0, limitCount).map((u, index) => ({
-				...u,
-				rank: index + 1,
-			}));
+			// Обрізаємо до запитаної кількості
+			const slicedResults = results.slice(0, limitCount);
+
+			// Додаємо ранг з логікою "shared rank" (однакові бали = однакове місце)
+			let currentRank = 1;
+			const finalResults = slicedResults.map((u, index) => {
+				if (index > 0 && u.score !== slicedResults[index - 1].score) {
+					currentRank = index + 1;
+				}
+				return {
+					...u,
+					rank: currentRank,
+				};
+			});
 
 			LEADERBOARD_CACHE[cacheKey] = { data: finalResults, timestamp: Date.now() };
 			return finalResults;
