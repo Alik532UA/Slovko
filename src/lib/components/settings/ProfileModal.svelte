@@ -69,7 +69,7 @@
 	const availableTabs = $derived.by(() => {
 		if (mode === "stats") return ["stats", "leaderboard"];
 		if (mode === "profile") return ["friends", "account"];
-		return ["stats", "friends", "leaderboard", "account"];
+		return ["stats", "leaderboard", "friends", "account"];
 	});
 
 	function setActiveTab(tab: TabType) {
@@ -372,16 +372,6 @@
 					<span>{$_("profile.tabs.stats")}</span>
 				</button>
 			{/if}
-			{#if availableTabs.includes("friends")}
-				<button
-					class:active={activeTab === "friends"}
-					onclick={() => setActiveTab("friends")}
-					data-testid="tab-friends"
-				>
-					<div class="tab-icon"><Users size={18} /></div>
-					<span>{$_("profile.tabs.friends")}</span>
-				</button>
-			{/if}
 			{#if availableTabs.includes("leaderboard")}
 				<button
 					class:active={activeTab === "leaderboard"}
@@ -390,6 +380,16 @@
 				>
 					<div class="tab-icon"><Trophy size={18} /></div>
 					<span>{$_("profile.tabs.leaderboard")}</span>
+				</button>
+			{/if}
+			{#if availableTabs.includes("friends")}
+				<button
+					class:active={activeTab === "friends"}
+					onclick={() => setActiveTab("friends")}
+					data-testid="tab-friends"
+				>
+					<div class="tab-icon"><Users size={18} /></div>
+					<span>{$_("profile.tabs.friends")}</span>
 				</button>
 			{/if}
 			{#if availableTabs.includes("account")}
