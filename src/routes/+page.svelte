@@ -18,10 +18,12 @@
 
 	import { untrack } from "svelte";
 	import { UrlSyncService } from "$lib/services/urlSyncService";
+	import { logService } from "$lib/services/logService";
 
 	let { data }: { data: PageData } = $props();
 
-	let isSyncing = false;
+	// Прапорець для запобігання циклічній синхронізації
+	let isSyncing = $state(false);
 
 	// Синхронізація стану (URL -> Store)
 	$effect(() => {
@@ -29,11 +31,14 @@
 			const current = settingsStore.value;
 			const incoming = data.gameSettings;
 
-			// Перевіряємо чи є реальна різниця, щоб не тригерити зайві оновлення
+			// Порівнюємо масиви через JSON.stringify для надійності
 			const hasChanged =
 				current.mode !== incoming.mode ||
-				current.currentLevel !== incoming.currentLevel ||
-				current.currentTopic !== incoming.currentTopic ||
+				JSON.stringify(current.currentLevel) !== JSON.stringify(incoming.currentLevel) ||
+				JSON.stringify(current.currentTopic) !== JSON.stringify(incoming.currentTopic) ||
+				JSON.stringify(current.currentTenses) !== JSON.stringify(incoming.currentTenses) ||
+				JSON.stringify(current.currentForms) !== JSON.stringify(incoming.currentForms) ||
+				current.tenseQuantity !== incoming.tenseQuantity ||
 				current.currentPlaylist !== incoming.currentPlaylist ||
 				current.sourceLanguage !== incoming.sourceLanguage ||
 				current.targetLanguage !== incoming.targetLanguage ||
@@ -43,8 +48,10 @@
 				isSyncing = true;
 				untrack(() => {
 					UrlSyncService.syncStoreWithUrl(incoming);
-					// Скидаємо прапорець після тіку мікрозавдання
-					setTimeout(() => (isSyncing = false), 0);
+					// Скидаємо прапорець після того, як Store оновився
+					setTimeout(() => {
+						isSyncing = false;
+					}, 50); // Невеликий дебаунс
 				});
 			}
 		}
@@ -52,10 +59,14 @@
 
 	// Синхронізація стану (Store -> URL)
 	$effect(() => {
+		// Реактивно стежимо за змінами в Store
 		const s = settingsStore.value;
-		if (isSyncing) return; // Не оновлюємо URL, якщо ми щойно взяли дані з нього
+		
+		// Якщо зараз йде синхронізація з URL -> Store, не перериваємо її
+		if (isSyncing) return;
 
-		const url = untrack(() => $page.url);
+		// Отримуємо поточний URL
+		const url = $page.url;
 
 		untrack(() => {
 			const newUrl = UrlSyncService.getUpdatedUrl(url, s);

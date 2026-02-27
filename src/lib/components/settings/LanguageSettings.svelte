@@ -162,7 +162,6 @@
 	class="modal-backdrop"
 	onclick={handleBackdropClick}
 	onkeydown={handleKeydown}
-	aria-hidden="true"
 >
 	<div
 		class="modal"

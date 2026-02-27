@@ -367,6 +367,8 @@
 		"authWarning": "Log in om in de ranglijst te verschijnen en met anderen te concurreren!"
 	},
 	"interaction": {
+		"match": "Kolommen",
+		"swipe": "Swipe",
 		"youFollowed": "Je bent gaan volgen!",
 		"youWaved": "Je hebt gezwaaid!",
 		"wavingAtYou": "zwaait naar je!",

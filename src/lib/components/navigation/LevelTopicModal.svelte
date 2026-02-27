@@ -180,7 +180,7 @@
 						data-testid="btn-match"
 					>
 						<Layers size={18} />
-						<span>Стовпці</span>
+						<span>{$_("interaction.match")}</span>
 					</button>
 					<button
 						class="interaction-btn"
@@ -189,7 +189,7 @@
 						data-testid="btn-swipe"
 					>
 						<Gamepad2 size={18} />
-						<span>Свайп</span>
+						<span>{$_("interaction.swipe")}</span>
 					</button>
 				</div>
 

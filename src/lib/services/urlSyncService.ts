@@ -36,11 +36,16 @@ export class UrlSyncService {
 		// Порівнюємо масиви через JSON.stringify
 		const levelsChanged = JSON.stringify(current.currentLevel) !== JSON.stringify(dataSettings.currentLevel);
 		const topicsChanged = JSON.stringify(current.currentTopic) !== JSON.stringify(dataSettings.currentTopic);
+		const tensesChanged = JSON.stringify(current.currentTenses) !== JSON.stringify(dataSettings.currentTenses);
+		const formsChanged = JSON.stringify(current.currentForms) !== JSON.stringify(dataSettings.currentForms);
 
 		if (
 			current.mode !== dataSettings.mode ||
 			levelsChanged ||
 			topicsChanged ||
+			tensesChanged ||
+			formsChanged ||
+			current.tenseQuantity !== dataSettings.tenseQuantity ||
 			current.currentPlaylist !== dataSettings.currentPlaylist ||
 			current.sourceLanguage !== dataSettings.sourceLanguage ||
 			current.targetLanguage !== dataSettings.targetLanguage ||
@@ -51,6 +56,9 @@ export class UrlSyncService {
 				mode: dataSettings.mode,
 				currentLevel: dataSettings.currentLevel,
 				currentTopic: dataSettings.currentTopic,
+				currentTenses: dataSettings.currentTenses,
+				currentForms: dataSettings.currentForms,
+				tenseQuantity: dataSettings.tenseQuantity,
 				currentPlaylist: dataSettings.currentPlaylist,
 				sourceLanguage: dataSettings.sourceLanguage,
 				targetLanguage: dataSettings.targetLanguage,
@@ -69,16 +77,28 @@ export class UrlSyncService {
 
 		const levelsStr = s.currentLevel.join(",");
 		const topicsStr = s.currentTopic.join(",");
+		const tensesStr = s.currentTenses.join(",");
+		const formsStr = s.currentForms.join(",");
 
 		// Перевіряємо чи потрібно оновлювати
+		const currentSource = url.searchParams.get("source");
+		const currentTarget = url.searchParams.get("target");
+		const currentMode = url.searchParams.get("mode");
+		const currentInteraction = url.searchParams.get("interaction");
+
 		const needsUpdate =
 			url.searchParams.toString() === "" ||
-			url.searchParams.get("source") !== s.sourceLanguage ||
-			url.searchParams.get("target") !== s.targetLanguage ||
-			url.searchParams.get("mode") !== s.mode ||
-			url.searchParams.get("interaction") !== s.interactionMode ||
+			currentSource !== s.sourceLanguage ||
+			currentTarget !== s.targetLanguage ||
+			currentMode !== s.mode ||
+			currentInteraction !== s.interactionMode ||
 			((s.mode === "levels" || s.mode === "phrases") && url.searchParams.get("level") !== levelsStr) ||
 			(s.mode === "topics" && url.searchParams.get("topic") !== topicsStr) ||
+			(s.mode === "tenses" && (
+				url.searchParams.get("tense") !== tensesStr || 
+				url.searchParams.get("forms") !== formsStr ||
+				url.searchParams.get("qty") !== s.tenseQuantity
+			)) ||
 			(s.mode === "playlists" && s.currentPlaylist && url.searchParams.get("playlist") !== s.currentPlaylist);
 
 		if (!needsUpdate) return null;
@@ -103,14 +123,30 @@ export class UrlSyncService {
 			url.searchParams.set("level", levelsStr);
 			url.searchParams.delete("topic");
 			url.searchParams.delete("playlist");
+			url.searchParams.delete("tense");
+			url.searchParams.delete("forms");
+			url.searchParams.delete("qty");
 		} else if (s.mode === "topics") {
 			url.searchParams.set("topic", topicsStr);
 			url.searchParams.delete("level");
+			url.searchParams.delete("playlist");
+			url.searchParams.delete("tense");
+			url.searchParams.delete("forms");
+			url.searchParams.delete("qty");
+		} else if (s.mode === "tenses") {
+			url.searchParams.set("tense", tensesStr);
+			url.searchParams.set("forms", formsStr);
+			url.searchParams.set("qty", s.tenseQuantity);
+			url.searchParams.delete("level");
+			url.searchParams.delete("topic");
 			url.searchParams.delete("playlist");
 		} else if (s.mode === "playlists" && s.currentPlaylist) {
 			url.searchParams.set("playlist", s.currentPlaylist);
 			url.searchParams.delete("level");
 			url.searchParams.delete("topic");
+			url.searchParams.delete("tense");
+			url.searchParams.delete("forms");
+			url.searchParams.delete("qty");
 		}
 
 		return url.toString() !== currentUrl.toString() ? url : null;

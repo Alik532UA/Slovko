@@ -367,6 +367,8 @@
 		"authWarning": "Rekordlarıñıznıñ top-listte kösterilmesi ve digerlernen yarışmaq içün kiriñiz!"
 	},
 	"interaction": {
+		"match": "Sutunlar",
+		"swipe": "Swayp",
 		"youFollowed": "Siz takip ettiñiz!",
 		"youWaved": "Siz el salladıñız!",
 		"wavingAtYou": "siğe el sallay!",

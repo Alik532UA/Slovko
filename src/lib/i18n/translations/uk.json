@@ -403,6 +403,8 @@
 		"unitCorrectStreak": "правильних відповідей поспіль"
 	},
 	"interaction": {
+		"match": "Стовпці",
+		"swipe": "Свайп",
 		"youFollowed": "Ви підписалися!",
 		"youWaved": "Ви помахали!",
 		"wavingAtYou": "махає тобі!",

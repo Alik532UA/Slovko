@@ -403,6 +403,8 @@
 		"unitCorrectStreak": "correct answers in a row"
 	},
 	"interaction": {
+		"match": "Columns",
+		"swipe": "Swipe",
 		"youFollowed": "You followed!",
 		"youWaved": "You waved!",
 		"wavingAtYou": "is waving at you!",

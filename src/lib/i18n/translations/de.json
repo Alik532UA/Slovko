@@ -367,6 +367,8 @@
 		"authWarning": "Melden Sie sich an, um in der Bestenliste zu erscheinen und mit anderen zu konkurrieren!"
 	},
 	"interaction": {
+		"match": "Spalten",
+		"swipe": "Swipe",
 		"youFollowed": "Du bist gefolgt!",
 		"youWaved": "Du hast gewunken!",
 		"wavingAtYou": "winkt dir zu!",
