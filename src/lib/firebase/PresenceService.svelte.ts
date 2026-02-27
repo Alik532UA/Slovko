@@ -27,12 +27,20 @@ export interface Signal {
 
 export interface InteractionEvent {
 	id: string;
-	type: 'online' | 'incoming_wave' | 'manual_menu' | 'new_follower' | 'daily_goal_reached';
+	type:
+		| "online"
+		| "incoming_wave"
+		| "manual_menu"
+		| "new_follower"
+		| "daily_goal_reached"
+		| "leader_gap_reached"
+		| "leader_overtaken";
 	uid: string;
 	profile: { name: string; photoURL: string | null };
 	timestamp: number;
-	state: 'collapsed' | 'expanded' | 'sent';
+	state: "collapsed" | "expanded" | "sent";
 	streak?: number;
+	gap?: number;
 }
 
 /**

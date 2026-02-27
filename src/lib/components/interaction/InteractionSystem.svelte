@@ -8,8 +8,12 @@
 	import InteractionCapsule from "./InteractionCapsule.svelte";
 	import ProfileModal from "../settings/ProfileModal.svelte";
 	import { flip } from "svelte/animate";
+	import { logService } from "$lib/services/logService";
 
 	let showStatsModal = $state(false);
+	let initialTab = $state<
+		"stats" | "leaderboard" | "friends" | "account" | undefined
+	>(undefined);
 
 	let sortedInteractions = $derived(
 		(
@@ -33,7 +37,16 @@
 			<InteractionCapsule
 				{event}
 				onAction={async () => {
-					if (event.type === "daily_goal_reached") {
+					logService.log(
+						"interaction",
+						`Action triggered for event ID: ${event.id}, type: ${event.type}, uid: ${event.uid}`,
+					);
+					if (event.uid === "local_system") {
+						initialTab =
+							event.type === "leader_gap_reached" ||
+							event.type === "leader_overtaken"
+								? "leaderboard"
+								: "stats";
 						showStatsModal = true;
 					} else if (event.type === "new_follower") {
 						const { FriendsService } =
@@ -51,7 +64,11 @@
 					}
 				}}
 				onRemove={(id: string) => {
-					if (event.type === "daily_goal_reached") {
+					logService.log(
+						"ui",
+						`Requested removal of interaction capsule. Event ID: ${id}, type: ${event.type}, uid: ${event.uid}`,
+					);
+					if (event.uid === "local_system") {
 						localEventsStore.removeEvent(id);
 					} else {
 						PresenceService.removeInteraction(id);
@@ -61,7 +78,13 @@
 					id: string,
 					state: "collapsed" | "expanded" | "sent",
 				) => {
-					if (event.type !== "daily_goal_reached") {
+					logService.log(
+						"ui",
+						`Interaction state update to '${state}'. Event ID: ${id}, type: ${event.type}, uid: ${event.uid}`,
+					);
+					if (event.uid === "local_system") {
+						localEventsStore.updateEventState(id, state);
+					} else {
 						PresenceService.updateInteractionState(id, state);
 					}
 				}}
@@ -71,7 +94,14 @@
 </div>
 
 {#if showStatsModal}
-	<ProfileModal mode="stats" onclose={() => (showStatsModal = false)} />
+	<ProfileModal
+		mode="stats"
+		{initialTab}
+		onclose={() => {
+			showStatsModal = false;
+			initialTab = undefined;
+		}}
+	/>
 {/if}
 
 <style>

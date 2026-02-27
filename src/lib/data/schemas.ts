@@ -443,6 +443,9 @@ export const ProgressStateSchema = z.object({
 	lastStreakUpdateDate: z.string().nullable().default(null),
 	dailyCorrect: z.number().default(0),
 	firstSeenDate: z.number().default(() => Date.now()),
+	// Нові поля для відстеження гонитви за лідером
+	shownGaps: z.array(z.number()).default([]),
+	lastInteractionTimestamp: z.number().default(() => Date.now()),
 });
 
 /**

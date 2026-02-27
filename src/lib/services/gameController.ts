@@ -30,7 +30,7 @@ export class GameController {
 		private dataService: GameDataService,
 		private audioHandler: GameAudioHandler,
 		private feedbackHandler: GameFeedbackHandler,
-	) {}
+	) { }
 
 	/**
 	 * Ініціалізація нової гри
@@ -41,13 +41,13 @@ export class GameController {
 		const activeSettings = preloadedData?.settings || settingsStore.value;
 		const currentMode = activeSettings.mode;
 		const currentPlaylist = activeSettings.currentPlaylist;
-		
+
 		logService.log("game", "initGame starting", { mode: currentMode, playlist: currentPlaylist });
 
 		this.gameState.setLoading(true);
 		this.gameState.setError(null);
 		this.gameState.setProcessing(false);
-		this.gameState.resetStats(); 
+		this.gameState.resetStats();
 		this.lastInteractionTime = Date.now();
 
 		try {
@@ -66,7 +66,7 @@ export class GameController {
 			const sourceLanguage = activeSettings.sourceLanguage as Language;
 			const targetLanguage = activeSettings.targetLanguage as Language;
 			const interfaceLanguage = settingsStore.value.interfaceLanguage;
-			
+
 			const initialWords = this.gameState.getAvailableWords(
 				this.gameState.getPairsLimit(),
 			);
@@ -159,7 +159,7 @@ export class GameController {
 		);
 
 		this.gameState.setSelectedCard(null);
-		
+
 		setTimeout(() => {
 			this.gameState.setProcessing(false);
 			this.checkAndRefill();
@@ -171,8 +171,6 @@ export class GameController {
 		this.gameState.updateCardStatus(card1.id, "wrong");
 		this.gameState.updateCardStatus(card2.id, "wrong");
 
-		this.gameState.recordMiss();
-
 		const pair1 = this.constructWordPair(card1.wordKey);
 		const pair2 = this.constructWordPair(card2.wordKey);
 		const levelId = card1.level || card2.level || this.getCurrentContextId();
@@ -181,6 +179,7 @@ export class GameController {
 		this.gameState.setSelectedCard(null);
 
 		setTimeout(() => {
+			this.gameState.recordMiss();
 			this.gameState.resetWrongCards(card1.id, card2.id);
 			this.gameState.setProcessing(false);
 		}, 500);

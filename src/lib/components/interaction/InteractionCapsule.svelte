@@ -3,7 +3,14 @@
 	import { _ } from "svelte-i18n";
 	import UserAvatar from "../friends/UserAvatar.svelte";
 	import { slide, scale } from "svelte/transition";
-	import { Hand, Check, CheckCircle, TrendingUp } from "lucide-svelte";
+	import {
+		Hand,
+		Check,
+		CheckCircle,
+		TrendingUp,
+		Trophy,
+		Flag,
+	} from "lucide-svelte";
 	import { dev } from "$app/environment";
 	import { onMount } from "svelte";
 	import { getPluralForm } from "$lib/utils/pluralize";
@@ -28,6 +35,8 @@
 	}: Props = $props();
 	let timer: NodeJS.Timeout;
 
+	let isSystemEvent = $derived(event.uid === "local_system");
+
 	async function handleActionClick(e: MouseEvent) {
 		e.stopPropagation();
 
@@ -35,15 +44,14 @@
 			onAction();
 		}
 
-		if (event.type !== "daily_goal_reached") {
+		if (!isSystemEvent) {
 			onUpdateState(event.id, "sent");
 		}
 
 		// Закриваємо капсулу з затримкою або миттєво
 		if (timer) clearTimeout(timer);
 
-		let delay = 2000;
-		if (event.type === "daily_goal_reached") delay = 0;
+		let delay = isSystemEvent ? 0 : 2000;
 
 		timer = setTimeout(() => {
 			onRemove(event.id);
@@ -58,7 +66,7 @@
 			(event.type === "manual_menu" || event.type === "new_follower")
 		) {
 			onUpdateState(event.id, "collapsed");
-		} else if (event.type === "daily_goal_reached") {
+		} else if (isSystemEvent) {
 			handleActionClick(new MouseEvent("click"));
 		}
 	}
@@ -94,6 +102,12 @@
 			);
 			return `${streak} ${dayWord} ${$_("profile.stats.inARow")}`;
 		}
+		if (event.type === "leader_gap_reached") {
+			return `До першого місця в топі залишилось: ${event.gap || 0}`;
+		}
+		if (event.type === "leader_overtaken") {
+			return "Вітаю! З першим місцем у рейтингу!";
+		}
 		if (event.state === "sent") {
 			return event.type === "new_follower"
 				? $_("interaction.youFollowed")
@@ -110,7 +124,7 @@
 	class="capsule-container"
 	class:expanded={event.state !== "collapsed"}
 	class:sent={event.state === "sent"}
-	class:success={event.type === "daily_goal_reached"}
+	class:success={isSystemEvent}
 	transition:scale={{ duration: 200, start: 0.8 }}
 	data-testid="interaction-capsule-{event.type}"
 >
@@ -125,12 +139,16 @@
 			<div
 				class="content-panel"
 				transition:slide={{ axis: "x", duration: 250 }}
-				data-testid="interaction-content"
+				data-testid="interaction-content-panel"
 			>
-				<div class="text-block">
+				<div class="text-block" data-testid="interaction-text-block">
 					<span class="nickname" data-testid="interaction-nickname">
 						{#if event.type === "daily_goal_reached"}
 							+1 {$_("profile.stats.day")}
+						{:else if event.type === "leader_gap_reached"}
+							Наздоганяємо лідера!
+						{:else if event.type === "leader_overtaken"}
+							Новий рекорд!
 						{:else}
 							{event.profile.name}
 						{/if}
@@ -140,19 +158,15 @@
 					</span>
 				</div>
 
-				{#if event.type === "daily_goal_reached"}
-					<div class="streak-badge" data-testid="stat-card-days-streak">
-						<TrendingUp size={16} />
-					</div>
-				{:else if event.state === "sent"}
+				{#if event.state === "sent"}
 					<div
 						class="sent-indicator"
 						transition:scale
 						data-testid="interaction-sent-indicator"
 					>
-						<Check size={18} />
+						<Check size={18} data-testid="icon-check-sent" />
 					</div>
-				{:else}
+				{:else if !isSystemEvent}
 					<button
 						class="wave-btn"
 						onclick={handleActionClick}
@@ -161,16 +175,36 @@
 							: $_("interaction.waveBack")}
 						data-testid="interaction-action-btn"
 					>
-						<Hand size={18} />
+						<Hand size={18} data-testid="icon-hand-wave" />
 					</button>
 				{/if}
 			</div>
 		{/if}
 
-		<div class="avatar-anchor" data-testid="interaction-avatar">
-			{#if event.type === "daily_goal_reached"}
-				<div class="success-icon" transition:scale>
-					<CheckCircle size={40} strokeWidth={2.5} />
+		<div class="avatar-anchor" data-testid="interaction-avatar-container">
+			{#if event.type === "daily_goal_reached" || event.type === "leader_gap_reached"}
+				<div
+					class="success-icon-wrapper"
+					transition:scale
+					data-testid="interaction-status-icon-box"
+				>
+					<TrendingUp
+						size={24}
+						strokeWidth={2.5}
+						data-testid="icon-trending-up"
+					/>
+				</div>
+			{:else if event.type === "leader_overtaken"}
+				<div
+					class="success-icon-wrapper winner"
+					transition:scale
+					data-testid="interaction-status-icon-box-winner"
+				>
+					<Trophy
+						size={24}
+						strokeWidth={2.5}
+						data-testid="icon-trophy-winner"
+					/>
 				</div>
 			{:else}
 				<UserAvatar
@@ -179,6 +213,7 @@
 					size={40}
 					interactive={false}
 					showStatus={event.type === "online" || event.state === "collapsed"}
+					data-testid="interaction-user-avatar"
 				/>
 			{/if}
 		</div>
@@ -213,22 +248,21 @@
 		box-shadow: 0 8px 20px rgba(46, 204, 113, 0.1);
 	}
 
-	.success-icon {
-		color: #2ecc71;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.streak-badge {
+	.success-icon-wrapper {
+		width: 40px;
+		height: 40px;
 		background: rgba(46, 204, 113, 0.2);
 		color: #2ecc71;
-		padding: 4px;
 		border-radius: 50%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		flex-shrink: 0;
+	}
+
+	.success-icon-wrapper.winner {
+		background: rgba(241, 196, 15, 0.2);
+		color: #f1c40f;
 	}
 
 	/* У згорнутому стані робимо фон мінімальним або взагалі прибираємо рамку */

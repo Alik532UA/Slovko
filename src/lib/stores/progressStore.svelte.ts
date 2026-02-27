@@ -8,6 +8,9 @@ import { SyncService } from "../firebase/SyncService.svelte";
 import { streakService } from "../services/streakService";
 import { logService } from "../services/logService";
 import { localEventsStore } from "../stores/localEventsStore.svelte";
+import { isMagicGap } from "../utils/gapSequence";
+import { leaderboardSyncService } from "../services/leaderboardSyncService";
+import { authStore } from "../firebase/authStore.svelte";
 import {
 	ProgressStateSchema,
 	DailyActivitySchema,
@@ -26,6 +29,47 @@ const DEFAULT_PROGRESS: ProgressState = ProgressStateSchema.parse({});
 function createProgressStore() {
 	let progress = $state<ProgressState>(loadProgress());
 	let dailyActivity = $state<DailyActivity>(loadDailyActivity());
+	let sessionOvertakenUid: string | null = null;
+
+	async function checkLeaderboard(currentTotalCorrect: number) {
+		try {
+			const leader = await leaderboardSyncService.getLeader();
+			const currentUid = authStore.uid;
+
+			if (!leader) return;
+
+			const gap = leader.totalCorrect - currentTotalCorrect;
+
+			// Запобігаємо перевірці з власним рекордом, якщо ми вже лідер
+			if (leader.uid === currentUid && gap <= 0) {
+				return;
+			}
+
+			if (gap > 0) {
+				if (isMagicGap(gap) && !progress.shownGaps.includes(gap)) {
+					localEventsStore.addLeaderGapReached(gap);
+					progress.shownGaps = [...progress.shownGaps, gap];
+					saveProgress(); // SSoT: записуємо в пам'ять одразу
+				}
+			} else if (gap <= 0) {
+				// Захищаємо від спаму протягом однієї сесії
+				if (sessionOvertakenUid === leader.uid) {
+					return;
+				}
+
+				const realLeaderScore = await leaderboardSyncService.verifyLeaderScore(leader.uid);
+				if (realLeaderScore !== null && currentTotalCorrect > realLeaderScore) {
+					localEventsStore.addLeaderOvertaken();
+					sessionOvertakenUid = leader.uid;
+					leaderboardSyncService.clearCache(); // Скидаємо кеш, щоб отримати наступного
+				} else if (realLeaderScore !== null) {
+					leaderboardSyncService.clearCache();
+				}
+			}
+		} catch (err) {
+			console.error("[DEBUG-LEADER] Error in checkLeaderboard", err);
+		}
+	}
 
 	function getTodayDate(): string {
 		return new Date().toLocaleDateString('en-CA');
@@ -39,6 +83,7 @@ function createProgressStore() {
 			if (stored) {
 				const parsed = JSON.parse(stored);
 				const validated = ProgressStateSchema.parse(parsed);
+				// Завжди запускаємо міграцію/корекцію для гарантії SSoT (Single Source of Truth)
 				return migrateStatistics(validated);
 			}
 		} catch (e) {
@@ -270,99 +315,119 @@ function createProgressStore() {
 
 		/** Записати правильну відповідь */
 		recordCorrect(wordKey: string, levelId: string = "unknown"): void {
-			// Update Daily Activity
-			const today = getTodayDate();
-			if (dailyActivity.date !== today) {
-				dailyActivity = DailyActivitySchema.parse({ date: today });
+			console.log("[DEBUG-LEADER] recordCorrect called", { wordKey, levelId });
+			try {
+				// Update Daily Activity
+				const today = getTodayDate();
+				if (dailyActivity.date !== today) {
+					dailyActivity = DailyActivitySchema.parse({ date: today });
+				}
+
+				dailyActivity.totalCorrect++;
+				dailyActivity.totalAttempts++;
+				if (!dailyActivity.levelStats[levelId]) {
+					dailyActivity.levelStats[levelId] = { correct: 0, attempts: 0 };
+				}
+				dailyActivity.levelStats[levelId].correct++;
+				dailyActivity.levelStats[levelId].attempts++;
+
+				// Update General Progress
+				const wordProgress: WordProgress = progress.words[wordKey] || {
+					wordKey,
+					correctCount: 0,
+					lastSeen: 0,
+				};
+
+				wordProgress.correctCount++;
+				wordProgress.lastSeen = Date.now();
+				progress.words[wordKey] = wordProgress;
+
+				// Логіка Streak (днів)
+				const oldStreakUpdateDate = progress.lastStreakUpdateDate;
+				const streakUpdate = streakService.calculateStreak(
+					progress.streak,
+					progress.lastCorrectDate,
+					progress.dailyCorrect,
+					progress.lastStreakUpdateDate,
+				);
+
+				// Перевірка досягнення цілі (10 пар)
+				if (streakUpdate.lastStreakUpdateDate === today && oldStreakUpdateDate !== today) {
+					logService.log("stats", "Daily goal reached! State updated.");
+					localEventsStore.addAchievement(streakUpdate.streak);
+				}
+
+				// Логіка серії правильних відповідей (підряд) - Глобальна
+				const newCurrentCorrectStreak = progress.currentCorrectStreak + 1;
+				const newBestCorrectStreak = Math.max(
+					progress.bestCorrectStreak,
+					newCurrentCorrectStreak,
+				);
+				const newBestDaysStreak = Math.max(
+					progress.bestStreak,
+					streakUpdate.streak,
+				);
+
+				// Логіка гонитви за лідером
+				const now = Date.now();
+				const SESSION_TIMEOUT = 60 * 60 * 1000; // 1 година
+				let updatedShownGaps = [...(progress.shownGaps || [])];
+
+				// Якщо пройшло більше години з останньої активності — скидаємо список показаних сповіщень
+				if (now - (progress.lastInteractionTimestamp || 0) > SESSION_TIMEOUT) {
+					updatedShownGaps = [];
+				}
+
+				const currentTotalCorrect = progress.totalCorrect + 1;
+				checkLeaderboard(currentTotalCorrect).catch(console.error);
+
+				// Логіка по рівнях
+				const currentLevelStats = progress.levelStats[levelId] || {
+					totalCorrect: 0,
+					totalAttempts: 0,
+					bestCorrectStreak: 0,
+					currentCorrectStreak: 0,
+				};
+
+				const lvlStreak = currentLevelStats.currentCorrectStreak + 1;
+				const lvlBest = Math.max(currentLevelStats.bestCorrectStreak, lvlStreak);
+
+				const newLevelStats = {
+					...progress.levelStats,
+					[levelId]: {
+						totalCorrect: currentLevelStats.totalCorrect + 1,
+						totalAttempts: currentLevelStats.totalAttempts + 1,
+						currentCorrectStreak: lvlStreak,
+						bestCorrectStreak: lvlBest,
+					},
+				};
+
+				progress = {
+					...progress,
+					words: { ...progress.words },
+					levelStats: newLevelStats,
+					totalCorrect: progress.totalCorrect + 1,
+					totalAttempts: progress.totalAttempts + 1,
+					bestStreak: newBestDaysStreak,
+					currentCorrectStreak: newCurrentCorrectStreak,
+					bestCorrectStreak: newBestCorrectStreak,
+					shownGaps: updatedShownGaps,
+					lastInteractionTimestamp: now,
+					...streakUpdate,
+				};
+
+				logService.log("stats", `Progress Store updated`, {
+					totalCorrect: progress.totalCorrect,
+					streak: progress.streak,
+					bestStreak: progress.bestStreak,
+					dailyCorrect: progress.dailyCorrect,
+					lastStreakUpdateDate: progress.lastStreakUpdateDate
+				});
+
+				saveProgress();
+			} catch (e) {
+				console.error("[DEBUG-LEADER] CRITICAL ERROR in recordCorrect", e);
 			}
-
-			dailyActivity.totalCorrect++;
-			dailyActivity.totalAttempts++;
-			if (!dailyActivity.levelStats[levelId]) {
-				dailyActivity.levelStats[levelId] = { correct: 0, attempts: 0 };
-			}
-			dailyActivity.levelStats[levelId].correct++;
-			dailyActivity.levelStats[levelId].attempts++;
-
-			// Update General Progress
-			const wordProgress: WordProgress = progress.words[wordKey] || {
-				wordKey,
-				correctCount: 0,
-				lastSeen: 0,
-			};
-
-			wordProgress.correctCount++;
-			wordProgress.lastSeen = Date.now();
-			progress.words[wordKey] = wordProgress;
-
-			// Логіка Streak (днів)
-			const oldStreakUpdateDate = progress.lastStreakUpdateDate;
-			const streakUpdate = streakService.calculateStreak(
-				progress.streak,
-				progress.lastCorrectDate,
-				progress.dailyCorrect,
-				progress.lastStreakUpdateDate,
-			);
-
-			// Перевірка досягнення цілі (10 пар)
-			if (streakUpdate.lastStreakUpdateDate === today && oldStreakUpdateDate !== today) {
-				logService.log("stats", "Daily goal reached! State updated.");
-				localEventsStore.addAchievement(streakUpdate.streak);
-			}
-
-			// Логіка серії правильних відповідей (підряд) - Глобальна
-			const newCurrentCorrectStreak = progress.currentCorrectStreak + 1;
-			const newBestCorrectStreak = Math.max(
-				progress.bestCorrectStreak,
-				newCurrentCorrectStreak,
-			);
-			const newBestDaysStreak = Math.max(
-				progress.bestStreak,
-				streakUpdate.streak,
-			);
-
-			// Логіка по рівнях
-			const currentLevelStats = progress.levelStats[levelId] || {
-				totalCorrect: 0,
-				totalAttempts: 0,
-				bestCorrectStreak: 0,
-				currentCorrectStreak: 0,
-			};
-
-			const lvlStreak = currentLevelStats.currentCorrectStreak + 1;
-			const lvlBest = Math.max(currentLevelStats.bestCorrectStreak, lvlStreak);
-
-			const newLevelStats = {
-				...progress.levelStats,
-				[levelId]: {
-					totalCorrect: currentLevelStats.totalCorrect + 1,
-					totalAttempts: currentLevelStats.totalAttempts + 1,
-					currentCorrectStreak: lvlStreak,
-					bestCorrectStreak: lvlBest,
-				},
-			};
-
-			progress = {
-				...progress,
-				words: { ...progress.words },
-				levelStats: newLevelStats,
-				totalCorrect: progress.totalCorrect + 1,
-				totalAttempts: progress.totalAttempts + 1,
-				bestStreak: newBestDaysStreak,
-				currentCorrectStreak: newCurrentCorrectStreak,
-				bestCorrectStreak: newBestCorrectStreak,
-				...streakUpdate,
-			};
-
-			logService.log("stats", `Progress Store updated`, {
-				totalCorrect: progress.totalCorrect,
-				streak: progress.streak,
-				bestStreak: progress.bestStreak,
-				dailyCorrect: progress.dailyCorrect,
-				lastStreakUpdateDate: progress.lastStreakUpdateDate
-			});
-
-			saveProgress();
 		},
 
 		/** Отримати середню кількість правильних відповідей за день */
