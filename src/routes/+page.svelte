@@ -7,6 +7,7 @@
 	import type { PageData } from "./$types";
 	import GameBoard from "$lib/components/game/GameBoard.svelte";
 	import GameStats from "$lib/components/game/GameStats.svelte";
+	import SwipeDeck from "$lib/components/game/swipe/SwipeDeck.svelte";
 	import TopBar from "$lib/components/navigation/TopBar.svelte";
 	import BottomBar from "$lib/components/navigation/BottomBar.svelte";
 	import ErrorFallback from "$lib/components/ui/ErrorFallback.svelte";
@@ -35,7 +36,8 @@
 				current.currentTopic !== incoming.currentTopic ||
 				current.currentPlaylist !== incoming.currentPlaylist ||
 				current.sourceLanguage !== incoming.sourceLanguage ||
-				current.targetLanguage !== incoming.targetLanguage;
+				current.targetLanguage !== incoming.targetLanguage ||
+				current.interactionMode !== incoming.interactionMode;
 
 			if (hasChanged) {
 				isSyncing = true;
@@ -86,7 +88,11 @@
 					reset={() => window.location.reload()}
 				/>
 			{:else if data.gameSettings}
-				<GameBoard gameData={data.gameData || undefined} />
+				{#if data.gameSettings.interactionMode === "swipe"}
+					<SwipeDeck gameData={data.gameData || undefined} />
+				{:else}
+					<GameBoard gameData={data.gameData || undefined} />
+				{/if}
 			{:else}
 				<!-- Loading state handled by SvelteKit usually -->
 				<div class="loading">Loading...</div>

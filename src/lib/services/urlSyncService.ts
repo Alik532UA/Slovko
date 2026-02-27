@@ -43,7 +43,8 @@ export class UrlSyncService {
 			topicsChanged ||
 			current.currentPlaylist !== dataSettings.currentPlaylist ||
 			current.sourceLanguage !== dataSettings.sourceLanguage ||
-			current.targetLanguage !== dataSettings.targetLanguage
+			current.targetLanguage !== dataSettings.targetLanguage ||
+			current.interactionMode !== dataSettings.interactionMode
 		) {
 			logService.log("sync", "Applying URL data to Store (Mismatch found)");
 			settingsStore._internalUpdate({
@@ -53,6 +54,7 @@ export class UrlSyncService {
 				currentPlaylist: dataSettings.currentPlaylist,
 				sourceLanguage: dataSettings.sourceLanguage,
 				targetLanguage: dataSettings.targetLanguage,
+				interactionMode: dataSettings.interactionMode,
 			});
 		}
 	}
@@ -74,6 +76,7 @@ export class UrlSyncService {
 			url.searchParams.get("source") !== s.sourceLanguage ||
 			url.searchParams.get("target") !== s.targetLanguage ||
 			url.searchParams.get("mode") !== s.mode ||
+			url.searchParams.get("interaction") !== s.interactionMode ||
 			((s.mode === "levels" || s.mode === "phrases") && url.searchParams.get("level") !== levelsStr) ||
 			(s.mode === "topics" && url.searchParams.get("topic") !== topicsStr) ||
 			(s.mode === "playlists" && s.currentPlaylist && url.searchParams.get("playlist") !== s.currentPlaylist);
@@ -90,6 +93,7 @@ export class UrlSyncService {
 		url.searchParams.set("mode", s.mode);
 		url.searchParams.set("source", s.sourceLanguage);
 		url.searchParams.set("target", s.targetLanguage);
+		url.searchParams.set("interaction", s.interactionMode);
 
 		if (currentModal) url.searchParams.set("modal", currentModal);
 		if (currentTab) url.searchParams.set("tab", currentTab);

@@ -4,6 +4,7 @@
 	 */
 	import { _ } from "svelte-i18n";
 	import { gameState } from "$lib/stores/gameState.svelte";
+	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { getGameController } from "$lib/context/gameContext";
 	import {
 		Flame,
@@ -12,17 +13,20 @@
 		Lightbulb,
 		GraduationCap,
 		Menu,
+		TriangleAlert,
 	} from "lucide-svelte";
 	import MenuModal from "../navigation/MenuModal.svelte";
 	import { fade } from "svelte/transition";
 	import { untrack } from "svelte";
 	import BaseTooltip from "../ui/BaseTooltip.svelte";
+	import BaseModal from "../ui/BaseModal.svelte";
 	import { navigationState } from "../../services/navigationState.svelte";
 	import { page } from "$app/stores";
 
 	const gameController = getGameController();
 
 	let showMenu = $state(false);
+	let showSwipeWarningModal = $state(false);
 
 	// Retrieve active modal from URL
 	const activeModal = $derived($page.url.searchParams.get("modal"));
@@ -106,84 +110,108 @@
 	);
 </script>
 
-<div class="stats-bar">
-	<BaseTooltip text={$_("common.tooltips.streak")}>
-		<div
-			class="stat-item streak"
-			class:frozen={isFrozen}
-			style="color: {streakColor}; border-color: {displayedStreak > 0
-				? streakColor
-				: ''}; transform: scale({streakScale});"
-			data-testid="stat-streak"
-			title=""
-		>
+<div class="stats-bar" data-testid="stats-bar">
+	{#if settingsStore.value.interactionMode !== "swipe"}
+		<BaseTooltip text={$_("common.tooltips.streak")}>
 			<div
-				class="icon-wrapper"
-				style="animation-duration: {streakAnimationSpeed}; animation-name: {displayedStreak >
-					5 && !isFrozen
-					? 'pulse-fire'
-					: 'none'}"
+				class="stat-item streak"
+				class:frozen={isFrozen}
+				style="color: {streakColor}; border-color: {displayedStreak > 0
+					? streakColor
+					: ''}; transform: scale({streakScale});"
+				data-testid="stat-streak"
+				title=""
 			>
-				{#if isFrozen}
-					<Snowflake size={20} />
-				{:else}
-					<Flame size={20} fill={displayedStreak > 10 ? streakColor : "none"} />
-				{/if}
+				<div
+					class="icon-wrapper"
+					style="animation-duration: {streakAnimationSpeed}; animation-name: {displayedStreak >
+						5 && !isFrozen
+						? 'pulse-fire'
+						: 'none'}"
+				>
+					{#if isFrozen}
+						<Snowflake size={20} />
+					{:else}
+						<Flame
+							size={20}
+							fill={displayedStreak > 10 ? streakColor : "none"}
+						/>
+					{/if}
+				</div>
+				<span class="value">{displayedStreak}</span>
 			</div>
-			<span class="value">{displayedStreak}</span>
-		</div>
-	</BaseTooltip>
+		</BaseTooltip>
 
-	<BaseTooltip text={$_("common.tooltips.accuracy")}>
-		<div
-			class="stat-item accuracy"
-			style="background: {accBgColor}; border-color: {accBorderColor}; color: {accProgress >
-			0.7
-				? '#2ecc71'
-				: ''}"
-			data-testid="stat-accuracy"
-			title=""
-		>
-			{#if accuracyDisplay !== ""}
-				<span class="value">{accuracyDisplay}</span>
-			{/if}
-			<div class="icon-wrapper">
-				<Percent size={20} />
+		<BaseTooltip text={$_("common.tooltips.accuracy")}>
+			<div
+				class="stat-item accuracy"
+				style="background: {accBgColor}; border-color: {accBorderColor}; color: {accProgress >
+				0.7
+					? '#2ecc71'
+					: ''}"
+				data-testid="stat-accuracy"
+				title=""
+			>
+				{#if accuracyDisplay !== ""}
+					<span class="value">{accuracyDisplay}</span>
+				{/if}
+				<div class="icon-wrapper">
+					<Percent size={20} />
+				</div>
 			</div>
-		</div>
-	</BaseTooltip>
+		</BaseTooltip>
+	{/if}
 
 	<div class="buttons-group">
-		<BaseTooltip text={$_("settings.learningMode")}>
-			<button
-				class="stat-item hint-btn"
-				class:active-mode={gameState.isLearningMode}
-				onclick={() => gameController.toggleLearningMode()}
-				disabled={gameState.isProcessing && !gameState.isLearningMode}
-				aria-label={$_("settings.learningMode")}
-				data-testid="learning-mode-btn"
-				title=""
-			>
-				<div class="icon-wrapper">
-					<GraduationCap size={20} />
-				</div>
-			</button>
-		</BaseTooltip>
+		{#if settingsStore.value.interactionMode === "swipe"}
+			<BaseTooltip text={$_("swipe.warningTitle") || "Увага"}>
+				<button
+					class="stat-item hint-btn"
+					style="border-color: rgba(241, 196, 15, 0.4); background: rgba(241, 196, 15, 0.1);"
+					onclick={() => (showSwipeWarningModal = true)}
+					aria-label="Warning"
+					data-testid="swipe-warning-btn"
+					title=""
+				>
+					<div class="icon-wrapper" style="color: #f1c40f;">
+						<TriangleAlert size={20} />
+					</div>
+				</button>
+			</BaseTooltip>
+		{/if}
 
-		<BaseTooltip text={$_("settings.hint")}>
-			<button
-				class="stat-item hint-btn"
-				onclick={() => gameController.useHint()}
-				disabled={gameState.isProcessing || gameState.isLearningMode}
-				aria-label={$_("settings.hint")}
-				data-testid="hint-btn"
-				title=""
-			>
-				<div class="icon-wrapper">
-					<Lightbulb size={20} />
-				</div>
-			</button>
-		</BaseTooltip>
+		{#if settingsStore.value.interactionMode !== "swipe"}
+			<BaseTooltip text={$_("settings.learningMode")}>
+				<button
+					class="stat-item hint-btn"
+					class:active-mode={gameState.isLearningMode}
+					onclick={() => gameController.toggleLearningMode()}
+					disabled={gameState.isProcessing && !gameState.isLearningMode}
+					aria-label={$_("settings.learningMode")}
+					data-testid="learning-mode-btn"
+					title=""
+				>
+					<div class="icon-wrapper">
+						<GraduationCap size={20} />
+					</div>
+				</button>
+			</BaseTooltip>
+
+			<BaseTooltip text={$_("settings.hint")}>
+				<button
+					class="stat-item hint-btn"
+					onclick={() => gameController.useHint()}
+					disabled={gameState.isProcessing || gameState.isLearningMode}
+					aria-label={$_("settings.hint")}
+					data-testid="hint-btn"
+					title=""
+				>
+					<div class="icon-wrapper">
+						<Lightbulb size={20} />
+					</div>
+				</button>
+			</BaseTooltip>
+		{/if}
 
 		<div class="menu-container" class:menu-active={showMenu}>
 			{#if showMenu}
@@ -212,6 +240,7 @@
 
 			{#if showMenu}
 				<MenuModal
+					centered={settingsStore.value.interactionMode === "swipe"}
 					onclose={() => (showMenu = false)}
 					onopenProfile={openProfile}
 					onopenLanguages={() => {
@@ -231,6 +260,36 @@
 		</div>
 	</div>
 </div>
+
+{#if showSwipeWarningModal}
+	<BaseModal
+		onclose={() => (showSwipeWarningModal = false)}
+		testid="swipe-warning-modal"
+		maxWidth="420px"
+	>
+		<div
+			style="padding: 1.5rem 1rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1rem;"
+		>
+			<TriangleAlert size={56} color="#f1c40f" />
+			<h2 style="margin: 0; font-size: 1.5rem; color: var(--text-primary);">
+				{$_("swipe.warningTitle")}
+			</h2>
+			<p
+				style="color: var(--text-secondary); line-height: 1.5; margin: 0; font-size: 0.95rem;"
+			>
+				{$_("swipe.warningMessage")}
+			</p>
+			<button
+				class="primary-action-btn"
+				style="width: 100%; margin-top: 1.5rem; padding: 0.8rem; border-radius: 12px; border: none; background: var(--accent); color: white; font-weight: 600; cursor: pointer; font-size: 1rem;"
+				onclick={() => (showSwipeWarningModal = false)}
+				data-testid="swipe-warning-ok-btn"
+			>
+				{$_("swipe.gotIt")}
+			</button>
+		</div>
+	</BaseModal>
+{/if}
 
 <style>
 	.menu-container {

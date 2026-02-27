@@ -34,6 +34,7 @@ class GameOrchestratorClass {
 			playlist: url.searchParams.get("playlist") || undefined,
 			source: url.searchParams.get("source") || undefined,
 			target: url.searchParams.get("target") || undefined,
+			interaction: url.searchParams.get("interaction") || undefined,
 		};
 
 		const result = UrlParamsSchema.safeParse(params);
@@ -105,6 +106,9 @@ class GameOrchestratorClass {
 		}
 		if (validated.target && validated.target !== settings.targetLanguage) {
 			settings.targetLanguage = validated.target;
+		}
+		if (validated.interaction && validated.interaction !== settings.interactionMode) {
+			settings.interactionMode = validated.interaction as any;
 		}
 	}
 }

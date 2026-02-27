@@ -5,17 +5,17 @@
 	import { onMount } from "svelte";
 	import { _ } from "svelte-i18n";
 	import { fly } from "svelte/transition";
-	import { 
-		User, 
-		Languages, 
-		Palette, 
-		Info, 
-		Coins, 
-		RefreshCcw, 
-		CloudOff, 
-		AlertCircle, 
+	import {
+		User,
+		Languages,
+		Palette,
+		Info,
+		Coins,
+		RefreshCcw,
+		CloudOff,
+		AlertCircle,
 		BarChart3,
-		TriangleAlert
+		TriangleAlert,
 	} from "lucide-svelte";
 	import { SyncService } from "$lib/firebase/SyncService.svelte";
 	import { authStore } from "$lib/firebase/authStore.svelte";
@@ -26,8 +26,16 @@
 		onopenLanguages: () => void;
 		onopenThemes: () => void;
 		onopenAbout: () => void;
+		centered?: boolean;
 	}
-	let { onclose, onopenProfile, onopenLanguages, onopenThemes, onopenAbout }: Props = $props();
+	let {
+		onclose,
+		onopenProfile,
+		onopenLanguages,
+		onopenThemes,
+		onopenAbout,
+		centered = false,
+	}: Props = $props();
 
 	const donateUrl = "https://send.monobank.ua/jar/7sCsydhJnR";
 	let syncStatus = $derived(SyncService.status);
@@ -45,7 +53,7 @@
 		const timer = setTimeout(() => {
 			window.addEventListener("click", handleClickOutside);
 		}, 10);
-		
+
 		return () => {
 			window.removeEventListener("click", handleClickOutside);
 			clearTimeout(timer);
@@ -53,27 +61,49 @@
 	});
 </script>
 
-<div 
-	class="dropdown-menu" 
-	bind:this={menuRef} 
+<div
+	class="dropdown-menu"
+	class:centered
+	bind:this={menuRef}
 	transition:fly={{ y: -10, duration: 200 }}
 	data-testid="menu-modal"
 >
 	<div class="menu-list">
 		<!-- 1. Мови -->
-		<button class="menu-item" onclick={() => { onopenLanguages(); onclose(); }} data-testid="menu-languages-btn">
+		<button
+			class="menu-item"
+			onclick={() => {
+				onopenLanguages();
+				onclose();
+			}}
+			data-testid="menu-languages-btn"
+		>
 			<div class="item-icon"><Languages size={18} /></div>
 			<span class="label">{$_("settings.languages") || "Languages"}</span>
 		</button>
 
 		<!-- 2. Статистика -->
-		<button class="menu-item" onclick={() => { onopenProfile("stats", "stats"); onclose(); }} data-testid="menu-stats-btn">
+		<button
+			class="menu-item"
+			onclick={() => {
+				onopenProfile("stats", "stats");
+				onclose();
+			}}
+			data-testid="menu-stats-btn"
+		>
 			<div class="item-icon"><BarChart3 size={18} /></div>
 			<span class="label">{$_("profile.tabs.stats") || "Statistics"}</span>
 		</button>
 
 		<!-- 3. Теми -->
-		<button class="menu-item" onclick={() => { onopenThemes(); onclose(); }} data-testid="menu-theme-btn">
+		<button
+			class="menu-item"
+			onclick={() => {
+				onopenThemes();
+				onclose();
+			}}
+			data-testid="menu-theme-btn"
+		>
 			<div class="item-icon"><Palette size={18} /></div>
 			<span class="label">{$_("settings.theme") || "Theme"}</span>
 		</button>
@@ -81,13 +111,27 @@
 		<hr class="divider" />
 
 		<!-- 4. Підтримати проект -->
-		<a href={donateUrl} target="_blank" rel="noopener noreferrer" class="menu-item donate-item" data-testid="menu-donate-link" onclick={onclose}>
+		<a
+			href={donateUrl}
+			target="_blank"
+			rel="noopener noreferrer"
+			class="menu-item donate-item"
+			data-testid="menu-donate-link"
+			onclick={onclose}
+		>
 			<div class="item-icon"><Coins size={18} /></div>
 			<span class="label">{$_("about.support") || "Support Project"}</span>
 		</a>
 
 		<!-- 5. Про Slovko -->
-		<button class="menu-item" onclick={() => { onopenAbout(); onclose(); }} data-testid="menu-about-btn">
+		<button
+			class="menu-item"
+			onclick={() => {
+				onopenAbout();
+				onclose();
+			}}
+			data-testid="menu-about-btn"
+		>
 			<div class="item-icon"><Info size={18} /></div>
 			<span class="label">{$_("about.title") || "About"}</span>
 		</button>
@@ -95,7 +139,14 @@
 		<hr class="divider" />
 
 		<!-- 6. Профіль -->
-		<button class="menu-item profile-item" onclick={() => { onopenProfile("profile", "account"); onclose(); }} data-testid="menu-profile-btn">
+		<button
+			class="menu-item profile-item"
+			onclick={() => {
+				onopenProfile("profile", "account");
+				onclose();
+			}}
+			data-testid="menu-profile-btn"
+		>
 			<div class="item-icon">
 				<User size={18} />
 				{#if !authStore.isGuest && syncStatus !== "up-to-date" && syncStatus !== "idle"}
@@ -110,14 +161,17 @@
 				<span class="label">{$_("common.profile") || "Profile"}</span>
 				<span class="sub-label">
 					{#if authStore.isGuest}
-						<span class="warning-icon-wrapper"><TriangleAlert size={12} /></span>
+						<span class="warning-icon-wrapper"><TriangleAlert size={12} /></span
+						>
 						{$_("sync.status.notLoggedIn") || "not signed in"}
 					{:else if syncStatus === "syncing"}
 						{$_("sync.status.syncing") || "Syncing..."}
 					{:else if syncStatus === "error"}
 						{$_("sync.status.error") || "Sync Error"}
 					{:else}
-						{authStore.displayName || authStore.email || $_("sync.status.synced")}
+						{authStore.displayName ||
+							authStore.email ||
+							$_("sync.status.synced")}
 					{/if}
 				</span>
 			</div>
@@ -137,6 +191,12 @@
 		z-index: 1000;
 		overflow: visible;
 		padding: 0.5rem;
+	}
+
+	.dropdown-menu.centered {
+		right: auto;
+		left: 50%;
+		margin-left: -130px;
 	}
 
 	.menu-list {
@@ -236,12 +296,23 @@
 		border: 1px solid var(--border);
 	}
 
-	.status-dot.syncing { color: var(--accent); animation: spin 2s linear infinite; }
-	.status-dot.error { color: #ef4444; }
-	.status-dot.offline { color: var(--text-secondary); }
+	.status-dot.syncing {
+		color: var(--accent);
+		animation: spin 2s linear infinite;
+	}
+	.status-dot.error {
+		color: #ef4444;
+	}
+	.status-dot.offline {
+		color: var(--text-secondary);
+	}
 
 	@keyframes spin {
-		from { transform: rotate(0deg); }
-		to { transform: rotate(360deg); }
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
 	}
 </style>

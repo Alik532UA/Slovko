@@ -259,7 +259,7 @@
 			"general": "Algemene Activiteit",
 			"correct": "correcte antwoorden in totaal",
 			"streak": "huidige dagelijkse reeks",
-			"days": "totaal aantal dagen in programma",
+			"days": "dagen",
 			"accuracy": "antwoordnauwkeurigheid",
 			"bestStreak": "record dagelijkse reeks",
 			"bestCorrectStreak": "recordreeks correcte antwoorden",
@@ -269,7 +269,6 @@
 			"showMore": "toon meer statistieken",
 			"showLess": "toon minder statistieken",
 			"day": "dag",
-			"days": "dagen",
 			"daysGenitive": "dagen",
 			"inARow": "op rij"
 		}
@@ -415,5 +414,15 @@
 		"future_continuous": "Future Continuous",
 		"future_perfect": "Future Perfect",
 		"future_perfect_continuous": "Future Perfect Continuous"
+	},
+	"swipe": {
+		"know": "Ik weet het",
+		"dontKnow": "Ik weet het niet",
+		"knowTitle": "Ik weet het (Omhoog)",
+		"dontKnowTitle": "Ik weet het niet (Omlaag)",
+		"tapToFlip": "Tik om te draaien",
+		"warningTitle": "Let op",
+		"warningMessage": "Deze modus telt niet mee voor de algemene statistieken, omdat het onmogelijk is om te controleren welke gebruikers eerlijk op „Ik weet het“ tikken en welke niet. Statistieken werken alleen in de modus „kolommen“.",
+		"gotIt": "Begrepen"
 	}
 }

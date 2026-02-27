@@ -103,6 +103,11 @@ export interface LocalSemantics {
 // ========================================
 
 /**
+ * Режими взаємодії з грою
+ */
+export type InteractionMode = "match" | "swipe";
+
+/**
  * Game Modes:
  * - 'levels': Sequential progression (A1 -> A2 -> ...)
  * - 'topics': Thematic learning (Food, Travel, etc.)

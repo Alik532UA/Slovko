@@ -124,170 +124,170 @@ export const PlaylistStateSchema = z.preprocess((val: unknown) => {
 
 
 
-		// Функція для нормалізації плейліста (якщо це масив — перетворюємо на об'єкт)
+	// Функція для нормалізації плейліста (якщо це масив — перетворюємо на об'єкт)
 
 
 
-		const normalize = (data: any, fallback: any) => {
+	const normalize = (data: any, fallback: any) => {
 
 
 
-			let result: any;
+		let result: any;
 
 
 
-			if (Array.isArray(data)) {
+		if (Array.isArray(data)) {
 
 
 
-				result = { ...fallback, words: data };
+			result = { ...fallback, words: data };
 
 
 
-			} else if (data && typeof data === "object") {
+		} else if (data && typeof data === "object") {
 
 
 
-				result = { ...fallback, ...data };
+			result = { ...fallback, ...data };
 
 
 
-			} else {
+		} else {
 
 
 
-				result = fallback;
+			result = fallback;
 
 
 
-			}
+		}
 
 
 
-	
 
 
 
-			// Додатково нормалізуємо масив words всередині плейліста
 
+		// Додатково нормалізуємо масив words всередині плейліста
 
 
-			if (result.words && Array.isArray(result.words)) {
 
+		if (result.words && Array.isArray(result.words)) {
 
 
-				result.words = result.words.map((w: any) => {
 
+			result.words = result.words.map((w: any) => {
 
 
-					if (typeof w === "string") return w;
 
+				if (typeof w === "string") return w;
 
 
-					if (w && typeof w === "object") {
 
+				if (w && typeof w === "object") {
 
 
-						// Якщо це старий формат mistake entry: { pair: { id: '...' } }
 
+					// Якщо це старий формат mistake entry: { pair: { id: '...' } }
 
 
-						if (w.pair && typeof w.pair === "object" && w.pair.id) return w.pair.id;
 
+					if (w.pair && typeof w.pair === "object" && w.pair.id) return w.pair.id;
 
 
-						// Якщо це просто об'єкт з id: { id: '...' }
 
+					// Якщо це просто об'єкт з id: { id: '...' }
 
 
-						if (w.id && !w.original && !w.translation && !w.term && !w.definition && !w.left && !w.right) return w.id;
 
+					if (w.id && !w.original && !w.translation && !w.term && !w.definition && !w.left && !w.right) return w.id;
 
 
-						// Legacy migration: original/term -> left, translation/definition -> right
 
-						if (w.id && (w.original || w.translation || w.term || w.definition)) {
-							return {
-								id: w.id,
-								left: w.left || w.term || w.original || "",
-								right: w.right || w.definition || w.translation || "",
-								transcription: w.transcription
-							};
-						}
+					// Legacy migration: original/term -> left, translation/definition -> right
 
-						// Якщо це схоже на CustomWord (id, left, right) — залишаємо як є
+					if (w.id && (w.original || w.translation || w.term || w.definition)) {
+						return {
+							id: w.id,
+							left: w.left || w.term || w.original || "",
+							right: w.right || w.definition || w.translation || "",
+							transcription: w.transcription
+						};
+					}
 
+					// Якщо це схоже на CustomWord (id, left, right) — залишаємо як є
 
 
-						if (w.id && w.left && w.right) return w;
 
+					if (w.id && w.left && w.right) return w;
 
 
-												// В іншому випадку спробуємо витягнути будь-який id або перетворити на рядок
 
+					// В іншому випадку спробуємо витягнути будь-який id або перетворити на рядок
 
 
-												return w.id || JSON.stringify(w);
 
+					return w.id || JSON.stringify(w);
 
 
-											}
 
+				}
 
 
-											return String(w);
 
+				return String(w);
 
 
-										});
 
+			});
 
 
-						
 
 
 
-										// Дедуплікація слів за ID для запобігання роздуванню БД
 
 
+			// Дедуплікація слів за ID для запобігання роздуванню БД
 
-										const seen = new Set();
 
 
+			const seen = new Set();
 
-										result.words = result.words.filter((w: any) => {
 
 
+			result.words = result.words.filter((w: any) => {
 
-											const id = typeof w === "string" ? w : w.id;
 
 
+				const id = typeof w === "string" ? w : w.id;
 
-											if (seen.has(id)) return false;
 
 
+				if (seen.has(id)) return false;
 
-											seen.add(id);
 
 
+				seen.add(id);
 
-											return true;
 
 
+				return true;
 
-										});
 
 
+			});
 
-									}
 
 
+		}
 
-									return result;
 
 
+		return result;
 
-								};
+
+
+	};
 
 
 
@@ -316,7 +316,7 @@ export const PlaylistStateSchema = z.preprocess((val: unknown) => {
 	const extra = normalize(systemPlaylists.extra || v.extra, DEFAULT_EXTRA);
 
 	// Міграція для кастомних плейлістів
-	const customPlaylists = Array.isArray(v.customPlaylists) 
+	const customPlaylists = Array.isArray(v.customPlaylists)
 		? v.customPlaylists.map((p: any) => normalize(p, {}))
 		: [];
 
@@ -341,6 +341,7 @@ const AppSettingsCoreSchema = z.object({
 	sourceLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("en"),
 	targetLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("uk"),
 	mode: z.enum(["levels", "topics", "phrases", "tenses", "playlists"]).default("levels"),
+	interactionMode: z.enum(["match", "swipe"]).default("match"),
 	currentLevel: z.array(z.enum(["A1", "A2", "B1", "B2", "C1", "C2", "ALL"])).default(["A1"]),
 	currentTopic: z.array(z.string()).default(["nature"]),
 	currentTenses: z.array(z.string()).default(["present_simple"]),
@@ -495,6 +496,7 @@ const commaStringToArray = z.preprocess((val) => {
 
 export const UrlParamsSchema = z.object({
 	mode: z.enum(["levels", "topics", "phrases", "tenses", "playlists"]).optional(),
+	interaction: z.enum(["match", "swipe"]).optional(),
 	level: commaStringToArray,
 	topic: commaStringToArray,
 	tense: commaStringToArray,

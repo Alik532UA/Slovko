@@ -14,6 +14,7 @@ import {
 	type AppTheme,
 	type PlaylistId,
 	type TenseForm,
+	type InteractionMode,
 } from "../types";
 import { AppSettingsSchema, type AppSettings } from "../data/schemas";
 
@@ -40,7 +41,7 @@ function createSettingsStore() {
 
 				if (result.success) {
 					let validated = result.data as AppSettings;
-					
+
 					// Якщо в браузері є версія додатку, вважаємо що онбординг вже було пройдено раніше
 					if (hasAppVersion) {
 						validated.hasCompletedOnboarding = true;
@@ -81,7 +82,7 @@ function createSettingsStore() {
 			settings = { ...settings, updatedAt: Date.now() };
 			logService.log("settings", "Saving settings to storage (immediate):", settings);
 			localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(settings));
-			
+
 			if (isCorrupted) {
 				logService.warn("settings", "Settings are in fallback mode (corrupted local data). Skipping cloud sync to protect data integrity.");
 				return;
@@ -91,7 +92,7 @@ function createSettingsStore() {
 			if (saveTimeout) clearTimeout(saveTimeout);
 			saveTimeout = setTimeout(() => {
 				SyncService.uploadAll();
-			}, 1000); 
+			}, 1000);
 		}
 	}
 
@@ -142,6 +143,12 @@ function createSettingsStore() {
 		setInterfaceLanguage(lang: Language) {
 			logService.log("settings", "Setting interface language:", lang);
 			settings = { ...settings, interfaceLanguage: lang };
+			saveSettings();
+		},
+
+		setInteractionMode(mode: InteractionMode) {
+			logService.log("settings", "Setting interaction mode:", mode);
+			settings = { ...settings, interactionMode: mode };
 			saveSettings();
 		},
 

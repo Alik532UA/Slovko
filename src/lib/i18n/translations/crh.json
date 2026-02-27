@@ -259,7 +259,7 @@
 			"general": "Umumiy faaliyet",
 			"correct": "doğru cevaplar",
 			"streak": "küñlük seri",
-			"days": "bütun künler",
+			"days": "kün",
 			"accuracy": "doğruluk",
 			"bestStreak": "rekord küñlük seri",
 			"bestCorrectStreak": "rekord doğru cevaplar serisi",
@@ -269,7 +269,6 @@
 			"showMore": "daa çoq statistika köster",
 			"showLess": "statistikani gizle",
 			"day": "kün",
-			"days": "kün",
 			"daysGenitive": "kün",
 			"inARow": "sırasınen"
 		}
@@ -415,5 +414,15 @@
 		"future_continuous": "Future Continuous",
 		"future_perfect": "Future Perfect",
 		"future_perfect_continuous": "Future Perfect Continuous"
+	},
+	"swipe": {
+		"know": "Bilem",
+		"dontKnow": "Bilmeyim",
+		"knowTitle": "Bilem (Yuqarı)",
+		"dontKnowTitle": "Bilmeyim (Aşağı)",
+		"tapToFlip": "Çevirmek içün basıñız",
+		"warningTitle": "Diqqat",
+		"warningMessage": "Bu rejim umumiy statistikaga kirmeydi, çünki kimniñ «Bilem» dögmesine dürüstçe basqanını, kimniñ ise yoq ekenini teşkerüv imkânsız. Statistika sadece «sütunlar» rejiminde çalışa.",
+		"gotIt": "Añlayışlı"
 	}
 }

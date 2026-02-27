@@ -259,7 +259,7 @@
 			"general": "Allgemeine Aktivität",
 			"correct": "richtige Antworten insgesamt",
 			"streak": "aktuelle Tages-Serie",
-			"days": "Tage im Programm insgesamt",
+			"days": "Tage",
 			"accuracy": "Antwortgenauigkeit",
 			"bestStreak": "Rekord-Serie von Tagen",
 			"bestCorrectStreak": "Rekord-Serie richtiger Antworten",
@@ -269,7 +269,6 @@
 			"showMore": "mehr Statistiken anzeigen",
 			"showLess": "weniger Statistiken anzeigen",
 			"day": "Tag",
-			"days": "Tage",
 			"daysGenitive": "Tage",
 			"inARow": "hintereinander"
 		}
@@ -415,5 +414,15 @@
 		"future_continuous": "Future Continuous",
 		"future_perfect": "Future Perfect",
 		"future_perfect_continuous": "Future Perfect Continuous"
+	},
+	"swipe": {
+		"know": "Weiß ich",
+		"dontKnow": "Weiß ich nicht",
+		"knowTitle": "Weiß ich (Nach oben)",
+		"dontKnowTitle": "Weiß ich nicht (Nach unten)",
+		"tapToFlip": "Tippen zum Umdrehen",
+		"warningTitle": "Achtung",
+		"warningMessage": "Dieser Modus wird nicht in die Gesamtstatistik eingerechnet, da nicht überprüft werden kann, welche Nutzer ehrlich auf „Weiß ich“ tippen und welche nicht. Statistiken funktionieren nur im Modus „Spalten“.",
+		"gotIt": "Verstanden"
 	}
 }

@@ -115,27 +115,27 @@
 		"phrasal_verbs": "Phrasal Verbs",
 		"adverbs_prepositions": "Adverbs & Prepositions"
 	},
-		"onboarding": {
-			"whatToLearn": "Which language do you want to learn?",
-			"yourLanguage": "Your language",
-			"explanation": "You can change interface and card languages in settings",
-			"explanationPart1": "There you can also toggle pronunciation",
-			"explanationPart2": "or transcription",
-			"explanationPart3": "for each column separately.",
-			"startBtn": "Start",
-			"nextHint": "Next tip",
-			"prevHint": "Previous tip",
-			"step1_part1": "You can change the interface and card languages in the settings",
-			"step1_part2": "There you can also toggle speech",
-			"step1_part3": "and transcription",
-			"step1_part4": "for each column separately",
-			"step2_part1": "Use the special learning mode",
-			"step2_part2": "and assistance tools",
-			"step2_part3": "for more effective memorization",
-			"step3": "Log in to save your progress in the cloud and stay independent of browser cache",
-			"step4": "You can install Slovko as an app on your mobile device or computer for quick access",
-			"step5": "The project is completely free and ad-free. You can support the developer in the menu"
-		},
+	"onboarding": {
+		"whatToLearn": "Which language do you want to learn?",
+		"yourLanguage": "Your language",
+		"explanation": "You can change interface and card languages in settings",
+		"explanationPart1": "There you can also toggle pronunciation",
+		"explanationPart2": "or transcription",
+		"explanationPart3": "for each column separately.",
+		"startBtn": "Start",
+		"nextHint": "Next tip",
+		"prevHint": "Previous tip",
+		"step1_part1": "You can change the interface and card languages in the settings",
+		"step1_part2": "There you can also toggle speech",
+		"step1_part3": "and transcription",
+		"step1_part4": "for each column separately",
+		"step2_part1": "Use the special learning mode",
+		"step2_part2": "and assistance tools",
+		"step2_part3": "for more effective memorization",
+		"step3": "Log in to save your progress in the cloud and stay independent of browser cache",
+		"step4": "You can install Slovko as an app on your mobile device or computer for quick access",
+		"step5": "The project is completely free and ad-free. You can support the developer in the menu"
+	},
 	"settings": {
 		"interfaceLanguage": "Interface language",
 		"cardLanguages": "Card languages",
@@ -290,7 +290,7 @@
 			"general": "General Activity",
 			"correct": "total correct answers",
 			"streak": "current daily streak",
-			"days": "total days in program",
+			"days": "days",
 			"accuracy": "answers accuracy",
 			"bestStreak": "record daily streak",
 			"bestCorrectStreak": "record correct answers streak",
@@ -300,7 +300,6 @@
 			"showMore": "show more statistics",
 			"showLess": "show less statistics",
 			"day": "day",
-			"days": "days",
 			"daysGenitive": "days",
 			"inARow": "in a row"
 		}
@@ -420,5 +419,15 @@
 		"active": "Active",
 		"waiting": "Waiting for others...",
 		"paste": "Paste from clipboard"
+	},
+	"swipe": {
+		"know": "Know",
+		"dontKnow": "Don't know",
+		"knowTitle": "Know (Up)",
+		"dontKnowTitle": "Don't know (Down)",
+		"tapToFlip": "Tap to flip",
+		"warningTitle": "Attention",
+		"warningMessage": "This mode does not count towards overall statistics because it is impossible to verify which users tap \"Know\" honestly and which do not. Statistics only work in \"columns\" mode.",
+		"gotIt": "Got it"
 	}
 }

@@ -12,6 +12,7 @@
 	import { smoothHeight } from "$lib/actions/smoothHeight";
 	import { page } from "$app/stores";
 	import { navigationState } from "$lib/services/navigationState.svelte";
+	import { Gamepad2, Layers } from "lucide-svelte";
 
 	// Mode Components
 	import LevelGrid from "./modes/LevelGrid.svelte";
@@ -100,6 +101,16 @@
 		selectedIds = [];
 	}
 
+	function setInteractionMode(mode: "match" | "swipe") {
+		settingsStore.setInteractionMode(mode);
+		if (
+			mode === "swipe" &&
+			["phrases", "tenses", "playlists"].includes(activeTab)
+		) {
+			navigationState.setTab("levels");
+		}
+	}
+
 	function startLearning() {
 		if (selectedIds.length === 0) return;
 
@@ -116,8 +127,11 @@
 		url.searchParams.delete("tense");
 		url.searchParams.delete("forms");
 		url.searchParams.delete("qty");
+		url.searchParams.delete("interaction");
 
 		url.searchParams.set("mode", activeTab);
+		url.searchParams.set("interaction", settingsStore.value.interactionMode);
+
 		if (activeTab === "levels") {
 			url.searchParams.set("level", idsStr);
 		} else if (activeTab === "phrases") {
@@ -144,8 +158,10 @@
 		url.searchParams.delete("tense");
 		url.searchParams.delete("forms");
 		url.searchParams.delete("qty");
+		url.searchParams.delete("interaction");
 
 		url.searchParams.set("mode", "playlists");
+		url.searchParams.set("interaction", settingsStore.value.interactionMode);
 		url.searchParams.set("playlist", playlistId);
 		goto(url, { keepFocus: true, noScroll: true });
 	}
@@ -155,17 +171,41 @@
 	<div class="modal-internal-wrapper" use:smoothHeight={{ duration: 300 }}>
 		<div class="modal-content-measure">
 			<div class="modal-inner">
+				<!-- Режим взаємодії (Стовпці vs Свайп) -->
+				<div class="interaction-toggle" data-testid="interaction-toggle">
+					<button
+						class="interaction-btn"
+						class:active={settingsStore.value.interactionMode === "match"}
+						onclick={() => setInteractionMode("match")}
+						data-testid="btn-match"
+					>
+						<Layers size={18} />
+						<span>Стовпці</span>
+					</button>
+					<button
+						class="interaction-btn"
+						class:active={settingsStore.value.interactionMode === "swipe"}
+						onclick={() => setInteractionMode("swipe")}
+						data-testid="btn-swipe"
+					>
+						<Gamepad2 size={18} />
+						<span>Свайп</span>
+					</button>
+				</div>
+
 				<!-- Tabs -->
 				<nav class="tabs" data-testid="level-topic-tabs">
 					{#each TABS as tab (tab.id)}
-						<button
-							class="tab"
-							class:active={activeTab === tab.id}
-							onclick={() => navigationState.setTab(tab.id)}
-							data-testid={tab.testId}
-						>
-							{$_(tab.label)}
-						</button>
+						{#if settingsStore.value.interactionMode === "match" || tab.id === "levels" || tab.id === "topics"}
+							<button
+								class="tab"
+								class:active={activeTab === tab.id}
+								onclick={() => navigationState.setTab(tab.id)}
+								data-testid={tab.testId}
+							>
+								{$_(tab.label)}
+							</button>
+						{/if}
 					{/each}
 				</nav>
 
@@ -240,6 +280,41 @@
 		display: flex;
 		flex-direction: column;
 		width: 100%;
+	}
+
+	.interaction-toggle {
+		display: flex;
+		background: var(--bg-primary);
+		padding: 4px;
+		border-radius: 12px;
+		margin-bottom: 1rem;
+		border: 1px solid var(--border);
+	}
+
+	.interaction-btn {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		padding: 0.75rem;
+		border-radius: 8px;
+		border: none;
+		background: transparent;
+		color: var(--text-secondary);
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.2s;
+	}
+
+	.interaction-btn:hover {
+		color: var(--text-primary);
+	}
+
+	.interaction-btn.active {
+		background: var(--accent);
+		color: white;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	}
 
 	.tabs {
