@@ -171,6 +171,8 @@ export class GameController {
 		this.gameState.updateCardStatus(card1.id, "wrong");
 		this.gameState.updateCardStatus(card2.id, "wrong");
 
+		this.gameState.recordMiss();
+
 		const pair1 = this.constructWordPair(card1.wordKey);
 		const pair2 = this.constructWordPair(card2.wordKey);
 		const levelId = card1.level || card2.level || this.getCurrentContextId();
@@ -179,7 +181,6 @@ export class GameController {
 		this.gameState.setSelectedCard(null);
 
 		setTimeout(() => {
-			this.gameState.recordMiss();
 			this.gameState.resetWrongCards(card1.id, card2.id);
 			this.gameState.setProcessing(false);
 		}, 500);

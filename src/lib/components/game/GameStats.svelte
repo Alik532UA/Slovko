@@ -7,6 +7,7 @@
 	import { getGameController } from "$lib/context/gameContext";
 	import {
 		Flame,
+		Snowflake,
 		Percent,
 		Lightbulb,
 		GraduationCap,
@@ -14,6 +15,7 @@
 	} from "lucide-svelte";
 	import MenuModal from "../navigation/MenuModal.svelte";
 	import { fade } from "svelte/transition";
+	import { untrack } from "svelte";
 	import BaseTooltip from "../ui/BaseTooltip.svelte";
 	import { navigationState } from "../../services/navigationState.svelte";
 	import { page } from "$app/stores";
@@ -33,12 +35,42 @@
 		navigationState.openModal("profile", tab);
 	}
 
+	// Local UI State for handling Frozen Streak
+	let displayedStreak = $state(gameState.streak);
+	let isFrozen = $state(false);
+
+	$effect(() => {
+		const currentStreak = gameState.streak;
+		const currentAttempts = gameState.totalAttempts;
+
+		if (currentStreak > 0) {
+			untrack(() => {
+				// Правильна відповідь
+				isFrozen = false;
+				displayedStreak = currentStreak;
+			});
+		} else if (currentStreak === 0 && currentAttempts > 0) {
+			untrack(() => {
+				// Відбулась помилка. Перевіряємо, чи в нас уже є заморожена серія
+				if (!isFrozen && displayedStreak > 0) {
+					// Це перша помилка: Заморожуємо
+					isFrozen = true;
+				} else if (isFrozen) {
+					// Це ДРУГА підряд помилка (або третя і т.д.): Знімаємо заморозку і показуємо 0
+					isFrozen = false;
+					displayedStreak = 0;
+				}
+			});
+		}
+	});
+
 	// Streak color interpolation (1 to 30)
 	const streakProgress = $derived(
-		Math.min(1, Math.max(0, (gameState.streak - 1) / 29)),
+		Math.min(1, Math.max(0, (displayedStreak - 1) / 29)),
 	);
 	const streakColor = $derived.by(() => {
-		if (gameState.streak === 0) return "rgba(128, 128, 128, 0.5)";
+		if (isFrozen) return "rgb(0, 191, 255)"; // Крижаний (Deep Sky Blue)
+		if (displayedStreak === 0) return "rgba(128, 128, 128, 0.5)"; // Сірий
 		const r = Math.round(128 + (255 - 128) * streakProgress);
 		const g = Math.round(128 + (165 - 128) * streakProgress);
 		const b = Math.round(128 + (0 - 128) * streakProgress);
@@ -47,7 +79,9 @@
 
 	// Streak animation intensity
 	const streakAnimationSpeed = $derived(
-		gameState.streak > 0 ? `${Math.max(0.5, 2 - streakProgress * 1.5)}s` : "0s",
+		displayedStreak > 0 && !isFrozen
+			? `${Math.max(0.5, 2 - streakProgress * 1.5)}s`
+			: "0s",
 	);
 	const streakScale = $derived(1 + streakProgress * 0.15);
 
@@ -76,7 +110,8 @@
 	<BaseTooltip text={$_("common.tooltips.streak")}>
 		<div
 			class="stat-item streak"
-			style="color: {streakColor}; border-color: {gameState.streak > 0
+			class:frozen={isFrozen}
+			style="color: {streakColor}; border-color: {displayedStreak > 0
 				? streakColor
 				: ''}; transform: scale({streakScale});"
 			data-testid="stat-streak"
@@ -84,14 +119,18 @@
 		>
 			<div
 				class="icon-wrapper"
-				style="animation-duration: {streakAnimationSpeed}; animation-name: {gameState.streak >
-				5
+				style="animation-duration: {streakAnimationSpeed}; animation-name: {displayedStreak >
+					5 && !isFrozen
 					? 'pulse-fire'
 					: 'none'}"
 			>
-				<Flame size={20} fill={gameState.streak > 10 ? streakColor : "none"} />
+				{#if isFrozen}
+					<Snowflake size={20} />
+				{:else}
+					<Flame size={20} fill={displayedStreak > 10 ? streakColor : "none"} />
+				{/if}
 			</div>
-			<span class="value">{gameState.streak}</span>
+			<span class="value">{displayedStreak}</span>
 		</div>
 	</BaseTooltip>
 
@@ -250,6 +289,17 @@
 		transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 		border: 1px solid rgba(255, 255, 255, 0.05);
 		white-space: nowrap;
+	}
+
+	.stat-item.frozen {
+		background: rgba(0, 191, 255, 0.15);
+		box-shadow:
+			0 0 10px rgba(0, 191, 255, 0.3),
+			inset 0 0 10px rgba(255, 255, 255, 0.2);
+		text-shadow: 0 0 5px rgba(0, 191, 255, 0.8);
+		border-color: rgba(0, 191, 255, 0.5) !important;
+		/* Візуальний ефект замерзання / кристалізації */
+		backdrop-filter: blur(12px) contrast(1.1);
 	}
 
 	.hint-btn,

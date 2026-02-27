@@ -44,6 +44,11 @@
 	class="modal-backdrop"
 	transition:fade={{ duration: 200 }}
 	onclick={handleBackdropClick}
+	onkeydown={(e) => {
+		if (e.key === "Enter" || e.key === " ") handleBackdropClick(e as any);
+	}}
+	role="button"
+	tabindex="0"
 >
 	<div
 		bind:this={modalEl}

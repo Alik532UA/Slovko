@@ -213,7 +213,6 @@
 					size={40}
 					interactive={false}
 					showStatus={event.type === "online" || event.state === "collapsed"}
-					data-testid="interaction-user-avatar"
 				/>
 			{/if}
 		</div>
