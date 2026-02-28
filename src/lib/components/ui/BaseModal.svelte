@@ -49,6 +49,7 @@
 	}}
 	role="button"
 	tabindex="0"
+	data-testid="{testid}-backdrop"
 >
 	<div
 		bind:this={modalEl}
@@ -84,7 +85,7 @@
 		position: fixed;
 		inset: 0;
 		z-index: 10100;
-		background: rgba(0, 0, 0, 0.8);
+		background: var(--backdrop-bg);
 		backdrop-filter: blur(12px);
 		display: flex;
 		flex-direction: column;
@@ -92,11 +93,7 @@
 		justify-content: flex-start;
 		padding: 5vh 1.5rem;
 		overflow-y: auto;
-	}
-
-	:global([data-theme="light-gray"]) .modal-backdrop,
-	:global([data-theme="green"]) .modal-backdrop {
-		background: rgba(255, 255, 255, 0.9);
+		transition: background-color 0.3s ease;
 	}
 
 	.modal {

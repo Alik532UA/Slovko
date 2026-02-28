@@ -51,7 +51,9 @@
 	transition:fade={{ duration: 200 }}
 	onclick={handleDismiss}
 	onkeydown={handleKeydown}
-	role="presentation"
+	role="button"
+	tabindex="0"
+	data-testid="update-notification-backdrop"
 >
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<div
@@ -61,13 +63,14 @@
 		role="dialog"
 		aria-modal="true"
 		tabindex="-1"
+		data-testid="update-notification-modal"
 	>
 		<div class="content">
-			<div class="header">
-				<AlertTriangle size={48} class="warning-icon" />
+			<div class="header" data-testid="update-notification-header">
+				<AlertTriangle size={48} class="warning-icon" data-testid="update-notification-icon" />
 				<div class="message">
-					<span class="text">{$_("updateNotification.message")}</span>
-					<div class="version-info">
+					<span class="text" data-testid="update-notification-title">{$_("updateNotification.message")}</span>
+					<div class="version-info" data-testid="update-notification-versions">
 						<span class="version-tag">
 							{$_("updateNotification.yourVersion")}:
 							<b>{localVersion || "???"}</b>
@@ -79,7 +82,7 @@
 				</div>
 			</div>
 
-			<p class="warning-text">{$_("updateNotification.warning")}</p>
+			<p class="warning-text" data-testid="update-notification-warning">{$_("updateNotification.warning")}</p>
 
 			<div class="actions">
 				<button
@@ -115,13 +118,14 @@
 		position: fixed;
 		inset: 0;
 		z-index: 10002;
-		background: rgba(0, 0, 0, 0.82);
+		background: var(--backdrop-bg);
 		backdrop-filter: blur(12px);
 		display: flex;
 		justify-content: center;
 		align-items: flex-start;
 		padding: 2rem 1rem;
 		overflow-y: auto;
+		transition: background-color 0.3s ease;
 	}
 
 	.modal {
@@ -159,7 +163,6 @@
 		font-size: 1.8rem;
 		color: var(--text-primary);
 		line-height: 1.1;
-		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 	}
 
 	.version-info {
@@ -180,7 +183,6 @@
 
 	:global(.warning-icon) {
 		color: #ff9800;
-		filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 	}
 
 	.warning-text {
@@ -189,7 +191,6 @@
 		color: var(--text-primary);
 		margin: 0;
 		opacity: 0.9;
-		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 	}
 
 	.actions {

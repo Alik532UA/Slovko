@@ -29,6 +29,9 @@
 	--wrong-bg: #5a2a2a;
 	--wrong-border: #e74c3c;
 
+	/* Backdrop */
+	--backdrop-bg: rgba(0, 0, 0, 0.8);
+
 	/* Toast notification colors */
 	--toast-info: #3b82f6;
 	--toast-success: #22c55e;
@@ -55,9 +58,16 @@
 	--card-border: #e5e7eb;
 	--card-hover-border: #9ca3af;
 
-	/* Overrides for light theme states */
+	/* States */
 	--selected-bg: rgba(58, 143, 214, 0.1);
 	--selected-border: #3a8fd6;
+	--correct-bg: #dcfce7;
+	--correct-border: #22c55e;
+	--wrong-bg: #fee2e2;
+	--wrong-border: #ef4444;
+
+	/* Backdrop - Light brightening */
+	--backdrop-bg: rgba(255, 255, 255, 0.9);
 }
 
 /* Orange (Ubuntu-like) */
@@ -72,8 +82,19 @@
 	--card-bg: rgba(255, 255, 255, 0.15);
 	--card-border: rgba(255, 255, 255, 0.3);
 	--card-hover-border: rgba(255, 255, 255, 0.5);
+
+	/* States */
+	--selected-bg: rgba(255, 255, 255, 0.25);
+	--selected-border: #ffffff;
+	--correct-bg: #2ecc71;
+	--correct-border: #ffffff;
+	--wrong-bg: #e74c3c;
+	--wrong-border: #ffffff;
+
+	/* Backdrop */
+	--backdrop-bg: rgba(0, 0, 0, 0.7);
+
 	background-attachment: fixed;
-	/* Fix gradient on scroll */
 }
 
 /* Green */
@@ -89,9 +110,16 @@
 	--card-border: #a7f3d0;
 	--card-hover-border: #34d399;
 
-	/* Selected states for green theme */
+	/* States */
 	--selected-bg: #dcfce7;
 	--selected-border: #059669;
+	--correct-bg: #10b981;
+	--correct-border: #064e3b;
+	--wrong-bg: #f87171;
+	--wrong-border: #991b1b;
+
+	/* Backdrop - Tinted Light */
+	--backdrop-bg: rgba(230, 255, 230, 0.85);
 }
 
 /* Альтернативні назви для зворотної сумісності */
