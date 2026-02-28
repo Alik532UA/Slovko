@@ -106,6 +106,7 @@
 		"step5": "Leyha tamamen bedava ve reklamsızdır. Menüde programcığa maliyeviy qoltutabilirsiñiz"
 	},
 	"settings": {
+		"levels": "Seviyeler",
 		"interfaceLanguage": "Arayüz tili",
 		"cardLanguages": "Kartaların tilleri",
 		"languages": "Tiller",

@@ -137,6 +137,7 @@
 		"step5": "The project is completely free and ad-free. You can support the developer in the menu"
 	},
 	"settings": {
+		"levels": "Modes",
 		"interfaceLanguage": "Interface language",
 		"cardLanguages": "Card languages",
 		"languages": "Languages",

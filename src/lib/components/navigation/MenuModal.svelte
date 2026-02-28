@@ -16,12 +16,14 @@
 		AlertCircle,
 		BarChart3,
 		TriangleAlert,
+		Layers,
 	} from "lucide-svelte";
 	import { SyncService } from "$lib/firebase/SyncService.svelte";
 	import { authStore } from "$lib/firebase/authStore.svelte";
 
 	interface Props {
 		onclose: () => void;
+		onopenLevels: () => void;
 		onopenProfile: (mode: "stats" | "profile", tab?: any) => void;
 		onopenLanguages: () => void;
 		onopenThemes: () => void;
@@ -30,6 +32,7 @@
 	}
 	let {
 		onclose,
+		onopenLevels,
 		onopenProfile,
 		onopenLanguages,
 		onopenThemes,
@@ -69,6 +72,19 @@
 	data-testid="menu-modal"
 >
 	<div class="menu-list">
+		<!-- 0. Режими -->
+		<button
+			class="menu-item"
+			onclick={() => {
+				onopenLevels();
+				onclose();
+			}}
+			data-testid="menu-levels-btn"
+		>
+			<div class="item-icon"><Layers size={18} /></div>
+			<span class="label">{$_("settings.levels") || "Modes"}</span>
+		</button>
+
 		<!-- 1. Мови -->
 		<button
 			class="menu-item"

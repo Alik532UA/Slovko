@@ -242,6 +242,10 @@
 				<MenuModal
 					centered={settingsStore.value.interactionMode === "swipe"}
 					onclose={() => (showMenu = false)}
+					onopenLevels={() => {
+						showMenu = false;
+						navigationState.openModal("levels");
+					}}
 					onopenProfile={openProfile}
 					onopenLanguages={() => {
 						showMenu = false;

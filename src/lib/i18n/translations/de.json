@@ -106,6 +106,7 @@
 		"step5": "Das Projekt ist völlig kostenlos und werbefrei. Sie können den Entwickler im Menü unterstützen"
 	},
 	"settings": {
+		"levels": "Stufen",
 		"interfaceLanguage": "Sprache der Benutzeroberfläche",
 		"cardLanguages": "Kartensprachen",
 		"languages": "Sprachen",
