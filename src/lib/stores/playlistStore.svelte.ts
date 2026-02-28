@@ -61,6 +61,7 @@ const DEFAULT_STATE: PlaylistState = {
 	systemPlaylists: { ...DEFAULT_SYSTEM_PLAYLISTS },
 	mistakeMetadata: {},
 	updatedAt: 0,
+	dbVersion: 1,
 };
 
 function createPlaylistStore() {

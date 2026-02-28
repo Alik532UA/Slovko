@@ -4,7 +4,7 @@ export const logConfig = {
 	editor: false,
 	store: false,
 	game: false,
-	sync: false,
+	sync: true,
 	settings: false,
 	interaction: false,
 	presence: false,

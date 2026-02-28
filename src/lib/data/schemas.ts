@@ -112,6 +112,7 @@ const PlaylistStateCoreSchema = z.object({
 		}),
 	mistakeMetadata: z.record(z.string(), z.number()).default({}),
 	updatedAt: z.number().default(0),
+	dbVersion: z.number().default(1),
 });
 
 export const PlaylistStateSchema = z.preprocess((val: unknown) => {

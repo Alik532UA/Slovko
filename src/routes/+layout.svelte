@@ -13,6 +13,7 @@
 	import ToastContainer from "$lib/components/ui/ToastContainer.svelte";
 	import InteractionSystem from "$lib/components/interaction/InteractionSystem.svelte";
 	import OnboardingModal from "$lib/components/onboarding/OnboardingModal.svelte";
+	import MigrationOverlay from "$lib/components/ui/MigrationOverlay.svelte";
 	import { authStore } from "$lib/firebase/authStore.svelte";
 	import { logService } from "$lib/services/logService";
 	import DebugListener from "$lib/components/debug/DebugListener.svelte";
@@ -295,6 +296,7 @@
 	<ToastContainer />
 	<InteractionSystem />
 	<NetworkIndicator />
+	<MigrationOverlay />
 {:else}
 	<div class="loading">
 		<div class="loading-spinner"></div>
