@@ -179,9 +179,9 @@
 		justify-content: center;
 		padding: 0.75rem;
 		border-radius: 16px;
-		background: rgba(255, 255, 255, 0.03);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		backdrop-filter: blur(4px);
+		background: var(--glass-bg);
+		border: 1px solid var(--glass-border);
+		backdrop-filter: blur(var(--glass-blur));
 	}
 
 	.social-icon:hover {
@@ -190,7 +190,7 @@
 		color: white;
 		background: var(--accent);
 		border-color: var(--accent);
-		box-shadow: 0 4px 15px var(--accent-shadow, rgba(0, 0, 0, 0.3));
+		box-shadow: var(--shadow-md);
 	}
 
 	.separator {
@@ -234,22 +234,22 @@
 	.donate {
 		background: var(--accent);
 		color: white;
-		box-shadow: 0 4px 12px rgba(58, 143, 214, 0.3);
+		box-shadow: var(--shadow-sm);
 	}
 
 	.donate:hover {
 		transform: translateY(-2px);
-		box-shadow: 0 6px 16px rgba(58, 143, 214, 0.4);
+		box-shadow: var(--shadow-md);
 	}
 
 	.install-btn {
-		background: rgba(255, 255, 255, 0.1);
+		background: var(--bg-secondary);
 		color: var(--text-primary);
 		border: 1px solid var(--accent);
 	}
 
 	.install-btn:hover {
-		background: rgba(233, 84, 32, 0.1); /* accent color with opacity */
+		background: var(--selected-bg);
 		transform: translateY(-2px);
 	}
 

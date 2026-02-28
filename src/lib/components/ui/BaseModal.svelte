@@ -86,7 +86,7 @@
 		inset: 0;
 		z-index: 10100;
 		background: var(--backdrop-bg);
-		backdrop-filter: blur(12px);
+		backdrop-filter: blur(var(--glass-blur));
 		display: flex;
 		flex-direction: column;
 		align-items: center;

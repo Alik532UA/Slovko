@@ -365,8 +365,8 @@
 		position: fixed;
 		inset: 0;
 		z-index: 10002;
-		background: rgba(0, 0, 0, 0.8);
-		backdrop-filter: blur(8px);
+		background: var(--backdrop-bg);
+		backdrop-filter: blur(var(--glass-blur));
 		display: flex;
 		flex-direction: column;
 		/* justify-content: center; - Removed to fix scroll clipping */
@@ -377,11 +377,7 @@
 		transition: background 0.3s;
 	}
 
-	/* Light theme override for backdrop */
-	:global([data-theme="light-gray"]) .modal-backdrop,
-	:global([data-theme="green"]) .modal-backdrop {
-		background: rgba(255, 255, 255, 0.9);
-	}
+	/* Light theme override for backdrop removed - now handled via var */
 
 	.modal {
 		background: transparent;
@@ -407,7 +403,7 @@
 		transition:
 			transform 0.2s,
 			background 0.2s;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+		box-shadow: var(--shadow-sm);
 	}
 
 	.confirm-btn:hover {
@@ -522,9 +518,9 @@
 	}
 
 	.icon-btn {
-		background: rgba(255, 255, 255, 0.1);
-		border: 1px solid rgba(255, 255, 255, 0.15);
-		color: var(--text-secondary);
+		background: var(--icon-btn-bg);
+		border: 1px solid var(--icon-btn-border);
+		color: var(--icon-btn-text);
 		padding: 0.5rem;
 		border-radius: 12px;
 		cursor: pointer;
@@ -535,7 +531,7 @@
 	}
 
 	.icon-btn:hover {
-		background: rgba(255, 255, 255, 0.15);
+		background: var(--icon-btn-border);
 		transform: translateY(-2px);
 	}
 
@@ -544,10 +540,10 @@
 	}
 
 	.icon-btn.active {
-		background: var(--selected-border);
-		color: white;
-		border-color: var(--selected-border);
-		box-shadow: 0 0 12px rgba(58, 143, 214, 0.4);
+		background: var(--icon-btn-active-bg);
+		color: var(--icon-btn-active-text);
+		border-color: var(--icon-btn-active-bg);
+		box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
 	}
 
 	.column-header {
