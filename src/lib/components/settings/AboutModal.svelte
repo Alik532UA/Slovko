@@ -7,6 +7,7 @@
 	import { hardReset } from "$lib/services/resetService";
 	import { pwaStore } from "$lib/stores/pwaStore.svelte";
 	import { Download, Instagram, Facebook, Linkedin } from "lucide-svelte";
+	import ThreadsIcon from "../ui/icons/ThreadsIcon.svelte";
 	import FeedbackModal from "./FeedbackModal.svelte";
 	import InstallGuide from "../pwa/InstallGuide.svelte";
 	import BaseModal from "../ui/BaseModal.svelte";
@@ -58,6 +59,16 @@
 				data-testid="about-social-linkedin"
 			>
 				<Linkedin size={22} />
+			</a>
+			<a
+				href="https://www.threads.com/@slovko.learn"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="social-icon"
+				title="Threads"
+				data-testid="about-social-threads"
+			>
+				<ThreadsIcon size={22} />
 			</a>
 		</div>
 
