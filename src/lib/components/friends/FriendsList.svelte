@@ -200,12 +200,12 @@
 		gap: 0.75rem;
 		padding: 0.75rem;
 		border-radius: 12px;
-		background: rgba(255, 255, 255, 0.05);
+		background: var(--glass-bg);
 		transition: background 0.2s;
 	}
 
 	.friend-card:hover {
-		background: rgba(255, 255, 255, 0.08);
+		background: var(--bg-hover);
 	}
 
 	.friend-info {
@@ -232,13 +232,14 @@
 	.retry-btn {
 		padding: 0.5rem 1rem;
 		background: var(--bg-secondary);
-		border: none;
+		border: 1px solid var(--border);
 		border-radius: 8px;
 		cursor: pointer;
 		color: var(--text-primary);
+		transition: background 0.2s;
 	}
 
 	.retry-btn:hover {
-		background: var(--border);
+		background: var(--bg-hover);
 	}
 </style>

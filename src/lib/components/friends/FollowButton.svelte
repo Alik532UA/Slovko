@@ -101,8 +101,8 @@
 		gap: 0.25rem;
 		font-size: 0.65rem;
 		font-weight: 700;
-		color: #22c55e;
-		background: rgba(34, 197, 94, 0.1);
+		color: var(--status-success);
+		background: var(--status-success-bg);
 		padding: 0.15rem 0.4rem;
 		border-radius: 4px;
 		text-transform: uppercase;
@@ -129,19 +129,19 @@
 	}
 
 	.action-btn.following {
-		background: rgba(34, 197, 94, 0.1);
-		color: #22c55e;
+		background: var(--status-success-bg);
+		color: var(--status-success);
 	}
 
 	.action-btn.follow-back {
-		background: rgba(var(--accent-rgb, 58, 143, 214), 0.15);
+		background: var(--selected-bg);
 		color: var(--accent);
-		border: 1px solid rgba(var(--accent-rgb, 58, 143, 214), 0.3);
+		border: 1px solid var(--selected-bg);
 	}
 
 	.action-btn.unfollow:hover:not(:disabled) {
-		background: rgba(239, 68, 68, 0.1);
-		color: #ef4444;
+		background: var(--status-danger-bg);
+		color: var(--status-danger);
 	}
 
 	.action-btn:disabled {

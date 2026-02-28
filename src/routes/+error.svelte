@@ -88,9 +88,8 @@ ${logs}
 		align-items: center;
 		justify-content: center;
 		min-height: 100vh;
-		background: #1a1a2e;
-		color: #e0e0e0;
-		font-family: system-ui, -apple-system, sans-serif;
+		background: var(--bg-primary);
+		color: var(--text-primary);
 		padding: 1rem;
 	}
 
@@ -98,52 +97,56 @@ ${logs}
 		text-align: center;
 		max-width: 400px;
 		width: 100%;
-		background: rgba(255, 255, 255, 0.05);
-		padding: 2rem;
-		border-radius: 16px;
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+		background: var(--glass-bg);
+		padding: 2.5rem 2rem;
+		border-radius: 24px;
+		border: 1px solid var(--glass-border);
+		box-shadow: var(--shadow-lg);
+		backdrop-filter: blur(var(--glass-blur));
 	}
 
 	.icon {
 		font-size: 4rem;
-		margin-bottom: 1rem;
+		margin-bottom: 1.5rem;
 	}
 
 	h1 {
-		font-size: 1.5rem;
+		font-size: 1.75rem;
 		margin-bottom: 0.5rem;
-		color: #fff;
+		color: var(--text-primary);
+		font-weight: 800;
 	}
 
 	.status {
-		color: #ff6b6b;
+		color: var(--status-danger);
 		font-weight: bold;
-		margin-bottom: 0.5rem;
+		margin-bottom: 0.75rem;
+		font-size: 1.1rem;
 	}
 
 	.message {
-		color: #a0a0a0;
+		color: var(--text-secondary);
 		margin-bottom: 2rem;
-		line-height: 1.4;
+		line-height: 1.5;
 		word-wrap: break-word;
+		font-size: 1rem;
 	}
 
 	.actions {
 		display: flex;
 		flex-direction: column;
-		gap: 0.75rem;
+		gap: 1rem;
 		margin-bottom: 2rem;
 	}
 
 	button {
-		padding: 0.8rem 1.5rem;
-		border-radius: 8px;
+		padding: 1rem 1.5rem;
+		border-radius: 14px;
 		border: none;
-		font-weight: 600;
+		font-weight: 700;
 		cursor: pointer;
 		font-size: 1rem;
-		transition: opacity 0.2s, transform 0.1s;
+		transition: all 0.2s;
 	}
 
 	button:active {
@@ -151,36 +154,54 @@ ${logs}
 	}
 
 	.primary-btn {
-		background: #3a8fd6;
+		background: var(--accent);
 		color: white;
+		box-shadow: var(--shadow-sm);
+	}
+
+	.primary-btn:hover {
+		background: var(--accent-hover);
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-md);
 	}
 
 	.secondary-btn {
-		background: rgba(255, 255, 255, 0.1);
-		color: #ccc;
-		border: 1px solid rgba(255, 255, 255, 0.2);
+		background: var(--bg-hover);
+		color: var(--text-primary);
+		border: 1px solid var(--glass-border);
+	}
+
+	.secondary-btn:hover {
+		background: var(--bg-active);
 	}
 
 	details {
 		text-align: left;
-		font-size: 0.8rem;
-		color: #666;
+		font-size: 0.85rem;
+		color: var(--text-secondary);
 		margin-top: 1rem;
+		padding: 1rem;
+		background: var(--bg-hover);
+		border-radius: 12px;
 	}
 	
 	summary {
 		cursor: pointer;
 		margin-bottom: 0.5rem;
+		font-weight: 600;
 	}
 
 	pre {
-		background: rgba(0,0,0,0.2);
-		padding: 0.5rem;
-		border-radius: 4px;
+		background: var(--bg-active);
+		padding: 0.75rem;
+		border-radius: 8px;
 		overflow-x: auto;
 		white-space: pre-wrap;
 		word-wrap: break-word;
 		max-height: 200px;
 		overflow-y: auto;
+		color: var(--text-secondary);
+		font-family: monospace;
+		border: 1px solid var(--glass-border);
 	}
 </style>

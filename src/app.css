@@ -28,6 +28,20 @@
 	--wrong-bg: #5a2a2a;
 	--wrong-border: #e74c3c;
 
+	/* Status colors (semantic) */
+	--status-success: #22c55e;
+	--status-success-bg: rgba(34, 197, 94, 0.1);
+	--status-danger: #ef4444;
+	--status-danger-bg: rgba(239, 68, 68, 0.1);
+	--status-info: #3b82f6;
+	--status-info-bg: rgba(59, 130, 246, 0.1);
+	--status-warning: #f59e0b;
+	--status-warning-bg: rgba(245, 158, 11, 0.1);
+
+	/* Tooltips */
+	--tooltip-bg: rgba(15, 15, 25, 0.98);
+	--tooltip-text: #ffffff;
+
 	/* Effects & Shadows */
 	--backdrop-bg: rgba(0, 0, 0, 0.8);
 	--glass-bg: rgba(255, 255, 255, 0.05);
@@ -38,6 +52,9 @@
 	--shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
 	--shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
 	--accent-shadow: rgba(var(--accent-rgb), 0.3);
+
+	--bg-hover: rgba(255, 255, 255, 0.08);
+	--bg-active: rgba(255, 255, 255, 0.12);
 
 	/* Icon buttons */
 	--icon-btn-bg: rgba(255, 255, 255, 0.1);
@@ -80,6 +97,20 @@
 	--wrong-bg: #fee2e2;
 	--wrong-border: #ef4444;
 
+	/* Status colors (semantic) */
+	--status-success: #16a34a;
+	--status-success-bg: #dcfce7;
+	--status-danger: #dc2626;
+	--status-danger-bg: #fee2e2;
+	--status-info: #2563eb;
+	--status-info-bg: #dbeafe;
+	--status-warning: #d97706;
+	--status-warning-bg: #fef3c7;
+
+	/* Tooltips */
+	--tooltip-bg: rgba(255, 255, 255, 0.95);
+	--tooltip-text: #1f2937;
+
 	/* Effects & Shadows */
 	--backdrop-bg: rgba(255, 255, 255, 0.9);
 	--glass-bg: rgba(255, 255, 255, 0.7);
@@ -90,6 +121,9 @@
 	--shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12);
 	--shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.15);
 	--accent-shadow: rgba(var(--accent-rgb), 0.2);
+
+	--bg-hover: rgba(0, 0, 0, 0.05);
+	--bg-active: rgba(0, 0, 0, 0.08);
 
 	/* Icon buttons */
 	--icon-btn-bg: #e5e7eb;
@@ -120,6 +154,20 @@
 	--correct-border: #ffffff;
 	--wrong-bg: #e74c3c;
 	--wrong-border: #ffffff;
+
+	/* Status colors (semantic) */
+	--status-success: #2ecc71;
+	--status-success-bg: rgba(255, 255, 255, 0.2);
+	--status-danger: #ff4d4d;
+	--status-danger-bg: rgba(255, 255, 255, 0.2);
+	--status-info: #3498db;
+	--status-info-bg: rgba(255, 255, 255, 0.2);
+	--status-warning: #f1c40f;
+	--status-warning-bg: rgba(255, 255, 255, 0.2);
+
+	/* Tooltips */
+	--tooltip-bg: rgba(40, 0, 40, 0.95);
+	--tooltip-text: #ffffff;
 
 	/* Effects & Shadows */
 	--backdrop-bg: rgba(0, 0, 0, 0.7);
@@ -163,6 +211,20 @@
 	--correct-border: #064e3b;
 	--wrong-bg: #f87171;
 	--wrong-border: #991b1b;
+
+	/* Status colors (semantic) */
+	--status-success: #059669;
+	--status-success-bg: #dcfce7;
+	--status-danger: #b91c1c;
+	--status-danger-bg: #fecaca;
+	--status-info: #0891b2;
+	--status-info-bg: #cffafe;
+	--status-warning: #b45309;
+	--status-warning-bg: #fef3c7;
+
+	/* Tooltips */
+	--tooltip-bg: rgba(6, 78, 59, 0.95);
+	--tooltip-text: #ffffff;
 
 	/* Effects & Shadows */
 	--backdrop-bg: rgba(230, 255, 230, 0.85);

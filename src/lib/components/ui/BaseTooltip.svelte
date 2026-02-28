@@ -132,17 +132,17 @@
 
 	.tooltip-content {
 		position: absolute;
-		background: rgba(15, 15, 25, 0.98);
-		color: white;
+		background: var(--tooltip-bg);
+		color: var(--tooltip-text);
 		padding: 0.6rem 1rem;
 		border-radius: 12px;
 		font-size: 0.85rem;
 		line-height: 1.4;
 		z-index: 200000;
 		pointer-events: none;
-		backdrop-filter: blur(12px);
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+		backdrop-filter: blur(var(--glass-blur));
+		border: 1px solid var(--glass-border);
+		box-shadow: var(--shadow-lg);
 		font-weight: 600;
 		text-align: center;
 		white-space: normal; 
@@ -159,12 +159,12 @@
 
 	.tooltip-content.top::after {
 		top: 100%;
-		border-top-color: rgba(15, 15, 25, 0.98);
+		border-top-color: var(--tooltip-bg);
 	}
 
 	.tooltip-content.bottom::after {
 		bottom: 100%;
-		border-bottom-color: rgba(15, 15, 25, 0.98);
+		border-bottom-color: var(--tooltip-bg);
 	}
 
 	@media (max-width: 768px) {

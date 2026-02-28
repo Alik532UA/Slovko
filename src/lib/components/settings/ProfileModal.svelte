@@ -570,10 +570,10 @@
 		display: flex;
 		gap: 0.25rem;
 		margin-bottom: 1.5rem;
-		background: rgba(255, 255, 255, 0.03);
+		background: var(--glass-bg);
 		padding: 0.4rem;
 		border-radius: 16px;
-		border: 1px solid rgba(255, 255, 255, 0.05);
+		border: 1px solid var(--glass-border);
 		overflow-x: auto;
 		scrollbar-width: none;
 	}
@@ -608,15 +608,15 @@
 		width: 32px;
 		height: 32px;
 		border-radius: 8px;
-		background: rgba(255, 255, 255, 0.03);
+		background: var(--bg-hover);
 		transition: all 0.3s;
 		color: var(--text-secondary);
 	}
 
 	.tabs-nav button.active {
-		background: rgba(255, 255, 255, 0.08);
+		background: var(--bg-active);
 		color: var(--text-primary);
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+		box-shadow: var(--shadow-sm);
 	}
 
 	.tabs-nav button.active .tab-icon {

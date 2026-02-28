@@ -93,15 +93,15 @@
 	}
 
 	.error-card {
-		background: rgba(255, 255, 255, 0.05);
-		backdrop-filter: blur(10px);
+		background: var(--glass-bg);
+		backdrop-filter: blur(var(--glass-blur));
 		border: 1px solid var(--border);
 		border-radius: 24px;
 		padding: 2.5rem;
 		max-width: 400px;
 		width: 100%;
 		text-align: center;
-		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+		box-shadow: var(--shadow-lg);
 	}
 
 	.error-card.compact-card {
@@ -110,7 +110,7 @@
 	}
 
 	.icon-box {
-		color: #f59e0b;
+		color: var(--status-warning);
 		margin-bottom: 1.5rem;
 		display: flex;
 		justify-content: center;
@@ -172,20 +172,22 @@
 	.retry {
 		background: var(--accent);
 		color: white;
+		box-shadow: var(--shadow-sm);
 	}
 
 	.retry:hover {
-		filter: brightness(1.1);
+		background: var(--accent-hover);
 		transform: translateY(-1px);
+		box-shadow: var(--shadow-md);
 	}
 
 	.report {
-		background: rgba(255, 255, 255, 0.05);
+		background: var(--bg-hover);
 		border: 1px solid var(--border);
 		color: var(--text-primary);
 	}
 
 	.report:hover {
-		background: rgba(255, 255, 255, 0.1);
+		background: var(--bg-active);
 	}
 </style>

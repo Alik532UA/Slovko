@@ -267,7 +267,7 @@
 	}
 
 	.icon-btn:hover {
-		background: rgba(255, 255, 255, 0.1);
+		background: var(--bg-hover);
 		color: var(--text-primary);
 	}
 
@@ -311,17 +311,17 @@
 		gap: 0.75rem;
 		padding: 0.5rem;
 		border-radius: 12px;
-		background: rgba(255, 255, 255, 0.03);
+		background: var(--glass-bg);
 		transition: background 0.2s;
 	}
 
 	.user-card:hover {
-		background: rgba(255, 255, 255, 0.06);
+		background: var(--bg-hover);
 	}
 	
 	.discovery-card {
-		border: 1px solid rgba(58, 143, 214, 0.2);
-		background: rgba(58, 143, 214, 0.05);
+		border: 1px solid var(--status-info-bg);
+		background: var(--status-info-bg);
 	}
 
 	.user-info {
@@ -386,8 +386,8 @@
 	}
 	
 	.toggle-btn {
-		background: rgba(255, 255, 255, 0.1);
-		border: none;
+		background: var(--bg-secondary);
+		border: 1px solid var(--border);
 		color: var(--text-primary);
 		padding: 0.4rem 0.8rem;
 		border-radius: 20px;
@@ -397,18 +397,18 @@
 	}
 	
 	.toggle-btn:hover {
-		background: rgba(255, 255, 255, 0.15);
+		background: var(--bg-hover);
 	}
 	
 	.toggle-btn.active {
-		background: rgba(46, 204, 113, 0.2);
-		color: #2ecc71;
-		border: 1px solid rgba(46, 204, 113, 0.3);
+		background: var(--status-success-bg);
+		color: var(--status-success);
+		border: 1px solid var(--status-success-bg);
 	}
 	
 	.status-indicator {
 		font-size: 0.7rem;
-		color: #2ecc71;
+		color: var(--status-success);
 	}
 	
 	.discovery-waiting {

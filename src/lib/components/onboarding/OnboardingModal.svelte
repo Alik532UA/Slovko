@@ -333,8 +333,8 @@
 		position: fixed;
 		inset: 0;
 		z-index: 10000;
-		background: rgba(0, 0, 0, 0.92);
-		backdrop-filter: blur(15px);
+		background: var(--backdrop-bg);
+		backdrop-filter: blur(var(--glass-blur));
 		display: grid;
 		place-items: center;
 		padding: 2rem 1rem;
@@ -381,20 +381,20 @@
 		flex: 1;
 		height: 6px;
 		border-radius: 10px;
-		background: rgba(255, 255, 255, 0.15);
-		border: none;
+		background: var(--glass-bg);
+		border: 1px solid var(--glass-border);
 		cursor: pointer;
 		transition: all 0.3s ease;
 		padding: 0;
 	}
 
 	.progress-segment:hover {
-		background: rgba(255, 255, 255, 0.3);
+		background: var(--glass-border);
 	}
 
 	.progress-segment.active {
 		background: var(--accent);
-		box-shadow: 0 0 10px rgba(var(--accent-rgb, 58, 143, 214), 0.5);
+		box-shadow: 0 0 10px var(--accent-shadow);
 	}
 
 	.progress-segment.completed {
@@ -416,12 +416,12 @@
 		align-items: center;
 		justify-content: center;
 		color: white;
-		box-shadow: 0 8px 20px rgba(var(--accent-rgb, 58, 143, 214), 0.3);
+		box-shadow: 0 8px 20px var(--accent-shadow);
 	}
 
 	.explanation-text p {
 		font-size: 1.2rem;
-		color: white;
+		color: var(--text-primary);
 		line-height: 1.5;
 		margin: 0;
 		font-weight: 500;
@@ -444,19 +444,19 @@
 		font-weight: 600;
 		cursor: pointer;
 		transition: all 0.2s;
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		border: 1px solid var(--glass-border);
 		text-decoration: none;
 	}
 
 	.action-btn-secondary {
-		background: rgba(255, 255, 255, 0.1);
-		color: white;
+		background: var(--glass-bg);
+		color: var(--text-primary);
 	}
 
 	.action-btn-accent {
 		background: var(--accent);
 		color: white;
-		border-color: rgba(255, 255, 255, 0.2);
+		border-color: var(--glass-border);
 	}
 
 	.action-btn-secondary:hover, .action-btn-accent:hover {
@@ -504,27 +504,27 @@
 	}
 
 	.nav-btn.next {
-		background: white;
-		color: black;
+		background: var(--text-primary);
+		color: var(--bg-primary);
 	}
 
 	.nav-btn.prev {
-		background: rgba(255, 255, 255, 0.1);
-		color: white;
-		border: 1px solid rgba(255, 255, 255, 0.15);
+		background: var(--glass-bg);
+		color: var(--text-primary);
+		border: 1px solid var(--glass-border);
 	}
 
 	.skip-all-btn {
-		background: #27ae60;
+		background: var(--status-success);
 		color: white;
-		border: 1px solid rgba(255, 255, 255, 0.2);
+		border: 1px solid var(--glass-border);
 		padding: 1.1rem;
 		border-radius: 18px;
 		font-size: 1.1rem;
 		font-weight: 700;
 		cursor: pointer;
 		transition: all 0.2s;
-		box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+		box-shadow: 0 4px 15px var(--status-success-bg);
 		width: 100%;
 		display: flex;
 		align-items: center;
@@ -532,10 +532,11 @@
 	}
 
 	.skip-all-btn:hover {
-		background: #2ecc71;
+		background: var(--status-success);
+		filter: brightness(1.1);
 		transform: translateY(-2px);
-		box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
-		border-color: rgba(255, 255, 255, 0.3);
+		box-shadow: 0 6px 20px var(--status-success-bg);
+		border-color: var(--glass-border);
 	}
 
 	.skip-all-btn:active {
@@ -555,7 +556,7 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		background: rgba(255, 255, 255, 0.1);
+		background: var(--glass-bg);
 		padding: 4px;
 		border-radius: 6px;
 		margin: 0 4px;
@@ -580,7 +581,7 @@
 	h1 {
 		font-size: 2.2rem;
 		margin: 0;
-		color: white;
+		color: var(--text-primary);
 		font-weight: 700;
 		line-height: 1.1;
 		text-align: center;
@@ -616,8 +617,8 @@
 	}
 
 	.flag-btn {
-		background: rgba(255, 255, 255, 0.05);
-		border: 2px solid rgba(255, 255, 255, 0.1);
+		background: var(--glass-bg);
+		border: 2px solid var(--glass-border);
 		border-radius: 20px;
 		padding: 1.5rem 1rem;
 		cursor: pointer;
@@ -626,11 +627,11 @@
 		flex-direction: column;
 		align-items: center;
 		gap: 0.8rem;
-		color: white;
+		color: var(--text-primary);
 	}
 
 	.flag-btn:hover:not(:disabled) {
-		background: rgba(255, 255, 255, 0.15);
+		background: var(--glass-border);
 		transform: translateY(-5px);
 		border-color: var(--accent);
 	}
@@ -646,7 +647,7 @@
 
 	.flag-btn.selected-step1 {
 		opacity: 0.4 !important;
-		border-color: rgba(255, 255, 255, 0.1);
+		border-color: var(--glass-border);
 		background: transparent;
 		cursor: default;
 		transform: none !important;

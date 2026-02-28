@@ -66,7 +66,7 @@
 		color: var(--text-primary);
 		padding: 12px 16px;
 		border-radius: 12px;
-		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+		box-shadow: var(--shadow-md);
 		display: flex;
 		align-items: center;
 		gap: 12px;
@@ -74,6 +74,7 @@
 		max-width: 90vw;
 		border-left: 4px solid transparent;
 		font-size: 0.9rem;
+		backdrop-filter: blur(8px);
 	}
 
 	.toast-content {
@@ -84,8 +85,8 @@
 	}
 
 	.copy-logs-btn {
-		background: rgba(255, 255, 255, 0.1);
-		border: 1px solid rgba(255, 255, 255, 0.2);
+		background: var(--bg-hover);
+		border: 1px solid var(--glass-border);
 		color: var(--text-primary);
 		padding: 4px 8px;
 		border-radius: 6px;
@@ -100,7 +101,7 @@
 	}
 
 	.copy-logs-btn:hover {
-		background: rgba(255, 255, 255, 0.2);
+		background: var(--bg-active);
 	}
 
 	.toast.info {
