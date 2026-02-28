@@ -6,7 +6,7 @@
 	import { versionStore } from "$lib/stores/versionStore.svelte";
 	import { hardReset } from "$lib/services/resetService";
 	import { pwaStore } from "$lib/stores/pwaStore.svelte";
-	import { Download } from "lucide-svelte";
+	import { Download, Instagram, Facebook, Linkedin } from "lucide-svelte";
 	import FeedbackModal from "./FeedbackModal.svelte";
 	import InstallGuide from "../pwa/InstallGuide.svelte";
 	import BaseModal from "../ui/BaseModal.svelte";
@@ -27,6 +27,41 @@
 <BaseModal {onclose} testid="about-modal">
 	<div class="content" data-testid="about-modal-content">
 		<p class="description" data-testid="about-description">{$_("about.description")}</p>
+
+		<div class="social-links" data-testid="about-social-links">
+			<a
+				href="https://www.instagram.com/slovko.learn/"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="social-icon"
+				title="Instagram"
+				data-testid="about-social-instagram"
+			>
+				<Instagram size={22} />
+			</a>
+			<a
+				href="https://www.facebook.com/slovko.learn"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="social-icon"
+				title="Facebook"
+				data-testid="about-social-facebook"
+			>
+				<Facebook size={22} />
+			</a>
+			<a
+				href="https://www.linkedin.com/company/slovko/"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="social-icon"
+				title="LinkedIn"
+				data-testid="about-social-linkedin"
+			>
+				<Linkedin size={22} />
+			</a>
+		</div>
+
+		<hr class="separator" />
 
 		<div class="links" data-testid="about-links-container">
 			{#if pwaStore.canInstall}
@@ -128,10 +163,53 @@
 		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 	}
 
+	.social-links {
+		display: flex;
+		justify-content: center;
+		gap: 1.5rem;
+		padding: 0.5rem 0;
+	}
+
+	.social-icon {
+		color: var(--text-primary);
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		opacity: 0.85;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.75rem;
+		border-radius: 16px;
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(4px);
+	}
+
+	.social-icon:hover {
+		opacity: 1;
+		transform: translateY(-3px);
+		color: white;
+		background: var(--accent);
+		border-color: var(--accent);
+		box-shadow: 0 4px 15px var(--accent-shadow, rgba(0, 0, 0, 0.3));
+	}
+
+	.separator {
+		border: none;
+		height: 1px;
+		background: linear-gradient(
+			90deg,
+			transparent,
+			var(--border),
+			transparent
+		);
+		margin: 0.5rem 0;
+		opacity: 0.5;
+	}
+
 	.links {
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
+		gap: 0.85rem;
 		align-items: center;
 	}
 

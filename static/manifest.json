@@ -1,7 +1,7 @@
 {
   "name": "Slovko",
   "short_name": "Slovko",
-  "description": "Learn languages by matching words without ads",
+  "description": "Easy and fun language learning by matching word pairs",
   "start_url": "/Slovko/",
   "scope": "/Slovko/",
   "display": "standalone",
