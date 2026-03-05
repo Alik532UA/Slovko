@@ -460,7 +460,7 @@
 	}
 
 	.action-btn-secondary:hover, .action-btn-accent:hover {
-		transform: translateY(-2px);
+		transform: scale(1.02);
 		filter: brightness(1.1);
 	}
 
@@ -534,17 +534,17 @@
 	.skip-all-btn:hover {
 		background: var(--status-success);
 		filter: brightness(1.1);
-		transform: translateY(-2px);
+		transform: scale(1.02);
 		box-shadow: 0 6px 20px var(--status-success-bg);
 		border-color: var(--glass-border);
 	}
 
 	.skip-all-btn:active {
-		transform: translateY(0);
+		transform: scale(0.98);
 	}
 
-	.nav-btn:hover { transform: translateY(-2px); }
-	.nav-btn:active { transform: translateY(0); }
+	.nav-btn:hover { transform: scale(1.02); }
+	.nav-btn:active { transform: scale(0.98); }
 
 	@media (max-width: 360px) {
 		.nav-btn {
@@ -632,8 +632,12 @@
 
 	.flag-btn:hover:not(:disabled) {
 		background: var(--glass-border);
-		transform: translateY(-5px);
+		transform: scale(1.05);
 		border-color: var(--accent);
+	}
+
+	.flag-btn:active:not(:disabled) {
+		transform: scale(0.95);
 	}
 
 	.flag-btn:disabled:not(.selected-step1) {

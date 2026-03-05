@@ -20,6 +20,7 @@
 		totalCorrect: number;
 		streak: number;
 		daysInApp: number;
+		activeDaysCount?: number;
 		accuracy: number;
 		bestStreak: number;
 		bestCorrectStreak: number;
@@ -32,6 +33,7 @@
 		totalCorrect,
 		streak,
 		daysInApp,
+		activeDaysCount = 0,
 		accuracy,
 		bestStreak,
 		bestCorrectStreak,
@@ -39,6 +41,8 @@
 		dailyAverage,
 		levelStats,
 	}: Props = $props();
+
+	const displayDays = $derived(activeDaysCount || daysInApp);
 
 		let showMore = $state(false);
 		let selectedLevel = $state("all");
@@ -219,13 +223,13 @@
 					type="button"
 					class="stat-card"
 					data-testid="stat-card-days-total"
-					onclick={() => playLabel("days")}
-					aria-label={$_("profile.stats.days")}
+					onclick={() => playLabel("activeDays")}
+					aria-label={$_("profile.stats.activeDays")}
 				>
 					<div class="stat-icon-box" aria-hidden="true"><Calendar size={20} /></div>
 					<div class="stat-content">
-						<span class="value">{daysInApp}</span>
-						<span class="label">{$_("profile.stats.days")}</span>
+						<span class="value">{displayDays}</span>
+						<span class="label">{$_("profile.stats.activeDays")}</span>
 					</div>
 				</button>
 			</div>
@@ -321,13 +325,13 @@
 
 	.stat-card:hover {
 		background: rgba(255, 255, 255, 0.06);
-		transform: translateY(-2px);
+		transform: scale(1.02);
 		border-color: rgba(255, 255, 255, 0.1);
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 	}
 
 	.stat-card:active {
-		transform: translateY(0);
+		transform: scale(0.98);
 	}
 
 	.stat-card .value {
@@ -438,12 +442,12 @@
 		background: var(--accent);
 		color: white;
 		border-color: var(--accent);
-		transform: translateY(-2px);
+		transform: scale(1.02);
 		box-shadow: 0 6px 15px rgba(58, 143, 214, 0.3);
 	}
 
 	.toggle-stats-btn:active {
-		transform: translateY(0);
+		transform: scale(0.98);
 	}
 
 	.btn-shine {

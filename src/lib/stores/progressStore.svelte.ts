@@ -392,6 +392,13 @@ function createProgressStore() {
 				const lvlStreak = currentLevelStats.currentCorrectStreak + 1;
 				const lvlBest = Math.max(currentLevelStats.bestCorrectStreak, lvlStreak);
 
+				// Підрахунок загальної кількості активних днів (activeDaysCount)
+				// Ми інкрементуємо лише один раз на добу при першій правильній відповіді
+				let newActiveDaysCount = progress.activeDaysCount || 0;
+				if (progress.lastCorrectDate !== today) {      
+					newActiveDaysCount++;
+				}
+
 				const newLevelStats = {
 					...progress.levelStats,
 					[levelId]: {
@@ -411,16 +418,18 @@ function createProgressStore() {
 					bestStreak: newBestDaysStreak,
 					currentCorrectStreak: newCurrentCorrectStreak,
 					bestCorrectStreak: newBestCorrectStreak,
+					activeDaysCount: newActiveDaysCount,   
 					shownGaps: updatedShownGaps,
 					lastInteractionTimestamp: now,
 					...streakUpdate,
 				};
 
 				logService.log("stats", `Progress Store updated`, {
-					totalCorrect: progress.totalCorrect,
+					totalCorrect: progress.totalCorrect,   
 					streak: progress.streak,
-					bestStreak: progress.bestStreak,
-					dailyCorrect: progress.dailyCorrect,
+					activeDaysCount: progress.activeDaysCount,
+					bestStreak: progress.bestStreak,       
+					dailyCorrect: progress.dailyCorrect,   
 					lastStreakUpdateDate: progress.lastStreakUpdateDate
 				});
 
@@ -432,13 +441,8 @@ function createProgressStore() {
 
 		/** Отримати середню кількість правильних відповідей за день */
 		getDailyAverage(): number {
-			const daysInApp = Math.max(
-				1,
-				Math.ceil(
-					(Date.now() - progress.firstSeenDate) / (1000 * 60 * 60 * 24),
-				),
-			);
-			const avg = progress.totalCorrect / daysInApp;
+			const days = Math.max(1, progress.activeDaysCount || 1);
+			const avg = progress.totalCorrect / days;
 			return Math.round(avg * 10) / 10; // Повертаємо з одним знаком після коми
 		},
 

@@ -119,6 +119,7 @@
 	const correctToday = $derived(progressStore.todayActivity.totalCorrect || 0);
 	const dailyAverage = $derived(progressStore.getDailyAverage());
 	const accuracy = $derived(progressStore.getAccuracy());
+	const activeDaysCount = $derived(progressStore.value.activeDaysCount || 0);
 	const daysInApp = $derived(
 		Math.max(
 			1,
@@ -129,6 +130,33 @@
 		),
 	);
 	const levelStats = $derived(progressStore.value.levelStats || {});
+
+	import { statisticsService } from "../../services/statisticsService.svelte";
+	import { untrack } from "svelte";
+	let isRecoveringActiveDays = $state(false);
+
+	// Авто-відновлення статистики при відкритті профілю
+	$effect(() => {
+		const uid = authStore.user?.uid;
+		const isGuest = authStore.isGuest;
+		
+		if (!isGuest && uid && !isRecoveringActiveDays) {
+			untrack(() => {
+				const progress = progressStore.value;
+				const needsRecovery =
+					!progress.isActiveDaysRecovered ||
+					(progress.activeDaysCount <= 1 && progress.totalCorrect >= 10);
+
+				if (needsRecovery) {
+					isRecoveringActiveDays = true;
+					statisticsService.recoverActiveDaysCount().finally(() => {
+						isRecoveringActiveDays = false;
+					});
+				}
+			});
+		}
+
+	});
 
 	// Avatar initial values
 	const avatarInitialIcon = $derived(() => {
@@ -414,6 +442,7 @@
 			{totalCorrect}
 			{streak}
 			{daysInApp}
+			{activeDaysCount}
 			{accuracy}
 			{bestStreak}
 			{bestCorrectStreak}

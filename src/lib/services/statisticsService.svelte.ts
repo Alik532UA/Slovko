@@ -170,6 +170,36 @@ class StatisticsServiceClass {
 	}
 
 	/**
+	 * Відновити кількість активних днів (activeDaysCount) з історії Firestore.
+	 */
+	async recoverActiveDaysCount(): Promise<number> {
+		if (!auth.currentUser) return 0;
+		const uid = auth.currentUser.uid;
+		const historyRef = collection(db, "users", uid, "history");
+		
+		logService.warn("stats", "Recovering active days count from history...");
+
+		try {
+			const snapshot = await getDocs(historyRef);
+			const count = snapshot.size;
+			
+			if (count > 0) {
+				const currentProgress = progressStore.value;
+				progressStore._internalSet({
+					...currentProgress,
+					activeDaysCount: count,
+					isActiveDaysRecovered: true
+				});
+				logService.log("stats", `Active days recovered: ${count}`);
+			}
+			return count;
+		} catch (error) {
+			logService.error("stats", "Error recovering active days:", error);
+			return 0;
+		}
+	}
+
+	/**
 	 * Логіка злиття статистики рівнів (допоміжний метод)
 	 */
 	private mergeLevelStats(local: Record<string, LevelStats>, recovered: Record<string, any>) {

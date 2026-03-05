@@ -10,16 +10,24 @@
 		Loader2,
 		Flame,
 		Lock,
+		Calendar,
 	} from "lucide-svelte";
-	import { FriendsService, LEADERBOARD_THRESHOLDS } from "$lib/firebase/FriendsService";
+	import {
+		FriendsService,
+		LEADERBOARD_THRESHOLDS,
+	} from "$lib/firebase/FriendsService";
 	import { authStore } from "$lib/firebase/authStore.svelte";
 	import { progressStore } from "$lib/stores/progressStore.svelte";
 	import UserAvatar from "../friends/UserAvatar.svelte";
 
 	let selectedLevel = $state("all");
 	let selectedMetric = $state<
-		"bestStreak" | "bestCorrectStreak" | "totalCorrect" | "accuracy"
-	>("totalCorrect");
+		| "bestStreak"
+		| "bestCorrectStreak"
+		| "totalCorrect"
+		| "accuracy"
+		| "activeDaysCount"
+	>("activeDaysCount");
 	let isLoading = $state(true);
 	let leaderboardData = $state<any[]>([]);
 
@@ -46,7 +54,7 @@
 			// System approach: shuffle users with identical scores on the client (Req 1B, 2A)
 			// We assign a temporary random weight to ensure the sort is stable but random for ties
 			leaderboardData = data
-				.map(u => ({ ...u, _shuffleWeight: Math.random() }))
+				.map((u) => ({ ...u, _shuffleWeight: Math.random() }))
 				.sort((a, b) => {
 					// Primary sort: score descending
 					if (a.score !== b.score) return b.score - a.score;
@@ -69,23 +77,35 @@
 			if (metric === "bestStreak") return p.bestStreak;
 			if (metric === "bestCorrectStreak") return p.bestCorrectStreak;
 			if (metric === "accuracy") return progressStore.getAccuracy();
+			if (metric === "activeDaysCount") return p.activeDaysCount || 0;
 		} else {
 			const stats = progressStore.getLevelStats(level);
 			if (metric === "totalCorrect") return stats.totalCorrect;
 			if (metric === "bestCorrectStreak") return stats.bestCorrectStreak;
 			if (metric === "accuracy") {
-				return stats.totalAttempts > 0 
-					? Math.round((stats.totalCorrect / stats.totalAttempts) * 100) : 0;
+				return stats.totalAttempts > 0
+					? Math.round((stats.totalCorrect / stats.totalAttempts) * 100)
+					: 0;
 			}
 		}
 		return 0;
 	}
 
 	const thresholdMap = {
-		totalCorrect: { val: LEADERBOARD_THRESHOLDS.totalCorrect, unit: "unitCorrect" },
+		totalCorrect: {
+			val: LEADERBOARD_THRESHOLDS.totalCorrect,
+			unit: "unitCorrect",
+		},
 		bestStreak: { val: LEADERBOARD_THRESHOLDS.bestStreak, unit: "unitDays" },
-		bestCorrectStreak: { val: LEADERBOARD_THRESHOLDS.bestCorrectStreak, unit: "unitCorrectStreak" },
-		accuracy: { val: LEADERBOARD_THRESHOLDS.accuracy, unit: "unitAttempts" }
+		bestCorrectStreak: {
+			val: LEADERBOARD_THRESHOLDS.bestCorrectStreak,
+			unit: "unitCorrectStreak",
+		},
+		accuracy: { val: LEADERBOARD_THRESHOLDS.accuracy, unit: "unitAttempts" },
+		activeDaysCount: {
+			val: LEADERBOARD_THRESHOLDS.activeDaysCount,
+			unit: "unitActiveDays",
+		},
 	};
 </script>
 
@@ -93,11 +113,11 @@
 	{@const config = thresholdMap[metric]}
 	<div class="limit-hint" in:fade data-testid="leaderboard-limit-hint">
 		<span>
-			{$_("leaderboard.limitHint", { 
-				values: { 
-					required: config.val, 
-					unit: $_(`leaderboard.${config.unit}`) 
-				} 
+			{$_("leaderboard.limitHint", {
+				values: {
+					required: config.val,
+					unit: $_(`leaderboard.${config.unit}`),
+				},
 			})}
 		</span>
 	</div>
@@ -128,6 +148,16 @@
 		</div>
 
 		<div class="metric-tabs" data-testid="metric-tabs">
+			<button
+				class="metric-tab"
+				class:active={selectedMetric === "activeDaysCount"}
+				onclick={() => (selectedMetric = "activeDaysCount")}
+				data-testid="metric-tab-active-days"
+				title={$_("profile.stats.activeDays")}
+			>
+				<div class="tab-icon"><Calendar size={18} /></div>
+				<span class="tab-label">{$_("profile.stats.activeDays")}</span>
+			</button>
 			<button
 				class="metric-tab"
 				class:active={selectedMetric === "bestStreak"}
@@ -174,7 +204,13 @@
 	<!-- List -->
 	<div class="leaderboard-list-wrapper">
 		{#key [selectedLevel, selectedMetric]}
-			<div in:fade={{ duration: 250, delay: 50 }} out:fade={{ duration: 150 }} class="leaderboard-list" data-testid="leaderboard-list" role="list">
+			<div
+				in:fade={{ duration: 250, delay: 50 }}
+				out:fade={{ duration: 150 }}
+				class="leaderboard-list"
+				data-testid="leaderboard-list"
+				role="list"
+			>
 				{#if isLoading}
 					<div class="loading-state">
 						<Loader2 size={32} class="spinner" />
@@ -191,35 +227,47 @@
 						   Це надійніше, ніж використовувати запечене в кеш значення isMe.
 						-->
 						{@const isMe = String(user.uid) === String(authStore.uid)}
-						
+
 						{@const realName =
-							isMe && authStore.displayName
-								? authStore.displayName
-								: user.name}
+							isMe && authStore.displayName ? authStore.displayName : user.name}
 						{@const realPhoto =
 							isMe && authStore.photoURL ? authStore.photoURL : user.photoURL}
-						
-						{@const localValue = isMe ? getLocalMetricValue(selectedMetric, selectedLevel) : 0}
-						{@const displayScore = isMe ? Math.max(user.score, localValue) : user.score}
+
+						{@const localValue = isMe
+							? getLocalMetricValue(selectedMetric, selectedLevel)
+							: 0}
+						{@const displayScore = isMe
+							? Math.max(user.score, localValue)
+							: user.score}
+						{@const optimisticMeetsThreshold =
+							isMe && localValue >= thresholdMap[selectedMetric].val
+								? true
+								: user.meetsThreshold}
+						{@const optimisticRank =
+							isMe && optimisticMeetsThreshold && !user.rank
+								? leaderboardData.filter(
+										(u) => u.meetsThreshold && u.score > displayScore,
+									).length + 1
+								: user.rank}
 
 						<div
 							class="leaderboard-item"
 							class:me={isMe}
-							class:below-threshold={user.meetsThreshold === false}
-							data-testid="leaderboard-item-{user.rank || 'none'}"
+							class:below-threshold={optimisticMeetsThreshold === false}
+							data-testid="leaderboard-item-{optimisticRank || 'none'}"
 							role="listitem"
 						>
 							<div class="col-rank">
-								{#if user.meetsThreshold === false}
+								{#if optimisticMeetsThreshold === false}
 									<span class="lock-icon"><Lock size={16} /></span>
-								{:else if user.rank === 1}
+								{:else if optimisticRank === 1}
 									<Crown size={20} color="#FFD700" fill="#FFD700" />
-								{:else if user.rank === 2}
+								{:else if optimisticRank === 2}
 									<Medal size={20} color="#C0C0C0" />
-								{:else if user.rank === 3}
+								{:else if optimisticRank === 3}
 									<Medal size={20} color="#CD7F32" />
-								{:else if user.rank}
-									<span class="rank-num">{user.rank}</span>
+								{:else if optimisticRank}
+									<span class="rank-num">{optimisticRank}</span>
 								{:else}
 									<span class="rank-num">-</span>
 								{/if}
@@ -227,14 +275,19 @@
 
 							<div class="col-user">
 								<div class="user-info-row">
-									<UserAvatar uid={user.uid} photoURL={realPhoto} displayName={realName} size={24} />
+									<UserAvatar
+										uid={user.uid}
+										photoURL={realPhoto}
+										displayName={realName}
+										size={24}
+									/>
 									<span class="username">{realName}</span>
 									{#if isMe}
 										<span class="me-badge">You</span>
 									{/if}
 								</div>
-								
-								{#if isMe && user.meetsThreshold === false}
+
+								{#if isMe && optimisticMeetsThreshold === false}
 									{@render limitHint(selectedMetric)}
 								{/if}
 							</div>
@@ -440,8 +493,12 @@
 	}
 
 	@keyframes spin {
-		from { transform: rotate(0deg); }
-		to { transform: rotate(360deg); }
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
 	}
 
 	.leaderboard-item {
@@ -455,7 +512,7 @@
 	}
 
 	.leaderboard-item:hover {
-		transform: scale(1.01) translateX(2px);
+		transform: scale(1.01);
 		background: rgba(255, 255, 255, 0.06);
 		border-color: rgba(255, 255, 255, 0.1);
 	}

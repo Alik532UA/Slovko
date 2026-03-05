@@ -65,6 +65,7 @@ export const LEADERBOARD_THRESHOLDS = {
 	bestStreak: 2,
 	bestCorrectStreak: 11, // Більше 10
 	accuracy: 100, // min totalAttempts
+	activeDaysCount: 1, // DEBUG: потім поставити 5
 };
 
 export const FriendsService = {
@@ -131,23 +132,23 @@ export const FriendsService = {
 
 			await batch.commit();
 			logService.log("sync", `Followed user: ${targetUid}`);
-			
+
 			// Remote logging for analysis
 			logService.logToRemote("friend_follow_success", {
 				targetUid,
 				targetName: targetProfile.displayName
 			});
-			
+
 			return true;
 		} catch (error: unknown) {
 			logService.error("sync", "Error following user:", error);
-			
+
 			// Remote logging for errors
 			logService.logToRemote("friend_follow_error", {
 				targetUid,
 				error: (error as Error).message || String(error)
 			});
-			
+
 			return false;
 		}
 	},
@@ -183,20 +184,20 @@ export const FriendsService = {
 
 			await batch.commit();
 			logService.log("sync", `Unfollowed user: ${targetUid}`);
-			
+
 			// Remote logging
 			logService.logToRemote("friend_unfollow_success", { targetUid });
-			
+
 			return true;
 		} catch (error: unknown) {
 			logService.error("sync", "Error unfollowing user:", error);
-			
+
 			// Remote logging
-			logService.logToRemote("friend_unfollow_error", { 
-				targetUid, 
-				error: (error as Error).message || String(error) 
+			logService.logToRemote("friend_unfollow_error", {
+				targetUid,
+				error: (error as Error).message || String(error)
 			});
-			
+
 			return false;
 		}
 	},
@@ -218,7 +219,7 @@ export const FriendsService = {
 			);
 			const snapshot = await getDocs(followingRef);
 			const results = snapshot.docs.map((doc) => doc.data() as FollowRecord);
-			
+
 			logService.log("sync", `Fetched following for ${targetUid}: ${results.length} items`, results.map(r => r.uid));
 			return results;
 		} catch (error: unknown) {
@@ -459,7 +460,7 @@ export const FriendsService = {
 	 */
 	async getUserProfiles(uids: string[]): Promise<UserProfile[]> {
 		if (!uids.length) return [];
-		
+
 		try {
 			const profilesRef = collection(db, COLLECTIONS.PROFILES);
 			// Firestore дозволяє до 30 елементів в операторі 'in'
@@ -471,7 +472,7 @@ export const FriendsService = {
 			}
 
 			const snapshots = await Promise.all(batches);
-			return snapshots.flatMap(snap => 
+			return snapshots.flatMap(snap =>
 				snap.docs.map(doc => ({ ...doc.data(), uid: doc.id }) as UserProfile)
 			);
 		} catch (error) {
@@ -594,13 +595,14 @@ export const FriendsService = {
 			| "totalCorrect"
 			| "bestStreak"
 			| "bestCorrectStreak"
-			| "accuracy" = "totalCorrect",
+			| "accuracy"
+			| "activeDaysCount" = "totalCorrect",
 		cefrLevel: string = "all",
 		limitCount: number = 20,
 	): Promise<any[]> {
 		const cacheKey = `${metric}_${cefrLevel}_${limitCount}`;
 		const now = Date.now();
-		
+
 		if (LEADERBOARD_CACHE[cacheKey] && (now - LEADERBOARD_CACHE[cacheKey].timestamp < CACHE_TTL)) {
 			logService.log("presence", "Returning cached leaderboard");
 			return LEADERBOARD_CACHE[cacheKey].data;
@@ -638,7 +640,7 @@ export const FriendsService = {
 			const snapshot = await getDocs(q);
 			let results = snapshot.docs.map((doc) => {
 				const data = doc.data() as Record<string, any>;
-				const isAnonymous = data.isAnonymous === true || 
+				const isAnonymous = data.isAnonymous === true ||
 					(data.isAnonymous === undefined && !data.searchableEmail);
 
 				// Перевірка порогу на основі ГЛОБАЛЬНИХ даних (SSoT)
@@ -656,6 +658,8 @@ export const FriendsService = {
 					meetsThreshold = globalBestCorrectStreak >= LEADERBOARD_THRESHOLDS.bestCorrectStreak;
 				} else if (metric === "accuracy") {
 					meetsThreshold = globalTotalAttempts >= LEADERBOARD_THRESHOLDS.accuracy;
+				} else if (metric === "activeDaysCount") {
+					meetsThreshold = ((data.activeDaysCount as number) || 0) >= LEADERBOARD_THRESHOLDS.activeDaysCount;
 				}
 
 				return {
@@ -689,9 +693,10 @@ export const FriendsService = {
 					else if (metric === "bestStreak") meetsThreshold = globalBestStreak >= LEADERBOARD_THRESHOLDS.bestStreak;
 					else if (metric === "bestCorrectStreak") meetsThreshold = globalBestCorrectStreak >= LEADERBOARD_THRESHOLDS.bestCorrectStreak;
 					else if (metric === "accuracy") meetsThreshold = globalTotalAttempts >= LEADERBOARD_THRESHOLDS.accuracy;
+					else if (metric === "activeDaysCount") meetsThreshold = ((data.activeDaysCount as number) || 0) >= LEADERBOARD_THRESHOLDS.activeDaysCount;
 
 					// Детекція анонімності для себе
-					const isAnonymous = data.isAnonymous === true || 
+					const isAnonymous = data.isAnonymous === true ||
 						(data.isAnonymous === undefined && !data.searchableEmail);
 
 					results.push({
@@ -722,7 +727,7 @@ export const FriendsService = {
 
 			// Відображаємо лише ТОП (ті, хто пройшов поріг)
 			const topVisible = results.filter(u => u.meetsThreshold).slice(0, limitCount);
-			
+
 			// Додаємо ранг для тих, хто пройшов ліміт
 			let currentRank = 1;
 			const finalPublicResults = topVisible.map((u, index) => {
@@ -735,7 +740,7 @@ export const FriendsService = {
 			// Якщо я не пройшов ліміт, або я пройшов, але не в ТОП-20 — додаю себе в кінець
 			const myEntry = results.find(u => u.isMe);
 			const alreadyInTop = topVisible.some(u => u.uid === currentUid && u.meetsThreshold);
-			
+
 			if (myEntry && !alreadyInTop) {
 				logService.log("score", `Adding current user to bottom. meetsThreshold: ${myEntry.meetsThreshold}`);
 				finalPublicResults.push({

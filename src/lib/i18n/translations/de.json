@@ -261,6 +261,7 @@
 			"correct": "richtige Antworten insgesamt",
 			"streak": "aktuelle Tages-Serie",
 			"days": "Tage",
+			"activeDays": "aktive Tage",
 			"accuracy": "Antwortgenauigkeit",
 			"bestStreak": "Rekord-Serie von Tagen",
 			"bestCorrectStreak": "Rekord-Serie richtiger Antworten",

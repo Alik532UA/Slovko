@@ -242,7 +242,11 @@
 		background: color-mix(in srgb, var(--bg-secondary) 100%, transparent);
 		color: var(--accent);
 		border-color: var(--accent);
-		transform: translateX(-4px);
+		transform: scale(1.02);
+	}
+
+	.menu-item:active {
+		transform: scale(0.98);
 	}
 
 	.item-icon {

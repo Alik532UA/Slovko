@@ -31,6 +31,7 @@ import {
 	type Playlist,
 	type CustomWord,
 } from "../data/schemas";
+import type { WordKey } from "../types";
 
 /** Стани синхронізації */
 export type SyncStatus = "idle" | "syncing" | "error" | "up-to-date" | "offline";
@@ -96,7 +97,7 @@ class SyncServiceClass {
 		if (typeof window !== "undefined") {
 			window.addEventListener("online", () => this.handleNetworkChange(true));
 			window.addEventListener("offline", () => this.handleNetworkChange(false));
-			
+
 			// Надійний спосіб збереження при закритті/згортанні
 			this.boundHandleVisibilityChange = () => {
 				if (document.visibilityState === "hidden" && (this.uploadTimeout || this.status === "syncing" || this.pendingUpload)) {
@@ -152,7 +153,7 @@ class SyncServiceClass {
 	private async migrateToV2(uid: string, customPlaylists: any[]) {
 		logService.log("sync", "Starting database migration to v2 (playlists subcollection)...");
 		const playlistsRef = collection(db, COLLECTIONS.USERS, uid, "playlists_v2");
-		
+
 		this.migrationInProgress = true;
 		this.migrationTotal = customPlaylists.length;
 		this.migrationCurrent = 0;
@@ -161,9 +162,9 @@ class SyncServiceClass {
 			if (customPlaylists.length === 0) {
 				const userDocRef = doc(db, COLLECTIONS.USERS, uid);
 				const batch = writeBatch(db);
-				batch.set(userDocRef, { 
+				batch.set(userDocRef, {
 					playlists: { dbVersion: 2 },
-					migrationV2At: Date.now() 
+					migrationV2At: Date.now()
 				}, { merge: true });
 				await batch.commit();
 				logService.log("sync", "Migration to v2 completed successfully (0 playlists).");
@@ -175,14 +176,14 @@ class SyncServiceClass {
 			for (let i = 0; i < customPlaylists.length; i += CHUNK_SIZE) {
 				const chunk = customPlaylists.slice(i, i + CHUNK_SIZE);
 				const batch = writeBatch(db);
-				
+
 				for (const playlist of chunk) {
 					if (playlist && playlist.id) {
 						const pRef = doc(playlistsRef, playlist.id);
 						batch.set(pRef, playlist);
 					}
 				}
-				
+
 				// Оновлюємо версію БД лише в останньому чанку
 				if (i + CHUNK_SIZE >= customPlaylists.length) {
 					const userDocRef = doc(db, COLLECTIONS.USERS, uid);
@@ -192,14 +193,14 @@ class SyncServiceClass {
 						migrationV2At: Date.now()
 					}, { merge: true });
 				}
-				
+
 				await batch.commit();
 				this.migrationCurrent = Math.min(i + CHUNK_SIZE, customPlaylists.length);
 				logService.log("sync", `Migration progress: ${this.migrationCurrent} / ${this.migrationTotal}`);
 			}
-			
+
 			logService.log("sync", "Migration to v2 completed successfully.");
-			
+
 			// Очищення старого localStorage (необов'язкове сміття)
 			if (typeof window !== "undefined") {
 				localStorage.removeItem("wordApp_playlists");
@@ -237,7 +238,7 @@ class SyncServiceClass {
 			async (snapshot) => {
 				const cloudData = snapshot.exists() ? snapshot.data() as UserCloudData : {};
 				const dbVersion = cloudData.playlists?.dbVersion || 1;
-				
+
 				if (dbVersion < 2) {
 					logService.log("sync", "Old dbVersion detected. Starting migration to v2.");
 					this.migrateToV2(uid, cloudData.playlists?.customPlaylists || []);
@@ -247,7 +248,7 @@ class SyncServiceClass {
 				// --- Логіка очищення старого масиву через 3 дні ---
 				if (dbVersion >= 2 && cloudData.playlists?.customPlaylists !== undefined) {
 					const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000;
-					
+
 					if (!cloudData.migrationV2At) {
 						// Для користувачів (як тестовий), які мігрували до появи поля migrationV2At
 						logService.log("sync", "V2 user missing migration date. Setting it now to start the 3-day countdown.");
@@ -292,7 +293,7 @@ class SyncServiceClass {
 		this.unsubscribePlaylists = onSnapshot(
 			playlistsV2Ref,
 			(snapshot) => {
-				const customPlaylists = snapshot.docs.map(doc => doc.data());
+				const customPlaylists = snapshot.docs.map(doc => doc.data() as Playlist);
 				this.latestCloudCustomPlaylists = customPlaylists;
 				this.triggerCombinedCloudUpdate();
 			},
@@ -409,7 +410,7 @@ class SyncServiceClass {
 		this.isUploading = true;
 		this.pendingUpload = false;
 		this.status = "syncing";
-		
+
 		const uid = auth.currentUser.uid;
 		const userDocRef = doc(db, COLLECTIONS.USERS, uid);
 		const profileRef = doc(db, COLLECTIONS.PROFILES, uid);
@@ -444,10 +445,10 @@ class SyncServiceClass {
 			if (!cloudData.playlists) {
 				cloudData.playlists = { dbVersion: dbVersion };
 			}
-			
+
 			// Для v2 беремо з кешу підколекції, для v1 - те що є в самому документі
-			cloudData.playlists.customPlaylists = isV2 
-				? (this.latestCloudCustomPlaylists || []) 
+			cloudData.playlists.customPlaylists = isV2
+				? (this.latestCloudCustomPlaylists || [])
 				: (cloudData.playlists.customPlaylists || []);
 
 			const localProgress = progressStore.value;
@@ -456,16 +457,16 @@ class SyncServiceClass {
 			const localPlaylists: PlaylistState = playlistStore.getSnapshotState();
 
 			// Smart Merge: Замість повної відмови від завантаження, ми об'єднуємо дані
-			const mergedProgress = this.mergeProgress(localProgress, cloudData.progress || {});
+			const mergedProgress = this.mergeProgress(localProgress, (cloudData.progress || {}) as any);
 			const mergedSettings = this.mergeSettings(localSettings, cloudData.settings || null);
-			const mergedPlaylists = this.mergePlaylists(localPlaylists, cloudData.playlists || {});
+			const mergedPlaylists = this.mergePlaylists(localPlaylists, (cloudData.playlists || {}) as any);
 
 			// Якщо хмарні дані значно відрізняються (наприклад, більше прогресу), 
 			// ми оновлюємо локальний стор, але ТІЛЬКИ тими полями, які реально новіші в хмарі
 			if ((cloudData.progress?.totalCorrect || 0) > localProgress.totalCorrect) {
 				logService.warn("sync", "Cloud has more progress. Partial sync down.");
 				progressStore._internalSet(mergedProgress);
-				
+
 				if (cloudHistory) {
 					progressStore._internalSetActivity(cloudHistory);
 				}
@@ -501,7 +502,7 @@ class SyncServiceClass {
 
 			// Зберігаємо кожен кастомний плейлист як окремий документ у підколекції
 			const mergedIds = new Set(mergedPlaylists.customPlaylists.map(p => p.id));
-			
+
 			for (const playlist of mergedPlaylists.customPlaylists) {
 				if (playlist && playlist.id) {
 					// Оптимізація записів (Dirty check)
@@ -580,7 +581,7 @@ class SyncServiceClass {
 
 	private handleCloudUpdate(cloudData: UserCloudData) {
 		if (!auth.currentUser) return;
-		
+
 		if (this.isUploading) {
 			logService.log("sync", "Upload in progress, queuing cloud update");
 			this.pendingCloudUpdate = cloudData;
@@ -593,7 +594,7 @@ class SyncServiceClass {
 			if (cloudData.settings) {
 				const localSettings = settingsStore.value;
 				const mergedSettings = this.mergeSettings(localSettings, cloudData.settings);
-				
+
 				// Якщо результат злиття відрізняється від локального, оновлюємо стор
 				// Це важливо для відновлення полів типу lastSeenFollowerAt
 				if (JSON.stringify(mergedSettings) !== JSON.stringify(localSettings)) {
@@ -611,9 +612,9 @@ class SyncServiceClass {
 					progressStore._internalSet(merged);
 				} else {
 					logService.error("sync", "Cloud progress validation failed:", result.error);
-					logService.logToRemote("sync_validation_error", { 
-						type: "progress", 
-						error: result.error.message 
+					logService.logToRemote("sync_validation_error", {
+						type: "progress",
+						error: result.error.message
 					});
 				}
 			}
@@ -621,7 +622,7 @@ class SyncServiceClass {
 			if (cloudData.playlists) {
 				const localPlaylists = playlistStore.getSnapshotState();
 				const merged = this.mergePlaylists(localPlaylists, cloudData.playlists);
-				
+
 				// Порівнюємо результат з поточним локальним станом
 				if (merged.updatedAt > (localPlaylists.updatedAt || 0)) {
 					logService.log("sync", "Cloud playlists merged into local state");
@@ -688,22 +689,22 @@ class SyncServiceClass {
 		// Обчислюємо сумарні показники з рівнів для валідації цілісності
 		const levelStats = this.mergeLevelStats(local.levelStats, cloud.levelStats || {});
 		const sumLevelCorrect = Object.values(levelStats).reduce((sum, s) => sum + s.totalCorrect, 0);
-		
+
 		// Для лічильників беремо максимум, але не менше суми по рівнях (Integrity Protection)
 		const baseTotalCorrect = Math.max(local.totalCorrect, cloud.totalCorrect || 0);
 		const restored = Math.max(local.restoredPoints || 0, cloud.restoredPoints || 0);
-		
+
 		// Total Correct = Сума по рівнях + відновлені бали
 		const validatedTotalCorrect = Math.max(baseTotalCorrect, sumLevelCorrect + restored);
 
 		// Монотонний мердж для стріків та дат
 		const validatedStreak = Math.max(local.streak || 0, cloud.streak || 0);
 		const validatedDailyCorrect = Math.max(local.dailyCorrect || 0, cloud.dailyCorrect || 0);
-		
+
 		// Вибираємо пізнішу дату
-		const validatedLastCorrectDate = (local.lastCorrectDate || "") >= (cloud.lastCorrectDate || "") 
+		const validatedLastCorrectDate = (local.lastCorrectDate || "") >= (cloud.lastCorrectDate || "")
 			? (local.lastCorrectDate || null) : (cloud.lastCorrectDate || null);
-		
+
 		const validatedLastStreakUpdateDate = (local.lastStreakUpdateDate || "") >= (cloud.lastStreakUpdateDate || "")
 			? (local.lastStreakUpdateDate || null) : (cloud.lastStreakUpdateDate || null);
 
@@ -720,6 +721,7 @@ class SyncServiceClass {
 			restorationHistory: this.mergeArrays(local.restorationHistory || [], cloud.restorationHistory || [], (i) => (i.timestamp + i.reason).toString()),
 			bestStreak: Math.max(local.bestStreak, cloud.bestStreak || 0),
 			bestCorrectStreak: Math.max(local.bestCorrectStreak, cloud.bestCorrectStreak || 0),
+			activeDaysCount: Math.max(local.activeDaysCount || 0, cloud.activeDaysCount || 0),
 			lastUpdated: Math.max(local.lastUpdated, cloud.lastUpdated || 0),
 			words: this.mergeWordProgress(local.words, cloud.words || {}),
 			levelStats: levelStats,
@@ -740,7 +742,7 @@ class SyncServiceClass {
 
 	private mergeLevelStats(local: Record<string, LevelStats>, cloud: Record<string, LevelStats>) {
 		const merged = { ...cloud };
-		
+
 		for (const key of Object.keys(merged)) {
 			if (key.includes(",") || key === "ALL") {
 				logService.log("sync", `Ignoring dirty cloud key during merge: ${key}`);
@@ -769,7 +771,7 @@ class SyncServiceClass {
 	 */
 	async restorePoints(amount: number, reason: string) {
 		if (!auth.currentUser || amount <= 0) return;
-		
+
 		const record = {
 			amount,
 			reason,
@@ -781,7 +783,7 @@ class SyncServiceClass {
 		const current = progressStore.value;
 		const newRestoredTotal = (current.restoredPoints || 0) + amount;
 		const newTotalCorrect = current.totalCorrect + amount;
-		
+
 		const newHistory = [...(current.restorationHistory || []), record].slice(-10);
 
 		progressStore._internalSet({
@@ -813,7 +815,7 @@ class SyncServiceClass {
 
 			return {
 				...local,
-				customPlaylists: this.mergeArrays(local.customPlaylists, validCloud.customPlaylists) as (WordKey | CustomWord)[],
+				customPlaylists: this.mergeArrays(local.customPlaylists, validCloud.customPlaylists) as Playlist[],
 				systemPlaylists: {
 					favorites: this.mergePlaylistObjects(local.systemPlaylists.favorites, validCloud.systemPlaylists.favorites),
 					extra: this.mergePlaylistObjects(local.systemPlaylists.extra, validCloud.systemPlaylists.extra),
@@ -845,7 +847,7 @@ class SyncServiceClass {
 
 	private prepareProfileUpdate(progress: ProgressState) {
 		const displayName = auth.currentUser?.displayName || auth.currentUser?.email?.split("@")[0] || "User";
-		
+
 		const update: Record<string, string | number | boolean | null | ReturnType<typeof serverTimestamp>> = {
 			displayName,
 			displayNameLower: displayName.toLowerCase(),
@@ -857,13 +859,14 @@ class SyncServiceClass {
 			bestCorrectStreak: progress.bestCorrectStreak,
 			accuracy: Math.round((progress.totalCorrect / (progress.totalAttempts || 1)) * 100),
 			updatedAt: serverTimestamp(),
+			activeDaysCount: progress.activeDaysCount || 0,
 		};
 
 		// Додаємо статистику по рівнях для лідерборду
 		for (const [lvl, stats] of Object.entries(progress.levelStats)) {
 			update[`level_${lvl}_totalCorrect`] = stats.totalCorrect;
 			update[`level_${lvl}_bestCorrectStreak`] = stats.bestCorrectStreak;
-			update[`level_${lvl}_accuracy`] = stats.totalAttempts > 0 
+			update[`level_${lvl}_accuracy`] = stats.totalAttempts > 0
 				? Math.round((stats.totalCorrect / stats.totalAttempts) * 100) : 0;
 		}
 

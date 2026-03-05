@@ -344,12 +344,12 @@ button {
 
 .primary-action-btn:hover:not(:disabled) {
 	background: var(--accent-hover);
-	transform: translateY(-2px);
+	transform: scale(1.02);
 	box-shadow: var(--shadow-md);
 }
 
 .primary-action-btn:active:not(:disabled) {
-	transform: translateY(0);
+	transform: scale(0.98);
 	box-shadow: var(--shadow-sm);
 }
 

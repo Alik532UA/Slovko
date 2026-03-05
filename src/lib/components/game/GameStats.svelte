@@ -380,7 +380,7 @@
 		background: rgba(58, 143, 214, 0.15);
 		color: #3a8fd6;
 		border-color: rgba(58, 143, 214, 0.4);
-		transform: translateY(-2px);
+		transform: scale(1.05);
 		box-shadow: 0 4px 12px rgba(58, 143, 214, 0.2);
 	}
 
@@ -389,8 +389,9 @@
 		border-color: rgba(255, 255, 255, 0.2);
 	}
 
-	.hint-btn:active:not(:disabled) {
-		transform: translateY(0);
+	.hint-btn:active:not(:disabled),
+	.menu-btn:active {
+		transform: scale(0.95);
 	}
 
 	.hint-btn:disabled {

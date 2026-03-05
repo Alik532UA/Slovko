@@ -292,6 +292,7 @@
 			"correct": "total correct answers",
 			"streak": "current daily streak",
 			"days": "days",
+			"activeDays": "active days",
 			"accuracy": "answers accuracy",
 			"bestStreak": "record daily streak",
 			"bestCorrectStreak": "record correct answers streak",
@@ -401,7 +402,8 @@
 		"unitDays": "days in a row",
 		"unitCorrect": "correct answers",
 		"unitAttempts": "answers",
-		"unitCorrectStreak": "correct answers in a row"
+		"unitCorrectStreak": "correct answers in a row",
+		"unitActiveDays": "active days"
 	},
 	"interaction": {
 		"match": "Columns",
