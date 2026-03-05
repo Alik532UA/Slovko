@@ -736,7 +736,8 @@ export const FriendsService = {
 			const finalPublicResults = topVisible.map((u, index) => {
 				if (index > 0) {
 					const prev = topVisible[index - 1];
-					if (u.score !== prev.score || u.totalCorrect !== prev.totalCorrect) {
+					// Ранг залежить ТІЛЬКИ від основного показника (score)
+					if (u.score !== prev.score) {
 						currentRank = index + 1;
 					}
 				}
