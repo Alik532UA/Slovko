@@ -32,11 +32,7 @@
 	let leaderboardData = $state<any[]>([]);
 
 	$effect(() => {
-		const controller = new AbortController();
 		loadLeaderboard();
-		return () => {
-			controller.abort();
-		};
 	});
 
 	async function loadLeaderboard() {
@@ -58,7 +54,10 @@
 				.sort((a, b) => {
 					// Primary sort: score descending
 					if (a.score !== b.score) return b.score - a.score;
-					// Secondary sort: random weight (only for ties)
+					// Secondary sort: totalCorrect descending (for fair ranking)
+					if (a.totalCorrect !== b.totalCorrect)
+						return (b.totalCorrect || 0) - (a.totalCorrect || 0);
+					// Tertiary sort: random weight (only for exact ties)
 					return a._shuffleWeight - b._shuffleWeight;
 				});
 		} finally {

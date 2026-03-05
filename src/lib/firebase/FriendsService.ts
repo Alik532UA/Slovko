@@ -722,8 +722,11 @@ export const FriendsService = {
 			// Поточний користувач ЗАВЖДИ бачить себе (навіть якщо не пройшов поріг)
 			results = results.filter((u) => u.isMe || u.meetsThreshold);
 
-			// Сортування результатів
-			results.sort((a, b) => b.score - a.score);
+			// Сортування результатів: основний score, а при співпадінні - кількість правильних відповідей (вторинний критерій)
+			results.sort((a, b) => {
+				if (b.score !== a.score) return b.score - a.score;
+				return (b.totalCorrect || 0) - (a.totalCorrect || 0);
+			});
 
 			// Відображаємо лише ТОП (ті, хто пройшов поріг)
 			const topVisible = results.filter(u => u.meetsThreshold).slice(0, limitCount);
@@ -731,8 +734,11 @@ export const FriendsService = {
 			// Додаємо ранг для тих, хто пройшов ліміт
 			let currentRank = 1;
 			const finalPublicResults = topVisible.map((u, index) => {
-				if (index > 0 && u.score !== topVisible[index - 1].score) {
-					currentRank = index + 1;
+				if (index > 0) {
+					const prev = topVisible[index - 1];
+					if (u.score !== prev.score || u.totalCorrect !== prev.totalCorrect) {
+						currentRank = index + 1;
+					}
 				}
 				return { ...u, rank: currentRank };
 			});

@@ -281,6 +281,8 @@ class SyncServiceClass {
 				// Auto-Healing: Якщо профіль пустий, але може бути історія (наприклад, після очищення кешу)
 				if (!snapshot.exists() || (cloudData.progress?.totalCorrect || 0) === 0) {
 					this.checkForOrphanedHistory(uid);
+				} else if (cloudData.progress && !cloudData.progress.isActiveDaysRecovered && (cloudData.progress.activeDaysCount || 0) === 0 && (cloudData.progress.totalCorrect || 0) > 0) {
+					this.checkForMissingActiveDays();
 				}
 			},
 			(error) => {
@@ -351,6 +353,30 @@ class SyncServiceClass {
 			this.uploadAll();
 		} else {
 			this.status = "offline";
+		}
+	}
+
+	/**
+	 * Перевіряє і відновлює activeDaysCount для старих акаунтів
+	 */
+	private async checkForMissingActiveDays() {
+		try {
+			logService.warn("sync", "Triggering active days recovery for legacy account...");
+			const count = await statisticsService.recoverActiveDaysCount();
+			if (count > 0) {
+				this.uploadAll();
+			} else {
+				// Якщо в історії немає нічого, але бали є, ставимо 1 щоб не зациклити
+				const currentProgress = progressStore.value;
+				progressStore._internalSet({
+					...currentProgress,
+					activeDaysCount: Math.max(1, currentProgress.activeDaysCount || 0),
+					isActiveDaysRecovered: true
+				});
+				this.uploadAll();
+			}
+		} catch (e) {
+			logService.error("sync", "Error checking missing active days:", e);
 		}
 	}
 
