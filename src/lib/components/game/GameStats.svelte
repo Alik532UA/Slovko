@@ -21,16 +21,11 @@
 	import BaseTooltip from "../ui/BaseTooltip.svelte";
 	import BaseModal from "../ui/BaseModal.svelte";
 	import { navigationState } from "../../services/navigationState.svelte";
-	import { page } from "$app/stores";
 
 	const gameController = getGameController();
 
 	let showMenu = $state(false);
 	let showSwipeWarningModal = $state(false);
-
-	// Retrieve active modal from URL
-	const activeModal = $derived($page.url.searchParams.get("modal"));
-	const initialProfileTab = $derived($page.url.searchParams.get("tab") as any);
 
 	function openProfile(
 		mode: "stats" | "profile" | "full",

@@ -12,7 +12,7 @@
 	import WordCard from "./WordCard.svelte";
 	import CardContextMenu from "./CardContextMenu.svelte";
 	import WordReportModal from "./WordReportModal.svelte";
-	import { onMount, untrack } from "svelte";
+	import { untrack } from "svelte";
 	import { fade } from "svelte/transition";
 	import { _ } from "svelte-i18n";
 	import type { ActiveCard, WordPair } from "$lib/types";
@@ -183,7 +183,6 @@
 
 		// Не підсвічуємо, якщо це та сама картка або з тієї ж колонки
 		if (foundCardId) {
-			const isSource = foundCardId === dragState.sourceCard?.id;
 			// Тут ми не маємо прямого доступу до об'єкта картки за ID швидко, 
 			// але можемо перевірити в sourceCards/targetCards
 			const targetCard = [...gameState.sourceCards, ...gameState.targetCards].find(c => c.id === foundCardId);
@@ -338,8 +337,8 @@
 										.enablePronunciationSource}
 									isDimmed={contextMenu !== null && contextMenu.cardId !== card.id}
 									onclick={() => gameController.selectCard(card)}
-									onpointerdown={(e) => handleDragStart(e, card)}
-									onlongpress={(e) => handleLongPress(e, card)}
+									onpointerdown={(e: PointerEvent) => handleDragStart(e, card)}
+									onlongpress={(e: PointerEvent) => handleLongPress(e, card)}
 								/>
 								{#if dragState.hoveredCardId === card.id || dragState.sourceCard?.id === card.id}
 									<div class="card-hover-highlight" aria-hidden="true"></div>
@@ -368,8 +367,8 @@
 										.enablePronunciationTarget}
 									isDimmed={contextMenu !== null && contextMenu.cardId !== card.id}
 									onclick={() => gameController.selectCard(card)}
-									onpointerdown={(e) => handleDragStart(e, card)}
-									onlongpress={(e) => handleLongPress(e, card)}
+									onpointerdown={(e: PointerEvent) => handleDragStart(e, card)}
+									onlongpress={(e: PointerEvent) => handleLongPress(e, card)}
 								/>
 								{#if dragState.hoveredCardId === card.id || dragState.sourceCard?.id === card.id}
 									<div class="card-hover-highlight" aria-hidden="true"></div>
