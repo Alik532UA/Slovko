@@ -1,4 +1,4 @@
-/**
+﻿/**
  * DE Transcription Rules (German)
  */
 

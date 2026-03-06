@@ -1,7 +1,7 @@
 {
 	"name": "slovko",
 	"private": true,
-	"version": "0.6.377",
+	"version": "0.7.378",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
@@ -20,7 +20,8 @@
 		"analyze:duplicates:global": "node scripts/analysis/check_global_duplicates.js",
 		"check:transcriptions": "node scripts/analysis/check_transcriptions.js",
 		"analyze:vocab": "node scripts/analysis/vocab_analysis.js",
-		"i18n:check": "node scripts/maintenance/check_translations.js"
+		"i18n:check": "node scripts/maintenance/check_translations.js",
+		"i18n:add:pl": "node scripts/maintenance/add_pl_translations.js"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^7.0.0",

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * IPA to Greek (el) mapping
  * Maps IPA sounds to Greek letters
  */

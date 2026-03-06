@@ -7,16 +7,38 @@ import { register, init, getLocaleFromNavigator, locale } from "svelte-i18n";
 import { browser } from "$app/environment";
 import type { Language } from "../types";
 
-// Реєстрація мов (динамічний імпорт для code splitting)
-register("uk", () => import("./translations/uk.json"));
-register("en", () => import("./translations/en.json"));
-register("crh", () => import("./translations/crh.json"));
-register("nl", () => import("./translations/nl.json"));
-register("de", () => import("./translations/de.json"));
-register("el", () => import("./translations/el.json"));
+// Динамічний імпорт усіх мовних файлів як raw для підтримки BOM
+const localeModules = import.meta.glob("./translations/*.json", { as: "raw" });
+
+/**
+ * Завантажувач мови, що видаляє BOM
+ */
+const loadLocale = async (lang: string) => {
+	const path = `./translations/${lang}.json`;
+	if (localeModules[path]) {
+		let raw = await localeModules[path]();
+		// Видаляємо BOM, якщо він є (код 0xFEFF)
+		if (raw.charCodeAt(0) === 0xFEFF) {
+			raw = raw.slice(1);
+		}
+		// Також про всяк випадок видаляємо BOM через regex та зайві пробіли на початку
+		const stripped = raw.replace(/^\uFEFF/, "").trim();
+		return JSON.parse(stripped);
+	}
+	throw new Error(`Locale file not found: ${path}`);
+};
+
+// Реєстрація мов
+register("uk", () => loadLocale("uk"));
+register("en", () => loadLocale("en"));
+register("crh", () => loadLocale("crh"));
+register("nl", () => loadLocale("nl"));
+register("de", () => loadLocale("de"));
+register("el", () => loadLocale("el"));
+register("pl", () => loadLocale("pl"));
 
 const DEFAULT_LOCALE: Language = "uk";
-const SUPPORTED_LOCALES: Language[] = ["uk", "en", "crh", "nl", "de", "el"];
+const SUPPORTED_LOCALES: Language[] = ["uk", "en", "crh", "nl", "de", "el", "pl"];
 const STORAGE_KEY = "wordApp_interfaceLanguage";
 
 /**

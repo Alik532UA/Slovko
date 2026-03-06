@@ -39,6 +39,7 @@
 		nl: "Jouw taal",
 		el: "Η γλώσσα σου",
 		crh: "Seniñ tiliñ",
+		pl: "Twój język",
 	};
 
 	onMount(() => {

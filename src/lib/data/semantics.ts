@@ -1,4 +1,4 @@
-export interface SemanticGroup {
+﻿export interface SemanticGroup {
 	base: string;
 	specific: string[];
 }

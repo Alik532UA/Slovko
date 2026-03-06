@@ -9,8 +9,10 @@ import { generateCrhIPA } from "./transcription/crh";
 import { generateNlIPA } from "./transcription/nl";
 import { generateDeIPA } from "./transcription/de";
 import { generateElIPA } from "./transcription/el";
+import { generatePlIPA } from "./transcription/pl";
 import { mapIpaToUk } from "./transcription/mappers/ipa-to-uk";
 import { mapIpaToNl } from "./transcription/mappers/ipa-to-nl";
+import { mapIpaToPl } from "./transcription/mappers/ipa-to-pl";
 
 /**
  * Генерує транскрипцію (легасі) або повертає undefined.
@@ -49,12 +51,14 @@ export function generateRulesIPA(
 		else if (lang === "uk") ipa = generateUkIPA(text);
 		else if (lang === "de") ipa = generateDeIPA(text);
 		else if (lang === "el") ipa = generateElIPA(text);
+		else if (lang === "pl") ipa = generatePlIPA(text);
 
 		if (!ipa) return undefined;
 
 		// Крок 2: Мапимо IPA на символи мови інтерфейсу (Народна транскрипція)
 		if (uiLang === "uk") return mapIpaToUk(ipa);
 		if (uiLang === "nl") return mapIpaToNl(ipa);
+		if (uiLang === "pl") return mapIpaToPl(ipa);
 
 		// Fallback: якщо мапера немає, повертаємо чистий IPA
 		return ipa;
@@ -65,5 +69,5 @@ export function generateRulesIPA(
 }
 
 function isLatin(lang: Language): boolean {
-	return ["en", "nl", "de", "crh"].includes(lang);
+	return ["en", "nl", "de", "crh", "pl"].includes(lang);
 }

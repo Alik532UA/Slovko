@@ -1,4 +1,6 @@
-import { z } from "zod";
+﻿import { z } from "zod";
+
+import { ALL_LANGUAGES } from "../types";
 
 // ========================================
 // БАЗОВІ СХЕМИ
@@ -227,9 +229,9 @@ export const PlaylistStateSchema = z.preprocess((val: unknown) => {
 // ========================================
 
 const AppSettingsCoreSchema = z.object({
-	interfaceLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("uk"),
-	sourceLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("en"),
-	targetLanguage: z.enum(["en", "uk", "nl", "de", "el", "crh"]).default("uk"),
+	interfaceLanguage: z.enum(ALL_LANGUAGES).default("uk"),
+	sourceLanguage: z.enum(ALL_LANGUAGES).default("en"),
+	targetLanguage: z.enum(ALL_LANGUAGES).default("uk"),
 	mode: z.enum(["levels", "topics", "phrases", "tenses", "playlists"]).default("levels"),
 	interactionMode: z.enum(["match", "swipe"]).default("match"),
 	currentLevel: z.array(z.enum(["A1", "A2", "B1", "B2", "C1", "C2", "ALL"])).default(["A1"]),
@@ -403,8 +405,8 @@ export const UrlParamsSchema = z.object({
 	forms: commaStringToArray,
 	qty: z.enum(["1", "3", "many"]).optional(),
 	playlist: z.string().optional(),
-	source: z.enum(["en", "uk", "nl", "de", "el", "crh"]).optional(),
-	target: z.enum(["en", "uk", "nl", "de", "el", "crh"]).optional(),
+	source: z.enum(ALL_LANGUAGES).optional(),
+	target: z.enum(ALL_LANGUAGES).optional(),
 });
 
 export type UrlParams = z.infer<typeof UrlParamsSchema>;

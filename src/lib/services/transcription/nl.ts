@@ -1,4 +1,4 @@
-/**
+﻿/**
  * NL Transcription Rules (Dutch)
  */
 

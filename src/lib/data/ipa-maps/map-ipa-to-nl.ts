@@ -1,4 +1,4 @@
-/**
+﻿/**
  * IPA to Dutch (Latin) Mapping
  * Converts IPA symbols to Dutch-readable Latin script
  */

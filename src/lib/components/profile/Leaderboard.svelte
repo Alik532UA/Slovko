@@ -228,7 +228,7 @@
 						{@const isMe = String(user.uid) === String(authStore.uid)}
 
 						{@const realName =
-							isMe && authStore.displayName ? authStore.displayName : user.name}
+							isMe && authStore.displayName ? authStore.displayName : user.displayName}
 						{@const realPhoto =
 							isMe && authStore.photoURL ? authStore.photoURL : user.photoURL}
 

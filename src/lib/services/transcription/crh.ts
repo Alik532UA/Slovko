@@ -1,4 +1,4 @@
-/**
+﻿/**
  * CRH Transcription Rules (Crimean Tatar)
  */
 

@@ -12,6 +12,32 @@ const TRANS_DIR = path.join(ROOT_DIR, 'src/lib/data/translations');
  * Звіряє Master List кожного рівня з усіма тематичними модулями перекладів.
  */
 
+/**
+ * Читає JSON файл, видаляючи BOM
+ */
+function readJson(filePath) {
+    const rawBuffer = fs.readFileSync(filePath);
+    let content;
+    
+    // Check for UTF-8 BOM manually via buffer
+    if (rawBuffer[0] === 0xEF && rawBuffer[1] === 0xBB && rawBuffer[2] === 0xBF) {
+        content = rawBuffer.slice(3).toString('utf8');
+    } else {
+        content = rawBuffer.toString('utf8');
+    }
+    
+    // Final safety strip and trim
+    content = content.replace(/^\uFEFF/, '').trim();
+    
+    try {
+        return JSON.parse(content);
+    } catch (e) {
+        console.error(`Failed to parse JSON: ${filePath}`);
+        console.error(`First 10 char codes: ${Array.from(content.slice(0, 10)).map(c => c.charCodeAt(0)).join(', ')}`);
+        throw e;
+    }
+}
+
 function audit() {
     console.log('🔍 Запуск повного аудиту перекладів (Модульна структура)...\n');
     
@@ -24,7 +50,7 @@ function audit() {
         const masterPath = path.join(MASTER_DIR, `${level}.json`);
         if (!fs.existsSync(masterPath)) continue;
 
-        const masterData = JSON.parse(fs.readFileSync(masterPath, 'utf8'));
+        const masterData = readJson(masterPath);
         const masterKeys = masterData.words;
 
         console.log(`--- Рівень ${level} (${masterKeys.length} слів) ---`);
@@ -38,7 +64,7 @@ function audit() {
             const translatedKeys = new Set();
 
             for (const file of subFiles) {
-                const content = JSON.parse(fs.readFileSync(path.join(langLevelsDir, file), 'utf8'));
+                const content = readJson(path.join(langLevelsDir, file));
                 Object.keys(content).forEach(k => translatedKeys.add(k));
             }
 

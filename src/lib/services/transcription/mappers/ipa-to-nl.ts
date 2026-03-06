@@ -1,4 +1,4 @@
-/**
+﻿/**
  * IPA to Dutch (NL) Mapper
  * Converts IPA symbols to Dutch-style latin transcription.
  */
@@ -32,6 +32,19 @@ export function mapIpaToNl(ipa: string): string {
 	t = t
 		.replace(/tʃ/g, "tsj")
 		.replace(/dʒ/g, "dzj")
+		.replace(/t͡ʂ/g, "tsj") // Polish cz -> tsj
+		.replace(/d͡z/g, "dz") // Polish dz
+		.replace(/d͡ʑ/g, "dzj") // Polish dź -> dzj
+		.replace(/d͡ʐ/g, "dzj") // Polish dż -> dzj
+		.replace(/t͡ɕ/g, "tsj") // Polish ć -> tsj
+		.replace(/t͡s/g, "ts") // Polish c
+		.replace(/ʂ/g, "sj") // Polish sz -> sj
+		.replace(/ʐ/g, "zj") // Polish rz/ż -> zj
+		.replace(/ɕ/g, "sj") // Polish ś -> sj
+		.replace(/ʑ/g, "zj") // Polish ź -> zj
+		.replace(/ɲ/g, "nj") // Polish ń -> nj
+		.replace(/ɔ̃/g, "on") // Polish ą
+		.replace(/ɛ̃/g, "en") // Polish ę
 		.replace(/ʃ/g, "sj")
 		.replace(/ʒ/g, "zj")
 		.replace(/ŋ/g, "ng")

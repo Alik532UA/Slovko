@@ -6,6 +6,31 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, '../..');
 const TRANS_DIR = path.join(ROOT_DIR, 'src/lib/data/translations/en/levels');
 
+/**
+ * Читає JSON файл, видаляючи BOM
+ */
+function readJson(filePath) {
+    const rawBuffer = fs.readFileSync(filePath);
+    let content;
+    
+    // Check for UTF-8 BOM manually via buffer
+    if (rawBuffer[0] === 0xEF && rawBuffer[1] === 0xBB && rawBuffer[2] === 0xBF) {
+        content = rawBuffer.slice(3).toString('utf8');
+    } else {
+        content = rawBuffer.toString('utf8');
+    }
+    
+    // Final safety strip and trim
+    content = content.replace(/^\uFEFF/, '').trim();
+    
+    try {
+        return JSON.parse(content);
+    } catch (e) {
+        console.error(`Failed to parse JSON: ${filePath}`);
+        throw e;
+    }
+}
+
 function analyze() {
     console.log('--- GLOBAL DUPLICATE ANALYSIS (EN) ---');
     
@@ -19,7 +44,7 @@ function analyze() {
 
     for (const file of files) {
         const filePath = path.join(TRANS_DIR, file);
-        const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        const data = readJson(filePath);
         
         Object.keys(data).forEach(key => {
             if (!keyMap.has(key)) {

@@ -8,7 +8,8 @@
 // ========================================
 
 /** Підтримувані мови */
-export type Language = "uk" | "en" | "crh" | "nl" | "de" | "el";
+export const ALL_LANGUAGES = ["uk", "en", "crh", "nl", "de", "el", "pl"] as const;
+export type Language = (typeof ALL_LANGUAGES)[number];
 
 /** Назви мов для відображення */
 export const LANGUAGE_NAMES: Record<Language, string> = {
@@ -18,6 +19,7 @@ export const LANGUAGE_NAMES: Record<Language, string> = {
 	nl: "Nederlands",
 	de: "Deutsch",
 	el: "Ελληνικά",
+	pl: "Polski",
 };
 
 /** Прапори мов (emoji) */
@@ -28,6 +30,7 @@ export const LANGUAGE_FLAGS: Record<Language, string> = {
 	nl: "🇳🇱",
 	de: "🇩🇪",
 	el: "🇬🇷",
+	pl: "🇵🇱",
 };
 
 /** Теми оформлення */

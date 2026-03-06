@@ -1,4 +1,4 @@
-/**
+﻿/**
  * UK Transcription Rules (Ukrainian)
  */
 
