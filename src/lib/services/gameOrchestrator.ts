@@ -84,7 +84,7 @@ class GameOrchestratorClass {
 			settings.mode = validated.mode;
 		}
 		if (validated.level && JSON.stringify(validated.level) !== JSON.stringify(settings.currentLevel)) {
-			settings.currentLevel = validated.level as any;
+			settings.currentLevel = validated.level as AppSettings["currentLevel"];
 		}
 		if (validated.topic && JSON.stringify(validated.topic) !== JSON.stringify(settings.currentTopic)) {
 			settings.currentTopic = validated.topic;
@@ -93,7 +93,7 @@ class GameOrchestratorClass {
 			settings.currentTenses = validated.tense;
 		}
 		if (validated.forms && JSON.stringify(validated.forms) !== JSON.stringify(settings.currentForms)) {
-			settings.currentForms = validated.forms as any;
+			settings.currentForms = validated.forms as AppSettings["currentForms"];
 		}
 		if (validated.qty && validated.qty !== settings.tenseQuantity) {
 			settings.tenseQuantity = validated.qty;
@@ -108,7 +108,7 @@ class GameOrchestratorClass {
 			settings.targetLanguage = validated.target;
 		}
 		if (validated.interaction && validated.interaction !== settings.interactionMode) {
-			settings.interactionMode = validated.interaction as any;
+			settings.interactionMode = validated.interaction as AppSettings["interactionMode"];
 		}
 	}
 }

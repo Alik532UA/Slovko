@@ -50,9 +50,10 @@ export const logService = {
 		recentLogs.push(fullMsg);
 		if (recentLogs.length > MAX_RECENT_LOGS) recentLogs.shift();
 		if (typeof window !== 'undefined') {
-			(window as any).__recentLogs = recentLogs;
+			window.__recentLogs = recentLogs;
 		}
 	},
+
 	getRecentLogs() {
 		return recentLogs.join('\n');
 	},
@@ -112,3 +113,9 @@ export const logService = {
 		}
 	}
 };
+
+declare global {
+	interface Window {
+		__recentLogs: string[];
+	}
+}
