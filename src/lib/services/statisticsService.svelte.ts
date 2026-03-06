@@ -202,20 +202,20 @@ class StatisticsServiceClass {
 	/**
 	 * Логіка злиття статистики рівнів (допоміжний метод)
 	 */
-	private mergeLevelStats(local: Record<string, LevelStats>, recovered: Record<string, any>) {
+	private mergeLevelStats(local: Record<string, LevelStats>, recovered: Record<string, LevelStats>) {
 		const merged = { ...local };
 		for (const [lvl, r] of Object.entries(recovered)) {
 			const l = local[lvl];
 			if (!l) {
-				merged[lvl] = r as LevelStats;
+				merged[lvl] = r;
 			} else {
 				// Вибираємо об'єкт з більшим прогресом (VULN_08)
-				if ((r.totalCorrect || 0) > l.totalCorrect) {
+				if (r.totalCorrect > l.totalCorrect) {
 					merged[lvl] = {
 						...l,
 						totalCorrect: r.totalCorrect,
 						totalAttempts: r.totalAttempts,
-						bestCorrectStreak: Math.max(l.bestCorrectStreak, r.bestCorrectStreak || 0)
+						bestCorrectStreak: Math.max(l.bestCorrectStreak, r.bestCorrectStreak)
 					};
 				}
 			}
