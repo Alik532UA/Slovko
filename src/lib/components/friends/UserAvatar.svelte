@@ -42,7 +42,7 @@
 		showStatus = true 
 	}: Props = $props();
 
-	const AVATAR_ICONS: Record<string, Component<{ size: number, color?: string }>> = {
+	const AVATAR_ICONS: Record<string, typeof UserIcon> = {
 		user: UserIcon,
 		cat: Cat,
 		dog: Dog,
