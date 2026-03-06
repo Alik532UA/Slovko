@@ -87,9 +87,10 @@ export class GameController {
 
 			this.gameState.setCards(source, target);
 			initialWords.forEach((w) => this.gameState.markWordAsUsed(w));
-		} catch (error: any) {
+		} catch (error) {
+			const err = error as { message?: string };
 			console.error("Failed to initialize game:", error);
-			this.gameState.setError(error?.message || "Failed to load game data");
+			this.gameState.setError(err?.message || "Failed to load game data");
 		} finally {
 			this.gameState.setLoading(false);
 		}

@@ -2,19 +2,19 @@ import {
 	loadLevel,
 	loadTopic,
 	loadTranslations,
-	loadTranscriptions,
 	loadPhrasesLevel,
 	loadAllTranslations,
 	loadAllTranscriptions,
 	loadTenseRegistry,
 } from "../data/wordService";
 import { logService } from "./logService";
-import type { AppSettings } from "../data/schemas";
+import type { AppSettings, CustomWord } from "../data/schemas";
 import type {
 	TranslationDictionary,
 	TranscriptionDictionary,
 	WordPair,
 	WordKey,
+	CEFRLevel,
 } from "../types";
 import { getSemanticGroup } from "../data/semantics";
 
@@ -27,7 +27,8 @@ export interface GameData {
 	/** Map of word keys to their source levels */
 	wordLevels: Record<WordKey, string>;
 	/** Snapshot of settings used to generate this data */
-	settings: {		mode: string;
+	settings: {
+		mode: string;
 		currentLevel: string[];
 		currentTopic: string[];
 		currentTenses: string[];
@@ -43,7 +44,7 @@ export interface PlaylistData {
 	mistakes: { pair: WordPair; correctStreak: number }[];
 	favorites: WordPair[];
 	extra: WordPair[];
-	custom: { id: string; name: string; words: (string | any)[] }[];
+	custom: { id: string; name: string; words: (string | CustomWord)[] }[];
 }
 
 /**
@@ -120,7 +121,12 @@ export class GameDataService {
 			currentPlaylist,
 		} = settings;
 
-		logService.log("data", "Loading game data", { mode, currentLevel, currentTopic, currentTenses });
+		logService.log("data", "Loading game data", {
+			mode,
+			currentLevel,
+			currentTopic,
+			currentTenses,
+		});
 
 		let sourceTranslations: TranslationDictionary = {};
 		let targetTranslations: TranslationDictionary = {};
@@ -145,7 +151,7 @@ export class GameDataService {
 
 			// 2. Load Words Pool
 			if (mode === "playlists" && currentPlaylist) {
-				let playlistWords: (string | any)[] = [];
+				let playlistWords: (string | CustomWord)[] = [];
 				if (currentPlaylist === "mistakes") {
 					playlistWords = playlists.mistakes.map((m) => m.pair.id);
 				} else if (currentPlaylist === "favorites") {
@@ -157,24 +163,31 @@ export class GameDataService {
 					if (customP) playlistWords = customP.words;
 				}
 
-				logService.log("data", `Extracting words from playlist "${currentPlaylist}":`, playlistWords);
+				logService.log(
+					"data",
+					`Extracting words from playlist "${currentPlaylist}":`,
+					playlistWords,
+				);
 
 				playlistWords.forEach((w) => {
 					if (typeof w === "string") {
 						const hasSource = !!sourceTranslations[w];
 						const hasTarget = !!targetTranslations[w];
-						
+
 						if (hasSource || hasTarget) {
 							words.push(w);
 							wordLevels[w] = currentPlaylist; // Tag as playlist ID
 						} else {
-							logService.warn("data", `Word "${w}" from playlist not found in any dictionary. Filtering out.`);
+							logService.warn(
+								"data",
+								`Word "${w}" from playlist not found in any dictionary. Filtering out.`,
+							);
 						}
 					} else if (w && typeof w === "object") {
 						const id = w.id || `custom-${Date.now()}`;
 						// Map neutral left/right to game dictionaries
-						sourceTranslations[id] = w.left || w.original || "";
-						targetTranslations[id] = w.right || w.translation || "";
+						sourceTranslations[id] = w.left || "";
+						targetTranslations[id] = w.right || "";
 						if (w.transcription) sourceTranscriptions[id] = w.transcription;
 						words.push(id);
 						wordLevels[id] = currentPlaylist;
@@ -188,19 +201,28 @@ export class GameDataService {
 						await Promise.all(
 							ids.map(async (levelId) => {
 								if (levelId === "ALL") {
-									const allLevels = ["A1", "A2", "B1", "B2", "C1", "C2"];
-									await Promise.all(allLevels.map(async (l) => {
-										const lvl = await loadLevel(l as any);
-										lvl.words.forEach(w => {
-											if (!wordLevels[w]) {
-												wordLevels[w] = l;
-												words.push(w);
-											}
-										});
-									}));
+									const allLevels: CEFRLevel[] = [
+										"A1",
+										"A2",
+										"B1",
+										"B2",
+										"C1",
+										"C2",
+									];
+									await Promise.all(
+										allLevels.map(async (l) => {
+											const lvl = await loadLevel(l);
+											lvl.words.forEach((w) => {
+												if (!wordLevels[w]) {
+													wordLevels[w] = l;
+													words.push(w);
+												}
+											});
+										}),
+									);
 								} else {
-									const lvl = await loadLevel(levelId as any);
-									lvl.words.forEach(w => {
+									const lvl = await loadLevel(levelId as CEFRLevel);
+									lvl.words.forEach((w) => {
 										if (!wordLevels[w]) {
 											wordLevels[w] = levelId;
 											words.push(w);
@@ -210,32 +232,38 @@ export class GameDataService {
 							}),
 						);
 					} else if (mode === "topics") {
-						await Promise.all(ids.map(async (id) => {
-							const topic = await loadTopic(id);
-							topic.words.forEach(w => {
-								if (!wordLevels[w]) {
-									wordLevels[w] = id;
-									words.push(w);
-								}
-							});
-						}));
+						await Promise.all(
+							ids.map(async (id) => {
+								const topic = await loadTopic(id);
+								topic.words.forEach((w) => {
+									if (!wordLevels[w]) {
+										wordLevels[w] = id;
+										words.push(w);
+									}
+								});
+							}),
+						);
 					} else if (mode === "phrases") {
-						await Promise.all(ids.map(async (id) => {
-							const phraseLevel = await loadPhrasesLevel(id as any);
-							phraseLevel.words.forEach(w => {
-								if (!wordLevels[w]) {
-									wordLevels[w] = id;
-									words.push(w);
-								}
-							});
-						}));
+						await Promise.all(
+							ids.map(async (id) => {
+								const phraseLevel = await loadPhrasesLevel(id as CEFRLevel);
+								phraseLevel.words.forEach((w) => {
+									if (!wordLevels[w]) {
+										wordLevels[w] = id;
+										words.push(w);
+									}
+								});
+							}),
+						);
 					}
 				}
 			}
 
 			if (mode === "tenses") {
 				const registry = await loadTenseRegistry();
-				const phraseIds = registry.packs[tenseQuantity as keyof typeof registry.packs] || registry.packs["3"];
+				const phraseIds =
+					registry.packs[tenseQuantity as keyof typeof registry.packs] ||
+					registry.packs["3"];
 
 				// Завантажуємо матриці для кожної фрази паралельно
 				const translationResults = await Promise.all(
@@ -273,12 +301,15 @@ export class GameDataService {
 			for (const word of words) {
 				if (!wordLevels[word]) {
 					// Find the root word that might have the level
-					const root = Object.keys(wordLevels).find(k => word.startsWith(k));
+					const root = Object.keys(wordLevels).find((k) => word.startsWith(k));
 					if (root) wordLevels[word] = wordLevels[root];
 				}
 			}
-			
-			logService.log("data", `Game data prepared with ${words.length} words total.`);
+
+			logService.log(
+				"data",
+				`Game data prepared with ${words.length} words total.`,
+			);
 		} catch (e) {
 			logService.error("data", `Failed to load game data for ${mode}`, e);
 			throw e;
