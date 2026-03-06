@@ -6,10 +6,8 @@
 	import {
 		Hand,
 		Check,
-		CheckCircle,
 		TrendingUp,
 		Trophy,
-		Flag,
 	} from "lucide-svelte";
 	import { dev } from "$app/environment";
 	import { onMount } from "svelte";

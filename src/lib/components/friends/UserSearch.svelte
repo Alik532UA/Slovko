@@ -4,8 +4,7 @@
 		Search,
 		Loader,
 		Clipboard,
-		Radio,
-		UserPlus
+		Radio
 	} from "lucide-svelte";
 	import {
 		FriendsService,

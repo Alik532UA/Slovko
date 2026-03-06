@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { hardReset } from "$lib/services/resetService";
-	import { authStore } from "$lib/firebase/authStore.svelte";
-	import { FriendsService } from "$lib/firebase/FriendsService";
 	import { logService } from "$lib/services/logService";
 	import { Copy } from "lucide-svelte";
 	import { dev } from "$app/environment";

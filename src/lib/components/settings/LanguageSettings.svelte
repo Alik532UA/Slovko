@@ -4,17 +4,15 @@
 	 * Красиве вікно з прапорами
 	 */
 	import { _ } from "svelte-i18n";
-	import { goto } from "$app/navigation";
-	import { Speech, Captions, Volume2 } from "lucide-svelte";
+	import { Speech, Captions } from "lucide-svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { logService } from "$lib/services/logService";
 	import VoiceSelectionModal from "./VoiceSelectionModal.svelte";
 	import { setInterfaceLanguage, LANGUAGES } from "$lib/i18n/init";
 	import { LANGUAGE_NAMES, type Language } from "$lib/types";
 	import { base } from "$app/paths";
-	import { onMount, onDestroy, tick } from "svelte";
+	import { onDestroy } from "svelte";
 	import { fade } from "svelte/transition";
-	import { dev } from "$app/environment";
 
 	interface Props {
 		onclose: () => void;
@@ -75,7 +73,7 @@
 		showVoiceSelection = true;
 	}
 
-	function handlePointerUp(e: PointerEvent) {
+	function handlePointerUp() {
 		logService.log("settings", "PointerUp", {
 			isLongPress,
 			showVoiceSelection,

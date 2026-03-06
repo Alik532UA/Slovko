@@ -29,8 +29,8 @@
 	// Watch for tab change or refresh trigger
 	$effect(() => {
 		// We want to react to tab change OR refresh trigger
-		const tab = activeTab;
-		const refresh = shouldRefresh;
+		activeTab;
+		shouldRefresh;
 		
 		untrack(() => {
 			loadList();

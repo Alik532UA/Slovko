@@ -10,7 +10,6 @@
 	} from "lucide-svelte";
 	import { logService } from "../../services/logService";
 	import { authStore } from "../../firebase/authStore.svelte";
-	import { friendsStore } from "../../stores/friendsStore.svelte";
 	import { AuthService } from "../../firebase/AuthService";
 	import { progressStore } from "../../stores/progressStore.svelte";
 	import { page } from "$app/stores";

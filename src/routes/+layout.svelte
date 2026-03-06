@@ -118,7 +118,7 @@
 						}
 					};
 					window.speechSynthesis.speak(u);
-				} catch (_e) {
+				} catch {
 					/* ignore */
 				}
 			};
@@ -139,7 +139,7 @@
 						source.start(0);
 						ctx.resume();
 					}
-				} catch (_e) {
+				} catch {
 					/* AudioContext not available */
 				}
 				audioCtxUnlocked = true;

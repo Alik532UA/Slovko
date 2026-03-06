@@ -20,6 +20,7 @@
 	import { logService } from "$lib/services/logService";
 	import { base } from "$app/paths";
 	import AvatarInteractionMenu from "./AvatarInteractionMenu.svelte";
+	import type { Component } from "svelte";
 
 	interface Props {
 		uid: string | null;
@@ -41,7 +42,7 @@
 		showStatus = true 
 	}: Props = $props();
 
-	const AVATAR_ICONS: Record<string, any> = {
+	const AVATAR_ICONS: Record<string, Component<{ size: number, color?: string }>> = {
 		user: UserIcon,
 		cat: Cat,
 		dog: Dog,

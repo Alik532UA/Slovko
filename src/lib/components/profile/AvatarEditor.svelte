@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
-	import { User, Check, X, Ban } from "lucide-svelte";
+	import { User, Check, X } from "lucide-svelte";
 	import {
 		Cat,
 		Dog,

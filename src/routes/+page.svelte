@@ -18,7 +18,6 @@
 
 	import { untrack } from "svelte";
 	import { UrlSyncService } from "$lib/services/urlSyncService";
-	import { logService } from "$lib/services/logService";
 
 	let { data }: { data: PageData } = $props();
 

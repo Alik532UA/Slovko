@@ -14,17 +14,8 @@
 	onMount(() => {
 		// Capture logs immediately when error page mounts
 		try {
-			// Using type assertion as logService might be typed differently in various contexts
-			// Assuming logService has getLogs or logs array
-			const entries = (logService as any).getLogs ? (logService as any).getLogs() : 
-						   (logService as any).logs ? (logService as any).logs : [];
-			
-			if (Array.isArray(entries)) {
-				logs = entries.map((l: any) => 
-					`[${l.timestamp ? new Date(l.timestamp).toISOString() : ''}] [${l.category}] ${l.message} ${l.data ? JSON.stringify(l.data) : ''}`
-				).join('\n');
-			}
-		} catch (e) {
+			logs = logService.getRecentLogs();
+		} catch {
 			logs = "Failed to retrieve logs.";
 		}
 	});
