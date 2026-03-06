@@ -3,21 +3,12 @@ import type {
 	ActiveCard,
 	CardStatus,
 	WordPair,
-	GameMode,
 } from "../types";
 import { shuffle } from "../services/gameCardFactory";
 import { getTranslation } from "../data/wordService";
 import { logService } from "../services/logService";
 import type { AppSettings } from "../data/schemas";
 import type { GameData } from "../services/gameDataService";
-
-const MODE_CONFIG: Record<GameMode, { pairsPerPage: number }> = {
-	levels: { pairsPerPage: 6 },
-	topics: { pairsPerPage: 6 },
-	phrases: { pairsPerPage: 6 },
-	tenses: { pairsPerPage: 6 },
-	playlists: { pairsPerPage: 6 },
-};
 
 /**
  * Game State Store — Чисте сховище стану гри.
@@ -48,7 +39,17 @@ function createGameState() {
 		targetTranscriptions: {},
 		wordLevels: {},
 		words: [],
-		settings: {} as any, // Initialized when data is loaded
+		settings: {
+			mode: "levels",
+			currentLevel: ["A1"],
+			currentTopic: [],
+			currentTenses: [],
+			currentForms: [],
+			tenseQuantity: "3",
+			currentPlaylist: null,
+			sourceLanguage: "en",
+			targetLanguage: "uk",
+		},
 	});
 
 	// Похідний стан (Derived)

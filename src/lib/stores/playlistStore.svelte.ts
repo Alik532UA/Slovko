@@ -320,13 +320,23 @@ function createPlaylistStore() {
 		/**
 		 * Імпортувати плейліст з об'єкта або рядка
 		 */
-		importFromData(input: any): Playlist | null {
+		importFromData(input: unknown): Playlist | null {
 			try {
-				let data: any;
+				interface ImportedData {
+					app?: string;
+					name?: string;
+					description?: string;
+					color?: string;
+					icon?: string;
+					words?: (string | CustomWord)[];
+					_legacy?: boolean;
+				}
+
+				let data: ImportedData;
 				if (typeof input === "string") {
 					const trimmed = input.trim();
 					if (trimmed.startsWith("{")) {
-						data = JSON.parse(trimmed);
+						data = JSON.parse(trimmed) as ImportedData;
 						// Сувора перевірка JSON
 						if (data.app !== "Slovko") return null;
 					} else {
@@ -340,7 +350,7 @@ function createPlaylistStore() {
 						let desc = "";
 						let color = "#3a8fd6";
 						let icon = "Bookmark";
-						let words: any[] = [];
+						let words: (string | CustomWord)[] = [];
 						
 						// Якщо немає роздільника, вважаємо що все це слова
 						let parsingWords = !trimmed.includes("---");
@@ -373,7 +383,7 @@ function createPlaylistStore() {
 						data = { name, description: desc, color, icon, words };
 					}
 				} else {
-					data = input;
+					data = input as ImportedData;
 					// Перевірка об'єкта, якщо він прийшов не як рядок
 					if (data.app !== "Slovko" && !data._legacy) return null;
 				}
