@@ -7,7 +7,7 @@
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { goto } from "$app/navigation";
 	import { _ } from "svelte-i18n";
-	import { ALL_LEVELS, ALL_TOPICS, ALL_TENSES } from "$lib/types";
+	import { ALL_LEVELS, ALL_TOPICS, ALL_TENSES, type CEFRLevel } from "$lib/types";
 	import { playlistStore } from "$lib/stores/playlistStore.svelte";
 	import BaseTooltip from "../ui/BaseTooltip.svelte";
 	import { navigationState } from "$lib/services/navigationState.svelte";
@@ -91,7 +91,7 @@
 			(mode === "levels" || mode === "phrases") &&
 			currentLevel.length === 1
 		) {
-			const idx = ALL_LEVELS.indexOf(currentLevel[0] as any);
+			const idx = ALL_LEVELS.indexOf(currentLevel[0] as CEFRLevel);
 			if (idx < ALL_LEVELS.length - 1) {
 				const next = ALL_LEVELS[idx + 1];
 				goto(`?mode=${mode}&level=${next}`);
@@ -119,7 +119,7 @@
 			(mode === "levels" || mode === "phrases") &&
 			currentLevel.length === 1
 		) {
-			const idx = ALL_LEVELS.indexOf(currentLevel[0] as any);
+			const idx = ALL_LEVELS.indexOf(currentLevel[0] as CEFRLevel);
 			if (idx > 0) {
 				const prev = ALL_LEVELS[idx - 1];
 				goto(`?mode=${mode}&level=${prev}`);

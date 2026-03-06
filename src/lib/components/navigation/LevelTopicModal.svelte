@@ -7,7 +7,7 @@
 	import { fade } from "svelte/transition";
 	import { goto } from "$app/navigation";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
-	import type { CEFRLevel, GameMode, PlaylistId } from "$lib/types";
+	import type { GameMode, PlaylistId, TenseForm } from "$lib/types";
 	import BaseModal from "../ui/BaseModal.svelte";
 	import { smoothHeight } from "$lib/actions/smoothHeight";
 	import { page } from "$app/stores";
@@ -81,7 +81,7 @@
 		}
 	}
 
-	function toggleForm(form: any) {
+	function toggleForm(form: TenseForm) {
 		if (selectedForms.includes(form)) {
 			if (selectedForms.length > 1) {
 				selectedForms = selectedForms.filter((f) => f !== form);

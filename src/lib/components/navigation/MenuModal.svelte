@@ -24,7 +24,10 @@
 	interface Props {
 		onclose: () => void;
 		onopenLevels: () => void;
-		onopenProfile: (mode: "stats" | "profile", tab?: any) => void;
+		onopenProfile: (
+			mode: "stats" | "profile" | "full",
+			tab?: "stats" | "account" | "friends" | "leaderboard",
+		) => void;
 		onopenLanguages: () => void;
 		onopenThemes: () => void;
 		onopenAbout: () => void;
