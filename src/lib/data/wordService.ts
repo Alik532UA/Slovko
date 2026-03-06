@@ -58,7 +58,9 @@ async function loadLocalSemantics(language: Language): Promise<LocalSemantics> {
 	try {
 		const path = `./translations/${language}/semantics.json`;
 		if (translationModules[path]) {
-			const module: any = await translationModules[path]();
+			const module = (await translationModules[path]()) as {
+				default?: unknown;
+			};
 			const parsed = SemanticsSchema.parse(module.default || module);
 			const data = parsed as LocalSemantics;
 			semanticsCache.set(language, data);
@@ -80,7 +82,9 @@ export async function loadLevel(levelId: CEFRLevel): Promise<WordLevel> {
 		return levelCache.get(levelId)!;
 	}
 
-	const module = await withRetry(() => import(`./words/levels/${levelId}.json`));
+	const module = (await withRetry(() =>
+		import(`./words/levels/${levelId}.json`),
+	)) as { default: unknown };
 	const parsed = LevelFileSchema.parse(module.default);
 	// Ensure id/name are present (LevelFileSchema allows them to be optional for backward compat)
 	const level: WordLevel = {
@@ -100,7 +104,9 @@ export async function loadTopic(topicId: string): Promise<WordTopic> {
 		return topicCache.get(topicId)!;
 	}
 
-	const module = await withRetry(() => import(`./words/topics/${topicId}.json`));
+	const module = (await withRetry(() =>
+		import(`./words/topics/${topicId}.json`),
+	)) as { default: unknown };
 	// On disk, topic is just string[]. In runtime, we enrich it.
 	const parsed = TopicFileSchema.parse(module.default);
 	const words = parsed.words;
@@ -144,7 +150,7 @@ export async function loadTranslations(
 			logService.log("i18n", `Levels to merge: ${levelsToLoad.join(", ")}`);
 
 			// Знаходимо всі модулі для кожного рівня
-			const allPromises: Promise<any>[] = [];
+			const allPromises: Promise<TranslationDictionary>[] = [];
 
 			for (const l of levelsToLoad) {
 				const levelPattern = `/levels/${l.toLowerCase()}_`;
@@ -159,11 +165,12 @@ export async function loadTranslations(
 
 				matchingPaths.forEach((path) => {
 					allPromises.push(
-						translationModules[path]().then((m: any) =>
-							DictionarySchema.parse(m.default || m),
-						).catch(e => {
+						translationModules[path]().then((m: unknown) => {
+							const module = m as { default?: unknown };
+							return DictionarySchema.parse(module.default || module);
+						}).catch((e: unknown) => {
 							logService.error("i18n", `Failed to load module ${path}`, e);
-							return {};
+							return {} as TranslationDictionary;
 						})
 					);
 				});
@@ -181,16 +188,17 @@ export async function loadTranslations(
 			const topic = await loadTopic(id);
 			const levels: CEFRLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
-			const allPromises: Promise<any>[] = [];
+			const allPromises: Promise<TranslationDictionary>[] = [];
 			levels.forEach((l) => {
 				const prefix = `./translations/${language}/levels/${l}_`;
 				Object.keys(translationModules)
 					.filter((p) => p.startsWith(prefix))
 					.forEach((p) => {
 						allPromises.push(
-							translationModules[p]().then((m: any) =>
-								DictionarySchema.parse(m.default || m),
-							),
+							translationModules[p]().then((m: unknown) => {
+								const module = m as { default?: unknown };
+								return DictionarySchema.parse(module.default || module);
+							}),
 						);
 					});
 			});
@@ -217,15 +225,16 @@ export async function loadTranslations(
 			// id тут - це phraseId (напр. "p1")
 			const path = `./translations/${language}/tenses/${id}.json`;
 			if (translationModules[path]) {
-				const module: any = await translationModules[path]();
-				const rawData = module.default || module;
+				const m: unknown = await translationModules[path]();
+				const module = m as { default?: unknown };
+				const rawData = (module.default || module) as Record<string, Record<string, string>>;
 				
 				// Трансформуємо матрицю фрази у плаский словник ключів
 				// t.p1.present_simple.aff -> "I go to school"
 				const dict: TranslationDictionary = {};
 				for (const [tenseId, forms] of Object.entries(rawData)) {
-					for (const [form, text] of Object.entries(forms as any)) {
-						dict[`t.${id}.${tenseId}.${form}`] = text as string;
+					for (const [form, text] of Object.entries(forms)) {
+						dict[`t.${id}.${tenseId}.${form}`] = text;
 					}
 				}
 				translationCache.set(cacheKey, dict);
@@ -235,7 +244,8 @@ export async function loadTranslations(
 		} else {
 			const path = `./translations/${language}/phrases/${id}.json`;
 			if (translationModules[path]) {
-				const module: any = await translationModules[path]();
+				const m: unknown = await translationModules[path]();
+				const module = m as { default?: unknown };
 				const data = DictionarySchema.parse(module.default || module);
 				translationCache.set(cacheKey, data);
 				return data;
@@ -265,9 +275,10 @@ export async function loadTranscriptions(
 
 			const allDicts = await Promise.all(
 				matchingPaths.map((path) =>
-					transcriptionModules[path]().then((m: any) =>
-						DictionarySchema.parse(m.default || m),
-					),
+					transcriptionModules[path]().then((m: unknown) => {
+						const module = m as { default?: unknown };
+						return DictionarySchema.parse(module.default || module);
+					}),
 				),
 			);
 			return Object.assign({}, ...allDicts);
@@ -275,16 +286,17 @@ export async function loadTranscriptions(
 			const topic = await loadTopic(id);
 			const levels = ["A1", "A2", "B1", "B2", "C1", "C2"] as const;
 
-			const allPromises: Promise<any>[] = [];
+			const allPromises: Promise<TranscriptionDictionary>[] = [];
 			levels.forEach((l) => {
 				const prefix = `./transcriptions/${language}/levels/${l}_`;
 				Object.keys(transcriptionModules)
 					.filter((p) => p.startsWith(prefix))
 					.forEach((p) => {
 						allPromises.push(
-							transcriptionModules[p]().then((m: any) =>
-								DictionarySchema.parse(m.default || m),
-							),
+							transcriptionModules[p]().then((m: unknown) => {
+								const module = m as { default?: unknown };
+								return DictionarySchema.parse(module.default || module);
+							}),
 						);
 					});
 			});
@@ -310,7 +322,9 @@ export async function loadTranscriptions(
  */
 export async function loadTenseRegistry(): Promise<{ packs: Record<string, string[]>, all_phrases: string[] }> {
 	try {
-		const module = await import("./phrases/tenses.json");
+		const module = (await import("./phrases/tenses.json")) as {
+			default: { packs: Record<string, string[]>; all_phrases: string[] };
+		};
 		return module.default;
 	} catch (e) {
 		console.error("Failed to load tense registry", e);
@@ -328,7 +342,9 @@ export async function loadPhrasesLevel(levelId: CEFRLevel): Promise<WordLevel> {
 	}
 
 	try {
-		const module = await import(`./phrases/levels/${levelId}.json`);
+		const module = (await import(`./phrases/levels/${levelId}.json`)) as {
+			default: unknown;
+		};
 		// Phrases usually follow same structure as Levels
 		const parsed = LevelFileSchema.parse(module.default);
 		const data: WordLevel = {
@@ -354,7 +370,7 @@ export async function loadAllTranslations(language: Language): Promise<Translati
 	}
 
 	const levels: CEFRLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
-	const allPromises: Promise<any>[] = [];
+	const allPromises: Promise<TranslationDictionary>[] = [];
 	const langPattern = `/${language.toLowerCase()}/`;
 
 	// 1. Levels
@@ -367,9 +383,10 @@ export async function loadAllTranslations(language: Language): Promise<Translati
 			})
 			.forEach((p) => {
 				allPromises.push(
-					translationModules[p]().then((m: any) =>
-						DictionarySchema.parse(m.default || m),
-					),
+					translationModules[p]().then((m: unknown) => {
+						const module = m as { default?: unknown };
+						return DictionarySchema.parse(module.default || module);
+					}),
 				);
 			});
 	});
@@ -384,9 +401,10 @@ export async function loadAllTranslations(language: Language): Promise<Translati
 			})
 			.forEach((p) => {
 				allPromises.push(
-					translationModules[p]().then((m: any) =>
-						DictionarySchema.parse(m.default || m),
-					),
+					translationModules[p]().then((m: unknown) => {
+						const module = m as { default?: unknown };
+						return DictionarySchema.parse(module.default || module);
+					}),
 				);
 			});
 	});
@@ -407,7 +425,7 @@ export async function loadAllTranscriptions(language: Language = "en"): Promise<
 	}
 
 	const levels: CEFRLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
-	const allPromises: Promise<any>[] = [];
+	const allPromises: Promise<TranscriptionDictionary>[] = [];
 	const langPattern = `/${language.toLowerCase()}/`;
 
 	// 1. Levels
@@ -420,9 +438,10 @@ export async function loadAllTranscriptions(language: Language = "en"): Promise<
 			})
 			.forEach((p) => {
 				allPromises.push(
-					transcriptionModules[p]().then((m: any) =>
-						DictionarySchema.parse(m.default || m),
-					),
+					transcriptionModules[p]().then((m: unknown) => {
+						const module = m as { default?: unknown };
+						return DictionarySchema.parse(module.default || module);
+					}),
 				);
 			});
 	});
@@ -437,9 +456,10 @@ export async function loadAllTranscriptions(language: Language = "en"): Promise<
 			})
 			.forEach((p) => {
 				allPromises.push(
-					transcriptionModules[p]().then((m: any) =>
-						DictionarySchema.parse(m.default || m),
-					),
+					transcriptionModules[p]().then((m: unknown) => {
+						const module = m as { default?: unknown };
+						return DictionarySchema.parse(module.default || module);
+					}),
 				);
 			});
 	});

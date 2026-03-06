@@ -2,7 +2,6 @@
 	import { _ } from "svelte-i18n";
 	import { fade } from "svelte/transition";
 	import {
-		X,
 		Target,
 		LayoutGrid,
 		Users,
@@ -187,13 +186,14 @@
 		try {
 			await authStore.loginWithGoogle();
 			loginMethod = null;
-		} catch (e: any) {
-			logService.error("auth", "Google login failed", e);
-			if (e.code === "auth/popup-closed-by-user") {
+		} catch (e) {
+			const err = e as { code?: string; message?: string };
+			logService.error("auth", "Google login failed", err);
+			if (err.code === "auth/popup-closed-by-user") {
 				errorMessage = $_("profile.errors.popupClosed");
 			} else {
 				errorMessage =
-					e.message ||
+					err.message ||
 					$_("profile.errors.loginFailed", { default: "Login error" });
 			}
 		} finally {
@@ -239,14 +239,15 @@
 		try {
 			await authStore.signInWithEmail(email, password);
 			loginMethod = null;
-		} catch (e: any) {
-			logService.warn("auth", "Sign in failed", e.code || e.message);
+		} catch (e) {
+			const err = e as { code?: string; message?: string };
+			logService.warn("auth", "Sign in failed", err.code || err.message);
 
-			const specificError = await checkProviderError(email, e.code);
+			const specificError = await checkProviderError(email, err.code || "");
 			errorMessage =
 				specificError ||
-				getAuthErrorMessage(e.code) ||
-				e.message ||
+				getAuthErrorMessage(err.code || "") ||
+				err.message ||
 				$_("profile.errors.unknownError", { default: "Error" });
 		} finally {
 			isLinking = false;
@@ -264,11 +265,12 @@
 		try {
 			await authStore.registerWithEmail(email, password);
 			loginMethod = null;
-		} catch (e: any) {
-			logService.warn("auth", "Registration failed", e.code || e.message);
+		} catch (e) {
+			const err = e as { code?: string; message?: string };
+			logService.warn("auth", "Registration failed", err.code || err.message);
 			errorMessage =
-				getAuthErrorMessage(e.code) ||
-				e.message ||
+				getAuthErrorMessage(err.code || "") ||
+				err.message ||
 				$_("profile.errors.unknownError", { default: "Error" });
 		} finally {
 			isLinking = false;
@@ -303,11 +305,12 @@
 				loginMethod = "auth";
 				resetForm();
 			}, 3000);
-		} catch (e: any) {
-			logService.error("auth", "Password reset failed", e);
+		} catch (e) {
+			const err = e as { code?: string; message?: string };
+			logService.error("auth", "Password reset failed", err);
 			errorMessage =
-				getAuthErrorMessage(e.code) ||
-				e.message ||
+				getAuthErrorMessage(err.code || "") ||
+				err.message ||
 				$_("profile.errors.unknownError", { default: "Error" });
 		} finally {
 			isLinking = false;
@@ -366,19 +369,6 @@
 			)
 		) {
 			await authStore.logout();
-		}
-	}
-
-	function handleKeydown(e: KeyboardEvent) {
-		if (e.key === "Escape") {
-			if (isEditingAvatar) {
-				isEditingAvatar = false;
-			} else if (loginMethod) {
-				loginMethod = null;
-				resetForm();
-			} else {
-				onclose();
-			}
 		}
 	}
 

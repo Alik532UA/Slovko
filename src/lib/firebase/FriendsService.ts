@@ -24,6 +24,7 @@ import {
 	type Timestamp,
 } from "firebase/firestore";
 import { db, auth } from "./config";
+import { authStore } from "./authStore.svelte";
 import { logService } from "../services/logService";
 import type { UserPrivacySettings } from "../types";
 
@@ -44,6 +45,22 @@ export interface FollowRecord {
 	followedAt: Timestamp | null;
 }
 
+/** Елемент лідерборду */
+export interface LeaderboardEntry {
+	uid: string;
+	displayName: string;
+	score: number;
+	photoURL: string | null;
+	isMe: boolean;
+	isAnonymous: boolean;
+	meetsThreshold: boolean;
+	rank: number | null;
+	totalAttempts: number;
+	totalCorrect: number;
+	bestStreak: number;
+	bestCorrectStreak: number;
+}
+
 /** Колекції Firestore */
 const COLLECTIONS = {
 	USERS: "users",
@@ -55,7 +72,7 @@ const COLLECTIONS = {
 /**
  * Сервіс для керування друзями та підписками
  */
-const LEADERBOARD_CACHE: Record<string, { data: any[], timestamp: number }> = {};
+const LEADERBOARD_CACHE: Record<string, { data: LeaderboardEntry[], timestamp: number }> = {};
 const CACHE_TTL = 5 * 60 * 1000; // 5 хвилин
 const MAX_FOLLOWING = 500;
 
@@ -599,7 +616,7 @@ export const FriendsService = {
 			| "activeDaysCount" = "totalCorrect",
 		cefrLevel: string = "all",
 		limitCount: number = 20,
-	): Promise<any[]> {
+	): Promise<LeaderboardEntry[]> {
 		const cacheKey = `${metric}_${cefrLevel}_${limitCount}`;
 		const now = Date.now();
 
@@ -610,7 +627,7 @@ export const FriendsService = {
 
 		try {
 			const profilesRef = collection(db, COLLECTIONS.PROFILES);
-			const currentUid = auth.currentUser?.uid;
+			const currentUid = authStore.user?.uid || auth.currentUser?.uid;
 
 			// Беремо 100, щоб після фільтрації за порогами залишилось достатньо для TOP-20
 			const fetchLimit = 100;
@@ -638,8 +655,8 @@ export const FriendsService = {
 			}
 
 			const snapshot = await getDocs(q);
-			let results = snapshot.docs.map((doc) => {
-				const data = doc.data() as Record<string, any>;
+			const results: LeaderboardEntry[] = snapshot.docs.map((doc) => {
+				const data = doc.data() as Record<string, unknown>;
 				const isAnonymous = data.isAnonymous === true ||
 					(data.isAnonymous === undefined && !data.searchableEmail);
 
@@ -664,12 +681,13 @@ export const FriendsService = {
 
 				return {
 					uid: doc.id,
-					name: (data.displayName as string) || "User",
+					displayName: (data.displayName as string) || "User",
 					score: (data[sortField] as number) || 0,
-					photoURL: data.photoURL as string | null,
+					photoURL: (data.photoURL as string) || null,
 					isMe: doc.id === currentUid,
 					isAnonymous,
 					meetsThreshold,
+					rank: null,
 					// Додаткові поля для діагностики та UI
 					totalAttempts: globalTotalAttempts,
 					totalCorrect: globalTotalCorrect,
@@ -682,7 +700,7 @@ export const FriendsService = {
 			if (currentUid && !results.find(u => u.uid === currentUid)) {
 				const myDoc = await getDoc(doc(db, COLLECTIONS.PROFILES, currentUid));
 				if (myDoc.exists()) {
-					const data = myDoc.data();
+					const data = myDoc.data() as Record<string, unknown>;
 					const globalTotalCorrect = (data.totalCorrect as number) || 0;
 					const globalBestStreak = (data.bestStreak as number) || 0;
 					const globalBestCorrectStreak = (data.bestCorrectStreak as number) || 0;
@@ -701,12 +719,13 @@ export const FriendsService = {
 
 					results.push({
 						uid: currentUid,
-						name: (data.displayName as string) || "User",
+						displayName: (data.displayName as string) || "User",
 						score: (data[sortField] as number) || 0,
-						photoURL: data.photoURL as string | null,
+						photoURL: (data.photoURL as string) || null,
 						isMe: true,
 						isAnonymous,
 						meetsThreshold,
+						rank: null,
 						totalAttempts: globalTotalAttempts,
 						totalCorrect: globalTotalCorrect,
 						bestStreak: globalBestStreak,
@@ -716,24 +735,24 @@ export const FriendsService = {
 			}
 
 			// Фільтрація: прибираємо анонімів (крім себе, якщо я анонім — я все одно маю бачити свій статус)
-			results = results.filter((u) => u.isMe || !u.isAnonymous);
+			let filteredResults = results.filter((u) => u.isMe || !u.isAnonymous);
 
 			// ПУБЛІЧНА Фільтрація: інші бачать тільки тих, хто пройшов поріг
 			// Поточний користувач ЗАВЖДИ бачить себе (навіть якщо не пройшов поріг)
-			results = results.filter((u) => u.isMe || u.meetsThreshold);
+			filteredResults = filteredResults.filter((u) => u.isMe || u.meetsThreshold);
 
 			// Сортування результатів: основний score, а при співпадінні - кількість правильних відповідей (вторинний критерій)
-			results.sort((a, b) => {
+			filteredResults.sort((a, b) => {
 				if (b.score !== a.score) return b.score - a.score;
 				return (b.totalCorrect || 0) - (a.totalCorrect || 0);
 			});
 
 			// Відображаємо лише ТОП (ті, хто пройшов поріг)
-			const topVisible = results.filter(u => u.meetsThreshold).slice(0, limitCount);
+			const topVisible = filteredResults.filter(u => u.meetsThreshold).slice(0, limitCount);
 
 			// Додаємо ранг для тих, хто пройшов ліміт
 			let currentRank = 1;
-			const finalPublicResults = topVisible.map((u, index) => {
+			const finalPublicResults: LeaderboardEntry[] = topVisible.map((u, index) => {
 				if (index > 0) {
 					const prev = topVisible[index - 1];
 					// Ранг залежить ТІЛЬКИ від основного показника (score)
@@ -745,14 +764,14 @@ export const FriendsService = {
 			});
 
 			// Якщо я не пройшов ліміт, або я пройшов, але не в ТОП-20 — додаю себе в кінець
-			const myEntry = results.find(u => u.isMe);
+			const myEntry = filteredResults.find(u => u.isMe);
 			const alreadyInTop = topVisible.some(u => u.uid === currentUid && u.meetsThreshold);
 
 			if (myEntry && !alreadyInTop) {
 				logService.log("score", `Adding current user to bottom. meetsThreshold: ${myEntry.meetsThreshold}`);
 				finalPublicResults.push({
 					...myEntry,
-					rank: null as any // Немає рангу для прихованих/не-топ
+					rank: null // Немає рангу для прихованих/не-топ
 				});
 			}
 

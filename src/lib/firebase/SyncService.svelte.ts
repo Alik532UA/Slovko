@@ -29,9 +29,8 @@ import {
 	type PlaylistState,
 	type LevelStats,
 	type Playlist,
-	type CustomWord,
+	type WordProgress,
 } from "../data/schemas";
-import type { WordKey } from "../types";
 
 /** Стани синхронізації */
 export type SyncStatus = "idle" | "syncing" | "error" | "up-to-date" | "offline";
@@ -74,7 +73,6 @@ class SyncServiceClass {
 
 	private latestCloudMainDoc: UserCloudData | null = null;
 	private latestCloudCustomPlaylists: Playlist[] | null = null;
-	private v2PlaylistsLoading = false;
 
 	// Реактивні стани (Runes)
 	status = $state<SyncStatus>("idle");
@@ -131,8 +129,6 @@ class SyncServiceClass {
 		// Якщо користувач вже на v2, беремо завантажену підколекцію
 		if (isV2) {
 			combinedData.playlists.customPlaylists = this.latestCloudCustomPlaylists || [];
-		} else {
-			// Якщо v1, беремо те що є в головному документі
 		}
 
 		this.handleCloudUpdate(combinedData);
@@ -146,11 +142,8 @@ class SyncServiceClass {
 	/**
 	 * migrateToV2 виконує перенесення плейлистів з масиву в головному документі
 	 * в окремі документи підколекції playlists_v2.
-	 * 
-	 * Важливо: Старий масив НЕ видаляється, а залишається як "заморожений бекап".
-	 * Це дозволяє безпечно відкотитися, якщо в новій логіці виникнуть проблеми.
 	 */
-	private async migrateToV2(uid: string, customPlaylists: any[]) {
+	private async migrateToV2(uid: string, customPlaylists: Playlist[]) {
 		logService.log("sync", "Starting database migration to v2 (playlists subcollection)...");
 		const playlistsRef = collection(db, COLLECTIONS.USERS, uid, "playlists_v2");
 
@@ -187,7 +180,6 @@ class SyncServiceClass {
 				// Оновлюємо версію БД лише в останньому чанку
 				if (i + CHUNK_SIZE >= customPlaylists.length) {
 					const userDocRef = doc(db, COLLECTIONS.USERS, uid);
-					// Оновлюємо версію БД і ставимо дату міграції, але НЕ ВИДАЛЯЄМО старий масив (заморожений бекап)
 					batch.set(userDocRef, {
 						playlists: { dbVersion: 2 },
 						migrationV2At: Date.now()
@@ -201,14 +193,13 @@ class SyncServiceClass {
 
 			logService.log("sync", "Migration to v2 completed successfully.");
 
-			// Очищення старого localStorage (необов'язкове сміття)
 			if (typeof window !== "undefined") {
 				localStorage.removeItem("wordApp_playlists");
 			}
 		} catch (err) {
 			logService.error("sync", "Migration to v2 failed:", err);
 			this.status = "error";
-			this.hasInitialData = true; // Пускаємо користувача офлайн, щоб не блокувати додаток
+			this.hasInitialData = true; 
 		} finally {
 			this.migrationInProgress = false;
 		}
@@ -250,35 +241,29 @@ class SyncServiceClass {
 					const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000;
 
 					if (!cloudData.migrationV2At) {
-						// Для користувачів (як тестовий), які мігрували до появи поля migrationV2At
-						logService.log("sync", "V2 user missing migration date. Setting it now to start the 3-day countdown.");
+						logService.log("sync", "V2 user missing migration date. Setting it now.");
 						try {
 							await updateDoc(userDocRef, { migrationV2At: Date.now() });
 						} catch (e) {
 							logService.error("sync", "Failed to set fallback migration date", e);
 						}
 					} else if (Date.now() - cloudData.migrationV2At > THREE_DAYS_MS) {
-						// Пройшло більше 3 днів — виконуємо Cleanup
-						logService.log("sync", "3 days passed since V2 migration. Cleaning up old customPlaylists and meta fields...");
+						logService.log("sync", "3 days passed since V2 migration. Cleaning up...");
 						try {
 							await updateDoc(userDocRef, {
 								"playlists.customPlaylists": deleteField(),
 								migrationV2At: deleteField()
 							});
-							logService.log("sync", "Cleanup successful! Main document is now optimized.");
+							logService.log("sync", "Cleanup successful!");
 						} catch (e) {
 							logService.error("sync", "Failed to cleanup old playlists", e);
 						}
-					} else {
-						const daysLeft = ((cloudData.migrationV2At + THREE_DAYS_MS - Date.now()) / (1000 * 60 * 60 * 24)).toFixed(1);
-						logService.log("sync", `Waiting for cleanup: ${daysLeft} days left.`);
 					}
 				}
 
 				this.latestCloudMainDoc = cloudData;
 				this.triggerCombinedCloudUpdate();
 
-				// Auto-Healing: Якщо профіль пустий, але може бути історія (наприклад, після очищення кешу)
 				if (!snapshot.exists() || (cloudData.progress?.totalCorrect || 0) === 0) {
 					this.checkForOrphanedHistory(uid);
 				} else if (cloudData.progress && !cloudData.progress.isActiveDaysRecovered && (cloudData.progress.activeDaysCount || 0) === 0 && (cloudData.progress.totalCorrect || 0) > 0) {
@@ -306,7 +291,6 @@ class SyncServiceClass {
 
 		logService.log("sync", `Sync initialized for user: ${uid}`);
 
-		// Додаємо доступ для дебагу в консолі ТІЛЬКИ в dev режимі
 		if (dev && typeof window !== "undefined") {
 			(window as any).wordApp = {
 				sync: this,
@@ -356,17 +340,13 @@ class SyncServiceClass {
 		}
 	}
 
-	/**
-	 * Перевіряє і відновлює activeDaysCount для старих акаунтів
-	 */
 	private async checkForMissingActiveDays() {
 		try {
-			logService.warn("sync", "Triggering active days recovery for legacy account...");
+			logService.warn("sync", "Triggering active days recovery...");
 			const count = await statisticsService.recoverActiveDaysCount();
 			if (count > 0) {
 				this.uploadAll();
 			} else {
-				// Якщо в історії немає нічого, але бали є, ставимо 1 щоб не зациклити
 				const currentProgress = progressStore.value;
 				progressStore._internalSet({
 					...currentProgress,
@@ -380,19 +360,14 @@ class SyncServiceClass {
 		}
 	}
 
-	/**
-	 * Перевіряє, чи є "сирота" історія у користувача з пустим профілем.
-	 * Якщо так — запускає відновлення.
-	 */
 	private async checkForOrphanedHistory(uid: string) {
 		try {
 			const historyRef = collection(db, COLLECTIONS.USERS, uid, COLLECTIONS.HISTORY);
-			// Перевіряємо наявність хоча б одного запису в історії
 			const q = query(historyRef, limit(1));
 			const snapshot = await getDocs(q);
 
 			if (!snapshot.empty) {
-				logService.warn("sync", "Found orphaned history for empty profile. Initiating recovery...");
+				logService.warn("sync", "Found orphaned history. Recovering...");
 				await statisticsService.recoverProgressFromHistory();
 				this.uploadAll();
 			}
@@ -401,22 +376,15 @@ class SyncServiceClass {
 		}
 	}
 
-	/**
-	 * Очистити локальні дані (при логауті)
-	 */
 	resetLocalData() {
 		progressStore.reset();
 		playlistStore.reset();
 	}
 
-	/**
-	 * Вивантажити локальні зміни в хмару (з дебаунсом або примусово)
-	 */
 	async uploadAll(force = false) {
 		if (!auth.currentUser || !this.isOnline) return;
 
 		this.pendingUpload = true;
-
 		if (this.uploadTimeout) clearTimeout(this.uploadTimeout);
 
 		if (force) {
@@ -443,7 +411,6 @@ class SyncServiceClass {
 		const playlistsV2Ref = collection(db, COLLECTIONS.USERS, uid, "playlists_v2");
 
 		try {
-			// Паралельно отримуємо основні дані та дані за сьогодні
 			const today = new Date().toISOString().split("T")[0];
 			const historyRef = doc(db, COLLECTIONS.USERS, uid, COLLECTIONS.HISTORY, today);
 
@@ -453,54 +420,34 @@ class SyncServiceClass {
 			]);
 
 			const cloudData = snapshot.exists() ? snapshot.data() as UserCloudData : {};
-			const cloudHistory = historySnap.exists() ? historySnap.data() : null;
+			const cloudHistory = historySnap.exists() ? historySnap.data() as ProgressState : null;
 
-			// Динамічно підтягуємо кешовані дані підколекції для мержу (без додаткового Read)
 			const dbVersion = cloudData.playlists?.dbVersion || 1;
 			const isV2 = dbVersion >= 2;
 
-			// Safety Check: Якщо ми на v2, але плейлисти ще не завантажилися — скасовуємо аплоад,
-			// щоб випадково не стерти дані через неповний мерж.
 			if (isV2 && this.latestCloudCustomPlaylists === null) {
-				logService.warn("sync", "Aborting upload: playlists_v2 not yet loaded, risking data loss.");
+				logService.warn("sync", "Aborting upload: playlists_v2 not loaded.");
 				this.isUploading = false;
 				this.status = "error";
 				return;
 			}
 
-			if (!cloudData.playlists) {
-				cloudData.playlists = { dbVersion: dbVersion };
-			}
-
-			// Для v2 беремо з кешу підколекції, для v1 - те що є в самому документі
-			cloudData.playlists.customPlaylists = isV2
-				? (this.latestCloudCustomPlaylists || [])
-				: (cloudData.playlists.customPlaylists || []);
-
 			const localProgress = progressStore.value;
 			const localSettings = settingsStore.value;
 			const localActivity = progressStore.todayActivity;
-			const localPlaylists: PlaylistState = playlistStore.getSnapshotState();
+			const localPlaylists = playlistStore.getSnapshotState();
 
-			// Smart Merge: Замість повної відмови від завантаження, ми об'єднуємо дані
-			const mergedProgress = this.mergeProgress(localProgress, (cloudData.progress || {}) as any);
+			const mergedProgress = this.mergeProgress(localProgress, (cloudData.progress || {}) as ProgressState);
 			const mergedSettings = this.mergeSettings(localSettings, cloudData.settings || null);
-			const mergedPlaylists = this.mergePlaylists(localPlaylists, (cloudData.playlists || {}) as any);
+			const mergedPlaylists = this.mergePlaylists(localPlaylists, (cloudData.playlists || {}) as PlaylistState);
 
-			// Якщо хмарні дані значно відрізняються (наприклад, більше прогресу), 
-			// ми оновлюємо локальний стор, але ТІЛЬКИ тими полями, які реально новіші в хмарі
 			if ((cloudData.progress?.totalCorrect || 0) > localProgress.totalCorrect) {
-				logService.warn("sync", "Cloud has more progress. Partial sync down.");
 				progressStore._internalSet(mergedProgress);
-
 				if (cloudHistory) {
 					progressStore._internalSetActivity(cloudHistory);
 				}
 			}
 
-			// Soft Backup Strategy: Ми НЕ видаляємо масив customPlaylists з об'єкта,
-			// але через { merge: true } і той факт, що ми передаємо об'єкт без цього поля,
-			// Firebase не зачепить і не перезапише заморожений бекап в хмарі.
 			const mainDocPlaylists = {
 				dbVersion: 2,
 				systemPlaylists: mergedPlaylists.systemPlaylists,
@@ -515,10 +462,7 @@ class SyncServiceClass {
 				lastSync: Date.now(),
 			};
 
-			// Публічний профіль для лідерборду
 			const profileUpdate = this.prepareProfileUpdate(mergedProgress);
-
-			// Атомарне оновлення через Batch для гарантування цілісності даних
 			const batch = writeBatch(db);
 			batch.set(userDocRef, mergedData, { merge: true });
 			batch.set(profileRef, profileUpdate, { merge: true });
@@ -526,108 +470,71 @@ class SyncServiceClass {
 				batch.set(historyRef, localActivity, { merge: true });
 			}
 
-			// Зберігаємо кожен кастомний плейлист як окремий документ у підколекції
-			const mergedIds = new Set(mergedPlaylists.customPlaylists.map(p => p.id));
-
+			const mergedIds = new Set(mergedPlaylists.customPlaylists.map((p: Playlist) => p.id));
 			for (const playlist of mergedPlaylists.customPlaylists) {
-				if (playlist && playlist.id) {
-					// Оптимізація записів (Dirty check)
-					const cloudPlaylist = this.latestCloudCustomPlaylists?.find(p => p.id === playlist.id);
-					const isChanged = !cloudPlaylist || JSON.stringify(cloudPlaylist) !== JSON.stringify(playlist);
-
-					if (isChanged) {
-						const pRef = doc(playlistsV2Ref, playlist.id);
-						batch.set(pRef, playlist, { merge: true });
-					}
+				const cloudPlaylist = this.latestCloudCustomPlaylists?.find(p => p.id === playlist.id);
+				if (!cloudPlaylist || JSON.stringify(cloudPlaylist) !== JSON.stringify(playlist)) {
+					const pRef = doc(playlistsV2Ref, playlist.id);
+					batch.set(pRef, playlist, { merge: true });
 				}
 			}
 
-			// Оптимізоване видалення: видаляємо тільки те, що є в локальному кеші хмари,
-			// але вже немає в mergedIds (видалено локально)
 			if (isV2 && this.latestCloudCustomPlaylists) {
 				for (const cloudPlaylist of this.latestCloudCustomPlaylists) {
 					if (!mergedIds.has(cloudPlaylist.id)) {
-						const pRef = doc(playlistsV2Ref, cloudPlaylist.id);
-						batch.delete(pRef);
+						batch.delete(doc(playlistsV2Ref, cloudPlaylist.id));
 					}
 				}
 			}
 
-			// Double check auth right before commit to avoid Permission Denied during logout
-			if (!auth.currentUser) {
-				logService.warn("sync", "Auth lost right before commit, aborting upload");
-				return;
-			}
+			if (!auth.currentUser) return;
 
 			try {
 				await batch.commit();
 			} catch (err) {
 				this.consecutiveFailures++;
-				logService.error("sync", `Atomic Sync Failed (${this.consecutiveFailures}):`, err);
 				throw err;
 			}
 
 			this.retryCount = 0;
-			this.consecutiveFailures = 0; // Успіх! Скидаємо лічильник
+			this.consecutiveFailures = 0;
 			this.lastSyncAttempt = Date.now();
 			this.status = "up-to-date";
 			logService.log("sync", "Upload successful");
 
-			// Після успішного вивантаження перевіряємо, чи не прийшли нові дані з хмари (VULN_06)
 			if (this.pendingCloudUpdate) {
-				const dataToProcess = this.pendingCloudUpdate;
+				const data = this.pendingCloudUpdate;
 				this.pendingCloudUpdate = null;
-				logService.log("sync", "Processing queued cloud update after upload");
-				this.handleCloudUpdate(dataToProcess);
+				this.handleCloudUpdate(data);
 			}
-		} catch (e: any) {
-			// Якщо помилка доступу сталася під час логауту — ігноруємо її (вона очікувана)
-			if (e?.code === 'permission-denied' && !auth.currentUser) {
-				logService.log("sync", "Sync aborted: user logged out during upload");
-			} else {
+		} catch (e: unknown) {
+			const err = e as { code?: string };
+			if (err?.code !== 'permission-denied' || auth.currentUser) {
 				logService.error("sync", "Sync Upload Error:", e);
 			}
 			this.status = "error";
-			this.isUploading = false; // Важливо: дозволити наступні спроби
+			this.isUploading = false;
 			this.scheduleRetry();
 		} finally {
 			this.isUploading = false;
-
-			// Якщо під час вивантаження прийшов запит на нове вивантаження — запускаємо його
-			if (this.pendingUpload) {
-				this.performUpload();
-			} else if (this.pendingCloudUpdate) {
-				// На випадок помилки або якщо немає нових вивантажень, перевіряємо чергу вхідних даних
-				const dataToProcess = this.pendingCloudUpdate;
-				this.pendingCloudUpdate = null;
-				this.handleCloudUpdate(dataToProcess);
-			}
+			if (this.pendingUpload) this.performUpload();
 		}
 	}
 
 	private handleCloudUpdate(cloudData: UserCloudData) {
 		if (!auth.currentUser) return;
-
 		if (this.isUploading) {
-			logService.log("sync", "Upload in progress, queuing cloud update");
 			this.pendingCloudUpdate = cloudData;
 			return;
 		}
 
 		this.isDownloading = true;
-
 		try {
 			if (cloudData.settings) {
 				const localSettings = settingsStore.value;
-				const mergedSettings = this.mergeSettings(localSettings, cloudData.settings);
-
-				// Якщо результат злиття відрізняється від локального, оновлюємо стор
-				// Це важливо для відновлення полів типу lastSeenFollowerAt
-				if (JSON.stringify(mergedSettings) !== JSON.stringify(localSettings)) {
-					logService.log("sync", "Cloud settings merged into local state");
-					settingsStore._internalUpdate(mergedSettings);
-				} else {
-					logService.log("sync", "Local settings are already up-to-date with cloud merge");
+				const merged = this.mergeSettings(localSettings, cloudData.settings);
+				if (JSON.stringify(merged) !== JSON.stringify(localSettings)) {
+					settingsStore._internalUpdate(merged);
 				}
 			}
 
@@ -636,30 +543,17 @@ class SyncServiceClass {
 				if (result.success) {
 					const merged = this.mergeProgress(progressStore.value, result.data);
 					progressStore._internalSet(merged);
-				} else {
-					logService.error("sync", "Cloud progress validation failed:", result.error);
-					logService.logToRemote("sync_validation_error", {
-						type: "progress",
-						error: result.error.message
-					});
 				}
 			}
 
 			if (cloudData.playlists) {
 				const localPlaylists = playlistStore.getSnapshotState();
-				const merged = this.mergePlaylists(localPlaylists, cloudData.playlists);
-
-				// Порівнюємо результат з поточним локальним станом
+				const merged = this.mergePlaylists(localPlaylists, cloudData.playlists as PlaylistState);
 				if (merged.updatedAt > (localPlaylists.updatedAt || 0)) {
-					logService.log("sync", "Cloud playlists merged into local state");
 					playlistStore._internalSet(merged);
 				}
 			}
-
-			// Після завантаження налаштувань перевіряємо сповіщення про підписників
 			friendsStore.checkFollowerNotifications();
-
-			logService.log("sync", "Cloud update processed");
 		} catch (e) {
 			logService.error("sync", "Sync Download Error:", e);
 		} finally {
@@ -667,83 +561,47 @@ class SyncServiceClass {
 		}
 	}
 
-	/**
-	 * Логіка об'єднання налаштувань на основі updatedAt
-	 */
 	private mergeSettings(local: AppSettings, cloud: AppSettings | null): AppSettings {
 		if (!cloud) return local;
-
 		try {
 			const cloudSettings = AppSettingsSchema.parse(cloud);
-			const cloudTime = cloudSettings.updatedAt || 0;
-			const localTime = local.updatedAt || 0;
-
-			// Використовуємо глибокий мерж для захисту вкладених полів (VULN_03)
-			if (cloudTime > localTime) {
+			if ((cloudSettings.updatedAt || 0) > (local.updatedAt || 0)) {
 				return this.deepMergeSettings(local, cloudSettings);
 			} else {
 				return this.deepMergeSettings(cloudSettings, local);
 			}
 		} catch (e) {
-			logService.error("sync", "Failed to parse cloud settings during merge", e);
+			logService.error("sync", "Failed to parse cloud settings", e);
+			return local;
 		}
-		return local;
 	}
 
 	private deepMergeSettings(base: AppSettings, updates: AppSettings): AppSettings {
 		const result = { ...base, ...updates };
-
-		// Глибокий мерж для voicePreferences
 		if (base.voicePreferences && updates.voicePreferences) {
-			result.voicePreferences = {
-				...base.voicePreferences,
-				...updates.voicePreferences
-			};
+			result.voicePreferences = { ...base.voicePreferences, ...updates.voicePreferences };
 		}
-
-		// CRDT Fix: lastSeenFollowerAt must always be monotonic (take max)
-		const maxLastSeen = Math.max(base.lastSeenFollowerAt || 0, updates.lastSeenFollowerAt || 0);
-		if (maxLastSeen > result.lastSeenFollowerAt) {
-			logService.log("sync", `Restoring lastSeenFollowerAt from history: ${result.lastSeenFollowerAt} -> ${maxLastSeen}`);
-			result.lastSeenFollowerAt = maxLastSeen;
-		}
-
+		result.lastSeenFollowerAt = Math.max(base.lastSeenFollowerAt || 0, updates.lastSeenFollowerAt || 0);
 		return result;
 	}
 
 	private mergeProgress(local: ProgressState, cloud: ProgressState): ProgressState {
-		// Обчислюємо сумарні показники з рівнів для валідації цілісності
 		const levelStats = this.mergeLevelStats(local.levelStats, cloud.levelStats || {});
 		const sumLevelCorrect = Object.values(levelStats).reduce((sum, s) => sum + s.totalCorrect, 0);
-
-		// Для лічильників беремо максимум, але не менше суми по рівнях (Integrity Protection)
 		const baseTotalCorrect = Math.max(local.totalCorrect, cloud.totalCorrect || 0);
 		const restored = Math.max(local.restoredPoints || 0, cloud.restoredPoints || 0);
-
-		// Total Correct = Сума по рівнях + відновлені бали
 		const validatedTotalCorrect = Math.max(baseTotalCorrect, sumLevelCorrect + restored);
 
-		// Монотонний мердж для стріків та дат
-		const validatedStreak = Math.max(local.streak || 0, cloud.streak || 0);
-		const validatedDailyCorrect = Math.max(local.dailyCorrect || 0, cloud.dailyCorrect || 0);
-
-		// Вибираємо пізнішу дату
-		const validatedLastCorrectDate = (local.lastCorrectDate || "") >= (cloud.lastCorrectDate || "")
-			? (local.lastCorrectDate || null) : (cloud.lastCorrectDate || null);
-
-		const validatedLastStreakUpdateDate = (local.lastStreakUpdateDate || "") >= (cloud.lastStreakUpdateDate || "")
-			? (local.lastStreakUpdateDate || null) : (cloud.lastStreakUpdateDate || null);
-
-		const merged: ProgressState = {
+		return {
 			...local,
 			...cloud,
 			totalCorrect: validatedTotalCorrect,
 			totalAttempts: Math.max(local.totalAttempts, cloud.totalAttempts || 0),
 			restoredPoints: restored,
-			streak: validatedStreak,
-			dailyCorrect: validatedDailyCorrect,
-			lastCorrectDate: validatedLastCorrectDate,
-			lastStreakUpdateDate: validatedLastStreakUpdateDate,
+			streak: Math.max(local.streak || 0, cloud.streak || 0),
+			dailyCorrect: Math.max(local.dailyCorrect || 0, cloud.dailyCorrect || 0),
+			lastCorrectDate: (local.lastCorrectDate || "") >= (cloud.lastCorrectDate || "") ? local.lastCorrectDate : cloud.lastCorrectDate,
+			lastStreakUpdateDate: (local.lastStreakUpdateDate || "") >= (cloud.lastStreakUpdateDate || "") ? local.lastStreakUpdateDate : cloud.lastStreakUpdateDate,
 			restorationHistory: this.mergeArrays(local.restorationHistory || [], cloud.restorationHistory || [], (i) => (i.timestamp + i.reason).toString()),
 			bestStreak: Math.max(local.bestStreak, cloud.bestStreak || 0),
 			bestCorrectStreak: Math.max(local.bestCorrectStreak, cloud.bestCorrectStreak || 0),
@@ -752,116 +610,70 @@ class SyncServiceClass {
 			words: this.mergeWordProgress(local.words, cloud.words || {}),
 			levelStats: levelStats,
 		};
-		return merged;
 	}
 
-	private mergeWordProgress(local: Record<string, any>, cloud: Record<string, any>) {
+	private mergeWordProgress(local: Record<string, WordProgress>, cloud: Record<string, WordProgress>): Record<string, WordProgress> {
 		const merged = { ...cloud };
 		for (const [key, lVal] of Object.entries(local)) {
 			const cVal = cloud[key];
-			if (!cVal || lVal.correctCount > cVal.correctCount) {
-				merged[key] = lVal;
-			}
+			if (!cVal || lVal.correctCount > cVal.correctCount) merged[key] = lVal;
 		}
 		return merged;
 	}
 
 	private mergeLevelStats(local: Record<string, LevelStats>, cloud: Record<string, LevelStats>) {
 		const merged = { ...cloud };
-
 		for (const key of Object.keys(merged)) {
-			if (key.includes(",") || key === "ALL") {
-				logService.log("sync", `Ignoring dirty cloud key during merge: ${key}`);
-				delete merged[key];
-			}
+			if (key.includes(",") || key === "ALL") delete merged[key];
 		}
-
 		for (const [lvl, l] of Object.entries(local)) {
 			const c = merged[lvl];
-			if (!c) {
-				merged[lvl] = l;
-			} else {
-				if (l.totalCorrect >= c.totalCorrect) {
-					merged[lvl] = l;
-				} else {
-					merged[lvl] = c;
-				}
-			}
+			if (!c || l.totalCorrect >= c.totalCorrect) merged[lvl] = l;
 		}
 		return merged;
 	}
 
-	/**
-	 * Ручне нарахування балів (для відновлення даних або компенсацій).
-	 * Додає бали до restoredPoints та totalCorrect.
-	 */
 	async restorePoints(amount: number, reason: string) {
 		if (!auth.currentUser || amount <= 0) return;
-
-		const record = {
-			amount,
-			reason,
-			timestamp: Date.now(),
-			adminId: "system"
-		};
-
-		// Оновлюємо локальний стан
 		const current = progressStore.value;
-		const newRestoredTotal = (current.restoredPoints || 0) + amount;
-		const newTotalCorrect = current.totalCorrect + amount;
-
-		const newHistory = [...(current.restorationHistory || []), record].slice(-10);
-
+		const record = { amount, reason, timestamp: Date.now(), adminId: "system" };
 		progressStore._internalSet({
 			...current,
-			totalCorrect: newTotalCorrect,
-			restoredPoints: newRestoredTotal,
-			restorationHistory: newHistory
+			totalCorrect: current.totalCorrect + amount,
+			restoredPoints: (current.restoredPoints || 0) + amount,
+			restorationHistory: [...(current.restorationHistory || []), record].slice(-10)
 		});
-
 		this.uploadAll();
-		logService.log("sync", `Restored ${amount} points. Reason: ${reason}`);
 	}
 
-	private mergePlaylists(local: PlaylistState, cloud: UserCloudData['playlists']): PlaylistState {
+	private mergePlaylists(local: PlaylistState, cloud: PlaylistState | null): PlaylistState {
 		if (!cloud) return local;
-
 		try {
 			const validCloud = PlaylistStateSchema.parse(cloud);
-			const cloudTime = validCloud.updatedAt || 0;
-			const localTime = local.updatedAt || 0;
-
-			if (cloudTime > localTime) {
-				logService.log("sync", "Cloud playlists are newer, accepting cloud state");
-				return validCloud;
-			} else if (localTime > cloudTime) {
-				logService.log("sync", "Local playlists are newer, keeping local state");
-				return local;
-			}
-
+			if ((validCloud.updatedAt || 0) > (local.updatedAt || 0)) return validCloud;
+			if ((local.updatedAt || 0) > (validCloud.updatedAt || 0)) return local;
 			return {
 				...local,
-				customPlaylists: this.mergeArrays(local.customPlaylists, validCloud.customPlaylists) as Playlist[],
+				customPlaylists: this.mergeArrays(local.customPlaylists, validCloud.customPlaylists),
 				systemPlaylists: {
 					favorites: this.mergePlaylistObjects(local.systemPlaylists.favorites, validCloud.systemPlaylists.favorites),
 					extra: this.mergePlaylistObjects(local.systemPlaylists.extra, validCloud.systemPlaylists.extra),
 					mistakes: this.mergePlaylistObjects(local.systemPlaylists.mistakes, validCloud.systemPlaylists.mistakes),
 				},
-				mistakeMetadata: { ...validCloud.mistakeMetadata, ...local.mistakeMetadata },
-				updatedAt: localTime
+				mistakeMetadata: { ...validCloud.mistakeMetadata, ...local.mistakeMetadata }
 			};
 		} catch (e) {
-			logService.error("sync", "Failed to parse cloud playlists during merge", e);
+			logService.error("sync", "Failed to parse playlists", e);
 			return local;
 		}
 	}
 
-	private mergePlaylistObjects(local: Partial<Playlist>, cloud: Partial<Playlist>): Playlist {
+	private mergePlaylistObjects(local: Playlist, cloud: Playlist): Playlist {
 		return {
 			...cloud,
 			...local,
 			words: this.mergeArrays(local.words || [], cloud.words || [], (w) => typeof w === "string" ? w : w.id)
-		} as Playlist;
+		};
 	}
 
 	private mergeArrays<T>(local: T[], cloud: T[], getId: (item: T) => string = (i: any) => i.id): T[] {
@@ -872,13 +684,13 @@ class SyncServiceClass {
 	}
 
 	private prepareProfileUpdate(progress: ProgressState) {
-		const displayName = auth.currentUser?.displayName || auth.currentUser?.email?.split("@")[0] || "User";
-
+		const user = auth.currentUser;
+		const displayName = user?.displayName || user?.email?.split("@")[0] || "User";
 		const update: Record<string, string | number | boolean | null | ReturnType<typeof serverTimestamp>> = {
 			displayName,
 			displayNameLower: displayName.toLowerCase(),
-			photoURL: auth.currentUser?.photoURL || null,
-			isAnonymous: auth.currentUser?.isAnonymous || false,
+			photoURL: user?.photoURL || null,
+			isAnonymous: user?.isAnonymous || false,
 			totalCorrect: progress.totalCorrect,
 			totalAttempts: progress.totalAttempts,
 			bestStreak: progress.bestStreak,
@@ -887,37 +699,26 @@ class SyncServiceClass {
 			updatedAt: serverTimestamp(),
 			activeDaysCount: progress.activeDaysCount || 0,
 		};
-
-		// Додаємо статистику по рівнях для лідерборду
 		for (const [lvl, stats] of Object.entries(progress.levelStats)) {
 			update[`level_${lvl}_totalCorrect`] = stats.totalCorrect;
 			update[`level_${lvl}_bestCorrectStreak`] = stats.bestCorrectStreak;
-			update[`level_${lvl}_accuracy`] = stats.totalAttempts > 0
-				? Math.round((stats.totalCorrect / stats.totalAttempts) * 100) : 0;
+			update[`level_${lvl}_accuracy`] = stats.totalAttempts > 0 ? Math.round((stats.totalCorrect / stats.totalAttempts) * 100) : 0;
 		}
-
 		return update;
 	}
 
 	private scheduleRetry() {
 		if (this.retryCount >= RETRY_CONFIG.maxAttempts || this.consecutiveFailures >= 5) {
-			logService.error("sync", "Max sync retries reached. Stopping automatic attempts.");
 			this.status = "error";
 			return;
 		}
 		const delay = Math.min(RETRY_CONFIG.baseDelay * Math.pow(2, this.retryCount), RETRY_CONFIG.maxDelay);
 		this.retryCount++;
-		setTimeout(() => {
-			if (this.isOnline && auth.currentUser) this.performUpload();
-		}, delay);
+		setTimeout(() => { if (this.isOnline && auth.currentUser) this.performUpload(); }, delay);
 	}
 
 	getStatus() {
-		return {
-			status: this.status,
-			isOnline: this.isOnline,
-			lastSync: this.lastSyncAttempt,
-		};
+		return { status: this.status, isOnline: this.isOnline, lastSync: this.lastSyncAttempt };
 	}
 }
 

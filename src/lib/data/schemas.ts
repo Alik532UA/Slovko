@@ -116,209 +116,98 @@ const PlaylistStateCoreSchema = z.object({
 });
 
 export const PlaylistStateSchema = z.preprocess((val: unknown) => {
-
 	if (!val || typeof val !== "object") return {};
 
-
-
-	const v = val as Record<string, any>;
-
-
+	const v = val as Record<string, unknown>;
 
 	// Функція для нормалізації плейліста (якщо це масив — перетворюємо на об'єкт)
-
-
-
-	const normalize = (data: any, fallback: any) => {
-
-
-
-		let result: any;
-
-
+	const normalize = (data: unknown, fallback: Playlist): Playlist => {
+		let result: Playlist;
 
 		if (Array.isArray(data)) {
-
-
-
-			result = { ...fallback, words: data };
-
-
-
+			result = { ...fallback, words: data as (string | CustomWord)[] };
 		} else if (data && typeof data === "object") {
-
-
-
-			result = { ...fallback, ...data };
-
-
-
+			result = { ...fallback, ...(data as Partial<Playlist>) };
 		} else {
-
-
-
 			result = fallback;
-
-
-
 		}
 
-
-
-
-
-
-
 		// Додатково нормалізуємо масив words всередині плейліста
-
-
-
 		if (result.words && Array.isArray(result.words)) {
-
-
-
-			result.words = result.words.map((w: any) => {
-
-
-
+			result.words = result.words.map((w: unknown) => {
 				if (typeof w === "string") return w;
 
-
-
 				if (w && typeof w === "object") {
-
-
-
+					const obj = w as Record<string, unknown>;
 					// Якщо це старий формат mistake entry: { pair: { id: '...' } }
-
-
-
-					if (w.pair && typeof w.pair === "object" && w.pair.id) return w.pair.id;
-
-
+					const pair = obj.pair as Record<string, unknown> | undefined;
+					if (pair && typeof pair === "object" && pair.id)
+						return String(pair.id);
 
 					// Якщо це просто об'єкт з id: { id: '...' }
-
-
-
-					if (w.id && !w.original && !w.translation && !w.term && !w.definition && !w.left && !w.right) return w.id;
-
-
+					if (
+						obj.id &&
+						!obj.original &&
+						!obj.translation &&
+						!obj.term &&
+						!obj.definition &&
+						!obj.left &&
+						!obj.right
+					)
+						return String(obj.id);
 
 					// Legacy migration: original/term -> left, translation/definition -> right
-
-					if (w.id && (w.original || w.translation || w.term || w.definition)) {
+					if (
+						obj.id &&
+						(obj.original || obj.translation || obj.term || obj.definition)
+					) {
 						return {
-							id: w.id,
-							left: w.left || w.term || w.original || "",
-							right: w.right || w.definition || w.translation || "",
-							transcription: w.transcription
+							id: String(obj.id),
+							left: String(obj.left || obj.term || obj.original || ""),
+							right: String(obj.right || obj.definition || obj.translation || ""),
+							transcription: obj.transcription ? String(obj.transcription) : undefined,
 						};
 					}
 
 					// Якщо це схоже на CustomWord (id, left, right) — залишаємо як є
-
-
-
-					if (w.id && w.left && w.right) return w;
-
-
+					if (obj.id && obj.left && obj.right) return obj as unknown as CustomWord;
 
 					// В іншому випадку спробуємо витягнути будь-який id або перетворити на рядок
-
-
-
-					return w.id || JSON.stringify(w);
-
-
-
+					return String(obj.id || JSON.stringify(obj));
 				}
 
-
-
 				return String(w);
-
-
-
 			});
-
-
-
-
-
-
 
 			// Дедуплікація слів за ID для запобігання роздуванню БД
-
-
-
-			const seen = new Set();
-
-
-
-			result.words = result.words.filter((w: any) => {
-
-
-
+			const seen = new Set<string>();
+			result.words = result.words.filter((w: string | CustomWord) => {
 				const id = typeof w === "string" ? w : w.id;
-
-
-
 				if (seen.has(id)) return false;
-
-
-
 				seen.add(id);
-
-
-
 				return true;
-
-
-
 			});
-
-
-
 		}
 
-
-
 		return result;
-
-
-
 	};
 
-
-
 	// Legacy migration: дані можуть бути в v.systemPlaylists або на верхньому рівні v
-
-	const systemPlaylists = v.systemPlaylists || {};
-
-
+	const systemPlaylists = (v.systemPlaylists as Record<string, unknown>) || {};
 
 	const favorites = normalize(
-
 		systemPlaylists.favorites || v.favorites,
-
 		DEFAULT_FAVORITES,
-
 	);
-
 	const mistakes = normalize(
-
 		systemPlaylists.mistakes || v.mistakes,
-
 		DEFAULT_MISTAKES,
-
 	);
-
 	const extra = normalize(systemPlaylists.extra || v.extra, DEFAULT_EXTRA);
 
 	// Міграція для кастомних плейлістів
 	const customPlaylists = Array.isArray(v.customPlaylists)
-		? v.customPlaylists.map((p: any) => normalize(p, {}))
+		? v.customPlaylists.map((p: unknown) => normalize(p, {} as Playlist))
 		: [];
 
 	return {
@@ -329,7 +218,7 @@ export const PlaylistStateSchema = z.preprocess((val: unknown) => {
 			extra,
 		},
 		customPlaylists,
-		mistakeMetadata: v.mistakeMetadata || {},
+		mistakeMetadata: (v.mistakeMetadata as Record<string, number>) || {},
 	};
 }, PlaylistStateCoreSchema);
 
@@ -365,12 +254,14 @@ const AppSettingsCoreSchema = z.object({
 export const AppSettingsSchema = z.preprocess((val: unknown) => {
 	if (!val || typeof val !== "object") return {};
 
-	const v = val as Record<string, any>;
+	const v = val as Record<string, unknown>;
 	const result = { ...v };
 
 	// Нормалізація currentLevel (може бути рядком "A1,A2" або поодиноким значенням)
 	if (typeof result.currentLevel === "string") {
-		result.currentLevel = result.currentLevel.split(",").filter(Boolean);
+		result.currentLevel = (result.currentLevel as string)
+			.split(",")
+			.filter(Boolean);
 	}
 	if (!Array.isArray(result.currentLevel)) {
 		result.currentLevel = undefined; // Дозволяємо дефолтному значенню Zod спрацювати
@@ -378,7 +269,9 @@ export const AppSettingsSchema = z.preprocess((val: unknown) => {
 
 	// Нормалізація currentTopic
 	if (typeof result.currentTopic === "string") {
-		result.currentTopic = result.currentTopic.split(",").filter(Boolean);
+		result.currentTopic = (result.currentTopic as string)
+			.split(",")
+			.filter(Boolean);
 	}
 	if (!Array.isArray(result.currentTopic)) {
 		result.currentTopic = undefined;
@@ -386,7 +279,9 @@ export const AppSettingsSchema = z.preprocess((val: unknown) => {
 
 	// Нормалізація currentTenses
 	if (typeof result.currentTenses === "string") {
-		result.currentTenses = result.currentTenses.split(",").filter(Boolean);
+		result.currentTenses = (result.currentTenses as string)
+			.split(",")
+			.filter(Boolean);
 	}
 	if (!Array.isArray(result.currentTenses)) {
 		result.currentTenses = undefined;
@@ -394,7 +289,9 @@ export const AppSettingsSchema = z.preprocess((val: unknown) => {
 
 	// Нормалізація currentForms
 	if (typeof result.currentForms === "string") {
-		result.currentForms = result.currentForms.split(",").filter(Boolean);
+		result.currentForms = (result.currentForms as string)
+			.split(",")
+			.filter(Boolean);
 	}
 	if (!Array.isArray(result.currentForms)) {
 		result.currentForms = undefined;

@@ -65,8 +65,9 @@ export const AuthService = {
 					// Але Firebase SDK автоматично не мержить дані при signInWithPopup.
 
 					return result.user;
-				} catch (error: any) {
-					if (error.code === "auth/account-exists-with-different-credential") {
+				} catch (error) {
+					const e = error as { code?: string };
+					if (e.code === "auth/account-exists-with-different-credential") {
 						// Це критичний момент: користувач намагається зайти через Google,
 						// але акаунт вже створений через Email.
 						throw new Error("ACCOUNT_EXISTS_EMAIL");
@@ -77,20 +78,21 @@ export const AuthService = {
 
 			// 2. Якщо користувач вже залогінений через Email — ПРИВ'ЯЗУЄМО
 			try {
-				const result = await linkWithPopup(user, googleProvider);
+				await linkWithPopup(user, googleProvider);
 				await user.reload();
 				console.log(
 					"[AuthService] Google successfully linked to existing Email account",
 				);
 				return user;
-			} catch (error: any) {
-				if (error.code === "auth/credential-already-in-use") {
+			} catch (error) {
+				const e = error as { code?: string };
+				if (e.code === "auth/credential-already-in-use") {
 					// Цей Google-акаунт вже прив'язаний до ІНШОГО користувача
 					throw new Error("GOOGLE_ALREADY_LINKED_ELSEWHERE");
 				}
 				throw error;
 			}
-		} catch (error: any) {
+		} catch (error) {
 			throw error;
 		}
 	},
@@ -121,7 +123,7 @@ export const AuthService = {
 				await result.user.reload();
 				return auth.currentUser;
 			}
-		} catch (error: any) {
+		} catch (error) {
 			throw error;
 		}
 	},
@@ -135,7 +137,7 @@ export const AuthService = {
 		try {
 			const result = await signInWithEmailAndPassword(auth, email, password);
 			return result.user;
-		} catch (error: any) {
+		} catch (error) {
 			throw error;
 		}
 	},
@@ -195,7 +197,7 @@ export const AuthService = {
 		try {
 			await reauthenticateWithCredential(auth.currentUser, credential);
 			await updatePassword(auth.currentUser, newPassword);
-		} catch (error: any) {
+		} catch (error) {
 			throw error;
 		}
 	},
@@ -208,7 +210,7 @@ export const AuthService = {
 
 		try {
 			await sendPasswordResetEmail(auth, email);
-		} catch (error: any) {
+		} catch (error) {
 			throw error;
 		}
 	},
@@ -257,7 +259,7 @@ export const AuthService = {
 
 			// 3. Видалення самого користувача
 			await deleteUser(user);
-		} catch (error: any) {
+		} catch (error) {
 			throw error;
 		}
 	},
