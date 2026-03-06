@@ -28,7 +28,6 @@ class ErrorHandler {
 
 		// 1. Extract Error Message
 		const message = this.extractMessage(error);
-		const stack = error instanceof Error ? error.stack : undefined;
 
 		// 2. Log to Console/Service
 		logService.error(category, `[${context}] ${message}`, error);
@@ -53,7 +52,8 @@ class ErrorHandler {
 		if (typeof error === "string") return error;
 		if (error instanceof Error) return error.message;
 		if (typeof error === "object" && error !== null && "message" in error) {
-			return String((error as any).message);
+			const e = error as { message: unknown };
+			return String(e.message);
 		}
 		return "Unknown error";
 	}
