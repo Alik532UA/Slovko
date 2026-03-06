@@ -5,5 +5,7 @@
 	"insurance": "verzekering",
 	"engine_motor": "motor",
 	"fuel": "brandstof",
-	"signal": "signaal"
+	"signal": "signaal",
+	"battery_electric": "batterij",
+	"battery_artillery": "batterij (geschut)"
 }

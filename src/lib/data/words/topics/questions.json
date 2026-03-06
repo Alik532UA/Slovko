@@ -39,15 +39,15 @@
 	"pardon",
 	"excuse_me",
 	"understand",
-	"mean",
+	"mean_verb",
 	"explain",
 	"repeat",
 	"speak_slowly",
 	"i_see",
 	"i_know",
 	"i_think",
-	"right",
+	"right_direction",
+	"right_correct",
 	"wrong",
-	"problem",
-	"right_correct"
+	"problem"
 ]

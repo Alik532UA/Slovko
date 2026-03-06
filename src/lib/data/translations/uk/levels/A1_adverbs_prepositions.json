@@ -4,9 +4,7 @@
 	"where": "де",
 	"in": "в",
 	"on": "на",
-	"at": "в / на",
 	"to": "до",
-	"from": "з / від",
 	"with": "з",
 	"without": "без",
 	"for": "для",
@@ -16,5 +14,9 @@
 	"often": "часто",
 	"sometimes": "іноді",
 	"usually": "зазвичай",
-	"under": "під"
+	"under": "під",
+	"at_place": "в",
+	"at_time": "о",
+	"from_origin": "з",
+	"from_time": "від"
 }

@@ -13,8 +13,6 @@
 	"angle": "angle",
 	"anticipation": "anticipation",
 	"anxiety": "anxiety",
-	"application_request": "application",
-	"application_software": "application",
 	"appointment_job": "appointment",
 	"appointment_meeting": "appointment",
 	"appreciation": "appreciation",
@@ -28,7 +26,6 @@
 	"assurance": "assurance",
 	"attraction_feature": "attraction",
 	"attraction_feeling": "attraction",
-	"authority_person": "authority",
 	"awareness": "awareness",
 	"capacity": "capacity",
 	"circumstance": "circumstance",
@@ -91,10 +88,11 @@
 	"equation_noun": "equation",
 	"erosion": "erosion",
 	"essence": "essence",
-	"establishment_noun": "establishment",
 	"evaluation": "evaluation",
 	"query_question": "query",
 	"sanction_allow": "sanction",
 	"sense_feel": "sense",
-	"supplement_add": "supplement"
+	"supplement_add": "supplement",
+	"establishment_institution": "establishment",
+	"establishment_founding": "establishment"
 }

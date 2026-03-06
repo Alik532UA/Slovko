@@ -9,7 +9,6 @@
 	"annual": "yıllıq",
 	"anxious": "raatsız",
 	"appeal": "muraacaat etmek",
-	"argument": "delil/tartışma",
 	"artificial": "suni",
 	"assistant": "yardımcı",
 	"automatic": "avtomatik",
@@ -139,5 +138,7 @@
 	"us_dative": "bizge",
 	"various": "türlü",
 	"you_plural": "siz",
-	"your_plural": "siziñ"
+	"your_plural": "siziñ",
+	"argument_reason": "delil",
+	"argument_dispute": "tartışma"
 }

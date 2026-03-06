@@ -1,5 +1,4 @@
 ﻿{
-	"lady": "Dame",
 	"adult": "Erwachsener",
 	"guy": "Typ",
 	"kid": "Kind",
@@ -18,5 +17,7 @@
 	"no_one": "niemand",
 	"ourselves": "wir selbst",
 	"somebody": "jemand",
-	"yourselves": "ihr selbst"
+	"yourselves": "ihr selbst",
+	"lady_noble": "Dame",
+	"lady_woman": "Gnädige Frau"
 }

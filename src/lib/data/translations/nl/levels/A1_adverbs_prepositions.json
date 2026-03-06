@@ -4,9 +4,7 @@
 	"where": "waar",
 	"in": "in",
 	"on": "op",
-	"at": "bij",
 	"to": "naar",
-	"from": "van",
 	"with": "met",
 	"without": "zonder",
 	"for": "voor",
@@ -16,5 +14,9 @@
 	"often": "vaak",
 	"sometimes": "soms",
 	"usually": "meestal",
-	"under": "onder"
+	"under": "onder",
+	"at_place": "bij",
+	"at_time": "om",
+	"from_origin": "uit",
+	"from_time": "vanaf"
 }

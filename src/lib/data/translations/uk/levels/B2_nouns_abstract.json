@@ -13,8 +13,6 @@
 	"angle": "кут",
 	"anticipation": "передчуття",
 	"anxiety": "тривога",
-	"application_request": "заява",
-	"application_software": "додаток",
 	"appointment_job": "призначення на посаду",
 	"appointment_meeting": "зустріч",
 	"appreciation": "вдячність",
@@ -28,7 +26,6 @@
 	"assurance": "запевнення",
 	"attraction_feature": "атракціон/пам'ятка",
 	"attraction_feeling": "потяг/симпатія",
-	"authority_person": "авторитет (особа)",
 	"awareness": "усвідомлення",
 	"capacity": "місткість / спроможність",
 	"circumstance": "обставина",
@@ -91,10 +88,11 @@
 	"equation_noun": "рівняння",
 	"erosion": "ерозія",
 	"essence": "сутність",
-	"establishment_noun": "установа / заснування",
 	"evaluation": "оцінка",
 	"query_question": "запитувати",
 	"sanction_allow": "санкціонувати",
 	"sense_feel": "відчувати",
-	"supplement_add": "доповнювати"
+	"supplement_add": "доповнювати",
+	"establishment_institution": "установа",
+	"establishment_founding": "заснування"
 }

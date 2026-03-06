@@ -1,5 +1,6 @@
 ﻿[
-	"time",
+	"time_abstract",
+	"time_clock",
 	"day",
 	"night",
 	"morning",

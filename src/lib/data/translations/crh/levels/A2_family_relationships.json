@@ -1,5 +1,4 @@
 ﻿{
-	"aunt": "ala / tize",
 	"aunt_paternal": "ala",
 	"aunt_maternal": "tize",
 	"uncle": "emce",
@@ -7,7 +6,6 @@
 	"uncle_maternal": "dayı",
 	"brother_male": "qardaş",
 	"colleague": "işdaş",
-	"cousin": "emce-tize balası",
 	"granddaughter": "qız torun",
 	"grandfather": "qartbaba",
 	"grandmother": "bita",
@@ -15,5 +13,7 @@
 	"married": "evli",
 	"marry": "evlenmek",
 	"partner": "ortaq",
-	"single": "tek"
+	"single": "tek",
+	"cousin_male": "emce-tize balası (erkek)",
+	"cousin_female": "emce-tize balası (qadın)"
 }

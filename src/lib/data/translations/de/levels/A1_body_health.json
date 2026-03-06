@@ -1,6 +1,5 @@
 ﻿{
 	"hand": "Hand",
-	"leg": "Bein",
 	"head": "Kopf",
 	"eye": "Auge",
 	"mouth": "Mund",
@@ -11,5 +10,8 @@
 	"ear": "Ohr",
 	"arm": "Arm",
 	"foot": "Fuß",
-	"hair": "Haar"
+	"hair": "Haar",
+	"arm_body": "Arm",
+	"arm_weapon": "Waffe",
+	"leg_full": "Bein"
 }

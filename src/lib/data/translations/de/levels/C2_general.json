@@ -1,6 +1,4 @@
 ﻿{
-	"aberration_sapuv": "Verirrung",
-	"aberration_verirrung": "Verirrung",
 	"abject": "elend",
 	"abnegation": "Verzicht",
 	"abrade": "abschürfen",
@@ -127,5 +125,7 @@
 	"apprehend_alamaq": "begreifen",
 	"apprehensive": "besorgt",
 	"apprise": "unterrichten",
-	"approbation": "Billigung"
+	"approbation": "Billigung",
+	"aberration_deviation": "Abweichung",
+	"aberration_mental": "Verirrung"
 }

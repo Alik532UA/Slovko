@@ -1,4 +1,4 @@
-﻿﻿{
+﻿{
 	"abuse": "nadużywać / obrażać",
 	"accident_chance": "przypadek",
 	"accompany": "towarzyszyć",
@@ -32,8 +32,6 @@
 	"architecture": "architektura",
 	"area_place": "obszar",
 	"area_subject": "dziedzina",
-	"arm_body": "ramię / ręka",
-	"arm_weapon": "broń",
 	"artist": "artysta",
 	"aside": "na bok / z boku",
 	"assert_claim": "twierdzić / dochodzić roszczeń",
@@ -312,5 +310,9 @@
 	"recognise_verb": "rozpoznawać / uznawać",
 	"regulate_verb": "regulować",
 	"rid_verb": "pozbywać się",
-	"unify_verb": "jednoczyć"
+	"unify_verb": "jednoczyć",
+	"abuse_misuse": "nadużycie",
+	"abuse_insult": "zniewaga",
+	"draft_sketch": "szkic",
+	"draft_wind": "przeciąg"
 }

@@ -13,8 +13,6 @@
 	"angle": "köşe",
 	"anticipation": "beklev",
 	"anxiety": "endişe",
-	"application_request": "ariza",
-	"application_software": "uyğulama",
 	"appointment_job": "tayin",
 	"appointment_meeting": "körüşüv",
 	"appreciation": "minnetdarlıq",
@@ -28,7 +26,6 @@
 	"assurance": "teminat",
 	"attraction_feature": "cazibe",
 	"attraction_feeling": "cazibe",
-	"authority_person": "akimat",
 	"awareness": "añlav",
 	"capacity": "haçım",
 	"circumstance": "al",
@@ -92,10 +89,11 @@
 	"equation_noun": "teñleme",
 	"erosion": "eroziya",
 	"essence": "öz",
-	"establishment_noun": "müessise",
 	"evaluation": "qıymet kesüv",
 	"query_question": "soramaq",
 	"sanction_allow": "tasdıqlamaq",
 	"sense_feel": "is etmek",
-	"supplement_add": "ilâve etmek"
+	"supplement_add": "ilâve etmek",
+	"establishment_institution": "müessise",
+	"establishment_founding": "quruluş"
 }

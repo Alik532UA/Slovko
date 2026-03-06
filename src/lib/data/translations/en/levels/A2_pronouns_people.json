@@ -1,5 +1,4 @@
 ﻿{
-	"lady": "lady",
 	"adult": "adult",
 	"guy": "guy",
 	"kid": "kid",
@@ -18,5 +17,7 @@
 	"no_one": "no one",
 	"ourselves": "ourselves",
 	"somebody": "somebody",
-	"yourselves": "yourselves"
+	"yourselves": "yourselves",
+	"lady_noble": "lady",
+	"lady_woman": "lady"
 }

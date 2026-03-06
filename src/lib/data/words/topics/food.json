@@ -16,7 +16,8 @@
 	"garlic",
 	"fruit",
 	"banana",
-	"orange",
+	"orange_color",
+	"orange_fruit",
 	"lemon",
 	"grape",
 	"strawberry",
@@ -59,8 +60,6 @@
 	"ham",
 	"bacon",
 	"toast",
-	"orange_color",
-	"orange_fruit",
 	"drink_noun",
 	"fry"
 ]

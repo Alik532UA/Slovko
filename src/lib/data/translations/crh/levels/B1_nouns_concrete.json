@@ -28,7 +28,6 @@
 	"approach_verb": "yaqınlaşmaq",
 	"approve": "tasdıqlamaq",
 	"architect": "mimar",
-	"area": "meydan",
 	"argue_dispute": "tartışmaq",
 	"article": "maqale",
 	"ashamed": "utanmaq",
@@ -212,7 +211,6 @@
 	"dose": "doza",
 	"dress_up": "kiyinmek",
 	"drop_off": "tüşürmek",
-	"drug": "ilâç",
 	"due_expected": "vadesi kelgen",
 	"dust": "toz",
 	"earnings": "qazanç",
@@ -563,7 +561,6 @@
 	"treat_behave": "davranmaq",
 	"trial_court": "mahkeme",
 	"trial_test": "sınav",
-	"tube": "boru",
 	"turn_direction": "burulış",
 	"turn_into": "çevrilmek",
 	"turn_order": "nevbet",
@@ -619,5 +616,11 @@
 	"yeah": "e",
 	"you_singular": "sen",
 	"your_singular": "seniñ",
-	"yourself": "özüñ"
+	"yourself": "özüñ",
+	"area_territory": "meydan",
+	"area_field": "saat",
+	"drug_medicine": "ilâç",
+	"drug_narcotic": "uysturıcı",
+	"tube_subway": "metro",
+	"tube_pipe": "boru"
 }

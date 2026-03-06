@@ -9,7 +9,6 @@
 	"annual": "ετήσιος",
 	"anxious": "αγχωμένος",
 	"appeal": "έφεση",
-	"argument": "επιχείρημα",
 	"artificial": "τεχνητός",
 	"assistant": "βοηθός",
 	"automatic": "αυτόματος",
@@ -138,5 +137,7 @@
 	"us_dative": "μας",
 	"various": "διάφοροι",
 	"you_plural": "εσείς",
-	"your_plural": "δικός σας"
+	"your_plural": "δικός σας",
+	"argument_reason": "επιχείρημα",
+	"argument_dispute": "λογομαχία"
 }

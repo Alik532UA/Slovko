@@ -47,11 +47,12 @@
 	"safe": "emin",
 	"dangerous": "tehlükeli",
 	"same": "aynı",
-	"different": "başqa",
 	"important": "emiyetli",
 	"possible": "mümkün",
 	"late": "keç",
 	"early": "erken",
 	"wrong": "yañlış",
-	"young": "yaş"
+	"young": "yaş",
+	"different_other": "başqa",
+	"different_various": "çeşitli"
 }

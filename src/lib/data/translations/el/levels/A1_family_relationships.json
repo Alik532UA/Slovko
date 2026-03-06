@@ -2,11 +2,12 @@
 	"friend": "φίλος",
 	"mother": "μητέρα",
 	"father": "πατέρας",
-	"sister": "αδελφή",
 	"family": "οικογένεια",
 	"child": "παιδί",
 	"parents": "γονείς",
 	"son": "γιος",
 	"husband": "άνδρας",
-	"wife": "γυναίκα"
+	"wife": "γυναίκα",
+	"sister_older": "αδελφή",
+	"sister_younger": "αδελφή"
 }

@@ -1,4 +1,4 @@
-﻿﻿{
+﻿{
 	"absence": "nieobecność",
 	"abundance": "obfitość",
 	"account_for_verb": "wyjaśniać / stanowić",
@@ -13,8 +13,6 @@
 	"angle": "kąt",
 	"anticipation": "oczekiwanie",
 	"anxiety": "niepokój",
-	"application_request": "wniosek / podanie",
-	"application_software": "aplikacja / oprogramowanie",
 	"appointment_job": "nominacja / mianowanie",
 	"appointment_meeting": "spotkanie / wizyta",
 	"appreciation": "uznanie / wdzięczność",
@@ -28,7 +26,6 @@
 	"assurance": "zapewnienie / pewność",
 	"attraction_feature": "atrakcja",
 	"attraction_feeling": "pociąg / atrakcyjność",
-	"authority_person": "autorytet",
 	"awareness": "świadomość",
 	"capacity": "pojemność / wydajność",
 	"circumstance": "okoliczność",
@@ -91,10 +88,11 @@
 	"equation_noun": "równanie",
 	"erosion": "erozja",
 	"essence": "istota / esencja",
-	"establishment_noun": "placówka / ustanowienie",
 	"evaluation": "ewaluacja / ocena",
 	"query_question": "zapytanie",
 	"sanction_allow": "sankcjonować",
 	"sense_feel": "czuć / wyczuwać",
-	"supplement_add": "uzupełniać"
+	"supplement_add": "uzupełniać",
+	"establishment_institution": "placówka",
+	"establishment_founding": "ustanowienie"
 }

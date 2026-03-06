@@ -17,9 +17,7 @@
 	"get_on_transport": "instappen",
 	"get_up": "opstaan",
 	"give_back": "teruggeven",
-	"give_up_habit": "opgeven",
 	"go_out": "uitgaan",
-	"grow_up": "opgroeien",
 	"look_after": "passen op",
 	"look_at": "kijken naar",
 	"look_for": "zoeken naar",
@@ -36,5 +34,9 @@
 	"write_down": "opschrijven",
 	"come_on": "kom op",
 	"look_forward_to": "uitkijken naar",
-	"turn_down_volume": "zachter zetten"
+	"turn_down_volume": "zachter zetten",
+	"give_up_quit": "stoppen",
+	"give_up_surrender": "opgeven",
+	"grow_up_mature": "volwassen worden",
+	"grow_up_physical": "opgroeien"
 }

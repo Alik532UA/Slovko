@@ -1,6 +1,4 @@
 ﻿{
-	"aberration_sapuv": "відхилення",
-	"aberration_verirrung": "відхилення",
 	"abject": "жалюгідний",
 	"abnegation": "самозречення",
 	"abrade": "стирати",
@@ -127,5 +125,7 @@
 	"apprehend_alamaq": "розуміти",
 	"apprehensive": "тривожний",
 	"apprise": "повідомляти",
-	"approbation": "схвалення"
+	"approbation": "схвалення",
+	"aberration_deviation": "відхилення",
+	"aberration_mental": "заблудження"
 }

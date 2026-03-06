@@ -11,8 +11,6 @@
 	"architecture": "архітектура",
 	"area_place": "територія",
 	"area_subject": "сфера",
-	"arm_body": "рука",
-	"arm_weapon": "зброя",
 	"artist": "художник",
 	"aside": "вбік",
 	"assure": "запевняти",
@@ -312,5 +310,9 @@
 	"acid": "кислота",
 	"medicine_substance": "ліки",
 	"draft_outline": "складати чернетку",
-	"deliberate_issue": "обмірковувати"
+	"deliberate_issue": "обмірковувати",
+	"abuse_misuse": "зловживання",
+	"abuse_insult": "образа",
+	"draft_sketch": "чернетка",
+	"draft_wind": "протяг"
 }

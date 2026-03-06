@@ -28,7 +28,6 @@
 	"approach_verb": "naderen",
 	"approve": "goedkeuren",
 	"architect": "architect",
-	"area": "gebied",
 	"argue_dispute": "ruziën",
 	"article": "artikel",
 	"ashamed": "beschaamd",
@@ -213,7 +212,6 @@
 	"dose": "dosis",
 	"dress_up": "zich verkleden",
 	"drop_off": "afzetten",
-	"drug": "medicijn",
 	"due_expected": "verwacht",
 	"dust": "stof",
 	"earnings": "verdiensten",
@@ -564,7 +562,6 @@
 	"treat_behave": "behandelen",
 	"trial_court": "proces",
 	"trial_test": "proef",
-	"tube": "metro / buis",
 	"turn_direction": "draai",
 	"turn_into": "veranderen in",
 	"turn_order": "beurt",
@@ -620,5 +617,11 @@
 	"yeah": "ja",
 	"you_singular": "jij",
 	"your_singular": "jouw",
-	"yourself": "jezelf"
+	"yourself": "jezelf",
+	"area_territory": "gebied",
+	"area_field": "terrein",
+	"drug_medicine": "medicijn",
+	"drug_narcotic": "drug",
+	"tube_subway": "metro",
+	"tube_pipe": "buis"
 }

@@ -317,6 +317,8 @@
 	"aircraft": "vliegtuig",
 	"alarm": "alarm",
 	"alcohol": "alcohol",
-	"arm_body": "arm",
-	"arm_weapon": "wapen"
+	"abuse_misuse": "misbruik",
+	"abuse_insult": "belediging",
+	"draft_sketch": "ontwerp",
+	"draft_wind": "tocht"
 }

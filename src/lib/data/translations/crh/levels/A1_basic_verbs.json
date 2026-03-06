@@ -23,7 +23,6 @@
 	"seem": "körünmek",
 	"feel": "duymaq",
 	"try": "denemek",
-	"leave": "taşlamaq",
 	"live": "yaşamaq",
 	"need": "muhtaç olmaq",
 	"talk": "laf etmek",
@@ -38,5 +37,7 @@
 	"stand": "turmaq",
 	"lose": "ğayıp etmek",
 	"thank_verb": "teşekkür etmek",
-	"help_verb": "yardım etmek"
+	"help_verb": "yardım etmek",
+	"leave_depart": "ketmek",
+	"leave_behind": "qaldırmaq"
 }

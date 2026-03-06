@@ -1,15 +1,17 @@
-﻿﻿{
-    "arm":  "ramię",
-    "body":  "ciało",
-    "ear":  "ucho",
-    "eye":  "oko",
-    "face":  "twarz",
-    "foot":  "stopa",
-    "hair":  "włosy",
-    "hand":  "ręka",
-    "head":  "głowa",
-    "hospital":  "szpital",
-    "leg":  "noga",
-    "mouth":  "usta",
-    "nose":  "nos"
+﻿{
+	"arm": "ramię",
+	"body": "ciało",
+	"ear": "ucho",
+	"eye": "oko",
+	"face": "twarz",
+	"foot": "stopa",
+	"hair": "włosy",
+	"hand": "ręka",
+	"head": "głowa",
+	"hospital": "szpital",
+	"mouth": "usta",
+	"nose": "nos",
+	"arm_body": "ramię",
+	"arm_weapon": "broń",
+	"leg_full": "noga"
 }

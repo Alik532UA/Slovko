@@ -4,9 +4,7 @@
 	"where": "where",
 	"in": "in",
 	"on": "on",
-	"at": "at",
 	"to": "to",
-	"from": "from",
 	"with": "with",
 	"without": "without",
 	"for": "for",
@@ -16,5 +14,9 @@
 	"often": "often",
 	"sometimes": "sometimes",
 	"usually": "usually",
-	"under": "under"
+	"under": "under",
+	"at_place": "at",
+	"at_time": "at",
+	"from_origin": "from",
+	"from_time": "from"
 }

@@ -3,7 +3,6 @@
 	"pick_choose": "wählen",
 	"beat_win": "besiegen",
 	"chat_talk": "chatten",
-	"design_verb": "entwerfen",
 	"dig": "graben",
 	"dive": "tauchen",
 	"film_verb": "filmen",
@@ -22,5 +21,7 @@
 	"sneeze": "niesen",
 	"spell_verb": "buchstabieren",
 	"spill": "verschütten",
-	"spoil": "verderben"
+	"spoil": "verderben",
+	"design_plan": "entwerfen",
+	"design_style": "gestalten"
 }

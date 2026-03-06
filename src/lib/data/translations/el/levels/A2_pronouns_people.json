@@ -12,7 +12,6 @@
 	"himself": "ο ίδιος",
 	"itself": "το ίδιο",
 	"kid": "παιδί",
-	"lady": "κυρία",
 	"myself": "εγώ ο ίδιος",
 	"no_one": "κανένας",
 	"nobody": "κανένας",
@@ -20,5 +19,7 @@
 	"ourselves": "εμείς οι ίδιοι",
 	"somebody": "κάποιος",
 	"your": "σου",
-	"yourselves": "εσείς οι ίδιοι"
+	"yourselves": "εσείς οι ίδιοι",
+	"lady_noble": "κυρία",
+	"lady_woman": "κυρία"
 }

@@ -2,7 +2,6 @@
 	"beat_win": "νικώ",
 	"call_phone": "τηλεφωνώ",
 	"chat_talk": "κουβεντιάζω",
-	"design_verb": "σχεδιάζω",
 	"dig": "σκάβω",
 	"dive": "βουτάω",
 	"drive_drive": "οδηγώ",
@@ -23,5 +22,7 @@
 	"sneeze": "φτερνίζομαι",
 	"spell_verb": "συλλαβίζω",
 	"spill": "χύνω",
-	"spoil": "χαλάω"
+	"spoil": "χαλάω",
+	"design_plan": "σχεδιάζω",
+	"design_style": "σχεδιάζω (στυλ)"
 }

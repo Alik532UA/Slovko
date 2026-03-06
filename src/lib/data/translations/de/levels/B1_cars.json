@@ -5,5 +5,7 @@
 	"insurance": "Versicherung",
 	"engine_motor": "Motor",
 	"fuel": "Treibstoff",
-	"signal": "Signal"
+	"signal": "Signal",
+	"battery_electric": "Batterie",
+	"battery_artillery": "Geschützbatterie"
 }

@@ -1,10 +1,8 @@
 ﻿{
-	"aunt": "θεία",
 	"aunt_paternal": "θεία",
 	"aunt_maternal": "θεία",
 	"brother_male": "αδελφός",
 	"colleague": "συνάδελφος",
-	"cousin": "ξάδερφος",
 	"granddaughter": "εγγονή",
 	"grandfather": "παππούς",
 	"grandmother": "γιαγιά",
@@ -15,5 +13,7 @@
 	"single": "ανύπαντρος",
 	"uncle": "θείος",
 	"uncle_paternal": "θείος",
-	"uncle_maternal": "θείος"
+	"uncle_maternal": "θείος",
+	"cousin_male": "ξάδερφος",
+	"cousin_female": "ξαδέρφη"
 }

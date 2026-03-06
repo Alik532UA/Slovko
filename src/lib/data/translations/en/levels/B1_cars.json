@@ -5,5 +5,7 @@
 	"insurance": "insurance",
 	"engine_motor": "engine",
 	"fuel": "fuel",
-	"signal": "signal"
+	"signal": "signal",
+	"battery_electric": "battery",
+	"battery_artillery": "battery"
 }

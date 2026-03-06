@@ -23,7 +23,6 @@
 	"seem": "schijnen",
 	"feel": "voelen",
 	"try": "proberen",
-	"leave": "verlaten",
 	"live": "leven",
 	"need": "nodig hebben",
 	"talk": "praten",
@@ -38,5 +37,7 @@
 	"stand": "staan",
 	"lose": "verliezen",
 	"thank_verb": "bedanken",
-	"help_verb": "helpen"
+	"help_verb": "helpen",
+	"leave_depart": "vertrekken",
+	"leave_behind": "laten"
 }

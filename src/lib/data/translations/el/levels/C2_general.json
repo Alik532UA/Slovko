@@ -1,6 +1,4 @@
 ﻿{
-	"aberration_sapuv": "παρέκκλιση",
-	"aberration_verirrung": "πλάνη",
 	"abject": "άθλιος",
 	"abnegation": "απάρνηση",
 	"abrade": "εκδέρνω",
@@ -127,5 +125,7 @@
 	"apprehend_alamaq": "κατανοώ",
 	"apprehensive": "ανήσυχος",
 	"apprise": "ενημερώνω",
-	"approbation": "έγκριση"
+	"approbation": "έγκριση",
+	"aberration_deviation": "παρέκκλιση",
+	"aberration_mental": "πλάνη"
 }

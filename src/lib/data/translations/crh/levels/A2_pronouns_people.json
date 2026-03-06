@@ -1,5 +1,4 @@
 ﻿{
-	"lady": "hanım",
 	"adult": "büyük",
 	"guy": "adam",
 	"kid": "bala",
@@ -18,5 +17,7 @@
 	"no_one": "iç kimse",
 	"ourselves": "özümüz",
 	"somebody": "kimse",
-	"yourselves": "özüñiz"
+	"yourselves": "özüñiz",
+	"lady_noble": "hanımefendi",
+	"lady_woman": "hanım"
 }

@@ -5,5 +5,7 @@
 	"insurance": "sigorta",
 	"engine_motor": "motor",
 	"fuel": "yaqıt",
-	"signal": "işaret"
+	"signal": "işaret",
+	"battery_electric": "batareya",
+	"battery_artillery": "topçu batareyası"
 }

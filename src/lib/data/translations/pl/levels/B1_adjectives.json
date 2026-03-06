@@ -1,4 +1,4 @@
-{
+﻿{
 	"achievement": "osiągnięcie",
 	"advertisement": "reklama",
 	"aggressive": "agresywny",
@@ -9,7 +9,6 @@
 	"annual": "doroczny",
 	"anxious": "zaniepokojony",
 	"appeal": "apelować",
-	"argument": "argument",
 	"artificial": "sztuczny",
 	"assistant": "asystent",
 	"automatic": "automatyczny",
@@ -138,5 +137,7 @@
 	"us_dative": "nam",
 	"various": "różny",
 	"you_plural": "wy",
-	"your_plural": "wasz"
+	"your_plural": "wasz",
+	"argument_reason": "argument",
+	"argument_dispute": "kłótnia"
 }

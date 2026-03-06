@@ -1,6 +1,4 @@
 ﻿{
-	"aberration_sapuv": "sapuv",
-	"aberration_verirrung": "aberratsiya",
 	"abject": "alçaq",
 	"abnegation": "fedakârlıq",
 	"abrade": "aşındırmaq",
@@ -127,5 +125,7 @@
 	"apiary": "arıhane",
 	"apocalyptic": "qıyamet",
 	"apostate": "murtad",
-	"apotheosis_apotheose": "ideal"
+	"apotheosis_apotheose": "ideal",
+	"aberration_deviation": "sapuv",
+	"aberration_mental": "yañlışlıq"
 }

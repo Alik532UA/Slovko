@@ -1,6 +1,4 @@
 ﻿{
-	"aberration_sapuv": "afwijking",
-	"aberration_verirrung": "afwijking",
 	"abject": "ellendig",
 	"abnegation": "verloochening",
 	"abrade": "schuren",
@@ -127,5 +125,7 @@
 	"apprehend_alamaq": "begrijpen",
 	"apprehensive": "bezorgd",
 	"apprise": "op de hoogte stellen",
-	"approbation": "goedkeuring"
+	"approbation": "goedkeuring",
+	"aberration_deviation": "afwijking",
+	"aberration_mental": "dwaling"
 }

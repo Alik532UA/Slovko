@@ -1,11 +1,9 @@
 ﻿{
-	"abolish": "abschaffen",
 	"academy": "Akademie",
 	"accent": "Akzent",
 	"acceptance": "Akzeptanz",
 	"accommodation_yerleme": "Unterkunft",
 	"accordance": "Übereinstimmung",
-	"accord": "Akkord",
 	"accountability": "Verantwortlichkeit",
 	"accumulation": "Ansammlung",
 	"accusation": "Anschuldigung",
@@ -14,7 +12,6 @@
 	"actuality": "Wirklichkeit",
 	"adherence": "Einhaltung",
 	"adjournment": "Vertagung",
-	"adjustment": "Anpassung",
 	"admiration": "Bewunderung",
 	"admission_kiri": "Eintritt",
 	"adoption_adoptie": "Annahme an Kindes Statt",
@@ -240,5 +237,10 @@
 	"exert_pressure": "ausüben",
 	"exhale_air": "ausatmen",
 	"exile_leader": "verbannen",
-	"affair": "Angelegenheit"
+	"affair": "Angelegenheit",
+	"abolish_system": "aufheben",
+	"accord_agreement": "Abkommen",
+	"accord_harmony": "Einklang",
+	"adjustment_change": "Anpassung",
+	"adjustment_setting": "Einstellung"
 }

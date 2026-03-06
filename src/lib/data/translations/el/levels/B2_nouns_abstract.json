@@ -13,8 +13,6 @@
 	"angle": "γωνία",
 	"anticipation": "προσδοκία",
 	"anxiety": "άγχος",
-	"application_request": "αίτηση",
-	"application_software": "εφαρμογή",
 	"appointment_job": "διορισμός",
 	"appointment_meeting": "ραντεβού",
 	"appreciation": "εκτίμηση",
@@ -28,7 +26,6 @@
 	"assurance": "διαβεβαίωση",
 	"attraction_feature": "αξιοθέατο",
 	"attraction_feeling": "έλξη",
-	"authority_person": "αρχή",
 	"awareness": "επίγνωση",
 	"capacity": "χωρητικότητα",
 	"circumstance": "περίσταση",
@@ -91,10 +88,11 @@
 	"equation_noun": "εξίσωση",
 	"erosion": "διάβρωση",
 	"essence": "ουσία",
-	"establishment_noun": "ίδρυση",
 	"evaluation": "αξιολόγηση",
 	"query_question": "ρωτώ",
 	"sanction_allow": "επιβάλλω κυρώσεις",
 	"sense_feel": "αισθάνομαι",
-	"supplement_add": "συμπληρώνω"
+	"supplement_add": "συμπληρώνω",
+	"establishment_institution": "ίδρυμα",
+	"establishment_founding": "ίδρυση"
 }

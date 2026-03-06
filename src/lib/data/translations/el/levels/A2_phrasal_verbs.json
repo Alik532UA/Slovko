@@ -17,9 +17,7 @@
 	"get_on_transport": "ανεβαίνω",
 	"get_up": "σηκώνομαι",
 	"give_back": "επιστρέφω",
-	"give_up_habit": "παραιτούμαι",
 	"go_out": "βγαίνω έξω",
-	"grow_up": "μεγαλώνω",
 	"look_after": "φροντίζω",
 	"look_at": "κοιτάζω",
 	"look_for": "ψάχνω",
@@ -36,5 +34,9 @@
 	"write_down": "σημειώνω",
 	"come_on": "έλα",
 	"look_forward_to": "ανυπομονώ",
-	"turn_down_volume": "χαμηλώνω"
+	"turn_down_volume": "χαμηλώνω",
+	"give_up_quit": "παραιτούμαι",
+	"give_up_surrender": "παραδίδομαι",
+	"grow_up_mature": "ωριμάζω",
+	"grow_up_physical": "μεγαλώνω"
 }

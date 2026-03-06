@@ -47,11 +47,12 @@
 	"safe": "ασφαλής",
 	"dangerous": "επικίνδυνος",
 	"same": "ίδιος",
-	"different": "διαφορετικός",
 	"important": "σημαντικός",
 	"possible": "πιθανός",
 	"late": "αργά",
 	"early": "νωρίς",
 	"wrong": "λάθος",
-	"young": "νέος"
+	"young": "νέος",
+	"different_other": "διαφορετικός",
+	"different_various": "ποικίλος"
 }

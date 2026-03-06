@@ -5,5 +5,7 @@
 	"insurance": "ασφάλεια",
 	"engine_motor": "μηχανή",
 	"fuel": "καύσιμο",
-	"signal": "σήμα"
+	"signal": "σήμα",
+	"battery_electric": "μπαταρία",
+	"battery_artillery": "πυροβολαρχία"
 }

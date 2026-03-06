@@ -17,9 +17,7 @@
 	"get_on_transport": "einsteigen",
 	"get_up": "aufstehen",
 	"give_back": "zurückgeben",
-	"give_up_habit": "aufgeben",
 	"go_out": "ausgehen",
-	"grow_up": "aufwachsen",
 	"look_after": "aufpassen auf",
 	"look_at": "anschauen",
 	"look_for": "suchen",
@@ -36,5 +34,9 @@
 	"write_down": "aufschreiben",
 	"come_on": "komm schon",
 	"look_forward_to": "sich freuen auf",
-	"turn_down_volume": "leiser stellen"
+	"turn_down_volume": "leiser stellen",
+	"give_up_quit": "aufhören",
+	"give_up_surrender": "aufgeben",
+	"grow_up_mature": "heranwachsen",
+	"grow_up_physical": "aufwachsen"
 }

@@ -1,13 +1,11 @@
 ﻿{
 	"abide_rules": "uymaq",
-	"abolish": "bitirmek",
 	"abolish_law": "bitirmek",
 	"academy": "akademiya",
 	"accelerate_speed": "tezleştirmek",
 	"accent": "aksent",
 	"acceptance": "qabul etüv",
 	"accommodation_yerleme": "yerleşme",
-	"accord": "anlaşma",
 	"accordance": "uyğunlıq",
 	"accountability": "mesuliyet",
 	"accumulate_wealth": "toplamaq",
@@ -20,7 +18,6 @@
 	"actuality": "aqiqat",
 	"adherence": "bağlılıq",
 	"adjournment": "tehir",
-	"adjustment": "ayarlama",
 	"admiration": "hayranlıq",
 	"admission_kiri": "kiriş",
 	"adoption_adoptie": "evlâtlıqqa aluv",
@@ -240,5 +237,10 @@
 	"exemplify_standard": "numüne olmaq",
 	"exert_pressure": "qullanmaq",
 	"exhale_air": "nefes bermek",
-	"exile_leader": "sürgün etmek"
+	"exile_leader": "sürgün etmek",
+	"abolish_system": "yoq etmek",
+	"accord_agreement": "anlaşma",
+	"accord_harmony": "uyğunlıq",
+	"adjustment_change": "ayarlama",
+	"adjustment_setting": "tüzetüv"
 }

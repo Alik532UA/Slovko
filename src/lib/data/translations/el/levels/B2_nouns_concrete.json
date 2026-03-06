@@ -11,8 +11,6 @@
 	"architecture": "αρχιτεκτονική",
 	"area_place": "περιοχή",
 	"area_subject": "τομέας",
-	"arm_body": "μπράτσο",
-	"arm_weapon": "όπλο",
 	"artist": "καλλιτέχνης",
 	"aside": "στην άκρη",
 	"assure": "διαβεβαιώνω",
@@ -312,5 +310,9 @@
 	"acid": "οξύ",
 	"medicine_substance": "φάρμακο",
 	"draft_outline": "προσχέδιο",
-	"deliberate_issue": "σκόπιμο ζήτημα"
+	"deliberate_issue": "σκόπιμο ζήτημα",
+	"abuse_misuse": "κατάχρηση",
+	"abuse_insult": "ύβρις",
+	"draft_sketch": "προσχέδιο",
+	"draft_wind": "ρεύμα αέρα"
 }

@@ -1,11 +1,9 @@
 ﻿{
-	"abolish": "καταργώ",
 	"academy": "ακαδημία",
 	"accent": "προφορά",
 	"acceptance": "αποδοχή",
 	"accommodation_yerleme": "τακτοποίηση",
 	"accordance": "συμφωνία",
-	"accord": "συμφωνία",
 	"accountability": "λογοδοσία",
 	"accumulation": "συσσώρευση",
 	"accusation": "κατηγορία",
@@ -14,7 +12,6 @@
 	"actuality": "πραγματικότητα",
 	"adherence": "προσκόλληση",
 	"adjournment": "αναβολή",
-	"adjustment": "προσαρμογή",
 	"admiration": "θαυμασμός",
 	"admission_kiri": "είσοδος",
 	"adoption_adoptie": "υιοθεσία",
@@ -241,5 +238,10 @@
 	"exhale_air": "εκπνέω",
 	"exile_leader": "εξορίζω",
 	"affair": "υπόθεση",
-	"constitute_majority": "αποτελώ"
+	"constitute_majority": "αποτελώ",
+	"abolish_system": "καταργώ (σύστημα)",
+	"accord_agreement": "συμφωνία",
+	"accord_harmony": "αρμονία",
+	"adjustment_change": "προσαρμογή",
+	"adjustment_setting": "ρύθμιση"
 }

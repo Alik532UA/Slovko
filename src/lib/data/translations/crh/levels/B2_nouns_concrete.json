@@ -39,8 +39,6 @@
 	"architecture": "mimarlıq",
 	"area_place": "alan",
 	"area_subject": "alan",
-	"arm_body": "qol",
-	"arm_weapon": "silâ",
 	"artist": "ressam",
 	"aside": "bir yana",
 	"assure": "inandırmaq",
@@ -315,5 +313,9 @@
 	"encounter_difficulty": "rastkelmek",
 	"entail_cost": "masraf kerekirmek",
 	"erode_confidence": "bozmaq",
-	"exceed_expectations": "keçmek"
+	"exceed_expectations": "keçmek",
+	"abuse_misuse": "suiistimal",
+	"abuse_insult": "aqaret",
+	"draft_sketch": "taslaq",
+	"draft_wind": "yel"
 }

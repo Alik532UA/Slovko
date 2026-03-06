@@ -4,9 +4,7 @@
 	"where": "qayda",
 	"in": "içinde",
 	"on": "üstünde",
-	"at": "anda",
 	"to": "ge / qa",
-	"from": "dan / den",
 	"with": "ile",
 	"without": "-sız / -siz",
 	"for": "içün",
@@ -16,5 +14,9 @@
 	"often": "sıq-sıq",
 	"sometimes": "bazıda",
 	"usually": "ekseriyetle",
-	"under": "astında"
+	"under": "astında",
+	"at_place": "anda",
+	"at_time": "saat",
+	"from_origin": "dan",
+	"from_time": "itibaren"
 }

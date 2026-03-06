@@ -3,7 +3,6 @@
 	"pick_choose": "pick",
 	"beat_win": "beat",
 	"chat_talk": "chat",
-	"design_verb": "design",
 	"dig": "dig",
 	"dive": "dive",
 	"film_verb": "film",
@@ -22,5 +21,7 @@
 	"sneeze": "sneeze",
 	"spell_verb": "spell",
 	"spill": "spill",
-	"spoil": "spoil"
+	"spoil": "spoil",
+	"design_plan": "design",
+	"design_style": "design"
 }

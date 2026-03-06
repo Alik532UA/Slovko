@@ -47,11 +47,12 @@
 	"safe": "безпечний",
 	"dangerous": "небезпечний",
 	"same": "такий самий",
-	"different": "інший / різний",
 	"important": "важливий",
 	"possible": "можливий",
 	"late": "пізно",
 	"early": "рано",
 	"wrong": "неправильний",
-	"young": "молодий"
+	"young": "молодий",
+	"different_other": "інший",
+	"different_various": "різний"
 }

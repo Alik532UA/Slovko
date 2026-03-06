@@ -1,4 +1,4 @@
-{
+﻿{
 	"ability": "zdolność",
 	"advantage": "zaleta",
 	"attitude": "postawa",
@@ -9,16 +9,12 @@
 	"difficulty": "trudność",
 	"direction": "kierunek",
 	"discussion": "dyskusja",
-	"effect": "efekt",
 	"effort": "wysiłek",
 	"emotion": "emocja",
 	"explanation": "wyjaśnienie",
-	"failure": "porażka",
 	"faith": "wiara",
-	"fault": "wina",
 	"freedom": "wolność",
 	"friendship": "przyjaźń",
-	"growth": "wzrost",
 	"habit": "nawyk",
 	"happiness": "szczęście",
 	"harm": "szkoda",
@@ -54,7 +50,6 @@
 	"shadow": "cień",
 	"shame": "wstyd",
 	"shock": "szok",
-	"sight": "wzrok",
 	"signal": "sygnał",
 	"signal_phone": "zasięg",
 	"silence": "cisza",
@@ -72,5 +67,15 @@
 	"war": "wojna",
 	"weakness": "słabość",
 	"wealth": "bogactwo",
-	"youth": "młodość"
+	"youth": "młodość",
+	"effect_result": "efekt",
+	"effect_influence": "wpływ",
+	"failure_lack": "niepowodzenie",
+	"failure_defeat": "klęska",
+	"fault_blame": "wina",
+	"fault_defect": "usterka",
+	"growth_physical": "wzrost",
+	"growth_development": "rozwój",
+	"sight_vision": "wzrok",
+	"sight_view": "widok"
 }

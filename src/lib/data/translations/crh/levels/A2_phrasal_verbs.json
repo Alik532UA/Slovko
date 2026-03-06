@@ -17,9 +17,7 @@
 	"get_on_transport": "minmek",
 	"get_up": "turmaq",
 	"give_back": "qaytarıp bermek",
-	"give_up_habit": "vazgeçmek",
 	"go_out": "tışarı çıqmaq",
-	"grow_up": "ösmek",
 	"look_after": "baqmaq",
 	"look_at": "baqmaq",
 	"look_for": "qıdırmaq",
@@ -36,5 +34,9 @@
 	"write_down": "yazmaq",
 	"come_on": "hadi!",
 	"look_forward_to": "sabırsızlanmaq",
-	"turn_down_volume": "sesini qısmaq"
+	"turn_down_volume": "sesini qısmaq",
+	"give_up_quit": "vazgeçmek",
+	"give_up_surrender": "teslim olmaq",
+	"grow_up_mature": "ösmek",
+	"grow_up_physical": "boylanmaq"
 }

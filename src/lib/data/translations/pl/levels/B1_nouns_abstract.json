@@ -1,4 +1,4 @@
-{
+﻿{
 	"access": "dostęp",
 	"access_code": "dostęp",
 	"accommodation_living": "zakwaterowanie",
@@ -8,12 +8,9 @@
 	"aim": "cel",
 	"ambition": "ambicja",
 	"anger": "gniew",
-	"appearance": "wygląd",
-	"application_form": "wniosek",
 	"atmosphere": "atmosfera",
 	"attention": "uwaga",
 	"audience": "publiczność",
-	"authority_power": "władza",
 	"balance": "równowaga",
 	"basis": "podstawa",
 	"belief": "wiara",
@@ -34,7 +31,6 @@
 	"condition_term": "warunek",
 	"conference": "konferencja",
 	"confidence": "pewność",
-	"confidence_trust": "zaufanie",
 	"conflict": "konflikt",
 	"connection": "połączenie",
 	"connection_internet": "połączenie",
@@ -156,5 +152,14 @@
 	"will_noun": "wola",
 	"wish": "życzenie",
 	"witness_person": "świadek",
-	"work_out": "ćwiczyć"
+	"work_out": "ćwiczyć",
+	"appearance_look": "wygląd",
+	"appearance_arrival": "pojawienie się",
+	"authority_power": "władza",
+	"authority_expert": "autorytet",
+	"confidence_trust": "zaufanie",
+	"confidence_assurance": "pewność siebie",
+	"application_request": "wniosek / podanie",
+	"application_software": "aplikacja / oprogramowanie",
+	"authority_person": "autorytet"
 }

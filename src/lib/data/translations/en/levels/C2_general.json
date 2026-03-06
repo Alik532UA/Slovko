@@ -1,6 +1,4 @@
 ﻿{
-	"aberration_sapuv": "aberration",
-	"aberration_verirrung": "aberration",
 	"abject": "abject",
 	"abnegation": "abnegation",
 	"abrade": "abrade",
@@ -127,5 +125,7 @@
 	"apprehend_alamaq": "apprehend",
 	"apprehensive": "apprehensive",
 	"apprise": "apprise",
-	"approbation": "approbation"
+	"approbation": "approbation",
+	"aberration_deviation": "aberration",
+	"aberration_mental": "aberration"
 }

@@ -1,11 +1,9 @@
 ﻿{
-	"abolish": "abolish",
 	"academy": "academy",
 	"accent": "accent",
 	"acceptance": "acceptance",
 	"accommodation_yerleme": "accommodation",
 	"accordance": "accordance",
-	"accord": "accord",
 	"accountability": "accountability",
 	"accumulation": "accumulation",
 	"accusation": "accusation",
@@ -14,7 +12,6 @@
 	"actuality": "actuality",
 	"adherence": "adherence",
 	"adjournment": "adjournment",
-	"adjustment": "adjustment",
 	"admiration": "admiration",
 	"admission_kiri": "admission",
 	"adoption_adoptie": "adoption",
@@ -240,5 +237,10 @@
 	"exert_pressure": "exert",
 	"exhale_air": "exhale",
 	"exile_leader": "exile",
-	"affair": "affair"
+	"affair": "affair",
+	"abolish_system": "abolish",
+	"accord_agreement": "accord",
+	"accord_harmony": "accord",
+	"adjustment_change": "adjustment",
+	"adjustment_setting": "adjustment"
 }

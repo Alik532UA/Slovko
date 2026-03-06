@@ -1,13 +1,11 @@
-﻿﻿{
+﻿{
 	"abide_rules": "przestrzegać zasad",
-	"abolish": "znosić / obalać",
-	"abolish_law": "uchylać prawo",
+	"abolish_law": "znosić",
 	"academy": "akademia",
 	"accelerate_speed": "przyspieszać",
 	"accent": "akcent",
 	"acceptance": "akceptacja / przyjęcie",
 	"accommodation_yerleme": "zakwaterowanie",
-	"accord": "porozumienie / zgoda",
 	"accordance": "zgodność",
 	"accountability": "odpowiedzialność",
 	"accumulate_wealth": "gromadzić bogactwo",
@@ -20,7 +18,6 @@
 	"actuality": "rzeczywistość",
 	"adherence": "przestrzeganie / wierność",
 	"adjournment": "odroczenie / przełożenie",
-	"adjustment": "regulacja / dostosowanie",
 	"admiration": "podziw",
 	"admission_kiri": "przyznanie / wstęp",
 	"adoption_adoptie": "adopcja / przyjęcie",
@@ -240,5 +237,10 @@
 	"exemplify_standard": "ilustrować standard",
 	"exert_pressure": "wywierać presję",
 	"exhale_air": "wydychać powietrze",
-	"exile_leader": "wyganiać lidera"
+	"exile_leader": "wyganiać lidera",
+	"abolish_system": "obalać",
+	"accord_agreement": "porozumienie",
+	"accord_harmony": "zgoda",
+	"adjustment_change": "regulacja",
+	"adjustment_setting": "dostosowanie"
 }

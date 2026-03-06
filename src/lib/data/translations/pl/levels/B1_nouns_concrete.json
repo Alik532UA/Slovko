@@ -1,4 +1,4 @@
-{
+﻿{
 	"abandon": "porzucać",
 	"absorb": "wchłaniać",
 	"accuse": "oskarżać",
@@ -28,7 +28,6 @@
 	"approach_verb": "zbliżać się",
 	"approve": "zatwierdzać",
 	"architect": "architekt",
-	"area": "obszar",
 	"argue_dispute": "kłócić się",
 	"article": "artykuł",
 	"ashamed": "zawstydzony",
@@ -218,7 +217,6 @@
 	"dose": "dawka",
 	"dress_up": "stroić się",
 	"drop_off": "podrzucić",
-	"drug": "lek",
 	"due_expected": "należny",
 	"dust": "kurz",
 	"earnings": "zarobki",
@@ -572,7 +570,6 @@
 	"treat_behave": "traktować",
 	"trial_court": "proces",
 	"trial_test": "próba",
-	"tube": "rura",
 	"turn_direction": "skręt",
 	"turn_into": "zmieniać się",
 	"turn_order": "kolej",
@@ -629,5 +626,11 @@
 	"yeah": "tak",
 	"you_singular": "ty",
 	"your_singular": "twój",
-	"yourself": "siebie"
+	"yourself": "siebie",
+	"area_territory": "obszar",
+	"area_field": "dziedzina",
+	"drug_medicine": "lek",
+	"drug_narcotic": "narkotyk",
+	"tube_subway": "metro",
+	"tube_pipe": "rura"
 }

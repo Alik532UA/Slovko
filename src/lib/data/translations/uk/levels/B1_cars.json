@@ -5,5 +5,7 @@
 	"insurance": "страхування",
 	"engine_motor": "двигун",
 	"fuel": "паливо",
-	"signal": "сигнал"
+	"signal": "сигнал",
+	"battery_electric": "акумулятор",
+	"battery_artillery": "батарея (гармат)"
 }

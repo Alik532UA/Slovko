@@ -14,8 +14,6 @@
 	"angle": "hoek",
 	"anticipation": "verwachting",
 	"anxiety": "angst",
-	"application_request": "sollicitatie",
-	"application_software": "applicatie",
 	"appointment_job": "benoeming",
 	"appointment_meeting": "afspraak",
 	"appreciation": "waardering",
@@ -29,7 +27,6 @@
 	"assurance": "verzekering",
 	"attraction_feature": "attractie",
 	"attraction_feeling": "attractie",
-	"authority_person": "autoriteit",
 	"awareness": "bewustzijn",
 	"capacity": "capaciteit",
 	"circumstance": "omstandigheid",
@@ -93,10 +90,11 @@
 	"equation_noun": "vergelijking",
 	"erosion": "erosie",
 	"essence": "essentie",
-	"establishment_noun": "oprichting / vestiging",
 	"evaluation": "evaluatie",
 	"query_question": "bevragen",
 	"sanction_allow": "bekrachtigen",
 	"sense_feel": "voelen",
-	"supplement_add": "aanvullen"
+	"supplement_add": "aanvullen",
+	"establishment_institution": "instelling",
+	"establishment_founding": "oprichting"
 }

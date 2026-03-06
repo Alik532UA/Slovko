@@ -28,7 +28,6 @@
 	"approach_verb": "approach",
 	"approve": "approve",
 	"architect": "architect",
-	"area": "area",
 	"argue_dispute": "argue",
 	"article": "article",
 	"ashamed": "ashamed",
@@ -218,7 +217,6 @@
 	"dose": "dose",
 	"dress_up": "dress up",
 	"drop_off": "drop off",
-	"drug": "drug",
 	"due_expected": "due",
 	"dust": "dust",
 	"earnings": "earnings",
@@ -569,7 +567,6 @@
 	"treat_behave": "treat",
 	"trial_court": "trial",
 	"trial_test": "trial",
-	"tube": "tube",
 	"turn_direction": "turn",
 	"turn_into": "turn into",
 	"turn_order": "turn",
@@ -625,5 +622,11 @@
 	"yeah": "yeah",
 	"you_singular": "you",
 	"your_singular": "your",
-	"yourself": "yourself"
+	"yourself": "yourself",
+	"area_territory": "area",
+	"area_field": "area",
+	"drug_medicine": "drug",
+	"drug_narcotic": "drug",
+	"tube_subway": "tube",
+	"tube_pipe": "tube"
 }

@@ -1,10 +1,8 @@
 ﻿{
-	"aunt": "Tante",
 	"aunt_paternal": "Tante",
 	"aunt_maternal": "Tante",
 	"brother_male": "Bruder",
 	"colleague": "Kollege",
-	"cousin": "Cousin",
 	"granddaughter": "Enkelin",
 	"grandfather": "Großvater",
 	"grandmother": "Großmutter",
@@ -15,5 +13,7 @@
 	"single": "ledig",
 	"uncle": "Onkel",
 	"uncle_paternal": "Onkel",
-	"uncle_maternal": "Onkel"
+	"uncle_maternal": "Onkel",
+	"cousin_male": "Cousin",
+	"cousin_female": "Cousine"
 }

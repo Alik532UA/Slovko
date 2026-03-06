@@ -47,11 +47,12 @@
 	"safe": "sicher",
 	"dangerous": "gefährlich",
 	"same": "gleich",
-	"different": "anders",
 	"important": "wichtig",
 	"possible": "möglich",
 	"late": "spät",
 	"early": "früh",
 	"wrong": "falsch",
-	"young": "jung"
+	"young": "jung",
+	"different_other": "anders",
+	"different_various": "verschieden"
 }

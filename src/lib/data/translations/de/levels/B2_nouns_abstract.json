@@ -13,8 +13,6 @@
 	"angle": "Winkel",
 	"anticipation": "Erwartung",
 	"anxiety": "Angst",
-	"application_request": "Bewerbung",
-	"application_software": "Anwendung",
 	"appointment_job": "Ernennung",
 	"appointment_meeting": "Termin",
 	"appreciation": "Wertschätzung",
@@ -28,7 +26,6 @@
 	"assurance": "Versicherung",
 	"attraction_feature": "Attraktion",
 	"attraction_feeling": "Attraktion",
-	"authority_person": "Autorität",
 	"awareness": "Bewusstsein",
 	"capacity": "Kapazität",
 	"circumstance": "Umstand",
@@ -91,10 +88,11 @@
 	"equation_noun": "Gleichung",
 	"erosion": "Erosion",
 	"essence": "Essenz",
-	"establishment_noun": "Einrichtung / Gründung",
 	"evaluation": "Bewertung",
 	"query_question": "abfragen",
 	"sanction_allow": "genehmigen",
 	"sense_feel": "fühlen",
-	"supplement_add": "ergänzen"
+	"supplement_add": "ergänzen",
+	"establishment_institution": "Einrichtung",
+	"establishment_founding": "Gründung"
 }

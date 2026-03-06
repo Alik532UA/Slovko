@@ -9,7 +9,6 @@
 	"annual": "jährlich",
 	"anxious": "besorgt",
 	"appeal": "appellieren",
-	"argument": "Argument/Streit",
 	"artificial": "künstlich",
 	"assistant": "Assistent",
 	"automatic": "automatisch",
@@ -139,5 +138,7 @@
 	"us_dative": "uns",
 	"various": "verschieden",
 	"you_plural": "ihr",
-	"your_plural": "euer"
+	"your_plural": "euer",
+	"argument_reason": "Argument",
+	"argument_dispute": "Streit"
 }

@@ -1,6 +1,4 @@
-﻿﻿{
-	"aberration_sapuv": "aberracja / odchylenie",
-	"aberration_verirrung": "anomalia / zboczenie",
+﻿{
 	"abject": "nędzny / nieszczęsny",
 	"abnegation": "abnegacja / wyrzeczenie",
 	"abrade": "ścierać / ocierać",
@@ -127,5 +125,7 @@
 	"apprehend_alamaq": "pojmować / rozumieć",
 	"apprehensive": "pełen obaw / lękliwy",
 	"apprise": "powiadamiać / informować",
-	"approbation": "aprobata / pochwała"
+	"approbation": "aprobata / pochwała",
+	"aberration_deviation": "aberracja",
+	"aberration_mental": "odchylenie"
 }

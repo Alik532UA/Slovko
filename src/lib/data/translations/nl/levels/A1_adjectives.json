@@ -47,11 +47,12 @@
 	"safe": "veilig",
 	"dangerous": "gevaarlijk",
 	"same": "hetzelfde",
-	"different": "anders",
 	"important": "belangrijk",
 	"possible": "mogelijk",
 	"late": "laat",
 	"early": "vroeg",
 	"wrong": "fout",
-	"young": "jong"
+	"young": "jong",
+	"different_other": "anders",
+	"different_various": "verschillend"
 }

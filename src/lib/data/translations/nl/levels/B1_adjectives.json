@@ -9,7 +9,6 @@
 	"annual": "jaarlijks",
 	"anxious": "ongerust",
 	"appeal": "aanspreken",
-	"argument": "argument/ruzie",
 	"artificial": "kunstmatig",
 	"assistant": "assistent",
 	"automatic": "automatisch",
@@ -139,5 +138,7 @@
 	"us_dative": "ons",
 	"various": "verscheidene",
 	"you_plural": "jullie",
-	"your_plural": "jullie"
+	"your_plural": "jullie",
+	"argument_reason": "argument",
+	"argument_dispute": "ruzie"
 }

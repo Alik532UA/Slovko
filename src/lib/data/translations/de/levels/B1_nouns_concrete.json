@@ -28,7 +28,6 @@
 	"approach_verb": "nähern",
 	"approve": "genehmigen",
 	"architect": "Architekt",
-	"area": "Bereich",
 	"argue_dispute": "streiten",
 	"article": "Artikel",
 	"ashamed": "beschämt",
@@ -213,7 +212,6 @@
 	"dose": "Dosis",
 	"dress_up": "sich schick machen",
 	"drop_off": "absetzen",
-	"drug": "Medikament",
 	"due_expected": "fällig",
 	"dust": "Staub",
 	"earnings": "Verdienst",
@@ -564,7 +562,6 @@
 	"treat_behave": "behandeln",
 	"trial_court": "Prozess",
 	"trial_test": "Versuch",
-	"tube": "U-Bahn",
 	"turn_direction": "Drehung",
 	"turn_into": "verwandeln in",
 	"turn_order": "Reihe",
@@ -620,5 +617,11 @@
 	"yeah": "ja",
 	"you_singular": "du",
 	"your_singular": "dein",
-	"yourself": "dich selbst"
+	"yourself": "dich selbst",
+	"area_territory": "Gebiet",
+	"area_field": "Bereich",
+	"drug_medicine": "Medikament",
+	"drug_narcotic": "Droge",
+	"tube_subway": "U-Bahn",
+	"tube_pipe": "Rohr"
 }

@@ -17,9 +17,7 @@
 	"get_on_transport": "сідати",
 	"get_up": "вставати",
 	"give_back": "віддавати",
-	"give_up_habit": "здаватися / кидати",
 	"go_out": "виходити (гуляти)",
-	"grow_up": "рости / дорослішати",
 	"look_after": "доглядати",
 	"look_at": "дивитися на",
 	"look_for": "шукати",
@@ -36,5 +34,9 @@
 	"write_down": "записувати",
 	"come_on": "давай!",
 	"look_forward_to": "з нетерпінням чекати",
-	"turn_down_volume": "зменшити гучність"
+	"turn_down_volume": "зменшити гучність",
+	"give_up_quit": "кинути",
+	"give_up_surrender": "здатися",
+	"grow_up_mature": "дорослішати",
+	"grow_up_physical": "рости"
 }

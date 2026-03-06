@@ -28,7 +28,6 @@
 	"approach_verb": "πλησιάζω",
 	"approve": "εγκρίνω",
 	"architect": "αρχιτέκτονας",
-	"area": "περιοχή",
 	"argue_dispute": "διαφωνώ",
 	"article": "άρθρο",
 	"ashamed": "ντροπιασμένος",
@@ -218,7 +217,6 @@
 	"dose": "δόση",
 	"dress_up": "στολίζομαι",
 	"drop_off": "αφήνω κάποιον (με το αυτοκίνητο)",
-	"drug": "φάρμακο",
 	"due_expected": "αναμενόμενος",
 	"dust": "σκόνη",
 	"earnings": "κέρδη",
@@ -563,7 +561,6 @@
 	"treat_behave": "φέρομαι",
 	"trial_court": "δίκη",
 	"trial_test": "δοκιμή",
-	"tube": "σωλήνας",
 	"turn_direction": "στρίβω",
 	"turn_into": "μετατρέπομαι σε",
 	"turn_order": "σειρά",
@@ -618,5 +615,11 @@
 	"yeah": "ναι",
 	"you_singular": "εσύ",
 	"your_singular": "δικός σου",
-	"yourself": "ο εαυτός σου"
+	"yourself": "ο εαυτός σου",
+	"area_territory": "περιοχή",
+	"area_field": "τομέας",
+	"drug_medicine": "φάρμακο",
+	"drug_narcotic": "ναρκωτικό",
+	"tube_subway": "μετρό",
+	"tube_pipe": "σωλήνας"
 }

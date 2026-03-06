@@ -17,9 +17,7 @@
 	"get_on_transport": "get on",
 	"get_up": "get up",
 	"give_back": "give back",
-	"give_up_habit": "give up",
 	"go_out": "go out",
-	"grow_up": "grow up",
 	"look_after": "look after",
 	"look_at": "look at",
 	"look_for": "look for",
@@ -36,5 +34,9 @@
 	"write_down": "write down",
 	"come_on": "come on",
 	"look_forward_to": "look forward to",
-	"turn_down_volume": "turn down"
+	"turn_down_volume": "turn down",
+	"give_up_quit": "give up",
+	"give_up_surrender": "give up",
+	"grow_up_mature": "grow up",
+	"grow_up_physical": "grow up"
 }

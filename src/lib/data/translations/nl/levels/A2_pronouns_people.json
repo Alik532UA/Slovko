@@ -1,5 +1,4 @@
 ﻿{
-	"lady": "dame",
 	"adult": "volwassene",
 	"guy": "vent",
 	"kid": "kind",
@@ -18,5 +17,7 @@
 	"no_one": "niemand",
 	"ourselves": "onszelf",
 	"somebody": "iemand",
-	"yourselves": "jezelf"
+	"yourselves": "jezelf",
+	"lady_noble": "dame",
+	"lady_woman": "mevrouw"
 }

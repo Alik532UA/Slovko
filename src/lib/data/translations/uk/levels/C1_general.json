@@ -1,11 +1,9 @@
 ﻿{
-	"abolish": "скасовувати",
 	"academy": "академія",
 	"accent": "акцент",
 	"acceptance": "прийняття",
 	"accommodation_yerleme": "розміщення",
 	"accordance": "відповідність",
-	"accord": "згода",
 	"accountability": "підзвітність",
 	"accumulation": "накопичення",
 	"accusation": "звинувачення",
@@ -14,7 +12,6 @@
 	"actuality": "дійсність",
 	"adherence": "дотримання",
 	"adjournment": "відкладення",
-	"adjustment": "регулювання",
 	"admiration": "захоплення",
 	"admission_kiri": "визнання",
 	"adoption_adoptie": "прийняття",
@@ -241,5 +238,10 @@
 	"exert_pressure": "чинити",
 	"exhale_air": "видихати",
 	"exile_leader": "виганяти",
-	"affair": "справа"
+	"affair": "справа",
+	"abolish_system": "ліквідовувати",
+	"accord_agreement": "згода",
+	"accord_harmony": "гармонія",
+	"adjustment_change": "регулювання",
+	"adjustment_setting": "налаштування"
 }

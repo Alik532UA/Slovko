@@ -9,7 +9,6 @@
 	"annual": "annual",
 	"anxious": "anxious",
 	"appeal": "appeal",
-	"argument": "argument",
 	"artificial": "artificial",
 	"assistant": "assistant",
 	"automatic": "automatic",
@@ -138,5 +137,7 @@
 	"us_dative": "us",
 	"various": "various",
 	"you_plural": "you",
-	"your_plural": "your"
+	"your_plural": "your",
+	"argument_reason": "argument",
+	"argument_dispute": "argument"
 }

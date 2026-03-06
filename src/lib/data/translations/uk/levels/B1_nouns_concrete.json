@@ -28,7 +28,6 @@
 	"approach_verb": "наближатися",
 	"approve": "схвалювати",
 	"architect": "архітектор",
-	"area": "територія/область",
 	"argue_dispute": "сперечатися",
 	"article": "стаття",
 	"ashamed": "соромно",
@@ -216,7 +215,6 @@
 	"dose": "доза",
 	"dress_up": "наряджатися",
 	"drop_off": "підвезти",
-	"drug": "ліки / наркотик",
 	"due_expected": "належний",
 	"dust": "пил",
 	"earnings": "заробіток",
@@ -567,7 +565,6 @@
 	"treat_behave": "ставитися",
 	"trial_court": "судовий процес",
 	"trial_test": "випробування",
-	"tube": "метро / труба",
 	"turn_direction": "поворот",
 	"turn_into": "перетворитися на",
 	"turn_order": "черга",
@@ -623,5 +620,11 @@
 	"yeah": "так (розмовне)",
 	"you_singular": "ти",
 	"your_singular": "твій",
-	"yourself": "себе"
+	"yourself": "себе",
+	"area_territory": "територія",
+	"area_field": "галузь",
+	"drug_medicine": "ліки",
+	"drug_narcotic": "наркотик",
+	"tube_subway": "метро",
+	"tube_pipe": "труба"
 }

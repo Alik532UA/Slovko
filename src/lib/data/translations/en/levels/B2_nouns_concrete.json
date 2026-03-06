@@ -11,8 +11,6 @@
 	"architecture": "architecture",
 	"area_place": "area",
 	"area_subject": "area",
-	"arm_body": "arm",
-	"arm_weapon": "arm",
 	"artist": "artist",
 	"aside": "aside",
 	"assure": "assure",
@@ -312,5 +310,9 @@
 	"acid": "acid",
 	"medicine_substance": "medicine",
 	"draft_outline": "draft outline",
-	"deliberate_issue": "deliberate issue"
+	"deliberate_issue": "deliberate issue",
+	"abuse_misuse": "abuse",
+	"abuse_insult": "abuse",
+	"draft_sketch": "draft",
+	"draft_wind": "draft"
 }

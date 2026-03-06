@@ -11,8 +11,6 @@
 	"architecture": "Architektur",
 	"area_place": "Bereich",
 	"area_subject": "Bereich",
-	"arm_body": "Arm",
-	"arm_weapon": "Waffe",
 	"artist": "Künstler",
 	"aside": "beiseite",
 	"assure": "versichern",
@@ -312,5 +310,9 @@
 	"acid": "Säure",
 	"medicine_substance": "Medizin",
 	"draft_outline": "entwerfen",
-	"deliberate_issue": "beraten"
+	"deliberate_issue": "beraten",
+	"abuse_misuse": "Missbrauch",
+	"abuse_insult": "Beleidigung",
+	"draft_sketch": "Entwurf",
+	"draft_wind": "Durchzug"
 }

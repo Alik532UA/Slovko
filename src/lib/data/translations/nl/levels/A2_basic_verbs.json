@@ -3,7 +3,6 @@
 	"pick_choose": "kiezen",
 	"beat_win": "verslaan",
 	"chat_talk": "kletsen",
-	"design_verb": "ontwerpen",
 	"dig": "graven",
 	"dive": "duiken",
 	"film_verb": "filmen",
@@ -22,5 +21,7 @@
 	"sneeze": "niezen",
 	"spell_verb": "spellen",
 	"spill": "morsen",
-	"spoil": "bederven"
+	"spoil": "bederven",
+	"design_plan": "ontwerpen",
+	"design_style": "vormgeven"
 }

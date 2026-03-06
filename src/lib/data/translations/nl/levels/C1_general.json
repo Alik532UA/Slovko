@@ -1,11 +1,9 @@
 ﻿{
-	"abolish": "afschaffen",
 	"academy": "academie",
 	"accent": "accentteken",
 	"acceptance": "acceptatie",
 	"accommodation_yerleme": "accommodatie",
 	"accordance": "overeenstemming",
-	"accord": "akkoord",
 	"accountability": "verantwoordelijkheid",
 	"accumulation": "ophoping",
 	"accusation": "beschuldiging",
@@ -14,7 +12,6 @@
 	"actuality": "werkelijkheid",
 	"adherence": "naleving",
 	"adjournment": "verdaging",
-	"adjustment": "aanpassing",
 	"admiration": "bewondering",
 	"admission_kiri": "toelating",
 	"adoption_adoptie": "adoptie",
@@ -240,5 +237,10 @@
 	"exhale_air": "uitademen",
 	"exile_leader": "verbannen",
 	"affair": "zaak",
-	"contemplate_life": "over het leven nadenken"
+	"contemplate_life": "over het leven nadenken",
+	"abolish_system": "opheffen",
+	"accord_agreement": "akkoord",
+	"accord_harmony": "overeenstemming",
+	"adjustment_change": "aanpassing",
+	"adjustment_setting": "afstelling"
 }

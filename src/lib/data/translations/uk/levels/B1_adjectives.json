@@ -9,7 +9,6 @@
 	"annual": "щорічний",
 	"anxious": "тривожний",
 	"appeal": "звертатися",
-	"argument": "аргумент/суперечка",
 	"artificial": "штучний",
 	"assistant": "помічник",
 	"automatic": "автоматичний",
@@ -138,5 +137,7 @@
 	"us_dative": "нам",
 	"various": "різноманітний",
 	"you_plural": "ви",
-	"your_plural": "ваш"
+	"your_plural": "ваш",
+	"argument_reason": "аргумент",
+	"argument_dispute": "суперечка"
 }

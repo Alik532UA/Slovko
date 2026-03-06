@@ -2,11 +2,12 @@
 	"friend": "Freund",
 	"mother": "Mutter",
 	"father": "Vater",
-	"sister": "Schwester",
 	"family": "Familie",
 	"child": "Kind",
 	"parents": "Eltern",
 	"son": "Sohn",
 	"husband": "Ehemann",
-	"wife": "Ehefrau"
+	"wife": "Ehefrau",
+	"sister_older": "Schwester",
+	"sister_younger": "Schwester"
 }
