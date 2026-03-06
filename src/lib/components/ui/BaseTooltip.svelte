@@ -2,10 +2,11 @@
 	import { fade } from "svelte/transition";
 	import { browser } from "$app/environment";
 	import { portal } from "$lib/actions/portal";
+	import type { Snippet } from "svelte";
 
 	interface Props {
 		text: string;
-		children: any;
+		children: Snippet;
 	}
 
 	let { text, children }: Props = $props();

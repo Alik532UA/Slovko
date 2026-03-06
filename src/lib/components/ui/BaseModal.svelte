@@ -2,12 +2,12 @@
 	import { _ } from "svelte-i18n";
 	import { fade, scale } from "svelte/transition";
 	import { X } from "lucide-svelte";
-	import { onMount, onDestroy } from "svelte";
+	import { onMount, onDestroy, type Snippet } from "svelte";
 
 	interface Props {
 		onclose: () => void;
 		testid: string;
-		children: any;
+		children: Snippet;
 		maxWidth?: string;
 		showCloseButton?: boolean;
 	}
@@ -32,8 +32,12 @@
 		document.body.style.overflow = "";
 	});
 
-	function handleBackdropClick(e: MouseEvent) {
-		if (e.target === e.currentTarget) onclose();
+	function handleBackdropClick(e: MouseEvent | KeyboardEvent) {
+		if (e instanceof MouseEvent) {
+			if (e.target === e.currentTarget) onclose();
+		} else {
+			onclose();
+		}
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
@@ -46,7 +50,7 @@
 	transition:fade={{ duration: 200 }}
 	onclick={handleBackdropClick}
 	onkeydown={(e) => {
-		if (e.key === "Enter" || e.key === " ") handleBackdropClick(e as any);
+		if (e.key === "Enter" || e.key === " ") handleBackdropClick(e);
 	}}
 	role="button"
 	tabindex="0"
