@@ -292,6 +292,7 @@
 		"voices": "stemmen"
 	},
 	"common": {
+		"close": "Sluiten",
 		"menu": "Menu",
 		"profile": "Profiel",
 		"all": "Alle",

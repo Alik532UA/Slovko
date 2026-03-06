@@ -50,6 +50,7 @@
 	role="button"
 	tabindex="-1"
 	onkeydown={(e) => e.key === "Escape" && onclose()}
+	aria-label={$_("common.close") || "Close"}
 	in:fade={{ duration: 150 }}
 	data-testid="context-menu-backdrop"
 ></div>
@@ -60,13 +61,12 @@
 >
 	<div class="menu-header" data-testid="context-menu-header">
 		<span class="word-title">{text}</span>
-		<button 
-			class="close-btn" 
-			onclick={onclose} 
-			aria-label="Close" 
+		<button
+			class="close-btn"
+			onclick={onclose}
+			aria-label={$_("common.close") || "Close"}
 			data-testid="context-menu-close"
-		>
-			<X size={18} />
+		>			<X size={18} />
 		</button>
 	</div>
 

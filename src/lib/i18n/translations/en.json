@@ -323,6 +323,7 @@
 		"voices": "voices"
 	},
 	"common": {
+		"close": "Close",
 		"menu": "Menu",
 		"profile": "Profile",
 		"all": "All",

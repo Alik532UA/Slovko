@@ -65,8 +65,7 @@ function run() {
             }
         }
         if (count > 0) {
-            fs.writeFileSync(p, JSON.stringify(data, null, "	") + "
-");
+            fs.writeFileSync(p, JSON.stringify(data, null, "\t") + "\n");
             console.log("Updated", level, count);
         }
     }

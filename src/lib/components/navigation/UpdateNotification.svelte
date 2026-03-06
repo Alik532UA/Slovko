@@ -53,6 +53,7 @@
 	onkeydown={handleKeydown}
 	role="button"
 	tabindex="0"
+	aria-label={$_("common.close") || "Close"}
 	data-testid="update-notification-backdrop"
 >
 	<!-- svelte-ignore a11y_click_events_have_key_events -->

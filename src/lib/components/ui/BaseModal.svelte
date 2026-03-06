@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { _ } from "svelte-i18n";
 	import { fade, scale } from "svelte/transition";
 	import { X } from "lucide-svelte";
 	import { onMount, onDestroy } from "svelte";
@@ -49,6 +50,7 @@
 	}}
 	role="button"
 	tabindex="0"
+	aria-label={$_("common.close") || "Close"}
 	data-testid="{testid}-backdrop"
 >
 	<div
@@ -68,7 +70,7 @@
 				class="close-btn"
 				data-testid="{testid}-close-btn"
 				onclick={onclose}
-				aria-label="Close"
+				aria-label={$_("common.close") || "Close"}
 			>
 				<X size={24} />
 			</button>

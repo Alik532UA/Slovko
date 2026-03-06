@@ -58,8 +58,7 @@ function run() {
         }
         
         if (changed) {
-            fs.writeFileSync(generalPath, JSON.stringify(data, null, "	") + "
-", "utf8");
+            fs.writeFileSync(generalPath, JSON.stringify(data, null, "\t") + "\n", "utf8");
             console.log(`Updated ${level}_general.json`);
         }
     }

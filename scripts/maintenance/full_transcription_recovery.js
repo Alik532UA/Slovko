@@ -54,8 +54,7 @@ function run() {
         if (!fs.existsSync(generalPath)) {
             const dir = path.dirname(generalPath);
             if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-            fs.writeFileSync(generalPath, "{}
-", "utf8");
+            fs.writeFileSync(generalPath, "{}\n", "utf8");
         }
         
         const data = JSON.parse(fs.readFileSync(generalPath, "utf8"));
@@ -82,8 +81,7 @@ function run() {
         }
 
         if (count > 0) {
-            fs.writeFileSync(generalPath, JSON.stringify(data, null, "	") + "
-", "utf8");
+            fs.writeFileSync(generalPath, JSON.stringify(data, null, "\t") + "\n", "utf8");
             console.log(`✅ ${level}: Added ${count} transcriptions.`);
         }
     }

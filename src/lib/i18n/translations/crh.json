@@ -292,6 +292,7 @@
 		"voices": "sesleri"
 	},
 	"common": {
+		"close": "Kapatmaq",
 		"menu": "Menü",
 		"profile": "Profil",
 		"all": "Episi",

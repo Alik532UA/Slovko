@@ -160,8 +160,12 @@
 
 <div
 	class="modal-backdrop"
+	transition:fade={{ duration: 200 }}
 	onclick={handleBackdropClick}
 	onkeydown={handleKeydown}
+	role="button"
+	tabindex="0"
+	aria-label={$_("common.close") || "Close"}
 >
 	<div
 		class="modal"
