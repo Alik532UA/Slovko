@@ -1,6 +1,5 @@
 {
 	"acceptable": "qabul etilgen",
-	"accident": "qaza",
 	"accident_event": "qaza",
 	"acknowledgement": "tasdıqlav",
 	"acknowledgement_confirmation": "tasdıqlav",
@@ -17,7 +16,6 @@
 	"alternative": "alternativ",
 	"amendment": "tüzetüv",
 	"approval": "tasdıq",
-	"argument": "delil",
 	"argument_logic": "delil",
 	"arrangement": "tertip",
 	"artistic": "sanatlı",

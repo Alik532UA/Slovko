@@ -29,6 +29,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "accord",
 		specific: ["accord_agreement", "accord_harmony"]
 	},
+	account_for: {
+		base: "account_for",
+		specific: ["account_for_verb"]
+	},
 	accretion: {
 		base: "accretion",
 		specific: ["accretion_artuv", "accretion_buyv"]
@@ -65,6 +69,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "adamant",
 		specific: ["adamant_inat", "adamant_qatt"]
 	},
+	address: {
+		base: "address",
+		specific: ["address_noun", "address_verb"]
+	},
 	adjustment: {
 		base: "adjustment",
 		specific: ["adjustment_change", "adjustment_setting"]
@@ -73,9 +81,13 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "administer",
 		specific: ["administer_justice", "administer_manage"]
 	},
+	admit: {
+		base: "admit",
+		specific: ["admit_verb"]
+	},
 	adversity: {
 		base: "adversity",
-		specific: ["adversity_misfortune", "adversity_hardship"]
+		specific: ["adversity_hardship", "adversity_misfortune"]
 	},
 	advocacy: {
 		base: "advocacy",
@@ -83,7 +95,7 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	},
 	advocate: {
 		base: "advocate",
-		specific: ["advocate_lawyer", "advocate_advocate", "advocate_cause", "advocate_verb"]
+		specific: ["advocate_advocate", "advocate_cause", "advocate_lawyer", "advocate_verb"]
 	},
 	affair: {
 		base: "affair",
@@ -93,233 +105,13 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "affinity",
 		specific: ["affinity_affinity", "affinity_yaqnlq"]
 	},
+	affirm: {
+		base: "affirm",
+		specific: ["affirm_statement"]
+	},
 	allowance: {
 		base: "allowance",
-		specific: ["allowance_money", "allowance_maa"]
-	},
-	and: {
-		base: "and",
-		specific: ["and_conjunction"]
-	},
-	bank: {
-		base: "bank",
-		specific: ["bank_finance", "bank_river"]
-	},
-	but: {
-		base: "but",
-		specific: ["but_conjunction"]
-	},
-	because: {
-		base: "because",
-		specific: ["because_conjunction"]
-	},
-	so: {
-		base: "so",
-		specific: ["so_conjunction"]
-	},
-	if: {
-		base: "if",
-		specific: ["if_conjunction"]
-	},
-	or: {
-		base: "or",
-		specific: ["or_conjunction"]
-	},
-	he: {
-		base: "he",
-		specific: ["he_pronoun"]
-	},
-	she: {
-		base: "she",
-		specific: ["she_pronoun"]
-	},
-	it: {
-		base: "it",
-		specific: ["it_pronoun"]
-	},
-	they: {
-		base: "they",
-		specific: ["they_pronoun"]
-	},
-	i: {
-		base: "i",
-		specific: ["i_pronoun"]
-	},
-	we: {
-		base: "we",
-		specific: ["we_pronoun"]
-	},
-	you: {
-		base: "you",
-		specific: ["you_informal", "you_formal"]
-	},
-	me: {
-		base: "me",
-		specific: ["me_pronoun"]
-	},
-	us: {
-		base: "us",
-		specific: ["us_pronoun"]
-	},
-	him: {
-		base: "him",
-		specific: ["him_pronoun"]
-	},
-	them: {
-		base: "them",
-		specific: ["them_pronoun"]
-	},
-	this: {
-		base: "this",
-		specific: ["this_pronoun"]
-	},
-	that: {
-		base: "that",
-		specific: ["that_pronoun"]
-	},
-	these: {
-		base: "these",
-		specific: ["these_pronoun"]
-	},
-	those: {
-		base: "those",
-		specific: ["those_pronoun"]
-	},
-	camp: {
-		base: "camp",
-		specific: ["camp_noun", "camp_verb"]
-	},
-	cross: {
-		base: "cross",
-		specific: ["cross_noun", "cross_verb"]
-	},
-	dance: {
-		base: "dance",
-		specific: ["dance_noun", "dance_verb"]
-	},
-	film: {
-		base: "film",
-		specific: ["film_noun", "film_verb"]
-	},
-	iron: {
-		base: "iron",
-		specific: ["iron_noun", "iron_verb"]
-	},
-	paint: {
-		base: "paint",
-		specific: ["paint_noun", "paint_verb"]
-	},
-	spell: {
-		base: "spell",
-		specific: ["spell_noun", "spell_verb"]
-	},
-	wish: {
-		base: "wish",
-		specific: ["wish_noun", "wish_verb"]
-	},
-	admit: {
-		base: "admit",
-		specific: ["admit_verb"]
-	},
-	float: {
-		base: "float",
-		specific: ["float_verb"]
-	},
-	knock: {
-		base: "knock",
-		specific: ["knock_verb"]
-	},
-	murder: {
-		base: "murder",
-		specific: ["murder_noun", "murder_verb"]
-	},
-	respect: {
-		base: "respect",
-		specific: ["respect_noun", "respect_verb"]
-	},
-	scream: {
-		base: "scream",
-		specific: ["scream_noun", "scream_verb"]
-	},
-	search: {
-		base: "search",
-		specific: ["search_noun", "search_verb"]
-	},
-	target: {
-		base: "target",
-		specific: ["target_noun", "target_verb"]
-	},
-	touch: {
-		base: "touch",
-		specific: ["touch_noun", "touch_verb"]
-	},
-	transport: {
-		base: "transport",
-		specific: ["transport_noun", "transport_verb"]
-	},
-	trust: {
-		base: "trust",
-		specific: ["trust_noun", "trust_verb"]
-	},
-	upset: {
-		base: "upset",
-		specific: ["upset_adj", "upset_verb"]
-	},
-	wave: {
-		base: "wave",
-		specific: ["wave_noun", "wave_verb"]
-	},
-	address: {
-		base: "address",
-		specific: ["address_noun", "address_verb"]
-	},
-	applaud: {
-		base: "applaud",
-		specific: ["applaud_verb"]
-	},
-	circulate: {
-		base: "circulate",
-		specific: ["circulate_verb"]
-	},
-	cite: {
-		base: "cite",
-		specific: ["cite_verb"]
-	},
-	cooperate: {
-		base: "cooperate",
-		specific: ["cooperate_verb"]
-	},
-	criticise: {
-		base: "criticise",
-		specific: ["criticise_verb"]
-	},
-	dramatise: {
-		base: "dramatise",
-		specific: ["dramatise_verb"]
-	},
-	eject: {
-		base: "eject",
-		specific: ["eject_verb"]
-	},
-	realise: {
-		base: "realise",
-		specific: ["realise_verb"]
-	},
-	recognise: {
-		base: "recognise",
-		specific: ["recognise_verb"]
-	},
-	regulate: {
-		base: "regulate",
-		specific: ["regulate_verb"]
-	},
-	rid: {
-		base: "rid",
-		specific: ["rid_verb"]
-	},
-	unify: {
-		base: "unify",
-		specific: ["unify_verb"]
+		specific: ["allowance_maa", "allowance_money"]
 	},
 	also: {
 		base: "also",
@@ -329,9 +121,17 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "alter",
 		specific: ["alter_change", "alter_plans"]
 	},
+	amend: {
+		base: "amend",
+		specific: ["amend_law"]
+	},
 	amiss: {
 		base: "amiss",
 		specific: ["amiss__", "amiss_amiss"]
+	},
+	and: {
+		base: "and",
+		specific: ["and_conjunction"]
 	},
 	anticipate: {
 		base: "anticipate",
@@ -352,6 +152,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	appendix: {
 		base: "appendix",
 		specific: ["appendix_anatomy", "appendix_document"]
+	},
+	applaud: {
+		base: "applaud",
+		specific: ["applaud_verb"]
 	},
 	application: {
 		base: "application",
@@ -397,6 +201,14 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "as",
 		specific: ["as_a_result", "as_conjunction", "as_like", "as_since", "as_soon_as"]
 	},
+	ask: {
+		base: "ask",
+		specific: ["ask_for"]
+	},
+	aspire: {
+		base: "aspire",
+		specific: ["aspire_goal"]
+	},
 	assert: {
 		base: "assert",
 		specific: ["assert_claim", "assert_rights"]
@@ -437,6 +249,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "back",
 		specific: ["back_body", "back_direction"]
 	},
+	bank: {
+		base: "bank",
+		specific: ["bank_finance", "bank_river"]
+	},
 	base: {
 		base: "base",
 		specific: ["base_foundation", "base_military"]
@@ -449,13 +265,29 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "bear",
 		specific: ["bear_animal", "bear_endure"]
 	},
+	beat: {
+		base: "beat",
+		specific: ["beat_win"]
+	},
+	because: {
+		base: "because",
+		specific: ["because_conjunction"]
+	},
 	before: {
 		base: "before",
 		specific: ["before_position", "before_time"]
 	},
+	beginning: {
+		base: "beginning",
+		specific: ["beginning_start"]
+	},
 	benefit: {
 		base: "benefit",
 		specific: ["benefit_noun", "benefit_profit"]
+	},
+	betray: {
+		base: "betray",
+		specific: ["betray_trust"]
 	},
 	block: {
 		base: "block",
@@ -485,6 +317,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "brother",
 		specific: ["brother_male", "brother_older", "brother_younger"]
 	},
+	budget: {
+		base: "budget",
+		specific: ["budget_plan"]
+	},
 	bug: {
 		base: "bug",
 		specific: ["bug_error", "bug_insect"]
@@ -492,6 +328,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	burn: {
 		base: "burn",
 		specific: ["burn_fire", "burn_injury"]
+	},
+	but: {
+		base: "but",
+		specific: ["but_conjunction"]
 	},
 	by: {
 		base: "by",
@@ -505,9 +345,17 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "call",
 		specific: ["call_back", "call_for", "call_name", "call_off_event", "call_phone", "call_shout"]
 	},
+	camp: {
+		base: "camp",
+		specific: ["camp_noun", "camp_verb"]
+	},
 	carry: {
 		base: "carry",
 		specific: ["carry_on", "carry_out"]
+	},
+	catch_up: {
+		base: "catch_up",
+		specific: ["catch_up_with"]
 	},
 	cease: {
 		base: "cease",
@@ -517,6 +365,14 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "character",
 		specific: ["character_fiction", "character_personality"]
 	},
+	characterise: {
+		base: "characterise",
+		specific: ["characterise_verb"]
+	},
+	characteristic: {
+		base: "characteristic",
+		specific: ["characteristic_noun"]
+	},
 	charge: {
 		base: "charge",
 		specific: ["charge_battery", "charge_electric", "charge_fee"]
@@ -524,6 +380,18 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	check: {
 		base: "check",
 		specific: ["check_in", "check_out"]
+	},
+	cheer: {
+		base: "cheer",
+		specific: ["cheer_up"]
+	},
+	circulate: {
+		base: "circulate",
+		specific: ["circulate_verb"]
+	},
+	cite: {
+		base: "cite",
+		specific: ["cite_verb"]
 	},
 	claim: {
 		base: "claim",
@@ -565,13 +433,25 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "commence",
 		specific: ["commence_ceremony", "commence_start"]
 	},
+	communication: {
+		base: "communication",
+		specific: ["communication_noun"]
+	},
 	compensate: {
 		base: "compensate",
 		specific: ["compensate_loss", "compensate_pay"]
 	},
+	complement: {
+		base: "complement",
+		specific: ["complement_style"]
+	},
 	complete: {
 		base: "complete",
 		specific: ["complete_adj", "complete_verb"]
+	},
+	component: {
+		base: "component",
+		specific: ["component_part"]
 	},
 	comprehend: {
 		base: "comprehend",
@@ -592,6 +472,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	concern: {
 		base: "concern",
 		specific: ["concern_care", "concern_worry"]
+	},
+	conclude: {
+		base: "conclude",
+		specific: ["conclude_meeting"]
 	},
 	condemn: {
 		base: "condemn",
@@ -621,9 +505,17 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "conquer",
 		specific: ["conquer_territory", "conquer_win"]
 	},
+	consent: {
+		base: "consent",
+		specific: ["consent_form"]
+	},
 	conserve: {
 		base: "conserve",
 		specific: ["conserve_energy", "conserve_protect"]
+	},
+	consolidate: {
+		base: "consolidate",
+		specific: ["consolidate_power"]
 	},
 	constitute: {
 		base: "constitute",
@@ -633,9 +525,17 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "construct",
 		specific: ["construct_build", "construct_theory"]
 	},
+	construction: {
+		base: "construction",
+		specific: ["construction_noun"]
+	},
 	consult: {
 		base: "consult",
 		specific: ["consult_expert", "consult_lawyer"]
+	},
+	contaminate: {
+		base: "contaminate",
+		specific: ["contaminate_water"]
 	},
 	contemplate: {
 		base: "contemplate",
@@ -653,6 +553,14 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "contribute",
 		specific: ["contribute_donate", "contribute_help"]
 	},
+	contribution: {
+		base: "contribution",
+		specific: ["contribution_help"]
+	},
+	convert: {
+		base: "convert",
+		specific: ["convert_change"]
+	},
 	convey: {
 		base: "convey",
 		specific: ["convey_emotion", "convey_message"]
@@ -661,9 +569,29 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "cool",
 		specific: ["cool_awesome", "cool_temp"]
 	},
+	cooperate: {
+		base: "cooperate",
+		specific: ["cooperate_verb"]
+	},
+	cooperation: {
+		base: "cooperation",
+		specific: ["cooperation_noun"]
+	},
+	coordinate: {
+		base: "coordinate",
+		specific: ["coordinate_action"]
+	},
+	cope: {
+		base: "cope",
+		specific: ["cope_with"]
+	},
 	correct: {
 		base: "correct",
 		specific: ["correct_adj", "correct_verb"]
+	},
+	corrupt: {
+		base: "corrupt",
+		specific: ["corrupt_system"]
 	},
 	courage: {
 		base: "courage",
@@ -677,13 +605,25 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "crash",
 		specific: ["crash_accident", "crash_verb"]
 	},
+	crave: {
+		base: "crave",
+		specific: ["crave_attention"]
+	},
 	cream: {
 		base: "cream",
 		specific: ["cream_cosmetic", "cream_dairy"]
 	},
+	criticise: {
+		base: "criticise",
+		specific: ["criticise_verb"]
+	},
 	cross: {
 		base: "cross",
-		specific: ["cross_symbol", "cross_verb"]
+		specific: ["cross_noun", "cross_symbol", "cross_verb"]
+	},
+	crumble: {
+		base: "crumble",
+		specific: ["crumble_away"]
 	},
 	cultivate: {
 		base: "cultivate",
@@ -697,6 +637,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "cut",
 		specific: ["cut_down", "cut_off"]
 	},
+	dance: {
+		base: "dance",
+		specific: ["dance_noun", "dance_verb"]
+	},
 	date: {
 		base: "date",
 		specific: ["date_calendar", "date_romantic"]
@@ -705,9 +649,21 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "deal",
 		specific: ["deal_verb", "deal_with"]
 	},
+	decision: {
+		base: "decision",
+		specific: ["decision_noun"]
+	},
 	decline: {
 		base: "decline",
 		specific: ["decline_offer", "decline_refuse"]
+	},
+	decompose: {
+		base: "decompose",
+		specific: ["decompose_waste"]
+	},
+	dedicate: {
+		base: "dedicate",
+		specific: ["dedicate_time"]
 	},
 	deduce: {
 		base: "deduce",
@@ -717,13 +673,41 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "definitely",
 		specific: ["definitely_certainly", "definitely_exactly"]
 	},
+	definition: {
+		base: "definition",
+		specific: ["definition_meaning"]
+	},
+	degrade: {
+		base: "degrade",
+		specific: ["degrade_quality"]
+	},
+	deliberate: {
+		base: "deliberate",
+		specific: ["deliberate_issue"]
+	},
 	demonstrate: {
 		base: "demonstrate",
 		specific: ["demonstrate_show", "demonstrate_skill"]
 	},
+	demonstration: {
+		base: "demonstration",
+		specific: ["demonstration_noun"]
+	},
+	department: {
+		base: "department",
+		specific: ["department_store"]
+	},
 	depict: {
 		base: "depict",
 		specific: ["depict_character", "depict_describe"]
+	},
+	deplore: {
+		base: "deplore",
+		specific: ["deplore_action"]
+	},
+	deprive: {
+		base: "deprive",
+		specific: ["deprive_rights"]
 	},
 	derive: {
 		base: "derive",
@@ -737,6 +721,14 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "designate",
 		specific: ["designate_mark", "designate_official"]
 	},
+	detach: {
+		base: "detach",
+		specific: ["detach_part"]
+	},
+	detail: {
+		base: "detail",
+		specific: ["detail_info"]
+	},
 	detect: {
 		base: "detect",
 		specific: ["detect_error", "detect_find"]
@@ -744,6 +736,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	deter: {
 		base: "deter",
 		specific: ["deter_crime", "deter_prevent"]
+	},
+	devastate: {
+		base: "devastate",
+		specific: ["devastate_area"]
 	},
 	devise: {
 		base: "devise",
@@ -765,9 +761,37 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "diminish",
 		specific: ["diminish_decrease", "diminish_influence"]
 	},
+	direct: {
+		base: "direct",
+		specific: ["direct_adj"]
+	},
+	disaster: {
+		base: "disaster",
+		specific: ["disaster_event"]
+	},
 	disclose: {
 		base: "disclose",
 		specific: ["disclose_info", "disclose_secret"]
+	},
+	discourage: {
+		base: "discourage",
+		specific: ["discourage_prevent"]
+	},
+	discredit: {
+		base: "discredit",
+		specific: ["discredit_theory"]
+	},
+	disgust: {
+		base: "disgust",
+		specific: ["disgust_feeling"]
+	},
+	disprove: {
+		base: "disprove",
+		specific: ["disprove_theory"]
+	},
+	dispute: {
+		base: "dispute",
+		specific: ["dispute_noun"]
 	},
 	distinguish: {
 		base: "distinguish",
@@ -781,17 +805,41 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "divert",
 		specific: ["divert_attention", "divert_traffic"]
 	},
+	divulge: {
+		base: "divulge",
+		specific: ["divulge_secret"]
+	},
 	dominate: {
 		base: "dominate",
 		specific: ["dominate_control", "dominate_market"]
+	},
+	download: {
+		base: "download",
+		specific: ["download_file"]
 	},
 	draft: {
 		base: "draft",
 		specific: ["draft_outline", "draft_sketch", "draft_wind"]
 	},
+	drama: {
+		base: "drama",
+		specific: ["drama_art"]
+	},
+	dramatise: {
+		base: "dramatise",
+		specific: ["dramatise_verb"]
+	},
 	dream: {
 		base: "dream",
 		specific: ["dream_goal", "dream_sleep"]
+	},
+	dress: {
+		base: "dress",
+		specific: ["dress_up"]
+	},
+	drift: {
+		base: "drift",
+		specific: ["drift_away"]
 	},
 	drug: {
 		base: "drug",
@@ -805,33 +853,89 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "duplicate",
 		specific: ["duplicate_copy", "duplicate_key"]
 	},
+	dwindle: {
+		base: "dwindle",
+		specific: ["dwindle_away"]
+	},
 	earth: {
 		base: "earth",
 		specific: ["earth_ground", "earth_planet", "earth_yer"]
+	},
+	eat: {
+		base: "eat",
+		specific: ["eat_out"]
+	},
+	ecology: {
+		base: "ecology",
+		specific: ["ecology_noun"]
 	},
 	economy: {
 		base: "economy",
 		specific: ["economy_noun", "economy_system"]
 	},
+	education: {
+		base: "education",
+		specific: ["education_system"]
+	},
 	effect: {
 		base: "effect",
 		specific: ["effect_influence", "effect_result"]
+	},
+	efficiency: {
+		base: "efficiency",
+		specific: ["efficiency_noun"]
+	},
+	eject: {
+		base: "eject",
+		specific: ["eject_verb"]
 	},
 	elaborate: {
 		base: "elaborate",
 		specific: ["elaborate_adj", "elaborate_detail", "elaborate_on"]
 	},
+	election: {
+		base: "election",
+		specific: ["election_noun"]
+	},
+	element: {
+		base: "element",
+		specific: ["element_noun"]
+	},
 	eliminate: {
 		base: "eliminate",
 		specific: ["eliminate_remove", "eliminate_waste"]
+	},
+	emanate: {
+		base: "emanate",
+		specific: ["emanate_from"]
+	},
+	embark: {
+		base: "embark",
+		specific: ["embark_on"]
+	},
+	embrace: {
+		base: "embrace",
+		specific: ["embrace_change"]
 	},
 	emerge: {
 		base: "emerge",
 		specific: ["emerge_appear", "emerge_stronger"]
 	},
+	emit: {
+		base: "emit",
+		specific: ["emit_light"]
+	},
+	enact: {
+		base: "enact",
+		specific: ["enact_law"]
+	},
 	encounter: {
 		base: "encounter",
 		specific: ["encounter_difficulty", "encounter_meet"]
+	},
+	end: {
+		base: "end",
+		specific: ["end_up"]
 	},
 	endorse: {
 		base: "endorse",
@@ -861,6 +965,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "envision",
 		specific: ["envision_future", "envision_imagine"]
 	},
+	equation: {
+		base: "equation",
+		specific: ["equation_noun"]
+	},
 	erode: {
 		base: "erode",
 		specific: ["erode_confidence", "erode_damage"]
@@ -873,9 +981,17 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "evaluate",
 		specific: ["evaluate_assess", "evaluate_impact"]
 	},
+	evaporate: {
+		base: "evaporate",
+		specific: ["evaporate_water"]
+	},
 	even: {
 		base: "even",
 		specific: ["even_if", "even_though"]
+	},
+	evolve_over: {
+		base: "evolve_over",
+		specific: ["evolve_over_time"]
 	},
 	exaggerate: {
 		base: "exaggerate",
@@ -885,6 +1001,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "exceed",
 		specific: ["exceed_expectations", "exceed_surpass"]
 	},
+	exclude_keep: {
+		base: "exclude_keep",
+		specific: ["exclude_keep_out"]
+	},
 	execute: {
 		base: "execute",
 		specific: ["execute_order", "execute_plan"]
@@ -893,9 +1013,21 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "exhibit",
 		specific: ["exhibit_art", "exhibit_show"]
 	},
+	expel_force: {
+		base: "expel_force",
+		specific: ["expel_force_out"]
+	},
 	experience: {
 		base: "experience",
 		specific: ["experience_noun", "experience_verb"]
+	},
+	exploit: {
+		base: "exploit",
+		specific: ["exploit_use"]
+	},
+	facilitate: {
+		base: "facilitate",
+		specific: ["facilitate_help"]
 	},
 	failure: {
 		base: "failure",
@@ -917,6 +1049,18 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "fight",
 		specific: ["fight_action", "fight_event"]
 	},
+	figure: {
+		base: "figure",
+		specific: ["figure_out"]
+	},
+	film: {
+		base: "film",
+		specific: ["film_noun", "film_verb"]
+	},
+	find: {
+		base: "find",
+		specific: ["find_out"]
+	},
 	fine: {
 		base: "fine",
 		specific: ["fine_good", "fine_penalty"]
@@ -925,9 +1069,17 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "flat",
 		specific: ["flat_adj", "flat_apartment", "flat_surface"]
 	},
+	float: {
+		base: "float",
+		specific: ["float_verb"]
+	},
 	floor: {
 		base: "floor",
 		specific: ["floor_ground", "floor_level"]
+	},
+	fluctuate: {
+		base: "fluctuate",
+		specific: ["fluctuate_change"]
 	},
 	fly: {
 		base: "fly",
@@ -940,6 +1092,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	from: {
 		base: "from",
 		specific: ["from_origin", "from_time"]
+	},
+	frustrate: {
+		base: "frustrate",
+		specific: ["frustrate_prevent"]
 	},
 	fundamental: {
 		base: "fundamental",
@@ -977,6 +1133,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "growth",
 		specific: ["growth_development", "growth_physical"]
 	},
+	guard: {
+		base: "guard",
+		specific: ["guard_person"]
+	},
 	hang: {
 		base: "hang",
 		specific: ["hang_out", "hang_verb"]
@@ -985,9 +1145,29 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "hard",
 		specific: ["hard_difficult", "hard_solid", "hard_tough"]
 	},
+	he: {
+		base: "he",
+		specific: ["he_pronoun"]
+	},
 	her: {
 		base: "her",
 		specific: ["her_possessive", "her_pronoun"]
+	},
+	him: {
+		base: "him",
+		specific: ["him_pronoun"]
+	},
+	hinder: {
+		base: "hinder",
+		specific: ["hinder_prevent"]
+	},
+	his: {
+		base: "his",
+		specific: ["his_possessive"]
+	},
+	hold: {
+		base: "hold",
+		specific: ["hold_on"]
 	},
 	holiday: {
 		base: "holiday",
@@ -1005,9 +1185,49 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "i",
 		specific: ["i_know", "i_pronoun", "i_see", "i_think"]
 	},
+	if: {
+		base: "if",
+		specific: ["if_conjunction"]
+	},
+	illustrate: {
+		base: "illustrate",
+		specific: ["illustrate_explain"]
+	},
+	impose: {
+		base: "impose",
+		specific: ["impose_tax"]
+	},
 	in: {
 		base: "in",
 		specific: ["in_case", "in_front_of", "in_order_to", "in_spite_of"]
+	},
+	income: {
+		base: "income",
+		specific: ["income_tax"]
+	},
+	initiate: {
+		base: "initiate",
+		specific: ["initiate_start"]
+	},
+	interpret: {
+		base: "interpret",
+		specific: ["interpret_explain"]
+	},
+	interview: {
+		base: "interview",
+		specific: ["interview_job"]
+	},
+	iron: {
+		base: "iron",
+		specific: ["iron_noun", "iron_verb"]
+	},
+	it: {
+		base: "it",
+		specific: ["it_pronoun"]
+	},
+	its: {
+		base: "its",
+		specific: ["its_possessive"]
 	},
 	jam: {
 		base: "jam",
@@ -1021,6 +1241,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "kind",
 		specific: ["kind_nice", "kind_type"]
 	},
+	knock: {
+		base: "knock",
+		specific: ["knock_verb"]
+	},
 	know: {
 		base: "know",
 		specific: ["know_info", "know_person"]
@@ -1029,6 +1253,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "lady",
 		specific: ["lady_noble", "lady_woman"]
 	},
+	leader: {
+		base: "leader",
+		specific: ["leader_person"]
+	},
 	leave: {
 		base: "leave",
 		specific: ["leave_behind", "leave_depart", "leave_object", "leave_place"]
@@ -1036,6 +1264,18 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	left: {
 		base: "left",
 		specific: ["left_direction", "left_remaining"]
+	},
+	legislate: {
+		base: "legislate",
+		specific: ["legislate_law"]
+	},
+	levy: {
+		base: "levy",
+		specific: ["levy_tax"]
+	},
+	license: {
+		base: "license",
+		specific: ["license_document"]
 	},
 	lie: {
 		base: "lie",
@@ -1081,6 +1321,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "matter",
 		specific: ["matter_issue", "matter_substance"]
 	},
+	me: {
+		base: "me",
+		specific: ["me_pronoun"]
+	},
 	measure: {
 		base: "measure",
 		specific: ["measure_noun", "measure_size"]
@@ -1101,6 +1345,14 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "monitor",
 		specific: ["monitor_screen", "monitor_verb"]
 	},
+	murder: {
+		base: "murder",
+		specific: ["murder_noun", "murder_verb"]
+	},
+	my: {
+		base: "my",
+		specific: ["my_possessive"]
+	},
 	nicely: {
 		base: "nicely",
 		specific: ["nicely_kindly", "nicely_well"]
@@ -1113,6 +1365,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "object",
 		specific: ["object_noun", "object_verb"]
 	},
+	offend: {
+		base: "offend",
+		specific: ["offend_insult"]
+	},
 	offer: {
 		base: "offer",
 		specific: ["offer_noun", "offer_verb"]
@@ -1121,6 +1377,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "oil",
 		specific: ["oil_food", "oil_fuel"]
 	},
+	or: {
+		base: "or",
+		specific: ["or_conjunction"]
+	},
 	orange: {
 		base: "orange",
 		specific: ["orange_color", "orange_fruit"]
@@ -1128,6 +1388,14 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	order: {
 		base: "order",
 		specific: ["order_command", "order_sequence"]
+	},
+	originate: {
+		base: "originate",
+		specific: ["originate_start"]
+	},
+	our: {
+		base: "our",
+		specific: ["our_possessive"]
 	},
 	paint: {
 		base: "paint",
@@ -1149,9 +1417,17 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "pattern",
 		specific: ["pattern_design", "pattern_template"]
 	},
+	perceive: {
+		base: "perceive",
+		specific: ["perceive_see"]
+	},
 	performance: {
 		base: "performance",
 		specific: ["performance_efficiency", "performance_show"]
+	},
+	permanent: {
+		base: "permanent",
+		specific: ["permanent_job"]
 	},
 	pick: {
 		base: "pick",
@@ -1185,9 +1461,57 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "present",
 		specific: ["present_current", "present_gift", "present_here", "present_time"]
 	},
+	prevail: {
+		base: "prevail",
+		specific: ["prevail_win"]
+	},
+	prioritise: {
+		base: "prioritise",
+		specific: ["prioritise_task"]
+	},
+	promotion: {
+		base: "promotion",
+		specific: ["promotion_job"]
+	},
+	prosecute: {
+		base: "prosecute",
+		specific: ["prosecute_law"]
+	},
+	protest: {
+		base: "protest",
+		specific: ["protest_event"]
+	},
+	provided: {
+		base: "provided",
+		specific: ["provided_that"]
+	},
+	psychological: {
+		base: "psychological",
+		specific: ["psychological_state"]
+	},
+	public: {
+		base: "public",
+		specific: ["public_transport"]
+	},
+	pure: {
+		base: "pure",
+		specific: ["pure_water"]
+	},
+	pursue: {
+		base: "pursue",
+		specific: ["pursue_goal"]
+	},
 	put: {
 		base: "put",
 		specific: ["put_away", "put_off_event", "put_on_clothes", "put_out", "put_up_with"]
+	},
+	qualification: {
+		base: "qualification",
+		specific: ["qualification_degree"]
+	},
+	qualify: {
+		base: "qualify",
+		specific: ["qualify_meet"]
 	},
 	race: {
 		base: "race",
@@ -1197,13 +1521,61 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "rate",
 		specific: ["rate_speed", "rate_value"]
 	},
+	realise: {
+		base: "realise",
+		specific: ["realise_verb"]
+	},
+	recognise: {
+		base: "recognise",
+		specific: ["recognise_verb"]
+	},
 	record: {
 		base: "record",
 		specific: ["record_achievement", "record_data", "record_verb"]
 	},
+	regular: {
+		base: "regular",
+		specific: ["regular_meeting"]
+	},
+	regulate: {
+		base: "regulate",
+		specific: ["regulate_verb"]
+	},
+	relevant: {
+		base: "relevant",
+		specific: ["relevant_info"]
+	},
+	renounce_give: {
+		base: "renounce_give",
+		specific: ["renounce_give_up"]
+	},
 	report: {
 		base: "report",
 		specific: ["report_noun", "report_verb"]
+	},
+	reproduce: {
+		base: "reproduce",
+		specific: ["reproduce_copy"]
+	},
+	respect: {
+		base: "respect",
+		specific: ["respect_noun", "respect_verb"]
+	},
+	responsible: {
+		base: "responsible",
+		specific: ["responsible_person"]
+	},
+	restrain: {
+		base: "restrain",
+		specific: ["restrain_limit"]
+	},
+	restrict: {
+		base: "restrict",
+		specific: ["restrict_limit"]
+	},
+	rid: {
+		base: "rid",
+		specific: ["rid_verb"]
 	},
 	right: {
 		base: "right",
@@ -1217,6 +1589,14 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "rock",
 		specific: ["rock_music", "rock_stone"]
 	},
+	rough: {
+		base: "rough",
+		specific: ["rough_surface"]
+	},
+	safety: {
+		base: "safety",
+		specific: ["safety_state"]
+	},
 	sausage: {
 		base: "sausage",
 		specific: ["sausage_small", "sausage_wurst"]
@@ -1228,6 +1608,14 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	scan: {
 		base: "scan",
 		specific: ["scan_digital", "scan_medical"]
+	},
+	scream: {
+		base: "scream",
+		specific: ["scream_noun", "scream_verb"]
+	},
+	search: {
+		base: "search",
+		specific: ["search_noun", "search_verb"]
 	},
 	second: {
 		base: "second",
@@ -1248,6 +1636,14 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	set: {
 		base: "set",
 		specific: ["set_collection", "set_off_journey", "set_up", "set_verb"]
+	},
+	settle: {
+		base: "settle",
+		specific: ["settle_dispute"]
+	},
+	she: {
+		base: "she",
+		specific: ["she_pronoun"]
 	},
 	shift: {
 		base: "shift",
@@ -1277,9 +1673,21 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "smoke",
 		specific: ["smoke_action", "smoke_gas"]
 	},
+	smooth: {
+		base: "smooth",
+		specific: ["smooth_surface"]
+	},
 	so: {
 		base: "so",
 		specific: ["so_adv", "so_conjunction", "so_degree", "so_that"]
+	},
+	solid: {
+		base: "solid",
+		specific: ["solid_material"]
+	},
+	sorry: {
+		base: "sorry",
+		specific: ["sorry_adj"]
 	},
 	sort: {
 		base: "sort",
@@ -1289,6 +1697,22 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "space",
 		specific: ["space_area", "space_cosmos"]
 	},
+	speculate: {
+		base: "speculate",
+		specific: ["speculate_think"]
+	},
+	spell: {
+		base: "spell",
+		specific: ["spell_noun", "spell_verb"]
+	},
+	spiritual: {
+		base: "spiritual",
+		specific: ["spiritual_life"]
+	},
+	sponsor: {
+		base: "sponsor",
+		specific: ["sponsor_help"]
+	},
 	square: {
 		base: "square",
 		specific: ["square_place", "square_shape"]
@@ -1296,6 +1720,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	stage: {
 		base: "stage",
 		specific: ["stage_phase", "stage_theater"]
+	},
+	stand: {
+		base: "stand",
+		specific: ["stand_up"]
 	},
 	start: {
 		base: "start",
@@ -1329,6 +1757,30 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "subject",
 		specific: ["subject_school", "subject_topic"]
 	},
+	submit: {
+		base: "submit",
+		specific: ["submit_document"]
+	},
+	subscribe: {
+		base: "subscribe",
+		specific: ["subscribe_sign"]
+	},
+	supervise: {
+		base: "supervise",
+		specific: ["supervise_manage"]
+	},
+	support: {
+		base: "support",
+		specific: ["support_help"]
+	},
+	surrender_give: {
+		base: "surrender_give",
+		specific: ["surrender_give_up"]
+	},
+	surround: {
+		base: "surround",
+		specific: ["surround_area"]
+	},
 	take: {
 		base: "take",
 		specific: ["take_after_relative", "take_off_clothes", "take_up_hobby"]
@@ -1336,6 +1788,22 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	talk: {
 		base: "talk",
 		specific: ["talk_noun", "talk_verb"]
+	},
+	target: {
+		base: "target",
+		specific: ["target_noun", "target_verb"]
+	},
+	technical: {
+		base: "technical",
+		specific: ["technical_support"]
+	},
+	temporary: {
+		base: "temporary",
+		specific: ["temporary_job"]
+	},
+	testify: {
+		base: "testify",
+		specific: ["testify_court"]
 	},
 	thank: {
 		base: "thank",
@@ -1345,158 +1813,6 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "that",
 		specific: ["that_conjunction", "that_demonstrative", "that_pronoun"]
 	},
-	then: {
-		base: "then",
-		specific: ["then_sequence", "then_time"]
-	},
-	time: {
-		base: "time",
-		specific: ["time_abstract", "time_clock"]
-	},
-	to: {
-		base: "to",
-		specific: ["to_be", "to_do", "to_have", "to_infinitive", "to_preposition"]
-	},
-	too: {
-		base: "too",
-		specific: ["too_also", "too_excessive", "too_much"]
-	},
-	treat: {
-		base: "treat",
-		specific: ["treat_behave", "treat_medical"]
-	},
-	trial: {
-		base: "trial",
-		specific: ["trial_court", "trial_test"]
-	},
-	tube: {
-		base: "tube",
-		specific: ["tube_pipe", "tube_subway"]
-	},
-	turn: {
-		base: "turn",
-		specific: ["turn_direction", "turn_down_volume", "turn_into", "turn_off_device", "turn_on_device", "turn_order", "turn_up"]
-	},
-	uncle: {
-		base: "uncle",
-		specific: ["uncle_maternal", "uncle_paternal"]
-	},
-	unit: {
-		base: "unit",
-		specific: ["unit_component", "unit_measure"]
-	},
-	us: {
-		base: "us",
-		specific: ["us_accusative", "us_dative", "us_pronoun"]
-	},
-	view: {
-		base: "view",
-		specific: ["view_opinion", "view_scenery", "view_verb"]
-	},
-	walk: {
-		base: "walk",
-		specific: ["walk_step", "walk_stroll"]
-	},
-	watch: {
-		base: "watch",
-		specific: ["watch_clock", "watch_verb"]
-	},
-	way: {
-		base: "way",
-		specific: ["way_method", "way_path"]
-	},
-	well: {
-		base: "well",
-		specific: ["well_adverb", "well_water"]
-	},
-	what: {
-		base: "what",
-		specific: ["what_about", "what_color", "what_for", "what_kind", "what_size", "what_time"]
-	},
-	where: {
-		base: "where",
-		specific: ["where_from", "where_to"]
-	},
-	will: {
-		base: "will",
-		specific: ["will_future", "will_noun"]
-	},
-	without: {
-		base: "without",
-		specific: ["without_preposition", "without_preposition_alt"]
-	},
-	wood: {
-		base: "wood",
-		specific: ["wood_bos", "wood_forest", "wood_holz", "wood_material"]
-	},
-	would: {
-		base: "would",
-		specific: ["would_auxiliary", "would_auxiliary_alt"]
-	},
-	you: {
-		base: "you",
-		specific: ["you_formal", "you_informal", "you_plural", "you_pronoun", "you_singular"]
-	},
-	your: {
-		base: "your",
-		specific: ["your_plural", "your_possessive", "your_singular"]
-	},
-	and: {
-		base: "and",
-		specific: ["and_conjunction"]
-	},
-	because: {
-		base: "because",
-		specific: ["because_conjunction"]
-	},
-	but: {
-		base: "but",
-		specific: ["but_conjunction"]
-	},
-	he: {
-		base: "he",
-		specific: ["he_pronoun"]
-	},
-	him: {
-		base: "him",
-		specific: ["him_pronoun"]
-	},
-	his: {
-		base: "his",
-		specific: ["his_possessive"]
-	},
-	if: {
-		base: "if",
-		specific: ["if_conjunction"]
-	},
-	it: {
-		base: "it",
-		specific: ["it_pronoun"]
-	},
-	its: {
-		base: "its",
-		specific: ["its_possessive"]
-	},
-	me: {
-		base: "me",
-		specific: ["me_pronoun"]
-	},
-	my: {
-		base: "my",
-		specific: ["my_possessive"]
-	},
-	or: {
-		base: "or",
-		specific: ["or_conjunction"]
-	},
-	our: {
-		base: "our",
-		specific: ["our_possessive"]
-	},
-	she: {
-		base: "she",
-		specific: ["she_pronoun"]
-	},
 	their: {
 		base: "their",
 		specific: ["their_possessive"]
@@ -1504,6 +1820,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	them: {
 		base: "them",
 		specific: ["them_pronoun"]
+	},
+	then: {
+		base: "then",
+		specific: ["then_sequence", "then_time"]
 	},
 	these: {
 		base: "these",
@@ -1521,265 +1841,77 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "those",
 		specific: ["those_pronoun"]
 	},
-	we: {
-		base: "we",
-		specific: ["we_pronoun"]
-	},
-	ask: {
-		base: "ask",
-		specific: ["ask_for"]
-	},
-	beat: {
-		base: "beat",
-		specific: ["beat_win"]
-	},
-	beginning: {
-		base: "beginning",
-		specific: ["beginning_start"]
-	},
-	camp: {
-		base: "camp",
-		specific: ["camp_verb"]
-	},
-	dance: {
-		base: "dance",
-		specific: ["dance_verb"]
-	},
-	detail: {
-		base: "detail",
-		specific: ["detail_info"]
-	},
-	film: {
-		base: "film",
-		specific: ["film_verb"]
-	},
-	find: {
-		base: "find",
-		specific: ["find_out"]
-	},
-	iron: {
-		base: "iron",
-		specific: ["iron_verb"]
-	},
-	sorry: {
-		base: "sorry",
-		specific: ["sorry_adj"]
-	},
-	spell: {
-		base: "spell",
-		specific: ["spell_verb"]
-	},
-	stand: {
-		base: "stand",
-		specific: ["stand_up"]
-	},
-	support: {
-		base: "support",
-		specific: ["support_help"]
-	},
 	ticket: {
 		base: "ticket",
 		specific: ["ticket_office"]
+	},
+	time: {
+		base: "time",
+		specific: ["time_abstract", "time_clock"]
+	},
+	to: {
+		base: "to",
+		specific: ["to_be", "to_do", "to_have", "to_infinitive", "to_preposition"]
+	},
+	too: {
+		base: "too",
+		specific: ["too_also", "too_excessive", "too_much"]
+	},
+	touch: {
+		base: "touch",
+		specific: ["touch_noun", "touch_verb"]
+	},
+	transform: {
+		base: "transform",
+		specific: ["transform_change"]
+	},
+	transport: {
+		base: "transport",
+		specific: ["transport_noun", "transport_verb"]
+	},
+	treat: {
+		base: "treat",
+		specific: ["treat_behave", "treat_medical"]
+	},
+	trial: {
+		base: "trial",
+		specific: ["trial_court", "trial_test"]
+	},
+	trust: {
+		base: "trust",
+		specific: ["trust_noun", "trust_verb"]
+	},
+	tube: {
+		base: "tube",
+		specific: ["tube_pipe", "tube_subway"]
+	},
+	turn: {
+		base: "turn",
+		specific: ["turn_direction", "turn_down_volume", "turn_into", "turn_off_device", "turn_on_device", "turn_order", "turn_up"]
 	},
 	ugly: {
 		base: "ugly",
 		specific: ["ugly_adj"]
 	},
-	wish: {
-		base: "wish",
-		specific: ["wish_verb"]
+	uncle: {
+		base: "uncle",
+		specific: ["uncle_maternal", "uncle_paternal"]
 	},
-	admit: {
-		base: "admit",
-		specific: ["admit_verb"]
+	undertake: {
+		base: "undertake",
+		specific: ["undertake_task"]
 	},
-	budget: {
-		base: "budget",
-		specific: ["budget_plan"]
-	},
-	catch_up: {
-		base: "catch_up",
-		specific: ["catch_up_with"]
-	},
-	cheer: {
-		base: "cheer",
-		specific: ["cheer_up"]
-	},
-	department: {
-		base: "department",
-		specific: ["department_store"]
-	},
-	direct: {
-		base: "direct",
-		specific: ["direct_adj"]
-	},
-	disaster: {
-		base: "disaster",
-		specific: ["disaster_event"]
-	},
-	download: {
-		base: "download",
-		specific: ["download_file"]
-	},
-	dress: {
-		base: "dress",
-		specific: ["dress_up"]
-	},
-	eat: {
-		base: "eat",
-		specific: ["eat_out"]
-	},
-	education: {
-		base: "education",
-		specific: ["education_system"]
-	},
-	end: {
-		base: "end",
-		specific: ["end_up"]
-	},
-	figure: {
-		base: "figure",
-		specific: ["figure_out"]
-	},
-	float: {
-		base: "float",
-		specific: ["float_verb"]
-	},
-	guard: {
-		base: "guard",
-		specific: ["guard_person"]
-	},
-	hold: {
-		base: "hold",
-		specific: ["hold_on"]
-	},
-	income: {
-		base: "income",
-		specific: ["income_tax"]
-	},
-	interview: {
-		base: "interview",
-		specific: ["interview_job"]
-	},
-	knock: {
-		base: "knock",
-		specific: ["knock_verb"]
-	},
-	leader: {
-		base: "leader",
-		specific: ["leader_person"]
-	},
-	license: {
-		base: "license",
-		specific: ["license_document"]
-	},
-	murder: {
-		base: "murder",
-		specific: ["murder_verb"]
-	},
-	permanent: {
-		base: "permanent",
-		specific: ["permanent_job"]
-	},
-	promotion: {
-		base: "promotion",
-		specific: ["promotion_job"]
-	},
-	protest: {
-		base: "protest",
-		specific: ["protest_event"]
-	},
-	provided: {
-		base: "provided",
-		specific: ["provided_that"]
-	},
-	psychological: {
-		base: "psychological",
-		specific: ["psychological_state"]
-	},
-	public: {
-		base: "public",
-		specific: ["public_transport"]
-	},
-	pure: {
-		base: "pure",
-		specific: ["pure_water"]
-	},
-	qualification: {
-		base: "qualification",
-		specific: ["qualification_degree"]
-	},
-	regular: {
-		base: "regular",
-		specific: ["regular_meeting"]
-	},
-	relevant: {
-		base: "relevant",
-		specific: ["relevant_info"]
-	},
-	respect: {
-		base: "respect",
-		specific: ["respect_verb"]
-	},
-	responsible: {
-		base: "responsible",
-		specific: ["responsible_person"]
-	},
-	rough: {
-		base: "rough",
-		specific: ["rough_surface"]
-	},
-	safety: {
-		base: "safety",
-		specific: ["safety_state"]
-	},
-	scream: {
-		base: "scream",
-		specific: ["scream_verb"]
-	},
-	search: {
-		base: "search",
-		specific: ["search_verb"]
-	},
-	smooth: {
-		base: "smooth",
-		specific: ["smooth_surface"]
-	},
-	solid: {
-		base: "solid",
-		specific: ["solid_material"]
-	},
-	spiritual: {
-		base: "spiritual",
-		specific: ["spiritual_life"]
-	},
-	target: {
-		base: "target",
-		specific: ["target_verb"]
-	},
-	technical: {
-		base: "technical",
-		specific: ["technical_support"]
-	},
-	temporary: {
-		base: "temporary",
-		specific: ["temporary_job"]
-	},
-	touch: {
-		base: "touch",
-		specific: ["touch_verb"]
-	},
-	transport: {
-		base: "transport",
-		specific: ["transport_verb"]
-	},
-	trust: {
-		base: "trust",
-		specific: ["trust_verb"]
+	unify: {
+		base: "unify",
+		specific: ["unify_verb"]
 	},
 	unique: {
 		base: "unique",
 		specific: ["unique_style"]
+	},
+	unit: {
+		base: "unit",
+		specific: ["unit_component", "unit_measure"]
 	},
 	universe: {
 		base: "universe",
@@ -1797,473 +1929,121 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "update",
 		specific: ["update_info"]
 	},
+	uphold: {
+		base: "uphold",
+		specific: ["uphold_support"]
+	},
 	upset: {
 		base: "upset",
-		specific: ["upset_verb"]
+		specific: ["upset_adj", "upset_verb"]
 	},
 	urgent: {
 		base: "urgent",
 		specific: ["urgent_matter"]
 	},
-	version: {
-		base: "version",
-		specific: ["version_software"]
-	},
-	visible: {
-		base: "visible",
-		specific: ["visible_sign"]
-	},
-	volume: {
-		base: "volume",
-		specific: ["volume_sound"]
-	},
-	wave: {
-		base: "wave",
-		specific: ["wave_verb"]
-	},
-	willing_to: {
-		base: "willing_to",
-		specific: ["willing_to_help"]
-	},
-	witness: {
-		base: "witness",
-		specific: ["witness_person"]
-	},
-	work: {
-		base: "work",
-		specific: ["work_out"]
-	},
-	account_for: {
-		base: "account_for",
-		specific: ["account_for_verb"]
-	},
-	address: {
-		base: "address",
-		specific: ["address_verb"]
-	},
-	applaud: {
-		base: "applaud",
-		specific: ["applaud_verb"]
-	},
-	characterise: {
-		base: "characterise",
-		specific: ["characterise_verb"]
-	},
-	characteristic: {
-		base: "characteristic",
-		specific: ["characteristic_noun"]
-	},
-	circulate: {
-		base: "circulate",
-		specific: ["circulate_verb"]
-	},
-	cite: {
-		base: "cite",
-		specific: ["cite_verb"]
-	},
-	communication: {
-		base: "communication",
-		specific: ["communication_noun"]
-	},
-	component: {
-		base: "component",
-		specific: ["component_part"]
-	},
-	construction: {
-		base: "construction",
-		specific: ["construction_noun"]
-	},
-	contribution: {
-		base: "contribution",
-		specific: ["contribution_help"]
-	},
-	convert: {
-		base: "convert",
-		specific: ["convert_change"]
-	},
-	cooperate: {
-		base: "cooperate",
-		specific: ["cooperate_verb"]
-	},
-	cooperation: {
-		base: "cooperation",
-		specific: ["cooperation_noun"]
-	},
-	coordinate: {
-		base: "coordinate",
-		specific: ["coordinate_action"]
-	},
-	cope: {
-		base: "cope",
-		specific: ["cope_with"]
-	},
-	criticise: {
-		base: "criticise",
-		specific: ["criticise_verb"]
-	},
-	decision: {
-		base: "decision",
-		specific: ["decision_noun"]
-	},
-	definition: {
-		base: "definition",
-		specific: ["definition_meaning"]
-	},
-	deliberate: {
-		base: "deliberate",
-		specific: ["deliberate_issue"]
-	},
-	demonstration: {
-		base: "demonstration",
-		specific: ["demonstration_noun"]
-	},
-	discourage: {
-		base: "discourage",
-		specific: ["discourage_prevent"]
-	},
-	dispute: {
-		base: "dispute",
-		specific: ["dispute_noun"]
-	},
-	drama: {
-		base: "drama",
-		specific: ["drama_art"]
-	},
-	dramatise: {
-		base: "dramatise",
-		specific: ["dramatise_verb"]
-	},
-	ecology: {
-		base: "ecology",
-		specific: ["ecology_noun"]
-	},
-	efficiency: {
-		base: "efficiency",
-		specific: ["efficiency_noun"]
-	},
-	eject: {
-		base: "eject",
-		specific: ["eject_verb"]
-	},
-	election: {
-		base: "election",
-		specific: ["election_noun"]
-	},
-	element: {
-		base: "element",
-		specific: ["element_noun"]
-	},
-	equation: {
-		base: "equation",
-		specific: ["equation_noun"]
-	},
-	exclude_keep: {
-		base: "exclude_keep",
-		specific: ["exclude_keep_out"]
-	},
-	expel_force: {
-		base: "expel_force",
-		specific: ["expel_force_out"]
-	},
-	exploit: {
-		base: "exploit",
-		specific: ["exploit_use"]
-	},
-	facilitate: {
-		base: "facilitate",
-		specific: ["facilitate_help"]
-	},
-	fluctuate: {
-		base: "fluctuate",
-		specific: ["fluctuate_change"]
-	},
-	frustrate: {
-		base: "frustrate",
-		specific: ["frustrate_prevent"]
-	},
-	hinder: {
-		base: "hinder",
-		specific: ["hinder_prevent"]
-	},
-	illustrate: {
-		base: "illustrate",
-		specific: ["illustrate_explain"]
-	},
-	impose: {
-		base: "impose",
-		specific: ["impose_tax"]
-	},
-	initiate: {
-		base: "initiate",
-		specific: ["initiate_start"]
-	},
-	interpret: {
-		base: "interpret",
-		specific: ["interpret_explain"]
-	},
-	legislate: {
-		base: "legislate",
-		specific: ["legislate_law"]
-	},
-	levy: {
-		base: "levy",
-		specific: ["levy_tax"]
-	},
-	offend: {
-		base: "offend",
-		specific: ["offend_insult"]
-	},
-	originate: {
-		base: "originate",
-		specific: ["originate_start"]
-	},
-	perceive: {
-		base: "perceive",
-		specific: ["perceive_see"]
-	},
-	prevail: {
-		base: "prevail",
-		specific: ["prevail_win"]
-	},
-	prioritise: {
-		base: "prioritise",
-		specific: ["prioritise_task"]
-	},
-	prosecute: {
-		base: "prosecute",
-		specific: ["prosecute_law"]
-	},
-	pursue: {
-		base: "pursue",
-		specific: ["pursue_goal"]
-	},
-	qualify: {
-		base: "qualify",
-		specific: ["qualify_meet"]
-	},
-	realise: {
-		base: "realise",
-		specific: ["realise_verb"]
-	},
-	recognise: {
-		base: "recognise",
-		specific: ["recognise_verb"]
-	},
-	regulate: {
-		base: "regulate",
-		specific: ["regulate_verb"]
-	},
-	renounce_give: {
-		base: "renounce_give",
-		specific: ["renounce_give_up"]
-	},
-	reproduce: {
-		base: "reproduce",
-		specific: ["reproduce_copy"]
-	},
-	restrain: {
-		base: "restrain",
-		specific: ["restrain_limit"]
-	},
-	restrict: {
-		base: "restrict",
-		specific: ["restrict_limit"]
-	},
-	rid: {
-		base: "rid",
-		specific: ["rid_verb"]
-	},
-	settle: {
-		base: "settle",
-		specific: ["settle_dispute"]
-	},
-	speculate: {
-		base: "speculate",
-		specific: ["speculate_think"]
-	},
-	sponsor: {
-		base: "sponsor",
-		specific: ["sponsor_help"]
-	},
-	submit: {
-		base: "submit",
-		specific: ["submit_document"]
-	},
-	subscribe: {
-		base: "subscribe",
-		specific: ["subscribe_sign"]
-	},
-	supervise: {
-		base: "supervise",
-		specific: ["supervise_manage"]
-	},
-	surrender_give: {
-		base: "surrender_give",
-		specific: ["surrender_give_up"]
-	},
-	surround: {
-		base: "surround",
-		specific: ["surround_area"]
-	},
-	testify: {
-		base: "testify",
-		specific: ["testify_court"]
-	},
-	transform: {
-		base: "transform",
-		specific: ["transform_change"]
-	},
-	undertake: {
-		base: "undertake",
-		specific: ["undertake_task"]
-	},
-	unify: {
-		base: "unify",
-		specific: ["unify_verb"]
-	},
-	uphold: {
-		base: "uphold",
-		specific: ["uphold_support"]
+	us: {
+		base: "us",
+		specific: ["us_accusative", "us_dative", "us_pronoun"]
 	},
 	utilise: {
 		base: "utilise",
 		specific: ["utilise_use"]
 	},
+	version: {
+		base: "version",
+		specific: ["version_software"]
+	},
+	view: {
+		base: "view",
+		specific: ["view_opinion", "view_scenery", "view_verb"]
+	},
 	violate: {
 		base: "violate",
 		specific: ["violate_law"]
+	},
+	visible: {
+		base: "visible",
+		specific: ["visible_sign"]
 	},
 	visualise: {
 		base: "visualise",
 		specific: ["visualise_imagine"]
 	},
-	affirm: {
-		base: "affirm",
-		specific: ["affirm_statement"]
+	volume: {
+		base: "volume",
+		specific: ["volume_sound"]
 	},
-	amend: {
-		base: "amend",
-		specific: ["amend_law"]
+	walk: {
+		base: "walk",
+		specific: ["walk_step", "walk_stroll"]
 	},
-	aspire: {
-		base: "aspire",
-		specific: ["aspire_goal"]
+	watch: {
+		base: "watch",
+		specific: ["watch_clock", "watch_verb"]
 	},
-	betray: {
-		base: "betray",
-		specific: ["betray_trust"]
+	wave: {
+		base: "wave",
+		specific: ["wave_noun", "wave_verb"]
 	},
-	complement: {
-		base: "complement",
-		specific: ["complement_style"]
+	way: {
+		base: "way",
+		specific: ["way_method", "way_path"]
 	},
-	conclude: {
-		base: "conclude",
-		specific: ["conclude_meeting"]
+	we: {
+		base: "we",
+		specific: ["we_pronoun"]
 	},
-	consent: {
-		base: "consent",
-		specific: ["consent_form"]
+	well: {
+		base: "well",
+		specific: ["well_adverb", "well_water"]
 	},
-	consolidate: {
-		base: "consolidate",
-		specific: ["consolidate_power"]
+	what: {
+		base: "what",
+		specific: ["what_about", "what_color", "what_for", "what_kind", "what_size", "what_time"]
 	},
-	contaminate: {
-		base: "contaminate",
-		specific: ["contaminate_water"]
+	where: {
+		base: "where",
+		specific: ["where_from", "where_to"]
 	},
-	corrupt: {
-		base: "corrupt",
-		specific: ["corrupt_system"]
+	will: {
+		base: "will",
+		specific: ["will_future", "will_noun"]
 	},
-	crave: {
-		base: "crave",
-		specific: ["crave_attention"]
+	willing_to: {
+		base: "willing_to",
+		specific: ["willing_to_help"]
 	},
-	crumble: {
-		base: "crumble",
-		specific: ["crumble_away"]
+	wish: {
+		base: "wish",
+		specific: ["wish_noun", "wish_verb"]
 	},
-	decompose: {
-		base: "decompose",
-		specific: ["decompose_waste"]
+	without: {
+		base: "without",
+		specific: ["without_preposition", "without_preposition_alt"]
 	},
-	dedicate: {
-		base: "dedicate",
-		specific: ["dedicate_time"]
+	witness: {
+		base: "witness",
+		specific: ["witness_person"]
 	},
-	degrade: {
-		base: "degrade",
-		specific: ["degrade_quality"]
+	wood: {
+		base: "wood",
+		specific: ["wood_bos", "wood_forest", "wood_holz", "wood_material"]
 	},
-	deplore: {
-		base: "deplore",
-		specific: ["deplore_action"]
+	work: {
+		base: "work",
+		specific: ["work_out"]
 	},
-	deprive: {
-		base: "deprive",
-		specific: ["deprive_rights"]
+	would: {
+		base: "would",
+		specific: ["would_auxiliary", "would_auxiliary_alt"]
 	},
-	detach: {
-		base: "detach",
-		specific: ["detach_part"]
+	you: {
+		base: "you",
+		specific: ["you_formal", "you_informal", "you_plural", "you_pronoun", "you_singular"]
 	},
-	devastate: {
-		base: "devastate",
-		specific: ["devastate_area"]
-	},
-	discredit: {
-		base: "discredit",
-		specific: ["discredit_theory"]
-	},
-	disgust: {
-		base: "disgust",
-		specific: ["disgust_feeling"]
-	},
-	disprove: {
-		base: "disprove",
-		specific: ["disprove_theory"]
-	},
-	divulge: {
-		base: "divulge",
-		specific: ["divulge_secret"]
-	},
-	drift: {
-		base: "drift",
-		specific: ["drift_away"]
-	},
-	dwindle: {
-		base: "dwindle",
-		specific: ["dwindle_away"]
-	},
-	emanate: {
-		base: "emanate",
-		specific: ["emanate_from"]
-	},
-	embark: {
-		base: "embark",
-		specific: ["embark_on"]
-	},
-	embrace: {
-		base: "embrace",
-		specific: ["embrace_change"]
-	},
-	emit: {
-		base: "emit",
-		specific: ["emit_light"]
-	},
-	enact: {
-		base: "enact",
-		specific: ["enact_law"]
-	},
-	evaporate: {
-		base: "evaporate",
-		specific: ["evaporate_water"]
-	},
-	evolve_over: {
-		base: "evolve_over",
-		specific: ["evolve_over_time"]
+	your: {
+		base: "your",
+		specific: ["your_plural", "your_possessive", "your_singular"]
 	},
 };
 
