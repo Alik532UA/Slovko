@@ -319,7 +319,7 @@
 				</p>
 			</div>
 		{:else}
-			<div class="column source" role="list" aria-label="Source words" data-testid="column-source">
+			<div class="column source safe-scale-container" role="list" aria-label="Source words" data-testid="column-source">
 				{#each gameState.sourceCards as card, i (i)}
 					<div class="card-slot" role="listitem">
 						{#key card.id}
@@ -349,7 +349,7 @@
 				{/each}
 			</div>
 
-			<div class="column target" role="list" aria-label="Target translations" data-testid="column-target">
+			<div class="column target safe-scale-container" role="list" aria-label="Target translations" data-testid="column-target">
 				{#each gameState.targetCards as card, i (i)}
 					<div class="card-slot" role="listitem">
 						{#key card.id}
@@ -465,6 +465,11 @@
 		height: 100%;
 		display: flex;
 		position: relative;
+		transition: z-index 0.2s;
+	}
+
+	.card-wrapper:hover {
+		z-index: 2;
 	}
 
 	.empty-state-message {

@@ -94,7 +94,7 @@
 					</div>
 				</div>
 			{/if}
-			<div class="friends-list" class:faded={isLoading} data-testid="friends-list-items">
+			<div class="friends-list safe-scale-container" class:faded={isLoading} data-testid="friends-list-items">
 				{#each list as user (user.uid)}
 					{@const actualName = friendsStore.resolveName(user.uid, user.displayName)}
 					{@const actualPhoto = friendsStore.resolvePhoto(user.uid, user.photoURL)}
@@ -201,11 +201,18 @@
 		padding: 0.75rem;
 		border-radius: 12px;
 		background: var(--glass-bg);
-		transition: background 0.2s;
+		transition: var(--hover-transition);
+		position: relative;
 	}
 
 	.friend-card:hover {
 		background: var(--bg-hover);
+		transform: scale(var(--hover-scale));
+		z-index: 2;
+	}
+
+	.friend-card:active {
+		transform: scale(var(--active-scale));
 	}
 
 	.friend-info {

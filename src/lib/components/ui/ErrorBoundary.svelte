@@ -158,7 +158,7 @@
 		border-radius: 14px;
 		font-weight: 600;
 		cursor: pointer;
-		transition: all 0.2s;
+		transition: var(--hover-transition);
 		border: none;
 		width: 100%;
 	}
@@ -177,7 +177,7 @@
 
 	.retry:hover {
 		background: var(--accent-hover);
-		transform: translateY(-1px);
+		transform: scale(var(--hover-scale));
 		box-shadow: var(--shadow-md);
 	}
 
@@ -189,5 +189,6 @@
 
 	.report:hover {
 		background: var(--bg-active);
+		transform: scale(var(--hover-scale));
 	}
 </style>

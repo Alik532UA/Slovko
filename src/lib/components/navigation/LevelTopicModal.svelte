@@ -9,6 +9,7 @@
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import type { GameMode, PlaylistId, TenseForm } from "$lib/types";
 	import BaseModal from "../ui/BaseModal.svelte";
+	import SegmentedControl from "../ui/SegmentedControl.svelte";
 	import { smoothHeight } from "$lib/actions/smoothHeight";
 	import { page } from "$app/stores";
 	import { navigationState } from "$lib/services/navigationState.svelte";
@@ -40,6 +41,20 @@
 		$page.url.searchParams.get("tab") as GameMode | null,
 	);
 	const activeTab = $derived(activeTabParam || settingsStore.value.mode);
+
+	const visibleTabs = $derived(
+		TABS.filter(
+			(tab) =>
+				settingsStore.value.interactionMode === "match" ||
+				tab.id === "levels" ||
+				tab.id === "topics",
+		),
+	);
+
+	const interactionOptions = [
+		{ id: "match", label: "interaction.match", icon: Layers, testId: "btn-match" },
+		{ id: "swipe", label: "interaction.swipe", icon: Gamepad2, testId: "btn-swipe" }
+	];
 
 	// Local state for multi-selection
 	let selectedIds = $state<string[]>([]);
@@ -171,44 +186,21 @@
 	<div class="modal-internal-wrapper" use:smoothHeight={{ duration: 300 }}>
 		<div class="modal-content-measure">
 			<div class="modal-inner">
-				<!-- Режим взаємодії (Стовпці vs Свайп) -->
-				<div class="interaction-toggle" data-testid="interaction-toggle">
-					<button
-						class="interaction-btn"
-						class:active={settingsStore.value.interactionMode === "match"}
-						onclick={() => setInteractionMode("match")}
-						data-testid="btn-match"
-					>
-						<Layers size={18} />
-						<span>{$_("interaction.match")}</span>
-					</button>
-					<button
-						class="interaction-btn"
-						class:active={settingsStore.value.interactionMode === "swipe"}
-						onclick={() => setInteractionMode("swipe")}
-						data-testid="btn-swipe"
-					>
-						<Gamepad2 size={18} />
-						<span>{$_("interaction.swipe")}</span>
-					</button>
-				</div>
+				<SegmentedControl
+					options={interactionOptions}
+					value={settingsStore.value.interactionMode}
+					onchange={(id) => setInteractionMode(id as any)}
+					testid="interaction-toggle"
+					class="mb-4 max-w-[400px]"
+				/>
 
-				<!-- Tabs -->
-				<nav class="tabs" data-testid="level-topic-tabs">
-					{#each TABS as tab (tab.id)}
-						{#if settingsStore.value.interactionMode === "match" || tab.id === "levels" || tab.id === "topics"}
-							<button
-								class="tab"
-								class:active={activeTab === tab.id}
-								onclick={() => navigationState.setTab(tab.id)}
-								data-testid={tab.testId}
-							>
-								{$_(tab.label)}
-							</button>
-						{/if}
-					{/each}
-				</nav>
-
+				<SegmentedControl
+					options={visibleTabs.map(t => ({ id: t.id, label: t.label, testId: t.testId }))}
+					value={activeTab}
+					onchange={(id) => navigationState.setTab(id as any)}
+					testid="level-topic-tabs"
+					class="mb-6 max-w-[500px]"
+				/>
 				<!-- Content -->
 				<div class="content-wrapper" data-testid="level-topic-modal-content">
 					{#key activeTab}
@@ -241,7 +233,7 @@
 
 				<!-- Actions -->
 				{#if activeTab !== "playlists"}
-					<div class="actions" data-testid="level-topic-actions">
+					<div class="actions safe-scale-container" data-testid="level-topic-actions">
 						<button
 							class="action-btn secondary"
 							onclick={resetSelection}
@@ -282,74 +274,6 @@
 		width: 100%;
 	}
 
-	.interaction-toggle {
-		display: flex;
-		background: var(--bg-primary);
-		padding: 4px;
-		border-radius: 12px;
-		margin-bottom: 1rem;
-		border: 1px solid var(--border);
-	}
-
-	.interaction-btn {
-		flex: 1;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 8px;
-		padding: 0.75rem;
-		border-radius: 8px;
-		border: none;
-		background: transparent;
-		color: var(--text-secondary);
-		font-weight: 600;
-		cursor: pointer;
-		transition: all 0.2s;
-	}
-
-	.interaction-btn:hover {
-		color: var(--text-primary);
-	}
-
-	.interaction-btn.active {
-		background: var(--accent);
-		color: white;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	}
-
-	.tabs {
-		display: flex;
-		flex-wrap: wrap; /* Дозволяємо перенесення на новий рядок */
-		margin-bottom: 1.5rem;
-		gap: 0.25rem;
-		justify-content: flex-start;
-		padding-bottom: 0.5rem;
-		border-bottom: 1px solid var(--border);
-	}
-
-	.tab {
-		padding: 0.6rem 1.25rem;
-		background: transparent;
-		border: none;
-		color: var(--text-secondary);
-		font-size: 0.95rem;
-		font-weight: 600;
-		cursor: pointer;
-		transition: all 0.2s;
-		border-radius: 12px;
-		white-space: nowrap;
-	}
-
-	.tab:hover {
-		color: var(--text-primary);
-		background: var(--bg-secondary);
-	}
-
-	.tab.active {
-		color: var(--accent);
-		background: var(--bg-secondary);
-	}
-
 	.content-wrapper {
 		display: grid;
 		grid-template-columns: 100%;
@@ -364,6 +288,7 @@
 
 	.actions {
 		display: flex;
+		flex-direction: row !important; /* Force row for modal footer */
 		gap: 1rem;
 		margin-top: 1.5rem;
 		padding-top: 1rem;
@@ -377,7 +302,7 @@
 		font-weight: 700;
 		font-size: 1rem;
 		cursor: pointer;
-		transition: all 0.2s;
+		transition: var(--hover-transition);
 		border: none;
 	}
 
@@ -387,13 +312,17 @@
 		filter: grayscale(1);
 	}
 
+	.action-btn:not(:disabled):hover {
+		transform: scale(var(--hover-scale));
+		z-index: 2;
+	}
+
 	.action-btn.primary {
 		background: var(--accent);
 		color: white;
 	}
 
 	.action-btn.primary:not(:disabled):hover {
-		transform: scale(1.02);
 		filter: brightness(1.1);
 	}
 

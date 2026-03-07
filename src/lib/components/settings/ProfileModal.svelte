@@ -1,13 +1,7 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { fade } from "svelte/transition";
-	import {
-		Target,
-		LayoutGrid,
-		Users,
-		Settings,
-		Trophy,
-	} from "lucide-svelte";
+	import { Target, LayoutGrid, Users, Settings, Trophy } from "lucide-svelte";
 	import { logService } from "../../services/logService";
 	import { authStore } from "../../firebase/authStore.svelte";
 	import { AuthService } from "../../firebase/AuthService";
@@ -70,6 +64,8 @@
 		return ["stats", "leaderboard", "friends", "account"];
 	});
 
+	const activeIndex = $derived(availableTabs.indexOf(activeTab));
+
 	function setActiveTab(tab: TabType) {
 		logService.log("profile", `Switching tab to: ${tab}`);
 		navigationState.setTab(tab);
@@ -106,6 +102,14 @@
 	);
 	let friendsSubTab = $derived(urlSubTab || "following");
 	let shouldRefreshFriends = $state(false);
+	let subtabRefs = $state<Record<string, HTMLButtonElement>>({});
+	let underlineStyle = $derived.by(() => {
+		const el = subtabRefs[friendsSubTab];
+		if (el) {
+			return `left: ${el.offsetLeft}px; width: ${el.offsetWidth}px;`;
+		}
+		return "opacity: 0;";
+	});
 
 	// Derived stats from progress store
 	const totalCorrect = $derived(progressStore.value.totalCorrect);
@@ -137,7 +141,7 @@
 	$effect(() => {
 		const uid = authStore.user?.uid;
 		const isGuest = authStore.isGuest;
-		
+
 		if (!isGuest && uid && !isRecoveringActiveDays) {
 			untrack(() => {
 				const progress = progressStore.value;
@@ -153,7 +157,6 @@
 				}
 			});
 		}
-
 	});
 
 	// Avatar initial values
@@ -372,54 +375,33 @@
 	}
 
 	import BaseModal from "../ui/BaseModal.svelte";
+	import SegmentedControl from "../ui/SegmentedControl.svelte";
 </script>
 
 {#snippet tabsNav()}
 	{#if !authStore.isGuest}
 		<ProfileHeader oneditAvatar={startEditingAvatar} />
 
-		<div class="tabs-nav" data-testid="profile-tabs-nav">
-			{#if availableTabs.includes("stats")}
-				<button
-					class:active={activeTab === "stats"}
-					onclick={() => setActiveTab("stats")}
-					data-testid="tab-stats"
-				>
-					<div class="tab-icon"><Target size={18} /></div>
-					<span>{$_("profile.tabs.stats")}</span>
-				</button>
-			{/if}
-			{#if availableTabs.includes("leaderboard")}
-				<button
-					class:active={activeTab === "leaderboard"}
-					onclick={() => setActiveTab("leaderboard")}
-					data-testid="tab-leaderboard"
-				>
-					<div class="tab-icon"><Trophy size={18} /></div>
-					<span>{$_("profile.tabs.leaderboard")}</span>
-				</button>
-			{/if}
-			{#if availableTabs.includes("friends")}
-				<button
-					class:active={activeTab === "friends"}
-					onclick={() => setActiveTab("friends")}
-					data-testid="tab-friends"
-				>
-					<div class="tab-icon"><Users size={18} /></div>
-					<span>{$_("profile.tabs.friends")}</span>
-				</button>
-			{/if}
-			{#if availableTabs.includes("account")}
-				<button
-					class:active={activeTab === "account"}
-					onclick={() => setActiveTab("account")}
-					data-testid="tab-account"
-				>
-					<div class="tab-icon"><LayoutGrid size={18} /></div>
-					<span>{$_("profile.tabs.account")}</span>
-				</button>
-			{/if}
-		</div>
+		<SegmentedControl
+			options={availableTabs.map((id) => ({
+				id,
+				label: `profile.tabs.${id}`,
+				icon:
+					id === "stats"
+						? Target
+						: id === "leaderboard"
+							? Trophy
+							: id === "friends"
+								? Users
+								: LayoutGrid,
+				testId: `tab-${id}`,
+			}))}
+			value={activeTab}
+			onchange={(id) => setActiveTab(id as any)}
+			variant="vertical"
+			testid="profile-tabs-nav"
+			class="profile-tabs-nav"
+		/>
 	{:else if activeTab !== "stats"}
 		<GuestProfileView {isLinking} onlogin={() => (loginMethod = "auth")} />
 	{/if}
@@ -442,29 +424,29 @@
 	{:else if activeTab === "friends" && !authStore.isGuest}
 		<div class="friends-layout" data-testid="friends-layout">
 			<div class="sub-tabs-container">
-				<div class="sub-tabs" data-testid="friends-sub-tabs">
-					<button
-						class:active={friendsSubTab === "following"}
-						onclick={() => navigationState.setSubTab("following")}
-						data-testid="subtab-following"
-					>
-						{$_("friends.tabs.following")}
-					</button>
-					<button
-						class:active={friendsSubTab === "followers"}
-						onclick={() => navigationState.setSubTab("followers")}
-						data-testid="subtab-followers"
-					>
-						{$_("friends.tabs.followers")}
-					</button>
-					<button
-						class:active={friendsSubTab === "search"}
-						onclick={() => navigationState.setSubTab("search")}
-						data-testid="subtab-search"
-					>
-						{$_("friends.tabs.search")}
-					</button>
-				</div>
+				<SegmentedControl
+					options={[
+						{
+							id: "following",
+							label: "friends.tabs.following",
+							testId: "subtab-following",
+						},
+						{
+							id: "followers",
+							label: "friends.tabs.followers",
+							testId: "subtab-followers",
+						},
+						{
+							id: "search",
+							label: "friends.tabs.search",
+							testId: "subtab-search",
+						},
+					]}
+					value={friendsSubTab}
+					onchange={(id) => navigationState.setSubTab(id as any)}
+					testid="friends-sub-tabs"
+					class="flex-1"
+				/>
 				<div class="friends-actions">
 					<button
 						class="friends-settings-btn"
@@ -584,78 +566,6 @@
 </BaseModal>
 
 <style>
-	.tabs-nav {
-		display: flex;
-		gap: 0.25rem;
-		margin-bottom: 1.5rem;
-		background: var(--glass-bg);
-		padding: 0.4rem;
-		border-radius: 16px;
-		border: 1px solid var(--glass-border);
-		overflow-x: auto;
-		scrollbar-width: none;
-	}
-
-	.tabs-nav::-webkit-scrollbar {
-		display: none;
-	}
-
-	.tabs-nav button {
-		flex: 1;
-		background: none;
-		border: none;
-		padding: 0.6rem 0.5rem;
-		color: var(--text-secondary);
-		font-weight: 600;
-		border-radius: 12px;
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		gap: 0.35rem;
-		font-size: 0.75rem;
-		white-space: nowrap;
-		min-width: 70px;
-	}
-
-	.tab-icon {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 32px;
-		height: 32px;
-		border-radius: 8px;
-		background: var(--bg-hover);
-		transition: all 0.3s;
-		color: var(--text-secondary);
-	}
-
-	.tabs-nav button.active {
-		background: var(--bg-active);
-		color: var(--text-primary);
-		box-shadow: var(--shadow-sm);
-	}
-
-	.tabs-nav button.active .tab-icon {
-		background: var(--accent);
-		color: white;
-		transform: scale(1.1);
-	}
-
-	@media (max-width: 480px) {
-		.tabs-nav button {
-			padding: 0.5rem 0.4rem;
-			font-size: 0.7rem;
-			gap: 0.25rem;
-			min-width: 60px;
-		}
-		.tab-icon {
-			width: 28px;
-			height: 28px;
-		}
-	}
-
 	.profile-content {
 		margin-bottom: 1.5rem;
 		display: grid;
@@ -678,6 +588,10 @@
 		display: block;
 	}
 
+	:global(.profile-tabs-nav) {
+		margin-bottom: 2rem !important;
+	}
+
 	/* Friends layout styles */
 	.friends-layout {
 		display: flex;
@@ -688,46 +602,9 @@
 	.sub-tabs-container {
 		display: flex;
 		align-items: center;
-		border-bottom: 1px solid var(--border);
 		position: relative;
 		gap: 0.5rem;
-	}
-
-	.sub-tabs {
-		display: flex;
-		flex: 1;
-		overflow-x: auto;
-		scrollbar-width: none; /* Hide scrollbar for cleaner look */
-		gap: 0.5rem;
-	}
-
-	.sub-tabs::-webkit-scrollbar {
-		display: none;
-	}
-
-	.sub-tabs button {
-		background: transparent;
-		border: none;
-		color: var(--text-secondary);
-		padding: 0.75rem 0.5rem;
-		cursor: pointer;
-		font-size: 0.9rem;
-		font-weight: 600;
-		border-bottom: 2px solid transparent;
-		transition: all 0.2s;
-		white-space: nowrap;
-		flex-shrink: 0;
-		position: relative;
-		top: 1px; /* Push border down to overlap container border */
-	}
-
-	.sub-tabs button:hover {
-		color: var(--text-primary);
-	}
-
-	.sub-tabs button.active {
-		color: var(--accent);
-		border-bottom-color: var(--accent);
+		margin-bottom: 1rem;
 	}
 
 	.friends-actions {

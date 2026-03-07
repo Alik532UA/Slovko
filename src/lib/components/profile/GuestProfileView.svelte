@@ -63,14 +63,18 @@
 		align-items: center;
 		justify-content: center;
 		gap: 0.8rem;
-		transition: transform 0.2s;
+		transition: var(--hover-transition);
 		margin-bottom: 2rem;
 		border: none;
 		cursor: pointer;
 	}
 
 	.login-btn:hover:not(:disabled) {
-		transform: translateY(-2px);
+		transform: scale(var(--hover-scale));
+	}
+
+	.login-btn:active:not(:disabled) {
+		transform: scale(var(--active-scale));
 	}
 
 	.login-btn:disabled {

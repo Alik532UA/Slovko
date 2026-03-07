@@ -8,7 +8,7 @@ import { browser } from "$app/environment";
 import type { Language } from "../types";
 
 // Динамічний імпорт усіх мовних файлів як raw для підтримки BOM
-const localeModules = import.meta.glob("./translations/*.json", { as: "raw" });
+const localeModules = import.meta.glob("./translations/*.json", { query: "?raw", import: "default" });
 
 /**
  * Завантажувач мови, що видаляє BOM
@@ -16,7 +16,7 @@ const localeModules = import.meta.glob("./translations/*.json", { as: "raw" });
 const loadLocale = async (lang: string) => {
 	const path = `./translations/${lang}.json`;
 	if (localeModules[path]) {
-		let raw = await localeModules[path]();
+		let raw = (await localeModules[path]()) as string;
 		// Видаляємо BOM, якщо він є (код 0xFEFF)
 		if (raw.charCodeAt(0) === 0xFEFF) {
 			raw = raw.slice(1);

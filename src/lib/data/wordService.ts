@@ -46,12 +46,12 @@ const semanticsCache = new Map<string, LocalSemantics>();
 
 // Динамічний імпорт усіх модулів перекладів та транскрипцій через Vite glob
 // Використовуємо as: "raw" для підтримки UTF-8 з BOM (Vite JSON plugin може падати на них)
-const translationModules = import.meta.glob("./translations/**/*.json", { as: "raw" });
-const transcriptionModules = import.meta.glob("./transcriptions/**/*.json", { as: "raw" });
-const levelModules = import.meta.glob("./words/levels/*.json", { as: "raw" });
-const topicModules = import.meta.glob("./words/topics/*.json", { as: "raw" });
-const phrasesLevelModules = import.meta.glob("./phrases/levels/*.json", { as: "raw" });
-const tenseRegistryModule = import.meta.glob("./phrases/tenses.json", { as: "raw" });
+const translationModules = import.meta.glob<string>("./translations/**/*.json", { query: "?raw", import: "default" });
+const transcriptionModules = import.meta.glob<string>("./transcriptions/**/*.json", { query: "?raw", import: "default" });
+const levelModules = import.meta.glob<string>("./words/levels/*.json", { query: "?raw", import: "default" });
+const topicModules = import.meta.glob<string>("./words/topics/*.json", { query: "?raw", import: "default" });
+const phrasesLevelModules = import.meta.glob<string>("./phrases/levels/*.json", { query: "?raw", import: "default" });
+const tenseRegistryModule = import.meta.glob<string>("./phrases/tenses.json", { query: "?raw", import: "default" });
 
 /**
  * Видалити BOM (Byte Order Mark) та зайві пробіли з початку рядка
@@ -69,8 +69,7 @@ const stripBOM = (text: string) => {
 /**
  * Безпечно розпарсити JSON, видаляючи BOM
  */
-function safeParse<T>(raw: string | unknown): T {
-	if (typeof raw !== "string") return raw as T;
+function safeParse<T>(raw: string): T {
 	const stripped = stripBOM(raw);
 	try {
 		return JSON.parse(stripped) as T;
@@ -118,7 +117,7 @@ export async function loadLevel(levelId: CEFRLevel): Promise<WordLevel> {
 	const path = `./words/levels/${levelId}.json`;
 	if (levelModules[path]) {
 		const raw = await levelModules[path]();
-		const data = safeParse<any>(raw);
+		const data = safeParse<unknown>(raw);
 		const parsed = LevelFileSchema.parse(data);
 		const level: WordLevel = {
 			id: parsed.id || levelId,
@@ -142,7 +141,7 @@ export async function loadTopic(topicId: string): Promise<WordTopic> {
 	const path = `./words/topics/${topicId}.json`;
 	if (topicModules[path]) {
 		const raw = await topicModules[path]();
-		const data = safeParse<any>(raw);
+		const data = safeParse<unknown>(raw);
 		const parsed = TopicFileSchema.parse(data);
 		const words = parsed.words;
 		const meta = ALL_TOPICS.find((t) => t.id === topicId);
@@ -329,9 +328,9 @@ export async function loadTranscriptions(
 					.filter((p) => p.startsWith(prefix))
 					.forEach((p) => {
 						allPromises.push(
-							transcriptionModules[p]().then((m: unknown) => {
-								const module = m as { default?: unknown };
-								return DictionarySchema.parse(module.default || module);
+							transcriptionModules[p]().then((raw: string) => {
+								const data = safeParse<TranscriptionDictionary>(raw);
+								return DictionarySchema.parse(data);
 							}),
 						);
 					});
@@ -361,7 +360,7 @@ export async function loadTenseRegistry(): Promise<{ packs: Record<string, strin
 		const path = "./phrases/tenses.json";
 		if (tenseRegistryModule[path]) {
 			const raw = await tenseRegistryModule[path]();
-			return safeParse<any>(raw);
+			return safeParse<{ packs: Record<string, string[]>, all_phrases: string[] }>(raw);
 		}
 		throw new Error(`Tense registry file not found: ${path}`);
 	} catch (e) {
@@ -383,7 +382,7 @@ export async function loadPhrasesLevel(levelId: CEFRLevel): Promise<WordLevel> {
 		const path = `./phrases/levels/${levelId}.json`;
 		if (phrasesLevelModules[path]) {
 			const raw = await phrasesLevelModules[path]();
-			const data = safeParse<any>(raw);
+			const data = safeParse<unknown>(raw);
 			// Phrases usually follow same structure as Levels
 			const parsed = LevelFileSchema.parse(data);
 			const result: WordLevel = {

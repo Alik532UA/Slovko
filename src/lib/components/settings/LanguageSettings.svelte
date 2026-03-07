@@ -402,15 +402,14 @@
 		border: none;
 		border-radius: 12px;
 		cursor: pointer;
-		transition:
-			transform 0.2s,
-			background 0.2s;
+		transition: all var(--hover-transition);
 		box-shadow: var(--shadow-sm);
 	}
 
 	.confirm-btn:hover {
 		background: var(--accent-hover);
-		transform: translateY(-2px);
+		transform: scale(var(--hover-scale));
+		z-index: 2;
 	}
 
 	.confirm-btn:active {
@@ -526,7 +525,7 @@
 		padding: 0.5rem;
 		border-radius: 12px;
 		cursor: pointer;
-		transition: all 0.2s;
+		transition: all var(--hover-transition);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -534,7 +533,8 @@
 
 	.icon-btn:hover {
 		background: var(--icon-btn-border);
-		transform: translateY(-2px);
+		transform: scale(var(--hover-scale));
+		z-index: 2;
 	}
 
 	.icon-btn:active {

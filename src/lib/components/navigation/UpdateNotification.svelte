@@ -211,7 +211,7 @@
 		align-items: center;
 		justify-content: center;
 		gap: 0.8rem;
-		transition: all 0.2s;
+		transition: var(--hover-transition);
 		cursor: pointer;
 		width: 100%;
 		max-width: 360px;
@@ -231,7 +231,7 @@
 	}
 
 	.update-btn:hover:not(:disabled) {
-		transform: translateY(-2px);
+		transform: scale(var(--hover-scale));
 	}
 
 	.update-btn.full:hover:not(:disabled) {
@@ -245,7 +245,7 @@
 	}
 
 	.update-btn:active:not(:disabled) {
-		transform: scale(0.98);
+		transform: scale(var(--active-scale));
 	}
 
 	.update-btn:disabled {

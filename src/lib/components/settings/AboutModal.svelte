@@ -183,7 +183,7 @@
 
 	.social-icon {
 		color: var(--text-primary);
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		transition: all var(--hover-transition);
 		opacity: 0.85;
 		display: flex;
 		align-items: center;
@@ -197,11 +197,12 @@
 
 	.social-icon:hover {
 		opacity: 1;
-		transform: translateY(-3px);
+		transform: scale(var(--hover-scale));
 		color: white;
 		background: var(--accent);
 		border-color: var(--accent);
 		box-shadow: var(--shadow-md);
+		z-index: 2;
 	}
 
 	.separator {
@@ -232,7 +233,7 @@
 		border-radius: 12px;
 		text-decoration: none;
 		font-weight: 600;
-		transition: all 0.2s;
+		transition: all var(--hover-transition);
 		width: 100%;
 		max-width: 280px;
 		border: 2px solid transparent;
@@ -249,8 +250,9 @@
 	}
 
 	.donate:hover {
-		transform: translateY(-2px);
+		transform: scale(var(--hover-scale));
 		box-shadow: var(--shadow-md);
+		z-index: 2;
 	}
 
 	.install-btn {
@@ -261,7 +263,8 @@
 
 	.install-btn:hover {
 		background: var(--selected-bg);
-		transform: translateY(-2px);
+		transform: scale(var(--hover-scale));
+		z-index: 2;
 	}
 
 	.cv,

@@ -137,11 +137,11 @@ ${logs}
 		font-weight: 700;
 		cursor: pointer;
 		font-size: 1rem;
-		transition: all 0.2s;
+		transition: var(--hover-transition);
 	}
 
 	button:active {
-		transform: scale(0.98);
+		transform: scale(var(--active-scale));
 	}
 
 	.primary-btn {
@@ -152,7 +152,7 @@ ${logs}
 
 	.primary-btn:hover {
 		background: var(--accent-hover);
-		transform: translateY(-2px);
+		transform: scale(var(--hover-scale));
 		box-shadow: var(--shadow-md);
 	}
 
@@ -164,6 +164,7 @@ ${logs}
 
 	.secondary-btn:hover {
 		background: var(--bg-active);
+		transform: scale(var(--hover-scale));
 	}
 
 	details {

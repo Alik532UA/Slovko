@@ -13,7 +13,7 @@
 	let { mode, selectedIds, onselect }: Props = $props();
 </script>
 
-<div class="grid">
+<div class="grid safe-scale-grid" data-testid="{mode}-grid">
 	{#each ALL_LEVELS as level (level)}
 		<button
 			class="item"
@@ -83,12 +83,13 @@
 
 	.item:hover {
 		border-color: var(--card-hover-border);
-		transform: scale(1.05);
+		transform: scale(var(--hover-scale));
 		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+		z-index: 2;
 	}
 
 	.item:active {
-		transform: scale(0.95);
+		transform: scale(var(--active-scale));
 	}
 
 	.item.selected {

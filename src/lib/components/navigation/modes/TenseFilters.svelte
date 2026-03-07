@@ -2,6 +2,7 @@
 	import { _ } from "svelte-i18n";
 	import type { TenseForm } from "$lib/types";
 	import { Plus, Minus, HelpCircle, Layers, LayoutGrid } from "lucide-svelte";
+	import SegmentedControl from "../../ui/SegmentedControl.svelte";
 
 	interface Props {
 		selectedForms: TenseForm[];
@@ -26,39 +27,16 @@
 			<span class="header-icon"><LayoutGrid size={16} /></span>
 			<span class="section-label">{$_("tenses.filterQuantity")}</span>
 		</div>
-		<div class="segmented-control" data-testid="tense-quantity-radio-group">
-			<button
-				class="segment-btn"
-				class:active={quantity === "1"}
-				onclick={() => onChangeQuantity("1")}
-				data-testid="tense-qty-1"
-			>
-				{$_("tenses.qty1")}
-			</button>
-			<button
-				class="segment-btn"
-				class:active={quantity === "3"}
-				onclick={() => onChangeQuantity("3")}
-				data-testid="tense-qty-3"
-			>
-				{$_("tenses.qty3")}
-			</button>
-			<button
-				class="segment-btn disabled"
-				class:active={quantity === "many"}
-				disabled
-				title={$_("tenses.underConstruction")}
-				data-testid="tense-qty-many"
-			>
-				{$_("tenses.qtyMany")}
-			</button>
-			<div 
-				class="selection-slider" 
-				class:pos-1={quantity === "1"}
-				class:pos-3={quantity === "3"}
-				class:pos-many={quantity === "many"}
-			></div>
-		</div>
+		<SegmentedControl 
+			options={[
+				{ id: '1', label: 'tenses.qty1', testId: 'tense-qty-1' },
+				{ id: '3', label: 'tenses.qty3', testId: 'tense-qty-3' },
+				{ id: 'many', label: 'tenses.qtyMany', testId: 'tense-qty-many', disabled: true, title: 'tenses.underConstruction' }
+			]}
+			value={quantity}
+			onchange={(id) => onChangeQuantity(id as any)}
+			testid="tense-quantity-radio-group"
+		/>
 	</div>
 
 	<!-- Forms Section (Modern Cards) -->
@@ -129,64 +107,6 @@
 		letter-spacing: 0.08em;
 	}
 
-	/* Segmented Control Styles */
-	.segmented-control {
-		display: flex;
-		background: rgba(0, 0, 0, 0.2);
-		padding: 0.25rem;
-		border-radius: 14px;
-		position: relative;
-		border: 1px solid rgba(255, 255, 255, 0.05);
-	}
-
-	.segment-btn {
-		flex: 1;
-		padding: 0.6rem;
-		border: none;
-		background: transparent;
-		color: var(--text-secondary);
-		font-size: 0.85rem;
-		font-weight: 700;
-		cursor: pointer;
-		position: relative;
-		z-index: 1;
-		transition: color 0.3s;
-		border-radius: 10px;
-	}
-
-	.segment-btn.active {
-		color: white;
-	}
-
-	.segment-btn.disabled {
-		opacity: 0.4;
-		cursor: not-allowed;
-	}
-
-	.selection-slider {
-		position: absolute;
-		top: 0.25rem;
-		bottom: 0.25rem;
-		left: 0.25rem;
-		width: calc(33.33% - 0.25rem);
-		background: var(--accent);
-		border-radius: 10px;
-		transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		box-shadow: 0 2px 8px rgba(58, 143, 214, 0.4);
-	}
-
-	.selection-slider.pos-1 {
-		transform: translateX(0);
-	}
-
-	.selection-slider.pos-3 {
-		transform: translateX(100%);
-	}
-
-	.selection-slider.pos-many {
-		transform: translateX(200%);
-	}
-
 	/* Modern Form Cards */
 	.forms-grid {
 		display: grid;
@@ -202,60 +122,70 @@
 		gap: 0.75rem;
 		padding: 1rem 0.5rem;
 		background: rgba(255, 255, 255, 0.03);
-		border: 1px solid rgba(255, 255, 255, 0.06);
+		border: 1px solid rgba(255, 255, 255, 0.05);
 		border-radius: 18px;
 		cursor: pointer;
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		transition: all var(--hover-transition);
 		position: relative;
 		overflow: hidden;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 	}
 
 	.modern-form-card:hover {
-		background: rgba(255, 255, 255, 0.07);
-		transform: translateY(-2px);
-		border-color: rgba(255, 255, 255, 0.12);
+		background: rgba(255, 255, 255, 0.06);
+		transform: scale(var(--hover-scale));
+		border-color: rgba(255, 255, 255, 0.1);
+		z-index: 2;
 	}
 
 	.modern-form-card.selected {
-		background: rgba(58, 143, 214, 0.1);
-		border-color: var(--accent);
-		box-shadow: 0 4px 15px rgba(58, 143, 214, 0.15);
+		background: rgba(var(--accent-rgb), 0.1);
+		border: 1px solid rgba(var(--accent-rgb), 0.2);
+		box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.1);
+		padding: 1rem 0.5rem;
 	}
 
 	.card-icon-box {
-		width: 36px;
-		height: 36px;
-		border-radius: 10px;
-		background: rgba(255, 255, 255, 0.05);
+		width: 38px;
+		height: 38px;
+		border-radius: 11px;
+		background: rgba(255, 255, 255, 0.04);
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		color: var(--text-secondary);
-		transition: all 0.3s;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	.modern-form-card.selected .card-icon-box {
 		background: var(--accent);
 		color: white;
 		transform: scale(1.1);
+		box-shadow: 0 4px 12px rgba(var(--accent-rgb), 0.3);
 	}
 
 	.card-label {
-		font-size: 0.8rem;
+		font-size: 0.85rem;
 		font-weight: 700;
 		color: var(--text-primary);
 		text-align: center;
 		line-height: 1.1;
+		transition: all 0.3s;
+	}
+
+	.modern-form-card.selected .card-label {
+		font-weight: 800;
+		color: white;
 	}
 
 	.custom-checkbox {
 		position: absolute;
-		top: 0.6rem;
-		right: 0.6rem;
-		width: 14px;
-		height: 14px;
-		border-radius: 4px;
-		border: 1.5px solid rgba(255, 255, 255, 0.15);
+		top: 0.7rem;
+		right: 0.7rem;
+		width: 16px;
+		height: 16px;
+		border-radius: 5px;
+		border: 1.5px solid rgba(255, 255, 255, 0.12);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -264,14 +194,15 @@
 
 	.modern-form-card.selected .custom-checkbox {
 		background: var(--accent);
-		border-color: var(--accent);
+		border: none;
+		box-shadow: 0 2px 6px rgba(var(--accent-rgb), 0.4);
 	}
 
 	.check-inner {
-		width: 6px;
-		height: 6px;
+		width: 7px;
+		height: 7px;
 		background: white;
-		border-radius: 1px;
+		border-radius: 1.5px;
 	}
 
 	@media (max-width: 480px) {
@@ -282,18 +213,22 @@
 		.modern-form-card {
 			flex-direction: row;
 			justify-content: flex-start;
-			padding: 0.8rem 1rem;
+			padding: 0.85rem 1rem;
 			gap: 1.25rem;
 		}
 
+		.modern-form-card.selected {
+			padding: calc(0.85rem + 1px) calc(1rem + 1px);
+		}
+
 		.card-label {
-			font-size: 0.9rem;
+			font-size: 0.95rem;
 			text-align: left;
 		}
 		
 		.card-icon-box {
-			width: 32px;
-			height: 32px;
+			width: 34px;
+			height: 34px;
 		}
 	}
 </style>

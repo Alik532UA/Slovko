@@ -73,6 +73,34 @@
 	--playlist-favorites-border: #2ecc71;
 	--playlist-mistakes-border: #e74c3c;
 	--playlist-extra-border: #3a8fd6;
+
+	/* Animation Standards */
+	--hover-scale: 1.015; /* Subtle scale for ~2px effect */
+	--active-scale: 0.98;
+	--hover-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Utility for containers with scaling children to prevent clipping */
+.safe-scale-container {
+	padding: 0.5rem !important;
+	margin: 0 !important;
+	overflow: visible !important;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.safe-scale-grid {
+	padding: 0.5rem !important;
+	margin: 0 !important;
+	overflow: visible !important;
+	width: 100%;
+}
+
+@media (max-width: 480px) {
+	.safe-scale-container, .safe-scale-grid {
+		padding: 0.35rem !important;
+	}
 }
 
 /* Light Gray */
@@ -344,12 +372,12 @@ button {
 
 .primary-action-btn:hover:not(:disabled) {
 	background: var(--accent-hover);
-	transform: scale(1.02);
+	transform: scale(var(--hover-scale));
 	box-shadow: var(--shadow-md);
 }
 
 .primary-action-btn:active:not(:disabled) {
-	transform: scale(0.98);
+	transform: scale(var(--active-scale));
 	box-shadow: var(--shadow-sm);
 }
 

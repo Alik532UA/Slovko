@@ -292,12 +292,12 @@
 		color: white;
 		font-weight: 700;
 		font-size: 1rem;
-		transition: all 0.2s;
+		transition: var(--hover-transition);
 	}
 
 	.primary-btn:hover:not(:disabled) {
 		filter: brightness(1.1);
-		transform: translateY(-1px);
+		transform: scale(var(--hover-scale));
 	}
 
 	.secondary-btn {
@@ -309,11 +309,12 @@
 		color: var(--text-primary);
 		font-weight: 600;
 		font-size: 1rem;
-		transition: all 0.2s;
+		transition: var(--hover-transition);
 	}
 
 	.secondary-btn:hover:not(:disabled) {
 		background: rgba(255, 255, 255, 0.08);
+		transform: scale(var(--hover-scale));
 	}
 
 	.google-btn {
@@ -329,12 +330,12 @@
 		font-weight: 600;
 		font-size: 0.95rem;
 		border: 1px solid #ddd;
-		transition: all 0.2s;
+		transition: var(--hover-transition);
 	}
 
 	.google-btn:hover:not(:disabled) {
 		background: #f5f5f5;
-		transform: translateY(-1px);
+		transform: scale(var(--hover-scale));
 	}
 
 	.divider {

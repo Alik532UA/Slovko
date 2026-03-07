@@ -202,6 +202,8 @@
 		align-items: center;
 		gap: 1.5rem;
 		margin-bottom: 2rem;
+		padding: 0.5rem; /* Space for scaling avatar */
+		overflow: visible; /* Prevent clipping */
 	}
 
 	@media (max-width: 480px) {
@@ -303,12 +305,13 @@
 		padding: 0;
 		cursor: pointer;
 		border-radius: 20px;
-		transition: transform 0.2s;
-		overflow: hidden;
+		transition: var(--hover-transition);
+		overflow: visible; /* Changed from hidden to allow scaling children if needed */
 	}
 
 	.avatar-wrapper-btn:hover {
-		transform: scale(1.05);
+		transform: scale(var(--hover-scale));
+		z-index: 2;
 	}
 	.avatar-wrapper-btn:hover .edit-overlay {
 		opacity: 1;

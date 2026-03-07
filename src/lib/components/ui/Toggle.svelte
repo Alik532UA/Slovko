@@ -4,12 +4,14 @@
 		onchange?: (checked: boolean) => void;
 		disabled?: boolean;
 		label?: string;
+		testid?: string;
 	}
 	let {
 		checked = $bindable(),
 		onchange,
 		disabled = false,
 		label = "Toggle",
+		testid = "toggle",
 	}: Props = $props();
 
 	function toggle() {
@@ -29,6 +31,7 @@
 	aria-checked={checked}
 	aria-label={label}
 	{disabled}
+	data-testid={testid}
 >
 	<div class="thumb"></div>
 </button>

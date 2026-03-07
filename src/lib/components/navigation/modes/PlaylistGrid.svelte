@@ -79,7 +79,7 @@
 	}
 </script>
 
-<div class="grid topics-grid">
+<div class="grid topics-grid safe-scale-grid" data-testid="playlist-grid">
 	<!-- System Playlists -->
 	{#each [playlistStore.systemPlaylists.favorites, playlistStore.systemPlaylists.mistakes, playlistStore.systemPlaylists.extra] as p (p.id)}
 		{@const Icon = PLAYLIST_ICONS_MAP[p.id === "mistakes" ? "RotateCcw" : p.id === "favorites" ? "Heart" : "Bookmark"]}
@@ -267,12 +267,13 @@
 
 	.item:hover {
 		border-color: var(--card-hover-border);
-		transform: scale(1.05);
+		transform: scale(var(--hover-scale));
 		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+		z-index: 2;
 	}
 
 	.item:active {
-		transform: scale(0.95);
+		transform: scale(var(--active-scale));
 	}
 
 	.item.selected {

@@ -200,13 +200,14 @@
 		background: var(--bg-secondary);
 		border: 1px solid var(--border);
 		border-radius: 16px;
-		transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+		transition: all var(--hover-transition);
 	}
 
 	.setting-item:hover {
-		transform: translateY(-2px);
+		transform: scale(var(--hover-scale));
 		border-color: var(--text-secondary);
 		background: var(--border);
+		z-index: 2;
 	}
 
 	.setting-info {

@@ -12,7 +12,7 @@
 	let { selectedIds, onselect }: Props = $props();
 </script>
 
-<div class="grid topics-grid">
+<div class="grid topics-grid safe-scale-grid" data-testid="topic-grid">
 	{#each ALL_TOPICS as topic (topic.id)}
 		{@const Icon = (APP_ICONS as any)[topic.icon]}
 		<button
@@ -86,12 +86,13 @@
 
 	.item:hover {
 		border-color: var(--card-hover-border);
-		transform: scale(1.05);
+		transform: scale(var(--hover-scale));
 		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+		z-index: 2;
 	}
 
 	.item:active {
-		transform: scale(0.95);
+		transform: scale(var(--active-scale));
 	}
 
 	.item.selected {

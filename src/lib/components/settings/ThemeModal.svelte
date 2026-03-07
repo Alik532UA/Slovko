@@ -101,13 +101,14 @@
 		flex-direction: column;
 		align-items: center;
 		gap: 0.75rem;
-		transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+		transition: all var(--hover-transition);
 	}
 
 	.theme-card:hover {
-		transform: translateY(-3px);
+		transform: scale(var(--hover-scale));
 		border-color: var(--text-secondary);
 		background: var(--border);
+		z-index: 2;
 	}
 
 	.theme-card.selected {

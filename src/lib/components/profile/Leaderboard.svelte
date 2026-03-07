@@ -19,8 +19,14 @@
 	import { authStore } from "$lib/firebase/authStore.svelte";
 	import { progressStore } from "$lib/stores/progressStore.svelte";
 	import UserAvatar from "../friends/UserAvatar.svelte";
+	import SegmentedControl from "../ui/SegmentedControl.svelte";
 
 	let selectedLevel = $state("all");
+	const levelOptions = $derived([
+		{ id: 'all', label: 'common.all', testId: 'level-tab-all' },
+		...ALL_LEVELS.map(level => ({ id: level, label: level, testId: `level-tab-${level}` }))
+	]);
+
 	let selectedMetric = $state<
 		| "bestStreak"
 		| "bestCorrectStreak"
@@ -28,6 +34,15 @@
 		| "accuracy"
 		| "activeDaysCount"
 	>("activeDaysCount");
+
+	const metricOptions = [
+		{ id: 'activeDaysCount', label: 'profile.stats.activeDays', icon: Calendar, testId: 'metric-tab-active-days' },
+		{ id: 'bestStreak', label: 'profile.stats.bestStreak', icon: Flame, testId: 'metric-tab-streak-days' },
+		{ id: 'bestCorrectStreak', label: 'profile.stats.bestCorrectStreak', icon: Medal, testId: 'metric-tab-streak-correct' },
+		{ id: 'totalCorrect', label: 'profile.stats.correct', icon: CheckCircle, testId: 'metric-tab-correct-total' },
+		{ id: 'accuracy', label: 'profile.stats.accuracy', icon: Target, testId: 'metric-tab-accuracy' }
+	];
+
 	let isLoading = $state(true);
 	let leaderboardData = $state<any[]>([]);
 
@@ -125,79 +140,22 @@
 <div class="leaderboard-container" data-testid="leaderboard-container">
 	<!-- Filters -->
 	<div class="filters">
-		<div class="level-tabs" data-testid="leaderboard-level-tabs">
-			<button
-				class="level-tab"
-				class:active={selectedLevel === "all"}
-				onclick={() => (selectedLevel = "all")}
-				data-testid="level-tab-all"
-			>
-				{$_("common.all")}
-			</button>
-			{#each ALL_LEVELS as level (level)}
-				<button
-					class="level-tab"
-					class:active={selectedLevel === level}
-					onclick={() => (selectedLevel = level)}
-					data-testid="level-tab-{level}"
-				>
-					{level}
-				</button>
-			{/each}
-		</div>
+		<SegmentedControl 
+			options={levelOptions}
+			value={selectedLevel}
+			onchange={(id) => (selectedLevel = id)}
+			testid="leaderboard-level-tabs"
+			class="mb-3 max-w-[500px]"
+		/>
 
-		<div class="metric-tabs" data-testid="metric-tabs">
-			<button
-				class="metric-tab"
-				class:active={selectedMetric === "activeDaysCount"}
-				onclick={() => (selectedMetric = "activeDaysCount")}
-				data-testid="metric-tab-active-days"
-				title={$_("profile.stats.activeDays")}
-			>
-				<div class="tab-icon"><Calendar size={18} /></div>
-				<span class="tab-label">{$_("profile.stats.activeDays")}</span>
-			</button>
-			<button
-				class="metric-tab"
-				class:active={selectedMetric === "bestStreak"}
-				onclick={() => (selectedMetric = "bestStreak")}
-				data-testid="metric-tab-streak-days"
-				title={$_("profile.stats.bestStreak")}
-			>
-				<div class="tab-icon"><Flame size={18} /></div>
-				<span class="tab-label">{$_("profile.stats.bestStreak")}</span>
-			</button>
-			<button
-				class="metric-tab"
-				class:active={selectedMetric === "bestCorrectStreak"}
-				onclick={() => (selectedMetric = "bestCorrectStreak")}
-				data-testid="metric-tab-streak-correct"
-				title={$_("profile.stats.bestCorrectStreak")}
-			>
-				<div class="tab-icon"><Medal size={18} /></div>
-				<span class="tab-label">{$_("profile.stats.bestCorrectStreak")}</span>
-			</button>
-			<button
-				class="metric-tab"
-				class:active={selectedMetric === "totalCorrect"}
-				onclick={() => (selectedMetric = "totalCorrect")}
-				data-testid="metric-tab-correct-total"
-				title={$_("profile.stats.correct")}
-			>
-				<div class="tab-icon"><CheckCircle size={18} /></div>
-				<span class="tab-label">{$_("profile.stats.correct")}</span>
-			</button>
-			<button
-				class="metric-tab"
-				class:active={selectedMetric === "accuracy"}
-				onclick={() => (selectedMetric = "accuracy")}
-				data-testid="metric-tab-accuracy"
-				title={$_("profile.stats.accuracy")}
-			>
-				<div class="tab-icon"><Target size={18} /></div>
-				<span class="tab-label">{$_("profile.stats.accuracy")}</span>
-			</button>
-		</div>
+		<SegmentedControl 
+			options={metricOptions}
+			value={selectedMetric}
+			onchange={(id) => (selectedMetric = id as any)}
+			variant="vertical"
+			testid="metric-tabs"
+			class="mb-6"
+		/>
 	</div>
 
 	<!-- List -->
@@ -206,7 +164,7 @@
 			<div
 				in:fade={{ duration: 250, delay: 50 }}
 				out:fade={{ duration: 150 }}
-				class="leaderboard-list"
+				class="leaderboard-list safe-scale-container"
 				data-testid="leaderboard-list"
 				role="list"
 			>
@@ -320,6 +278,13 @@
 		height: 100%;
 	}
 
+	.filters {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		margin-bottom: 0.5rem;
+	}
+
 	.guest-cta {
 		margin-top: 1rem;
 		padding: 1rem;
@@ -330,114 +295,6 @@
 		font-size: 0.9rem;
 		color: var(--text-primary);
 		line-height: 1.4;
-	}
-
-	/* Tabs Styles - Reused from ProfileStats but scoped */
-	.level-tabs {
-		display: flex;
-		flex-wrap: wrap; /* Allow wrapping on mobile */
-		gap: 0.5rem;
-		padding-bottom: 0.75rem;
-		justify-content: center;
-	}
-
-	.level-tab {
-		background: transparent;
-		border: 1px solid var(--border);
-		color: var(--text-secondary);
-		padding: 0.4rem 0.8rem;
-		border-radius: 8px;
-		cursor: pointer;
-		font-weight: 600;
-		transition: all 0.2s;
-		flex-shrink: 0;
-	}
-
-	.level-tab.active {
-		background: var(--accent);
-		color: white;
-		border-color: var(--accent);
-	}
-
-	.metric-tabs {
-		display: flex;
-		gap: 0.25rem;
-		margin-bottom: 1.5rem;
-		background: rgba(255, 255, 255, 0.03);
-		padding: 0.4rem;
-		border-radius: 16px;
-		border: 1px solid rgba(255, 255, 255, 0.05);
-		overflow-x: auto;
-		scrollbar-width: none;
-	}
-
-	.metric-tabs::-webkit-scrollbar {
-		display: none;
-	}
-
-	.metric-tab {
-		flex: 1;
-		background: none;
-		border: none;
-		padding: 0.6rem 0.35rem;
-		color: var(--text-secondary);
-		font-weight: 600;
-		border-radius: 12px;
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		gap: 0.35rem;
-		font-size: 0.7rem;
-		min-width: 65px;
-		cursor: pointer;
-		line-height: 1.1;
-	}
-
-	.tab-icon {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 32px;
-		height: 32px;
-		border-radius: 8px;
-		background: rgba(255, 255, 255, 0.03);
-		transition: all 0.3s;
-		color: var(--text-secondary);
-	}
-
-	.metric-tab.active {
-		background: rgba(255, 255, 255, 0.08);
-		color: var(--text-primary);
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-	}
-
-	.metric-tab.active .tab-icon {
-		background: var(--accent);
-		color: white;
-		transform: scale(1.1);
-	}
-
-	.tab-label {
-		white-space: normal; /* Allow wrapping */
-		text-align: center;
-		word-wrap: break-word;
-		display: block;
-		width: 100%;
-	}
-
-	@media (max-width: 480px) {
-		.metric-tab {
-			padding: 0.5rem 0.25rem;
-			font-size: 0.65rem;
-			gap: 0.25rem;
-			min-width: 60px;
-		}
-		.tab-icon {
-			width: 28px;
-			height: 28px;
-		}
 	}
 
 	/* List Styles */
@@ -504,22 +361,26 @@
 		display: flex;
 		align-items: center;
 		background: rgba(255, 255, 255, 0.03);
+		backdrop-filter: blur(16px);
+		-webkit-backdrop-filter: blur(16px);
 		padding: 0.85rem 1rem;
 		border-radius: 16px;
 		border: 1px solid rgba(255, 255, 255, 0.05);
 		transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 	}
 
 	.leaderboard-item:hover {
-		transform: scale(1.01);
+		transform: scale(var(--hover-scale));
 		background: rgba(255, 255, 255, 0.06);
 		border-color: rgba(255, 255, 255, 0.1);
+		z-index: 2;
 	}
 
 	.leaderboard-item.me {
-		background: rgba(58, 143, 214, 0.12);
-		border-color: var(--accent);
-		box-shadow: 0 4px 15px rgba(58, 143, 214, 0.1);
+		background: rgba(255, 255, 255, 0.1);
+		border-color: rgba(255, 255, 255, 0.1);
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 	}
 
 	.rank-num {

@@ -15,6 +15,7 @@
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import type { LevelStats } from "$lib/data/schemas";
 	import { ALL_LEVELS } from "$lib/types";
+	import SegmentedControl from "../ui/SegmentedControl.svelte";
 
 	interface Props {
 		totalCorrect: number;
@@ -46,6 +47,10 @@
 
 		let showMore = $state(false);
 		let selectedLevel = $state("all");
+		const activeLevelIndex = $derived(
+			selectedLevel === "all" ? 0 : ALL_LEVELS.indexOf(selectedLevel as any) + 1,
+		);
+		const totalLevels = $derived(ALL_LEVELS.length + 1);
 	
 		const currentLevelStats = $derived.by(() => {
 			if (selectedLevel === "all") {
@@ -88,30 +93,20 @@
 			{$_("profile.stats.byLevel")}
 		</h3>
 
-		<div class="level-tabs" data-testid="stats-level-tabs">
-			<button
-				class="level-tab"
-				class:active={selectedLevel === "all"}
-				onclick={() => (selectedLevel = "all")}
-				data-testid="level-stats-tab-all"
-			>
-				{$_("common.all")}
-			</button>
-			{#each ALL_LEVELS as level (level)}
-				<button
-					class="level-tab"
-					class:active={selectedLevel === level}
-					onclick={() => (selectedLevel = level)}
-					data-testid="level-stats-tab-{level}"
-				>
-					{level}
-				</button>
-			{/each}
-		</div>
+		<SegmentedControl 
+			options={[
+				{ id: 'all', label: 'common.all', testId: 'level-stats-tab-all' },
+				...ALL_LEVELS.map(level => ({ id: level, label: level, testId: `level-stats-tab-${level}` }))
+			]}
+			value={selectedLevel}
+			onchange={(id) => (selectedLevel = id)}
+			testid="stats-level-tabs"
+			class="mb-4"
+		/>
 
 		<div class="stats-grid-wrapper">
 			{#key selectedLevel}
-				<div in:fade={{ duration: 250, delay: 50 }} out:fade={{ duration: 150 }} class="stats-grid" data-testid="level-stats-grid">
+				<div in:fade={{ duration: 250, delay: 50 }} out:fade={{ duration: 150 }} class="stats-grid safe-scale-container" data-testid="level-stats-grid">
 					<button 
 						type="button"
 						class="stat-card level-stat" 
@@ -163,7 +158,7 @@
 				{$_("profile.stats.general")}
 			</h3>
 			<div
-				class="stats-grid extra-stats"
+				class="stats-grid extra-stats safe-scale-container"
 				class:expanded={showMore}
 				data-testid="profile-stats-grid"
 			>
@@ -236,20 +231,22 @@
 		</div>
 	{/if}
 
-	<button
-		type="button"
-		class="toggle-stats-btn primary-action-btn"
-		onclick={() => (showMore = !showMore)}
-		aria-expanded={showMore}
-		data-testid="toggle-stats-btn"
-	>
-		<span
-			>{$_(
-				showMore ? "profile.stats.showLess" : "profile.stats.showMore",
-			)}</span
+	<div class="safe-scale-container" style="padding: 0.5rem 0;">
+		<button
+			type="button"
+			class="toggle-stats-btn primary-action-btn"
+			onclick={() => (showMore = !showMore)}
+			aria-expanded={showMore}
+			data-testid="toggle-stats-btn"
 		>
-		<div class="btn-shine"></div>
-	</button>
+			<span
+				>{$_(
+					showMore ? "profile.stats.showLess" : "profile.stats.showMore",
+				)}</span
+			>
+			<div class="btn-shine"></div>
+		</button>
+	</div>
 </div>
 
 <style>
@@ -264,7 +261,7 @@
 		grid-area: 1 / 1 / 2 / 2;
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: 0.6rem;
 		margin-bottom: 1rem;
 		transition: all 0.3s ease;
 		width: 100%;
@@ -278,6 +275,8 @@
 
 	.stat-card {
 		background: rgba(255, 255, 255, 0.03);
+		backdrop-filter: blur(16px);
+		-webkit-backdrop-filter: blur(16px);
 		padding: 0.8rem 1.25rem;
 		border-radius: 16px;
 		display: flex;
@@ -287,8 +286,11 @@
 		gap: 1.25rem;
 		border: 1px solid rgba(255, 255, 255, 0.05);
 		cursor: pointer;
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		transition: var(--hover-transition);
 		width: 100%;
+		max-width: 100%; /* Ensure it doesn't exceed grid */
+		position: relative; /* For z-index to work */
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 	}
 
 	.stat-card.level-stat {
@@ -304,14 +306,14 @@
 		border-radius: 12px;
 		background: rgba(255, 255, 255, 0.05);
 		color: var(--accent);
-		transition: all 0.3s;
+		transition: var(--hover-transition);
 		flex-shrink: 0;
 	}
 
 	.stat-card:hover .stat-icon-box {
 		background: var(--accent);
 		color: white;
-		transform: scale(1.1);
+		transform: scale(var(--hover-scale));
 	}
 
 	.stat-content {
@@ -325,13 +327,14 @@
 
 	.stat-card:hover {
 		background: rgba(255, 255, 255, 0.06);
-		transform: scale(1.02);
+		transform: scale(var(--hover-scale));
 		border-color: rgba(255, 255, 255, 0.1);
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+		z-index: 2; /* Lift above neighbors */
 	}
 
 	.stat-card:active {
-		transform: scale(0.98);
+		transform: scale(var(--active-scale));
 	}
 
 	.stat-card .value {
@@ -392,32 +395,6 @@
 		text-align: center;
 	}
 
-	.level-tabs {
-		display: flex;
-		flex-wrap: wrap; /* Allow items to wrap to next line */
-		gap: 0.5rem;
-		padding-bottom: 0.5rem;
-		margin-bottom: 0.75rem;
-		justify-content: center;
-	}
-
-	.level-tab {
-		background: transparent;
-		border: 1px solid var(--border);
-		color: var(--text-secondary);
-		padding: 0.4rem 0.8rem;
-		border-radius: 8px;
-		cursor: pointer;
-		font-weight: 600;
-		transition: all 0.2s;
-	}
-
-	.level-tab.active {
-		background: var(--accent);
-		color: white;
-		border-color: var(--accent);
-	}
-
 	.toggle-stats-btn {
 		width: 100%;
 		background: rgba(255, 255, 255, 0.05);
@@ -428,8 +405,7 @@
 		font-size: 0.9rem;
 		font-weight: 700;
 		cursor: pointer;
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		margin-top: 1rem;
+		transition: var(--hover-transition);
 		position: relative;
 		overflow: hidden;
 		display: flex;
@@ -442,12 +418,12 @@
 		background: var(--accent);
 		color: white;
 		border-color: var(--accent);
-		transform: scale(1.02);
+		transform: scale(var(--hover-scale));
 		box-shadow: 0 6px 15px rgba(58, 143, 214, 0.3);
 	}
 
 	.toggle-stats-btn:active {
-		transform: scale(0.98);
+		transform: scale(var(--active-scale));
 	}
 
 	.btn-shine {

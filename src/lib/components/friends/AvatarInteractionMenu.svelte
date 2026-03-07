@@ -151,7 +151,7 @@
 			class="menu-item" 
 			onclick={handleWave} 
 			disabled={isWaved}
-			aria-label={isWaved ? $_("interaction.youWaved") : $_("interaction.waveBack")}
+			aria-label={isWaved ? $_("interaction.youWaved") : $_("interaction.wave")}
 			data-testid="avatar-menu-wave"
 		>
 			<div class="icon-wrapper" class:sent={isWaved} aria-hidden="true">
@@ -161,7 +161,7 @@
 					<Hand size={18} />
 				{/if}
 			</div>
-			<span>{isWaved ? $_("interaction.youWaved") : $_("interaction.waveBack")}</span>
+			<span>{isWaved ? $_("interaction.youWaved") : $_("interaction.wave")}</span>
 		</button>
 
 		<button 

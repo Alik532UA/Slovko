@@ -114,7 +114,8 @@
 		if (event.type === "incoming_wave") return $_("interaction.wavingAtYou");
 		if (event.type === "new_follower") return $_("interaction.followedYou");
 		if (event.type === "online") return $_("interaction.onlineNow");
-		return $_("interaction.waveBack");
+		
+		return $_("interaction.wave");
 	});
 </script>
 
@@ -170,7 +171,7 @@
 						onclick={handleActionClick}
 						aria-label={event.type === "new_follower"
 							? $_("interaction.followBack")
-							: $_("interaction.waveBack")}
+							: (event.type === "incoming_wave" ? $_("interaction.waveBack") : $_("interaction.wave"))}
 						data-testid="interaction-action-btn"
 					>
 						<Hand size={18} data-testid="icon-hand-wave" />
@@ -205,13 +206,15 @@
 					/>
 				</div>
 			{:else}
-				<UserAvatar
-					uid={event.uid}
-					photoURL={event.profile.photoURL}
-					size={40}
-					interactive={false}
-					showStatus={event.type === "online" || event.state === "collapsed"}
-				/>
+				<div style="pointer-events: none; display: flex;">
+					<UserAvatar
+						uid={event.uid}
+						photoURL={event.profile.photoURL}
+						size={40}
+						interactive={false}
+						showStatus={event.type === "online" || event.state === "collapsed"}
+					/>
+				</div>
 			{/if}
 		</div>
 	</div>
@@ -322,6 +325,20 @@
 	.wave-btn:hover {
 		transform: scale(1.1);
 		background: #4a9fe6;
+	}
+
+	.wave-btn :global(svg) {
+		animation: waving 2.5s infinite ease-in-out;
+		transform-origin: bottom center;
+	}
+
+	@keyframes waving {
+		0%, 100% { transform: rotate(0deg); }
+		15% { transform: rotate(-15deg); }
+		30% { transform: rotate(12deg); }
+		45% { transform: rotate(-10deg); }
+		60% { transform: rotate(7deg); }
+		75% { transform: rotate(0deg); }
 	}
 
 	.sent-indicator {

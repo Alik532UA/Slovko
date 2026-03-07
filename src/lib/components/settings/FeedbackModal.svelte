@@ -231,7 +231,7 @@
 		border-radius: 18px;
 		color: var(--text-primary);
 		cursor: pointer;
-		transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+		transition: all var(--hover-transition);
 		text-align: left;
 		font-size: 1.05rem;
 		font-weight: 600;
@@ -251,7 +251,8 @@
 	.category-large-btn:hover {
 		background: rgba(255, 255, 255, 0.07);
 		border-color: var(--accent);
-		transform: translateX(4px);
+		transform: scale(var(--hover-scale));
+		z-index: 2;
 	}
 
 	.category-large-btn:hover .icon-box {
@@ -314,15 +315,16 @@
 		align-items: center;
 		justify-content: center;
 		gap: 0.75rem;
-		transition: all 0.2s;
+		transition: all var(--hover-transition);
 		margin-top: 1rem;
 		box-shadow: 0 4px 15px rgba(58, 143, 214, 0.3);
 	}
 
 	.submit-btn:hover:not(:disabled) {
-		transform: translateY(-2px);
+		transform: scale(var(--hover-scale));
 		box-shadow: 0 6px 20px rgba(58, 143, 214, 0.4);
 		filter: brightness(1.1);
+		z-index: 2;
 	}
 
 	.submit-btn:disabled {

@@ -206,12 +206,13 @@
 	}
 
 	.word-card:hover {
-		transform: scale(1.02);
+		transform: scale(var(--hover-scale));
 		border-color: var(--card-hover-border);
+		z-index: 2;
 	}
 
 	.word-card:active {
-		transform: scale(0.98);
+		transform: scale(var(--active-scale));
 	}
 
 	/* Remove specific disabled styling or keep it if needed for visual indication that it's matched */
