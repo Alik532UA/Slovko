@@ -3,6 +3,7 @@
 	"girl": "/ɡɜːl/",
 	"he": "/hiː/",
 	"he_pronoun": "/hiː/",
+	"pronoun_3rd": "/hiː/",
 	"her": "/hɜːr/",
 	"her_possessive": "/hɜːr/",
 	"her_pronoun": "/hɜːr/",
@@ -23,6 +24,7 @@
 	"mrs": "/ˈmɪsɪz/",
 	"my": "/maɪ/",
 	"my_possessive": "/maɪ/",
+	"our": "/ˈaʊər/",
 	"our_possessive": "/ˈaʊər/",
 	"people": "/ˈpiːpl/",
 	"person": "/ˈpɜːsn/",
@@ -30,6 +32,7 @@
 	"she_pronoun": "/ʃiː/",
 	"that": "/ðæt/",
 	"that_pronoun": "/ðæt/",
+	"their": "/ðeər/",
 	"their_possessive": "/ðeər/",
 	"them": "/ðɛm/",
 	"them_pronoun": "/ðɛm/",
@@ -47,5 +50,6 @@
 	"we_pronoun": "/wiː/",
 	"woman": "/ˈwʊmən/",
 	"you_pronoun": "/juː/",
+	"your": "/jɔːr/",
 	"your_possessive": "/jɔːr/"
 }
