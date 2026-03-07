@@ -75,15 +75,15 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	},
 	adversity: {
 		base: "adversity",
-		specific: ["adversity_1", "adversity_2"]
+		specific: ["adversity_misfortune", "adversity_hardship"]
 	},
 	advocacy: {
 		base: "advocacy",
-		specific: ["advocacy_2", "advocacy_qoralav"]
+		specific: ["advocacy_protection", "advocacy_qoralav"]
 	},
 	advocate: {
 		base: "advocate",
-		specific: ["advocate_1", "advocate_advocate", "advocate_cause", "advocate_verb"]
+		specific: ["advocate_lawyer", "advocate_advocate", "advocate_cause", "advocate_verb"]
 	},
 	affair: {
 		base: "affair",
@@ -95,7 +95,231 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	},
 	allowance: {
 		base: "allowance",
-		specific: ["allowance__", "allowance_maa"]
+		specific: ["allowance_money", "allowance_maa"]
+	},
+	and: {
+		base: "and",
+		specific: ["and_conjunction"]
+	},
+	bank: {
+		base: "bank",
+		specific: ["bank_finance", "bank_river"]
+	},
+	but: {
+		base: "but",
+		specific: ["but_conjunction"]
+	},
+	because: {
+		base: "because",
+		specific: ["because_conjunction"]
+	},
+	so: {
+		base: "so",
+		specific: ["so_conjunction"]
+	},
+	if: {
+		base: "if",
+		specific: ["if_conjunction"]
+	},
+	or: {
+		base: "or",
+		specific: ["or_conjunction"]
+	},
+	he: {
+		base: "he",
+		specific: ["he_pronoun"]
+	},
+	she: {
+		base: "she",
+		specific: ["she_pronoun"]
+	},
+	it: {
+		base: "it",
+		specific: ["it_pronoun"]
+	},
+	they: {
+		base: "they",
+		specific: ["they_pronoun"]
+	},
+	i: {
+		base: "i",
+		specific: ["i_pronoun"]
+	},
+	we: {
+		base: "we",
+		specific: ["we_pronoun"]
+	},
+	you: {
+		base: "you",
+		specific: ["you_informal", "you_formal"]
+	},
+	me: {
+		base: "me",
+		specific: ["me_pronoun"]
+	},
+	us: {
+		base: "us",
+		specific: ["us_pronoun"]
+	},
+	him: {
+		base: "him",
+		specific: ["him_pronoun"]
+	},
+	them: {
+		base: "them",
+		specific: ["them_pronoun"]
+	},
+	this: {
+		base: "this",
+		specific: ["this_pronoun"]
+	},
+	that: {
+		base: "that",
+		specific: ["that_pronoun"]
+	},
+	these: {
+		base: "these",
+		specific: ["these_pronoun"]
+	},
+	those: {
+		base: "those",
+		specific: ["those_pronoun"]
+	},
+	camp: {
+		base: "camp",
+		specific: ["camp_noun", "camp_verb"]
+	},
+	cross: {
+		base: "cross",
+		specific: ["cross_noun", "cross_verb"]
+	},
+	dance: {
+		base: "dance",
+		specific: ["dance_noun", "dance_verb"]
+	},
+	film: {
+		base: "film",
+		specific: ["film_noun", "film_verb"]
+	},
+	iron: {
+		base: "iron",
+		specific: ["iron_noun", "iron_verb"]
+	},
+	paint: {
+		base: "paint",
+		specific: ["paint_noun", "paint_verb"]
+	},
+	spell: {
+		base: "spell",
+		specific: ["spell_noun", "spell_verb"]
+	},
+	wish: {
+		base: "wish",
+		specific: ["wish_noun", "wish_verb"]
+	},
+	admit: {
+		base: "admit",
+		specific: ["admit_verb"]
+	},
+	float: {
+		base: "float",
+		specific: ["float_verb"]
+	},
+	knock: {
+		base: "knock",
+		specific: ["knock_verb"]
+	},
+	murder: {
+		base: "murder",
+		specific: ["murder_noun", "murder_verb"]
+	},
+	respect: {
+		base: "respect",
+		specific: ["respect_noun", "respect_verb"]
+	},
+	scream: {
+		base: "scream",
+		specific: ["scream_noun", "scream_verb"]
+	},
+	search: {
+		base: "search",
+		specific: ["search_noun", "search_verb"]
+	},
+	target: {
+		base: "target",
+		specific: ["target_noun", "target_verb"]
+	},
+	touch: {
+		base: "touch",
+		specific: ["touch_noun", "touch_verb"]
+	},
+	transport: {
+		base: "transport",
+		specific: ["transport_noun", "transport_verb"]
+	},
+	trust: {
+		base: "trust",
+		specific: ["trust_noun", "trust_verb"]
+	},
+	upset: {
+		base: "upset",
+		specific: ["upset_adj", "upset_verb"]
+	},
+	wave: {
+		base: "wave",
+		specific: ["wave_noun", "wave_verb"]
+	},
+	address: {
+		base: "address",
+		specific: ["address_noun", "address_verb"]
+	},
+	applaud: {
+		base: "applaud",
+		specific: ["applaud_verb"]
+	},
+	circulate: {
+		base: "circulate",
+		specific: ["circulate_verb"]
+	},
+	cite: {
+		base: "cite",
+		specific: ["cite_verb"]
+	},
+	cooperate: {
+		base: "cooperate",
+		specific: ["cooperate_verb"]
+	},
+	criticise: {
+		base: "criticise",
+		specific: ["criticise_verb"]
+	},
+	dramatise: {
+		base: "dramatise",
+		specific: ["dramatise_verb"]
+	},
+	eject: {
+		base: "eject",
+		specific: ["eject_verb"]
+	},
+	realise: {
+		base: "realise",
+		specific: ["realise_verb"]
+	},
+	recognise: {
+		base: "recognise",
+		specific: ["recognise_verb"]
+	},
+	regulate: {
+		base: "regulate",
+		specific: ["regulate_verb"]
+	},
+	rid: {
+		base: "rid",
+		specific: ["rid_verb"]
+	},
+	unify: {
+		base: "unify",
+		specific: ["unify_verb"]
 	},
 	also: {
 		base: "also",

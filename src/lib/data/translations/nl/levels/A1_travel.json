@@ -1,10 +1,10 @@
-{
+﻿{
 	"room": "kamer",
 	"money": "geld",
 	"airport": "luchthaven",
 	"stop": "stoppen",
 	"bag": "tas",
-	"bank_finance": "bank",
+	"bank_finance": "bank",`n        "bank_river": "oever",
 	"hotel": "hotel",
 	"ticket": "kaartje",
 	"map": "kaart",
