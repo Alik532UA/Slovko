@@ -1,4 +1,4 @@
-﻿{
+{
 	"abandon": "porzucać",
 	"absorb": "wchłaniać",
 	"accuse": "oskarżać",
@@ -632,5 +632,29 @@
 	"drug_medicine": "lek",
 	"drug_narcotic": "narkotyk",
 	"tube_subway": "metro",
-	"tube_pipe": "rura"
+	"tube_pipe": "rura",
+	"area": "obszar",
+	"drug": "lek",
+	"tube": "metro",
+	"block": "blok",
+	"board": "rada",
+	"character": "postać",
+	"collapse": "zapaść",
+	"concern": "troska",
+	"construct": "budować",
+	"deal": "handlować",
+	"due": "należny",
+	"hang": "spędzać czas",
+	"major": "główny",
+	"mark": "ocena",
+	"measure": "środek",
+	"pattern": "wzór",
+	"race": "wyścig",
+	"site": "miejsce",
+	"stage": "etap",
+	"stock": "zapas",
+	"that": "że",
+	"treat": "traktować",
+	"trial": "proces",
+	"would": "by"
 }

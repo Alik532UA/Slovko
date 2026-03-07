@@ -1,4 +1,4 @@
-﻿{
+{
 	"accurate": "точний",
 	"advertise": "рекламувати",
 	"apologize": "вибачатися",
@@ -65,5 +65,7 @@
 	"support": "підтримка",
 	"translate": "перекладати",
 	"trust_verb": "довіряти",
-	"unemployment_rate": "безробіття"
+	"unemployment_rate": "безробіття",
+	"condition": "стан",
+	"contribute": "робити внесок"
 }

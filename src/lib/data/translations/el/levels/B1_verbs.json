@@ -1,4 +1,4 @@
-﻿{
+{
 	"accurate": "ακριβής",
 	"advertise": "διαφημίζω",
 	"apologize": "ζητώ συγγνώμη",
@@ -64,5 +64,7 @@
 	"support": "υποστήριξη",
 	"translate": "μεταφράζω",
 	"trust_verb": "εμπιστεύομαι",
-	"unemployment_rate": "ποσοστό ανεργίας"
+	"unemployment_rate": "ποσοστό ανεργίας",
+	"condition": "κατάσταση",
+	"contribute": "δωρίζω"
 }

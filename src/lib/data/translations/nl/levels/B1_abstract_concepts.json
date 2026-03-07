@@ -1,4 +1,4 @@
-﻿{
+{
 	"ability": "vermogen",
 	"advantage": "voordeel",
 	"attitude": "houding",
@@ -75,5 +75,10 @@
 	"growth_physical": "groei",
 	"growth_development": "ontwikkeling",
 	"sight_vision": "zicht",
-	"sight_view": "bezienswaardigheid"
+	"sight_view": "bezienswaardigheid",
+	"effect": "effect",
+	"failure": "falen",
+	"fault": "schuld",
+	"growth": "groei",
+	"sight": "zicht"
 }

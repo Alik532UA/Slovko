@@ -1,4 +1,4 @@
-﻿{
+{
 	"battery_life": "Batterie",
 	"fuel_energy": "Kraftstoff",
 	"signal_phone": "Signal",
@@ -7,5 +7,6 @@
 	"fuel": "Treibstoff",
 	"signal": "Signal",
 	"battery_electric": "Batterie",
-	"battery_artillery": "Geschützbatterie"
+	"battery_artillery": "Geschützbatterie",
+	"battery": "Batterie"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"academy": "ακαδημία",
 	"accent": "προφορά",
 	"acceptance": "αποδοχή",
@@ -243,5 +243,13 @@
 	"accord_agreement": "συμφωνία",
 	"accord_harmony": "αρμονία",
 	"adjustment_change": "προσαρμογή",
-	"adjustment_setting": "ρύθμιση"
+	"adjustment_setting": "ρύθμιση",
+	"abolish": "καταργώ",
+	"accord": "συμφωνία",
+	"adjustment": "προσαρμογή",
+	"adversity": "αντιξοότητα",
+	"affinity": "συγγένεια",
+	"allowance": "ανοχή",
+	"appendix": "σκωληκοειδής απόφυση",
+	"articulate": "εύγλωττος"
 }

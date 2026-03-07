@@ -1,4 +1,4 @@
-﻿{
+{
 	"friend": "φίλος",
 	"mother": "μητέρα",
 	"father": "πατέρας",
@@ -9,5 +9,6 @@
 	"husband": "άνδρας",
 	"wife": "γυναίκα",
 	"sister_older": "αδελφή",
-	"sister_younger": "αδελφή"
+	"sister_younger": "αδελφή",
+	"sister": "αδελφή"
 }

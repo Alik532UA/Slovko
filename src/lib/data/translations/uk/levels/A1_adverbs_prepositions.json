@@ -1,4 +1,4 @@
-﻿{
+{
 	"here": "тут",
 	"there": "там",
 	"where": "де",
@@ -18,5 +18,7 @@
 	"at_place": "в",
 	"at_time": "о",
 	"from_origin": "з",
-	"from_time": "від"
+	"from_time": "від",
+	"at": "в",
+	"from": "з"
 }

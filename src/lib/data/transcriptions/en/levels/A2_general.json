@@ -1,4 +1,4 @@
-﻿{
+{
 	"able": "/ˈeɪbl/",
 	"accept": "/əkˈsɛpt/",
 	"achieve": "/əˈtʃiːv/",
@@ -651,5 +651,10 @@
 	"yet": "/jɛt/",
 	"you": "/juː/",
 	"your": "/jɔːr/",
-	"zoo": "/zuː/"
+	"zoo": "/zuː/",
+	"mad_insane": "/mæd/",
+	"burn_fire": "/bɜːn/",
+	"burn_injury": "/bɜːn/",
+	"before_time": "/bɪˈfɔː/",
+	"before_position": "/bɪˈfɔː/"
 }

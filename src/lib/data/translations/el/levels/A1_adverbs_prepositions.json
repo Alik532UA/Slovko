@@ -1,4 +1,4 @@
-﻿{
+{
 	"here": "εδώ",
 	"there": "εκεί",
 	"where": "πού",
@@ -18,5 +18,7 @@
 	"at_place": "σε",
 	"at_time": "στις",
 	"from_origin": "από",
-	"from_time": "από"
+	"from_time": "από",
+	"at": "σε",
+	"from": "από"
 }

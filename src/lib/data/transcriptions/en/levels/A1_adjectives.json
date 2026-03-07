@@ -1,4 +1,4 @@
-﻿{
+{
 	"big": "/bɪɡ/",
 	"small": "/smɔːl/",
 	"hot": "/hɒt/",
@@ -54,5 +54,7 @@
 	"early": "/ˈɜːli/",
 	"wrong": "/rɒŋ/",
 	"young": "/jʌŋ/",
-	"hard_difficult": "/hɑːrd/"
+	"hard_difficult": "/hɑːrd/",
+	"different_other": "/ˈdɪf.ər.ənt/",
+	"different_various": "/ˈdɪf.ər.ənt/"
 }

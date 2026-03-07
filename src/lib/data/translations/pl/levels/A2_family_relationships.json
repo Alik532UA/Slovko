@@ -1,4 +1,4 @@
-﻿{
+{
 	"aunt_maternal": "stryjna/ciotka",
 	"aunt_paternal": "ciotka",
 	"brother_male": "brat",
@@ -15,5 +15,7 @@
 	"uncle_maternal": "wujek",
 	"uncle_paternal": "wujek",
 	"cousin_male": "kuzyn",
-	"cousin_female": "kuzynka"
+	"cousin_female": "kuzynka",
+	"aunt": "ciotka",
+	"cousin": "kuzyn"
 }

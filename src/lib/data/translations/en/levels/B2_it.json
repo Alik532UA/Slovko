@@ -1,4 +1,5 @@
-﻿{
+{
 	"scan_medical": "scan",
-	"scan_digital": "scan"
+	"scan_digital": "scan",
+	"scan": "scan"
 }

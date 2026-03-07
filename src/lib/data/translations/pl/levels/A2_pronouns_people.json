@@ -1,4 +1,4 @@
-﻿{
+{
 	"adult": "dorosły",
 	"anybody": "ktokolwiek",
 	"anyone": "ktokolwiek",
@@ -19,5 +19,6 @@
 	"somebody": "ktoś",
 	"yourselves": "sami",
 	"lady_noble": "dama",
-	"lady_woman": "pani"
+	"lady_woman": "pani",
+	"lady": "dama"
 }

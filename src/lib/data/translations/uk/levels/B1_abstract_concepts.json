@@ -1,4 +1,4 @@
-﻿{
+{
 	"ability": "здатність",
 	"advantage": "перевага",
 	"attitude": "ставлення",
@@ -75,5 +75,10 @@
 	"growth_physical": "зріст",
 	"growth_development": "розвиток",
 	"sight_vision": "зір",
-	"sight_view": "краєвид"
+	"sight_view": "краєвид",
+	"effect": "ефект",
+	"failure": "нестача",
+	"fault": "провина",
+	"growth": "зріст",
+	"sight": "зір"
 }

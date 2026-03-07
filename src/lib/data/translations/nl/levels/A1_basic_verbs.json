@@ -1,4 +1,4 @@
-﻿{
+{
 	"come": "komen",
 	"see": "zien",
 	"hear": "horen",
@@ -39,5 +39,6 @@
 	"thank_verb": "bedanken",
 	"help_verb": "helpen",
 	"leave_depart": "vertrekken",
-	"leave_behind": "laten"
+	"leave_behind": "laten",
+	"leave": "vertrekken"
 }

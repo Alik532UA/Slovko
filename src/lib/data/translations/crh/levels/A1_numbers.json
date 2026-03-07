@@ -1,4 +1,4 @@
-﻿{
+{
 	"one": "bir",
 	"two": "eki",
 	"three": "üç",
@@ -31,5 +31,6 @@
 	"ninety": "doqsan",
 	"first": "birinci",
 	"second_ord": "ekinci",
-	"third": "üçünci"
+	"third": "üçünci",
+	"second": "ekinci"
 }

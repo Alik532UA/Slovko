@@ -73,7 +73,7 @@ export class GameDataService {
 				const hasDifference = (dict: TranslationDictionary) => {
 					// Беремо ТІЛЬКИ ті переклади, які є реально у словнику (без fallback)
 					const translations = group.specific
-						.map((k) => dict[k])
+						.map((k: string) => dict[k])
 						.filter(Boolean);
 
 					const unique = new Set(translations);

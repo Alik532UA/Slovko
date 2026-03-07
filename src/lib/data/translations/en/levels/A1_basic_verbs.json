@@ -1,4 +1,4 @@
-﻿{
+{
 	"come": "come",
 	"see": "see",
 	"hear": "hear",
@@ -39,5 +39,6 @@
 	"thank_verb": "thank",
 	"help_verb": "help",
 	"leave_depart": "leave",
-	"leave_behind": "leave"
+	"leave_behind": "leave",
+	"leave": "leave"
 }

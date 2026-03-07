@@ -1,4 +1,4 @@
-﻿{
+{
 	"grandfather": "дідусь",
 	"grandmother": "бабуся",
 	"marry": "одружуватися",
@@ -15,5 +15,7 @@
 	"partner": "партнер",
 	"brother_male": "брат",
 	"cousin_male": "кузен",
-	"cousin_female": "кузина"
+	"cousin_female": "кузина",
+	"aunt": "тітка (по батьку)",
+	"cousin": "кузен"
 }

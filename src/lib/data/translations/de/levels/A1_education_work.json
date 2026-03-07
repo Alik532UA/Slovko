@@ -1,7 +1,7 @@
-﻿{
-	"school": "Schule",
-	"class": "Klasse",
-	"teacher": "Lehrer",
-	"student": "Student",
-	"job": "Job"
+{
+    "school": "Schule",
+    "class": "Klasse",
+    "teacher": "Lehrer",
+    "student": "Teilnehmer",
+    "job": "Job"
 }

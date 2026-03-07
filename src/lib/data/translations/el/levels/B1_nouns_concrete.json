@@ -1,4 +1,4 @@
-﻿{
+{
 	"abandon": "εγκαταλείπω",
 	"absorb": "απορροφώ",
 	"accuse": "κατηγορώ",
@@ -534,6 +534,7 @@
 	"tend": "τείνω",
 	"term": "όρος",
 	"terrified": "τρομοκρατημένος",
+	"that": "ότι",
 	"that_conjunction": "ότι",
 	"the_definite": "ο",
 	"themselves": "οι ίδιοι",
@@ -621,5 +622,28 @@
 	"drug_medicine": "φάρμακο",
 	"drug_narcotic": "ναρκωτικό",
 	"tube_subway": "μετρό",
-	"tube_pipe": "σωλήνας"
+	"tube_pipe": "σωλήνας",
+	"area": "περιοχή",
+	"drug": "φάρμακο",
+	"tube": "μετρό",
+	"block": "μπλοκ",
+	"board": "συμβούλιο",
+	"character": "ήρωας",
+	"collapse": "κατάρρευση",
+	"concern": "φροντίδα",
+	"construct": "χτίζω",
+	"deal": "συμφωνία",
+	"due": "αναμενόμενος",
+	"hang": "κάνω παρέα",
+	"major": "κύριος",
+	"mark": "βαθμός",
+	"measure": "μέτρο",
+	"pattern": "μοτίβο",
+	"race": "αγώνας",
+	"site": "τοποθεσία",
+	"stage": "φάση",
+	"stock": "απόθεμα",
+	"treat": "φέρομαι",
+	"trial": "δίκη",
+	"would": "θα"
 }

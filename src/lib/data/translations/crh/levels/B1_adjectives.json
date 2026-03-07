@@ -1,4 +1,4 @@
-﻿{
+{
 	"achievement": "muvafaqiyet",
 	"advertisement": "elan",
 	"aggressive": "atılğan",
@@ -140,5 +140,12 @@
 	"you_plural": "siz",
 	"your_plural": "siziñ",
 	"argument_reason": "delil",
-	"argument_dispute": "tartışma"
+	"argument_dispute": "tartışma",
+	"argument": "delil",
+	"clear": "añlaşılır",
+	"crash": "qaza",
+	"patient": "sabırlı",
+	"record": "rekord",
+	"stuff": "malzeme",
+	"unit": "birlem"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"here": "/hɪər/",
 	"there": "/ðeər/",
 	"where": "/weər/",
@@ -16,5 +16,9 @@
 	"often": "/ˈɒfn/",
 	"sometimes": "/ˈsʌmtaɪmz/",
 	"usually": "/ˈjuːʒuəli/",
-	"under": "/ˈʌndə/"
+	"under": "/ˈʌndə/",
+	"at_place": "/æt/",
+	"at_time": "/æt/",
+	"from_origin": "/frɒm/",
+	"from_time": "/frɒm/"
 }

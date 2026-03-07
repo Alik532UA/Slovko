@@ -1,4 +1,4 @@
-﻿{
+{
 	"ask_for": "vragen om",
 	"be_over": "voorbij zijn",
 	"break_down_machine": "kapot gaan",
@@ -38,5 +38,7 @@
 	"give_up_quit": "stoppen",
 	"give_up_surrender": "opgeven",
 	"grow_up_mature": "volwassen worden",
-	"grow_up_physical": "opgroeien"
+	"grow_up_physical": "opgroeien",
+	"give_up_habit": "stoppen",
+	"grow_up": "volwassen worden"
 }

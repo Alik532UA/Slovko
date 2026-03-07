@@ -1,4 +1,4 @@
-﻿{
+{
 	"cat": "cat",
 	"dog": "dog",
 	"chicken": "chicken",
@@ -17,5 +17,6 @@
 	"duck_animal": "duck",
 	"spider": "spider",
 	"elephant": "elephant",
-	"monkey": "monkey"
+	"monkey": "monkey",
+	"duck": "duck"
 }

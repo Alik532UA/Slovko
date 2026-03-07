@@ -1,4 +1,4 @@
-﻿{
+{
 	"aunt_paternal": "tante",
 	"aunt_maternal": "tante",
 	"brother_male": "broer",
@@ -15,5 +15,7 @@
 	"uncle_paternal": "oom",
 	"uncle_maternal": "oom",
 	"cousin_male": "neef",
-	"cousin_female": "nicht"
+	"cousin_female": "nicht",
+	"aunt": "tante",
+	"cousin": "neef"
 }

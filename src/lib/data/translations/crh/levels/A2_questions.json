@@ -1,4 +1,4 @@
-﻿{
+{
 	"problem": "mesele",
 	"repeat": "tekrarlamaq",
 	"sure": "emin",
@@ -32,5 +32,6 @@
 	"speak_slowly": "yavaş aytıñız",
 	"i_see": "añladım",
 	"i_know": "bilem",
-	"i_think": "belli"
+	"i_think": "belli",
+	"i": "bilem"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"here": "here",
 	"there": "there",
 	"where": "where",
@@ -18,5 +18,7 @@
 	"at_place": "at",
 	"at_time": "at",
 	"from_origin": "from",
-	"from_time": "from"
+	"from_time": "from",
+	"at": "at",
+	"from": "from"
 }

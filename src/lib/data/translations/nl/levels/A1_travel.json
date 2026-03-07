@@ -1,4 +1,4 @@
-﻿{
+{
 	"room": "kamer",
 	"money": "geld",
 	"airport": "luchthaven",
@@ -8,5 +8,6 @@
 	"hotel": "hotel",
 	"ticket": "kaartje",
 	"map": "kaart",
-	"price": "prijs"
+	"price": "prijs",
+	"bank": "bank"
 }

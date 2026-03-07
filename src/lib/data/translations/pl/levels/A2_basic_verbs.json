@@ -1,4 +1,4 @@
-﻿{
+{
 	"beat_win": "pokonać",
 	"call_phone": "dzwonić",
 	"chat_talk": "rozmawiać",
@@ -23,5 +23,8 @@
 	"spill": "rozlewać",
 	"spoil": "psuć",
 	"design_plan": "projektować",
-	"design_style": "stylizować"
+	"design_style": "stylizować",
+	"design_verb": "projektować",
+	"design": "projektować",
+	"pick": "wybierać"
 }

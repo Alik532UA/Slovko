@@ -1,4 +1,4 @@
-﻿{
+{
 	"airline": "/ˈɛəlaɪn/",
 	"arrival": "/əˈraɪv(ə)l/",
 	"backpack": "/ˈbækpæk/",
@@ -29,5 +29,7 @@
 	"terminal": "/ˈtɜːmɪn(ə)l/",
 	"tourism": "/ˈtʊərɪzm/",
 	"visa": "/ˈviːzə/",
-	"voyage": "/ˈvɔɪɪdʒ/"
+	"voyage": "/ˈvɔɪɪdʒ/",
+	"cabin_ship": "/ˈkæbɪn/",
+	"cabin_plane": "/ˈkæbɪn/"
 }

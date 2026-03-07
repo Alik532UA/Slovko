@@ -1,4 +1,4 @@
-﻿{
+{
 	"achievement": "επίτευγμα",
 	"advertisement": "διαφήμιση",
 	"aggressive": "επιθετικός",
@@ -139,5 +139,12 @@
 	"you_plural": "εσείς",
 	"your_plural": "δικός σας",
 	"argument_reason": "επιχείρημα",
-	"argument_dispute": "λογομαχία"
+	"argument_dispute": "λογομαχία",
+	"argument": "επιχείρημα",
+	"clear": "σαφής",
+	"crash": "σύγκρουση",
+	"patient": "υπομονετικός",
+	"record": "ρεκόρ",
+	"stuff": "υλικό",
+	"unit": "εξάρτημα"
 }

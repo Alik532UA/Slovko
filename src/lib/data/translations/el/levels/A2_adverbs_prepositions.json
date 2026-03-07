@@ -1,4 +1,4 @@
-﻿{
+{
 	"during": "κατά τη διάρκεια",
 	"until": "μέχρι",
 	"well": "καλά",
@@ -47,5 +47,11 @@
 	"as_like": "όπως",
 	"as_since": "καθώς",
 	"by_near": "δίπλα",
-	"by_agent": "από"
+	"by_agent": "από",
+	"nicely": "ωραία",
+	"definitely": "οπωσδήποτε",
+	"as_conjunction": "όπως",
+	"by_preposition": "δίπλα",
+	"as": "όπως",
+	"by": "δίπλα"
 }

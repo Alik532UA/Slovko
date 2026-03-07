@@ -1,4 +1,4 @@
-﻿{
+{
 	"access": "irişim",
 	"access_code": "irişim",
 	"accommodation_living": "mesken",
@@ -158,5 +158,16 @@
 	"confidence_assurance": "özüne inam",
 	"application_request": "ariza",
 	"application_software": "uyğulama",
-	"authority_person": "akimat"
+	"authority_person": "akimat",
+	"appearance": "körünüş",
+	"authority": "selâhiyet",
+	"application": "ariza",
+	"command": "emir",
+	"performance": "icra",
+	"power": "küç",
+	"sense": "duyğu",
+	"service": "hızmet",
+	"sort": "tür",
+	"state": "al",
+	"view": "baqış"
 }

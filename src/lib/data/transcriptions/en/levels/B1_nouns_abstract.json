@@ -1,4 +1,4 @@
-﻿{
+{
 	"access": "/ˈæksɛs/",
 	"access_code": "/ˈæksɛs/",
 	"accommodation_living": "/əˌkɒməˈdeɪʃ(ə)n/",
@@ -187,5 +187,8 @@
 	"will_future": "/wɪl/",
 	"will_noun": "/wɪl/",
 	"witness_person": "/ˈwɪtnəs/",
-	"work_out": "/wɜːk aʊt/"
+	"work_out": "/wɜːk aʊt/",
+	"appearance_look": "/əˈpɪərəns/",
+	"appearance_arrival": "/əˈpɪərəns/",
+	"confidence_assurance": "/ˈkɒnfɪdəns/"
 }

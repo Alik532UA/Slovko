@@ -1,4 +1,4 @@
-﻿{
+{
 	"accurate": "doğru",
 	"advertise": "reklama yapmaq",
 	"apologize": "bağışlav soramaq",
@@ -66,5 +66,7 @@
 	"support": "destek",
 	"translate": "tercüme etmek",
 	"trust_verb": "güvenmek",
-	"unemployment_rate": "işsizlik"
+	"unemployment_rate": "işsizlik",
+	"condition": "al",
+	"contribute": "isse qoşmaq"
 }

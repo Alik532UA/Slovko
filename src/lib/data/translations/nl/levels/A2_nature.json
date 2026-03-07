@@ -1,4 +1,4 @@
-﻿{
+{
 	"lake": "meer",
 	"forest": "bos",
 	"grass": "gras",
@@ -28,5 +28,7 @@
 	"bush": "struik",
 	"cave": "grot",
 	"volcano": "vulkaan",
-	"branch_tak": "tak"
+	"branch_tak": "tak",
+	"branch": "tak",
+	"wood": "bos"
 }

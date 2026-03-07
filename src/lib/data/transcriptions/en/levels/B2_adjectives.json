@@ -1,4 +1,4 @@
-﻿{
+{
 	"accident_event": "/ˈæksɪdənt/",
 	"action_legal": "/ˈækʃn/",
 	"acceptable": "/əkˈsɛptəbl/",
@@ -285,5 +285,20 @@
 	"cultivate_talent": "/ˈkʌltɪveɪt/",
 	"designate_official": "/ˈdezɪɡneɪt/",
 	"diagnose_patient": "/ˌdaɪəɡˈnəʊz/",
-	"divert_traffic": "/daɪˈvɜːrt/"
+	"divert_traffic": "/daɪˈvɜːrt/",
+	"engagement_involvement": "/ɪnˈɡeɪдʒmənt/",
+	"engagement_betrothal": "/ɪnˈɡeɪдʒmənt/",
+	"assessment_tax": "/əˈsɛsmənt/",
+	"establishment_institution": "//",
+	"establishment_founding": "//",
+	"attachment_file": "/əˈtætʃmənt/",
+	"attachment_emotion": "/əˈtætʃmənt/",
+	"comprehensive_thorough": "/ˌkɒmprɪˈhɛnsɪv/",
+	"comprehensive_inclusive": "/ˌkɒmprɪˈhɛnsɪv/",
+	"fundamental_basic": "/ˌfʌndəˈmɛntl/",
+	"fundamental_essential": "/ˌfʌndəˈmɛntl/",
+	"acknowledgement_confirmation": "/əkˈnɒlɪdʒm(ə)nt/",
+	"acknowledgement_recognition": "/əkˈnɒlɪdʒm(ə)nt/",
+	"enhancement_improvement": "/ɪnˈhænsməнт/",
+	"enhancement_augmentation": "/ɪnˈhænsməнт/"
 }

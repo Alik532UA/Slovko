@@ -1,4 +1,4 @@
-﻿{
+{
 	"shoes": "shoes",
 	"difficult": "difficult",
 	"pharmacy": "pharmacy",
@@ -527,5 +527,23 @@
 	"before_time": "before",
 	"before_position": "before",
 	"so_degree": "so",
-	"so_conjunction": "so"
+	"so_conjunction": "so",
+	"back": "back",
+	"fine": "fine",
+	"bear": "bear",
+	"cool": "cool",
+	"match": "match",
+	"ring": "ring",
+	"lie": "lie",
+	"point": "point",
+	"letter": "letter",
+	"burn": "burn",
+	"also": "also",
+	"before": "before",
+	"so_adv": "so",
+	"bug": "bug (error)",
+	"earth": "earth",
+	"gas": "gas",
+	"mad": "mad",
+	"post": "post office"
 }

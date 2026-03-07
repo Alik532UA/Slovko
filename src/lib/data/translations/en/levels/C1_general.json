@@ -1,4 +1,4 @@
-﻿{
+{
 	"academy": "academy",
 	"accent": "accent",
 	"acceptance": "acceptance",
@@ -242,5 +242,13 @@
 	"accord_agreement": "accord",
 	"accord_harmony": "accord",
 	"adjustment_change": "adjustment",
-	"adjustment_setting": "adjustment"
+	"adjustment_setting": "adjustment",
+	"abolish": "abolish",
+	"accord": "accord",
+	"adjustment": "adjustment",
+	"adversity": "adversity",
+	"affinity": "affinity",
+	"allowance": "allowance",
+	"appendix": "appendix",
+	"articulate": "articulate"
 }

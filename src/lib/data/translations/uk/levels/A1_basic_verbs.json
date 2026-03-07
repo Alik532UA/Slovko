@@ -1,4 +1,4 @@
-﻿{
+{
 	"come": "приходити",
 	"see": "бачити",
 	"hear": "чути",
@@ -39,5 +39,6 @@
 	"thank_verb": "дякувати",
 	"help_verb": "допомагати",
 	"leave_depart": "йти",
-	"leave_behind": "залишати"
+	"leave_behind": "залишати",
+	"leave": "йти"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"ask_for": "ask for",
 	"be_over": "be over",
 	"break_down_machine": "break down",
@@ -38,5 +38,7 @@
 	"give_up_quit": "give up",
 	"give_up_surrender": "give up",
 	"grow_up_mature": "grow up",
-	"grow_up_physical": "grow up"
+	"grow_up_physical": "grow up",
+	"give_up_habit": "give up",
+	"grow_up": "grow up"
 }

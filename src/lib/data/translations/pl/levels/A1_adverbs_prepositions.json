@@ -1,4 +1,4 @@
-﻿{
+{
 	"about": "o",
 	"always": "zawsze",
 	"for": "dla",
@@ -18,5 +18,7 @@
 	"at_place": "w",
 	"at_time": "o",
 	"from_origin": "z",
-	"from_time": "od"
+	"from_time": "od",
+	"at": "w",
+	"from": "z"
 }

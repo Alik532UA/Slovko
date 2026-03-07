@@ -1,4 +1,4 @@
-﻿{
+{
 	"boy": "хлопчик",
 	"girl": "дівчинка",
 	"he_pronoun": "він",
@@ -29,5 +29,6 @@
 	"we_pronoun": "ми",
 	"woman": "жінка (людина)",
 	"you_pronoun": "ви",
-	"your_possessive": "твій / ваш"
+	"your_possessive": "твій / ваш",
+	"pronoun_3rd": "він"
 }

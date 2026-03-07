@@ -1,4 +1,4 @@
-﻿{
+{
 	"room": "room",
 	"money": "money",
 	"airport": "airport",
@@ -8,5 +8,6 @@
 	"hotel": "hotel",
 	"ticket": "ticket",
 	"map": "map",
-	"price": "price"
+	"price": "price",
+	"bank": "bank"
 }

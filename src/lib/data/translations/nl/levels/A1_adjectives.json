@@ -1,4 +1,4 @@
-﻿{
+{
 	"big": "groot",
 	"small": "klein",
 	"hot": "heet",
@@ -54,5 +54,9 @@
 	"wrong": "fout",
 	"young": "jong",
 	"different_other": "anders",
-	"different_various": "verschillend"
+	"different_various": "verschillend",
+	"hard": "moeilijk",
+	"kind": "aardig",
+	"different": "anders",
+	"left": "links"
 }

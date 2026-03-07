@@ -1,4 +1,4 @@
-﻿{
+{
 	"ask_for": "просити (щось)",
 	"be_over": "закінчитися",
 	"break_down_machine": "зламатися",
@@ -38,5 +38,7 @@
 	"give_up_quit": "кинути",
 	"give_up_surrender": "здатися",
 	"grow_up_mature": "дорослішати",
-	"grow_up_physical": "рости"
+	"grow_up_physical": "рости",
+	"give_up_habit": "кинути",
+	"grow_up": "дорослішати"
 }

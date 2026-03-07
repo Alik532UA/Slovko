@@ -1,4 +1,4 @@
-﻿{
+{
 	"problem": "problem",
 	"repeat": "repeat",
 	"sure": "sure",
@@ -32,5 +32,6 @@
 	"speak_slowly": "speak slowly",
 	"i_see": "I see",
 	"i_know": "I know",
-	"i_think": "I think"
+	"i_think": "I think",
+	"i": "I know"
 }

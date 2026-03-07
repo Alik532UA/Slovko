@@ -1,4 +1,4 @@
-﻿{
+{
 	"small": "μικρός",
 	"big": "μεγάλος",
 	"good": "καλός",
@@ -54,5 +54,9 @@
 	"wrong": "λάθος",
 	"young": "νέος",
 	"different_other": "διαφορετικός",
-	"different_various": "ποικίλος"
+	"different_various": "ποικίλος",
+	"hard": "δύσκολος",
+	"kind": "ευγενικός",
+	"different": "διαφορετικός",
+	"left": "αριστερά"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"beat_win": "νικώ",
 	"call_phone": "τηλεφωνώ",
 	"chat_talk": "κουβεντιάζω",
@@ -24,5 +24,8 @@
 	"spill": "χύνω",
 	"spoil": "χαλάω",
 	"design_plan": "σχεδιάζω",
-	"design_style": "σχεδιάζω (στυλ)"
+	"design_style": "σχεδιάζω (στυλ)",
+	"design_verb": "σχεδιάζω",
+	"design": "σχεδιάζω",
+	"pick": "διαλέγω"
 }

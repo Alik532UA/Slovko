@@ -1,4 +1,4 @@
-﻿{
+{
 	"absence": "afwezigheid",
 	"abundance": "overvloed",
 	"account_for_verb": "verklaren / goed zijn voor",
@@ -96,5 +96,10 @@
 	"sense_feel": "voelen",
 	"supplement_add": "aanvullen",
 	"establishment_institution": "instelling",
-	"establishment_founding": "oprichting"
+	"establishment_founding": "oprichting",
+	"establishment": "instelling",
+	"action": "actie",
+	"attraction": "attractie",
+	"enhance": "verbeteren",
+	"envision": "voorstellen"
 }

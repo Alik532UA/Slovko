@@ -1,4 +1,4 @@
-﻿{
+{
 	"abandon": "/əˈbændən/",
 	"absorb": "/əbˈzɔːrb/",
 	"accuse": "/əˈkjuːz/",
@@ -552,5 +552,11 @@
 	"yeah": "/jeə/",
 	"you_singular": "/juː/",
 	"your_singular": "/jɔːr/",
-	"yourself": "/jɔːˈsɛlf/"
+	"yourself": "/jɔːˈsɛlf/",
+	"area_territory": "/ˈeəriə/",
+	"area_field": "/ˈeəriə/",
+	"drug_medicine": "/drʌɡ/",
+	"drug_narcotic": "/drʌɡ/",
+	"tube_subway": "/tjuːb/",
+	"tube_pipe": "/tjuːb/"
 }

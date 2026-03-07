@@ -1,4 +1,4 @@
-﻿{
+{
 	"hello": "привіт",
 	"goodbye": "до побачення",
 	"yes": "так",
@@ -140,5 +140,17 @@
 	"picture_photo": "фото",
 	"picture_painting": "картина",
 	"brother_older": "брат",
-	"brother_younger": "брат"
+	"brother_younger": "брат",
+	"brother": "брат",
+	"walk": "йти",
+	"go": "йти",
+	"free": "вільний",
+	"watch": "дивитися",
+	"right": "правий",
+	"too": "також",
+	"light": "світло",
+	"park": "парк",
+	"call": "дзвонити",
+	"number": "число",
+	"picture": "фото"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"shoes": "ayaqqap",
 	"difficult": "qıyın",
 	"pharmacy": "eczahane",
@@ -538,5 +538,23 @@
 	"before_time": "evel",
 	"before_position": "ögünde",
 	"so_degree": "öyle",
-	"so_conjunction": "onıñ içün"
+	"so_conjunction": "onıñ içün",
+	"back": "arqa",
+	"fine": "yahşı",
+	"bear": "ayı",
+	"cool": "alâ",
+	"match": "maç",
+	"ring": "yüzük",
+	"lie": "yatmaq",
+	"point": "noqta",
+	"letter": "mektüp",
+	"burn": "yanmaq",
+	"also": "da",
+	"before": "evel",
+	"so_adv": "öyle",
+	"bug": "hat",
+	"earth": "topraq",
+	"gas": "gaz",
+	"mad": "delice",
+	"post": "poçta"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"cat": "pisik",
 	"dog": "köpek",
 	"chicken": "tavuq",
@@ -17,5 +17,6 @@
 	"duck_animal": "ördek",
 	"spider": "örümcek",
 	"elephant": "fil",
-	"monkey": "maymun"
+	"monkey": "maymun",
+	"duck": "ördek"
 }

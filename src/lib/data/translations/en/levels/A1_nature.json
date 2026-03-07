@@ -1,4 +1,4 @@
-﻿{
+{
 	"sun": "sun",
 	"moon": "moon",
 	"star": "star",
@@ -17,5 +17,6 @@
 	"winter": "winter",
 	"beach": "beach",
 	"mountain": "mountain",
-	"island": "island"
+	"island": "island",
+	"spring": "spring"
 }

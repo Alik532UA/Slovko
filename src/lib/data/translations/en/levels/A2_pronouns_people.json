@@ -1,4 +1,4 @@
-﻿{
+{
 	"adult": "adult",
 	"guy": "guy",
 	"kid": "kid",
@@ -19,5 +19,6 @@
 	"somebody": "somebody",
 	"yourselves": "yourselves",
 	"lady_noble": "lady",
-	"lady_woman": "lady"
+	"lady_woman": "lady",
+	"lady": "lady"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"hello": "hello",
 	"goodbye": "goodbye",
 	"yes": "yes",
@@ -140,5 +140,17 @@
 	"picture_photo": "photo",
 	"picture_painting": "painting",
 	"brother_older": "brother",
-	"brother_younger": "brother"
+	"brother_younger": "brother",
+	"brother": "brother",
+	"walk": "walk",
+	"go": "go",
+	"free": "free",
+	"watch": "watch",
+	"right": "right",
+	"too": "also / too",
+	"light": "light",
+	"park": "park",
+	"call": "call",
+	"number": "number",
+	"picture": "photo"
 }

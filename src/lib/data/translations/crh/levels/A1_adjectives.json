@@ -1,4 +1,4 @@
-﻿{
+{
 	"big": "büyük",
 	"small": "kiçik",
 	"hot": "sıcaq",
@@ -54,5 +54,9 @@
 	"wrong": "yañlış",
 	"young": "yaş",
 	"different_other": "başqa",
-	"different_various": "çeşitli"
+	"different_various": "çeşitli",
+	"hard": "qıyın",
+	"kind": "merametli",
+	"different": "başqa",
+	"left": "sol"
 }

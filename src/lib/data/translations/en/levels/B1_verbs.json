@@ -1,4 +1,4 @@
-﻿{
+{
 	"accurate": "accurate",
 	"advertise": "advertise",
 	"apologize": "apologize",
@@ -64,5 +64,7 @@
 	"support": "support",
 	"translate": "translate",
 	"trust_verb": "trust",
-	"unemployment_rate": "unemployment"
+	"unemployment_rate": "unemployment",
+	"condition": "condition",
+	"contribute": "contribute"
 }

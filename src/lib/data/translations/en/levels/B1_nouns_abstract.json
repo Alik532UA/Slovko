@@ -1,4 +1,4 @@
-﻿{
+{
 	"access": "access",
 	"access_code": "access",
 	"accommodation_living": "accommodation",
@@ -157,5 +157,16 @@
 	"confidence_assurance": "confidence",
 	"application_request": "application",
 	"application_software": "application",
-	"authority_person": "authority"
+	"authority_person": "authority",
+	"appearance": "appearance",
+	"authority": "authority",
+	"application": "application",
+	"command": "command",
+	"performance": "performance",
+	"power": "power",
+	"sense": "sense",
+	"service": "service",
+	"sort": "sort",
+	"state": "state",
+	"view": "view"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"lemon": "lemon",
 	"onion": "onion",
 	"pepper": "pepper",
@@ -39,5 +39,8 @@
 	"pie_baked": "pie",
 	"sausage_small": "sausage",
 	"pasta_food": "pasta",
-	"jam_fruit": "jam"
+	"jam_fruit": "jam",
+	"jam": "jam",
+	"pie": "pie",
+	"sausage": "sausage"
 }

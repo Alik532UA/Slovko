@@ -1,4 +1,4 @@
-﻿{
+{
 	"abandon": "tastamaq",
 	"absorb": "emmek",
 	"accuse": "suçlamaq",
@@ -622,5 +622,29 @@
 	"drug_medicine": "ilâç",
 	"drug_narcotic": "uysturıcı",
 	"tube_subway": "metro",
-	"tube_pipe": "boru"
+	"tube_pipe": "boru",
+	"area": "meydan",
+	"drug": "ilâç",
+	"tube": "metro",
+	"block": "blok",
+	"board": "şura",
+	"character": "qaraman",
+	"collapse": "yığıluv",
+	"concern": "endişe",
+	"construct": "qurmaq",
+	"deal": "iş yapmaq",
+	"due": "vadesi kelgen",
+	"hang": "vakit keçirmek",
+	"major": "büyük",
+	"mark": "baha",
+	"measure": "ölçü",
+	"pattern": "numüne",
+	"race": "yarış",
+	"site": "yer",
+	"stage": "basamaq",
+	"stock": "stok",
+	"that": "ki",
+	"treat": "davranmaq",
+	"trial": "mahkeme",
+	"would": "-dı"
 }

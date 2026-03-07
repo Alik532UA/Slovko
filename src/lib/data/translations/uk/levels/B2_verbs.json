@@ -1,4 +1,4 @@
-﻿{
+{
 	"accelerate": "прискорювати",
 	"accumulate": "накопичувати",
 	"acknowledge_recognize": "визнавати",
@@ -30,5 +30,7 @@
 	"pinpoint_identify": "точно визначати",
 	"pledge_promise": "обіцяти",
 	"serve_general": "служити",
-	"simulate_imitate": "імітувати"
+	"simulate_imitate": "імітувати",
+	"endorse": "схвалювати",
+	"exaggerate": "перебільшувати"
 }

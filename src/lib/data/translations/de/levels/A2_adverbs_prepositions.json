@@ -1,4 +1,4 @@
-﻿{
+{
 	"during": "während",
 	"until": "bis",
 	"well": "gut",
@@ -47,5 +47,11 @@
 	"as_like": "wie",
 	"as_since": "da",
 	"by_near": "bei",
-	"by_agent": "von"
+	"by_agent": "von",
+	"nicely": "nett",
+	"definitely": "bestimmt",
+	"as_conjunction": "wie",
+	"by_preposition": "bei",
+	"as": "wie",
+	"by": "bei"
 }

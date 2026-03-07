@@ -1,4 +1,4 @@
-﻿{
+{
 	"big": "big",
 	"small": "small",
 	"hot": "hot",
@@ -54,5 +54,9 @@
 	"wrong": "wrong",
 	"young": "young",
 	"different_other": "different",
-	"different_various": "different"
+	"different_various": "different",
+	"hard": "hard",
+	"kind": "kind",
+	"different": "different",
+	"left": "left"
 }

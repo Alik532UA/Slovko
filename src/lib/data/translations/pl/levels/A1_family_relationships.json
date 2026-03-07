@@ -1,4 +1,4 @@
-﻿{
+{
 	"child": "dziecko",
 	"family": "rodzina",
 	"father": "ojciec",
@@ -9,5 +9,6 @@
 	"son": "syn",
 	"wife": "żona",
 	"sister_older": "siostra",
-	"sister_younger": "siostra"
+	"sister_younger": "siostra",
+	"sister": "siostra"
 }

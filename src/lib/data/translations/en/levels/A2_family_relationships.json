@@ -1,4 +1,4 @@
-﻿{
+{
 	"aunt_paternal": "aunt",
 	"aunt_maternal": "aunt",
 	"brother_male": "brother",
@@ -15,5 +15,7 @@
 	"uncle_paternal": "uncle",
 	"uncle_maternal": "uncle",
 	"cousin_male": "cousin",
-	"cousin_female": "cousin"
+	"cousin_female": "cousin",
+	"aunt": "aunt",
+	"cousin": "cousin"
 }

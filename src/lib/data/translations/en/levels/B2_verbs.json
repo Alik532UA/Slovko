@@ -1,4 +1,4 @@
-﻿{
+{
 	"accelerate": "accelerate",
 	"accumulate": "accumulate",
 	"acknowledge_recognize": "acknowledge",
@@ -30,5 +30,7 @@
 	"pinpoint_identify": "pinpoint",
 	"pledge_promise": "pledge",
 	"serve_general": "serve",
-	"simulate_imitate": "simulate"
+	"simulate_imitate": "simulate",
+	"endorse": "endorse candidate",
+	"exaggerate": "exaggerate"
 }

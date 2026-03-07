@@ -1,4 +1,4 @@
-﻿{
+{
 	"found": "found",
 	"cancel": "cancel",
 	"cash": "cash",
@@ -33,5 +33,6 @@
 	"tourism": "tourism",
 	"voyage": "voyage",
 	"cabin_ship": "cabin",
-	"cabin_plane": "cabin"
+	"cabin_plane": "cabin",
+	"cabin": "cabin"
 }

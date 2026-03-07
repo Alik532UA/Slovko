@@ -1,4 +1,4 @@
-﻿{
+{
 	"friend": "Freund",
 	"mother": "Mutter",
 	"father": "Vater",
@@ -9,5 +9,6 @@
 	"husband": "Ehemann",
 	"wife": "Ehefrau",
 	"sister_older": "Schwester",
-	"sister_younger": "Schwester"
+	"sister_younger": "Schwester",
+	"sister": "Schwester"
 }

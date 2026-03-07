@@ -1,4 +1,4 @@
-﻿{
+{
 	"hand": "hand",
 	"head": "head",
 	"eye": "eye",
@@ -13,5 +13,6 @@
 	"hair": "hair",
 	"arm_body": "arm",
 	"arm_weapon": "arm",
-	"leg_full": "leg"
+	"leg_full": "leg",
+	"leg": "leg"
 }

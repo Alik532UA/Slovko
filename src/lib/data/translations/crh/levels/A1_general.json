@@ -1,4 +1,4 @@
-﻿{
+{
 	"hello": "selâm",
 	"goodbye": "sağlıqnen qal",
 	"yes": "e",
@@ -143,5 +143,17 @@
 	"number_digit": "sayı",
 	"number_item": "nomer",
 	"picture_photo": "resim",
-	"picture_painting": "levha"
+	"picture_painting": "levha",
+	"brother": "ağa",
+	"walk": "yürüv",
+	"go": "ketmek",
+	"free": "azat",
+	"watch": "baqmaq",
+	"right": "sağ",
+	"too": "da / de",
+	"light": "ışıq",
+	"park": "park",
+	"call": "telefon etmek",
+	"number": "sayı",
+	"picture": "resim"
 }

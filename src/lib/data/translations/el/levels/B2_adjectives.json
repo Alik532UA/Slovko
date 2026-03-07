@@ -1,4 +1,4 @@
-﻿{
+{
 	"accident_event": "ατύχημα",
 	"action_legal": "ενέργεια",
 	"acceptable": "αποδεκτός",
@@ -56,5 +56,13 @@
 	"acknowledgement_confirmation": "επιβεβαίωση",
 	"acknowledgement_recognition": "αναγνώριση",
 	"enhancement_improvement": "βελτίωση",
-	"enhancement_augmentation": "ενίσχυση"
+	"enhancement_augmentation": "ενίσχυση",
+	"assessment_tax": "αξιολόγηση",
+	"engagement": "δέσμευση",
+	"attachment": "συνημμένο",
+	"comprehensive": "ολοκληρωμένος",
+	"fundamental": "θεμελιώδης",
+	"acknowledgement": "επιβεβαίωση",
+	"enhancement": "βελτίωση",
+	"actual": "τωρινός"
 }

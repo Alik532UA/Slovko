@@ -1,4 +1,4 @@
-﻿{
+{
 	"hello": "γεια",
 	"goodbye": "αντίο",
 	"yes": "ναι",
@@ -158,5 +158,17 @@
 	"picture_photo": "φωτογραφία",
 	"picture_painting": "πίνακας",
 	"brother_older": "αδελφός",
-	"brother_younger": "αδελφός"
+	"brother_younger": "αδελφός",
+	"brother": "αδελφός",
+	"walk": "περπατώ",
+	"go": "πηγαίνω",
+	"free": "ελεύθερος",
+	"watch": "παρακολουθώ",
+	"right": "δεξιός",
+	"too": "επίσης",
+	"light": "φως",
+	"park": "πάρκο",
+	"call": "τηλεφωνώ",
+	"number": "αριθμός",
+	"picture": "φωτογραφία"
 }

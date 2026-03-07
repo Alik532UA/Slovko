@@ -1,4 +1,4 @@
-﻿{
+{
 	"sun": "kün",
 	"moon": "ay",
 	"star": "yıldız",
@@ -17,5 +17,6 @@
 	"winter": "qış",
 	"beach": "plâj",
 	"mountain": "dağ",
-	"island": "ada"
+	"island": "ada",
+	"spring": "baar"
 }

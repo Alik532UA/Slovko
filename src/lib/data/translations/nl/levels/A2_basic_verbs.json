@@ -1,4 +1,4 @@
-﻿{
+{
 	"call_phone": "bellen",
 	"pick_choose": "kiezen",
 	"beat_win": "verslaan",
@@ -23,5 +23,8 @@
 	"spill": "morsen",
 	"spoil": "bederven",
 	"design_plan": "ontwerpen",
-	"design_style": "vormgeven"
+	"design_style": "vormgeven",
+	"design_verb": "ontwerpen",
+	"design": "ontwerpen",
+	"pick": "kiezen"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"arm": "ramię",
 	"body": "ciało",
 	"ear": "ucho",
@@ -13,5 +13,6 @@
 	"nose": "nos",
 	"arm_body": "ramię",
 	"arm_weapon": "broń",
-	"leg_full": "noga"
+	"leg_full": "noga",
+	"leg": "noga"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"battery_life": "batareya",
 	"fuel_energy": "yaqıt",
 	"signal_phone": "işaret",
@@ -7,5 +7,6 @@
 	"fuel": "yaqıt",
 	"signal": "işaret",
 	"battery_electric": "batareya",
-	"battery_artillery": "topçu batareyası"
+	"battery_artillery": "topçu batareyası",
+	"battery": "batareya"
 }

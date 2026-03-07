@@ -1,4 +1,4 @@
-﻿{
+{
 	"one": "een",
 	"two": "twee",
 	"three": "drie",
@@ -31,5 +31,6 @@
 	"ninety": "negentig",
 	"first": "eerste",
 	"second_ord": "tweede",
-	"third": "derde"
+	"third": "derde",
+	"second": "tweede"
 }

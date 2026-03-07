@@ -1,4 +1,4 @@
-﻿{
+{
 	"aunt_paternal": "θεία",
 	"aunt_maternal": "θεία",
 	"brother_male": "αδελφός",
@@ -15,5 +15,7 @@
 	"uncle_paternal": "θείος",
 	"uncle_maternal": "θείος",
 	"cousin_male": "ξάδερφος",
-	"cousin_female": "ξαδέρφη"
+	"cousin_female": "ξαδέρφη",
+	"aunt": "θεία",
+	"cousin": "ξάδερφος"
 }

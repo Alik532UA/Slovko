@@ -1,4 +1,4 @@
-﻿{
+{
 	"ask": "pytać",
 	"bring": "przynosić",
 	"come": "przychodzić",
@@ -39,5 +39,6 @@
 	"work": "pracować",
 	"write": "pisać",
 	"leave_depart": "odchodzić",
-	"leave_behind": "zostawiać"
+	"leave_behind": "zostawiać",
+	"leave": "odchodzić"
 }

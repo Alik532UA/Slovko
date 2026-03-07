@@ -1,4 +1,4 @@
-﻿{
+{
 	"access": "dostęp",
 	"access_code": "dostęp",
 	"accommodation_living": "zakwaterowanie",
@@ -161,5 +161,16 @@
 	"confidence_assurance": "pewność siebie",
 	"application_request": "wniosek / podanie",
 	"application_software": "aplikacja / oprogramowanie",
-	"authority_person": "autorytet"
+	"authority_person": "autorytet",
+	"appearance": "wygląd",
+	"authority": "władza",
+	"application": "wniosek / podanie",
+	"command": "polecenie",
+	"performance": "wydajność",
+	"power": "władza",
+	"sense": "poczucie",
+	"service": "usługa",
+	"sort": "rodzaj",
+	"state": "stan",
+	"view": "pogląd"
 }

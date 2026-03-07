@@ -1,4 +1,4 @@
-﻿{
+{
 	"lion": "arslan",
 	"mouse": "sıçan",
 	"sheep": "qoy",
@@ -40,5 +40,6 @@
 	"walrus": "morj",
 	"jellyfish": "meduza",
 	"starfish": "deñiz yıldızı",
-	"bear_bear": "ayı"
+	"bear_bear": "ayı",
+	"bat": "yarasa"
 }

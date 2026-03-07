@@ -1,13 +1,14 @@
-﻿﻿{
-    "excuse_me":  "przepraszam",
-    "explain":  "wyjaśniać",
-    "how":  "jak",
-    "maybe":  "może",
-    "mean_verb":  "oznaczać",
-    "really":  "naprawdę",
-    "understand":  "rozumieć",
-    "what":  "co",
-    "when":  "kiedy",
-    "who":  "kto",
-    "why":  "dlaczego"
+{
+	"excuse_me": "przepraszam",
+	"explain": "wyjaśniać",
+	"how": "jak",
+	"maybe": "może",
+	"mean_verb": "oznaczać",
+	"really": "naprawdę",
+	"understand": "rozumieć",
+	"what": "co",
+	"when": "kiedy",
+	"who": "kto",
+	"why": "dlaczego",
+	"mean": "oznaczać"
 }

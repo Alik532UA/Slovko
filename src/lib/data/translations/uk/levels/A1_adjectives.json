@@ -1,4 +1,4 @@
-﻿{
+{
 	"big": "великий",
 	"small": "маленький",
 	"hot": "гарячий",
@@ -54,5 +54,9 @@
 	"wrong": "неправильний",
 	"young": "молодий",
 	"different_other": "інший",
-	"different_various": "різний"
+	"different_various": "різний",
+	"hard": "важкий",
+	"kind": "добрий",
+	"different": "інший",
+	"left": "ліворуч"
 }

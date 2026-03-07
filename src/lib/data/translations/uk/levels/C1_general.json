@@ -1,4 +1,4 @@
-﻿{
+{
 	"academy": "академія",
 	"accent": "акцент",
 	"acceptance": "прийняття",
@@ -243,5 +243,13 @@
 	"accord_agreement": "згода",
 	"accord_harmony": "гармонія",
 	"adjustment_change": "регулювання",
-	"adjustment_setting": "налаштування"
+	"adjustment_setting": "налаштування",
+	"abolish": "скасовувати",
+	"accord": "згода",
+	"adjustment": "регулювання",
+	"adversity": "нещастя",
+	"affinity": "спорідненість",
+	"allowance": "кишенькові гроші",
+	"appendix": "апендикс",
+	"articulate": "чіткий / виразний"
 }

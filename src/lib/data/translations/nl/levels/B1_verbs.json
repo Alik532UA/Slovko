@@ -1,4 +1,4 @@
-﻿{
+{
 	"accurate": "nauwkeurig",
 	"advertise": "adverteren",
 	"apologize": "verontschuldigen",
@@ -66,5 +66,7 @@
 	"support": "steun",
 	"translate": "vertalen",
 	"trust_verb": "vertrouwen",
-	"unemployment_rate": "werkloosheid"
+	"unemployment_rate": "werkloosheid",
+	"condition": "toestand",
+	"contribute": "doneren"
 }

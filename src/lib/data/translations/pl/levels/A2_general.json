@@ -1,4 +1,4 @@
-﻿{
+{
 	"able": "zdolny",
 	"accept": "akceptować",
 	"achieve": "osiągnąć",
@@ -527,5 +527,23 @@
 	"before_time": "wcześniej",
 	"before_position": "przed",
 	"so_degree": "tak",
-	"so_conjunction": "więc"
+	"so_conjunction": "więc",
+	"back": "plecy",
+	"fine": "świetny",
+	"bear": "niedźwiedź",
+	"cool": "świetny",
+	"match": "mecz",
+	"ring": "pierścionek",
+	"lie": "leżeć",
+	"point": "punkt",
+	"letter": "list",
+	"burn": "palić się",
+	"also": "także",
+	"before": "wcześniej",
+	"so_adv": "tak",
+	"bug": "błąd",
+	"earth": "ziemia",
+	"gas": "benzyna",
+	"mad": "szalony",
+	"post": "poczta"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"absence": "yoqluq",
 	"abundance": "bolluq",
 	"account_for_verb": "izaat etmek",
@@ -95,5 +95,11 @@
 	"sense_feel": "is etmek",
 	"supplement_add": "ilâve etmek",
 	"establishment_institution": "müessise",
-	"establishment_founding": "quruluş"
+	"establishment_founding": "quruluş",
+	"appointment": "tayin",
+	"establishment": "müessise",
+	"action": "areket",
+	"attraction": "cazibe",
+	"enhance": "arttırmaq",
+	"envision": "tasavvur etmek"
 }

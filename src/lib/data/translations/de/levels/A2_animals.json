@@ -1,4 +1,4 @@
-﻿{
+{
 	"lion": "Löwe",
 	"mouse": "Maus",
 	"sheep": "Schaf",
@@ -40,5 +40,6 @@
 	"walrus": "Walross",
 	"jellyfish": "Qualle",
 	"starfish": "Seestern",
-	"bear_bear": "tragen"
+	"bear_bear": "tragen",
+	"bat": "Fledermaus"
 }

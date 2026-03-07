@@ -1,4 +1,4 @@
-﻿{
+{
 	"excuse_me": "pardon",
 	"mean_verb": "betekenen",
 	"understand": "begrijpen",
@@ -9,5 +9,6 @@
 	"why": "waarom",
 	"how": "hoe",
 	"really": "echt",
-	"maybe": "misschien"
+	"maybe": "misschien",
+	"mean": "betekenen"
 }

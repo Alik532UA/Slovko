@@ -1,4 +1,4 @@
-﻿{
+{
 	"ability": "/əˈbɪləti/",
 	"advantage": "/ədˈvɑːntɪdʒ/",
 	"attitude": "/ˈætɪtjuːd/",
@@ -64,5 +64,15 @@
 	"victory": "/ˈvɪktəri/",
 	"weakness": "/ˈwiːknɪs/",
 	"wealth": "/wɛlθ/",
-	"youth": "/juːθ/"
+	"youth": "/juːθ/",
+	"effect_result": "/ɪˈfɛkt/",
+	"effect_influence": "/ɪˈfɛkt/",
+	"failure_lack": "/ˈfeɪljər/",
+	"failure_defeat": "/ˈfeɪljər/",
+	"fault_blame": "/fɔːlt/",
+	"fault_defect": "/fɔːlt/",
+	"growth_physical": "/groʊθ/",
+	"growth_development": "/groʊθ/",
+	"sight_vision": "/saɪt/",
+	"sight_view": "/saɪt/"
 }

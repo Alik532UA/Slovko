@@ -1,4 +1,4 @@
-﻿{
+{
 	"hello": "/həˈləʊ/",
 	"goodbye": "/ɡʊdˈbaɪ/",
 	"yes": "/jɛs/",
@@ -324,5 +324,16 @@
 	"ticket_office": "/ˈtɪkɪt ˈɑːfɪs/",
 	"timetable": "/ˈtaɪmteɪbl/",
 	"lost": "/lɔːst/",
-	"emergency": "/iˈmɜːrdʒənsi/"
+	"emergency": "/iˈmɜːrdʒənsi/",
+	"brother_older": "/ˈbrʌðər/",
+	"brother_younger": "/ˈbrʌðər/",
+	"walk_step": "/wɔːk/",
+	"walk_stroll": "/wɔːk/",
+	"free_gratis": "/friː/",
+	"call_name": "/kɔːl/",
+	"number_digit": "/ˈnʌmbə/",
+	"number_item": "/ˈnʌmbə/",
+	"picture_photo": "/ˈpɪktʃə/",
+	"picture_painting": "/ˈpɪktʃə/",
+	"left_remaining": "/lɛft/"
 }

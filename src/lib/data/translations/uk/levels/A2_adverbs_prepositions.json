@@ -1,4 +1,4 @@
-﻿{
+{
 	"during": "під час",
 	"until": "до (якогось часу)",
 	"well": "добре",
@@ -47,5 +47,11 @@
 	"as_like": "як",
 	"as_since": "оскільки",
 	"by_near": "біля",
-	"by_agent": "за допомогою"
+	"by_agent": "за допомогою",
+	"nicely": "мило",
+	"definitely": "безумовно",
+	"as_conjunction": "як",
+	"by_preposition": "біля",
+	"as": "як",
+	"by": "біля"
 }

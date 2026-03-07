@@ -1,4 +1,4 @@
-﻿{
+{
 	"battery_life": "batterij",
 	"fuel_energy": "brandstof",
 	"signal_phone": "signaal",
@@ -7,5 +7,6 @@
 	"fuel": "brandstof",
 	"signal": "signaal",
 	"battery_electric": "batterij",
-	"battery_artillery": "batterij (geschut)"
+	"battery_artillery": "batterij (geschut)",
+	"battery": "batterij"
 }

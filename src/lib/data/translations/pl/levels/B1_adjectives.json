@@ -1,4 +1,4 @@
-﻿{
+{
 	"achievement": "osiągnięcie",
 	"advertisement": "reklama",
 	"aggressive": "agresywny",
@@ -139,5 +139,12 @@
 	"you_plural": "wy",
 	"your_plural": "wasz",
 	"argument_reason": "argument",
-	"argument_dispute": "kłótnia"
+	"argument_dispute": "kłótnia",
+	"argument": "argument",
+	"clear": "jasny",
+	"crash": "katastrofa",
+	"patient": "cierpliwy",
+	"record": "rekord",
+	"stuff": "rzeczy",
+	"unit": "jednostka"
 }

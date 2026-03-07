@@ -1,4 +1,4 @@
-﻿{
+{
 	"access": "πρόσβαση",
 	"access_code": "κωδικός πρόσβασης",
 	"accommodation_living": "κατάλυμα",
@@ -157,5 +157,16 @@
 	"confidence_assurance": "αυτοπεποίθηση",
 	"application_request": "αίτηση",
 	"application_software": "εφαρμογή",
-	"authority_person": "αρχή"
+	"authority_person": "αρχή",
+	"appearance": "εμφάνιση",
+	"authority": "εξουσία",
+	"application": "αίτηση",
+	"command": "οδηγία",
+	"performance": "απόδοση",
+	"power": "εξουσία",
+	"sense": "αίσθηση",
+	"service": "υπηρεσία",
+	"sort": "είδος",
+	"state": "κατάσταση",
+	"view": "άποψη"
 }

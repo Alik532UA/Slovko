@@ -1,4 +1,4 @@
-﻿{
+{
 	"call_phone": "telefon etmek",
 	"pick_choose": "saylamaq",
 	"beat_win": "yeñmek",
@@ -23,5 +23,8 @@
 	"spill": "tökmek",
 	"spoil": "bozmaq",
 	"design_plan": "tasarlamaq",
-	"design_style": "dizayn"
+	"design_style": "dizayn",
+	"design_verb": "tasarlamaq",
+	"design": "tasarlamaq",
+	"pick": "saylamaq"
 }

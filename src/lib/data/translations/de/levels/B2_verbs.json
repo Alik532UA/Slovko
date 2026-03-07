@@ -1,4 +1,4 @@
-﻿{
+{
 	"accelerate": "beschleunigen",
 	"accumulate": "ansammeln",
 	"acknowledge_recognize": "anerkennen",
@@ -30,5 +30,7 @@
 	"pinpoint_identify": "genau bestimmen",
 	"pledge_promise": "versprechen",
 	"serve_general": "dienen",
-	"simulate_imitate": "simulieren"
+	"simulate_imitate": "simulieren",
+	"endorse": "unterstützen",
+	"exaggerate": "übertreiben"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"access": "доступ",
 	"access_code": "доступ",
 	"accommodation_living": "житло",
@@ -158,5 +158,16 @@
 	"confidence_assurance": "впевненість",
 	"application_request": "заява",
 	"application_software": "додаток",
-	"authority_person": "авторитет (особа)"
+	"authority_person": "авторитет (особа)",
+	"appearance": "зовнішність",
+	"authority": "влада",
+	"application": "заява",
+	"command": "команда",
+	"performance": "продуктивність",
+	"power": "влада",
+	"sense": "чуття",
+	"service": "сервіс",
+	"sort": "сорт",
+	"state": "стан",
+	"view": "погляд"
 }

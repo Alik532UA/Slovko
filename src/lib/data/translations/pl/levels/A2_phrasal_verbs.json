@@ -1,4 +1,4 @@
-﻿{
+{
 	"ask_for": "prosić o",
 	"be_over": "skończyć się",
 	"break_down_machine": "zepsuć się",
@@ -38,5 +38,7 @@
 	"give_up_quit": "rzucić",
 	"give_up_surrender": "poddać się",
 	"grow_up_mature": "dorastać",
-	"grow_up_physical": "rosnąć"
+	"grow_up_physical": "rosnąć",
+	"give_up_habit": "rzucić",
+	"grow_up": "dorastać"
 }

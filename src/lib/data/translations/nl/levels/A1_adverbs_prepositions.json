@@ -1,4 +1,4 @@
-﻿{
+{
 	"here": "hier",
 	"there": "daar",
 	"where": "waar",
@@ -18,5 +18,7 @@
 	"at_place": "bij",
 	"at_time": "om",
 	"from_origin": "uit",
-	"from_time": "vanaf"
+	"from_time": "vanaf",
+	"at": "bij",
+	"from": "uit"
 }

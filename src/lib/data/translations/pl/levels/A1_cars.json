@@ -1,13 +1,13 @@
-﻿﻿{
-    "bus":  "autobus",
-    "car":  "samochód",
-    "door":  "drzwi",
-    "key":  "klucz",
-    "light_color":  "jasny",
-    "plane":  "samolot",
-    "road":  "droga",
-    "street":  "ulica",
-    "taxi":  "taksówka",
-    "train":  "pociąg",
-    "window":  "okno"
+{
+	"bus": "autobus",
+	"car": "samochód",
+	"door": "drzwi",
+	"key": "klucz",
+	"light_color": "jasny",
+	"plane": "samolot",
+	"road": "droga",
+	"street": "ulica",
+	"taxi": "taksówka",
+	"train": "pociąg",
+	"window": "okno"
 }

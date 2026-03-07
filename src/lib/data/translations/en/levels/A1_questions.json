@@ -1,4 +1,4 @@
-﻿{
+{
 	"excuse_me": "excuse me",
 	"mean_verb": "mean",
 	"understand": "understand",
@@ -9,5 +9,6 @@
 	"why": "why",
 	"how": "how",
 	"really": "really",
-	"maybe": "maybe"
+	"maybe": "maybe",
+	"mean": "mean"
 }

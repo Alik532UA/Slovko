@@ -1,4 +1,4 @@
-﻿{
+{
 	"contradict_statement": "beyanatqa qarşı çıqmaq",
 	"cultivate_talent": "istidatnı yetiştirmek",
 	"diagnose_patient": "teşhis qoymaq",
@@ -57,5 +57,13 @@
 	"acknowledgement_confirmation": "tasdıqlav",
 	"acknowledgement_recognition": "tanılma",
 	"enhancement_improvement": "yahşılaştırma",
-	"enhancement_augmentation": "küçlendirme"
+	"enhancement_augmentation": "küçlendirme",
+	"assessment_tax": "qıymetlendirüv",
+	"engagement": "iştirak",
+	"attachment": "ek",
+	"comprehensive": "er taraflı",
+	"fundamental": "esaslı",
+	"acknowledgement": "tasdıqlav",
+	"enhancement": "yahşılaştırma",
+	"actual": "cari"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"accelerate": "versnellen",
 	"accumulate": "accumuleren",
 	"acknowledge_recognize": "erkennen",
@@ -32,5 +32,7 @@
 	"pinpoint_identify": "nauwkeurig vaststellen",
 	"pledge_promise": "beloven",
 	"serve_general": "dienen als",
-	"simulate_imitate": "simuleren"
+	"simulate_imitate": "simuleren",
+	"endorse": "onderschrijven",
+	"exaggerate": "overdrijven"
 }

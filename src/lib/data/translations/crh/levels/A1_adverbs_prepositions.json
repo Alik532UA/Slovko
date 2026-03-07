@@ -1,4 +1,4 @@
-﻿{
+{
 	"here": "mında",
 	"there": "anda",
 	"where": "qayda",
@@ -18,5 +18,7 @@
 	"at_place": "anda",
 	"at_time": "saat",
 	"from_origin": "dan",
-	"from_time": "itibaren"
+	"from_time": "itibaren",
+	"at": "anda",
+	"from": "dan"
 }

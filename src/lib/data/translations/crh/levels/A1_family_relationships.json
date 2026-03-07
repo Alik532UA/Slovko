@@ -1,4 +1,4 @@
-﻿{
+{
 	"friend": "dost",
 	"mother": "ana",
 	"father": "baba",
@@ -9,5 +9,6 @@
 	"husband": "aqay",
 	"wife": "hanım",
 	"sister_older": "tata",
-	"sister_younger": "siñil"
+	"sister_younger": "siñil",
+	"sister": "abla"
 }

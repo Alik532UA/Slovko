@@ -1,4 +1,4 @@
-﻿{
+{
 	"ability": "ability",
 	"advantage": "advantage",
 	"attitude": "attitude",
@@ -75,5 +75,10 @@
 	"growth_physical": "growth",
 	"growth_development": "growth",
 	"sight_vision": "sight",
-	"sight_view": "sight"
+	"sight_view": "sight",
+	"effect": "effect",
+	"failure": "failure",
+	"fault": "fault",
+	"growth": "growth",
+	"sight": "sight"
 }

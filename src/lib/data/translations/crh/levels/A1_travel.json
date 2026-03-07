@@ -1,4 +1,4 @@
-﻿{
+{
 	"room": "oda",
 	"money": "aqça",
 	"airport": "ava limanı",
@@ -8,5 +8,6 @@
 	"hotel": "musafirhane",
 	"ticket": "bilet",
 	"map": "harita",
-	"price": "fiyat"
+	"price": "fiyat",
+	"bank": "banka"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"accident_event": "wypadek",
 	"action_legal": "powództwo",
 	"acceptable": "akceptowalny",
@@ -56,5 +56,13 @@
 	"acknowledgement_confirmation": "potwierdzenie",
 	"acknowledgement_recognition": "uznanie",
 	"enhancement_improvement": "ulepszenie",
-	"enhancement_augmentation": "wzmocnienie"
+	"enhancement_augmentation": "wzmocnienie",
+	"assessment_tax": "ocena",
+	"engagement": "zaangażowanie",
+	"attachment": "załącznik",
+	"comprehensive": "wszechstronny",
+	"fundamental": "fundamentalny",
+	"acknowledgement": "potwierdzenie",
+	"enhancement": "ulepszenie",
+	"actual": "bieżący"
 }

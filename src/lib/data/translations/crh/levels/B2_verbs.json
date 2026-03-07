@@ -1,4 +1,4 @@
-﻿{
+{
 	"accelerate": "tezleştirmek",
 	"accumulate": "toplamaq",
 	"acknowledge_recognize": "tanımaq",
@@ -30,5 +30,7 @@
 	"pinpoint_identify": "belgilemek",
 	"pledge_promise": "vade etmek",
 	"serve_general": "hızmet etmek",
-	"simulate_imitate": "benzetmek"
+	"simulate_imitate": "benzetmek",
+	"endorse": "desteklemek",
+	"exaggerate": "mubalağa etmek"
 }

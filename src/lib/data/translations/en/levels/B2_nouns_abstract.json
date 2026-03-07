@@ -1,4 +1,4 @@
-﻿{
+{
 	"absence": "absence",
 	"abundance": "abundance",
 	"account_for_verb": "account for",
@@ -94,5 +94,11 @@
 	"sense_feel": "sense",
 	"supplement_add": "supplement",
 	"establishment_institution": "establishment",
-	"establishment_founding": "establishment"
+	"establishment_founding": "establishment",
+	"appointment": "appointment",
+	"establishment": "establishment",
+	"action": "action",
+	"attraction": "attraction",
+	"enhance": "enhance",
+	"envision": "envision future"
 }

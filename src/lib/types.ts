@@ -47,6 +47,11 @@ export const ALL_LEVELS: CEFRLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 // ========================================
 
 /** Унікальний ідентифікатор слова (зазвичай англійське слово) */
+export interface SemanticGroup {
+	base: string;
+	specific: string[];
+}
+
 export type WordKey = string;
 
 /**

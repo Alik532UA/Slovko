@@ -1,4 +1,4 @@
-﻿{
+{
 	"lion": "lion",
 	"mouse": "mouse",
 	"sheep": "sheep",
@@ -39,5 +39,6 @@
 	"seal": "seal",
 	"walrus": "walrus",
 	"jellyfish": "jellyfish",
-	"starfish": "starfish"
+	"starfish": "starfish",
+	"bat": "bat"
 }

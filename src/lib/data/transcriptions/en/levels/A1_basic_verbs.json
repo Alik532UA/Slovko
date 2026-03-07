@@ -1,4 +1,4 @@
-﻿{
+{
 	"come": "/kʌm/",
 	"see": "/siː/",
 	"hear": "/hɪər/",
@@ -38,5 +38,7 @@
 	"stand": "/stænd/",
 	"lose": "/luːz/",
 	"thank_verb": "/θæŋk/",
-	"help_verb": "/hɛlp/"
+	"help_verb": "/hɛlp/",
+	"leave_depart": "/liːv/",
+	"leave_behind": "/liːv/"
 }

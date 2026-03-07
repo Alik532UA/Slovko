@@ -1,4 +1,4 @@
-﻿{
+{
 	"achievement": "досягнення",
 	"advertisement": "реклама",
 	"aggressive": "агресивний",
@@ -139,5 +139,12 @@
 	"you_plural": "ви",
 	"your_plural": "ваш",
 	"argument_reason": "аргумент",
-	"argument_dispute": "суперечка"
+	"argument_dispute": "суперечка",
+	"argument": "аргумент",
+	"clear": "зрозумілий",
+	"crash": "аварія",
+	"patient": "терплячий",
+	"record": "рекорд",
+	"stuff": "матеріал",
+	"unit": "блок"
 }

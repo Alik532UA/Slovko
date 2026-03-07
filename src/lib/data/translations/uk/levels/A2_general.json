@@ -1,4 +1,4 @@
-﻿{
+{
 	"shoes": "взуття",
 	"difficult": "складний",
 	"pharmacy": "аптека",
@@ -527,5 +527,22 @@
 	"before_time": "раніше",
 	"before_position": "перед",
 	"so_degree": "так",
-	"so_conjunction": "отже"
+	"so_conjunction": "отже",
+	"back": "спина",
+	"fine": "чудовий",
+	"bear": "ведмідь",
+	"cool": "крутий",
+	"match": "матч",
+	"ring": "кільце",
+	"lie": "лежати",
+	"point": "точка",
+	"letter": "лист",
+	"burn": "горіти",
+	"also": "також",
+	"before": "раніше",
+	"so_adv": "так",
+	"bug": "помилка",
+	"gas": "бензин",
+	"mad": "шалений",
+	"post": "пошта"
 }

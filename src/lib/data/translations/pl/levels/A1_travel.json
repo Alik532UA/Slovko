@@ -1,12 +1,13 @@
-﻿﻿{
-    "airport":  "lotnisko",
-    "bag":  "torba",
-    "bank_finance":  "bank",
-    "hotel":  "hotel",
-    "map":  "mapa",
-    "money":  "pieniądze",
-    "price":  "cena",
-    "room":  "pokój",
-    "stop":  "zatrzymywać się",
-    "ticket":  "bilet"
+{
+	"airport": "lotnisko",
+	"bag": "torba",
+	"bank_finance": "bank",
+	"hotel": "hotel",
+	"map": "mapa",
+	"money": "pieniądze",
+	"price": "cena",
+	"room": "pokój",
+	"stop": "zatrzymywać się",
+	"ticket": "bilet",
+	"bank": "bank"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"call_phone": "anrufen",
 	"pick_choose": "wählen",
 	"beat_win": "besiegen",
@@ -23,5 +23,8 @@
 	"spill": "verschütten",
 	"spoil": "verderben",
 	"design_plan": "entwerfen",
-	"design_style": "gestalten"
+	"design_style": "gestalten",
+	"design_verb": "entwerfen",
+	"design": "entwerfen",
+	"pick": "wählen"
 }

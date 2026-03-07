@@ -1,4 +1,4 @@
-﻿{
+{
 	"accident_event": "нещасний випадок",
 	"action_legal": "позов",
 	"acceptable": "прийнятний",
@@ -56,5 +56,13 @@
 	"acknowledgement_confirmation": "підтвердження",
 	"acknowledgement_recognition": "визнання",
 	"enhancement_improvement": "покращення",
-	"enhancement_augmentation": "підсилення"
+	"enhancement_augmentation": "підсилення",
+	"assessment_tax": "оцінка",
+	"engagement": "залучення",
+	"attachment": "вкладення",
+	"comprehensive": "всебічний",
+	"fundamental": "фундаментальний",
+	"acknowledgement": "підтвердження",
+	"enhancement": "покращення",
+	"actual": "теперішній"
 }

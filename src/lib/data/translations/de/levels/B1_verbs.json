@@ -1,4 +1,4 @@
-﻿{
+{
 	"accurate": "genau",
 	"advertise": "werben",
 	"apologize": "entschuldigen",
@@ -66,5 +66,7 @@
 	"support": "Unterstützung",
 	"translate": "übersetzen",
 	"trust_verb": "vertrauen",
-	"unemployment_rate": "Arbeitslosigkeit"
+	"unemployment_rate": "Arbeitslosigkeit",
+	"condition": "Zustand",
+	"contribute": "spenden"
 }

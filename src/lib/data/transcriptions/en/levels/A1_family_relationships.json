@@ -1,4 +1,4 @@
-﻿{
+{
 	"friend": "/frɛnd/",
 	"mother": "/ˈmʌðər/",
 	"father": "/ˈfɑːðər/",
@@ -8,5 +8,7 @@
 	"parents": "/ˈpeərənts/",
 	"son": "/sʌn/",
 	"husband": "/ˈhʌzbənd/",
-	"wife": "/waɪf/"
+	"wife": "/waɪf/",
+	"sister_older": "/ˈsɪstər/",
+	"sister_younger": "/ˈsɪstər/"
 }

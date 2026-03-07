@@ -1,4 +1,4 @@
-﻿{
+{
 	"aunt": "/ɑːnt/",
 	"brother_male": "/ˈbrʌð.ə/",
 	"colleague": "/ˈkɒliːɡ/",
@@ -11,5 +11,11 @@
 	"marry": "/ˈmæri/",
 	"partner": "/ˈpɑːtnə/",
 	"single": "/ˈsɪŋɡl/",
-	"uncle": "/ˈʌŋkl/"
+	"uncle": "/ˈʌŋkl/",
+	"aunt_paternal": "/ɑːnt/",
+	"aunt_maternal": "/ɑːnt/",
+	"uncle_paternal": "/ˈʌŋkl/",
+	"uncle_maternal": "/ˈʌŋkl/",
+	"cousin_male": "/ˈkʌzn/",
+	"cousin_female": "/ˈkʌzn/"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"lake": "See",
 	"forest": "Wald",
 	"grass": "Gras",
@@ -28,5 +28,7 @@
 	"bush": "Busch",
 	"cave": "Höhle",
 	"volcano": "Vulkan",
-	"branch_tak": "Zweig"
+	"branch_tak": "Zweig",
+	"branch": "Zweig",
+	"wood": "Wald"
 }

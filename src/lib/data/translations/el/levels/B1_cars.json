@@ -1,4 +1,4 @@
-﻿{
+{
 	"battery_life": "διάρκεια μπαταρίας",
 	"fuel_energy": "καύσιμο",
 	"signal_phone": "σήμα",
@@ -7,5 +7,6 @@
 	"fuel": "καύσιμο",
 	"signal": "σήμα",
 	"battery_electric": "μπαταρία",
-	"battery_artillery": "πυροβολαρχία"
+	"battery_artillery": "πυροβολαρχία",
+	"battery": "μπαταρία"
 }

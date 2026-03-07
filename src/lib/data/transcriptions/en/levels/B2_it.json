@@ -1,4 +1,6 @@
-﻿{
+{
 	"scan_look": "/skæn/",
-	"scan": "/skæn/"
+	"scan": "/skæn/",
+	"scan_medical": "/skæn/",
+	"scan_digital": "/skæn/"
 }

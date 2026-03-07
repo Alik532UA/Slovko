@@ -1,4 +1,4 @@
-﻿{
+{
 	"ask_for": "ζητάω",
 	"be_over": "τελειώνω",
 	"break_down_machine": "χαλάω",
@@ -38,5 +38,7 @@
 	"give_up_quit": "παραιτούμαι",
 	"give_up_surrender": "παραδίδομαι",
 	"grow_up_mature": "ωριμάζω",
-	"grow_up_physical": "μεγαλώνω"
+	"grow_up_physical": "μεγαλώνω",
+	"give_up_habit": "παραιτούμαι",
+	"grow_up": "ωριμάζω"
 }

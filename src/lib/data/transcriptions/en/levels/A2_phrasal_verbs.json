@@ -1,4 +1,4 @@
-﻿{
+{
 	"ask_for": "/ɑːsk fɔːr/",
 	"be_over": "/biː ˈəʊvər/",
 	"break_down_machine": "/breɪk daʊn/",
@@ -36,5 +36,9 @@
 	"write_down": "/raɪt daʊn/",
 	"come_on": "/kʌm ɒn/",
 	"look_forward_to": "/lʊk ˈfɔːrwərd tuː/",
-	"turn_down_volume": "/tɜːrn daʊn/"
+	"turn_down_volume": "/tɜːrn daʊn/",
+	"give_up_quit": "/ɡɪv ʌp/",
+	"give_up_surrender": "/ɡɪv ʌp/",
+	"grow_up_mature": "/ɡrəʊ ʌp/",
+	"grow_up_physical": "/ɡrəʊ ʌp/"
 }

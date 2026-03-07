@@ -1,4 +1,4 @@
-﻿{
+{
 	"absence": "απουσία",
 	"abundance": "αφθονία",
 	"account_for_verb": "αιτιολογώ",
@@ -94,5 +94,11 @@
 	"sense_feel": "αισθάνομαι",
 	"supplement_add": "συμπληρώνω",
 	"establishment_institution": "ίδρυμα",
-	"establishment_founding": "ίδρυση"
+	"establishment_founding": "ίδρυση",
+	"appointment": "διορισμός",
+	"establishment": "ίδρυμα",
+	"action": "πράξη",
+	"attraction": "αξιοθέατο",
+	"enhance": "βελτιώνω",
+	"envision": "οραματίζομαι το μέλλον"
 }

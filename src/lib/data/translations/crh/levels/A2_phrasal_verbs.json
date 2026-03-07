@@ -1,4 +1,4 @@
-﻿{
+{
 	"ask_for": "soraqlamaq",
 	"be_over": "bitmek",
 	"break_down_machine": "bozulmaq",
@@ -38,5 +38,7 @@
 	"give_up_quit": "vazgeçmek",
 	"give_up_surrender": "teslim olmaq",
 	"grow_up_mature": "ösmek",
-	"grow_up_physical": "boylanmaq"
+	"grow_up_physical": "boylanmaq",
+	"give_up_habit": "vazgeçmek",
+	"grow_up": "ösmek"
 }

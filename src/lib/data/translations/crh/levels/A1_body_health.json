@@ -1,4 +1,4 @@
-﻿{
+{
 	"hand": "el",
 	"head": "baş",
 	"eye": "köz",
@@ -13,5 +13,6 @@
 	"hair": "saç",
 	"arm_body": "qol",
 	"arm_weapon": "silâ",
-	"leg_full": "ayaq"
+	"leg_full": "ayaq",
+	"leg": "ayaq"
 }

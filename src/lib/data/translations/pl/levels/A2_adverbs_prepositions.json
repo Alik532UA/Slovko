@@ -1,4 +1,4 @@
-﻿{
+{
 	"above": "nad",
 	"along": "wzdłuż",
 	"as_soon_as": "jak тільки",
@@ -47,5 +47,11 @@
 	"as_like": "jako",
 	"as_since": "ponieważ",
 	"by_near": "obok",
-	"by_agent": "przez"
+	"by_agent": "przez",
+	"nicely": "miło",
+	"definitely": "zdecydowanie",
+	"as_conjunction": "jako",
+	"by_preposition": "obok",
+	"as": "jako",
+	"by": "obok"
 }

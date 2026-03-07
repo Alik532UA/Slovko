@@ -1,4 +1,4 @@
-﻿{
+{
 	"come": "kelmek",
 	"see": "körmek",
 	"hear": "eşitmek",
@@ -39,5 +39,6 @@
 	"thank_verb": "teşekkür etmek",
 	"help_verb": "yardım etmek",
 	"leave_depart": "ketmek",
-	"leave_behind": "qaldırmaq"
+	"leave_behind": "qaldırmaq",
+	"leave": "ketmek"
 }

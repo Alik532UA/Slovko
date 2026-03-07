@@ -1,4 +1,4 @@
-﻿{
+{
 	"cat": "kat",
 	"dog": "hond",
 	"chicken": "kip",
@@ -17,5 +17,6 @@
 	"duck_animal": "eend",
 	"spider": "spin",
 	"elephant": "olifant",
-	"monkey": "aap"
+	"monkey": "aap",
+	"duck": "eend"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"abide_rules": "uymaq",
 	"abolish_law": "bitirmek",
 	"academy": "akademiya",
@@ -242,5 +242,13 @@
 	"accord_agreement": "anlaşma",
 	"accord_harmony": "uyğunlıq",
 	"adjustment_change": "ayarlama",
-	"adjustment_setting": "tüzetüv"
+	"adjustment_setting": "tüzetüv",
+	"abolish": "bitirmek",
+	"accord": "anlaşma",
+	"adjustment": "ayarlama",
+	"adversity": "bahtsızlıq",
+	"affinity": "aqrabalıq",
+	"allowance": "maaş",
+	"appendix": "körbağırsaq",
+	"articulate": "açıq"
 }

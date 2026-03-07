@@ -1,4 +1,4 @@
-﻿{
+{
 	"angry": "zły",
 	"bad": "zły",
 	"beautiful": "piękny",
@@ -54,5 +54,9 @@
 	"wrong": "błędny",
 	"young": "młody",
 	"different_other": "inny",
-	"different_various": "różny"
+	"different_various": "różny",
+	"hard": "trudny",
+	"kind": "miły",
+	"different": "inny",
+	"left": "lewo"
 }

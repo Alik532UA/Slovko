@@ -1,4 +1,4 @@
-﻿{
+{
 	"beat_win": "/biːt/",
 	"call_phone": "/kɔːl/",
 	"chat_talk": "/tʃæt/",
@@ -27,5 +27,7 @@
 	"sneeze": "/sniːz/",
 	"spell_verb": "/spɛl/",
 	"spill": "/spɪl/",
-	"spoil": "/spɔɪl/"
+	"spoil": "/spɔɪl/",
+	"design_plan": "/dɪˈzaɪn/",
+	"design_style": "/dɪˈzaɪn/"
 }

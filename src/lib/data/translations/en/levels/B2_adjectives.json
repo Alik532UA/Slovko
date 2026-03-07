@@ -1,4 +1,4 @@
-﻿{
+{
 	"accident_event": "accident",
 	"action_legal": "action",
 	"acceptable": "acceptable",
@@ -56,5 +56,13 @@
 	"acknowledgement_confirmation": "acknowledgement",
 	"acknowledgement_recognition": "acknowledgement",
 	"enhancement_improvement": "enhancement",
-	"enhancement_augmentation": "enhancement"
+	"enhancement_augmentation": "enhancement",
+	"assessment_tax": "assessment",
+	"engagement": "engagement",
+	"attachment": "attachment",
+	"comprehensive": "comprehensive",
+	"fundamental": "fundamental",
+	"acknowledgement": "acknowledgement",
+	"enhancement": "enhancement",
+	"actual": "actual"
 }

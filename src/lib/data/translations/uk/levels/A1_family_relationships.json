@@ -1,4 +1,4 @@
-﻿{
+{
 	"friend": "друг",
 	"mother": "мама",
 	"father": "тато",
@@ -9,5 +9,6 @@
 	"husband": "чоловік (у шлюбі)",
 	"wife": "дружина",
 	"sister_older": "сестра",
-	"sister_younger": "сестра"
+	"sister_younger": "сестра",
+	"sister": "сестра"
 }

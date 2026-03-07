@@ -1,4 +1,4 @@
-﻿{
+{
 	"during": "devamında",
 	"until": "qadar",
 	"well": "yahşı",
@@ -47,5 +47,11 @@
 	"as_like": "kibi",
 	"as_since": "içün",
 	"by_near": "yanında",
-	"by_agent": "vasta-ile"
+	"by_agent": "vasta-ile",
+	"nicely": "güzel",
+	"definitely": "muitlaqa",
+	"as_conjunction": "kibi",
+	"by_preposition": "yanında",
+	"as": "kibi",
+	"by": "yanında"
 }

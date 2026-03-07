@@ -1,4 +1,4 @@
-﻿{
+{
 	"man": "man",
 	"woman": "woman",
 	"girl": "girl",
@@ -29,5 +29,6 @@
 	"mrs": "Mrs.",
 	"person": "person",
 	"people": "people",
-	"boy": "boy"
+	"boy": "boy",
+	"pronoun_3rd": "he"
 }

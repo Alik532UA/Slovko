@@ -1,4 +1,4 @@
-﻿{
+{
 	"during": "during",
 	"until": "until",
 	"well": "well",
@@ -47,5 +47,11 @@
 	"as_like": "as",
 	"as_since": "as",
 	"by_near": "by",
-	"by_agent": "by"
+	"by_agent": "by",
+	"nicely": "nicely",
+	"definitely": "definitely",
+	"as_conjunction": "as",
+	"by_preposition": "by",
+	"as": "as",
+	"by": "by"
 }

@@ -1,4 +1,4 @@
-﻿﻿{
+{
 	"accelerate": "przyspieszać",
 	"accumulate": "gromadzić",
 	"acknowledge_recognize": "uznać",
@@ -30,5 +30,7 @@
 	"pinpoint_identify": "precyzyjnie określać",
 	"pledge_promise": "deklarować / obiecywać",
 	"serve_general": "służyć",
-	"simulate_imitate": "symulować / imitować"
+	"simulate_imitate": "symulować / imitować",
+	"endorse": "poprzeć kandydata",
+	"exaggerate": "wyolbrzymiać / przesadzać"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"lemon": "limon",
 	"onion": "soğan",
 	"pepper": "biber",
@@ -40,5 +40,8 @@
 	"pie_baked": "pasta",
 	"sausage_small": "sucuk",
 	"pasta_food": "makarna",
-	"jam_fruit": "murebbe"
+	"jam_fruit": "murebbe",
+	"jam": "murebbe",
+	"pie": "pasta",
+	"sausage": "sucuk"
 }

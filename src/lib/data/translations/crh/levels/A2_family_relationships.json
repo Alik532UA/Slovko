@@ -1,4 +1,4 @@
-﻿{
+{
 	"aunt_paternal": "ala",
 	"aunt_maternal": "tize",
 	"uncle": "emce",
@@ -15,5 +15,7 @@
 	"partner": "ortaq",
 	"single": "tek",
 	"cousin_male": "emce-tize balası (erkek)",
-	"cousin_female": "emce-tize balası (qadın)"
+	"cousin_female": "emce-tize balası (qadın)",
+	"aunt": "ala",
+	"cousin": "emce-tize balası (erkek)"
 }

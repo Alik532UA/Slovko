@@ -1,4 +1,4 @@
-﻿{
+{
 	"lake": "köl",
 	"forest": "orman",
 	"grass": "ot",
@@ -28,5 +28,7 @@
 	"bush": "terekçik",
 	"cave": "qoba",
 	"volcano": "yanardağ",
-	"branch_tak": "pıtaq"
+	"branch_tak": "pıtaq",
+	"branch": "pıtaq",
+	"wood": "orman"
 }

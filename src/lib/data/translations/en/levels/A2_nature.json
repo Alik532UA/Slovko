@@ -1,4 +1,4 @@
-﻿{
+{
 	"lake": "lake",
 	"forest": "forest",
 	"grass": "grass",
@@ -28,5 +28,7 @@
 	"bush": "bush",
 	"cave": "cave",
 	"volcano": "volcano",
-	"branch_tak": "branch"
+	"branch_tak": "branch",
+	"branch": "branch",
+	"wood": "wood"
 }

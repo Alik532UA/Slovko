@@ -1,4 +1,4 @@
-﻿{
+{
 	"found": "znaleźć",
 	"cancel": "anulować",
 	"cash": "gotówka",
@@ -33,5 +33,6 @@
 	"tourism": "turystyka",
 	"voyage": "podróż morska",
 	"cabin_ship": "kajuta",
-	"cabin_plane": "kabina samolotu"
+	"cabin_plane": "kabina samolotu",
+	"cabin": "kajuta"
 }

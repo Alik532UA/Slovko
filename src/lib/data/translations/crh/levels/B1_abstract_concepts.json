@@ -1,4 +1,4 @@
-﻿{
+{
 	"ability": "qabiliyet",
 	"advantage": "üstünlik",
 	"attitude": "munasebet",
@@ -75,5 +75,10 @@
 	"growth_physical": "ösüv",
 	"growth_development": "inkişaf",
 	"sight_vision": "körüş",
-	"sight_view": "manzara"
+	"sight_view": "manzara",
+	"effect": "tesir",
+	"failure": "muvafaqiyetsizlik",
+	"fault": "qabaat",
+	"growth": "ösüv",
+	"sight": "körüş"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"and_conjunction": "i",
 	"answer": "odpowiedź",
 	"apartment": "mieszkanie",
@@ -140,5 +140,17 @@
 	"picture_photo": "zdjęcie",
 	"picture_painting": "obraz",
 	"brother_older": "brat",
-	"brother_younger": "brat"
+	"brother_younger": "brat",
+	"brother": "brat",
+	"walk": "chodzić",
+	"go": "iść",
+	"free": "wolny",
+	"watch": "oglądać",
+	"right": "prawy",
+	"too": "również",
+	"light": "jasny",
+	"park": "park",
+	"call": "dzwonić",
+	"number": "liczba",
+	"picture": "zdjęcie"
 }

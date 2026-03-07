@@ -1,4 +1,4 @@
-﻿{
+{
 	"absence": "nieobecność",
 	"abundance": "obfitość",
 	"account_for_verb": "wyjaśniać / stanowić",
@@ -94,5 +94,11 @@
 	"sense_feel": "czuć / wyczuwać",
 	"supplement_add": "uzupełniać",
 	"establishment_institution": "placówka",
-	"establishment_founding": "ustanowienie"
+	"establishment_founding": "ustanowienie",
+	"appointment": "nominacja / mianowanie",
+	"establishment": "placówka",
+	"action": "działanie",
+	"attraction": "atrakcja",
+	"enhance": "usprawniać",
+	"envision": "wyobrażać sobie przyszłość"
 }

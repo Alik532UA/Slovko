@@ -1,4 +1,4 @@
-﻿{
+{
 	"abandon": "abandon",
 	"absorb": "absorb",
 	"accuse": "accuse",
@@ -628,5 +628,29 @@
 	"drug_medicine": "drug",
 	"drug_narcotic": "drug",
 	"tube_subway": "tube",
-	"tube_pipe": "tube"
+	"tube_pipe": "tube",
+	"area": "area",
+	"drug": "drug",
+	"tube": "tube",
+	"block": "block",
+	"board": "board",
+	"character": "character",
+	"collapse": "collapse",
+	"concern": "concern",
+	"construct": "construct",
+	"deal": "deal",
+	"due": "due",
+	"hang": "hang out",
+	"major": "major",
+	"mark": "mark",
+	"measure": "measure",
+	"pattern": "pattern",
+	"race": "race",
+	"site": "site",
+	"stage": "stage",
+	"stock": "stock",
+	"that": "that",
+	"treat": "treat",
+	"trial": "trial",
+	"would": "would"
 }

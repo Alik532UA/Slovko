@@ -67,5 +67,7 @@
 	"support": "wsparcie",
 	"translate": "tłumaczyć",
 	"trust_verb": "ufać",
-	"unemployment_rate": "bezrobocie"
+	"unemployment_rate": "bezrobocie",
+	"condition": "stan",
+	"contribute": "wpłacać"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"abide_rules": "przestrzegać zasad",
 	"abolish_law": "znosić",
 	"academy": "akademia",
@@ -242,5 +242,13 @@
 	"accord_agreement": "porozumienie",
 	"accord_harmony": "zgoda",
 	"adjustment_change": "regulacja",
-	"adjustment_setting": "dostosowanie"
+	"adjustment_setting": "dostosowanie",
+	"abolish": "znosić",
+	"accord": "porozumienie",
+	"adjustment": "regulacja",
+	"adversity": "przeciwność losu",
+	"affinity": "pokrewieństwo / powinowactwo",
+	"allowance": "kieszonkowe",
+	"appendix": "wyrostek robaczkowy",
+	"articulate": "artykułowany / wyraźny"
 }

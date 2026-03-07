@@ -1,4 +1,4 @@
-﻿{
+{
 	"absence": "відсутність",
 	"abundance": "достаток",
 	"account_for_verb": "пояснювати / складати (частку)",
@@ -94,5 +94,11 @@
 	"sense_feel": "відчувати",
 	"supplement_add": "доповнювати",
 	"establishment_institution": "установа",
-	"establishment_founding": "заснування"
+	"establishment_founding": "заснування",
+	"appointment": "призначення на посаду",
+	"establishment": "установа",
+	"action": "дія",
+	"attraction": "атракціон/пам'ятка",
+	"enhance": "покращувати",
+	"envision": "уявляти"
 }

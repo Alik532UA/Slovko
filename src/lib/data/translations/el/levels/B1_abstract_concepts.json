@@ -1,4 +1,4 @@
-﻿{
+{
 	"ability": "ικανότητα",
 	"advantage": "πλεονέκτημα",
 	"attitude": "στάση",
@@ -75,5 +75,10 @@
 	"growth_physical": "ανάπτυξη",
 	"growth_development": "ανάπτυξη",
 	"sight_vision": "όραση",
-	"sight_view": "θέα"
+	"sight_view": "θέα",
+	"effect": "αποτέλεσμα",
+	"failure": "αποτυχία",
+	"fault": "φταίξιμο",
+	"growth": "ανάπτυξη",
+	"sight": "όραση"
 }

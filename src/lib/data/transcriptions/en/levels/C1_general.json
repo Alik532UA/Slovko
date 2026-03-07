@@ -1,4 +1,4 @@
-﻿{
+{
 	"abide_rules": "/əˈbaɪd/",
 	"abolish": "/əˈbɒlɪʃ/",
 	"abolish_law": "/əˈbɒlɪʃ/",
@@ -240,5 +240,10 @@
 	"exemplify_standard": "/ɪɡˈzɛmplɪfaɪ/",
 	"exert_pressure": "/ɪɡˈzɜːrt/",
 	"exhale_air": "/eksˈheɪl/",
-	"exile_leader": "/ˈɛksaɪl/"
+	"exile_leader": "/ˈɛksaɪl/",
+	"abolish_system": "/əˈbɒlɪʃ/",
+	"accord_agreement": "/əˈkɔːd/",
+	"accord_harmony": "/əˈkɔːd/",
+	"adjustment_change": "/əˈdʒʌstmənt/",
+	"adjustment_setting": "/əˈdʒʌstmənt/"
 }

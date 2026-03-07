@@ -1,4 +1,4 @@
-﻿{
+{
 	"hand": "hand",
 	"head": "hoofd",
 	"eye": "oog",
@@ -13,5 +13,6 @@
 	"hair": "haar",
 	"arm_body": "arm",
 	"arm_weapon": "wapen",
-	"leg_full": "been"
+	"leg_full": "been",
+	"leg": "been"
 }

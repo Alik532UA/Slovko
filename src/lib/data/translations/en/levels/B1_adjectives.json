@@ -1,4 +1,4 @@
-﻿{
+{
 	"achievement": "achievement",
 	"advertisement": "advertisement",
 	"aggressive": "aggressive",
@@ -139,5 +139,12 @@
 	"you_plural": "you",
 	"your_plural": "your",
 	"argument_reason": "argument",
-	"argument_dispute": "argument"
+	"argument_dispute": "argument",
+	"argument": "argument",
+	"clear": "clear",
+	"crash": "crash",
+	"patient": "patient",
+	"record": "record",
+	"stuff": "stuff",
+	"unit": "unit"
 }

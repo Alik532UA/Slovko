@@ -1,4 +1,5 @@
-﻿{
+{
 	"battery_electric": "akumulator",
-	"battery_artillery": "bateria (artyleryjska)"
+	"battery_artillery": "bateria (artyleryjska)",
+	"battery": "akumulator"
 }
