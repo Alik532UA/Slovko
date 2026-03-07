@@ -2,6 +2,8 @@
 	"atm": "/ˌeɪ.tiːˈem/",
 	"boarding": "/ˈbɔː.dɪŋ/",
 	"booking": "/ˈbʊk.ɪŋ/",
+	"camera": "/ˈkæmərə/",
+	"camp": "/kæmp/",
 	"camp_verb": "/kæmp/",
 	"cash": "/kæʃ/",
 	"credit_card": "/ˈkrɛdɪt kɑːd/",
@@ -9,6 +11,8 @@
 	"emergency": "/ɪˈmɜː.dʒən.si/",
 	"exchange": "/ɪksˈtʃeɪndʒ/",
 	"flight": "/flaɪt/",
+	"gate": "/ɡeɪt/",
+	"guide": "/ɡaɪd/",
 	"information": "/ˌɪnfərˈmeɪʃn/",
 	"journey": "/ˈдʒɜːrni/",
 	"lost": "/lɒst/",
@@ -26,6 +30,5 @@
 	"tour": "/tʊə/",
 	"tourist": "/ˈtʊərɪst/",
 	"trip": "/trɪp/",
-	"vacation": "/veɪˈkeɪ.ʃən/",
-	"camp": "/kæmp/"
+	"vacation": "/veɪˈkeɪ.ʃən/"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"app": {
 		"title": "Slovko"
 	},
@@ -304,7 +304,8 @@
 			"day": "dzień",
 			"daysGenitive": "dni",
 			"inARow": "z rzędu"
-		}
+		},
+		"leaderboardGuestMessage": "Zaloguj się, aby pojawić się w rankingu i rywalizować z innymi!"
 	},
 	"updateNotification": {
 		"message": "Dostępna aktualizacja!",

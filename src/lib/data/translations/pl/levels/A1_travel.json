@@ -1,13 +1,14 @@
 ﻿{
-	"airport": "lotnisko",
-	"bag": "torba",
-	"bank_finance": "bank",`n        "bank_river": "brzeg",
-	"hotel": "hotel",
-	"map": "mapa",
-	"money": "pieniÄ…dze",
-	"price": "cena",
-	"room": "pokÃ³j",
-	"stop": "zatrzymywaÄ‡ siÄ™",
-	"ticket": "bilet",
-	"bank": "bank"
+    "airport": "lotnisko",
+    "bag": "torba",
+    "bank_finance": "bank",
+    "bank_river": "brzeg",
+    "hotel": "hotel",
+    "map": "mapa",
+    "money": "pieniądze",
+    "price": "cena",
+    "room": "pokój",
+    "stop": "zatrzymywać się",
+    "ticket": "bilet",
+    "bank": "bank"
 }

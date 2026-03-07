@@ -1,4 +1,4 @@
-﻿{
+{
 	"app": {
 		"title": "Slovko"
 	},
@@ -273,7 +273,8 @@
 			"day": "kün",
 			"daysGenitive": "kün",
 			"inARow": "sırasınen"
-		}
+		},
+		"leaderboardGuestMessage": "Reytingde kösterilmek ve başqalarıman yarışmaq içün kirtiniñiz."
 	},
 	"updateNotification": {
 		"message": "Yañartuv bar!",
@@ -367,7 +368,13 @@
 	"leaderboard": {
 		"loading": "Top yüklenile...",
 		"noData": "Şimdilik malümat yoq",
-		"authWarning": "Rekordlarıñıznıñ top-listte kösterilmesi ve digerlernen yarışmaq içün kiriñiz!"
+		"authWarning": "Rekordlarıñıznıñ top-listte kösterilmesi ve digerlernen yarışmaq içün kiriñiz!",
+		"limitHint": "Diger qullanıcılar sizi körmesi içün {required} {unit} qazanmalısıñız",
+		"unitDays": "kün devamında",
+		"unitCorrect": "doğru cevap",
+		"unitAttempts": "cevap",
+		"unitCorrectStreak": "sıradaki doğru cevap",
+		"unitActiveDays": "faal kün"
 	},
 	"interaction": {
 		"match": "Sutunlar",

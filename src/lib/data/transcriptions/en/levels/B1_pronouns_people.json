@@ -1,4 +1,10 @@
 {
 	"someone": "/ˈsʌm.wʌn/",
-	"themselves": "/ðəmˈsɛlvz/"
+	"themselves": "/ðəmˈsɛlvz/",
+	"you": "/juː/",
+	"you_formal": "/juː/",
+	"you_informal": "/juː/",
+	"you_plural": "/juː/",
+	"you_pronoun": "/juː/",
+	"you_singular": "/juː/"
 }

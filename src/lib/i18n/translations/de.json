@@ -1,4 +1,4 @@
-﻿{
+{
 	"app": {
 		"title": "Slovko"
 	},
@@ -273,7 +273,8 @@
 			"day": "Tag",
 			"daysGenitive": "Tage",
 			"inARow": "hintereinander"
-		}
+		},
+		"leaderboardGuestMessage": "Melden Sie sich an, um in der Bestenliste zu erscheinen und sich mit anderen zu messen!"
 	},
 	"updateNotification": {
 		"message": "Update verfügbar!",
@@ -367,7 +368,13 @@
 	"leaderboard": {
 		"loading": "Bestenliste laden...",
 		"noData": "Noch keine Daten zum Anzeigen",
-		"authWarning": "Melden Sie sich an, um in der Bestenliste zu erscheinen und mit anderen zu konkurrieren!"
+		"authWarning": "Melden Sie sich an, um in der Bestenliste zu erscheinen und mit anderen zu konkurrieren!",
+		"limitHint": "Damit andere Benutzer Sie sehen können, müssen Sie {required} {unit} erreichen",
+		"unitDays": "Tage in Folge",
+		"unitCorrect": "richtige Antworten",
+		"unitAttempts": "Antworten",
+		"unitCorrectStreak": "richtige Antworten in Folge",
+		"unitActiveDays": "aktive Tage"
 	},
 	"interaction": {
 		"match": "Spalten",

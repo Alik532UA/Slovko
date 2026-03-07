@@ -1,17 +1,19 @@
 {
-	"sock": "/sɒk/",
-	"suit": "/suːt/",
+	"belt": "/bɛlt/",
 	"boot": "/buːt/",
 	"cap": "/kæp/",
+	"cotton": "/ˈkɒtn/",
+	"glove": "/ɡlʌv/",
 	"jacket": "/ˈdʒækɪt/",
 	"jeans": "/dʒiːnz/",
+	"leather": "/ˈlɛðər/",
+	"purse": "/pɜːrs/",
+	"sock": "/sɒk/",
+	"suit": "/suːt/",
 	"sunglasses": "/ˈsʌnɡlæsɪz/",
 	"sweater": "/ˈswɛtər/",
 	"tie_clothes": "/taɪ/",
 	"umbrella": "/ʌmˈbrɛlə/",
 	"uniform": "/ˈjuːnɪfɔːrm/",
-	"cotton": "/ˈkɒtn/",
-	"leather": "/ˈlɛðər/",
-	"wool": "/wʊl/",
-	"purse": "/pɜːrs/"
+	"wool": "/wʊl/"
 }

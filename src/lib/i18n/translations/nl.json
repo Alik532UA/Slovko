@@ -1,4 +1,4 @@
-﻿{
+{
 	"app": {
 		"title": "Slovko"
 	},
@@ -273,7 +273,8 @@
 			"day": "dag",
 			"daysGenitive": "dagen",
 			"inARow": "op rij"
-		}
+		},
+		"leaderboardGuestMessage": "Log in om in de ranglijst te verschijnen und met anderen te concurreren!"
 	},
 	"updateNotification": {
 		"message": "Update beschikbaar!",
@@ -367,7 +368,13 @@
 	"leaderboard": {
 		"loading": "Ranglijst laden...",
 		"noData": "Nog geen gegevens om weer te geven",
-		"authWarning": "Log in om in de ranglijst te verschijnen en met anderen te concurreren!"
+		"authWarning": "Log in om in de ranglijst te verschijnen en met anderen te concurreren!",
+		"limitHint": "Om door andere gebruikers gezien te worden, moet je {required} {unit} verdienen",
+		"unitDays": "dagen op rij",
+		"unitCorrect": "correcte antwoorden",
+		"unitAttempts": "pogingen",
+		"unitCorrectStreak": "correcte antwoorden op rij",
+		"unitActiveDays": "actieve dagen"
 	},
 	"interaction": {
 		"match": "Kolommen",
