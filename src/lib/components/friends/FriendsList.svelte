@@ -7,6 +7,7 @@
 	import {
 		Users,
 		Loader2,
+		Settings,
 	} from "lucide-svelte";
 	import { logService } from "$lib/services/logService";
 	import { friendsStore } from "$lib/stores/friendsStore.svelte";
@@ -19,8 +20,13 @@
 	interface Props {
 		activeTab: "following" | "followers";
 		shouldRefresh: boolean; // Trigger refresh from parent
+		onopenSettings?: () => void;
 	}
-	let { activeTab = "following", shouldRefresh }: Props = $props();
+	let {
+		activeTab = "following",
+		shouldRefresh = $bindable(),
+		onopenSettings,
+	}: Props = $props();
 
 	let list = $state<FollowRecord[]>([]);
 	let isLoading = $state(false);
@@ -57,6 +63,17 @@
 </script>
 
 <div class="list-container" data-testid="friends-list-root">
+	{#if onopenSettings}
+		<button
+			class="settings-btn-top"
+			onclick={onopenSettings}
+			aria-label="Friends settings"
+			data-testid="friends-settings-btn"
+		>
+			<Settings size={20} />
+		</button>
+	{/if}
+
 	<ErrorBoundary compact>
 		{#if isLoading && list.length === 0}
 			<div class="loading-state" data-testid="friends-loading">
@@ -247,6 +264,29 @@
 	}
 
 	.retry-btn:hover {
+		background: var(--bg-hover);
+	}
+
+	.settings-btn-top {
+		position: absolute;
+		top: -45px;
+		right: 0;
+		background: var(--bg-secondary);
+		border: 1px solid var(--border);
+		color: var(--text-secondary);
+		padding: 0.5rem;
+		border-radius: 10px;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.2s;
+		z-index: 5;
+	}
+
+	.settings-btn-top:hover {
+		color: var(--accent);
+		border-color: var(--accent);
 		background: var(--bg-hover);
 	}
 </style>

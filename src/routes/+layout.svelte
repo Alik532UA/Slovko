@@ -32,6 +32,7 @@
 	import AboutModal from "$lib/components/settings/AboutModal.svelte";
 	import ThemeModal from "$lib/components/settings/ThemeModal.svelte";
 	import ProfileModal from "$lib/components/settings/ProfileModal.svelte";
+	import StatsModal from "$lib/components/settings/StatsModal.svelte";
 
 	import "../app.css";
 
@@ -285,9 +286,13 @@
 		<AboutModal onclose={() => navigationState.closeModal()} />
 	{:else if activeModal === "themes"}
 		<ThemeModal onclose={() => navigationState.closeModal()} />
+	{:else if activeModal === "stats"}
+		<StatsModal
+			initialTab={$page.url.searchParams.get("tab") as any}
+			onclose={() => navigationState.closeModal()}
+		/>
 	{:else if activeModal === "profile"}
 		<ProfileModal
-			mode="full"
 			initialTab={$page.url.searchParams.get("tab") as any}
 			onclose={() => navigationState.closeModal()}
 		/>

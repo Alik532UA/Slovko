@@ -55,21 +55,37 @@
 		bottom: 10px;
 		right: 10px;
 		z-index: 999999;
-		background: rgba(0, 0, 0, 0.7);
-		color: white;
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		padding: 8px 12px;
-		border-radius: 8px;
 		display: flex;
 		align-items: center;
-		gap: 6px;
-		font-size: 12px;
+		justify-content: center;
+		gap: 0.5rem;
+		background: rgba(255, 255, 255, 0.1);
+		padding: 0.5rem;
+		min-width: 42px;
+		height: 42px;
+		border-radius: 20px;
+		color: var(--text-secondary);
+		transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+		border: 1px solid rgba(255, 255, 255, 0.15);
+		white-space: nowrap;
 		cursor: pointer;
-		font-family: monospace;
-		transition: all 0.2s;
 	}
+
 	.debug-copy-btn:hover {
-		background: rgba(0, 0, 0, 0.9);
-		border-color: rgba(255, 255, 255, 0.4);
+		background: rgba(58, 143, 214, 0.15);
+		color: #3a8fd6;
+		border-color: rgba(58, 143, 214, 0.4);
+		transform: scale(1.05);
+		box-shadow: 0 4px 12px rgba(58, 143, 214, 0.2);
+	}
+
+	.debug-copy-btn:active {
+		transform: scale(0.95);
+	}
+
+	.debug-copy-btn span {
+		font-size: 0.75rem;
+		font-weight: 600;
+		padding-right: 0.5rem;
 	}
 </style>

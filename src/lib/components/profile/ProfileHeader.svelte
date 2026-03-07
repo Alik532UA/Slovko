@@ -25,10 +25,11 @@
 	import { logService } from "../../services/logService";
 
 	interface Props {
-		oneditAvatar: () => void;
+		oneditAvatar?: () => void;
+		hideEditButton?: boolean;
 	}
 
-	let { oneditAvatar }: Props = $props();
+	let { oneditAvatar, hideEditButton = false }: Props = $props();
 
 	let isEditingName = $state(false);
 	let editedName = $state("");
@@ -77,10 +78,11 @@
 <div class="header" data-testid="profile-header">
 	<button
 		class="avatar-wrapper-btn"
-		onclick={oneditAvatar}
+		onclick={() => !hideEditButton && oneditAvatar?.()}
 		type="button"
 		aria-label={$_("profile.avatar.edit") || "Edit avatar"}
 		data-testid="edit-avatar-trigger"
+		disabled={hideEditButton}
 	>
 		{#if authStore.photoURL?.startsWith("internal:")}
 			{@const parts = authStore.photoURL.split(":")}
@@ -117,9 +119,11 @@
 				<User size={72} />
 			</div>
 		{/if}
-		<div class="edit-overlay" aria-hidden="true">
-			<Edit2 size={16} />
-		</div>
+		{#if !hideEditButton}
+			<div class="edit-overlay" aria-hidden="true">
+				<Edit2 size={16} />
+			</div>
+		{/if}
 	</button>
 
 	<div class="user-info">
@@ -161,14 +165,16 @@
 				<h2>
 					{authStore.displayName || authStore.email?.split("@")[0] || "User"}
 				</h2>
-				<button
-					class="edit-name-btn"
-					onclick={startEditingName}
-					aria-label="Edit display name"
-					data-testid="start-edit-name-btn"
-				>
-					<Edit2 size={16} />
-				</button>
+				{#if !hideEditButton}
+					<button
+						class="edit-name-btn"
+						onclick={startEditingName}
+						aria-label="Edit display name"
+						data-testid="start-edit-name-btn"
+					>
+						<Edit2 size={16} />
+					</button>
+				{/if}
 			</div>
 		{/if}
 		<p>{authStore.email}</p>

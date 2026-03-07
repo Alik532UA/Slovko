@@ -227,7 +227,7 @@
 		"anonymousTitle": "Guest",
 		"anonymousSub": "Progress not synced",
 		"syncWarning": "Sign in to save your progress in the cloud and keep it safe across devices.",
-		"guestWarning": "You are playing as a guest. Sign in to save progress in the cloud and compete with others.",
+		"guestWarning": "Sign in to save progress in the cloud and compete with others.",
 		"tempAccountWarning": "You are using a temporary account. Link an email so you don't lose your progress.",
 		"login": "Sign In",
 		"logout": "Sign Out",
@@ -247,6 +247,7 @@
 		"passwordResetSent": "Password reset email sent",
 		"linkAccount": "Link Account",
 		"editAvatarTitle": "Edit Avatar",
+		"leaderboardGuestMessage": "Sign in to see other players and their stats",
 		"errors": {
 			"enterEmail": "Enter email",
 			"userNotFound": "User with this email not found",

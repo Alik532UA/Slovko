@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
-	import { fade } from "svelte/transition";
+	import { fade, slide } from "svelte/transition";
 	import { ALL_LEVELS } from "$lib/types";
 	import {
 		Medal,
@@ -11,6 +11,8 @@
 		Flame,
 		Lock,
 		Calendar,
+		ChevronDown,
+		ChevronUp,
 	} from "lucide-svelte";
 	import {
 		FriendsService,
@@ -20,8 +22,10 @@
 	import { progressStore } from "$lib/stores/progressStore.svelte";
 	import UserAvatar from "../friends/UserAvatar.svelte";
 	import SegmentedControl from "../ui/SegmentedControl.svelte";
+	import { smoothHeight } from "$lib/actions/smoothHeight";
 
 	let selectedLevel = $state("all");
+	let lastSelectedLevel = $state("all");
 	const levelOptions = $derived([
 		{ id: 'all', label: 'common.all', testId: 'level-tab-all' },
 		...ALL_LEVELS.map(level => ({ id: level, label: level, testId: `level-tab-${level}` }))
@@ -33,15 +37,55 @@
 		| "totalCorrect"
 		| "accuracy"
 		| "activeDaysCount"
-	>("activeDaysCount");
+	>("totalCorrect");
 
-	const metricOptions = [
+	let isMetricExpanded = $state(false);
+
+	const supportsLevels = $derived(
+		selectedMetric !== "activeDaysCount" && selectedMetric !== "bestStreak"
+	);
+
+	const allMetricOptions = [
+		{ id: 'totalCorrect', label: 'profile.stats.correct', icon: CheckCircle, testId: 'metric-tab-correct-total' },
 		{ id: 'activeDaysCount', label: 'profile.stats.activeDays', icon: Calendar, testId: 'metric-tab-active-days' },
 		{ id: 'bestStreak', label: 'profile.stats.bestStreak', icon: Flame, testId: 'metric-tab-streak-days' },
 		{ id: 'bestCorrectStreak', label: 'profile.stats.bestCorrectStreak', icon: Medal, testId: 'metric-tab-streak-correct' },
-		{ id: 'totalCorrect', label: 'profile.stats.correct', icon: CheckCircle, testId: 'metric-tab-correct-total' },
 		{ id: 'accuracy', label: 'profile.stats.accuracy', icon: Target, testId: 'metric-tab-accuracy' }
 	];
+
+	const metricOptions = $derived.by(() => {
+		if (isMetricExpanded) {
+			return [
+				...allMetricOptions,
+				{ id: 'show-less', label: 'profile.stats.showLess', icon: ChevronUp, testId: 'metric-tab-show-less' }
+			];
+		}
+		return [
+			allMetricOptions[0], // totalCorrect
+			allMetricOptions[1], // activeDaysCount
+			{ id: 'show-more', label: 'profile.stats.showMore', icon: ChevronDown, testId: 'metric-tab-show-more' }
+		];
+	});
+
+	function handleMetricChange(id: string) {
+		if (id === 'show-more') {
+			isMetricExpanded = true;
+		} else if (id === 'show-less') {
+			isMetricExpanded = false;
+		} else {
+			selectedMetric = id as any;
+			if (selectedMetric === "activeDaysCount" || selectedMetric === "bestStreak") {
+				selectedLevel = "all";
+			} else {
+				selectedLevel = lastSelectedLevel;
+			}
+		}
+	}
+
+	function handleLevelChange(id: string) {
+		selectedLevel = id;
+		lastSelectedLevel = id;
+	}
 
 	let isLoading = $state(true);
 	let leaderboardData = $state<any[]>([]);
@@ -140,22 +184,30 @@
 <div class="leaderboard-container" data-testid="leaderboard-container">
 	<!-- Filters -->
 	<div class="filters">
-		<SegmentedControl 
-			options={levelOptions}
-			value={selectedLevel}
-			onchange={(id) => (selectedLevel = id)}
-			testid="leaderboard-level-tabs"
-			class="mb-3 max-w-[500px]"
-		/>
+		<div class="metric-tabs-wrapper" use:smoothHeight={{ duration: 300 }}>
+			<div class="modal-content-measure">
+				<SegmentedControl 
+					options={metricOptions}
+					value={selectedMetric}
+					onchange={handleMetricChange}
+					variant="vertical"
+					testid="metric-tabs"
+					class="mb-6"
+				/>
+			</div>
+		</div>
 
-		<SegmentedControl 
-			options={metricOptions}
-			value={selectedMetric}
-			onchange={(id) => (selectedMetric = id as any)}
-			variant="vertical"
-			testid="metric-tabs"
-			class="mb-6"
-		/>
+		{#if supportsLevels}
+			<div transition:slide={{ duration: 300 }}>
+				<SegmentedControl 
+					options={levelOptions}
+					value={selectedLevel}
+					onchange={handleLevelChange}
+					testid="leaderboard-level-tabs"
+					class="mb-3 max-w-[500px]"
+				/>
+			</div>
+		{/if}
 	</div>
 
 	<!-- List -->
@@ -196,8 +248,9 @@
 						{@const displayScore = isMe
 							? Math.max(user.score, localValue)
 							: user.score}
+						{@const config = thresholdMap[selectedMetric as keyof typeof thresholdMap]}
 						{@const optimisticMeetsThreshold =
-							isMe && localValue >= thresholdMap[selectedMetric].val
+							isMe && config && localValue >= config.val
 								? true
 								: user.meetsThreshold}
 						{@const optimisticRank =

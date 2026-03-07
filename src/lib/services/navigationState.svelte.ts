@@ -16,15 +16,22 @@ class NavigationState {
      * Відкрити глобальну модалку і (опціонально) змінити активний таб.
      * @param modalId Ідентифікатор модалки (profile, levels, menu, etc.)
      * @param tabId Ідентифікатор вкладки (stats, friends, etc.)
+     * @param mode Режим відображення (наприклад, для профілю: full, stats, profile)
      */
-    openModal(modalId: string, tabId?: string) {
+    openModal(modalId: string, tabId?: string, mode?: string) {
         const url = new URL(this.getUrl());
         url.searchParams.set("modal", modalId);
+        
         if (tabId) {
             url.searchParams.set("tab", tabId);
         } else {
-            // Якщо таб не передано, очищаємо старий, щоб модалка відкрилась з дефолтним
             url.searchParams.delete("tab");
+        }
+
+        if (mode) {
+            url.searchParams.set("mode", mode);
+        } else {
+            url.searchParams.delete("mode");
         }
 
         goto(url, { keepFocus: true, noScroll: true });
@@ -57,6 +64,7 @@ class NavigationState {
         const url = new URL(this.getUrl());
         url.searchParams.delete("modal");
         url.searchParams.delete("tab");
+        url.searchParams.delete("mode");
         url.searchParams.delete("subtab");
         goto(url, { keepFocus: true, noScroll: true });
     }

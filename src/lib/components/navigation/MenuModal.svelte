@@ -105,7 +105,7 @@
 		<button
 			class="menu-item"
 			onclick={() => {
-				onopenProfile("stats", "stats");
+				onopenProfile("stats");
 				onclose();
 			}}
 			data-testid="menu-stats-btn"

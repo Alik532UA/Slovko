@@ -6,14 +6,12 @@
 	import { localEventsStore } from "$lib/stores/localEventsStore.svelte";
 	import { authStore } from "$lib/firebase/authStore.svelte";
 	import InteractionCapsule from "./InteractionCapsule.svelte";
-	import ProfileModal from "../settings/ProfileModal.svelte";
+	import StatsModal from "../settings/StatsModal.svelte";
 	import { flip } from "svelte/animate";
 	import { logService } from "$lib/services/logService";
 
 	let showStatsModal = $state(false);
-	let initialTab = $state<
-		"stats" | "leaderboard" | "friends" | "account" | undefined
-	>(undefined);
+	let initialTab = $state<"stats" | "leaderboard" | undefined>(undefined);
 
 	let sortedInteractions = $derived(
 		(
@@ -94,8 +92,7 @@
 </div>
 
 {#if showStatsModal}
-	<ProfileModal
-		mode="stats"
+	<StatsModal
 		{initialTab}
 		onclose={() => {
 			showStatsModal = false;

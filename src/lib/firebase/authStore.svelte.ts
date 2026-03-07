@@ -52,7 +52,7 @@ function serializeUser(user: User | null): AuthState {
 		photoURL: user.photoURL,
 		originalPhotoURL: googleProvider?.photoURL || null,
 		isAnonymous: user.isAnonymous,
-		isGuest: false,
+		isGuest: user.isAnonymous, // Анонімний користувач також вважається гостем
 		providerId: user.providerData[0]?.providerId || null,
 	};
 }

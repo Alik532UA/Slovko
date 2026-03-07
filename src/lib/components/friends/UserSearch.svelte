@@ -18,6 +18,11 @@
 	import { onDestroy } from "svelte";
 	import { flip } from "svelte/animate";
 
+	interface Props {
+		onfollow?: () => void;
+	}
+	let { onfollow }: Props = $props();
+
 	// State
 	let searchQuery = $state("");
 	let searchResults = $state<UserProfile[]>([]);

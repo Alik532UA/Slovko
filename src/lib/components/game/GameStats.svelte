@@ -31,7 +31,11 @@
 		mode: "stats" | "profile" | "full",
 		tab?: "stats" | "account" | "friends" | "leaderboard",
 	) {
-		navigationState.openModal("profile", tab);
+		if (mode === "stats") {
+			navigationState.openModal("stats", tab);
+		} else {
+			navigationState.openModal("profile", tab);
+		}
 	}
 
 	// Local UI State for handling Frozen Streak

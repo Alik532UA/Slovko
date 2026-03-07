@@ -236,6 +236,24 @@
 			padding: 4px;
 			border-radius: 18px;
 		}
+		.segmented-control.vertical {
+			flex-wrap: wrap;
+			min-height: auto;
+			gap: 0;
+		}
+		.segmented-control.vertical .segment-btn {
+			flex: 0 0 33.333%;
+			padding: 0.75rem 0.25rem;
+		}
+		.segmented-control.vertical .slider-container {
+			display: none;
+		}
+		.segmented-control.vertical .segment-btn.active {
+			background: rgba(255, 255, 255, 0.1);
+			border-radius: 14px;
+			box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+		}
+		
 		.slider-container {
 			top: 4px;
 			bottom: 4px;
@@ -249,9 +267,6 @@
 			padding: 0.6rem 0.2rem;
 			gap: 4px;
 			border-radius: 14px;
-		}
-		.segmented-control.vertical {
-			min-height: 65px;
 		}
 	}
 </style>
