@@ -2,7 +2,6 @@
 	"friend": "/frɛnd/",
 	"mother": "/ˈmʌðər/",
 	"father": "/ˈfɑːðər/",
-	"sister": "/ˈsɪstər/",
 	"family": "/ˈfæməli/",
 	"child": "/tʃaɪld/",
 	"parents": "/ˈpeərənts/",
@@ -10,5 +9,6 @@
 	"husband": "/ˈhʌzbənd/",
 	"wife": "/waɪf/",
 	"sister_older": "/ˈsɪstər/",
-	"sister_younger": "/ˈsɪstər/"
+	"sister_younger": "/ˈsɪstər/",
+	"sister": "/ˈsɪstər/"
 }

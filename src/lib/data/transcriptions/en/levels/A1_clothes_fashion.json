@@ -1,10 +1,9 @@
 {
-	"clothes": "/kləʊðz/",
-	"coat": "/kəʊt/",
-	"dress": "/drɛs/",
-	"dress_up": "/drɛs ʌp/",
-	"hat": "/hæt/",
-	"pants": "/pænts/",
 	"shirt": "/ʃɜːt/",
-	"skirt": "/skɜːt/"
+	"pants": "/pænts/",
+	"skirt": "/skɜːt/",
+	"hat": "/hæt/",
+	"clothes": "/kləʊðz/",
+	"dress": "/drɛs/",
+	"coat": "/kəʊt/"
 }

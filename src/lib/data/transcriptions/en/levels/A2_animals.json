@@ -1,9 +1,7 @@
 {
-	"bat_animal": "/bæt/",
-	"fly_action": "/flaɪ/",
-	"fly_insect": "/flaɪ/",
 	"lion": "/ˈlaɪən/",
 	"mouse": "/maʊs/",
 	"sheep": "/ʃiːp/",
-	"snake": "/sneɪk/"
+	"snake": "/sneɪk/",
+	"bat_animal": "/bæt/"
 }

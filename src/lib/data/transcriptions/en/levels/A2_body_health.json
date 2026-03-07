@@ -1,18 +1,16 @@
 {
-	"accident": "/ˈæksɪdənt/",
-	"blood": "/blʌd/",
-	"brain": "/breɪn/",
-	"clap_hands": "/klæp/",
-	"comb_hair": "/koʊm/",
 	"finger": "/ˈfɪŋɡər/",
+	"accident": "/ˈæksɪdənt/",
 	"health": "/hɛlθ/",
 	"heart": "/hɑːrt/",
-	"hurt_injury": "/hɜːt/",
-	"hurt_pain": "/hɜːt/",
 	"knee": "/niː/",
 	"neck": "/nɛk/",
 	"shoulder": "/ˈʃəʊldər/",
-	"stomach": "/ˈstʌmək/",
 	"tooth": "/tuːθ/",
-	"voice": "/vɔɪs/"
+	"voice": "/vɔɪs/",
+	"blood": "/blʌd/",
+	"stomach": "/ˈstʌmək/",
+	"brain": "/breɪn/",
+	"clap_hands": "/klæp/",
+	"comb_hair": "/koʊm/"
 }

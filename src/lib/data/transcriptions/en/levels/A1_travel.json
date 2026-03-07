@@ -1,11 +1,13 @@
 {
-	"airport": "/ˈeəpɔːt/",
-	"bag": "/bæɡ/",
-	"hotel": "/həʊˈtɛl/",
-	"map": "/mæp/",
-	"money": "/ˈmʌni/",
-	"price": "/praɪs/",
 	"room": "/ruːm/",
+	"money": "/ˈmʌni/",
+	"airport": "/ˈeəpɔːt/",
 	"stop": "/stɒp/",
-	"ticket": "/ˈtɪkɪt/"
+	"bag": "/bæɡ/",
+	"bank_finance": "/bæŋk/",
+	"hotel": "/həʊˈtɛl/",
+	"ticket": "/ˈtɪkɪt/",
+	"map": "/mæp/",
+	"price": "/praɪs/",
+	"bank": "/bæŋk/"
 }

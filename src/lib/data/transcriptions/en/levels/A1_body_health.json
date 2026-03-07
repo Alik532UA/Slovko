@@ -1,6 +1,5 @@
 {
 	"hand": "/hænd/",
-	"leg": "/lɛɡ/",
 	"head": "/hɛd/",
 	"eye": "/aɪ/",
 	"mouth": "/maʊθ/",
@@ -12,5 +11,8 @@
 	"arm": "/ɑːm/",
 	"foot": "/fʊt/",
 	"hair": "/heə/",
-	"leg_full": "/lɛɡ/"
+	"arm_body": "/ɑːm/",
+	"arm_weapon": "/ɑːm/",
+	"leg_full": "/lɛɡ/",
+	"leg": "/lɛɡ/"
 }

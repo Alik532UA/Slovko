@@ -1,4 +1,5 @@
 {
+	"law": "/lɔː/",
 	"discount": "/ˈdɪskaʊnt/",
 	"headline": "/ˈhɛdlaɪn/",
 	"identification": "/aɪˌdɛntɪfɪˈkeɪʃən/",
@@ -6,7 +7,5 @@
 	"queue": "/kjuː/",
 	"receipt": "/rɪˈsiːt/",
 	"sale": "/seɪl/",
-	"signature": "/ˈsɪgnətʃər/",
-	"vote": "/vəʊt/",
-	"law": "/lɔː/"
+	"signature": "/ˈsɪgnətʃər/"
 }

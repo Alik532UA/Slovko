@@ -1,10 +1,10 @@
 {
 	"battery_life": "/ˈbætəri/",
-	"fuel": "/fjʊəl/",
 	"fuel_energy": "/ˈfjuːəl/",
-	"oil_food": "/ɔɪl/",
-	"oil_fuel": "/ɔɪl/",
-	"sign_symbol": "/saɪn/",
+	"signal_phone": "/ˈsɪɡnəl/",
+	"fuel": "/fjʊəl/",
 	"signal": "/ˈsɪɡn(ə)l/",
-	"signal_phone": "/ˈsɪɡnəl/"
+	"battery_electric": "/ˈbætəri/",
+	"battery_artillery": "/ˈbætəri/",
+	"battery": "/ˈbætəri/"
 }

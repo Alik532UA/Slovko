@@ -1,12 +1,14 @@
 {
 	"excuse_me": "/ɪkˈskjuːz mi/",
-	"explain": "/ɪkˈspleɪn/",
-	"how": "/haʊ/",
-	"maybe": "/ˈmeɪbi/",
-	"really": "/ˈrɪəli/",
+	"mean_verb": "/miːn/",
 	"understand": "/ˌʌndəˈstænd/",
+	"explain": "/ɪkˈspleɪn/",
 	"what": "/wɒt/",
-	"when": "/wɛn/",
 	"who": "/huː/",
-	"why": "/waɪ/"
+	"when": "/wɛn/",
+	"why": "/waɪ/",
+	"how": "/haʊ/",
+	"really": "/ˈrɪəli/",
+	"maybe": "/ˈmeɪbi/",
+	"mean": "/miːn/"
 }

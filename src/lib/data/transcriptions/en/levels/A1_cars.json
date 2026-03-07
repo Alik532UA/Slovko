@@ -1,14 +1,14 @@
 {
 	"bus": "/bʌs/",
 	"car": "/kɑːr/",
-	"street": "/striːt/",
 	"door": "/dɔːr/",
-	"window": "/ˈwɪndəʊ/",
 	"key": "/kiː/",
+	"light": "/laɪt/",
 	"light_color": "/laɪt/",
-	"road": "/rəʊd/",
-	"train": "/treɪn/",
 	"plane": "/pleɪn/",
+	"road": "/rəʊd/",
+	"street": "/striːt/",
 	"taxi": "/ˈtæksi/",
-	"light": "/laɪt/"
+	"train": "/treɪn/",
+	"window": "/ˈwɪndəʊ/"
 }

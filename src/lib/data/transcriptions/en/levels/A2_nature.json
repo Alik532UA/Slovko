@@ -1,9 +1,10 @@
 {
 	"air": "/eə/",
-	"branch_2": "/brɑːntʃ/",
 	"branch_tak": "/brɑːntʃ/",
 	"bush": "/bʊʃ/",
+	"cave": "/keɪv/",
 	"desert": "/ˈdɛzərt/",
+	"earth_yer": "/ɜːrθ/",
 	"fog": "/fɒɡ/",
 	"forest": "/ˈfɒrɪst/",
 	"grass": "/ɡrɑːs/",
@@ -23,5 +24,7 @@
 	"stone": "/stəʊn/",
 	"storm": "/stɔːm/",
 	"thunder": "/ˈθʌndər/",
-	"volcano": "/vɒlˈkeɪnəʊ/"
+	"volcano": "/vɒlˈkeɪnəʊ/",
+	"wood_bos": "/wʊd/",
+	"wood_holz": "/wʊd/"
 }

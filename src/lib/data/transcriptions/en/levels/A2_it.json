@@ -1,19 +1,15 @@
 {
-	"camera": "/ˈkæmərə/",
-	"copy": "/ˈkɒpi/",
-	"document": "/ˈdɒkjʊmənt/",
-	"download_file": "/ˌdaʊnˈləʊd/",
-	"email": "/ˈiːmeɪl/",
-	"error": "/ˈɛrə/",
 	"internet": "/ˈɪntənɛt/",
-	"keyboard": "/ˈkiːbɔːd/",
-	"laptop": "/ˈlæptɒp/",
+	"email": "/ˈiːmeɪl/",
+	"camera": "/ˈkæmərə/",
 	"memory": "/ˈmɛməri/",
-	"print": "/prɪnt/",
 	"program": "/ˈprəʊɡræm/",
-	"save_keep": "/seɪv/",
 	"save_rescue": "/seɪv/",
 	"screen": "/skriːn/",
+	"copy": "/ˈkɒpi/",
 	"search": "/sɜːtʃ/",
-	"website": "/ˈwɛbsaɪt/"
+	"laptop": "/ˈlæptɒp/",
+	"keyboard": "/ˈkiːbɔːd/",
+	"website": "/ˈwɛbsaɪt/",
+	"print": "/prɪnt/"
 }
