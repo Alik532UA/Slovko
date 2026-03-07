@@ -10,6 +10,9 @@
 	"help": "pomagać",
 	"help_verb": "pomagać",
 	"know": "wiedzieć",
+	"leave": "odchodzić",
+	"leave_behind": "zostawiać",
+	"leave_depart": "odchodzić",
 	"like": "lubić",
 	"live": "mieszkać",
 	"look": "patrzeć",
@@ -28,8 +31,10 @@
 	"take": "brać",
 	"talk": "rozmawiać",
 	"tell": "mówić",
+	"thank": "dziękować",
 	"thank_verb": "dziękować",
 	"think": "myśleć",
+	"to": "być",
 	"to_be": "być",
 	"to_do": "robić",
 	"to_have": "mieć",
@@ -37,8 +42,5 @@
 	"use": "używać",
 	"want": "chcieć",
 	"work": "pracować",
-	"write": "pisać",
-	"leave_depart": "odchodzić",
-	"leave_behind": "zostawiać",
-	"leave": "odchodzić"
+	"write": "pisać"
 }

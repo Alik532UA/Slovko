@@ -1,11 +1,14 @@
 {
-	"right_correct": "goed",
-	"clean_pure": "schoon",
-	"free_liberty": "vrij",
 	"amazed": "verbaasd",
 	"amusing": "grappig",
 	"charming": "charmant",
+	"clean": "schoon",
+	"clean_pure": "schoon",
+	"free": "vrij",
+	"free_liberty": "vrij",
 	"gentle": "zachtaardig",
+	"right": "goed",
+	"right_correct": "goed",
 	"silly": "dwaas",
 	"straight": "recht"
 }

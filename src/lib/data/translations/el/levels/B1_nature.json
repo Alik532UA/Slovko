@@ -1,8 +1,9 @@
 {
+	"earth": "Γη",
+	"earth_planet": "Γη",
 	"flood": "πλημμύρα",
 	"jungle": "ζούγκλα",
-	"valley": "κοιλάδα",
-	"earth_planet": "Γη",
 	"landscape": "τοπίο",
-	"scenery": "θέα"
+	"scenery": "θέα",
+	"valley": "κοιλάδα"
 }

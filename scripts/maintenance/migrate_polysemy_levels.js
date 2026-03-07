@@ -1,189 +1,194 @@
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
-// Helper for ESM directory
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const PROJECT_ROOT = path.resolve(__dirname, '../../');
+const semanticsPath = 'src/lib/data/semantics.ts';
+const levelsDir = 'src/lib/data/words/levels';
 
-const LEVELS_DIR = path.join(PROJECT_ROOT, 'src/lib/data/words/levels');
-const SEMANTICS_PATH = path.join(PROJECT_ROOT, 'src/lib/data/semantics.ts');
-const EN_SEMANTICS_PATH = path.join(PROJECT_ROOT, 'src/lib/data/translations/en/semantics.json');
+// Суфікси, які ми вважаємо технічним боргом (полісемією)
+const techSuffixes = [
+    '_conjunction', '_pronoun', '_possessive', '_verb', '_noun', '_adj', 
+    '_fruit', '_animal', '_member', '_part', '_direction', '_brightness', 
+    '_area', '_clock', '_abstract', '_digit', '_item', '_photo', '_painting',
+    '_older', '_younger', '_male', '_female', '_formal', '_informal', 
+    '_singular', '_plural', '_accusative', '_dative', '_gratis', '_liberty',
+    '_foot', '_vehicle', '_verb_alt', '_legal', '_doing', '_real', '_current',
+    '_arrest', '_understand', '_matter', '_romance', '_law', '_system',
+    '_insult', '_misuse', '_chance', '_event', '_living', '_yerleme',
+    '_agreement', '_harmony', '_artuv', '_buyv', '_ac', '_herb',
+    '_receipt', '_recognize', '_confirmation', '_recognition',
+    '_knowledge', '_obtain', '_auv', '_yamanlq', '_inat', '_qatt',
+    '_change', '_setting', '_justice', '_manage', '_expect', '_future',
+    '_attraction', '_request', '_arrival', '_look', '_anatomy', '_document',
+    '_software', '_job', '_use', '_meeting', '_alamaq', '_yaqalamaq',
+    '_method', '_field', '_place', '_subject', '_territory', '_dispute',
+    '_reason', '_logic', '_body', '_weapon', '_speech', '_claim', '_rights',
+    '_eval', '_tax', '_role', '_task', '_emotion', '_file', '_feature',
+    '_feeling', '_quality', '_source', '_maternal', '_paternal', '_expert',
+    '_person', '_power', '_foundation', '_military', '_artillery', '_electric',
+    '_life', '_endure', '_position', '_time', '_profit', '_object', '_dark',
+    '_light', '_council', '_wood', '_economy', '_increase', '_office',
+    '_tak', '_tree', '_damage', '_pause', '_personality', '_fiction',
+    '_fee', '_state', '_statement', '_explain', '_events', '_happen',
+    '_instruction', '_order', '_ceremony', '_start', '_loss', '_pay',
+    '_inclusive', '_thorough', '_evidence', '_hide', '_admit', '_defeat',
+    '_care', '_worry', '_action', '_criticize', '_term', '_assurance',
+    '_trust', '_limit', '_obey', '_standards', '_face', '_issue',
+    '_win', '_energy', '_protect', '_form', '_majority', '_build',
+    '_theory', '_lawyer', '_think', '_shrink', '_donate', '_help',
+    '_awesome', '_temp', '_bravery', '_manliness', '_calendar', '_romantic',
+    '_with', '_certainly', '_exactly', '_show', '_skill', '_describe',
+    '_from', '_pleasure', '_plan', '_style', '_mark', '_official',
+    '_error', '_find', '_crime', '_prevent', '_conclusion', '_other',
+    '_various', '_between', '_distinguish', '_decrease', '_influence',
+    '_info', '_secret', '_image', '_truth', '_attention', '_traffic',
+    '_market', '_outline', '_sketch', '_wind', '_goal', '_sleep',
+    '_narcotic', '_expected', '_copy', '_ground', '_planet', '_yer',
+    '_detail', '_remove', '_waste', '_appear', '_stronger', '_difficulty',
+    '_meet', '_candidate', '_support', '_betrothal', '_involvement',
+    '_improve', '_augmentation', '_nature', '_imagine', '_confidence',
+    '_founding', '_institution', '_assess', '_impact', '_overstate',
+    '_art', '_failure', '_drop', '_out', '_obese', '_oil', '_blame',
+    '_defect', '_penalty', '_surface', '_surface', '_cost', '_liberty',
+    '_origin', '_basic', '_essential', '_orchard', '_yard', '_fuel',
+    '_along_with', '_away', '_by', '_off_transport', '_on_transport',
+    '_over_illness', '_rid_of', '_up', '_in_surrender', '_up_habit',
+    '_up_quit', '_up_surrender', '_material', '_on', '_up_mature',
+    '_up_physical', '_development', '_physical', '_difficult', '_solid',
+    '_tough', '_holiday', '_vacation', '_know', '_see', '_case',
+    '_front_of', '_order_to', '_spite_of', '_fruit', '_hold', '_store',
+    '_nice', '_type', '_noble', '_behind', '_depart', '_remaining',
+    '_false', '_elevator', '_brightness', '_exist', '_reside', '_after',
+    '_at', '_for', '_forward_to', '_up_word', '_mechanism', '_angry',
+    '_insane', '_main', '_grade', '_sign', '_sound', '_stone', '_small',
+    '_wurst', '_rescue', '_digital', '_medical', '_ord', '_ordinal',
+    '_meaning', '_duty', '_service', '_business', '_collection',
+    '_off_journey', '_view', '_scenery', '_location', '_web', '_sense',
+    '_gas', '_adv', '_degree', '_that', '_kind', '_cosmos', '_shape',
+    '_phase', '_theater', '_stop', '_transport', '_inventory', '_share',
+    '_shop', '_things', '_school', '_topic', '_after_relative',
+    '_off_clothes', '_up_hobby', '_demonstrative', '_sequence',
+    '_abstract', '_be', '_do', '_have', '_infinitive', '_preposition',
+    '_also', '_excessive', '_much', '_behave', '_court', '_test',
+    '_pipe', '_subway', '_direction', '_down_volume', '_into',
+    '_off_device', '_on_device', '_water', '_about', '_color',
+    '_future', '_bos', '_forest', '_holz', '_auxiliary', '_auxiliary_alt'
+];
 
-// Levels to process
-const TARGET_LEVELS = ['A1.json', 'A2.json', 'B1.json', 'B2.json', 'C1.json', 'C2.json'];
+function migrate() {
+    console.log('--- Starting Polysemy Migration ---');
 
-// Load existing semantics to avoid duplicates
-let semanticsContent = fs.readFileSync(SEMANTICS_PATH, 'utf-8');
-const existingSemanticsMatch = semanticsContent.match(/export const semanticHierarchy: Record<string, SemanticGroup> = ({[\s\S]*?});/);
-let semanticsObj = {};
-
-// Dirty parser for TS object (since we can't import TS directly easily in simple JS script without build step)
-// We will append new entries to the end of the object string instead of full parsing
-// But to check existence, we can regex.
-
-function extractBaseWord(key) {
-    // Heuristic: take everything before the LAST underscore, or the first?
-    // "give_up" -> "give"? No, give_up is a phrasal verb.
-    // "affair_matter" -> "affair".
-    // "apprehend_alamaq" -> "apprehend".
+    // 1. Читаємо semantics.ts
+    let semanticsContent = fs.readFileSync(semanticsPath, 'utf8');
     
-    // Strategy: 
-    // 1. Split by '_'. 
-    // 2. Check if the first part is a known "base candidate".
-    // 3. BUT, how do distinguish "give_up" from "bank_river"?
-    //    "give_up" usually doesn't have a sibling "give_down" in the same level.
-    //    "bank_river" usually has "bank_finance".
+    // Витягуємо об'єкт semanticHierarchy
+    const startMatch = semanticsContent.indexOf('export const semanticHierarchy');
+    const braceStart = semanticsContent.indexOf('{', startMatch);
     
-    // So, we only group if there are MULTIPLE keys with the same prefix in the SAME level.
-    return key.split('_')[0]; 
-}
+    // Ми не будемо парсити JSON, бо це TS, ми будемо працювати з об'єктом в пам'яті
+    // Для цього ми завантажимо його через eval або просто будемо шукати regex-ом
+    // Але надійніше - прочитати всі файли рівнів і подивитися що треба додати
+    
+    let levels = fs.readdirSync(levelsDir).filter(f => f.endsWith('.json'));
+    let changesMade = false;
 
-function stripBOM(content) {
-    if (content.charCodeAt(0) === 0xFEFF) {
-        content = content.slice(1);
+    // Словник для швидкого пошуку існуючих специфічних ключів
+    // Будуємо його з поточного вмісту semantics.ts
+    let specificToBase = {};
+    const regex = /(\w+):\s*{\s*base:\s*["'](\w+)["'],\s*specific:\s*\[([^\]]+)\]/g;
+    let match;
+    while ((match = regex.exec(semanticsContent)) !== null) {
+        const base = match[2];
+        const specifics = match[3].split(',').map(s => s.trim().replace(/["']/g, ''));
+        specifics.forEach(s => {
+            specificToBase[s] = base;
+        });
     }
-    return content;
-}
 
-function processLevel(levelFile) {
-    const filePath = path.join(LEVELS_DIR, levelFile);
-    if (!fs.existsSync(filePath)) return;
+    levels.forEach(levelFile => {
+        const filePath = path.join(levelsDir, levelFile);
+        const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        const originalCount = data.words.length;
+        
+        let newWords = [];
+        data.words.forEach(word => {
+            if (word.includes('_')) {
+                // Це кандидат на рефакторинг
+                let base = null;
+                
+                // Перевіряємо чи він вже є в semantics
+                if (specificToBase[word]) {
+                    base = specificToBase[word];
+                } else {
+                    // Пробуємо відрізати відомі суфікси
+                    for (const suffix of techSuffixes) {
+                        if (word.endsWith(suffix)) {
+                            base = word.substring(0, word.length - suffix.length);
+                            break;
+                        }
+                    }
+                }
 
-    const content = JSON.parse(stripBOM(fs.readFileSync(filePath, 'utf-8')));
-    const words = content.words;
-    const newWords = [];
-    const groups = {}; // prefix -> [full_keys]
-
-    // 1. Group by prefix
-    words.forEach(word => {
-        if (word.includes('_')) {
-            const parts = word.split('_');
-            // Try different prefixes (word_part1_part2 -> base=word, or base=word_part1)
-            // Ideally, we look for the longest common prefix among neighbors?
-            // Simple approach: Take everything before the last underscore?
-            // "affair_matter" -> base "affair".
-            // "give_up" -> base "give"?
-            
-            // Let's use the First Part as base for now, and refine.
-            const base = parts[0]; 
-            if (!groups[base]) groups[base] = [];
-            groups[base].push(word);
-        } else {
-            newWords.push(word);
-        }
-    });
-
-    // 2. Analyze groups
-    const semanticUpdates = [];
-    const levelReplacements = new Set(); // words to add to level (bases)
-
-    Object.keys(groups).forEach(base => {
-        const groupWords = groups[base];
-        
-        // FILTER: Only treat as polysemy if:
-        // A) There are > 1 variants (e.g. affair_matter, affair_romance)
-        // OR
-        // B) The 'base' word ITSELF exists in the level (e.g. "cultivate", "cultivate_grow")
-        
-        // Special Case: "give_up" is alone. "give" might be in A1. 
-        // If "give_up" is alone in B2, and "give" is not in B2 -> It's likely a phrasal verb or distinct word. KEEP AS IS.
-        
-        // Special Case: "apprehend_alamaq", "apprehend_yaqalamaq". (2 variants). -> CONVERT TO POLYSEMY.
-        
-        const baseExistsInLevel = words.includes(base);
-        
-        if (groupWords.length > 1 || baseExistsInLevel) {
-            // Check if it's a phrasal verb cluster? "get_up", "get_down".
-            // Even if they are phrasal verbs, if they share "get", do we want to collapse them?
-            // NO. "get up" and "get down" are distinct.
-            // "bank (river)" and "bank (finance)" are distinct MEANINGS of SAME WORD.
-            
-            // How to distinguish? 
-            // Polysemy = same spelling in base language (English).
-            // "get up" vs "get down" -> Different spelling (up vs down).
-            // "apprehend" vs "apprehend" -> Same spelling.
-            
-            // CRITICAL CHECK: Check English translation!
-            // If English translation for all variants is the SAME (the base word), then it is Polysemy.
-            // If English translation includes the suffix (e.g. "give up"), it is NOT polysemy of "give".
-            
-            // Note: I don't have easy access to EN translations here without loading them.
-            // But I can assume based on the key pattern in B2/C2.
-            // Most "bad" keys in B2/C2 are like "word_suffix" where suffix is a hint.
-            
-            // Let's rely on the user's specific request for "apprehend", "affair", "cultivate".
-            // I will aggressively migrate groups that have 2+ variants.
-            
-            console.log(`Found candidate group: ${base} -> ${groupWords.join(', ')}`);
-            
-            // Add to semantics
-            semanticUpdates.push({ base, specific: groupWords });
-            
-            // Add base to new level words (once)
-            if (!newWords.includes(base)) {
-                newWords.push(base);
+                if (base) {
+                    console.log(`[${levelFile}] Mapping: ${word} -> ${base}`);
+                    newWords.push(base);
+                    
+                    // Додаємо в semantics якщо треба
+                    if (!specificToBase[word]) {
+                        addSpecificToSemantics(base, word);
+                        specificToBase[word] = base;
+                        changesMade = true;
+                    }
+                } else {
+                    // Якщо не знайшли базу (наприклад, t_shirt), залишаємо як є
+                    newWords.push(word);
+                }
+            } else {
+                newWords.push(word);
             }
-        } else {
-            // Single word with underscore (e.g. "give_up"). Keep as is.
-            newWords.push(...groupWords);
+        });
+
+        // Дедуплікація
+        data.words = [...new Set(newWords)];
+        
+        if (data.words.length !== originalCount) {
+            fs.writeFileSync(filePath, JSON.stringify(data, null, '\t') + '\n');
+            console.log(`[${levelFile}] Updated. Words: ${originalCount} -> ${data.words.length}`);
         }
     });
 
-    // Sort new words to be clean
-    content.words = newWords.sort();
-    
-    // Write Level
-    fs.writeFileSync(filePath, JSON.stringify(content, null, '\t'));
-    console.log(`Updated ${levelFile}`);
-    
-    return semanticUpdates;
-}
-
-// Main execution
-const allUpdates = [];
-
-TARGET_LEVELS.forEach(file => {
-    const updates = processLevel(file);
-    allUpdates.push(...updates);
-});
-
-// Update Semantics.ts
-let newSemanticsBlock = "";
-allUpdates.forEach(update => {
-    // Check if already exists to avoid duplicates (simple text check)
-    if (!semanticsContent.includes(`${update.base}: {`)) {
-        newSemanticsBlock += `\t${update.base}: {\n\t\tbase: "${update.base}",\n\t\tspecific: ${JSON.stringify(update.specific)},\n\t},\n`;
+    if (changesMade) {
+        // Записуємо оновлений semantics.ts
+        // (addSpecificToSemantics вже модифікує глобальну змінну або файл)
     }
-});
-
-if (newSemanticsBlock) {
-    // Insert before the last brace
-    const lastBraceIndex = semanticsContent.lastIndexOf('};');
-    const updatedSemantics = semanticsContent.slice(0, lastBraceIndex) + newSemanticsBlock + semanticsContent.slice(lastBraceIndex);
-    fs.writeFileSync(SEMANTICS_PATH, updatedSemantics);
-    console.log("Updated semantics.ts");
 }
 
-// Update EN Semantics JSON (Labels)
-const enSemantics = JSON.parse(fs.readFileSync(EN_SEMANTICS_PATH, 'utf-8'));
-let labelsUpdated = false;
+function addSpecificToSemantics(base, specific) {
+    let content = fs.readFileSync(semanticsPath, 'utf8');
+    
+    // Перевіряємо чи є вже така база
+    const baseRegex = new RegExp(`(\\s*)${base}:\\s*{\\s*base:\\s*["']${base}["'],\\s*specific:\\s*\\[([^\\]]*)\\]\\s*}`, 's');
+    const match = content.match(baseRegex);
 
-allUpdates.forEach(update => {
-    update.specific.forEach(key => {
-        if (!enSemantics.labels[key]) {
-            // Generate label from suffix
-            const suffix = key.replace(update.base + '_', '');
-            enSemantics.labels[key] = suffix; // Placeholder, e.g. "alamaq"
-            labelsUpdated = true;
+    if (match) {
+        // База є, додаємо специфік
+        let specifics = match[2].split(',').map(s => s.trim()).filter(s => s);
+        if (!specifics.includes(`"${specific}"`) && !specifics.includes(`'${specific}'`)) {
+            specifics.push(`"${specific}"`);
+            specifics.sort();
+            const newEntry = `${match[1]}${base}: {\n\t\tbase: "${base}",\n\t\tspecific: [${specifics.join(', ')}]\n\t}`;
+            content = content.replace(match[0], newEntry);
+            fs.writeFileSync(semanticsPath, content);
+            console.log(`Added specific "${specific}" to base "${base}" in semantics.ts`);
         }
-    });
-});
-
-if (labelsUpdated) {
-    fs.writeFileSync(EN_SEMANTICS_PATH, JSON.stringify(enSemantics, null, '\t'));
-    console.log("Updated en/semantics.json");
+    } else {
+        // Бази немає, створюємо нову групу
+        // Шукаємо кінець об'єкта
+        const lastBraceIndex = content.lastIndexOf('};');
+        const newEntry = `\t${base}: {\n\t\tbase: "${base}",\n\t\tspecific: ["${specific}"]\n\t},\n`;
+        content = content.slice(0, lastBraceIndex) + newEntry + content.slice(lastBraceIndex);
+        fs.writeFileSync(semanticsPath, content);
+        console.log(`Created new base "${base}" with specific "${specific}" in semantics.ts`);
+    }
 }
 
-console.log("Migration Complete.");
+migrate();

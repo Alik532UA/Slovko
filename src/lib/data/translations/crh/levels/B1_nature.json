@@ -1,8 +1,9 @@
 {
+	"earth": "Dünya",
+	"earth_planet": "Dünya",
 	"flood": "suv basuv",
 	"jungle": "orman",
-	"valley": "dere",
-	"earth_planet": "Dünya",
 	"landscape": "manzara",
-	"scenery": "manzara"
+	"scenery": "manzara",
+	"valley": "dere"
 }

@@ -1217,6 +1217,830 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "your",
 		specific: ["your_plural", "your_possessive", "your_singular"]
 	},
+	and: {
+		base: "and",
+		specific: ["and_conjunction"]
+	},
+	because: {
+		base: "because",
+		specific: ["because_conjunction"]
+	},
+	but: {
+		base: "but",
+		specific: ["but_conjunction"]
+	},
+	he: {
+		base: "he",
+		specific: ["he_pronoun"]
+	},
+	him: {
+		base: "him",
+		specific: ["him_pronoun"]
+	},
+	his: {
+		base: "his",
+		specific: ["his_possessive"]
+	},
+	if: {
+		base: "if",
+		specific: ["if_conjunction"]
+	},
+	it: {
+		base: "it",
+		specific: ["it_pronoun"]
+	},
+	its: {
+		base: "its",
+		specific: ["its_possessive"]
+	},
+	me: {
+		base: "me",
+		specific: ["me_pronoun"]
+	},
+	my: {
+		base: "my",
+		specific: ["my_possessive"]
+	},
+	or: {
+		base: "or",
+		specific: ["or_conjunction"]
+	},
+	our: {
+		base: "our",
+		specific: ["our_possessive"]
+	},
+	she: {
+		base: "she",
+		specific: ["she_pronoun"]
+	},
+	their: {
+		base: "their",
+		specific: ["their_possessive"]
+	},
+	them: {
+		base: "them",
+		specific: ["them_pronoun"]
+	},
+	these: {
+		base: "these",
+		specific: ["these_pronoun"]
+	},
+	they: {
+		base: "they",
+		specific: ["they_pronoun"]
+	},
+	this: {
+		base: "this",
+		specific: ["this_pronoun"]
+	},
+	those: {
+		base: "those",
+		specific: ["those_pronoun"]
+	},
+	we: {
+		base: "we",
+		specific: ["we_pronoun"]
+	},
+	ask: {
+		base: "ask",
+		specific: ["ask_for"]
+	},
+	beat: {
+		base: "beat",
+		specific: ["beat_win"]
+	},
+	beginning: {
+		base: "beginning",
+		specific: ["beginning_start"]
+	},
+	camp: {
+		base: "camp",
+		specific: ["camp_verb"]
+	},
+	dance: {
+		base: "dance",
+		specific: ["dance_verb"]
+	},
+	detail: {
+		base: "detail",
+		specific: ["detail_info"]
+	},
+	film: {
+		base: "film",
+		specific: ["film_verb"]
+	},
+	find: {
+		base: "find",
+		specific: ["find_out"]
+	},
+	iron: {
+		base: "iron",
+		specific: ["iron_verb"]
+	},
+	sorry: {
+		base: "sorry",
+		specific: ["sorry_adj"]
+	},
+	spell: {
+		base: "spell",
+		specific: ["spell_verb"]
+	},
+	stand: {
+		base: "stand",
+		specific: ["stand_up"]
+	},
+	support: {
+		base: "support",
+		specific: ["support_help"]
+	},
+	ticket: {
+		base: "ticket",
+		specific: ["ticket_office"]
+	},
+	ugly: {
+		base: "ugly",
+		specific: ["ugly_adj"]
+	},
+	wish: {
+		base: "wish",
+		specific: ["wish_verb"]
+	},
+	admit: {
+		base: "admit",
+		specific: ["admit_verb"]
+	},
+	budget: {
+		base: "budget",
+		specific: ["budget_plan"]
+	},
+	catch_up: {
+		base: "catch_up",
+		specific: ["catch_up_with"]
+	},
+	cheer: {
+		base: "cheer",
+		specific: ["cheer_up"]
+	},
+	department: {
+		base: "department",
+		specific: ["department_store"]
+	},
+	direct: {
+		base: "direct",
+		specific: ["direct_adj"]
+	},
+	disaster: {
+		base: "disaster",
+		specific: ["disaster_event"]
+	},
+	download: {
+		base: "download",
+		specific: ["download_file"]
+	},
+	dress: {
+		base: "dress",
+		specific: ["dress_up"]
+	},
+	eat: {
+		base: "eat",
+		specific: ["eat_out"]
+	},
+	education: {
+		base: "education",
+		specific: ["education_system"]
+	},
+	end: {
+		base: "end",
+		specific: ["end_up"]
+	},
+	figure: {
+		base: "figure",
+		specific: ["figure_out"]
+	},
+	float: {
+		base: "float",
+		specific: ["float_verb"]
+	},
+	guard: {
+		base: "guard",
+		specific: ["guard_person"]
+	},
+	hold: {
+		base: "hold",
+		specific: ["hold_on"]
+	},
+	income: {
+		base: "income",
+		specific: ["income_tax"]
+	},
+	interview: {
+		base: "interview",
+		specific: ["interview_job"]
+	},
+	knock: {
+		base: "knock",
+		specific: ["knock_verb"]
+	},
+	leader: {
+		base: "leader",
+		specific: ["leader_person"]
+	},
+	license: {
+		base: "license",
+		specific: ["license_document"]
+	},
+	murder: {
+		base: "murder",
+		specific: ["murder_verb"]
+	},
+	permanent: {
+		base: "permanent",
+		specific: ["permanent_job"]
+	},
+	promotion: {
+		base: "promotion",
+		specific: ["promotion_job"]
+	},
+	protest: {
+		base: "protest",
+		specific: ["protest_event"]
+	},
+	provided: {
+		base: "provided",
+		specific: ["provided_that"]
+	},
+	psychological: {
+		base: "psychological",
+		specific: ["psychological_state"]
+	},
+	public: {
+		base: "public",
+		specific: ["public_transport"]
+	},
+	pure: {
+		base: "pure",
+		specific: ["pure_water"]
+	},
+	qualification: {
+		base: "qualification",
+		specific: ["qualification_degree"]
+	},
+	regular: {
+		base: "regular",
+		specific: ["regular_meeting"]
+	},
+	relevant: {
+		base: "relevant",
+		specific: ["relevant_info"]
+	},
+	respect: {
+		base: "respect",
+		specific: ["respect_verb"]
+	},
+	responsible: {
+		base: "responsible",
+		specific: ["responsible_person"]
+	},
+	rough: {
+		base: "rough",
+		specific: ["rough_surface"]
+	},
+	safety: {
+		base: "safety",
+		specific: ["safety_state"]
+	},
+	scream: {
+		base: "scream",
+		specific: ["scream_verb"]
+	},
+	search: {
+		base: "search",
+		specific: ["search_verb"]
+	},
+	smooth: {
+		base: "smooth",
+		specific: ["smooth_surface"]
+	},
+	solid: {
+		base: "solid",
+		specific: ["solid_material"]
+	},
+	spiritual: {
+		base: "spiritual",
+		specific: ["spiritual_life"]
+	},
+	target: {
+		base: "target",
+		specific: ["target_verb"]
+	},
+	technical: {
+		base: "technical",
+		specific: ["technical_support"]
+	},
+	temporary: {
+		base: "temporary",
+		specific: ["temporary_job"]
+	},
+	touch: {
+		base: "touch",
+		specific: ["touch_verb"]
+	},
+	transport: {
+		base: "transport",
+		specific: ["transport_verb"]
+	},
+	trust: {
+		base: "trust",
+		specific: ["trust_verb"]
+	},
+	unique: {
+		base: "unique",
+		specific: ["unique_style"]
+	},
+	universe: {
+		base: "universe",
+		specific: ["universe_cosmos"]
+	},
+	unknown: {
+		base: "unknown",
+		specific: ["unknown_person"]
+	},
+	unlikely: {
+		base: "unlikely",
+		specific: ["unlikely_event"]
+	},
+	update: {
+		base: "update",
+		specific: ["update_info"]
+	},
+	upset: {
+		base: "upset",
+		specific: ["upset_verb"]
+	},
+	urgent: {
+		base: "urgent",
+		specific: ["urgent_matter"]
+	},
+	version: {
+		base: "version",
+		specific: ["version_software"]
+	},
+	visible: {
+		base: "visible",
+		specific: ["visible_sign"]
+	},
+	volume: {
+		base: "volume",
+		specific: ["volume_sound"]
+	},
+	wave: {
+		base: "wave",
+		specific: ["wave_verb"]
+	},
+	willing_to: {
+		base: "willing_to",
+		specific: ["willing_to_help"]
+	},
+	witness: {
+		base: "witness",
+		specific: ["witness_person"]
+	},
+	work: {
+		base: "work",
+		specific: ["work_out"]
+	},
+	account_for: {
+		base: "account_for",
+		specific: ["account_for_verb"]
+	},
+	address: {
+		base: "address",
+		specific: ["address_verb"]
+	},
+	applaud: {
+		base: "applaud",
+		specific: ["applaud_verb"]
+	},
+	characterise: {
+		base: "characterise",
+		specific: ["characterise_verb"]
+	},
+	characteristic: {
+		base: "characteristic",
+		specific: ["characteristic_noun"]
+	},
+	circulate: {
+		base: "circulate",
+		specific: ["circulate_verb"]
+	},
+	cite: {
+		base: "cite",
+		specific: ["cite_verb"]
+	},
+	communication: {
+		base: "communication",
+		specific: ["communication_noun"]
+	},
+	component: {
+		base: "component",
+		specific: ["component_part"]
+	},
+	construction: {
+		base: "construction",
+		specific: ["construction_noun"]
+	},
+	contribution: {
+		base: "contribution",
+		specific: ["contribution_help"]
+	},
+	convert: {
+		base: "convert",
+		specific: ["convert_change"]
+	},
+	cooperate: {
+		base: "cooperate",
+		specific: ["cooperate_verb"]
+	},
+	cooperation: {
+		base: "cooperation",
+		specific: ["cooperation_noun"]
+	},
+	coordinate: {
+		base: "coordinate",
+		specific: ["coordinate_action"]
+	},
+	cope: {
+		base: "cope",
+		specific: ["cope_with"]
+	},
+	criticise: {
+		base: "criticise",
+		specific: ["criticise_verb"]
+	},
+	decision: {
+		base: "decision",
+		specific: ["decision_noun"]
+	},
+	definition: {
+		base: "definition",
+		specific: ["definition_meaning"]
+	},
+	deliberate: {
+		base: "deliberate",
+		specific: ["deliberate_issue"]
+	},
+	demonstration: {
+		base: "demonstration",
+		specific: ["demonstration_noun"]
+	},
+	discourage: {
+		base: "discourage",
+		specific: ["discourage_prevent"]
+	},
+	dispute: {
+		base: "dispute",
+		specific: ["dispute_noun"]
+	},
+	drama: {
+		base: "drama",
+		specific: ["drama_art"]
+	},
+	dramatise: {
+		base: "dramatise",
+		specific: ["dramatise_verb"]
+	},
+	ecology: {
+		base: "ecology",
+		specific: ["ecology_noun"]
+	},
+	efficiency: {
+		base: "efficiency",
+		specific: ["efficiency_noun"]
+	},
+	eject: {
+		base: "eject",
+		specific: ["eject_verb"]
+	},
+	election: {
+		base: "election",
+		specific: ["election_noun"]
+	},
+	element: {
+		base: "element",
+		specific: ["element_noun"]
+	},
+	equation: {
+		base: "equation",
+		specific: ["equation_noun"]
+	},
+	exclude_keep: {
+		base: "exclude_keep",
+		specific: ["exclude_keep_out"]
+	},
+	expel_force: {
+		base: "expel_force",
+		specific: ["expel_force_out"]
+	},
+	exploit: {
+		base: "exploit",
+		specific: ["exploit_use"]
+	},
+	facilitate: {
+		base: "facilitate",
+		specific: ["facilitate_help"]
+	},
+	fluctuate: {
+		base: "fluctuate",
+		specific: ["fluctuate_change"]
+	},
+	frustrate: {
+		base: "frustrate",
+		specific: ["frustrate_prevent"]
+	},
+	hinder: {
+		base: "hinder",
+		specific: ["hinder_prevent"]
+	},
+	illustrate: {
+		base: "illustrate",
+		specific: ["illustrate_explain"]
+	},
+	impose: {
+		base: "impose",
+		specific: ["impose_tax"]
+	},
+	initiate: {
+		base: "initiate",
+		specific: ["initiate_start"]
+	},
+	interpret: {
+		base: "interpret",
+		specific: ["interpret_explain"]
+	},
+	legislate: {
+		base: "legislate",
+		specific: ["legislate_law"]
+	},
+	levy: {
+		base: "levy",
+		specific: ["levy_tax"]
+	},
+	offend: {
+		base: "offend",
+		specific: ["offend_insult"]
+	},
+	originate: {
+		base: "originate",
+		specific: ["originate_start"]
+	},
+	perceive: {
+		base: "perceive",
+		specific: ["perceive_see"]
+	},
+	prevail: {
+		base: "prevail",
+		specific: ["prevail_win"]
+	},
+	prioritise: {
+		base: "prioritise",
+		specific: ["prioritise_task"]
+	},
+	prosecute: {
+		base: "prosecute",
+		specific: ["prosecute_law"]
+	},
+	pursue: {
+		base: "pursue",
+		specific: ["pursue_goal"]
+	},
+	qualify: {
+		base: "qualify",
+		specific: ["qualify_meet"]
+	},
+	realise: {
+		base: "realise",
+		specific: ["realise_verb"]
+	},
+	recognise: {
+		base: "recognise",
+		specific: ["recognise_verb"]
+	},
+	regulate: {
+		base: "regulate",
+		specific: ["regulate_verb"]
+	},
+	renounce_give: {
+		base: "renounce_give",
+		specific: ["renounce_give_up"]
+	},
+	reproduce: {
+		base: "reproduce",
+		specific: ["reproduce_copy"]
+	},
+	restrain: {
+		base: "restrain",
+		specific: ["restrain_limit"]
+	},
+	restrict: {
+		base: "restrict",
+		specific: ["restrict_limit"]
+	},
+	rid: {
+		base: "rid",
+		specific: ["rid_verb"]
+	},
+	settle: {
+		base: "settle",
+		specific: ["settle_dispute"]
+	},
+	speculate: {
+		base: "speculate",
+		specific: ["speculate_think"]
+	},
+	sponsor: {
+		base: "sponsor",
+		specific: ["sponsor_help"]
+	},
+	submit: {
+		base: "submit",
+		specific: ["submit_document"]
+	},
+	subscribe: {
+		base: "subscribe",
+		specific: ["subscribe_sign"]
+	},
+	supervise: {
+		base: "supervise",
+		specific: ["supervise_manage"]
+	},
+	surrender_give: {
+		base: "surrender_give",
+		specific: ["surrender_give_up"]
+	},
+	surround: {
+		base: "surround",
+		specific: ["surround_area"]
+	},
+	testify: {
+		base: "testify",
+		specific: ["testify_court"]
+	},
+	transform: {
+		base: "transform",
+		specific: ["transform_change"]
+	},
+	undertake: {
+		base: "undertake",
+		specific: ["undertake_task"]
+	},
+	unify: {
+		base: "unify",
+		specific: ["unify_verb"]
+	},
+	uphold: {
+		base: "uphold",
+		specific: ["uphold_support"]
+	},
+	utilise: {
+		base: "utilise",
+		specific: ["utilise_use"]
+	},
+	violate: {
+		base: "violate",
+		specific: ["violate_law"]
+	},
+	visualise: {
+		base: "visualise",
+		specific: ["visualise_imagine"]
+	},
+	affirm: {
+		base: "affirm",
+		specific: ["affirm_statement"]
+	},
+	amend: {
+		base: "amend",
+		specific: ["amend_law"]
+	},
+	aspire: {
+		base: "aspire",
+		specific: ["aspire_goal"]
+	},
+	betray: {
+		base: "betray",
+		specific: ["betray_trust"]
+	},
+	complement: {
+		base: "complement",
+		specific: ["complement_style"]
+	},
+	conclude: {
+		base: "conclude",
+		specific: ["conclude_meeting"]
+	},
+	consent: {
+		base: "consent",
+		specific: ["consent_form"]
+	},
+	consolidate: {
+		base: "consolidate",
+		specific: ["consolidate_power"]
+	},
+	contaminate: {
+		base: "contaminate",
+		specific: ["contaminate_water"]
+	},
+	corrupt: {
+		base: "corrupt",
+		specific: ["corrupt_system"]
+	},
+	crave: {
+		base: "crave",
+		specific: ["crave_attention"]
+	},
+	crumble: {
+		base: "crumble",
+		specific: ["crumble_away"]
+	},
+	decompose: {
+		base: "decompose",
+		specific: ["decompose_waste"]
+	},
+	dedicate: {
+		base: "dedicate",
+		specific: ["dedicate_time"]
+	},
+	degrade: {
+		base: "degrade",
+		specific: ["degrade_quality"]
+	},
+	deplore: {
+		base: "deplore",
+		specific: ["deplore_action"]
+	},
+	deprive: {
+		base: "deprive",
+		specific: ["deprive_rights"]
+	},
+	detach: {
+		base: "detach",
+		specific: ["detach_part"]
+	},
+	devastate: {
+		base: "devastate",
+		specific: ["devastate_area"]
+	},
+	discredit: {
+		base: "discredit",
+		specific: ["discredit_theory"]
+	},
+	disgust: {
+		base: "disgust",
+		specific: ["disgust_feeling"]
+	},
+	disprove: {
+		base: "disprove",
+		specific: ["disprove_theory"]
+	},
+	divulge: {
+		base: "divulge",
+		specific: ["divulge_secret"]
+	},
+	drift: {
+		base: "drift",
+		specific: ["drift_away"]
+	},
+	dwindle: {
+		base: "dwindle",
+		specific: ["dwindle_away"]
+	},
+	emanate: {
+		base: "emanate",
+		specific: ["emanate_from"]
+	},
+	embark: {
+		base: "embark",
+		specific: ["embark_on"]
+	},
+	embrace: {
+		base: "embrace",
+		specific: ["embrace_change"]
+	},
+	emit: {
+		base: "emit",
+		specific: ["emit_light"]
+	},
+	enact: {
+		base: "enact",
+		specific: ["enact_law"]
+	},
+	evaporate: {
+		base: "evaporate",
+		specific: ["evaporate_water"]
+	},
+	evolve_over: {
+		base: "evolve_over",
+		specific: ["evolve_over_time"]
+	},
 };
 
 /**

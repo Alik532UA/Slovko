@@ -1,12 +1,13 @@
 {
 	"career": "καριέρα",
 	"course": "μάθημα",
-	"professor": "καθηγητής",
-	"skill": "δεξιότητα",
 	"employee": "υπάλληλος",
 	"employer": "εργοδότης",
+	"interview": "συνέντευξη",
 	"interview_job": "συνέντευξη",
-	"training_course": "σεμινάριο εκπαίδευσης",
+	"profession": "επάγγελμα",
+	"professor": "καθηγητής",
 	"salary": "μισθός",
-	"profession": "επάγγελμα"
+	"skill": "δεξιότητα",
+	"training_course": "σεμινάριο εκπαίδευσης"
 }

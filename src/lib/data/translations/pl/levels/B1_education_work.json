@@ -1,12 +1,13 @@
 {
 	"career": "kariera",
 	"course": "kurs",
-	"professor": "profesor",
-	"skill": "umiejętność",
 	"employee": "pracownik",
 	"employer": "pracodawca",
+	"interview": "rozmowa kwalifikacyjna",
 	"interview_job": "rozmowa kwalifikacyjna",
-	"training_course": "szkolenie",
+	"profession": "zawód",
+	"professor": "profesor",
 	"salary": "wynagrodzenie",
-	"profession": "zawód"
+	"skill": "umiejętność",
+	"training_course": "szkolenie"
 }

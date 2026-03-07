@@ -1,11 +1,14 @@
 {
-	"right_correct": "right",
-	"clean_pure": "clean",
-	"free_liberty": "free",
 	"amazed": "amazed",
 	"amusing": "amusing",
 	"charming": "charming",
+	"clean": "clean",
+	"clean_pure": "clean",
+	"free": "free",
+	"free_liberty": "free",
 	"gentle": "gentle",
+	"right": "right",
+	"right_correct": "right",
 	"silly": "silly",
 	"straight": "straight"
 }

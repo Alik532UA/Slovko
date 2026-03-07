@@ -1,12 +1,13 @@
 {
 	"career": "carrière",
 	"course": "cursus",
-	"professor": "hoogleraar",
-	"skill": "vaardigheid",
 	"employee": "werknemer",
 	"employer": "werkgever",
+	"interview": "sollicitatiegesprek",
 	"interview_job": "sollicitatiegesprek",
-	"training_course": "training,",
+	"profession": "beroep",
+	"professor": "hoogleraar",
 	"salary": "salaris",
-	"profession": "beroep"
+	"skill": "vaardigheid",
+	"training_course": "training,"
 }

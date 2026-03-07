@@ -1,12 +1,13 @@
 {
 	"career": "karyera",
 	"course": "kurs",
-	"professor": "professor",
-	"skill": "ustalıq",
 	"employee": "işçi",
 	"employer": "iş berici",
+	"interview": "mülâqat",
 	"interview_job": "mülâqat",
-	"training_course": "kurs",
+	"profession": "zenaat",
+	"professor": "professor",
 	"salary": "maaş",
-	"profession": "zenaat"
+	"skill": "ustalıq",
+	"training_course": "kurs"
 }

@@ -1,9 +1,11 @@
 {
 	"air": "αέρας",
+	"branch": "κλαδί",
 	"branch_tak": "κλαδί",
 	"bush": "θάμνος",
 	"cave": "σπηλιά",
 	"desert": "έρημος",
+	"earth": "γη",
 	"earth_yer": "γη",
 	"fog": "ομίχλη",
 	"forest": "δάσος",
@@ -28,8 +30,7 @@
 	"storm": "καταιγίδα",
 	"thunder": "κεραυνός",
 	"volcano": "ηφαίστειο",
+	"wood": "δάσος",
 	"wood_bos": "δάσος",
-	"wood_holz": "ξύλο",
-	"branch": "κλαδί",
-	"wood": "δάσος"
+	"wood_holz": "ξύλο"
 }

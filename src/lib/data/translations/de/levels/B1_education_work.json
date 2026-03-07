@@ -1,12 +1,13 @@
 {
-    "career": "Karriere",
-    "course": "Kurs",
-    "professor": "Professor",
-    "skill": "Fähigkeit",
-    "employee": "Angestellter",
-    "employer": "Arbeitgeber",
-    "interview_job": "Vorstellungsgespräch",
-    "training_course": "Training, Schulung",
-    "salary": "Gehalt",
-    "profession": "Beruf"
+	"career": "Karriere",
+	"course": "Kurs",
+	"employee": "Angestellter",
+	"employer": "Arbeitgeber",
+	"interview": "Vorstellungsgespräch",
+	"interview_job": "Vorstellungsgespräch",
+	"profession": "Beruf",
+	"professor": "Professor",
+	"salary": "Gehalt",
+	"skill": "Fähigkeit",
+	"training_course": "Training, Schulung"
 }

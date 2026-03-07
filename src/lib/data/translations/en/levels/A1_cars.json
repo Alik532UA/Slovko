@@ -1,13 +1,14 @@
 {
-	"car": "car",
-	"street": "street",
-	"door": "door",
-	"window": "window",
-	"key": "key",
-	"light_color": "light",
-	"road": "road",
-	"train": "train",
 	"bus": "bus",
+	"car": "car",
+	"door": "door",
+	"key": "key",
+	"light": "light",
+	"light_color": "light",
 	"plane": "plane",
-	"taxi": "taxi"
+	"road": "road",
+	"street": "street",
+	"taxi": "taxi",
+	"train": "train",
+	"window": "window"
 }

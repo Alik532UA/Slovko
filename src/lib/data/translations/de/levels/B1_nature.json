@@ -1,8 +1,9 @@
 {
+	"earth": "Erde",
+	"earth_planet": "Erde",
 	"flood": "Flut",
 	"jungle": "Dschungel",
-	"valley": "Tal",
-	"earth_planet": "Erde",
 	"landscape": "Landschaft",
-	"scenery": "Landschaft"
+	"scenery": "Landschaft",
+	"valley": "Tal"
 }

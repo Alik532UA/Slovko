@@ -1,8 +1,13 @@
 {
-	"aunt_paternal": "aunt",
+	"aunt": "aunt",
 	"aunt_maternal": "aunt",
+	"aunt_paternal": "aunt",
+	"brother": "brother",
 	"brother_male": "brother",
 	"colleague": "colleague",
+	"cousin": "cousin",
+	"cousin_female": "cousin",
+	"cousin_male": "cousin",
 	"granddaughter": "granddaughter",
 	"grandfather": "grandfather",
 	"grandmother": "grandmother",
@@ -12,10 +17,6 @@
 	"partner": "partner",
 	"single": "single",
 	"uncle": "uncle",
-	"uncle_paternal": "uncle",
 	"uncle_maternal": "uncle",
-	"cousin_male": "cousin",
-	"cousin_female": "cousin",
-	"aunt": "aunt",
-	"cousin": "cousin"
+	"uncle_paternal": "uncle"
 }

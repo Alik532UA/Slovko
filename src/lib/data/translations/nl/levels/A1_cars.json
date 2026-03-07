@@ -1,13 +1,14 @@
 {
 	"bus": "bus",
 	"car": "auto",
-	"street": "straat",
 	"door": "deur",
-	"window": "raam",
 	"key": "sleutel",
+	"light": "licht",
 	"light_color": "licht",
-	"road": "weg",
-	"train": "trein",
 	"plane": "vliegtuig",
-	"taxi": "taxi"
+	"road": "weg",
+	"street": "straat",
+	"taxi": "taxi",
+	"train": "trein",
+	"window": "raam"
 }

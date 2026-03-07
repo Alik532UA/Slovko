@@ -1,8 +1,13 @@
 {
+	"aunt": "ciotka",
 	"aunt_maternal": "stryjna/ciotka",
 	"aunt_paternal": "ciotka",
+	"brother": "brat",
 	"brother_male": "brat",
 	"colleague": "kolega",
+	"cousin": "kuzyn",
+	"cousin_female": "kuzynka",
+	"cousin_male": "kuzyn",
 	"granddaughter": "wnuczka",
 	"grandfather": "dziadek",
 	"grandmother": "babcia",
@@ -13,9 +18,5 @@
 	"single": "wolny",
 	"uncle": "wujek",
 	"uncle_maternal": "wujek",
-	"uncle_paternal": "wujek",
-	"cousin_male": "kuzyn",
-	"cousin_female": "kuzynka",
-	"aunt": "ciotka",
-	"cousin": "kuzyn"
+	"uncle_paternal": "wujek"
 }

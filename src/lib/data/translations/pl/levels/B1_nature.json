@@ -1,8 +1,9 @@
 {
+	"earth": "Ziemia",
+	"earth_planet": "Ziemia",
 	"flood": "powódź",
 	"jungle": "dżungla",
-	"valley": "dolina",
-	"earth_planet": "Ziemia",
 	"landscape": "krajobraz",
-	"scenery": "sceneria"
+	"scenery": "sceneria",
+	"valley": "dolina"
 }

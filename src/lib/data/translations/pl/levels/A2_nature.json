@@ -1,9 +1,11 @@
 {
 	"air": "powietrze",
+	"branch": "gałąź",
 	"branch_tak": "gałąź",
 	"bush": "krzak",
 	"cave": "jaskinia",
 	"desert": "pustynia",
+	"earth": "ziemia",
 	"earth_yer": "ziemia",
 	"fog": "mgła",
 	"forest": "las",
@@ -27,8 +29,7 @@
 	"storm": "burza",
 	"thunder": "grzmot",
 	"volcano": "wulkan",
+	"wood": "las",
 	"wood_bos": "las",
-	"wood_holz": "drewno",
-	"branch": "gałąź",
-	"wood": "las"
+	"wood_holz": "drewno"
 }

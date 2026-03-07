@@ -13,20 +13,23 @@ import { generatePlIPA } from "./transcription/pl";
 import { mapIpaToUk } from "./transcription/mappers/ipa-to-uk";
 import { mapIpaToNl } from "./transcription/mappers/ipa-to-nl";
 import { mapIpaToPl } from "./transcription/mappers/ipa-to-pl";
+import { mapIpaToEl } from "./transcription/mappers/ipa-to-el";
+import { mapIpaToCrh } from "./transcription/mappers/ipa-to-crh";
+import { mapIpaToDe } from "./transcription/mappers/ipa-to-de";
 
 /**
  * Генерує транскрипцію (легасі) або повертає undefined.
  * Використовується як fallback, якщо IPA не знайдено.
  */
 export function generateTranscription(
-	text: string,
-	sourceLang: Language,
-	targetLang: Language,
+        text: string,
+        sourceLang: Language,
+        targetLang: Language,
 ): string | undefined {
-	if (sourceLang === "uk" && isLatin(targetLang)) {
-		return transliterateUkToLatin(text);
-	}
-	return undefined;
+        if (sourceLang === "uk" && isLatin(targetLang)) {
+                return transliterateUkToLatin(text);
+        }
+        return undefined;
 }
 
 /**
@@ -35,39 +38,42 @@ export function generateTranscription(
  * Крок 2: IPA -> Символи мови інтерфейсу
  */
 export function generateRulesIPA(
-	text: string,
-	lang: Language,
-	uiLang: Language = "uk",
+        text: string,
+        lang: Language,
+        uiLang: Language = "uk",
 ): string | undefined {
-	try {
-		// Виключення: Англійська завжди показує свою транскрипцію (зберігається в JSON)
-		if (lang === "en") return undefined;
+        try {
+                // Виключення: Англійська завжди показує свою транскрипцію (зберігається в JSON)
+                if (lang === "en") return undefined;
 
-		let ipa: string | undefined;
+                let ipa: string | undefined;
 
-		// Крок 1: Генеруємо універсальний IPA
-		if (lang === "crh") ipa = generateCrhIPA(text);
-		else if (lang === "nl") ipa = generateNlIPA(text);
-		else if (lang === "uk") ipa = generateUkIPA(text);
-		else if (lang === "de") ipa = generateDeIPA(text);
-		else if (lang === "el") ipa = generateElIPA(text);
-		else if (lang === "pl") ipa = generatePlIPA(text);
+                // Крок 1: Генеруємо універсальний IPA
+                if (lang === "crh") ipa = generateCrhIPA(text);
+                else if (lang === "nl") ipa = generateNlIPA(text);
+                else if (lang === "uk") ipa = generateUkIPA(text);
+                else if (lang === "de") ipa = generateDeIPA(text);
+                else if (lang === "el") ipa = generateElIPA(text);
+                else if (lang === "pl") ipa = generatePlIPA(text);
 
-		if (!ipa) return undefined;
+                if (!ipa) return undefined;
 
-		// Крок 2: Мапимо IPA на символи мови інтерфейсу (Народна транскрипція)
-		if (uiLang === "uk") return mapIpaToUk(ipa);
-		if (uiLang === "nl") return mapIpaToNl(ipa);
-		if (uiLang === "pl") return mapIpaToPl(ipa);
+                // Крок 2: Мапимо IPA на символи мови інтерфейсу (Народна транскрипція)
+                if (uiLang === "uk") return mapIpaToUk(ipa);
+                if (uiLang === "nl") return mapIpaToNl(ipa);
+                if (uiLang === "pl") return mapIpaToPl(ipa);
+                if (uiLang === "el") return mapIpaToEl(ipa);
+                if (uiLang === "crh") return mapIpaToCrh(ipa);
+                if (uiLang === "de") return mapIpaToDe(ipa);
 
-		// Fallback: якщо мапера немає, повертаємо чистий IPA
-		return ipa;
-	} catch (e) {
-		console.warn(`IPA Generation failed for ${lang} (UI: ${uiLang}):`, e);
-		return undefined;
-	}
+                // Fallback: якщо мапера немає, повертаємо чистий IPA
+                return ipa;
+        } catch (e) {
+                console.warn(`IPA Generation failed for ${lang} (UI: ${uiLang}):`, e);
+                return undefined;
+        }
 }
 
 function isLatin(lang: Language): boolean {
-	return ["en", "nl", "de", "crh", "pl"].includes(lang);
+        return ["en", "nl", "de", "crh", "pl"].includes(lang);
 }

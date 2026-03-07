@@ -1,13 +1,14 @@
 {
 	"bus": "Bus",
 	"car": "Auto",
-	"street": "Straße",
 	"door": "Tür",
-	"window": "Fenster",
 	"key": "Schlüssel",
+	"light": "hell",
 	"light_color": "hell",
-	"road": "Straße",
-	"train": "Zug",
 	"plane": "Flugzeug",
-	"taxi": "Taxi"
+	"road": "Straße",
+	"street": "Straße",
+	"taxi": "Taxi",
+	"train": "Zug",
+	"window": "Fenster"
 }

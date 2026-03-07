@@ -1,8 +1,9 @@
 {
+	"earth": "aarde",
+	"earth_planet": "aarde",
 	"flood": "overstroming",
 	"jungle": "jungle",
-	"valley": "vallei",
-	"earth_planet": "aarde",
 	"landscape": "landschap",
-	"scenery": "landschap"
+	"scenery": "landschap",
+	"valley": "vallei"
 }

@@ -1,13 +1,14 @@
 {
 	"bus": "avtobus",
 	"car": "araba",
-	"street": "soqaq",
 	"door": "qapı",
-	"window": "pencere",
 	"key": "anahtar",
+	"light": "aydın",
 	"light_color": "aydın",
-	"road": "yol",
-	"train": "tren",
 	"plane": "uçaq",
-	"taxi": "taksi"
+	"road": "yol",
+	"street": "soqaq",
+	"taxi": "taksi",
+	"train": "tren",
+	"window": "pencere"
 }

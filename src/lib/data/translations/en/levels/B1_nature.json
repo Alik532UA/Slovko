@@ -1,8 +1,9 @@
 {
+	"earth": "earth",
+	"earth_planet": "earth",
 	"flood": "flood",
 	"jungle": "jungle",
-	"valley": "valley",
-	"earth_planet": "earth",
 	"landscape": "landscape",
-	"scenery": "scenery"
+	"scenery": "scenery",
+	"valley": "valley"
 }

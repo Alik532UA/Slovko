@@ -1,11 +1,13 @@
 {
-	"aunt_paternal": "ala",
+	"aunt": "ala",
 	"aunt_maternal": "tize",
-	"uncle": "emce",
-	"uncle_paternal": "amca",
-	"uncle_maternal": "dayı",
+	"aunt_paternal": "ala",
+	"brother": "qardaş",
 	"brother_male": "qardaş",
 	"colleague": "işdaş",
+	"cousin": "emce-tize balası (erkek)",
+	"cousin_female": "emce-tize balası (qadın)",
+	"cousin_male": "emce-tize balası (erkek)",
 	"granddaughter": "qız torun",
 	"grandfather": "qartbaba",
 	"grandmother": "bita",
@@ -14,8 +16,7 @@
 	"marry": "evlenmek",
 	"partner": "ortaq",
 	"single": "tek",
-	"cousin_male": "emce-tize balası (erkek)",
-	"cousin_female": "emce-tize balası (qadın)",
-	"aunt": "ala",
-	"cousin": "emce-tize balası (erkek)"
+	"uncle": "emce",
+	"uncle_maternal": "dayı",
+	"uncle_paternal": "amca"
 }

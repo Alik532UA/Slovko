@@ -1,8 +1,13 @@
 {
-	"aunt_paternal": "tante",
+	"aunt": "tante",
 	"aunt_maternal": "tante",
+	"aunt_paternal": "tante",
+	"brother": "broer",
 	"brother_male": "broer",
 	"colleague": "collega",
+	"cousin": "neef",
+	"cousin_female": "nicht",
+	"cousin_male": "neef",
 	"granddaughter": "kleindochter",
 	"grandfather": "grootvader",
 	"grandmother": "grootmoeder",
@@ -12,10 +17,6 @@
 	"partner": "partner",
 	"single": "enkel",
 	"uncle": "oom",
-	"uncle_paternal": "oom",
 	"uncle_maternal": "oom",
-	"cousin_male": "neef",
-	"cousin_female": "nicht",
-	"aunt": "tante",
-	"cousin": "neef"
+	"uncle_paternal": "oom"
 }

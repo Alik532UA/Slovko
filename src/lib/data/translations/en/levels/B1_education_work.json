@@ -1,12 +1,13 @@
 {
 	"career": "career",
 	"course": "course",
-	"professor": "professor",
-	"skill": "skill",
 	"employee": "employee",
 	"employer": "employer",
+	"interview": "interview",
 	"interview_job": "interview",
-	"training_course": "training",
+	"profession": "profession",
+	"professor": "professor",
 	"salary": "salary",
-	"profession": "profession"
+	"skill": "skill",
+	"training_course": "training"
 }
