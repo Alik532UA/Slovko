@@ -1,25 +1,11 @@
 {
 	"airport": "/ˈeəpɔːt/",
 	"bag": "/bæɡ/",
-	"bank_finance": "/bæŋk/",
-	"bus": "/bʌs/",
-	"car": "/kɑːr/",
-	"cheap": "/tʃiːp/",
-	"expensive": "/ɪkˈspɛn.sɪv/",
-	"help": "/hɛlp/",
-	"help_verb": "/hɛlp/",
-	"hospital": "/ˈhɒspɪtl/",
 	"hotel": "/həʊˈtɛl/",
 	"map": "/mæp/",
 	"money": "/ˈmʌni/",
-	"plane": "/pleɪn/",
-	"police": "/pəˈliːs/",
-	"police_station": "/pəˈliːs ˈsteɪʃən/",
 	"price": "/praɪs/",
 	"room": "/ruːm/",
 	"stop": "/stɒp/",
-	"taxi": "/ˈtæksi/",
-	"ticket": "/ˈtɪkɪt/",
-	"ticket_office": "/ˈtɪk.ɪt ˌɒf.ɪs/",
-	"train": "/treɪn/"
+	"ticket": "/ˈtɪkɪt/"
 }

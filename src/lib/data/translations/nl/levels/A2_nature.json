@@ -1,11 +1,9 @@
 {
 	"air": "lucht",
-	"branch": "tak",
 	"branch_tak": "tak",
 	"bush": "struik",
 	"cave": "grot",
 	"desert": "woestijn",
-	"earth": "aarde",
 	"earth_yer": "aarde",
 	"fog": "mist",
 	"forest": "bos",
@@ -18,7 +16,6 @@
 	"lightning": "bliksem",
 	"ocean": "oceaan",
 	"rainbow": "regenboog",
-	"rock": "rots",
 	"rock_stone": "rots",
 	"root": "wortel",
 	"sand": "zand",
@@ -29,7 +26,6 @@
 	"storm": "storm",
 	"thunder": "donder",
 	"volcano": "vulkaan",
-	"wood": "bos",
 	"wood_bos": "bos",
 	"wood_holz": "hout"
 }

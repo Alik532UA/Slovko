@@ -1,11 +1,9 @@
 {
 	"air": "Luft",
-	"branch": "Zweig",
 	"branch_tak": "Zweig",
 	"bush": "Busch",
 	"cave": "Höhle",
 	"desert": "Wüste",
-	"earth": "Erde",
 	"earth_yer": "Erde",
 	"fog": "Nebel",
 	"forest": "Wald",
@@ -18,7 +16,6 @@
 	"lightning": "Blitz",
 	"ocean": "Ozean",
 	"rainbow": "Regenbogen",
-	"rock": "Fels",
 	"rock_stone": "Stein",
 	"root": "Wurzel",
 	"sand": "Sand",
@@ -29,7 +26,6 @@
 	"storm": "Sturm",
 	"thunder": "Donner",
 	"volcano": "Vulkan",
-	"wood": "Wald",
 	"wood_bos": "Wald",
 	"wood_holz": "Holz"
 }

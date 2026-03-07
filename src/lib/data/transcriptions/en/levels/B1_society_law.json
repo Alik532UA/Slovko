@@ -5,13 +5,9 @@
 	"crime": "/kraɪm/",
 	"criminal": "/ˈkrɪmɪnl/",
 	"government": "/ˈɡʌv(ə)nm(ə)nt/",
-	"government_body": "/ˈɡʌvənmənt/",
 	"nation": "/ˈneɪʃn/",
 	"politics": "/ˈpɒlətɪks/",
 	"president": "/ˈprɛzɪdənt/",
-	"security": "/sɪˈkjʊərəti/",
 	"society": "/səˈsaɪəti/",
-	"soldier": "/ˈsəʊldʒər/",
-	"vote": "/vəʊt/",
-	"war": "/wɔː/"
+	"soldier": "/ˈsəʊldʒər/"
 }

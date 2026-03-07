@@ -1,6 +1,5 @@
 {
 	"acceptable": "acceptable",
-	"accident": "accident",
 	"accident_event": "accident",
 	"acknowledgement": "acknowledgement",
 	"acknowledgement_confirmation": "acknowledgement",
@@ -17,7 +16,6 @@
 	"alternative": "alternative",
 	"amendment": "amendment",
 	"approval": "approval",
-	"argument": "argument",
 	"argument_logic": "argument",
 	"arrangement": "arrangement",
 	"artistic": "artistic",

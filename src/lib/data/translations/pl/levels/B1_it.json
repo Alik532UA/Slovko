@@ -1,7 +1,6 @@
 {
 	"app": "aplikacja",
 	"app_store": "aplikacja",
-	"battery": "żywotność baterii",
 	"battery_life": "żywotność baterii",
 	"cable": "kabel",
 	"cable_tv": "kabel",
@@ -13,7 +12,6 @@
 	"database": "baza danych",
 	"database_management": "baza danych",
 	"document": "dokument",
-	"download": "pobierać",
 	"download_file": "pobierać",
 	"error": "błąd",
 	"file": "plik",
