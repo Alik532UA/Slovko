@@ -16,9 +16,17 @@
 	"cheese": "сир",
 	"cake": "торт",
 	"chocolate": "шоколад",
-	"orange": "помаранчевий",
-	"sandwich": "сендвіч",
+	"orange_color": "помаранчевий",
 	"orange_fruit": "апельсин",
-	"drink_noun": "напій",
-	"beer": "пиво"
+	"sandwich": "сендвіч",
+	"pizza": "піца",
+	"pasta": "паста",
+	"rice": "рис",
+	"soup": "суп",
+	"salad": "салат",
+	"breakfast": "сніданок",
+	"lunch": "обід",
+	"dinner": "вечеря",
+	"chicken": "курка",
+	"fish": "риба"
 }

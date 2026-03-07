@@ -8,7 +8,7 @@
 	"bike": "velosiped",
 	"book": "kitap",
 	"box": "qutu",
-	"break": "uvalamaq",
+	"break_verb": "uvalamaq",
 	"breakfast": "sabalıq",
 	"brother": "ağa",
 	"brother_older": "ağa",
@@ -150,9 +150,8 @@
 	"walk_step": "yürüv",
 	"walk_stroll": "aylanuv",
 	"wash": "yuvmaq",
-	"watch": "baqmaq",
-	"watch_clock": "saat",
 	"watch_verb": "baqmaq",
+	"watch_clock": "saat",
 	"weather": "hava",
 	"win": "yeñmek",
 	"word": "söz",
@@ -160,5 +159,6 @@
 	"yes": "e",
 	"you": "sen",
 	"you_formal": "siz",
-	"you_informal": "sen"
+	"you_informal": "sen",
+	"break_pause": "tenefüs"
 }

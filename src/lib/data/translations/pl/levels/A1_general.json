@@ -8,7 +8,7 @@
 	"bike": "rower",
 	"book": "książka",
 	"box": "pudełko",
-	"break": "przerwa",
+	"break_pause": "przerwa",
 	"breakfast": "śniadanie",
 	"brother": "brat",
 	"brother_older": "brat",
@@ -149,9 +149,8 @@
 	"walk_step": "chodzić",
 	"walk_stroll": "spacerować",
 	"wash": "myć",
-	"watch": "oglądać",
-	"watch_clock": "zegarek",
 	"watch_verb": "oglądać",
+	"watch_clock": "zegarek",
 	"weather": "pogoda",
 	"win": "wygrywać",
 	"word": "słowo",
@@ -159,5 +158,6 @@
 	"yes": "tak",
 	"you": "pan/pani",
 	"you_formal": "pan/pani",
-	"you_informal": "ty"
+	"you_informal": "ty",
+	"break_verb": "łamać"
 }

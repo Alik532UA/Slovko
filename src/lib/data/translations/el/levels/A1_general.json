@@ -8,7 +8,7 @@
 	"bike": "ποδήλατο",
 	"book": "βιβλίο",
 	"box": "κουτί",
-	"break": "σπάω",
+	"break_verb": "σπάω",
 	"breakfast": "πρωινό",
 	"brother": "αδελφός",
 	"brother_older": "αδελφός",
@@ -164,9 +164,8 @@
 	"walk_step": "περπατώ",
 	"walk_stroll": "κάνω βόλτα",
 	"wash": "πλένω",
-	"watch": "παρακολουθώ",
-	"watch_clock": "ρολόι",
 	"watch_verb": "παρακολουθώ",
+	"watch_clock": "ρολόι",
 	"we": "εμείς",
 	"weather": "καιρός",
 	"win": "κερδίζω",
@@ -176,5 +175,6 @@
 	"you": "εσύ",
 	"you_formal": "εσείς",
 	"you_informal": "εσύ",
-	"your": "σου"
+	"your": "σου",
+	"break_pause": "διάλειμμα"
 }

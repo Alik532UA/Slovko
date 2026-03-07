@@ -8,7 +8,7 @@
 	"bike": "Fahrrad",
 	"book": "Buch",
 	"box": "Kiste",
-	"break": "brechen",
+	"break_verb": "brechen",
 	"breakfast": "Frühstück",
 	"brother": "Bruder",
 	"brother_older": "Bruder",
@@ -149,9 +149,8 @@
 	"walk_step": "gehen",
 	"walk_stroll": "spazieren",
 	"wash": "waschen",
-	"watch": "schauen",
-	"watch_clock": "Uhr",
 	"watch_verb": "schauen",
+	"watch_clock": "Uhr",
 	"weather": "Wetter",
 	"win": "gewinnen",
 	"word": "Wort",
@@ -159,5 +158,6 @@
 	"yes": "ja",
 	"you": "du",
 	"you_formal": "Sie",
-	"you_informal": "du"
+	"you_informal": "du",
+	"break_pause": "Pause"
 }

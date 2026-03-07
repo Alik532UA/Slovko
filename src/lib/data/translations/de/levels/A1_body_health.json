@@ -1,5 +1,5 @@
 {
-    "hand": "anziehen",
+    "hand": "Hand",
     "head": "Kopf",
     "eye": "Auge",
     "mouth": "Mund",
@@ -8,10 +8,10 @@
     "body": "Körper",
     "face": "Gesicht",
     "ear": "Ohr",
-    "arm": "Schwenkarm",
+    "arm": "Arm",
     "foot": "Fuß",
     "hair": "Haar",
-    "arm_body": "Schwenkarm",
+    "arm_body": "Arm",
     "arm_weapon": "Waffe",
     "leg_full": "Bein",
     "leg": "Bein"

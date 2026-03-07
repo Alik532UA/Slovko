@@ -1,14 +1,13 @@
 {
-    "room": "kamer",
-    "money": "geld",
-    "airport": "luchthaven",
-    "stop": "stoppen",
-    "bag": "tas",
-    "bank_finance": "bank",
-    "bank_river": "oever",
-    "hotel": "hotel",
-    "ticket": "kaartje",
-    "map": "kaart",
-    "price": "prijs",
-    "bank": "bank"
+	"room": "kamer",
+	"money": "geld",
+	"airport": "luchthaven",
+	"stop": "stoppen",
+	"bag": "tas",
+	"bank_finance": "bank",
+	"bank_river": "oever",
+	"hotel": "hotel",
+	"ticket": "kaartje",
+	"map": "kaart",
+	"price": "prijs"
 }

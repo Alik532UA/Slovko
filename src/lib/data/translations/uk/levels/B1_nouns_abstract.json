@@ -20,7 +20,7 @@
 	"audience": "аудиторія",
 	"authority": "влада",
 	"authority_expert": "авторитет",
-	"authority_person": "авторитет (особа)",
+	"authority_person": "авторитет",
 	"authority_power": "влада",
 	"balance": "баланс",
 	"basis": "основа",
@@ -176,5 +176,6 @@
 	"will_noun": "воля",
 	"witness": "свідок",
 	"witness_person": "свідок",
-	"work_out": "тренуватися"
+	"work_out": "тренуватися",
+	"subject_topic": "тема"
 }

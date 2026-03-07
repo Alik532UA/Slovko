@@ -1,6 +1,5 @@
 {
 	"id": "B1",
-	"name": "Intermediate",
 	"words": [
 		"abandon",
 		"ability",
@@ -665,7 +664,7 @@
 		"lack",
 		"landscape",
 		"laughter",
-		"lead",
+		"lead_verb",
 		"leader",
 		"leader_person",
 		"lean",
@@ -1283,7 +1282,6 @@
 		"various_reasons",
 		"vary",
 		"vehicle",
-		"version",
 		"version_software",
 		"victim",
 		"victory",

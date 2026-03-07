@@ -10,7 +10,7 @@
 	"ambition": "φιλοδοξία",
 	"anger": "θυμός",
 	"appearance": "εμφάνιση",
-	"appearance_arrival": "εμφάνιση (άφιξη)",
+	"appearance_arrival": "εμφάνιση",
 	"appearance_look": "εμφάνιση",
 	"application": "αίτηση",
 	"application_request": "αίτηση",
@@ -175,5 +175,6 @@
 	"will_noun": "διαθήκη",
 	"witness": "μάρτυρας",
 	"witness_person": "μάρτυρας",
-	"work_out": "γυμνάζομαι"
+	"work_out": "γυμνάζομαι",
+	"subject_topic": "θέμα"
 }

@@ -35,7 +35,7 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	},
 	accretion: {
 		base: "accretion",
-		specific: ["accretion_artuv", "accretion_buyv"]
+		specific: ["accretion_growth", "accretion_buildup"]
 	},
 	acerbic: {
 		base: "acerbic",
@@ -55,7 +55,7 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	},
 	acrimony: {
 		base: "acrimony",
-		specific: ["acrimony_auv", "acrimony_yamanlq"]
+		specific: ["acrimony_bitterness", "acrimony_malice"]
 	},
 	action: {
 		base: "action",
@@ -67,7 +67,7 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	},
 	adamant: {
 		base: "adamant",
-		specific: ["adamant_inat", "adamant_qatt"]
+		specific: ["adamant_stubborn", "adamant_firm"]
 	},
 	address: {
 		base: "address",
@@ -171,7 +171,7 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	},
 	apprehend: {
 		base: "apprehend",
-		specific: ["apprehend_alamaq", "apprehend_yaqalamaq"]
+		specific: ["apprehend_understand", "apprehend_arrest"]
 	},
 	approach: {
 		base: "approach",

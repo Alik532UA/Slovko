@@ -16,9 +16,9 @@
 	"cheese": "pendir",
 	"cake": "pasta",
 	"chocolate": "şokolad",
-	"orange": "turunç",
+	"orange_fruit": "turunç",
 	"sandwich": "sandviç",
-	"orange_fruit": "portaqal",
 	"drink_noun": "içimlik",
-	"beer": "pivo"
+	"beer": "pivo",
+	"orange_color": "turuncu"
 }
