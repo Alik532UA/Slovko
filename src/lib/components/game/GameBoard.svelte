@@ -127,6 +127,17 @@
 		hoveredCardId: null,
 	});
 
+	// Динамічний розрахунок товщини лінії залежно від відстані
+	const dragStrokeWidth = $derived.by(() => {
+		if (!dragState.startPoint || !dragState.currentPoint) return 10;
+		const dx = dragState.currentPoint.x - dragState.startPoint.x;
+		const dy = dragState.currentPoint.y - dragState.startPoint.y;
+		const distance = Math.sqrt(dx * dx + dy * dy);
+		
+		// Початкова товщина 10px, зменшується до 4px при розтягуванні на 500px (ефект гуми)
+		return Math.max(4, 10 - (distance / 500) * 6);
+	});
+
 	function handleDragStart(e: PointerEvent, card: ActiveCard) {
 		// Ігноруємо якщо вже йде процес або картка в "фінальному" стані
 		if (card.status === "correct" || card.status === "wrong") return;
@@ -283,7 +294,7 @@
 				x2={dragState.currentPoint.x} 
 				y2={dragState.currentPoint.y} 
 				stroke="var(--selected-border)" 
-				stroke-width="4" 
+				stroke-width={dragStrokeWidth} 
 				stroke-linecap="round"
 				opacity="0.6"
 			/>
