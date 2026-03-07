@@ -283,7 +283,6 @@
 		align-items: center;
 		gap: 10px;
 		padding: 0 12px 0 16px;
-		overflow: hidden;
 	}
 
 	.text-block {
