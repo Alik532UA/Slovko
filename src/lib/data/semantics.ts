@@ -153,6 +153,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "appendix",
 		specific: ["appendix_anatomy", "appendix_document"]
 	},
+	annex: {
+		base: "annex",
+		specific: ["annex_territory", "annex_document", "annex_verb"]
+	},
 	applaud: {
 		base: "applaud",
 		specific: ["applaud_verb"]
@@ -848,6 +852,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	due: {
 		base: "due",
 		specific: ["due_expected", "due_to"]
+	},
+	drive: {
+		base: "drive",
+		specific: ["drive_verb", "drive_it"]
 	},
 	duplicate: {
 		base: "duplicate",
