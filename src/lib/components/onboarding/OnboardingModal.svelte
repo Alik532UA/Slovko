@@ -177,7 +177,7 @@
 									(step === 2 && lang === settingsStore.value.targetLanguage)}
 								data-testid="onboarding-flag-{lang}"
 							>
-								<img src="{base}/flags/{lang}.svg" alt={LANGUAGE_NAMES[lang]} />
+								<img src="{base}/flags/{lang}.svg" alt={LANGUAGE_NAMES[lang]} loading="lazy" width="80" height="54" />
 								<span>{LANGUAGE_NAMES[lang]}</span>
 							</button>
 						{/each}

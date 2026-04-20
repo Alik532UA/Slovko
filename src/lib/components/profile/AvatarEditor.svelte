@@ -94,6 +94,9 @@
 					src={authStore.originalPhotoURL}
 					alt=""
 					class="google-preview-img"
+					loading="lazy"
+					width="100%"
+					height="100%"
 				/>
 			{:else if selectedColor.startsWith("flag-")}
 				{@const lang = selectedColor.replace("flag-", "")}
@@ -122,7 +125,7 @@
 					aria-label="Google Profile Picture"
 					data-testid="color-btn-google"
 				>
-					<img src={authStore.originalPhotoURL} alt="" class="google-btn-img" />
+					<img src={authStore.originalPhotoURL} alt="" class="google-btn-img" loading="lazy" width="100%" height="100%" />
 				</button>
 			{/if}
 

@@ -194,6 +194,9 @@
 								src="{base}/flags/{lang}.svg"
 								alt=""
 								class="flag-img"
+								loading="lazy"
+								width="100%"
+								height="100%"
 							/>
 						</button>
 					{/each}
@@ -237,6 +240,9 @@
 										src="{base}/flags/{lang}.svg"
 										alt=""
 										class="flag-img"
+										loading="lazy"
+										width="100%"
+										height="100%"
 									/>
 								</button>
 							{/each}
@@ -309,6 +315,9 @@
 										src="{base}/flags/{lang}.svg"
 										alt=""
 										class="flag-img"
+										loading="lazy"
+										width="100%"
+										height="100%"
 									/>
 								</button>
 							{/each}

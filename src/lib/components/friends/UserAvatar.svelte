@@ -130,7 +130,7 @@
 			{#if isFlagColor}
 				{@const lang = rawColor.replace("flag-", "")}
 				<div class="flag-bg-wrapper">
-					<img src="{base}/flags/{lang}.svg" alt="" class="flag-bg-img" />
+					<img src="{base}/flags/{lang}.svg" alt="" class="flag-bg-img" loading="lazy" width="100%" height="100%" />
 				</div>
 			{/if}
 			{#if Icon}

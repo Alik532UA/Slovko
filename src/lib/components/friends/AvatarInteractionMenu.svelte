@@ -57,6 +57,10 @@
 		position = { top, left };
 	}
 
+	import { throttle } from "$lib/utils/throttle";
+
+	const throttledUpdatePosition = throttle(updatePosition, 100);
+
 	onMount(() => {
 		tick().then(() => {
 			updatePosition();
@@ -65,9 +69,9 @@
 			menuEl?.querySelector<HTMLButtonElement>('button:not(:disabled)')?.focus();
 		});
 
-		window.addEventListener('scroll', updatePosition, true);
-		window.addEventListener('resize', updatePosition);
-		
+		window.addEventListener('scroll', throttledUpdatePosition, true);
+		window.addEventListener('resize', throttledUpdatePosition);
+
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (e.key === 'Escape') {
 				onclose();
@@ -80,13 +84,12 @@
 		}, 100);
 
 		return () => {
-			window.removeEventListener('scroll', updatePosition, true);
-			window.removeEventListener('resize', updatePosition);
+			window.removeEventListener('scroll', throttledUpdatePosition, true);
+			window.removeEventListener('resize', throttledUpdatePosition);
 			window.removeEventListener('keydown', handleKeyDown);
 			clearTimeout(timer);
 		};
 	});
-
 	function handleBackdropClick(e: MouseEvent) {
 		if (!canClose) return;
 		e.preventDefault();

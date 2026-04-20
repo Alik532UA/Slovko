@@ -68,6 +68,10 @@
 		};
 	}
 
+	import { throttle } from "$lib/utils/throttle";
+
+	const throttledUpdatePosition = throttle(updatePosition, 100);
+
 	function show() {
 		isVisible = true;
 		// Подвійний прохід для ідеального позиціонування
@@ -83,11 +87,11 @@
 
 	$effect(() => {
 		if (isVisible) {
-			window.addEventListener('resize', updatePosition);
-			window.addEventListener('scroll', updatePosition, { passive: true });
+			window.addEventListener('resize', throttledUpdatePosition);
+			window.addEventListener('scroll', throttledUpdatePosition, { passive: true });
 			return () => {
-				window.removeEventListener('resize', updatePosition);
-				window.removeEventListener('scroll', updatePosition);
+				window.removeEventListener('resize', throttledUpdatePosition);
+				window.removeEventListener('scroll', throttledUpdatePosition);
 			};
 		}
 	});
