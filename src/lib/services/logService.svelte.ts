@@ -1,4 +1,5 @@
 import { browser, dev } from "$app/environment";
+import { base } from "$app/paths";
 
 export const logConfig = {
 	auth: false,
@@ -93,7 +94,7 @@ class LogService {
 		let appVersion = "unknown";
 		if (browser) {
 			try {
-				const res = await fetch('/Slovko/app-version.json?t=' + Date.now());
+				const res = await fetch(`${base}/app-version.json?t=` + Date.now());
 				if (res.ok) {
 					const data = await res.json();
 					appVersion = data.version;

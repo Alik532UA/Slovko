@@ -236,12 +236,24 @@
 		window.addEventListener("visibilitychange", handleVisibilityChange);
 		window.addEventListener("focus", handleVisibilityChange);
 
+		// OS theme sync
+		const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+		const handleThemeChange = (e: MediaQueryListEvent) => {
+			// Синхронізація лише якщо користувач на базових темах
+			const current = settingsStore.value.theme;
+			if (current === 'dark-gray' || current === 'light-gray') {
+				settingsStore.setTheme(e.matches ? 'dark-gray' : 'light-gray');
+			}
+		};
+		mediaQuery.addEventListener('change', handleThemeChange);
+
 		return () => {
 			window.removeEventListener("resize", updateVh);
 			window.removeEventListener("orientationchange", updateVh);
 			window.removeEventListener("click", handleGlobalClick);
 			window.removeEventListener("visibilitychange", handleVisibilityChange);
 			window.removeEventListener("focus", handleVisibilityChange);
+			mediaQuery.removeEventListener('change', handleThemeChange);
 			if (handleFirstTouch)
 				window.removeEventListener("touchstart", handleFirstTouch);
 			if (handleFirstClick)
@@ -252,11 +264,15 @@
 	});
 
 	$effect(() => {
-		document.documentElement.setAttribute(
-			"data-theme",
-			settingsStore.value.theme,
-		);
+		const theme = settingsStore.value.theme;
+		document.documentElement.setAttribute("data-theme", theme);
 		document.documentElement.lang = settingsStore.value.interfaceLanguage;
+		
+		const isDark = theme === "dark-gray" || theme === "orange";
+		const meta = document.querySelector('meta[name="color-scheme"]');
+		if (meta) {
+			meta.setAttribute("content", isDark ? "dark" : "light dark");
+		}
 	});
 
 	// Відстеження зміни сторінок

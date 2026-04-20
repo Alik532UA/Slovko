@@ -19,19 +19,30 @@
 		<meta name="apple-mobile-web-app-title" content="Slovko" />
 		<meta name="mobile-web-app-capable" content="yes" />
 		<meta name="application-name" content="Slovko" />
+		<meta name="color-scheme" content="light dark" />
 		<script>
 			(function () {
 				try {
-					var stored = localStorage.getItem("slovko_settings");
-					var theme = "dark-gray";
+					var PREFIX = "slovko_";
+					var stored = localStorage.getItem(PREFIX + "settings");
+					var theme = null;
 					if (stored) {
 						var parsed = JSON.parse(stored);
 						if (parsed.theme) {
 							theme = parsed.theme === "purple" ? "orange" : parsed.theme;
 						}
 					}
+					var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+					if (!theme) {
+						theme = prefersDark ? "dark-gray" : "light-gray";
+					}
 					document.documentElement.setAttribute("data-theme", theme);
-					document.documentElement.style.colorScheme = "dark";
+					
+					var isDark = theme === "dark-gray" || theme === "orange";
+					var meta = document.querySelector('meta[name="color-scheme"]');
+					if (meta) {
+						meta.setAttribute('content', isDark ? 'dark' : 'light dark');
+					}
 				} catch (e) {}
 			})();
 		</script>
