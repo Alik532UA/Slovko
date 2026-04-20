@@ -4,6 +4,7 @@
 	import { applyUpdate, skipUpdate } from "$lib/services/versionService";
 	import { versionStore } from "$lib/stores/versionStore.svelte";
 	import { logService } from "$lib/services/logService";
+	import { localStorageProvider } from "$lib/services/storage/storageProvider";
 	import { fade, scale } from "svelte/transition";
 	import { onMount } from "svelte";
 
@@ -16,7 +17,7 @@
 
 	onMount(() => {
 		logService.log("version", "UpdateNotification mounted on screen.");
-		localVersion = localStorage.getItem("slovko_app_cache_version");
+		localVersion = localStorageProvider.getItem("app_cache_version");
 	});
 
 	async function handleUpdate() {

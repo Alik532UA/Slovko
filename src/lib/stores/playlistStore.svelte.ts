@@ -6,6 +6,7 @@ import { browser } from "$app/environment";
 import { SyncService } from "../firebase/SyncService.svelte";
 import { settingsStore } from "./settingsStore.svelte";
 import { logService } from "../services/logService";
+import { localStorageProvider } from "../services/storage/storageProvider";
 import type { WordPair, PlaylistId, CustomWord, WordKey } from "../types";
 import {
 	PlaylistStateSchema,
@@ -13,8 +14,8 @@ import {
 	type Playlist,
 } from "../data/schemas";
 
-const STORAGE_KEY = "slovko_playlists_v2"; // Increment version for new structure
-const LEGACY_STORAGE_KEY = "slovko_playlists";
+const STORAGE_KEY = "playlists_v2"; // Increment version for new structure
+const LEGACY_STORAGE_KEY = "playlists";
 const MISTAKE_REMOVAL_THRESHOLD = 3;
 
 export interface MistakeEntry {
@@ -71,7 +72,7 @@ function createPlaylistStore() {
 		if (!browser) return DEFAULT_STATE;
 		try {
 			// Try new structure first
-			const stored = localStorage.getItem(STORAGE_KEY);
+			const stored = localStorageProvider.getItem(STORAGE_KEY);
 			if (stored) {
 				const parsed = JSON.parse(stored);
 				// Use Zod to validate and fill defaults/missing fields
@@ -119,14 +120,14 @@ function createPlaylistStore() {
 	function saveState() {
 		if (browser) {
 			state = { ...state, updatedAt: Date.now() };
-			localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+			localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(state));
 			SyncService.uploadAll();
 		}
 	}
 
 	if (browser) {
 		window.addEventListener("storage", (e: StorageEvent) => {
-			if (e.key === STORAGE_KEY && e.newValue) {
+			if (e.key === "slovko_" + STORAGE_KEY && e.newValue) {
 				const parsed = JSON.parse(e.newValue);
 				const result = PlaylistStateSchema.safeParse(parsed);
 				if (result.success) {

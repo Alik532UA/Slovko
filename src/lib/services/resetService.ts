@@ -1,3 +1,5 @@
+import { localStorageProvider, sessionStorageProvider } from "./storage/storageProvider";
+
 /**
  * Reset Service — Повне очищення даних додатка
  */
@@ -28,21 +30,8 @@ export async function hardReset(askConfirmation = true) {
 	}
 
 	// 3. Clear Local Storage & Session Storage (Slovko only)
-	const PREFIX = "slovko_";
-	
-	const lsKeysToRemove: string[] = [];
-	for (let i = 0; i < localStorage.length; i++) {
-		const key = localStorage.key(i);
-		if (key?.startsWith(PREFIX)) lsKeysToRemove.push(key);
-	}
-	lsKeysToRemove.forEach(k => localStorage.removeItem(k));
-
-	const ssKeysToRemove: string[] = [];
-	for (let i = 0; i < sessionStorage.length; i++) {
-		const key = sessionStorage.key(i);
-		if (key?.startsWith(PREFIX)) ssKeysToRemove.push(key);
-	}
-	ssKeysToRemove.forEach(k => sessionStorage.removeItem(k));
+	localStorageProvider.clear();
+	sessionStorageProvider.clear();
 
 	// 4. Clear Cookies (Slovko path only)
 	const cookies = document.cookie.split(";");

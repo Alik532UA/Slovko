@@ -6,6 +6,7 @@
 import { register, init, getLocaleFromNavigator, locale } from "svelte-i18n";
 import { browser } from "$app/environment";
 import type { Language } from "../types";
+import { localStorageProvider } from "../services/storage/storageProvider";
 
 // Динамічний імпорт усіх мовних файлів як raw для підтримки BOM
 const localeModules = import.meta.glob("./translations/*.json", { query: "?raw", import: "default" });
@@ -39,7 +40,7 @@ register("pl", () => loadLocale("pl"));
 
 const DEFAULT_LOCALE: Language = "uk";
 const SUPPORTED_LOCALES: Language[] = ["uk", "en", "crh", "nl", "de", "el", "pl"];
-const STORAGE_KEY = "slovko_interfaceLanguage";
+const STORAGE_KEY = "interfaceLanguage";
 
 /**
  * Ініціалізувати i18n систему
@@ -49,7 +50,7 @@ export async function initializeI18n(): Promise<void> {
 
 	if (browser) {
 		// Спробувати отримати збережену мову
-		const stored = localStorage.getItem(STORAGE_KEY);
+		const stored = localStorageProvider.getItem(STORAGE_KEY);
 		if (stored && SUPPORTED_LOCALES.includes(stored as Language)) {
 			savedLocale = stored as Language;
 		} else {
@@ -74,7 +75,7 @@ export function setInterfaceLanguage(lang: Language): void {
 	if (SUPPORTED_LOCALES.includes(lang)) {
 		locale.set(lang);
 		if (browser) {
-			localStorage.setItem(STORAGE_KEY, lang);
+			localStorageProvider.setItem(STORAGE_KEY, lang);
 		}
 	}
 }

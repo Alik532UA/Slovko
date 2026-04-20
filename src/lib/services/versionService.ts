@@ -1,11 +1,12 @@
 import { versionStore } from "../stores/versionStore.svelte";
 import { base } from "$app/paths";
 import { logService } from "./logService";
+import { localStorageProvider } from "./storage/storageProvider";
 
 const VERSION_URL = `${base}/app-version.json`;
-const CACHE_VERSION_KEY = "slovko_app_cache_version";
-const REFUSED_VERSION_KEY = "slovko_app_update_refused_version";
-const REFUSED_AT_KEY = "slovko_app_update_refused_at";
+const CACHE_VERSION_KEY = "app_cache_version";
+const REFUSED_VERSION_KEY = "app_update_refused_version";
+const REFUSED_AT_KEY = "app_update_refused_at";
 
 const FIVE_DAYS_MS = 5 * 24 * 60 * 60 * 1000;
 
@@ -50,9 +51,9 @@ export async function checkForUpdates() {
 		const serverVersion = data.version;
 		const minVersion = data.minVersion || "0.0.0";
 
-		const cacheVersion = localStorage.getItem(CACHE_VERSION_KEY) || "0.0.0";
-		const refusedVersion = localStorage.getItem(REFUSED_VERSION_KEY);
-		const refusedAt = parseInt(localStorage.getItem(REFUSED_AT_KEY) || "0");
+		const cacheVersion = localStorageProvider.getItem(CACHE_VERSION_KEY) || "0.0.0";
+		const refusedVersion = localStorageProvider.getItem(REFUSED_VERSION_KEY);
+		const refusedAt = parseInt(localStorageProvider.getItem(REFUSED_AT_KEY) || "0");
 
 		logService.log("version", "Version comparison:", {
 			server: serverVersion,
@@ -77,7 +78,7 @@ export async function checkForUpdates() {
 
 		if (cacheVersion === "0.0.0") {
 			logService.log("version", "First visit: setting initial cache version.");
-			localStorage.setItem(CACHE_VERSION_KEY, serverVersion);
+			localStorageProvider.setItem(CACHE_VERSION_KEY, serverVersion);
 			return;
 		}
 
@@ -117,9 +118,9 @@ export async function applyUpdate() {
 		await clearCaches();
 		
 		// Оновлюємо маркер версії
-		localStorage.setItem(CACHE_VERSION_KEY, nextVersion);
-		localStorage.removeItem(REFUSED_VERSION_KEY);
-		localStorage.removeItem(REFUSED_AT_KEY);
+		localStorageProvider.setItem(CACHE_VERSION_KEY, nextVersion);
+		localStorageProvider.removeItem(REFUSED_VERSION_KEY);
+		localStorageProvider.removeItem(REFUSED_AT_KEY);
 
 		logService.log("version", "Performing HARD reload with cache buster...");
 		
@@ -145,8 +146,8 @@ export function skipUpdate() {
 		const now = Date.now();
 		logService.log("version", `Postponing version ${versionStore.currentVersion} until ${new Date(now + FIVE_DAYS_MS).toISOString()}`);
 		
-		localStorage.setItem(REFUSED_VERSION_KEY, versionStore.currentVersion);
-		localStorage.setItem(REFUSED_AT_KEY, now.toString());
+		localStorageProvider.setItem(REFUSED_VERSION_KEY, versionStore.currentVersion);
+		localStorageProvider.setItem(REFUSED_AT_KEY, now.toString());
 		
 		versionStore.setRefusal(versionStore.currentVersion, now);
 		versionStore.setUpdate(false);

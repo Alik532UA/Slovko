@@ -7,6 +7,7 @@ import { browser } from "$app/environment";
 import { SyncService } from "../firebase/SyncService.svelte";
 import { streakService } from "../services/streakService";
 import { logService } from "../services/logService";
+import { localStorageProvider } from "../services/storage/storageProvider";
 import { localEventsStore } from "../stores/localEventsStore.svelte";
 import { isMagicGap } from "../utils/gapSequence";
 import { leaderboardSyncService } from "../services/leaderboardSyncService";
@@ -20,8 +21,8 @@ import {
 	type DailyActivity,
 } from "../data/schemas";
 
-const STORAGE_KEY = "slovko_progress";
-const ACTIVITY_STORAGE_KEY = "slovko_daily_activity";
+const STORAGE_KEY = "progress";
+const ACTIVITY_STORAGE_KEY = "daily_activity";
 
 /** Значення за замовчуванням */
 const DEFAULT_PROGRESS: ProgressState = ProgressStateSchema.parse({});
@@ -79,7 +80,7 @@ function createProgressStore() {
 		if (!browser) return DEFAULT_PROGRESS;
 
 		try {
-			const stored = localStorage.getItem(STORAGE_KEY);
+			const stored = localStorageProvider.getItem(STORAGE_KEY);
 			if (stored) {
 				const parsed = JSON.parse(stored);
 				const validated = ProgressStateSchema.parse(parsed);
@@ -228,8 +229,8 @@ function createProgressStore() {
 		if (browser) {
 			// 1. Оновлюємо localStorage миттєво (SSoT для поточної сесії та UI)
 			progress.lastUpdated = Date.now();
-			localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-			localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(dailyActivity));
+			localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(progress));
+			localStorageProvider.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(dailyActivity));
 
 			// 2. Дебаунсимо тільки завантаження в хмару та важкі операції очищення
 			if (saveTimeout) clearTimeout(saveTimeout);
@@ -261,16 +262,16 @@ function createProgressStore() {
 
 	if (browser) {
 		window.addEventListener("storage", (e) => {
-			if (e.key === STORAGE_KEY && e.newValue) {
+			if (e.key === "slovko_" + STORAGE_KEY && e.newValue) {
 				const parsed = JSON.parse(e.newValue);
 				const result = ProgressStateSchema.safeParse(parsed);
 				if (result.success) {
 					progress = result.data;
 				}
 			}
-			if (e.key === ACTIVITY_STORAGE_KEY && e.newValue) {
+			if (e.key === "slovko_" + ACTIVITY_STORAGE_KEY && e.newValue) {
 				const parsed = JSON.parse(e.newValue);
-				const result = DailyActivitySchema.safeParse(parsed);
+				const result = DailyActivitySchema.parse(parsed);
 				if (result.success) {
 					dailyActivity = result.data;
 				}
@@ -294,7 +295,7 @@ function createProgressStore() {
 				progress = migrateStatistics(validated);
 
 				if (browser) {
-					localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+					localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(progress));
 				}
 			} catch (e: unknown) {
 				console.error("Failed to sync progress: invalid data", e);
@@ -306,7 +307,7 @@ function createProgressStore() {
 			try {
 				dailyActivity = DailyActivitySchema.parse(newData);
 				if (browser) {
-					localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(dailyActivity));
+					localStorageProvider.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(dailyActivity));
 				}
 			} catch (e: unknown) {
 				console.error("Failed to sync daily activity: invalid data", e);
