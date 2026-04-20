@@ -1,0 +1,7 @@
+node_modules/
+build/
+dist/
+.svelte-kit/
+.private/
+*.lock
+package-lock.json

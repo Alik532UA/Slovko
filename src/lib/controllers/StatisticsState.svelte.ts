@@ -8,7 +8,7 @@ import {
 	getDoc,
 } from "firebase/firestore";
 import { db, auth } from "../firebase/config";
-import { logService } from "./logService";
+import { logService } from "../services/logService";
 import { progressStore } from "../stores/progressStore.svelte";
 import { 
 	type DailyActivity, 
@@ -17,10 +17,10 @@ import {
 } from "../data/schemas";
 
 /**
- * StatisticsService — сервіс для роботи з історією активності та прогресом.
+ * StatisticsState — сервіс для роботи з історією активності та прогресом.
  * Використовує Svelte Runes для реактивності, де це необхідно.
  */
-class StatisticsServiceClass {
+class StatisticsStateClass {
 	// Реактивні дані для календаря або поточної статистики
 	historyCache = $state<Record<string, DailyActivity>>({});
 	isLoading = $state(false);
@@ -262,4 +262,4 @@ class StatisticsServiceClass {
 	}
 }
 
-export const statisticsService = new StatisticsServiceClass();
+export const statisticsState = new StatisticsStateClass();

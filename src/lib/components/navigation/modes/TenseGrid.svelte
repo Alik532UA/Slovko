@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
-	import { ALL_TENSES } from "$lib/types";
+	import { ALL_TENSES } from "$lib/types/index";
 	import { APP_ICONS } from "$lib/config/icons";
 	import { Check } from "lucide-svelte";
 

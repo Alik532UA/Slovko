@@ -18,7 +18,7 @@ import { progressStore } from "../stores/progressStore.svelte";
 import { playlistStore } from "../stores/playlistStore.svelte";
 import { friendsStore } from "../stores/friendsStore.svelte";
 import { logService } from "../services/logService";
-import { statisticsService } from "../services/statisticsService.svelte";
+import { statisticsState } from "../controllers/StatisticsState.svelte";
 import { dev } from "$app/environment";
 import {
 	AppSettingsSchema,
@@ -294,10 +294,10 @@ class SyncServiceClass {
 		if (dev && typeof window !== "undefined") {
 			(window as any).wordApp = {
 				sync: this,
-				stats: statisticsService,
+				stats: statisticsState,
 				restorePoints: (amount: number, reason: string) => this.restorePoints(amount, reason),
-				recover: () => statisticsService.recoverProgressFromHistory(),
-				getHistory: (start: string, end: string) => statisticsService.getHistoryByRange(start, end)
+				recover: () => statisticsState.recoverProgressFromHistory(),
+				getHistory: (start: string, end: string) => statisticsState.getHistoryByRange(start, end)
 			};
 		}
 	}
@@ -343,7 +343,7 @@ class SyncServiceClass {
 	private async checkForMissingActiveDays() {
 		try {
 			logService.warn("sync", "Triggering active days recovery...");
-			const count = await statisticsService.recoverActiveDaysCount();
+			const count = await statisticsState.recoverActiveDaysCount();
 			if (count > 0) {
 				this.uploadAll();
 			} else {
@@ -368,7 +368,7 @@ class SyncServiceClass {
 
 			if (!snapshot.empty) {
 				logService.warn("sync", "Found orphaned history. Recovering...");
-				await statisticsService.recoverProgressFromHistory();
+				await statisticsState.recoverProgressFromHistory();
 				this.uploadAll();
 			}
 		} catch (e) {

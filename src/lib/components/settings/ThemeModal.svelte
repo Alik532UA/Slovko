@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
-	import type { AppTheme } from "$lib/types";
+	import type { AppTheme } from "$lib/types/index";
 	import { Check } from "lucide-svelte";
 	import { _ } from "svelte-i18n";
 	import BaseModal from "../ui/BaseModal.svelte";

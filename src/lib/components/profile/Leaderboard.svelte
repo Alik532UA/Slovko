@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { fade, slide } from "svelte/transition";
-	import { ALL_LEVELS } from "$lib/types";
+	import { ALL_LEVELS } from "$lib/types/index";
 	import {
 		Medal,
 		Crown,

@@ -7,10 +7,10 @@
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { goto } from "$app/navigation";
 	import { _ } from "svelte-i18n";
-	import { ALL_LEVELS, ALL_TOPICS, ALL_TENSES, type CEFRLevel } from "$lib/types";
+	import { ALL_LEVELS, ALL_TOPICS, ALL_TENSES, type CEFRLevel } from "$lib/types/index";
 	import { playlistStore } from "$lib/stores/playlistStore.svelte";
 	import BaseTooltip from "../ui/BaseTooltip.svelte";
-	import { navigationState } from "$lib/services/navigationState.svelte";
+	import { navigationState } from "$lib/controllers/NavigationState.svelte";
 
 	// Отримати поточний лейбл
 	const currentLabel = $derived.by(() => {

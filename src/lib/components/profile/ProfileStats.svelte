@@ -14,7 +14,7 @@
 	import { speakText } from "$lib/services/speechService";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import type { LevelStats } from "$lib/data/schemas";
-	import { ALL_LEVELS } from "$lib/types";
+	import { ALL_LEVELS } from "$lib/types/index";
 	import SegmentedControl from "../ui/SegmentedControl.svelte";
 
 	interface Props {

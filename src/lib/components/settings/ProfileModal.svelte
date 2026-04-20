@@ -5,7 +5,7 @@
 	import { authStore } from "../../firebase/authStore.svelte";
 	import { AuthService } from "../../firebase/AuthService";
 	import { page } from "$app/stores";
-	import { navigationState } from "../../services/navigationState.svelte";
+	import { navigationState } from "../../controllers/NavigationState.svelte";
 
 	// Sub-components
 	import AvatarEditor from "../profile/AvatarEditor.svelte";

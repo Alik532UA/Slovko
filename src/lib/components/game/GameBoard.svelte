@@ -15,7 +15,7 @@
 	import { untrack } from "svelte";
 	import { fade } from "svelte/transition";
 	import { _ } from "svelte-i18n";
-	import type { ActiveCard, WordPair } from "$lib/types";
+	import type { ActiveCard, WordPair } from "$lib/types/index";
 	import type { GameData } from "$lib/services/gameDataService";
 
 	let { gameData }: { gameData?: GameData } = $props();

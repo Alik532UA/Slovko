@@ -271,7 +271,7 @@ function createProgressStore() {
 			}
 			if (e.key === "slovko_" + ACTIVITY_STORAGE_KEY && e.newValue) {
 				const parsed = JSON.parse(e.newValue);
-				const result = DailyActivitySchema.parse(parsed);
+				const result = DailyActivitySchema.safeParse(parsed);
 				if (result.success) {
 					dailyActivity = result.data;
 				}

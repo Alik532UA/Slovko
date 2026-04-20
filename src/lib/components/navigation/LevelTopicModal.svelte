@@ -7,12 +7,12 @@
 	import { fade } from "svelte/transition";
 	import { goto } from "$app/navigation";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
-	import type { GameMode, PlaylistId, TenseForm } from "$lib/types";
+	import type { GameMode, PlaylistId, TenseForm } from "$lib/types/index";
 	import BaseModal from "../ui/BaseModal.svelte";
 	import SegmentedControl from "../ui/SegmentedControl.svelte";
 	import { smoothHeight } from "$lib/actions/smoothHeight";
 	import { page } from "$app/stores";
-	import { navigationState } from "$lib/services/navigationState.svelte";
+	import { navigationState } from "$lib/controllers/NavigationState.svelte";
 	import { Gamepad2, Layers } from "lucide-svelte";
 
 	// Mode Components

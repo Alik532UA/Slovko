@@ -8,7 +8,7 @@
 		WordKey,
 		CustomWord,
 		TranslationDictionary,
-	} from "$lib/types";
+	} from "$lib/types/index";
 	import { THEME_COLORS } from "$lib/config/colors";
 	import { slide } from "svelte/transition";
 	import { untrack } from "svelte";

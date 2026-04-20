@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { Target, Trophy } from "lucide-svelte";
-	import { navigationState } from "../../services/navigationState.svelte";
+	import { navigationState } from "../../controllers/NavigationState.svelte";
 	import { page } from "$app/stores";
 	import { authStore } from "../../firebase/authStore.svelte";
 	import { progressStore } from "../../stores/progressStore.svelte";

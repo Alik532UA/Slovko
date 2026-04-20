@@ -24,7 +24,7 @@
 	} from "$lib/services/analyticsService";
 	import { pwaStore } from "$lib/stores/pwaStore.svelte";
 	import { page } from "$app/stores";
-	import { navigationState } from "$lib/services/navigationState.svelte";
+	import { navigationState } from "$lib/controllers/NavigationState.svelte";
 	import { migrateStorageKeys } from "$lib/utils/storageMigration";
 
 	// Modals

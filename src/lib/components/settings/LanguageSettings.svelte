@@ -9,7 +9,7 @@
 	import { logService } from "$lib/services/logService";
 	import VoiceSelectionModal from "./VoiceSelectionModal.svelte";
 	import { setInterfaceLanguage, LANGUAGES } from "$lib/i18n/init";
-	import { LANGUAGE_NAMES, type Language } from "$lib/types";
+	import { LANGUAGE_NAMES, type Language } from "$lib/types/index";
 	import { base } from "$app/paths";
 	import { onDestroy } from "svelte";
 	import { fade } from "svelte/transition";

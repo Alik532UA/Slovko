@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
-	import type { TenseForm } from "$lib/types";
+	import type { TenseForm } from "$lib/types/index";
 	import { Plus, Minus, HelpCircle, Layers, LayoutGrid } from "lucide-svelte";
 	import SegmentedControl from "../../ui/SegmentedControl.svelte";
 

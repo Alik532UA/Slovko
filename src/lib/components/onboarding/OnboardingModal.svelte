@@ -4,7 +4,7 @@
 	import { waitLocale, _ } from "svelte-i18n";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { setInterfaceLanguage, LANGUAGES } from "$lib/i18n/init";
-	import { LANGUAGE_NAMES, type Language } from "$lib/types";
+	import { LANGUAGE_NAMES, type Language } from "$lib/types/index";
 	import { base } from "$app/paths";
 	import { Languages, Speech, Captions, Download, UserCheck, Heart, GraduationCap, Lightbulb } from "lucide-svelte";
 	import BaseModal from "$lib/components/ui/BaseModal.svelte";

@@ -13,7 +13,7 @@
 	import { notificationStore } from "$lib/stores/notificationStore.svelte";
 	import PlaylistModal from "../PlaylistModal.svelte";
 	import { PLAYLIST_ICONS_MAP } from "$lib/config/icons";
-	import type { PlaylistId } from "$lib/types";
+	import type { PlaylistId } from "$lib/types/index";
 
 	interface Props {
 		onselect: (id: PlaylistId) => void;

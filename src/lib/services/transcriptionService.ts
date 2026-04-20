@@ -3,7 +3,7 @@
  * Сервіс-фасад для генерації транскрипції.
  */
 
-import type { Language } from "$lib/types";
+import type { Language } from "$lib/types/index";
 import { generateUkIPA, transliterateUkToLatin } from "./transcription/uk";
 import { generateCrhIPA } from "./transcription/crh";
 import { generateNlIPA } from "./transcription/nl";

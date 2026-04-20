@@ -4,7 +4,7 @@
 	import { FriendsService } from "$lib/firebase/FriendsService";
 	import { authStore } from "$lib/firebase/authStore.svelte";
 	import { onMount } from "svelte";
-	import type { UserPrivacySettings } from "$lib/types";
+	import type { UserPrivacySettings } from "$lib/types/index";
 	import Toggle from "$lib/components/ui/Toggle.svelte";
 	import BaseModal from "$lib/components/ui/BaseModal.svelte";
 

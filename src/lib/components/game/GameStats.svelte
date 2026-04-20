@@ -20,7 +20,7 @@
 	import { untrack } from "svelte";
 	import BaseTooltip from "../ui/BaseTooltip.svelte";
 	import BaseModal from "../ui/BaseModal.svelte";
-	import { navigationState } from "../../services/navigationState.svelte";
+	import { navigationState } from "../../controllers/NavigationState.svelte";
 
 	const gameController = getGameController();
 

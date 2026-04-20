@@ -8,7 +8,7 @@
 	import { Check } from "lucide-svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { logService } from "$lib/services/logService";
-	import type { Language } from "$lib/types";
+	import type { Language } from "$lib/types/index";
 	import { findBestVoice } from "$lib/services/speechService";
 	import { tick, onMount } from "svelte";
 	import BaseModal from "../ui/BaseModal.svelte";

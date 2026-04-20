@@ -4,7 +4,7 @@
 	 * SoC: тільки відображення та передача подій
 	 * Підтримка транскрипції та озвучування
 	 */
-	import type { ActiveCard } from "$lib/types";
+	import type { ActiveCard } from "$lib/types/index";
 	import { speakText } from "$lib/services/speechService";
 	import type { Snippet } from "svelte";
 

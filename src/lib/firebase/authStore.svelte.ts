@@ -3,7 +3,7 @@ import { SyncService } from "./SyncService.svelte";
 import { PresenceService } from "./PresenceService.svelte";
 import { FriendsService } from "./FriendsService";
 import { friendsStore } from "../stores/friendsStore.svelte";
-import { statisticsService } from "../services/statisticsService.svelte";
+import { statisticsState } from "../controllers/StatisticsState.svelte";
 import { notificationStore } from "../stores/notificationStore.svelte";
 import { settingsStore } from "../stores/settingsStore.svelte";
 import type { User } from "firebase/auth";
@@ -84,7 +84,7 @@ function createAuthStore() {
 		// Завжди очищаємо кеш лідерборду та інші сервіси при зміні користувача, 
 		// щоб уникнути фантомних даних
 		FriendsService.clearCache();
-		statisticsService.clearCache();
+		statisticsState.clearCache();
 		notificationStore.clear();
 		settingsStore.resetUserSpecificData();
 
