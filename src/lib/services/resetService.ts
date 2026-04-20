@@ -21,21 +21,36 @@ export async function hardReset(askConfirmation = true) {
 	if ("caches" in window) {
 		const keys = await caches.keys();
 		for (const key of keys) {
-			await caches.delete(key);
+			if (key.startsWith("slovko-")) {
+				await caches.delete(key);
+			}
 		}
 	}
 
-	// 3. Clear Local Storage & Session Storage
-	localStorage.clear();
-	sessionStorage.clear();
+	// 3. Clear Local Storage & Session Storage (Slovko only)
+	const PREFIX = "slovko_";
+	
+	const lsKeysToRemove: string[] = [];
+	for (let i = 0; i < localStorage.length; i++) {
+		const key = localStorage.key(i);
+		if (key?.startsWith(PREFIX)) lsKeysToRemove.push(key);
+	}
+	lsKeysToRemove.forEach(k => localStorage.removeItem(k));
 
-	// 4. Clear Cookies
+	const ssKeysToRemove: string[] = [];
+	for (let i = 0; i < sessionStorage.length; i++) {
+		const key = sessionStorage.key(i);
+		if (key?.startsWith(PREFIX)) ssKeysToRemove.push(key);
+	}
+	ssKeysToRemove.forEach(k => sessionStorage.removeItem(k));
+
+	// 4. Clear Cookies (Slovko path only)
 	const cookies = document.cookie.split(";");
 	for (let i = 0; i < cookies.length; i++) {
 		const cookie = cookies[i];
 		const eqPos = cookie.indexOf("=");
-		const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-		document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+		const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
+		document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/Slovko/";
 	}
 
 	// 5. Force Reload

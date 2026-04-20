@@ -2,7 +2,7 @@
 import { build, files, prerendered, version } from "$service-worker";
 
 // Назва кешу з версією для автоматичного оновлення
-const CACHE = `cache-${version}`;
+const CACHE = `slovko-cache-${version}`;
 
 // Список всіх файлів для попереднього кешування
 const ASSETS = [
@@ -19,11 +19,13 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
-	// Видаляємо старі кеші
+	// Видаляємо старі кеші (тільки Slovko)
 	event.waitUntil(
 		caches.keys().then(async (keys) => {
 			for (const key of keys) {
-				if (key !== CACHE) await caches.delete(key);
+				if (key.startsWith("slovko-") && key !== CACHE) {
+					await caches.delete(key);
+				}
 			}
 			// Змушуємо SW одразу керувати всіма вкладками
 			await self.clients.claim();

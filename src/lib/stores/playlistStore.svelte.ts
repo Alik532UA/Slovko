@@ -13,8 +13,8 @@ import {
 	type Playlist,
 } from "../data/schemas";
 
-const STORAGE_KEY = "wordApp_playlists_v2"; // Increment version for new structure
-const LEGACY_STORAGE_KEY = "wordApp_playlists";
+const STORAGE_KEY = "slovko_playlists_v2"; // Increment version for new structure
+const LEGACY_STORAGE_KEY = "slovko_playlists";
 const MISTAKE_REMOVAL_THRESHOLD = 3;
 
 export interface MistakeEntry {

@@ -39,7 +39,7 @@ register("pl", () => loadLocale("pl"));
 
 const DEFAULT_LOCALE: Language = "uk";
 const SUPPORTED_LOCALES: Language[] = ["uk", "en", "crh", "nl", "de", "el", "pl"];
-const STORAGE_KEY = "wordApp_interfaceLanguage";
+const STORAGE_KEY = "slovko_interfaceLanguage";
 
 /**
  * Ініціалізувати i18n систему

@@ -18,7 +18,7 @@ import {
 } from "../types";
 import { AppSettingsSchema, type AppSettings } from "../data/schemas";
 
-const STORAGE_KEY = "wordApp_settings";
+const STORAGE_KEY = "settings";
 
 const DEFAULT_SETTINGS: AppSettings = AppSettingsSchema.parse({});
 
@@ -98,7 +98,7 @@ function createSettingsStore() {
 
 	if (browser) {
 		window.addEventListener("storage", (e) => {
-			if (e.key === STORAGE_KEY && e.newValue) {
+			if (e.key === "slovko_" + STORAGE_KEY && e.newValue) {
 				const parsed = JSON.parse(e.newValue);
 				const result = AppSettingsSchema.safeParse(parsed);
 				if (result.success) {

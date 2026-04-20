@@ -3,9 +3,9 @@ import { base } from "$app/paths";
 import { logService } from "./logService";
 
 const VERSION_URL = `${base}/app-version.json`;
-const CACHE_VERSION_KEY = "app_cache_version";
-const REFUSED_VERSION_KEY = "app_update_refused_version";
-const REFUSED_AT_KEY = "app_update_refused_at";
+const CACHE_VERSION_KEY = "slovko_app_cache_version";
+const REFUSED_VERSION_KEY = "slovko_app_update_refused_version";
+const REFUSED_AT_KEY = "slovko_app_update_refused_at";
 
 const FIVE_DAYS_MS = 5 * 24 * 60 * 60 * 1000;
 
@@ -171,8 +171,13 @@ async function clearCaches() {
 	if ("caches" in window) {
 		try {
 			const keys = await caches.keys();
-			await Promise.all(keys.map(key => caches.delete(key)));
-			logService.log("version", "Cache Storage cleared.");
+			// Видаляємо лише кеші проєкту Slovko
+			await Promise.all(
+				keys
+					.filter((key) => key.startsWith("slovko-"))
+					.map((key) => caches.delete(key))
+			);
+			logService.log("version", "Cache Storage cleared (Slovko only).");
 		} catch (e) {
 			logService.error("version", "Cache deletion failed:", e);
 		}

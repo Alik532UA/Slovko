@@ -25,6 +25,7 @@
 	import { pwaStore } from "$lib/stores/pwaStore.svelte";
 	import { page } from "$app/stores";
 	import { navigationState } from "$lib/services/navigationState.svelte";
+	import { migrateStorageKeys } from "$lib/utils/storageMigration";
 
 	// Modals
 	import LevelTopicModal from "$lib/components/navigation/LevelTopicModal.svelte";
@@ -70,6 +71,7 @@
 	};
 
 	onMount(() => {
+		migrateStorageKeys();
 		logService.log("version", "Root layout onMount started");
 
 		// Signal to the global error diagnostics that Svelte has mounted

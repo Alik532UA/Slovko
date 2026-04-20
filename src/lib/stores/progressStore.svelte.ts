@@ -20,8 +20,8 @@ import {
 	type DailyActivity,
 } from "../data/schemas";
 
-const STORAGE_KEY = "wordApp_progress";
-const ACTIVITY_STORAGE_KEY = "wordApp_daily_activity";
+const STORAGE_KEY = "slovko_progress";
+const ACTIVITY_STORAGE_KEY = "slovko_daily_activity";
 
 /** Значення за замовчуванням */
 const DEFAULT_PROGRESS: ProgressState = ProgressStateSchema.parse({});

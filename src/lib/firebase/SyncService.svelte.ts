@@ -194,7 +194,7 @@ class SyncServiceClass {
 			logService.log("sync", "Migration to v2 completed successfully.");
 
 			if (typeof window !== "undefined") {
-				localStorage.removeItem("wordApp_playlists");
+				localStorage.removeItem("slovko_playlists");
 			}
 		} catch (err) {
 			logService.error("sync", "Migration to v2 failed:", err);

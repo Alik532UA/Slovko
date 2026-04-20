@@ -22,7 +22,7 @@
 		<script>
 			(function () {
 				try {
-					var stored = localStorage.getItem("wordApp_settings");
+					var stored = localStorage.getItem("slovko_settings");
 					var theme = "dark-gray";
 					if (stored) {
 						var parsed = JSON.parse(stored);
@@ -100,7 +100,7 @@
 
 					document.getElementById('err-clear-btn').addEventListener('click', function() {
 						this.textContent = '⏳ Очищення...';
-						// Clear SW + Cache API
+						// Clear SW + Cache API (Slovko only)
 						Promise.resolve()
 							.then(function() {
 								if ('serviceWorker' in navigator) {
@@ -110,7 +110,9 @@
 							})
 							.then(function() {
 								if ('caches' in window) {
-									return caches.keys().then(function(keys) { return Promise.all(keys.map(function(k) { return caches.delete(k); })); });
+									return caches.keys().then(function(keys) { 
+										return Promise.all(keys.filter(function(k) { return k.startsWith('slovko-'); }).map(function(k) { return caches.delete(k); })); 
+									});
 								}
 							})
 							.then(function() {
@@ -160,12 +162,12 @@
 
 					// Try to get localStorage info
 					try {
-						var cacheVer = localStorage.getItem('app_cache_version') || 'none';
+						var cacheVer = localStorage.getItem('slovko_app_cache_version') || 'none';
 						lines.push('');
 						lines.push('=== CACHE ===');
-						lines.push('app_cache_version: ' + cacheVer);
+						lines.push('slovko_app_cache_version: ' + cacheVer);
 
-						var settingsRaw = localStorage.getItem('wordApp_settings');
+						var settingsRaw = localStorage.getItem('slovko_settings');
 						if (settingsRaw) {
 							var s = JSON.parse(settingsRaw);
 							lines.push('settings.mode: ' + (s.mode || 'undefined'));

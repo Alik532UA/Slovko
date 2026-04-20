@@ -16,7 +16,7 @@
 
 	onMount(() => {
 		logService.log("version", "UpdateNotification mounted on screen.");
-		localVersion = localStorage.getItem("app_cache_version");
+		localVersion = localStorage.getItem("slovko_app_cache_version");
 	});
 
 	async function handleUpdate() {
