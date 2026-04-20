@@ -4,7 +4,7 @@
  */
 
 import { browser } from "$app/environment";
-import { logService } from "../services/logService";
+import { logService } from "../services/logService.svelte";
 
 interface BeforeInstallPromptEvent extends Event {
 	prompt: () => Promise<void>;

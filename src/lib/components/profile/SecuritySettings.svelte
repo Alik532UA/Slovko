@@ -2,7 +2,7 @@
 	import { _ } from "svelte-i18n";
 	import { ArrowLeft } from "lucide-svelte";
 	import { authStore } from "../../firebase/authStore.svelte";
-	import { logService } from "../../services/logService";
+	import { logService } from "../../services/logService.svelte";
 
 	interface Props {
 		mode: "change-password" | "delete-account";

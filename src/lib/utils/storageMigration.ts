@@ -1,3 +1,4 @@
+import { logService } from "../services/logService.svelte";
 const STORAGE_PREFIX = 'slovko_';
 const MIGRATION_KEY = STORAGE_PREFIX + '__migrated_v1';
 
@@ -42,6 +43,6 @@ export function migrateStorageKeys() {
     
     localStorage.setItem(MIGRATION_KEY, 'true');
     if (migratedCount > 0) {
-        console.log(`[Storage Migration] Migrated ${migratedCount} keys to 'slovko_' prefix.`);
+        logService.log("debug", `[Storage Migration] Migrated ${migratedCount} keys to 'slovko_' prefix.`);
     }
 }

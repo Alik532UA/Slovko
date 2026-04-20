@@ -1,5 +1,5 @@
 import { FriendsService } from "../firebase/FriendsService";
-import { logService } from "./logService";
+import { logService } from "./logService.svelte";
 import { db } from "../firebase/config";
 import { doc, getDoc } from "firebase/firestore";
 

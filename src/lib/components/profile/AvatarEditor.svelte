@@ -16,7 +16,7 @@
 		Zap,
 		Target,
 	} from "lucide-svelte";
-	import { logService } from "../../services/logService";
+	import { logService } from "../../services/logService.svelte";
 	import { THEME_COLORS } from "../../config/colors";
 	import { untrack } from "svelte";
 	import { authStore } from "../../firebase/authStore.svelte";

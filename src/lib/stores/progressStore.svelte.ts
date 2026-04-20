@@ -6,7 +6,7 @@
 import { browser } from "$app/environment";
 import { SyncService } from "../firebase/SyncService.svelte";
 import { streakService } from "../services/streakService";
-import { logService } from "../services/logService";
+import { logService } from "../services/logService.svelte";
 import { localStorageProvider } from "../services/storage/storageProvider";
 import { localEventsStore } from "../stores/localEventsStore.svelte";
 import { isMagicGap } from "../utils/gapSequence";
@@ -68,7 +68,7 @@ function createProgressStore() {
 				}
 			}
 		} catch (err) {
-			console.error("[DEBUG-LEADER] Error in checkLeaderboard", err);
+			logService.error("debug", "[DEBUG-LEADER] Error in checkLeaderboard", err);
 		}
 	}
 
@@ -88,7 +88,7 @@ function createProgressStore() {
 				return migrateStatistics(validated);
 			}
 		} catch (e) {
-			console.warn("Failed to load progress:", e);
+			logService.warn("debug", "Failed to load progress:", e);
 		}
 		return DEFAULT_PROGRESS;
 	}
@@ -218,7 +218,7 @@ function createProgressStore() {
 				}
 			}
 		} catch (e) {
-			console.warn("Failed to load daily activity:", e);
+			logService.warn("debug", "Failed to load daily activity:", e);
 		}
 		return DailyActivitySchema.parse({ date: getTodayDate() });
 	}
@@ -298,7 +298,7 @@ function createProgressStore() {
 					localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(progress));
 				}
 			} catch (e: unknown) {
-				console.error("Failed to sync progress: invalid data", e);
+				logService.error("debug", "Failed to sync progress: invalid data", e);
 			}
 		},
 
@@ -310,13 +310,13 @@ function createProgressStore() {
 					localStorageProvider.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(dailyActivity));
 				}
 			} catch (e: unknown) {
-				console.error("Failed to sync daily activity: invalid data", e);
+				logService.error("debug", "Failed to sync daily activity: invalid data", e);
 			}
 		},
 
 		/** Записати правильну відповідь */
 		recordCorrect(wordKey: string, levelId: string = "unknown"): void {
-			console.log("[DEBUG-LEADER] recordCorrect called", { wordKey, levelId });
+			logService.log("debug", "[DEBUG-LEADER] recordCorrect called", { wordKey, levelId });
 			try {
 				// Update Daily Activity
 				const today = getTodayDate();
@@ -380,7 +380,7 @@ function createProgressStore() {
 				}
 
 				const currentTotalCorrect = progress.totalCorrect + 1;
-				checkLeaderboard(currentTotalCorrect).catch(console.error);
+				checkLeaderboard(currentTotalCorrect).catch((e) => logService.error("debug", "Promise rejection:", e));
 
 				// Логіка по рівнях
 				const currentLevelStats = progress.levelStats[levelId] || {
@@ -436,7 +436,7 @@ function createProgressStore() {
 
 				saveProgress();
 			} catch (e) {
-				console.error("[DEBUG-LEADER] CRITICAL ERROR in recordCorrect", e);
+				logService.error("debug", "[DEBUG-LEADER] CRITICAL ERROR in recordCorrect", e);
 			}
 		},
 

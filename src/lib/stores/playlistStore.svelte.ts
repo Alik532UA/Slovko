@@ -5,7 +5,7 @@
 import { browser } from "$app/environment";
 import { SyncService } from "../firebase/SyncService.svelte";
 import { settingsStore } from "./settingsStore.svelte";
-import { logService } from "../services/logService";
+import { logService } from "../services/logService.svelte";
 import { localStorageProvider } from "../services/storage/storageProvider";
 import type { WordPair, PlaylistId, CustomWord, WordKey } from "../types";
 import {
@@ -87,7 +87,7 @@ function createPlaylistStore() {
 				return PlaylistStateSchema.parse(migrateFromLegacy(oldData));
 			}
 		} catch (e) {
-			console.error("Failed to load playlists", e);
+			logService.error("debug", "Failed to load playlists", e);
 		}
 		return DEFAULT_STATE;
 	}
@@ -169,7 +169,7 @@ function createPlaylistStore() {
 					localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 				}
 			} catch (e: unknown) {
-				console.error("Failed to sync playlists: invalid data", e);
+				logService.error("debug", "Failed to sync playlists: invalid data", e);
 			}
 		},
 
@@ -412,7 +412,7 @@ function createPlaylistStore() {
 					return this.getPlaylist(newPlaylist.id) || null;
 				}
 			} catch (e) {
-				console.error("Failed to import playlist", e);
+				logService.error("debug", "Failed to import playlist", e);
 			}
 			return null;
 		},

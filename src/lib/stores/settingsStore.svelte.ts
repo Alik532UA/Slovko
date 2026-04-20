@@ -6,7 +6,7 @@
 import { browser } from "$app/environment";
 import { SyncService } from "../firebase/SyncService.svelte";
 import { localStorageProvider } from "../services/storage/storageProvider";
-import { logService } from "../services/logService";
+import { logService } from "../services/logService.svelte";
 import {
 	ALL_LEVELS,
 	type Language,
@@ -58,7 +58,7 @@ function createSettingsStore() {
 					logService.log("settings", "Validated settings:", validated);
 					return validated;
 				} else {
-					console.error(
+					logService.error("debug", 
 						"CRITICAL: Invalid settings found in localStorage. Resetting to defaults:",
 						result.error.format(),
 					);
@@ -67,7 +67,7 @@ function createSettingsStore() {
 				}
 			}
 		} catch (e) {
-			console.error("Failed to load settings from storage:", e);
+			logService.error("debug", "Failed to load settings from storage:", e);
 		}
 		return DEFAULT_SETTINGS;
 	}

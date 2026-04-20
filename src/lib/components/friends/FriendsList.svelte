@@ -9,7 +9,7 @@
 		Loader2,
 		Settings,
 	} from "lucide-svelte";
-	import { logService } from "$lib/services/logService";
+	import { logService } from "$lib/services/logService.svelte";
 	import { friendsStore } from "$lib/stores/friendsStore.svelte";
 	import ErrorBoundary from "../ui/ErrorBoundary.svelte";
 	import UserAvatar from "./UserAvatar.svelte";

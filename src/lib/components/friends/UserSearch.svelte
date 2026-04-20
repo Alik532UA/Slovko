@@ -12,7 +12,7 @@
 	} from "$lib/firebase/FriendsService";
 	import { PresenceService, type DiscoveryUser } from "$lib/firebase/PresenceService.svelte";
 	import { authStore } from "$lib/firebase/authStore.svelte";
-	import { logService } from "$lib/services/logService";
+	import { logService } from "$lib/services/logService.svelte";
 	import UserAvatar from "./UserAvatar.svelte";
 	import FollowButton from "./FollowButton.svelte";
 	import { onDestroy } from "svelte";

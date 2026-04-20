@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { logService } from "$lib/services/logService.svelte";
 	import { _ } from "svelte-i18n";
 	import {
 		Bookmark,
@@ -51,7 +52,7 @@
 				notificationStore.error($_("playlists.importInvalidFormat"));
 			}
 		} catch (err) {
-			console.error("Import failed", err);
+			logService.error("debug", "Import failed", err);
 			notificationStore.error($_("playlists.importError"));
 		}
 		(e.target as HTMLInputElement).value = "";
@@ -73,7 +74,7 @@
 				notificationStore.error($_("playlists.importInvalidFormat"));
 			}
 		} catch (err) {
-			console.error("Clipboard access failed", err);
+			logService.error("debug", "Clipboard access failed", err);
 			notificationStore.error($_("playlists.clipboardError"));
 		}
 	}

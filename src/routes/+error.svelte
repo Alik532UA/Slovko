@@ -5,7 +5,7 @@
 	 * Includes debug logs copy functionality.
 	 */
 	import { page } from "$app/stores";
-	import { logService } from "$lib/services/logService";
+	import { logService } from "$lib/services/logService.svelte";
 	import { onMount } from "svelte";
 
 	let logsCopied = $state(false);
@@ -36,7 +36,7 @@ ${logs}
 			logsCopied = true;
 			setTimeout(() => logsCopied = false, 2000);
 		} catch (err) {
-			console.error("Failed to copy logs:", err);
+			logService.error("debug", "Failed to copy logs:", err);
 			// Fallback alert if clipboard API fails
 			alert("Failed to copy logs to clipboard. Check console.");
 		}

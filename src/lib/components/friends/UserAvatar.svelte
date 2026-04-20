@@ -17,7 +17,7 @@
 	} from "lucide-svelte";
 	import { PresenceService } from "$lib/firebase/PresenceService.svelte";
 	import { authStore } from "$lib/firebase/authStore.svelte";
-	import { logService } from "$lib/services/logService";
+	import { logService } from "$lib/services/logService.svelte";
 	import { base } from "$app/paths";
 	import AvatarInteractionMenu from "./AvatarInteractionMenu.svelte";
 	import type { Component } from "svelte";

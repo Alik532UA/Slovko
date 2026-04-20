@@ -1,4 +1,4 @@
-import { logService } from "../services/logService";
+import { logService } from "../services/logService.svelte";
 
 /**
  * Systemic V24: Robust Universal Strategy

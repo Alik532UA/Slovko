@@ -8,7 +8,7 @@
 	import InteractionCapsule from "./InteractionCapsule.svelte";
 	import StatsModal from "../settings/StatsModal.svelte";
 	import { flip } from "svelte/animate";
-	import { logService } from "$lib/services/logService";
+	import { logService } from "$lib/services/logService.svelte";
 
 	let showStatsModal = $state(false);
 	let initialTab = $state<"stats" | "leaderboard" | undefined>(undefined);

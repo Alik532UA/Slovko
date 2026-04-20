@@ -1,7 +1,7 @@
 import type { gameState as GameStateType } from "../stores/gameState.svelte";
 import { settingsStore } from "../stores/settingsStore.svelte";
 import { playlistStore } from "../stores/playlistStore.svelte";
-import { logService } from "./logService";
+import { logService } from "./logService.svelte";
 import {
 	gameDataService,
 	type GameDataService,
@@ -89,7 +89,7 @@ export class GameController {
 			initialWords.forEach((w) => this.gameState.markWordAsUsed(w));
 		} catch (error) {
 			const err = error as { message?: string };
-			console.error("Failed to initialize game:", error);
+			logService.error("debug", "Failed to initialize game:", error);
 			this.gameState.setError(err?.message || "Failed to load game data");
 		} finally {
 			this.gameState.setLoading(false);

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { gameState } from "$lib/stores/gameState.svelte";
 	import { getGameController } from "$lib/context/gameContext";
-	import { logService } from "$lib/services/logService";
+	import { logService } from "$lib/services/logService.svelte";
 	import { untrack } from "svelte";
 	import { fade, fly } from "svelte/transition";
 	import { _ } from "svelte-i18n";

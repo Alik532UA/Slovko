@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { logService } from "$lib/services/logService.svelte";
 	import { _ } from "svelte-i18n";
 	import { playlistStore } from "$lib/stores/playlistStore.svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
@@ -85,7 +86,7 @@
 			);
 			translations = { ...translations, ...data.targetTranslations };
 		} catch (e) {
-			console.error("Failed to load translations for modal", e);
+			logService.error("debug", "Failed to load translations for modal", e);
 		}
 	}
 

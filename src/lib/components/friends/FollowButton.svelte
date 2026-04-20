@@ -2,7 +2,7 @@
 	import { _ } from "svelte-i18n";
 	import { UserPlus, UserCheck, Loader2, Users } from "lucide-svelte";
 	import { FriendsService } from "$lib/firebase/FriendsService";
-	import { logService } from "$lib/services/logService";
+	import { logService } from "$lib/services/logService.svelte";
 	import { friendsStore } from "$lib/stores/friendsStore.svelte";
 
 	interface Props {

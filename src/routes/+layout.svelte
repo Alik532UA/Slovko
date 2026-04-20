@@ -15,7 +15,7 @@
 	import OnboardingModal from "$lib/components/onboarding/OnboardingModal.svelte";
 	import MigrationOverlay from "$lib/components/ui/MigrationOverlay.svelte";
 	import { authStore } from "$lib/firebase/authStore.svelte";
-	import { logService } from "$lib/services/logService";
+	import { logService } from "$lib/services/logService.svelte";
 	import DebugListener from "$lib/components/debug/DebugListener.svelte";
 	import {
 		initGA,

@@ -25,7 +25,7 @@ import {
 } from "firebase/firestore";
 import { db, auth } from "./config";
 import { authStore } from "./authStore.svelte";
-import { logService } from "../services/logService";
+import { logService } from "../services/logService.svelte";
 import type { UserPrivacySettings } from "../types";
 
 /** Інтерфейс публічного профілю */

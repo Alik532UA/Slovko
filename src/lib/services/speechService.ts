@@ -5,7 +5,7 @@
 
 import { browser } from "$app/environment";
 import { settingsStore } from "../stores/settingsStore.svelte";
-import { logService } from "./logService";
+import { logService } from "./logService.svelte";
 
 function normalizeLocale(locale: string): string {
 	return locale.replace('_', '-');

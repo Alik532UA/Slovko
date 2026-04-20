@@ -9,7 +9,7 @@ import { db, auth } from "./config";
 import { AuthService } from "./AuthService";
 import { versionStore } from "../stores/versionStore.svelte";
 import { settingsStore } from "../stores/settingsStore.svelte";
-import { logService } from "../services/logService";
+import { logService } from "../services/logService.svelte";
 
 export type FeedbackCategory = "bug" | "improvement" | "contact";
 
@@ -38,7 +38,7 @@ async function ensureAuth() {
 			await new Promise((resolve) => setTimeout(resolve, 600));
 			user = auth.currentUser;
 		} catch {
-			console.warn("[FeedbackService] Could not establish anonymous session");
+			logService.warn("debug", "[FeedbackService] Could not establish anonymous session");
 		}
 	}
 	return user;

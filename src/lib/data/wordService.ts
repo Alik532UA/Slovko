@@ -5,7 +5,7 @@
 
 import { ALL_TOPICS } from "../types";
 import { getBaseKey } from "./semantics";
-import { logService } from "../services/logService";
+import { logService } from "../services/logService.svelte";
 import type {
 	WordLevel,
 	WordTopic,
@@ -74,10 +74,10 @@ function safeParse<T>(raw: string): T {
 	try {
 		return JSON.parse(stripped) as T;
 	} catch (e) {
-		console.error("Failed to parse JSON. First 10 chars codes:", 
+		logService.error("debug", "Failed to parse JSON. First 10 chars codes:", 
 			Array.from(raw.slice(0, 10)).map(c => c.charCodeAt(0)).join(", "));
-		console.error("Stripped content start:", stripped.slice(0, 20));
-		console.error("Full error:", e);
+		logService.error("debug", "Stripped content start:", stripped.slice(0, 20));
+		logService.error("debug", "Full error:", e);
 		return {} as T;
 	}
 }
@@ -101,7 +101,7 @@ async function loadLocalSemantics(language: Language): Promise<LocalSemantics> {
 		return { labels: {} };
 	} catch (e) {
 		if (import.meta.env.DEV)
-			console.error(`Failed to load semantics for ${language}`, e);
+			logService.error("debug", `Failed to load semantics for ${language}`, e);
 		return { labels: {} };
 	}
 }
@@ -248,7 +248,7 @@ export async function loadTranslations(
 					topicDict[key] = megaDict[key];
 				} else {
 					if (import.meta.env.DEV)
-						console.warn(
+						logService.warn("debug", 
 							`Missing translation for ${key} in ${language} (Topic: ${id})`,
 						);
 					topicDict[key] = key;
@@ -288,7 +288,7 @@ export async function loadTranslations(
 			return {};
 		}
 	} catch (e) {
-		console.warn(`Translations not found for ${language}/${category}/${id}`, e);
+		logService.warn("debug", `Translations not found for ${language}/${category}/${id}`, e);
 		return {};
 	}
 }
@@ -364,7 +364,7 @@ export async function loadTenseRegistry(): Promise<{ packs: Record<string, strin
 		}
 		throw new Error(`Tense registry file not found: ${path}`);
 	} catch (e) {
-		console.error("Failed to load tense registry", e);
+		logService.error("debug", "Failed to load tense registry", e);
 		return { packs: { "3": [] }, all_phrases: [] };
 	}
 }
@@ -395,7 +395,7 @@ export async function loadPhrasesLevel(levelId: CEFRLevel): Promise<WordLevel> {
 		}
 		throw new Error(`Phrases for level ${levelId} not found`);
 	} catch (e) {
-		console.error(`Phrases for level ${levelId} not found or invalid`, e);
+		logService.error("debug", `Phrases for level ${levelId} not found or invalid`, e);
 		return { id: levelId, name: levelId, words: [] };
 	}
 }
@@ -534,7 +534,7 @@ export function getTranslation(
 			translation = label ? `${baseTranslation} (${label})` : baseTranslation;
 
 			if (import.meta.env.DEV) {
-				console.log(
+				logService.log("debug", 
 					`[Semantic Fallback] Key: "${word}", Base: "${baseKey}", Translation: "${translation}" (${language})`,
 				);
 			}
@@ -543,7 +543,7 @@ export function getTranslation(
 
 	if (!translation) {
 		if (import.meta.env.DEV) {
-			console.warn(`[Missing Translation] Word: "${word}"`);
+			logService.warn("debug", `[Missing Translation] Word: "${word}"`);
 		}
 		return word;
 	}

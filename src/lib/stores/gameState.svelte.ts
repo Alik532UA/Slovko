@@ -6,7 +6,7 @@ import type {
 } from "../types";
 import { shuffle } from "../services/gameCardFactory";
 import { getTranslation } from "../data/wordService";
-import { logService } from "../services/logService";
+import { logService } from "../services/logService.svelte";
 import type { AppSettings } from "../data/schemas";
 import type { GameData } from "../services/gameDataService";
 

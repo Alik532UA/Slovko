@@ -3,7 +3,7 @@
 	import { AlertTriangle, Copy, RotateCcw } from "lucide-svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { versionStore } from "$lib/stores/versionStore.svelte";
-	import { logService } from "../../services/logService";
+	import { logService } from "../../services/logService.svelte";
 	import type { Snippet } from "svelte";
 
 	interface Props {

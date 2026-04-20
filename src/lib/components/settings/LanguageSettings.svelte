@@ -6,7 +6,7 @@
 	import { _ } from "svelte-i18n";
 	import { Speech, Captions } from "lucide-svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
-	import { logService } from "$lib/services/logService";
+	import { logService } from "$lib/services/logService.svelte";
 	import VoiceSelectionModal from "./VoiceSelectionModal.svelte";
 	import { setInterfaceLanguage, LANGUAGES } from "$lib/i18n/init";
 	import { LANGUAGE_NAMES, type Language } from "$lib/types/index";

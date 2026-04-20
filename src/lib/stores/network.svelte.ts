@@ -1,5 +1,5 @@
 import { browser } from "$app/environment";
-import { logService } from "../services/logService";
+import { logService } from "../services/logService.svelte";
 
 /**
  * Network Store — Відстеження стану мережі (Svelte 5 Runes)

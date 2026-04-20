@@ -1,3 +1,4 @@
+import { logService } from "./logService.svelte";
 /**
  * transcriptionService.ts
  * Сервіс-фасад для генерації транскрипції.
@@ -69,7 +70,7 @@ export function generateRulesIPA(
                 // Fallback: якщо мапера немає, повертаємо чистий IPA
                 return ipa;
         } catch (e) {
-                console.warn(`IPA Generation failed for ${lang} (UI: ${uiLang}):`, e);
+                logService.warn("debug", `IPA Generation failed for ${lang} (UI: ${uiLang}):`, e);
                 return undefined;
         }
 }

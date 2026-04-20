@@ -7,7 +7,7 @@ import {
 	loadAllTranscriptions,
 	loadTenseRegistry,
 } from "../data/wordService";
-import { logService } from "./logService";
+import { logService } from "./logService.svelte";
 import type { AppSettings, CustomWord } from "../data/schemas";
 import type {
 	TranslationDictionary,

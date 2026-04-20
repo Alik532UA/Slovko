@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { logService } from "$lib/services/logService.svelte";
 	import { Save, Shield } from "lucide-svelte";
 	import { _ } from "svelte-i18n";
 	import { FriendsService } from "$lib/firebase/FriendsService";
@@ -29,7 +30,7 @@
 					settings = { ...settings, ...profile.privacy };
 				}
 			} catch (error) {
-				console.error("Failed to load privacy settings:", error);
+				logService.error("debug", "Failed to load privacy settings:", error);
 			} finally {
 				isLoading = false;
 			}
@@ -46,7 +47,7 @@
 				onclose();
 			}
 		} catch (error) {
-			console.error("Failed to save privacy settings:", error);
+			logService.error("debug", "Failed to save privacy settings:", error);
 		} finally {
 			isSaving = false;
 		}

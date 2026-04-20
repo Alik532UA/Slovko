@@ -1,3 +1,4 @@
+import { logService } from "../services/logService.svelte";
 import { AuthService } from "./AuthService";
 import { SyncService } from "./SyncService.svelte";
 import { PresenceService } from "./PresenceService.svelte";
@@ -101,7 +102,7 @@ function createAuthStore() {
 			state = serializeUser(null);
 		}
 
-		console.log("[AuthStore] State updated:", {
+		logService.log("debug", "[AuthStore] State updated:", {
 			uid: state.uid,
 			email: state.email,
 			isAnonymous: state.isAnonymous,
@@ -110,7 +111,7 @@ function createAuthStore() {
 
 	// Ініціалізація слухача Firebase Auth
 	AuthService.init((user) => {
-		console.log("[AuthStore] onAuthStateChanged:", {
+		logService.log("debug", "[AuthStore] onAuthStateChanged:", {
 			uid: user?.uid,
 			isAnonymous: user?.isAnonymous,
 		});
@@ -160,7 +161,7 @@ function createAuthStore() {
 		async loginWithGoogle() {
 			const result = await AuthService.linkWithGoogle();
 			if (result) {
-				console.log("[AuthStore] loginWithGoogle success, updating state");
+				logService.log("debug", "[AuthStore] loginWithGoogle success, updating state");
 				updateState(result);
 			}
 			return result;
@@ -172,7 +173,7 @@ function createAuthStore() {
 		async registerWithEmail(email: string, password: string) {
 			const result = await AuthService.linkWithEmail(email, password);
 			if (result) {
-				console.log("[AuthStore] registerWithEmail success, updating state");
+				logService.log("debug", "[AuthStore] registerWithEmail success, updating state");
 				updateState(result);
 			}
 			return result;
@@ -216,21 +217,21 @@ function createAuthStore() {
 				const { FriendsService } = await import("./FriendsService");
 				await FriendsService.updatePublicProfile();
 
-				console.log("[AuthStore] Profile and public profile updated");
+				logService.log("debug", "[AuthStore] Profile and public profile updated");
 			} catch (error) {
-				console.error("[AuthStore] Failed to update profile", error);
+				logService.error("debug", "[AuthStore] Failed to update profile", error);
 				throw error;
 			}
 		},
 
 		async logout() {
-			console.log("[AuthStore] Logging out...");
+			logService.log("debug", "[AuthStore] Logging out...");
 			
 			// Примусово зберігаємо останні дані перед виходом
 			try {
 				await SyncService.uploadAll(true);
 			} catch (e) {
-				console.error("[AuthStore] Final sync failed, proceeding with logout", e);
+				logService.error("debug", "[AuthStore] Final sync failed, proceeding with logout", e);
 			}
 			
 			// Очищаємо локальні дані перед виходом, щоб наступний користувач не бачив "чужих" слів

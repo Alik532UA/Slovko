@@ -1,4 +1,4 @@
-import { logService, type logConfig } from "./logService";
+import { logService, type logConfig } from "./logService.svelte";
 import { notificationStore } from "../stores/notificationStore.svelte";
 
 type LogCategory = keyof typeof logConfig;

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { logService } from "$lib/services/logService.svelte";
 	import { _ } from "svelte-i18n";
 	import { fade, slide } from "svelte/transition";
 	import { ALL_LEVELS } from "$lib/types/index";
@@ -99,7 +100,7 @@
 		try {
 			// Запускаємо оновлення профілю у фоні, тільки якщо користувач залогінений
 			if (!authStore.isGuest && authStore.user?.uid) {
-				FriendsService.updatePublicProfile().catch(console.error);
+				FriendsService.updatePublicProfile().catch((e) => logService.error("debug", "Promise rejection:", e));
 			}
 			const data = await FriendsService.getLeaderboard(
 				selectedMetric,

@@ -1,3 +1,4 @@
+import { logService } from "../services/logService.svelte";
 import {
 	signInAnonymously,
 	signOut as fbSignOut,
@@ -26,7 +27,7 @@ export const AuthService = {
 		try {
 			await signInAnonymously(auth);
 		} catch (error) {
-			console.error("Firebase Anonymous Auth Error:", error);
+			logService.error("debug", "Firebase Anonymous Auth Error:", error);
 			throw error; // Прокидаємо помилку далі
 		}
 	},
@@ -40,7 +41,7 @@ export const AuthService = {
 			const providers = await fetchSignInMethodsForEmail(auth, email);
 			return providers;
 		} catch (error) {
-			console.error("[AuthService] Fetch methods error:", error);
+			logService.error("debug", "[AuthService] Fetch methods error:", error);
 			return [];
 		}
 	},
@@ -80,7 +81,7 @@ export const AuthService = {
 			try {
 				await linkWithPopup(user, googleProvider);
 				await user.reload();
-				console.log(
+				logService.log("debug", 
 					"[AuthService] Google successfully linked to existing Email account",
 				);
 				return user;
@@ -150,7 +151,7 @@ export const AuthService = {
 			await fbSignOut(auth);
 			// Після виходу onAuthStateChanged автоматично викличе loginAnonymously
 		} catch (error) {
-			console.error("Firebase SignOut Error:", error);
+			logService.error("debug", "Firebase SignOut Error:", error);
 		}
 	},
 
@@ -176,7 +177,7 @@ export const AuthService = {
 			await auth.currentUser.reload();
 			return auth.currentUser;
 		} catch (error) {
-			console.error("Error updating profile:", error);
+			logService.error("debug", "Error updating profile:", error);
 			throw error;
 		}
 	},
@@ -254,7 +255,7 @@ export const AuthService = {
 			try {
 				await Promise.all([deleteDoc(userDocRef), deleteDoc(profileDocRef)]);
 			} catch (e) {
-				console.warn("[AuthService] Failed to delete Firestore data:", e);
+				logService.warn("debug", "[AuthService] Failed to delete Firestore data:", e);
 			}
 
 			// 3. Видалення самого користувача

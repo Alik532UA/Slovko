@@ -22,7 +22,7 @@
 	} from "lucide-svelte";
 	import { authStore } from "../../firebase/authStore.svelte";
 	import { friendsStore } from "../../stores/friendsStore.svelte";
-	import { logService } from "../../services/logService";
+	import { logService } from "../../services/logService.svelte";
 
 	interface Props {
 		oneditAvatar?: () => void;

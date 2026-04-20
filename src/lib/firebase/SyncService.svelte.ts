@@ -17,7 +17,7 @@ import { settingsStore } from "../stores/settingsStore.svelte";
 import { progressStore } from "../stores/progressStore.svelte";
 import { playlistStore } from "../stores/playlistStore.svelte";
 import { friendsStore } from "../stores/friendsStore.svelte";
-import { logService } from "../services/logService";
+import { logService } from "../services/logService.svelte";
 import { statisticsState } from "../controllers/StatisticsState.svelte";
 import { dev } from "$app/environment";
 import {

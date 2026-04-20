@@ -1,6 +1,6 @@
 import { settingsStore } from "../stores/settingsStore.svelte";
 import type { AppSettings } from "../data/schemas";
-import { logService } from "./logService";
+import { logService } from "./logService.svelte";
 
 /**
  * UrlSyncService - відповідає за синхронізацію стану між URL та SettingsStore.

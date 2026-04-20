@@ -8,7 +8,7 @@
 	import { getGameController } from "$lib/context/gameContext";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { playlistStore } from "$lib/stores/playlistStore.svelte";
-	import { logService } from "$lib/services/logService";
+	import { logService } from "$lib/services/logService.svelte";
 	import WordCard from "./WordCard.svelte";
 	import CardContextMenu from "./CardContextMenu.svelte";
 	import WordReportModal from "./WordReportModal.svelte";

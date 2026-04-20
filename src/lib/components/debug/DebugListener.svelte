@@ -1,12 +1,15 @@
 <script lang="ts">
 	import { hardReset } from "$lib/services/resetService";
-	import { logService } from "$lib/services/logService";
-	import { Copy } from "lucide-svelte";
+	import { logService } from "$lib/services/logService.svelte";
+	import { Copy, Check } from "lucide-svelte";
 	import { dev } from "$app/environment";
 
 	let kKeyPressCount = 0;
 	let kKeyPressTimer: ReturnType<typeof setTimeout>;
 	let copied = $state(false);
+	
+	const SHOW_LOGS_IN_PROD = false; // toggle this to true to see in prod
+	const isVisible = dev || SHOW_LOGS_IN_PROD;
 
 	function handleGlobalKeydown(e: KeyboardEvent) {
 		// Використовуємо e.code для ігнорування мовної розкладки (KeyR = 'R' або 'К')
@@ -30,22 +33,27 @@
 	}
 
 	async function handleCopy() {
-		const logs = logService.getRecentLogs();
-		const header = `--- SLOVKO DEBUG LOG (MANUAL COPY VIA BUTTON) ---\n` + 
-					 `Generated: ${new Date().toLocaleString()}\n` +
-					 `-----------------------------------------------\n\n`;
-		await navigator.clipboard.writeText(header + logs);
-		copied = true;
-		setTimeout(() => (copied = false), 2000);
+		const success = await logService.copyLogsToClipboard();
+		if (success) {
+			copied = true;
+			setTimeout(() => (copied = false), 2000);
+		}
 	}
 </script>
 
 <svelte:window onkeydown={handleGlobalKeydown} />
 
-{#if dev}
-	<button class="debug-copy-btn" data-testid="debug-copy-btn" onclick={handleCopy} title="Копіювати логи">
-		<Copy size={16} />
-		{#if copied}<span>Скопійовано!</span>{/if}
+{#if isVisible}
+	<button class="debug-copy-btn" class:has-errors={logService.errorCount > 0} class:copied={copied} data-testid="debug-copy-btn" onclick={handleCopy} title="Копіювати логи">
+		{#if copied}
+			<Check size={16} />
+			<span>Скопійовано!</span>
+		{:else}
+			<Copy size={16} />
+			{#if logService.errorCount > 0}
+				<span class="error-badge">{logService.errorCount}</span>
+			{/if}
+		{/if}
 	</button>
 {/if}
 
@@ -71,12 +79,31 @@
 		cursor: pointer;
 	}
 
+	.debug-copy-btn.has-errors {
+		background: rgba(244, 67, 54, 0.15);
+		color: #f44336;
+		border-color: rgba(244, 67, 54, 0.4);
+	}
+
+	.debug-copy-btn.copied {
+		background: rgba(76, 175, 80, 0.15);
+		color: #4caf50;
+		border-color: rgba(76, 175, 80, 0.4);
+	}
+
 	.debug-copy-btn:hover {
 		background: rgba(58, 143, 214, 0.15);
 		color: #3a8fd6;
 		border-color: rgba(58, 143, 214, 0.4);
 		transform: scale(1.05);
 		box-shadow: 0 4px 12px rgba(58, 143, 214, 0.2);
+	}
+
+	.debug-copy-btn.has-errors:hover {
+		background: rgba(244, 67, 54, 0.25);
+		color: #f44336;
+		border-color: rgba(244, 67, 54, 0.6);
+		box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
 	}
 
 	.debug-copy-btn:active {
@@ -87,5 +114,14 @@
 		font-size: 0.75rem;
 		font-weight: 600;
 		padding-right: 0.5rem;
+	}
+
+	.error-badge {
+		background: #f44336;
+		color: white;
+		border-radius: 10px;
+		padding: 2px 6px;
+		font-size: 0.7rem;
+		font-weight: bold;
 	}
 </style>

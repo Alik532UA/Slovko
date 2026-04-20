@@ -1,3 +1,4 @@
+import { logService } from "./logService.svelte";
 import { progressStore } from "../stores/progressStore.svelte";
 import { playlistStore } from "../stores/playlistStore.svelte";
 import { browser } from "$app/environment";
@@ -75,7 +76,7 @@ export class GameFeedbackHandler {
 			oscillator.start();
 			oscillator.stop(ctx.currentTime + 0.4);
 		} catch (e) {
-			console.warn("Failed to play success sound:", e);
+			logService.warn("debug", "Failed to play success sound:", e);
 		}
 	}
 
