@@ -197,9 +197,16 @@ export class GameDataService {
 				const ids = mode === "topics" ? currentTopic : currentLevel;
 
 				if (ids && ids.length > 0) {
+					// Обчислюємо множники (скільки разів вибрано рівень/фразу)
+					const multipliers: Record<string, number> = {};
+					ids.forEach(id => {
+						multipliers[id] = (multipliers[id] || 0) + 1;
+					});
+					const uniqueIds = Object.keys(multipliers);
+
 					if (mode === "levels") {
 						await Promise.all(
-							ids.map(async (levelId) => {
+							uniqueIds.map(async (levelId) => {
 								if (levelId === "ALL") {
 									const allLevels: CEFRLevel[] = [
 										"A1",
@@ -212,9 +219,10 @@ export class GameDataService {
 									await Promise.all(
 										allLevels.map(async (l) => {
 											const lvl = await loadLevel(l);
+											const multiplier = multipliers[levelId] || 1;
 											lvl.words.forEach((w) => {
-												if (!wordLevels[w]) {
-													wordLevels[w] = l;
+												wordLevels[w] = l;
+												for (let i = 0; i < multiplier; i++) {
 													words.push(w);
 												}
 											});
@@ -222,9 +230,10 @@ export class GameDataService {
 									);
 								} else {
 									const lvl = await loadLevel(levelId as CEFRLevel);
+									const multiplier = multipliers[levelId] || 1;
 									lvl.words.forEach((w) => {
-										if (!wordLevels[w]) {
-											wordLevels[w] = levelId;
+										wordLevels[w] = levelId;
+										for (let i = 0; i < multiplier; i++) {
 											words.push(w);
 										}
 									});
@@ -245,11 +254,12 @@ export class GameDataService {
 						);
 					} else if (mode === "phrases") {
 						await Promise.all(
-							ids.map(async (id) => {
+							uniqueIds.map(async (id) => {
 								const phraseLevel = await loadPhrasesLevel(id as CEFRLevel);
+								const multiplier = multipliers[id] || 1;
 								phraseLevel.words.forEach((w) => {
-									if (!wordLevels[w]) {
-										wordLevels[w] = id;
+									wordLevels[w] = id;
+									for (let i = 0; i < multiplier; i++) {
 										words.push(w);
 									}
 								});

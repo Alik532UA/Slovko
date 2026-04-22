@@ -1057,6 +1057,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "fight",
 		specific: ["fight_action", "fight_event"]
 	},
+	fit: {
+		base: "fit",
+		specific: ["fit_healthy"]
+	},
 	figure: {
 		base: "figure",
 		specific: ["figure_out"]

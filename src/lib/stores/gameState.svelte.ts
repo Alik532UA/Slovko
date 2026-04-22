@@ -23,7 +23,7 @@ function createGameState() {
 	let isLoading = $state(true);
 	let error = $state<string | null>(null);
 	let currentWords = $state<WordKey[]>([]);
-	let usedWordKeys = $state(new Set<WordKey>());
+	let wordPool = $state<WordKey[]>([]);
 
 	// Статистика
 	let streak = $state(0);
@@ -136,8 +136,8 @@ function createGameState() {
 
 		setData(newData: GameData) {
 			data = newData;
-			currentWords = shuffle(newData.words);
-			usedWordKeys.clear();
+			currentWords = [...newData.words]; // Зберігаємо оригінальну структуру (з множниками)
+			wordPool = shuffle([...newData.words]);
 			sourceCards = [];
 			targetCards = [];
 		},
@@ -195,7 +195,7 @@ function createGameState() {
 			mistakesCount = 0;
 			correctAnswersHistory = [];
 			ignoredTime = 0;
-			usedWordKeys.clear();
+			wordPool = shuffle([...currentWords]);
 			sourceCards = [];
 			targetCards = [];
 		},
@@ -225,19 +225,37 @@ function createGameState() {
 		},
 
 		getAvailableWords(needed: number): WordKey[] {
-			let available = currentWords.filter((w) => !usedWordKeys.has(w));
-			if (available.length < needed) {
-				usedWordKeys.clear();
+			const selected: WordKey[] = [];
+			const currentlyOnBoard = new Set(
 				sourceCards
-					.filter((c) => c.isVisible)
-					.forEach((c) => usedWordKeys.add(c.wordKey));
-				available = currentWords.filter((w) => !usedWordKeys.has(w));
+					.filter((c) => c.status !== "correct")
+					.map((c) => c.wordKey),
+			);
+
+			let attempts = 0;
+			const maxAttempts = Math.max(wordPool.length * 2, 50);
+
+			while (selected.length < needed && attempts < maxAttempts) {
+				if (wordPool.length === 0) {
+					wordPool = shuffle([...currentWords]);
+				}
+
+				const w = wordPool.pop()!;
+
+				if (currentlyOnBoard.has(w) || selected.includes(w)) {
+					const randomIndex = Math.floor(Math.random() * (wordPool.length + 1));
+					wordPool.splice(randomIndex, 0, w);
+					attempts++;
+				} else {
+					selected.push(w);
+					attempts = 0;
+				}
 			}
-			return available.slice(0, needed);
+			return selected;
 		},
 
-		markWordAsUsed(word: WordKey) {
-			usedWordKeys.add(word);
+		markWordAsUsed(_word: WordKey) {
+			// Більше не потрібно, бо getAvailableWords сам вилучає слова з пулу
 		},
 
 		refillCards(newSource: ActiveCard[], newTarget: ActiveCard[]) {

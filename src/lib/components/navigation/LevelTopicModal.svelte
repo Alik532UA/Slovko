@@ -96,6 +96,21 @@
 		}
 	}
 
+	function updateId(id: string, action: "add" | "remove" | "clear") {
+		if (action === "add") {
+			selectedIds = [...selectedIds, id];
+		} else if (action === "remove") {
+			const idx = selectedIds.indexOf(id);
+			if (idx !== -1) {
+				const newIds = [...selectedIds];
+				newIds.splice(idx, 1);
+				selectedIds = newIds;
+			}
+		} else if (action === "clear") {
+			selectedIds = selectedIds.filter((i) => i !== id);
+		}
+	}
+
 	function toggleForm(form: TenseForm) {
 		if (selectedForms.includes(form)) {
 			if (selectedForms.length > 1) {
@@ -211,11 +226,11 @@
 							data-testid="level-topic-scroll-area"
 						>
 							{#if activeTab === "levels"}
-								<LevelGrid mode="levels" {selectedIds} onselect={toggleId} />
+								<LevelGrid mode="levels" {selectedIds} onchange={updateId} />
 							{:else if activeTab === "topics"}
 								<TopicGrid {selectedIds} onselect={toggleId} />
 							{:else if activeTab === "phrases"}
-								<LevelGrid mode="phrases" {selectedIds} onselect={toggleId} />
+								<LevelGrid mode="phrases" {selectedIds} onchange={updateId} />
 							{:else if activeTab === "tenses"}
 								<TenseFilters
 									{selectedForms}

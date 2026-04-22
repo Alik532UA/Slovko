@@ -5,6 +5,7 @@ node_modules
 .private/notes
 .private/notes.txt
 .agent/rules
+.read_for_AI
 README-source.md
 
 # Output
