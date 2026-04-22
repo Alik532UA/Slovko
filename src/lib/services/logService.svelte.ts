@@ -1,30 +1,29 @@
 import { browser, dev } from "$app/environment";
-import { base } from "$app/paths";
-
-export const logConfig = {
-	auth: false,
-	profile: false,
-	editor: false,
-	store: false,
-	game: false,
-	sync: true,
-	settings: false,
-	interaction: false,
-	presence: false,
-	stats: false,
-	data: false,
-	i18n: false,
-	version: false,
-	ui: false,
-	score: true,
-	debug: true, // system/fallback logs
-};
 
 const MAX_RECENT_LOGS = 1000;
 
 class LogService {
 	errorCount = $state(0);
 	private recentLogs: string[] = [];
+	
+	private logConfig = {
+		auth: false,
+		profile: false,
+		editor: false,
+		store: false,
+		game: false,
+		sync: true,
+		settings: false,
+		interaction: false,
+		presence: false,
+		stats: false,
+		data: false,
+		i18n: false,
+		version: false,
+		ui: false,
+		score: true,
+		debug: true,
+	};
 
 	constructor() {
 		if (browser) {
@@ -40,10 +39,16 @@ class LogService {
 		}
 	}
 
+	private shouldLog(category: string): boolean {
+		if (dev) return true;
+		if (category === 'error') return true;
+		return this.logConfig[category as keyof typeof this.logConfig] || false;
+	}
+
 	log(category: string, message: string, ...args: unknown[]) {
 		const logMsg = `[${category.toUpperCase()}] ${message}`;
 		this.addToRecent(logMsg, args);
-		if (dev || category === 'debug' || logConfig[category as keyof typeof logConfig]) {
+		if (this.shouldLog(category)) {
 			console.log(logMsg, ...args);
 		}
 	}
@@ -58,7 +63,7 @@ class LogService {
 	warn(category: string, message: string, ...args: unknown[]) {
 		const logMsg = `[WARN][${category.toUpperCase()}] ${message}`;
 		this.addToRecent(logMsg, args);
-		if (dev || category === 'debug' || logConfig[category as keyof typeof logConfig]) {
+		if (this.shouldLog(category)) {
 			console.warn(logMsg, ...args);
 		}
 	}
@@ -91,26 +96,15 @@ class LogService {
 
 	async copyLogsToClipboard() {
 		const logs = this.getRecentLogs();
-		let appVersion = "unknown";
-		if (browser) {
-			try {
-				const res = await fetch(`${base}/app-version.json?t=` + Date.now());
-				if (res.ok) {
-					const data = await res.json();
-					appVersion = data.version;
-				}
-			} catch (e) {
-				// ignore
-			}
-		}
+		const appVersion = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : "unknown";
+		const buildTime = typeof __BUILD_TIME__ !== 'undefined' ? __BUILD_TIME__ : "unknown";
 		
-		const info = `--- REPORT from Copy LOG button ---\nDATE: ${new Date().toLocaleString()}\nURL: ${browser ? window.location.href : 'SSR'}\nDEVICE: ${navigator.userAgent}\nVERSION: ${appVersion}\n---\n${logs}`;
+		const info = `--- LOG REPORT ---\nDATE: ${new Date().toLocaleString()}\nURL: ${browser ? window.location.href : 'SSR'}\nDEVICE: ${navigator.userAgent}\nVERSION: ${appVersion}\nBUILD: ${buildTime}\n---\n${logs}`;
 		try {
 			await navigator.clipboard.writeText(info);
 			return true;
 		} catch (err) {
 			this.error("system", "Failed to copy logs");
-			if (browser) alert("Could not copy automatically. See console.");
 			return false;
 		}
 	}
