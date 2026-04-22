@@ -51,38 +51,40 @@ export async function checkForUpdates() {
 		const serverVersion = data.version;
 		const minVersion = data.minVersion || "0.0.0";
 
-		const cacheVersion = localStorageProvider.getItem(CACHE_VERSION_KEY) || "0.0.0";
+		// Поточна версія, яка ЗАРАЗ запущена в браузері (Build-time)
+		const runningVersion = versionStore.currentVersion;
+		
 		const refusedVersion = localStorageProvider.getItem(REFUSED_VERSION_KEY);
 		const refusedAt = parseInt(localStorageProvider.getItem(REFUSED_AT_KEY) || "0");
 
 		logService.log("version", "Version comparison:", {
 			server: serverVersion,
 			minRequired: minVersion,
-			local: cacheVersion,
+			running: runningVersion,
 			refused: refusedVersion,
 		});
 
-		versionStore.setVersion(serverVersion);
 		if (refusedVersion) {
 			versionStore.setRefusal(refusedVersion, refusedAt);
 		}
 
 		// ПЕРЕВІРКА НА КРИТИЧНУ ВЕРСІЮ
-		// Якщо поточна версія менша або рівна критичній — оновлюємо миттєво
-		const isCritical = cacheVersion === minVersion || isVersionOlder(cacheVersion, minVersion);
-		if (isCritical && cacheVersion !== "0.0.0" && cacheVersion !== serverVersion) {
+		// Якщо поточно запущена версія менша за критичну — оновлюємо миттєво
+		const isCritical = runningVersion === minVersion || isVersionOlder(runningVersion, minVersion);
+		if (isCritical && runningVersion !== "0.0.0" && runningVersion !== serverVersion) {
 			logService.warn("version", "CRITICAL UPDATE REQUIRED. Forcing reload...");
-			await applyUpdate();
+			await applyUpdate(serverVersion);
 			return;
 		}
 
-		if (cacheVersion === "0.0.0") {
+		// Якщо це перший візит (версія 0.0.0), просто запам'ятовуємо поточну версію
+		if (localStorageProvider.getItem(CACHE_VERSION_KEY) === null) {
 			logService.log("version", "First visit: setting initial cache version.");
-			localStorageProvider.setItem(CACHE_VERSION_KEY, serverVersion);
-			return;
+			localStorageProvider.setItem(CACHE_VERSION_KEY, runningVersion);
 		}
 
-		if (cacheVersion !== serverVersion) {
+		// Якщо на сервері версія новіша за ту, що запущена
+		if (runningVersion !== serverVersion && isVersionOlder(runningVersion, serverVersion)) {
 			const now = Date.now();
 			const isNewerThanRefused = serverVersion !== refusedVersion;
 			const isCooldownOver = now - refusedAt > FIVE_DAYS_MS;
@@ -109,15 +111,15 @@ export async function checkForUpdates() {
 /**
  * Виконує оновлення (застосовує нову версію)
  */
-export async function applyUpdate() {
+export async function applyUpdate(targetVersion?: string) {
 	logService.log("version", "applyUpdate called. Starting update process...");
-	const nextVersion = versionStore.currentVersion || "latest";
+	const nextVersion = targetVersion || "latest";
 
 	try {
 		logService.log("version", "Clearing caches and unregistering SW...");
 		await clearCaches();
 		
-		// Оновлюємо маркер версії
+		// Оновлюємо маркер версії в localStorage для наступного завантаження
 		localStorageProvider.setItem(CACHE_VERSION_KEY, nextVersion);
 		localStorageProvider.removeItem(REFUSED_VERSION_KEY);
 		localStorageProvider.removeItem(REFUSED_AT_KEY);

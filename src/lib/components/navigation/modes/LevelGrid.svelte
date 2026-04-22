@@ -40,11 +40,13 @@
 				<span class="item-desc">{$_(`levels.${level}`)}</span>
 			</button>
 			{#if count > 0}
+				<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
 				<div
 					class="multiplier-controls"
 					onclick={(e) => e.stopPropagation()}
 					onkeydown={(e) => e.stopPropagation()}
-					role="group"
+					role="presentation"
 				>
 					<button class="ctrl-btn" onclick={() => onchange(level, "remove")}>
 						<Minus size={14} />

@@ -6,6 +6,9 @@ export interface StorageProvider {
 	getItem(key: string): string | null;
 	setItem(key: string, value: string): void;
 	removeItem(key: string): void;
+	getJson<T>(key: string): T | null;
+	setJson(key: string, value: unknown): void;
+	clear(): void;
 }
 
 /**
@@ -31,6 +34,20 @@ export class LocalStorageProvider implements StorageProvider {
 	removeItem(key: string): void {
 		if (typeof window === "undefined") return;
 		localStorage.removeItem(this.prefix + key);
+	}
+
+	getJson<T>(key: string): T | null {
+		const raw = this.getItem(key);
+		if (raw === null) return null;
+		try {
+			return JSON.parse(raw) as T;
+		} catch {
+			return null;
+		}
+	}
+
+	setJson(key: string, value: unknown): void {
+		this.setItem(key, JSON.stringify(value));
 	}
 
 	clear(): void {
@@ -69,6 +86,20 @@ export class SessionStorageProvider implements StorageProvider {
 	removeItem(key: string): void {
 		if (typeof window === "undefined") return;
 		sessionStorage.removeItem(this.prefix + key);
+	}
+
+	getJson<T>(key: string): T | null {
+		const raw = this.getItem(key);
+		if (raw === null) return null;
+		try {
+			return JSON.parse(raw) as T;
+		} catch {
+			return null;
+		}
+	}
+
+	setJson(key: string, value: unknown): void {
+		this.setItem(key, JSON.stringify(value));
 	}
 
 	clear(): void {

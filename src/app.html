@@ -173,12 +173,13 @@
 
 					// Try to get localStorage info
 					try {
-						var cacheVer = localStorage.getItem('slovko_app_cache_version') || 'none';
+						var PREFIX = "slovko_";
+						var cacheVer = localStorage.getItem(PREFIX + 'app_cache_version') || 'none';
 						lines.push('');
 						lines.push('=== CACHE ===');
-						lines.push('slovko_app_cache_version: ' + cacheVer);
+						lines.push('app_cache_version: ' + cacheVer);
 
-						var settingsRaw = localStorage.getItem('slovko_settings');
+						var settingsRaw = localStorage.getItem(PREFIX + 'settings');
 						if (settingsRaw) {
 							var s = JSON.parse(settingsRaw);
 							lines.push('settings.mode: ' + (s.mode || 'undefined'));
@@ -225,11 +226,12 @@
 					
 					// SMART RECOVERY: If a chunk failed to load (version mismatch), auto-reload ONCE
 					if (msg.indexOf('Failed to fetch dynamically imported module') !== -1) {
-						var lastReload = sessionStorage.getItem('last_chunk_reload');
+						var PREFIX = "slovko_";
+						var lastReload = sessionStorage.getItem(PREFIX + 'last_chunk_reload');
 						var now = Date.now();
 						// Only auto-reload if we haven't done so in the last 10 seconds (loop protection)
 						if (!lastReload || (now - parseInt(lastReload)) > 10000) {
-							sessionStorage.setItem('last_chunk_reload', now.toString());
+							sessionStorage.setItem(PREFIX + 'last_chunk_reload', now.toString());
 							console.warn('Chunk load failed. Auto-reloading for version sync...');
 							window.location.reload();
 							return;

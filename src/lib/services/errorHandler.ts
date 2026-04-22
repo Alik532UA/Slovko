@@ -1,13 +1,11 @@
-import { logService, type logConfig } from "./logService.svelte";
+import { logService } from "./logService.svelte";
 import { notificationStore } from "../stores/notificationStore.svelte";
-
-type LogCategory = keyof typeof logConfig;
 
 interface ErrorOptions {
 	showToast?: boolean;
 	toastMessage?: string; // If not provided, will try to extract from error or use default
 	rethrow?: boolean;
-	category?: LogCategory;
+	category?: string;
 }
 
 /**

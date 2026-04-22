@@ -1,4 +1,5 @@
 import { browser, dev } from "$app/environment";
+import { sessionStorageProvider } from "./storage/storageProvider";
 
 const MAX_RECENT_LOGS = 1000;
 
@@ -27,7 +28,7 @@ class LogService {
 
 	constructor() {
 		if (browser) {
-			const saved = sessionStorage.getItem("slovko_logs");
+			const saved = sessionStorageProvider.getItem("logs");
 			if (saved) {
 				try {
 					this.recentLogs = JSON.parse(saved);
@@ -85,7 +86,7 @@ class LogService {
 		this.recentLogs.push(fullMsg);
 		if (this.recentLogs.length > MAX_RECENT_LOGS) this.recentLogs.shift();
 		if (browser) {
-			sessionStorage.setItem("slovko_logs", JSON.stringify(this.recentLogs));
+			sessionStorageProvider.setItem("logs", JSON.stringify(this.recentLogs));
 			window.__recentLogs = this.recentLogs;
 		}
 	}

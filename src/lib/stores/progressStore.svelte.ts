@@ -80,12 +80,13 @@ function createProgressStore() {
 		if (!browser) return DEFAULT_PROGRESS;
 
 		try {
-			const stored = localStorageProvider.getItem(STORAGE_KEY);
-			if (stored) {
-				const parsed = JSON.parse(stored);
-				const validated = ProgressStateSchema.parse(parsed);
-				// Завжди запускаємо міграцію/корекцію для гарантії SSoT (Single Source of Truth)
-				return migrateStatistics(validated);
+			const validated = localStorageProvider.getJson(STORAGE_KEY);
+			if (validated) {
+				const result = ProgressStateSchema.safeParse(validated);
+				if (result.success) {
+					// Завжди запускаємо міграцію/корекцію для гарантії SSoT (Single Source of Truth)
+					return migrateStatistics(result.data);
+				}
 			}
 		} catch (e) {
 			logService.warn("debug", "Failed to load progress:", e);
@@ -209,12 +210,11 @@ function createProgressStore() {
 		if (!browser) return DailyActivitySchema.parse({ date: getTodayDate() });
 
 		try {
-			const stored = localStorage.getItem(ACTIVITY_STORAGE_KEY);
-			if (stored) {
-				const parsed = JSON.parse(stored);
+			const validated = localStorageProvider.getJson(ACTIVITY_STORAGE_KEY) as any;
+			if (validated) {
 				const today = getTodayDate();
-				if (parsed.date === today) {
-					return DailyActivitySchema.parse(parsed);
+				if (validated.date === today) {
+					return DailyActivitySchema.parse(validated);
 				}
 			}
 		} catch (e) {
@@ -229,8 +229,8 @@ function createProgressStore() {
 		if (browser) {
 			// 1. Оновлюємо localStorage миттєво (SSoT для поточної сесії та UI)
 			progress.lastUpdated = Date.now();
-			localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(progress));
-			localStorageProvider.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(dailyActivity));
+			localStorageProvider.setJson(STORAGE_KEY, progress);
+			localStorageProvider.setJson(ACTIVITY_STORAGE_KEY, dailyActivity);
 
 			// 2. Дебаунсимо тільки завантаження в хмару та важкі операції очищення
 			if (saveTimeout) clearTimeout(saveTimeout);
@@ -252,7 +252,7 @@ function createProgressStore() {
 
 				if (hasCleanup) {
 					progress.words = cleanedWords;
-					localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+					localStorageProvider.setJson(STORAGE_KEY, progress);
 				}
 
 				SyncService.uploadAll();
@@ -295,7 +295,7 @@ function createProgressStore() {
 				progress = migrateStatistics(validated);
 
 				if (browser) {
-					localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(progress));
+					localStorageProvider.setJson(STORAGE_KEY, progress);
 				}
 			} catch (e: unknown) {
 				logService.error("debug", "Failed to sync progress: invalid data", e);
@@ -307,7 +307,7 @@ function createProgressStore() {
 			try {
 				dailyActivity = DailyActivitySchema.parse(newData);
 				if (browser) {
-					localStorageProvider.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(dailyActivity));
+					localStorageProvider.setJson(ACTIVITY_STORAGE_KEY, dailyActivity);
 				}
 			} catch (e: unknown) {
 				logService.error("debug", "Failed to sync daily activity: invalid data", e);
@@ -521,8 +521,8 @@ function createProgressStore() {
 			progress = { ...DEFAULT_PROGRESS, firstSeenDate: Date.now() };
 			dailyActivity = DailyActivitySchema.parse({ date: getTodayDate() });
 			if (browser) {
-				localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-				localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(dailyActivity));
+				localStorageProvider.setJson(STORAGE_KEY, progress);
+				localStorageProvider.setJson(ACTIVITY_STORAGE_KEY, dailyActivity);
 			}
 		},
 	};

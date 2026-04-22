@@ -2,7 +2,8 @@
  * Version Store - відстеження версії додатка
  */
 export const versionStore = (() => {
-	let currentVersion = $state<string | null>(null);
+	// Встановлюємо версію відразу з build-time константи, щоб уникнути null при старті
+	let currentVersion = $state<string>(typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : "0.0.0");
 	let hasUpdate = $state(false);
 	let refusedVersion = $state<string | null>(null);
 	let refusedAt = $state<number>(0);

@@ -30,33 +30,32 @@ function createSettingsStore() {
 		if (!browser) return DEFAULT_SETTINGS;
 
 		try {
-			const stored = localStorageProvider.getItem(STORAGE_KEY);
+			const validated = localStorageProvider.getJson<AppSettings>(STORAGE_KEY);
 			const hasAppVersion = !!localStorageProvider.getItem("app_cache_version");
 
-			if (stored) {
-				let parsed = JSON.parse(stored);
-				logService.log("settings", "Loading settings from storage:", parsed);
+			if (validated) {
+				logService.log("settings", "Loading settings from storage:", validated);
 
-				const result = AppSettingsSchema.safeParse(parsed);
+				const result = AppSettingsSchema.safeParse(validated);
 
 				if (result.success) {
-					let validated = result.data as AppSettings;
+					const validatedData = result.data;
 
 					// Якщо в браузері є версія додатку, вважаємо що онбординг вже було пройдено раніше
 					if (hasAppVersion) {
-						validated.hasCompletedOnboarding = true;
+						validatedData.hasCompletedOnboarding = true;
 					}
 
 					// КРИТИЧНО: Якщо онбординг не завершено, ми ГАРАНТУЄМО, що користувач 
 					// почне з дефолтного рівня A1, а не з порожніх плейлістів.
-					if (!validated.hasCompletedOnboarding) {
-						validated.mode = "levels";
-						validated.currentLevel = ["A1"];
-						validated.currentPlaylist = null;
+					if (!validatedData.hasCompletedOnboarding) {
+						validatedData.mode = "levels";
+						validatedData.currentLevel = ["A1"];
+						validatedData.currentPlaylist = null;
 					}
 
-					logService.log("settings", "Validated settings:", validated);
-					return validated;
+					logService.log("settings", "Validated settings:", validatedData);
+					return validatedData;
 				} else {
 					logService.error("debug", 
 						"CRITICAL: Invalid settings found in localStorage. Resetting to defaults:",
@@ -81,7 +80,7 @@ function createSettingsStore() {
 			// Користувач має зробити хоча б одну зміну сам.
 			settings = { ...settings, updatedAt: Date.now() };
 			logService.log("settings", "Saving settings to storage (immediate):", settings);
-			localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(settings));
+			localStorageProvider.setJson(STORAGE_KEY, settings);
 
 			if (isCorrupted) {
 				logService.warn("settings", "Settings are in fallback mode (corrupted local data). Skipping cloud sync to protect data integrity.");
@@ -119,7 +118,7 @@ function createSettingsStore() {
 			logService.log("settings", "Internal update received:", newData);
 			settings = { ...settings, ...newData };
 			if (browser) {
-				localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(settings));
+				localStorageProvider.setJson(STORAGE_KEY, settings);
 			}
 		},
 
@@ -280,7 +279,7 @@ function createSettingsStore() {
 				// Тут можна додати інші поля, які не мають "перетікати" між акаунтами
 			};
 			if (browser) {
-				localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(settings));
+				localStorageProvider.setJson(STORAGE_KEY, settings);
 			}
 		},
 	};

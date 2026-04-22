@@ -72,11 +72,10 @@ function createPlaylistStore() {
 		if (!browser) return DEFAULT_STATE;
 		try {
 			// Try new structure first
-			const stored = localStorageProvider.getItem(STORAGE_KEY);
-			if (stored) {
-				const parsed = JSON.parse(stored);
+			const validated = localStorageProvider.getJson(STORAGE_KEY);
+			if (validated) {
 				// Use Zod to validate and fill defaults/missing fields
-				return PlaylistStateSchema.parse(parsed);
+				return PlaylistStateSchema.parse(validated);
 			}
 
 			// Fallback to legacy and migrate
@@ -120,7 +119,7 @@ function createPlaylistStore() {
 	function saveState() {
 		if (browser) {
 			state = { ...state, updatedAt: Date.now() };
-			localStorageProvider.setItem(STORAGE_KEY, JSON.stringify(state));
+			localStorageProvider.setJson(STORAGE_KEY, state);
 			SyncService.uploadAll();
 		}
 	}
@@ -128,8 +127,7 @@ function createPlaylistStore() {
 	if (browser) {
 		window.addEventListener("storage", (e: StorageEvent) => {
 			if (e.key === "slovko_" + STORAGE_KEY && e.newValue) {
-				const parsed = JSON.parse(e.newValue);
-				const result = PlaylistStateSchema.safeParse(parsed);
+				const result = PlaylistStateSchema.safeParse(JSON.parse(e.newValue));
 				if (result.success) {
 					state = result.data;
 				}
@@ -166,7 +164,7 @@ function createPlaylistStore() {
 				state = validData;
 
 				if (browser) {
-					localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+					localStorageProvider.setJson(STORAGE_KEY, state);
 				}
 			} catch (e: unknown) {
 				logService.error("debug", "Failed to sync playlists: invalid data", e);
@@ -489,7 +487,7 @@ function createPlaylistStore() {
 				systemPlaylists: { ...DEFAULT_SYSTEM_PLAYLISTS },
 			};
 			if (browser) {
-				localStorage.removeItem(STORAGE_KEY);
+				localStorageProvider.removeItem(STORAGE_KEY);
 				localStorage.removeItem(LEGACY_STORAGE_KEY);
 			}
 		},
