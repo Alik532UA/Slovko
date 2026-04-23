@@ -35,8 +35,8 @@
 	// Watch for tab change or refresh trigger
 	$effect(() => {
 		// We want to react to tab change OR refresh trigger
-		activeTab;
-		shouldRefresh;
+		void activeTab;
+		void shouldRefresh;
 		
 		untrack(() => {
 			loadList();
