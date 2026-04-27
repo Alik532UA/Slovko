@@ -13,18 +13,16 @@
 	}
 	let { version }: Props = $props();
 	let isUpdating = $state(false);
-	let localVersion = $state<string | null>(null);
 
 	onMount(() => {
 		logService.log("version", "UpdateNotification mounted on screen.");
-		localVersion = localStorageProvider.getItem("app_cache_version");
 	});
 
 	async function handleUpdate() {
 		logService.log("version", "User clicked 'Update' button.");
 		if (isUpdating) return;
 		isUpdating = true;
-		await applyUpdate();
+		await applyUpdate(version);
 	}
 
 	/** Ручна відмова — переносить на 5 днів */
@@ -75,7 +73,7 @@
 					<div class="version-info" data-testid="update-notification-versions">
 						<span class="version-tag">
 							{$_("updateNotification.yourVersion")}:
-							<b>{localVersion || "???"}</b>
+							<b>{versionStore.currentVersion || "???"}</b>
 						</span>
 						<span class="version-tag">
 							{$_("updateNotification.availableVersion")}: <b>{version}</b>

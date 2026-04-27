@@ -7,6 +7,7 @@ const VERSION_URL = `${base}/app-version.json`;
 const CACHE_VERSION_KEY = "app_cache_version";
 const REFUSED_VERSION_KEY = "app_update_refused_version";
 const REFUSED_AT_KEY = "app_update_refused_at";
+const ATTEMPTED_VERSION_KEY = "app_update_attempted_version";
 
 const FIVE_DAYS_MS = 5 * 24 * 60 * 60 * 1000;
 
@@ -73,15 +74,20 @@ export async function checkForUpdates() {
 		const isCritical = runningVersion === minVersion || isVersionOlder(runningVersion, minVersion);
 		if (isCritical && runningVersion !== "0.0.0" && runningVersion !== serverVersion) {
 			logService.warn("version", "CRITICAL UPDATE REQUIRED. Forcing reload...");
-			await applyUpdate(serverVersion);
+			await applyUpdate();
 			return;
 		}
 
-		// Якщо це перший візит (версія 0.0.0), просто запам'ятовуємо поточну версію
-		if (localStorageProvider.getItem(CACHE_VERSION_KEY) === null) {
-			logService.log("version", "First visit: setting initial cache version.");
+		// Синхронізуємо маркер версії у storage із запущеною (build-time) версією
+		const cachedVersion = localStorageProvider.getItem(CACHE_VERSION_KEY);
+		if (cachedVersion !== runningVersion) {
+			logService.log("version", `Version changed from ${cachedVersion} to ${runningVersion}. Updating cache marker.`);
 			localStorageProvider.setItem(CACHE_VERSION_KEY, runningVersion);
+			// Оновлення фактично пройшло, стираємо маркер спроби
+			localStorageProvider.removeItem(ATTEMPTED_VERSION_KEY);
 		}
+
+		versionStore.setServerVersion(serverVersion); // Зберігаємо для відображення в UI
 
 		// Якщо на сервері версія новіша за ту, що запущена
 		if (runningVersion !== serverVersion && isVersionOlder(runningVersion, serverVersion)) {
@@ -89,12 +95,19 @@ export async function checkForUpdates() {
 			const isNewerThanRefused = serverVersion !== refusedVersion;
 			const isCooldownOver = now - refusedAt > FIVE_DAYS_MS;
 			
+			// Якщо ми щойно спробували оновитися до цієї (або новішої) версії, але після релоаду все ще маємо стару
+			const attemptedVersion = localStorageProvider.getItem(ATTEMPTED_VERSION_KEY);
+			const isAlreadyAttempted = attemptedVersion === serverVersion || attemptedVersion === "latest";
+			
 			logService.log("version", "Conditions for showing update banner:", {
 				isNewerThanRefused,
 				isCooldownOver,
+				isAlreadyAttempted
 			});
 
-			if (!refusedVersion || isNewerThanRefused || isCooldownOver) {
+			if (isAlreadyAttempted) {
+				logService.warn("version", "Action: Update proposal suppressed. Already attempted but app version hasn't changed. Likely cached/dev mode issue.");
+			} else if (!refusedVersion || isNewerThanRefused || isCooldownOver) {
 				logService.log("version", "Action: Triggering update proposal banner.");
 				versionStore.setUpdate(true);
 			} else {
@@ -112,26 +125,26 @@ export async function checkForUpdates() {
  * Виконує оновлення (застосовує нову версію)
  */
 export async function applyUpdate(targetVersion?: string) {
-	logService.log("version", "applyUpdate called. Starting update process...");
-	const nextVersion = targetVersion || "latest";
+	logService.log("version", `applyUpdate called with target ${targetVersion}. Starting update process...`);
 
 	try {
 		logService.log("version", "Clearing caches and unregistering SW...");
 		await clearCaches();
 		
-		// Оновлюємо маркер версії в localStorage для наступного завантаження
-		localStorageProvider.setItem(CACHE_VERSION_KEY, nextVersion);
 		localStorageProvider.removeItem(REFUSED_VERSION_KEY);
 		localStorageProvider.removeItem(REFUSED_AT_KEY);
+		
+		// Записуємо версію, яку намагалися завантажити, щоб уникнути безкінечного циклу оновлень
+		localStorageProvider.setItem(ATTEMPTED_VERSION_KEY, targetVersion || "latest");
 
 		logService.log("version", "Performing HARD reload with cache buster...");
 		
 		// Створюємо URL з параметром для обходу HTTP-кешу браузера
-		const url = new URL(window.location.origin + base);
+		const url = new URL(window.location.href);
 		url.searchParams.set('upd', Date.now().toString());
 		
-		// Використовуємо replace, щоб не засмічувати історію переходів
-		window.location.replace(url.toString());
+		// Використовуємо href для гарантованого релоаду
+		window.location.href = url.toString();
 	} catch (e) {
 		logService.error("version", "Failed to perform clean update:", e);
 		// Fallback до звичайного релоаду

@@ -186,9 +186,15 @@
 			pwaStore.init();
 
 			if (!dev && "serviceWorker" in navigator) {
+				let isInitialInstall = false;
 				const registration = await navigator.serviceWorker.register(
 					`${base}/service-worker.js`,
 				);
+
+				// Якщо controller null при реєстрації, це перше завантаження (або після unregistered)
+				if (!navigator.serviceWorker.controller) {
+					isInitialInstall = true;
+				}
 
 				// Слухаємо оновлення Service Worker
 				registration.addEventListener("updatefound", () => {
@@ -197,13 +203,19 @@
 						newWorker.addEventListener("statechange", () => {
 							if (
 								newWorker.state === "installed" &&
-								navigator.serviceWorker.controller
+								navigator.serviceWorker.controller &&
+								!isInitialInstall
 							) {
 								logService.log(
 									"version",
 									"New Service Worker found and installed. Triggering banner.",
 								);
-								versionStore.setUpdate(true);
+								// Запобігаємо показу однакових версій
+								if (versionStore.serverVersion && versionStore.currentVersion === versionStore.serverVersion) {
+									logService.log("version", "Current version matches server, ignoring SW update event.");
+								} else {
+									versionStore.setUpdate(true);
+								}
 							}
 						});
 					}
@@ -284,7 +296,7 @@
 <LogCopyButton />
 
 {#if versionStore.hasUpdate && versionStore.currentVersion}
-	<UpdateNotification version={versionStore.currentVersion} />
+	<UpdateNotification version={versionStore.serverVersion} />
 {/if}
 
 {#if ready && !$isLoading && authStore.isDataReady}
