@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Word Service — Сервіс для завантаження та роботи зі словами
  * Динамічний імпорт JSON файлів для code splitting
  */
@@ -404,6 +404,9 @@ export async function loadPhrasesLevel(levelId: CEFRLevel): Promise<WordLevel> {
  * Завантажити ВСІ переклади для мови (для плейлистів та пошуку)
  */
 export async function loadAllTranslations(language: Language): Promise<TranslationDictionary> {
+	// Обов'язково завантажуємо семантику
+	await loadLocalSemantics(language);
+
 	const cacheKey = `${language}:all`;
 	if (translationCache.has(cacheKey)) {
 		return translationCache.get(cacheKey)!;
@@ -519,24 +522,26 @@ export function getTranslation(
 	language: Language = "uk",
 ): string {
 	let translation = translations[word];
+	const baseKey = getBaseKey(word);
 
-	// Якщо прямого перекладу немає, перевіряємо семантичну ієрархію
-	if (!translation) {
-		const baseKey = getBaseKey(word);
+	if (import.meta.env.DEV && baseKey && baseKey !== word) {
+		logService.log("debug", `[Translation Check] Key: "${word}", Base: "${baseKey}", Direct: "${translation}", BaseTrans: "${translations[baseKey]}"`);
+	}
+
+	// Якщо прямого перекладу немає, або він ідентичний базовому (для специфічних ключів)
+	// перевіряємо семантичну ієрархію для додавання міток
+	if (!translation || (baseKey && baseKey !== word && translation === translations[baseKey])) {
 		if (baseKey && translations[baseKey]) {
 			const baseTranslation = translations[baseKey];
-
-			// Беремо мітку з локальної семантики мови
 			const localSemantics = semanticsCache.get(language);
 			const label = localSemantics?.labels?.[word];
 
-			// Якщо є мітка (напр. "старший"), додаємо її до базового перекладу
-			translation = label ? `${baseTranslation} (${label})` : baseTranslation;
-
-			if (import.meta.env.DEV) {
-				logService.log("debug", 
-					`[Semantic Fallback] Key: "${word}", Base: "${baseKey}", Translation: "${translation}" (${language})`,
-				);
+			if (label) {
+				const newTranslation = `${baseTranslation} (${label})`;
+				if (import.meta.env.DEV) {
+					logService.log("debug", `[Semantic Applied] "${word}" -> "${newTranslation}"`);
+				}
+				return newTranslation;
 			}
 		}
 	}

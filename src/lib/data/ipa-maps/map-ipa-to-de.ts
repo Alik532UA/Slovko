@@ -1,4 +1,4 @@
-﻿/**
+/**
  * IPA to German (Latin) Mapping
  * Converts IPA symbols to German-readable Latin script
  */

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * IPA to Ukrainian Cyrillic Mapping
  * Comprehensive coverage of all IPA symbols used in the system
  * Ordered by specificity (longer sequences first to ensure greedy matching)

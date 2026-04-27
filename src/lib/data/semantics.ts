@@ -319,7 +319,7 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	},
 	brother: {
 		base: "brother",
-		specific: ["brother_male", "brother_older", "brother_younger"]
+		specific: ["brother_older", "brother_younger"]
 	},
 	budget: {
 		base: "budget",

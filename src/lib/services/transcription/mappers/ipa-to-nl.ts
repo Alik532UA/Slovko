@@ -1,4 +1,4 @@
-﻿/**
+/**
  * IPA to Dutch (NL) Mapper
  * Converts IPA symbols to Dutch-style latin transcription.
  */

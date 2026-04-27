@@ -1,4 +1,4 @@
-﻿/**
+/**
  * IPA to Polish (PL) Mapper
  * Converts standard IPA symbols to "folk" Polish transcription.
  * For example: /ʃ/ -> sz, /tʃ/ -> cz.

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * IPA to Crimean Tatar (Latin) Mapping
  * Comprehensive coverage of all IPA symbols used in the system
  * Ordered by specificity (longer sequences first)

@@ -1,4 +1,4 @@
-﻿---
+---
 title: Налаштування Firebase Console
 description: Опис ручних налаштувань у консолі Firebase, які впливають на логіку автентифікації та безпеки.
 type: documentation

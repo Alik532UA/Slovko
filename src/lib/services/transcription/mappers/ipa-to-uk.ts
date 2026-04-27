@@ -1,4 +1,4 @@
-﻿/**
+/**
  * IPA to Ukrainian Cyrillic Mapper
  * Converts standard IPA symbols to "folk" Ukrainian transcription.
  */

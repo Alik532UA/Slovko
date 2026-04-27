@@ -81,16 +81,22 @@ export class GameDataService {
 				};
 
 				if (hasDifference(sourceTrans) || hasDifference(targetTrans)) {
-					shouldExpand = true;
-				}
-
-				if (shouldExpand) {
-					logService.log(
-						"game",
-						`Expanding base word "${word}" into:`,
-						group.specific,
+					// Додаємо лише ті специфічні ключі, які реально мають переклади в обох мовах
+					const validSpecific = group.specific.filter(
+						(k: string) => sourceTrans[k] && targetTrans[k],
 					);
-					expanded.push(...group.specific);
+
+					if (validSpecific.length > 0) {
+						logService.log(
+							"game",
+							`Expanding base word "${word}" into:`,
+							validSpecific,
+						);
+						expanded.push(...validSpecific);
+					} else {
+						// Якщо валідних специфічних немає, залишаємо базове слово
+						expanded.push(word);
+					}
 				} else {
 					expanded.push(word);
 				}
