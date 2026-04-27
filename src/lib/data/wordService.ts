@@ -536,7 +536,8 @@ export function getTranslation(
 			const localSemantics = semanticsCache.get(language);
 			const label = localSemantics?.labels?.[word];
 
-			if (label) {
+			// Додаємо мітку ТІЛЬКИ якщо вона не порожня і НЕ збігається з перекладом
+			if (label && label.toLowerCase() !== baseTranslation.toLowerCase() && label.toLowerCase() !== translation?.toLowerCase()) {
 				const newTranslation = `${baseTranslation} (${label})`;
 				if (import.meta.env.DEV) {
 					logService.log("debug", `[Semantic Applied] "${word}" -> "${newTranslation}"`);
