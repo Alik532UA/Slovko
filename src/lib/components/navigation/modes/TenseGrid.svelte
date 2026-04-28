@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { ALL_TENSES } from "$lib/types/index";
-	import { APP_ICONS } from "$lib/config/icons";
+	import { APP_ICONS, type AppIconId } from "$lib/config/icons";
 	import { Check } from "lucide-svelte";
 
 	interface Props {
@@ -14,7 +14,7 @@
 
 <div class="grid tenses-grid safe-scale-grid" data-testid="tenses-grid">
 	{#each ALL_TENSES as tense (tense.id)}
-		{@const Icon = (APP_ICONS as any)[tense.icon]}
+		{@const Icon = APP_ICONS[tense.icon as AppIconId]}
 		<button
 			class="item tense-item"
 			class:selected={selectedIds.includes(tense.id)}

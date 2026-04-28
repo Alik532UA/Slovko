@@ -32,7 +32,7 @@ class LogService {
 			if (saved) {
 				try {
 					this.recentLogs = JSON.parse(saved);
-				} catch (e) {
+				} catch (_e) {
 					// ignore
 				}
 			}
@@ -104,7 +104,7 @@ class LogService {
 		try {
 			await navigator.clipboard.writeText(info);
 			return true;
-		} catch (err) {
+		} catch (_err) {
 			this.error("system", "Failed to copy logs");
 			return false;
 		}
@@ -141,7 +141,7 @@ class LogService {
 				details: sanitizedDetails,
 				userAgent: navigator.userAgent
 			});
-		} catch (e: unknown) {
+		} catch (_e: unknown) {
 			this.error("system", "Failed to log to remote");
 		}
 	}

@@ -18,6 +18,7 @@
 	import {
 		FriendsService,
 		LEADERBOARD_THRESHOLDS,
+		type LeaderboardEntry
 	} from "$lib/firebase/FriendsService";
 	import { authStore } from "$lib/firebase/authStore.svelte";
 	import { progressStore } from "$lib/stores/progressStore.svelte";
@@ -74,7 +75,7 @@
 		} else if (id === 'show-less') {
 			isMetricExpanded = false;
 		} else {
-			selectedMetric = id as any;
+			selectedMetric = id as typeof selectedMetric;
 			if (selectedMetric === "activeDaysCount" || selectedMetric === "bestStreak") {
 				selectedLevel = "all";
 			} else {
@@ -89,7 +90,7 @@
 	}
 
 	let isLoading = $state(true);
-	let leaderboardData = $state<any[]>([]);
+	let leaderboardData = $state<(LeaderboardEntry & { _shuffleWeight?: number })[]>([]);
 
 	$effect(() => {
 		loadLeaderboard();

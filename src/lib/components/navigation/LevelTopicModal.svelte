@@ -204,7 +204,7 @@
 				<SegmentedControl
 					options={interactionOptions}
 					value={settingsStore.value.interactionMode}
-					onchange={(id) => setInteractionMode(id as any)}
+					onchange={(id) => setInteractionMode(id as "match" | "swipe")}
 					testid="interaction-toggle"
 					class="mb-4 max-w-[400px]"
 				/>
@@ -212,7 +212,7 @@
 				<SegmentedControl
 					options={visibleTabs.map(t => ({ id: t.id, label: t.label, testId: t.testId }))}
 					value={activeTab}
-					onchange={(id) => navigationState.setTab(id as any)}
+					onchange={(id) => navigationState.setTab(id as GameMode)}
 					testid="level-topic-tabs"
 					class="mb-6 max-w-[500px]"
 				/>

@@ -13,7 +13,7 @@
 	import { playlistStore } from "$lib/stores/playlistStore.svelte";
 	import { notificationStore } from "$lib/stores/notificationStore.svelte";
 	import PlaylistModal from "../PlaylistModal.svelte";
-	import { PLAYLIST_ICONS_MAP } from "$lib/config/icons";
+	import { PLAYLIST_ICONS_MAP, type AppIconId } from "$lib/config/icons";
 	import type { PlaylistId } from "$lib/types/index";
 
 	interface Props {
@@ -121,7 +121,7 @@
 
 	<!-- Custom Playlists -->
 	{#each playlistStore.customPlaylists as p (p.id)}
-		{@const Icon = (PLAYLIST_ICONS_MAP as any)[p.icon || "Bookmark"] || Bookmark}
+		{@const Icon = PLAYLIST_ICONS_MAP[(p.icon as AppIconId) || "Bookmark"] || Bookmark}
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<div
 			class="item topic-item custom-playlist"

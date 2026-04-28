@@ -71,7 +71,7 @@
 			testId: `tab-${id}`,
 		}))}
 		value={activeTab}
-		onchange={(id) => setActiveTab(id as any)}
+		onchange={(id) => setActiveTab(id as TabType)}
 	/>
 {/snippet}
 

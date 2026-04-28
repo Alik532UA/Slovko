@@ -37,7 +37,7 @@
 	const followingCount = $derived(friendsStore.followingCount);
 	const followersCount = $derived(friendsStore.followersCount);
 
-	const AVATAR_ICONS: Record<string, any> = {
+	const AVATAR_ICONS: Record<string, typeof User> = {
 		user: User,
 		cat: Cat,
 		dog: Dog,

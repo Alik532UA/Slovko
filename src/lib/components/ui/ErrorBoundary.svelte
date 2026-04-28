@@ -13,7 +13,7 @@
 	let { children, compact = false }: Props = $props();
 
 	function copyReport(error: unknown) {
-		const err = error as any;
+		const err = error as { message?: string; stack?: string };
 		const report = {
 			error: err?.message || "Unknown error",
 			stack: err?.stack,
@@ -55,7 +55,7 @@
 				{/if}
 
 				<p class="error-msg" class:compact-msg={compact}>
-					{(error as any)?.message || "An unexpected error occurred"}
+					{(error as { message?: string })?.message || "An unexpected error occurred"}
 				</p>
 
 				<div class="actions" class:compact-actions={compact}>

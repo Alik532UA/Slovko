@@ -77,7 +77,7 @@ export function speakText(text: string, lang: string): void {
 			selectedVoice = currentVoices.find(v => v.voiceURI === prefs[lang]);
 			if (selectedVoice) hasUserPref = true;
 		}
-	} catch (e) { }
+	} catch (_e) { }
 
 	if (!selectedVoice) {
 		selectedVoice = findBestVoice(currentVoices, lang === "crh" ? "tr" : lang);

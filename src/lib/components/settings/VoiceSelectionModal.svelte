@@ -58,7 +58,7 @@
 					selected.scrollIntoView({ block: "center", behavior: "smooth" });
 				}
 			}
-		} catch (e) {
+		} catch (_e) {
 			// Ignore scroll errors
 		}
 	}

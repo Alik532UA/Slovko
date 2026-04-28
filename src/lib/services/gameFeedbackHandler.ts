@@ -87,7 +87,7 @@ export class GameFeedbackHandler {
 		if (browser && navigator.vibrate) {
 			try {
 				navigator.vibrate(pattern);
-			} catch (e) { /* ignore */ }
+			} catch (_e) { /* ignore */ }
 		}
 	}
 }

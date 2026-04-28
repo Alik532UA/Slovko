@@ -62,7 +62,7 @@
 		currentY = e.clientY;
 	}
 
-	function onPointerUp(e: PointerEvent) {
+	function onPointerUp(_e: PointerEvent) {
 		if (!isDragging) return;
 
 		const finalTransformY = transformY;
@@ -86,7 +86,7 @@
 		currentY = 0;
 	}
 
-	function onPointerCancel(e: PointerEvent) {
+	function onPointerCancel(_e: PointerEvent) {
 		if (!isDragging) return;
 
 		const finalTransformY = transformY;

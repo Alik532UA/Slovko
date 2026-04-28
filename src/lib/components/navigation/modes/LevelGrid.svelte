@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
-	import { ALL_LEVELS, type CEFRLevel } from "$lib/types/index";
+	import { ALL_LEVELS } from "$lib/types/index";
 	import { APP_ICONS } from "$lib/config/icons";
 	import { Check, Plus, Minus } from "lucide-svelte";
 

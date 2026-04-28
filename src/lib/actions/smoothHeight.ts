@@ -111,7 +111,7 @@ export function smoothHeight(node: HTMLElement, options: { duration?: number, ea
     updateHeight();
 
     return {
-        update(newOptions: any) {
+        update(newOptions: { duration?: number, easing?: string, minHeight?: number }) {
             options.duration = newOptions.duration || 300;
             options.minHeight = newOptions.minHeight ?? 0;
         },

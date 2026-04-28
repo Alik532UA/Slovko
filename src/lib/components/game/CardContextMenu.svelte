@@ -4,7 +4,7 @@
 	import { Heart, Bookmark, Volume2, AlertTriangle, X } from "lucide-svelte";
 	import { speakText } from "$lib/services/speechService";
 	import { scale, fade } from "svelte/transition";
-	import { PLAYLIST_ICONS_MAP } from "$lib/config/icons";
+	import { PLAYLIST_ICONS_MAP, type AppIconId } from "$lib/config/icons";
 
 	interface Props {
 		wordKey: string;
@@ -103,7 +103,7 @@
 		<div class="divider"></div>
 		<div class="submenu-label" data-testid="context-menu-playlists-label">{$_("playlists.addToPlaylist")}</div>
 		{#each playlistStore.customPlaylists as p (p.id)}
-			{@const Icon = (PLAYLIST_ICONS_MAP as any)[p.icon || "Bookmark"] || Bookmark}
+			{@const Icon = PLAYLIST_ICONS_MAP[(p.icon as AppIconId) || "Bookmark"] || Bookmark}
 			<button 
 				onclick={() => addToPlaylist(p.id)} 
 				class="custom-playlist-btn"

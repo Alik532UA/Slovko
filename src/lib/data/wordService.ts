@@ -23,20 +23,63 @@ import {
 } from "./schemas";
 
 /**
- * Допоміжна функція для повторних спроб динамічного імпорту.
- * Корисна при нестабільному з'єднанні.
+ * Завантажити транскрипції для конкретної категорії
  */
-async function withRetry<T>(fn: () => Promise<T>, retries = 3, delay = 1000): Promise<T> {
+export async function loadTranscriptions(
+	category: "levels" | "topics" | "phrases",
+	id: string,
+	language: Language = "en",
+): Promise<TranscriptionDictionary> {
 	try {
-		return await fn();
-	} catch (e) {
-		if (retries <= 0) throw e;
-		await new Promise(resolve => setTimeout(resolve, delay));
-		return withRetry(fn, retries - 1, delay * 2);
+		if (category === "levels") {
+			const prefix = `./transcriptions/${language}/levels/${id}_`;
+			const matchingPaths = Object.keys(transcriptionModules).filter((path) =>
+				path.startsWith(prefix),
+			);
+
+			const allDicts = await Promise.all(
+				matchingPaths.map((path) =>
+					transcriptionModules[path]().then((raw: string) => {
+						const data = safeParse<TranscriptionDictionary>(raw);
+						return DictionarySchema.parse(data);
+					}),
+				),
+			);
+			return Object.assign({}, ...allDicts);
+		} else if (category === "topics") {
+			const topic = await loadTopic(id);
+			const levels = ["A1", "A2", "B1", "B2", "C1", "C2"] as const;
+
+			const allPromises: Promise<TranscriptionDictionary>[] = [];
+			levels.forEach((l) => {
+				const prefix = `./transcriptions/${language}/levels/${l}_`;
+				Object.keys(transcriptionModules)
+					.filter((p) => p.startsWith(prefix))
+					.forEach((p) => {
+						allPromises.push(
+							transcriptionModules[p]().then((raw: string) => {
+								const data = safeParse<TranscriptionDictionary>(raw);
+								return DictionarySchema.parse(data);
+							}),
+						);
+					});
+			});
+
+			const allData = await Promise.all(allPromises);
+			const megaDict = Object.assign({}, ...allData);
+
+			const topicDict: TranscriptionDictionary = {};
+			topic.words.forEach((key) => {
+				if (megaDict[key]) topicDict[key] = megaDict[key];
+			});
+			return topicDict;
+		} else {
+			return {};
+		}
+	} catch (_e) {
+		return {};
 	}
 }
-
-// Кеш для уникнення повторних завантажень
 const levelCache = new Map<string, WordLevel>();
 const topicCache = new Map<string, WordTopic>();
 const phrasesCache = new Map<string, WordLevel>();
@@ -289,65 +332,6 @@ export async function loadTranslations(
 		}
 	} catch (e) {
 		logService.warn("debug", `Translations not found for ${language}/${category}/${id}`, e);
-		return {};
-	}
-}
-
-/**
- * Завантажити транскрипції для конкретної категорії
- */
-export async function loadTranscriptions(
-	category: "levels" | "topics" | "phrases",
-	id: string,
-	language: Language = "en",
-): Promise<TranscriptionDictionary> {
-	try {
-		if (category === "levels") {
-			const prefix = `./transcriptions/${language}/levels/${id}_`;
-			const matchingPaths = Object.keys(transcriptionModules).filter((path) =>
-				path.startsWith(prefix),
-			);
-
-			const allDicts = await Promise.all(
-				matchingPaths.map((path) =>
-					transcriptionModules[path]().then((raw: string) => {
-						const data = safeParse<TranscriptionDictionary>(raw);
-						return DictionarySchema.parse(data);
-					}),
-				),
-			);
-			return Object.assign({}, ...allDicts);
-		} else if (category === "topics") {
-			const topic = await loadTopic(id);
-			const levels = ["A1", "A2", "B1", "B2", "C1", "C2"] as const;
-
-			const allPromises: Promise<TranscriptionDictionary>[] = [];
-			levels.forEach((l) => {
-				const prefix = `./transcriptions/${language}/levels/${l}_`;
-				Object.keys(transcriptionModules)
-					.filter((p) => p.startsWith(prefix))
-					.forEach((p) => {
-						allPromises.push(
-							transcriptionModules[p]().then((raw: string) => {
-								const data = safeParse<TranscriptionDictionary>(raw);
-								return DictionarySchema.parse(data);
-							}),
-						);
-					});
-			});
-
-			const allData = await Promise.all(allPromises);
-			const megaDict = Object.assign({}, ...allData);
-
-			const topicDict: TranscriptionDictionary = {};
-			topic.words.forEach((key) => {
-				if (megaDict[key]) topicDict[key] = megaDict[key];
-			});
-			return topicDict;
-		} else {
-			return {};
-		}
-	} catch (e) {
 		return {};
 	}
 }

@@ -4,7 +4,6 @@
 	import { applyUpdate, skipUpdate } from "$lib/services/versionService";
 	import { versionStore } from "$lib/stores/versionStore.svelte";
 	import { logService } from "$lib/services/logService.svelte";
-	import { localStorageProvider } from "$lib/services/storage/storageProvider";
 	import { fade, scale } from "svelte/transition";
 	import { onMount } from "svelte";
 

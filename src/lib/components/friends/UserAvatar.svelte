@@ -20,7 +20,6 @@
 	import { logService } from "$lib/services/logService.svelte";
 	import { base } from "$app/paths";
 	import AvatarInteractionMenu from "./AvatarInteractionMenu.svelte";
-	import type { Component } from "svelte";
 
 	interface Props {
 		uid: string | null;

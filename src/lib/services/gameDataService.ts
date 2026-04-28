@@ -67,9 +67,6 @@ export class GameDataService {
 			const group = getSemanticGroup(word);
 
 			if (group) {
-				// Перевіряємо, чи розрізняються слова в будь-якій з мов
-				let shouldExpand = false;
-
 				const hasDifference = (dict: TranslationDictionary) => {
 					// Беремо ТІЛЬКИ ті переклади, які є реально у словнику (без fallback)
 					const translations = group.specific

@@ -47,10 +47,6 @@
 
 		let showMore = $state(false);
 		let selectedLevel = $state("all");
-		const activeLevelIndex = $derived(
-			selectedLevel === "all" ? 0 : ALL_LEVELS.indexOf(selectedLevel as any) + 1,
-		);
-		const totalLevels = $derived(ALL_LEVELS.length + 1);
 	
 		const currentLevelStats = $derived.by(() => {
 			if (selectedLevel === "all") {

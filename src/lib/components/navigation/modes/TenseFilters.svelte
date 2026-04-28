@@ -13,7 +13,7 @@
 
 	let { selectedForms, quantity, onToggleForm, onChangeQuantity }: Props = $props();
 
-	const FORMS: { id: TenseForm; label: string; icon: any }[] = [
+	const FORMS: { id: TenseForm; label: string; icon: typeof Plus }[] = [
 		{ id: "aff", label: "tenses.forms.aff", icon: Plus },
 		{ id: "neg", label: "tenses.forms.neg", icon: Minus },
 		{ id: "ques", label: "tenses.forms.ques", icon: HelpCircle }
@@ -34,7 +34,7 @@
 				{ id: 'many', label: 'tenses.qtyMany', testId: 'tense-qty-many', disabled: true, title: 'tenses.underConstruction' }
 			]}
 			value={quantity}
-			onchange={(id) => onChangeQuantity(id as any)}
+			onchange={(id) => onChangeQuantity(id as "1" | "3" | "many")}
 			testid="tense-quantity-radio-group"
 		/>
 	</div>

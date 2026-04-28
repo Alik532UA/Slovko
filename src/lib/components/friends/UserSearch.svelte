@@ -8,7 +8,6 @@
 	} from "lucide-svelte";
 	import {
 		FriendsService,
-		type UserProfile,
 	} from "$lib/firebase/FriendsService";
 	import { PresenceService, type DiscoveryUser } from "$lib/firebase/PresenceService.svelte";
 	import { authStore } from "$lib/firebase/authStore.svelte";
@@ -18,20 +17,17 @@
 	import { onDestroy } from "svelte";
 	import { flip } from "svelte/animate";
 
-	interface Props {
-		onfollow?: () => void;
-	}
-	let { onfollow }: Props = $props();
+	let { onfollow }: { onfollow?: () => void } = $props();
 
-	// State
-	let searchQuery = $state("");
-	let searchResults = $state<UserProfile[]>([]);
-	let isSearching = $state(false);
-	
 	// Discovery State
 	let isDiscoveryMode = $state(false);
 	let discoveryUsers = $state<DiscoveryUser[]>([]);
 	let discoveryUnsub: (() => void) | null = null;
+
+	// Search State
+	let searchQuery = $state("");
+	let searchResults = $state<any[]>([]);
+	let isSearching = $state(false);
 
 	// Debounce search
 	let searchTimeout: ReturnType<typeof setTimeout>;
@@ -162,6 +158,7 @@
 						displayName={user.displayName}
 						photoURL={user.photoURL}
 						variant="compact"
+						onchange={onfollow}
 					/>
 				</div>
 			{/each}
@@ -212,6 +209,7 @@
 							displayName={user.displayName}
 							photoURL={user.photoURL}
 							variant="compact"
+							onchange={onfollow}
 						/>
 					</div>
 				{/each}

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { ALL_TOPICS } from "$lib/types/index";
-	import { APP_ICONS } from "$lib/config/icons";
+	import { APP_ICONS, type AppIconId } from "$lib/config/icons";
 	import { Check } from "lucide-svelte";
 
 	interface Props {
@@ -14,7 +14,7 @@
 
 <div class="grid topics-grid safe-scale-grid" data-testid="topic-grid">
 	{#each ALL_TOPICS as topic (topic.id)}
-		{@const Icon = (APP_ICONS as any)[topic.icon]}
+		{@const Icon = APP_ICONS[topic.icon as AppIconId]}
 		<button
 			class="item topic-item"
 			class:selected={selectedIds.includes(topic.id)}

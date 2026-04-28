@@ -2,7 +2,7 @@
 	import { dev } from "$app/environment";
 	import { logService } from "$lib/services/logService.svelte";
 	import { hardReset } from "$lib/services/resetService";
-	import { Check, Bug } from "lucide-svelte";
+	import { Check } from "lucide-svelte";
 
 	let copied = $state(false);
 	

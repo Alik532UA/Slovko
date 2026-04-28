@@ -10,13 +10,15 @@
 		displayName?: string;
 		photoURL?: string | null;
 		variant?: "standard" | "compact";
+		onchange?: () => void;
 	}
 
 	let { 
 		uid, 
 		displayName = "User", 
 		photoURL = null,
-		variant = "standard"
+		variant = "standard",
+		onchange
 	}: Props = $props();
 
 	let isProcessing = $state(false);
@@ -48,6 +50,7 @@
 			if (success) {
 				// Оновлюємо стор після успішної дії
 				await friendsStore.refreshAll();
+				onchange?.();
 			}
 		} catch (e) {
 			logService.error("sync", "Follow toggle failed", e);

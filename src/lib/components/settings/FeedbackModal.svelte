@@ -44,8 +44,9 @@
 			});
 			isSuccess = true;
 			setTimeout(onclose, 2500);
-		} catch (e: any) {
-			error = e.message || "Помилка при відправці";
+		} catch (e: unknown) {
+			const err = e as { message?: string };
+			error = err.message || "Помилка при відправці";
 		} finally {
 			isSubmitting = false;
 		}

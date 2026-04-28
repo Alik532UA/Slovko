@@ -42,8 +42,9 @@
 			});
 			isSuccess = true;
 			setTimeout(onclose, 2500);
-		} catch (e: any) {
-			if (e.message === "AUTH_REQUIRED") {
+		} catch (e: unknown) {
+			const err = e as { message?: string };
+			if (err.message === "AUTH_REQUIRED") {
 				notificationStore.error($_("wordReport.authRequired"));
 			} else {
 				notificationStore.error($_("wordReport.error"));

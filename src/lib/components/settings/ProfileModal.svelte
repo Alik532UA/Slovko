@@ -85,8 +85,9 @@
 		try {
 			await AuthService.signInWithEmail(email, pass);
 			loginMethod = null;
-		} catch (e: any) {
-			errorMessage = e.message || $_("profile.errors.unknownError");
+		} catch (e: unknown) {
+			const err = e as { message?: string };
+			errorMessage = err.message || $_("profile.errors.unknownError");
 		} finally {
 			isLoading = false;
 		}
@@ -98,8 +99,9 @@
 		try {
 			await AuthService.linkWithEmail(email, pass);
 			loginMethod = null;
-		} catch (e: any) {
-			errorMessage = e.message || $_("profile.errors.unknownError");
+		} catch (e: unknown) {
+			const err = e as { message?: string };
+			errorMessage = err.message || $_("profile.errors.unknownError");
 		} finally {
 			isLoading = false;
 		}
@@ -111,8 +113,9 @@
 		try {
 			await AuthService.linkWithGoogle();
 			loginMethod = null;
-		} catch (e: any) {
-			errorMessage = e.message || $_("profile.errors.unknownError");
+		} catch (e: unknown) {
+			const err = e as { message?: string };
+			errorMessage = err.message || $_("profile.errors.unknownError");
 		} finally {
 			isLoading = false;
 		}
@@ -130,8 +133,9 @@
 			setTimeout(() => {
 				loginMethod = "auth";
 			}, 3000);
-		} catch (e: any) {
-			errorMessage = e.message || $_("profile.errors.unknownError");
+		} catch (e: unknown) {
+			const err = e as { message?: string };
+			errorMessage = err.message || $_("profile.errors.unknownError");
 		} finally {
 			isLoading = false;
 		}
@@ -176,7 +180,7 @@
 			disabled: authStore.isGuest // Вкладки неклікабельні для гостя
 		}))}
 		value={activeTab}
-		onchange={(id) => setActiveTab(id as any)}
+		onchange={(id) => setActiveTab(id as TabType)}
 	/>
 {/snippet}
 

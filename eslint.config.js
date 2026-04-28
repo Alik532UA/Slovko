@@ -39,7 +39,11 @@ export default [
 			"@typescript-eslint/no-explicit-any": "warn",
 			"@typescript-eslint/no-unused-vars": [
 				"warn",
-				{ argsIgnorePattern: "^_" },
+				{ 
+					argsIgnorePattern: "^_",
+					varsIgnorePattern: "^_",
+					caughtErrorsIgnorePattern: "^_"
+				},
 			],
 			"@typescript-eslint/ban-ts-comment": "off",
 		},
@@ -65,7 +69,11 @@ export default [
 			"@typescript-eslint/no-explicit-any": "warn",
 			"@typescript-eslint/no-unused-vars": [
 				"warn",
-				{ argsIgnorePattern: "^_" },
+				{ 
+					argsIgnorePattern: "^_",
+					varsIgnorePattern: "^_",
+					caughtErrorsIgnorePattern: "^_"
+				},
 			],
 			"svelte/no-at-html-tags": "warn",
 		},

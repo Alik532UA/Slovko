@@ -53,8 +53,9 @@
 			setTimeout(() => {
 				onback();
 			}, 2000);
-		} catch (e: any) {
-			errorMessage = getAuthErrorMessage(e.code) || e.message;
+		} catch (e: unknown) {
+			const err = e as { code?: string; message?: string };
+			errorMessage = getAuthErrorMessage(err.code || "") || err.message || "Error";
 		} finally {
 			isLinking = false;
 		}
@@ -80,9 +81,10 @@
 		try {
 			await authStore.deleteAccount(password);
 			if (onclose) onclose();
-		} catch (e: any) {
+		} catch (e: unknown) {
+			const err = e as { code?: string; message?: string };
 			logService.error("auth", "Account deletion failed", e);
-			errorMessage = getAuthErrorMessage(e.code) || e.message || "Помилка";
+			errorMessage = getAuthErrorMessage(err.code || "") || err.message || "Помилка";
 		} finally {
 			isLinking = false;
 		}
