@@ -421,5 +421,8 @@
 	"warrant_guarantee": "warrant",
 	"withdraw_money": "withdraw",
 	"withstand_resist": "withstand",
-	"yield_produce": "yield"
+	"yield_produce": "yield",
+	"mine": "mine",
+	"slope": "slope",
+	"arena": "arena"
 }

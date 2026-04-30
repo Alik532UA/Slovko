@@ -29,5 +29,7 @@
 	"pinpoint_identify": "pinpoint",
 	"pledge_promise": "pledge",
 	"serve_general": "serve",
-	"simulate_imitate": "simulate"
+	"simulate_imitate": "simulate",
+	"align": "align",
+	"scan_look": "scan"
 }

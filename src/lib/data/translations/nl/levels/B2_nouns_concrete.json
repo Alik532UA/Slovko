@@ -426,5 +426,8 @@
 	"warrant_guarantee": "waarborgen",
 	"withdraw_money": "opnemen",
 	"withstand_resist": "weerstaan",
-	"yield_produce": "opbrengen"
+	"yield_produce": "opbrengen",
+	"mine": "mijn",
+	"slope": "helling",
+	"arena": "arena"
 }

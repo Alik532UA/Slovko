@@ -109,5 +109,9 @@
 	"query_question": "bevragen",
 	"sanction_allow": "bekrachtigen",
 	"sense_feel": "voelen",
-	"supplement_add": "aanvullen"
+	"supplement_add": "aanvullen",
+	"sponsorship": "sponsoring",
+	"indication": "indicatie",
+	"implication": "implicatie",
+	"confusion": "verwarring"
 }

@@ -108,5 +108,9 @@
 	"query_question": "query",
 	"sanction_allow": "sanction",
 	"sense_feel": "sense",
-	"supplement_add": "supplement"
+	"supplement_add": "supplement",
+	"sponsorship": "sponsorship",
+	"indication": "indication",
+	"implication": "implication",
+	"confusion": "confusion"
 }
