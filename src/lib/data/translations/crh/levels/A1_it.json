@@ -1,3 +1,10 @@
-{
-	"cloud": "bulut"
+﻿{
+	"camera": "kamera",
+	"internet": "internet",
+	"keyboard": "klaviatura",
+	"memory": "hafıza",
+	"print": "bastırmaq",
+	"program": "programma",
+	"search": "qıdırmaq",
+	"video": "video"
 }

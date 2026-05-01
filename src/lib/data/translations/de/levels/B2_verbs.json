@@ -1,11 +1,7 @@
 ﻿{
-	"accelerate": "beschleunigen",
-	"accumulate": "ansammeln",
+	"accurate": "genau",
 	"acknowledge_recognize": "anerkennen",
-	"allocate": "zuweisen",
-	"analyze": "analysieren",
 	"apply_job": "bewerben",
-	"appoint": "ernennen",
 	"appoint_job": "ernennen",
 	"appraise": "bewerten",
 	"appropriate": "angemessen",
@@ -17,7 +13,6 @@
 	"assume": "annehmen",
 	"assume_suppose": "annehmen",
 	"assure_promise": "versichern",
-	"authorize": "autorisieren",
 	"compose_create": "komponieren",
 	"compromise": "Kompromiss",
 	"condemn_criticize": "verurteilen",
@@ -25,12 +20,11 @@
 	"exaggerate_overstate": "übertreiben",
 	"formulate_create": "formulieren",
 	"inspire_motivate": "inspirieren",
+	"justify": "rechtfertigen",
 	"mediate_negotiate": "vermitteln",
 	"pinpoint_identify": "genau bestimmen",
 	"pledge_promise": "versprechen",
-	"serve_general": "dienen",
-	"simulate_imitate": "simulieren",
-	"align": "ausrichten",
 	"scan_look": "überfliegen",
-	"abolish": "abschaffen"
+	"serve_general": "dienen",
+	"simulate_imitate": "simulieren"
 }

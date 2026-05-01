@@ -1,5 +1,8 @@
 ﻿{
-	"scan_medical": "skaner",
+	"audio": "ses",
+	"browser": "brauzer",
+	"drive_it": "sürücü",
+	"hardware": "donanım",
 	"scan_digital": "skaner",
-	"scan": "skaner"
+	"scan_medical": "skaner"
 }

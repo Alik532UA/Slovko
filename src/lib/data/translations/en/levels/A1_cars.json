@@ -1,12 +1,16 @@
-{
+﻿{
+	"bicycle": "bicycle",
+	"boat": "boat",
 	"bus": "bus",
 	"car": "car",
 	"door": "door",
 	"key": "key",
 	"light": "light",
 	"light_color": "light",
+	"oil": "oil",
 	"plane": "plane",
 	"road": "road",
+	"seat": "seat",
 	"street": "street",
 	"taxi": "taxi",
 	"train": "train",

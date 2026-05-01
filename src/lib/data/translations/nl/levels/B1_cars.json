@@ -1,12 +1,19 @@
-{
+﻿{
+	"battery": "batterij",
+	"battery_artillery": "batterij",
+	"battery_electric": "batterij",
 	"battery_life": "batterij",
-	"fuel_energy": "brandstof",
-	"signal_phone": "signaal",
-	"insurance": "verzekering",
 	"engine_motor": "motor",
 	"fuel": "brandstof",
-	"signal": "signaal",
-	"battery_electric": "batterij",
-	"battery_artillery": "batterij",
-	"battery": "batterij"
+	"fuel_energy": "brandstof",
+	"insurance": "verzekering",
+	"mechanic": "monteur",
+	"pedal": "pedaal",
+	"piston": "zuiger",
+	"signal_phone": "signaal",
+	"suspension": "ophanging",
+	"taillight": "achterlicht",
+	"transmission": "transmissie",
+	"trunk": "kofferbak",
+	"wiper": "ruitenwisser"
 }

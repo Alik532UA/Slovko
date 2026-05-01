@@ -1,15 +1,14 @@
-{
-	"problem": "/ˈprɒbləm/",
-	"repeat": "/rɪˈpiːt/",
-	"since_when": "/sɪns/",
-	"sure": "/ʃʊər/",
-	"until_when": "/ənˈtɪl/",
-	"which": "/wɪtʃ/",
+﻿{
+	"explain": "/ɪkˈspleɪn/",
 	"how_come": "/haʊ kʌm/",
 	"how_far": "/haʊ fɑːr/",
 	"how_long": "/haʊ lɒŋ/",
 	"how_many": "/haʊ ˈmɛni/",
 	"how_much": "/haʊ mʌtʃ/",
 	"how_often": "/haʊ ˈɒfn/",
-	"how_old": "/haʊ oʊld/"
+	"how_old": "/haʊ oʊld/",
+	"repeat": "/rɪˈpiːt/",
+	"since_when": "/sɪns/",
+	"until_when": "/ənˈtɪl/",
+	"whose": "/huːz/"
 }

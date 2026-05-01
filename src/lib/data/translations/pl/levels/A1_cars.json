@@ -1,12 +1,16 @@
-{
+﻿{
+	"bicycle": "rower",
+	"boat": "łódź",
 	"bus": "autobus",
 	"car": "samochód",
 	"door": "drzwi",
 	"key": "klucz",
 	"light": "jasny",
 	"light_color": "jasny",
+	"oil": "olej",
 	"plane": "samolot",
 	"road": "droga",
+	"seat": "siedzenie",
 	"street": "ulica",
 	"taxi": "taksówka",
 	"train": "pociąg",

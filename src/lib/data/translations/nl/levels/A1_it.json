@@ -1,3 +1,10 @@
-{
-	"cloud": "wolk"
+﻿{
+	"camera": "camera",
+	"internet": "internet",
+	"keyboard": "toetsenbord",
+	"memory": "geheugen",
+	"print": "afdrukken",
+	"program": "programma",
+	"search": "zoeken",
+	"video": "video"
 }

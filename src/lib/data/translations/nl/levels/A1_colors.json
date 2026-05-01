@@ -1,14 +1,13 @@
-{
-	"red": "rood",
+﻿{
+	"black": "zwart",
 	"blue": "blauw",
 	"blue_dark": "donkerblauw",
 	"blue_light": "lichtblauw",
-	"green": "groen",
-	"yellow": "geel",
-	"black": "zwart",
-	"white": "wit",
 	"brown": "bruin",
-	"purple": "paars",
 	"color": "kleur",
-	"pink": "roze"
+	"green": "groen",
+	"pink": "roze",
+	"red": "rood",
+	"white": "wit",
+	"yellow": "geel"
 }

@@ -1,12 +1,16 @@
-{
+﻿{
+	"bicycle": "/ˈbaɪsɪkl/",
+	"boat": "/bəʊt/",
 	"bus": "/bʌs/",
 	"car": "/kɑːr/",
 	"door": "/dɔːr/",
 	"key": "/kiː/",
 	"light": "/laɪt/",
 	"light_color": "/laɪt/",
+	"oil": "/ɔɪl/",
 	"plane": "/pleɪn/",
 	"road": "/rəʊd/",
+	"seat": "/siːt/",
 	"street": "/striːt/",
 	"taxi": "/ˈtæksi/",
 	"train": "/treɪn/",

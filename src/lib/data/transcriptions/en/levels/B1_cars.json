@@ -1,10 +1,16 @@
-{
-	"battery_life": "/ˈbætəri/",
-	"fuel_energy": "/ˈfjuːəl/",
-	"signal_phone": "/ˈsɪɡnəl/",
-	"fuel": "/fjʊəl/",
-	"signal": "/ˈsɪɡn(ə)l/",
-	"battery_electric": "/ˈbætəri/",
+﻿{
+	"battery": "/ˈbætəri/",
 	"battery_artillery": "/ˈbætəri/",
-	"battery": "/ˈbætəri/"
+	"battery_electric": "/ˈbætəri/",
+	"battery_life": "/ˈbætəri/",
+	"fuel": "/fjʊəl/",
+	"fuel_energy": "/ˈfjuːəl/",
+	"pedal": "/ˈpɛdl/",
+	"piston": "/ˈpɪstən/",
+	"signal_phone": "/ˈsɪɡnəl/",
+	"suspension": "/səˈspɛnʃn/",
+	"taillight": "/ˈteɪllaɪt/",
+	"transmission": "/trænzˈmɪʃn/",
+	"trunk": "/trʌŋk/",
+	"wiper": "/ˈwaɪpər/"
 }

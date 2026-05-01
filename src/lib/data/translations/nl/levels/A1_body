@@ -1,0 +1,22 @@
+﻿{
+	"arm": "arm",
+	"arm_body": "arm",
+	"arm_weapon": "wapen",
+	"body": "lichaam",
+	"ear": "oor",
+	"eye": "oog",
+	"face": "gezicht",
+	"finger": "vinger",
+	"foot": "voet",
+	"hair": "haar",
+	"hand": "hand",
+	"head": "hoofd",
+	"health": "gezondheid",
+	"heart": "hart",
+	"hospital": "ziekenhuis",
+	"leg": "been",
+	"leg_full": "been",
+	"mouth": "mond",
+	"nose": "neus",
+	"tooth": "tand"
+}

@@ -1,5 +1,8 @@
 ﻿{
-	"scan_medical": "badanie",
+	"audio": "audio",
+	"browser": "przeglądarka",
+	"drive_it": "napęd",
+	"hardware": "sprzęt",
 	"scan_digital": "skanowanie",
-	"scan": "badanie"
+	"scan_medical": "badanie"
 }

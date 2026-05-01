@@ -1,14 +1,13 @@
-{
-	"red": "red",
+﻿{
+	"black": "black",
 	"blue": "blue",
 	"blue_dark": "blue",
 	"blue_light": "blue",
-	"green": "green",
-	"yellow": "yellow",
-	"black": "black",
-	"white": "white",
 	"brown": "brown",
-	"purple": "purple",
 	"color": "color",
-	"pink": "pink"
+	"green": "green",
+	"pink": "pink",
+	"red": "red",
+	"white": "white",
+	"yellow": "yellow"
 }

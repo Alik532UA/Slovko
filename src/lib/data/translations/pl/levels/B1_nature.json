@@ -1,8 +1,15 @@
-{
+﻿{
+	"bush": "krzak",
+	"cave": "jaskinia",
+	"desert": "pustynia",
 	"earth_planet": "Ziemia",
 	"flood": "powódź",
+	"fog": "mgła",
 	"jungle": "dżungla",
-	"landscape": "krajobraz",
+	"lightning": "piorun",
+	"rainbow": "tęcza",
+	"root": "korzeń",
+	"sand": "piasek",
 	"scenery": "sceneria",
-	"valley": "dolina"
+	"seed": "nasiono"
 }

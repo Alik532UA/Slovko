@@ -1,12 +1,19 @@
-{
+﻿{
+	"battery": "batareya",
+	"battery_artillery": "topçu batareyası",
+	"battery_electric": "batareya",
 	"battery_life": "batareya",
-	"fuel_energy": "yaqıt",
-	"signal_phone": "işaret",
-	"insurance": "sigorta",
 	"engine_motor": "motor",
 	"fuel": "yaqıt",
-	"signal": "işaret",
-	"battery_electric": "batareya",
-	"battery_artillery": "topçu batareyası",
-	"battery": "batareya"
+	"fuel_energy": "yaqıt",
+	"insurance": "sigorta",
+	"mechanic": "mehanik",
+	"pedal": "pedal",
+	"piston": "piston",
+	"signal_phone": "işaret",
+	"suspension": "süspansiyon",
+	"taillight": "art far",
+	"transmission": "vites qutusı",
+	"trunk": "yükyeri",
+	"wiper": "silecegi"
 }

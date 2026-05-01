@@ -1,12 +1,16 @@
-{
+﻿{
+	"bicycle": "Fahrrad",
+	"boat": "Boot",
 	"bus": "Bus",
 	"car": "Auto",
 	"door": "Tür",
 	"key": "Schlüssel",
 	"light": "hell",
 	"light_color": "hell",
+	"oil": "Öl",
 	"plane": "Flugzeug",
 	"road": "Straße",
+	"seat": "Sitz",
 	"street": "Straße",
 	"taxi": "Taxi",
 	"train": "Zug",

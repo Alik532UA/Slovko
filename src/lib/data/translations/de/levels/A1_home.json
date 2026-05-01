@@ -1,20 +1,21 @@
-{
-	"table": "Tisch",
-	"chair": "Stuhl",
-	"bed": "Bett",
+﻿{
+	"bath": "Bad",
 	"bathroom": "Badezimmer",
+	"bed": "Bett",
 	"bedroom": "Schlafzimmer",
-	"wall": "Wand",
+	"chair": "Stuhl",
+	"clock": "Uhr",
 	"computer": "Computer",
 	"cup": "Tasse",
-	"knife": "Messer",
-	"fork": "Gabel",
-	"spoon": "Löffel",
-	"clock": "Uhr",
-	"living_room": "Wohnzimmer",
 	"glass": "Glas",
+	"knife": "Messer",
+	"living_room": "Wohnzimmer",
+	"plant": "Pflanze",
+	"plastic": "Plastik",
 	"plate": "Teller",
+	"shower": "Dusche",
 	"stove": "Herd",
-	"sink": "Spüle",
-	"balcony": "Balkon"
+	"table": "Tisch",
+	"toilet": "Toilette",
+	"wall": "Wand"
 }

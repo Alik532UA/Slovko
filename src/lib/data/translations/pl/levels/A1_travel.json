@@ -1,13 +1,19 @@
-{
+﻿{
 	"airport": "lotnisko",
 	"bag": "torba",
 	"bank_finance": "bank",
-	"bank_river": "brzeg",
+	"camp": "obozować",
+	"holiday": "święto",
 	"hotel": "hotel",
+	"information": "informacja",
 	"map": "mapa",
 	"money": "pieniądze",
 	"price": "cena",
 	"room": "pokój",
 	"stop": "zatrzymywać się",
-	"ticket": "bilet"
+	"ticket": "bilet",
+	"tour": "wycieczka",
+	"tourist": "turysta",
+	"trip": "wycieczka",
+	"vacation": "wakacje"
 }

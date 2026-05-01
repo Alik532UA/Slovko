@@ -1,4 +1,5 @@
 ﻿{
-	"drought": "drought",
-	"earthquake": "earthquake"
+	"landscape": "landscape",
+	"ocean": "ocean",
+	"volcano": "volcano"
 }

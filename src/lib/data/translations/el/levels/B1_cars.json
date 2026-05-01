@@ -1,12 +1,19 @@
-{
+﻿{
+	"battery": "μπαταρία",
+	"battery_artillery": "πυροβολαρχία",
+	"battery_electric": "μπαταρία",
 	"battery_life": "διάρκεια μπαταρίας",
-	"fuel_energy": "καύσιμο",
-	"signal_phone": "σήμα",
-	"insurance": "ασφάλεια",
 	"engine_motor": "μηχανή",
 	"fuel": "καύσιμο",
-	"signal": "σήμα",
-	"battery_electric": "μπαταρία",
-	"battery_artillery": "πυροβολαρχία",
-	"battery": "μπαταρία"
+	"fuel_energy": "καύσιμο",
+	"insurance": "ασφάλεια",
+	"mechanic": "μηχανικός",
+	"pedal": "πεντάλ",
+	"piston": "έμβολο",
+	"signal_phone": "σήμα",
+	"suspension": "ανάρτηση",
+	"taillight": "πίσω φως",
+	"transmission": "σασμάν",
+	"trunk": "πορτμπαγκάζ",
+	"wiper": "υαλοκαθαριστήρας"
 }

@@ -1,0 +1,20 @@
+﻿{
+	"aunt": "ala",
+	"child": "bala",
+	"family": "aile",
+	"father": "baba",
+	"friend": "dost",
+	"grandfather": "qartbaba",
+	"grandmother": "bita",
+	"husband": "aqay",
+	"marry": "evlenmek",
+	"mother": "ana",
+	"parents": "ana-baba",
+	"partner": "ortaq",
+	"sister": "abla",
+	"sister_older": "tata",
+	"sister_younger": "siñil",
+	"son": "oğul",
+	"uncle": "emce",
+	"wife": "hanım"
+}

@@ -1,0 +1,22 @@
+﻿{
+	"arm": "Arm",
+	"arm_body": "Arm",
+	"arm_weapon": "Waffe",
+	"body": "Körper",
+	"ear": "Ohr",
+	"eye": "Auge",
+	"face": "Gesicht",
+	"finger": "Finger",
+	"foot": "Fuß",
+	"hair": "Haar",
+	"hand": "Hand",
+	"head": "Kopf",
+	"health": "Gesundheit",
+	"heart": "Herz",
+	"hospital": "Krankenhaus",
+	"leg": "Bein",
+	"leg_full": "Bein",
+	"mouth": "Mund",
+	"nose": "Nase",
+	"tooth": "Zahn"
+}

@@ -1,12 +1,19 @@
-{
-	"flood": "/flʌd/",
-	"jungle": "/ˈdʒʌŋɡ(ə)l/",
-	"landscape": "/ˈlændskeɪp/",
-	"scenery": "/ˈsiːnəri/",
-	"valley": "/ˈvæli/",
+﻿{
+	"bush": "/bʊʃ/",
+	"cave": "/keɪv/",
+	"desert": "/ˈdɛzərt/",
 	"environment_nature": "/ɪnˈvaɪrənmənt/",
+	"flood": "/flʌd/",
+	"fog": "/fɒɡ/",
+	"jungle": "/ˈdʒʌŋɡ(ə)l/",
+	"lightning": "/ˈlaɪtnɪŋ/",
 	"planet_earth": "/ˈplænɪt/",
+	"rainbow": "/ˈreɪnbəʊ/",
 	"rare_species": "/rɛər/",
+	"root": "/ruːt/",
+	"sand": "/sænd/",
+	"scenery": "/ˈsiːnəri/",
+	"seed": "/siːd/",
 	"universe_cosmos": "/ˈjuːnɪvɜːrs/",
-	"wildlife": "/ˈwaɪldlaɪf/"
+	"watermelon": "/ˈwɔːtərmɛlən/"
 }

@@ -1,13 +1,20 @@
-{
-	"room": "/ruːm/",
-	"money": "/ˈmʌni/",
+﻿{
 	"airport": "/ˈeəpɔːt/",
-	"stop": "/stɒp/",
 	"bag": "/bæɡ/",
+	"bank": "/bæŋk/",
 	"bank_finance": "/bæŋk/",
+	"camp": "/kæmp/",
+	"front": "/frʌnt/",
+	"holiday": "/ˈhɒlədeɪ/",
 	"hotel": "/həʊˈtɛl/",
-	"ticket": "/ˈtɪkɪt/",
+	"information": "/ˌɪnfərˈmeɪʃn/",
 	"map": "/mæp/",
+	"money": "/ˈmʌni/",
 	"price": "/praɪs/",
-	"bank": "/bæŋk/"
+	"room": "/ruːm/",
+	"stop": "/stɒp/",
+	"ticket": "/ˈtɪkɪt/",
+	"tour": "/tʊər/",
+	"tourist": "/ˈtʊərɪst/",
+	"trip": "/trɪp/"
 }

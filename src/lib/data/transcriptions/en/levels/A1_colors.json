@@ -1,15 +1,13 @@
-{
-	"red": "/rɛd/",
+﻿{
+	"black": "/blæk/",
 	"blue": "/bluː/",
 	"blue_dark": "/bluː/",
 	"blue_light": "/bluː/",
-	"green": "/ɡriːn/",
-	"yellow": "/ˈjɛləʊ/",
-	"black": "/blæk/",
-	"white": "/waɪt/",
 	"brown": "/braʊn/",
-	"purple": "/ˈpɜːpl/",
 	"color": "/ˈkʌlər/",
-	"orange_color": "/ˈɒrɪndʒ/",
-	"pink": "/pɪŋk/"
+	"green": "/ɡriːn/",
+	"pink": "/pɪŋk/",
+	"red": "/rɛd/",
+	"white": "/waɪt/",
+	"yellow": "/ˈjɛləʊ/"
 }

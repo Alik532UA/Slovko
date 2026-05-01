@@ -1,12 +1,16 @@
-{
+﻿{
+	"bicycle": "fiets",
+	"boat": "boot",
 	"bus": "bus",
 	"car": "auto",
 	"door": "deur",
 	"key": "sleutel",
 	"light": "licht",
 	"light_color": "licht",
+	"oil": "olie",
 	"plane": "vliegtuig",
 	"road": "weg",
+	"seat": "stoel",
 	"street": "straat",
 	"taxi": "taxi",
 	"train": "trein",

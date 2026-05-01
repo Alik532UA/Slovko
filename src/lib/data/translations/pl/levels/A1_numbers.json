@@ -1,4 +1,4 @@
-{
+﻿{
 	"eight": "osiem",
 	"eighteen": "osiemnaście",
 	"eighty": "osiemdziesiąt",
@@ -16,6 +16,7 @@
 	"nineteen": "dziewiętnaście",
 	"ninety": "dziewięćdziesiąt",
 	"one": "jeden",
+	"second": "drugi",
 	"second_ord": "drugi",
 	"seven": "siedem",
 	"seventeen": "siedemnaście",
@@ -31,6 +32,5 @@
 	"three": "trzy",
 	"twelve": "dwanaście",
 	"twenty": "dwadzieścia",
-	"two": "dwa",
-	"second": "drugi"
+	"two": "dwa"
 }

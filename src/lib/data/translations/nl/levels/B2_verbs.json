@@ -1,13 +1,9 @@
 ﻿{
-	"accelerate": "versnellen",
-	"accumulate": "accumuleren",
+	"accurate": "nauwkeurig",
 	"acknowledge_recognize": "erkennen",
 	"adequate": "voldoende",
-	"allocate": "toewijzen",
 	"amuse": "amuseren",
-	"analyze": "analyseren",
 	"apply_job": "solliciteren",
-	"appoint": "benoemen",
 	"appoint_job": "benoemen",
 	"appraise": "taxeren",
 	"appropriate": "gepast",
@@ -19,7 +15,6 @@
 	"assume": "aannemen",
 	"assume_suppose": "aannemen",
 	"assure_promise": "verzekeren",
-	"authorize": "autoriseren",
 	"compose_create": "componeren",
 	"compromise": "compromis",
 	"condemn_criticize": "veroordelen",
@@ -27,12 +22,11 @@
 	"exaggerate_overstate": "overdrijven",
 	"formulate_create": "formuleren",
 	"inspire_motivate": "inspireren",
+	"justify": "rechtvaardigen",
 	"mediate_negotiate": "bemiddelen",
 	"pinpoint_identify": "nauwkeurig vaststellen",
 	"pledge_promise": "beloven",
-	"serve_general": "dienen als",
-	"simulate_imitate": "simuleren",
-	"align": "uitlijnen",
 	"scan_look": "vluchtig bekijken",
-	"abolish": "afschaffen"
+	"serve_general": "dienen als",
+	"simulate_imitate": "simuleren"
 }

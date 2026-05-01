@@ -1,8 +1,8 @@
-{
-	"any_questions": "Gibt es Fragen?",
+﻿{
 	"are_you": "sind Sie",
 	"can_you": "können Sie",
 	"do_you": "tun Sie",
+	"explain": "erklären",
 	"how_come": "wieso",
 	"how_far": "wie weit",
 	"how_long": "wie lange",
@@ -15,12 +15,9 @@
 	"i_think": "ich denke",
 	"is_it": "ist es",
 	"of_course": "natürlich",
-	"pardon": "wie bitte",
-	"problem": "Problem",
 	"repeat": "wiederholen",
 	"since_when": "seit wann",
 	"speak_slowly": "langsam sprechen",
-	"sure": "sicher",
 	"until_when": "bis wann",
 	"what_about": "was ist mit",
 	"what_color": "welche Farbe",
@@ -30,7 +27,7 @@
 	"what_time": "wie spät",
 	"where_from": "woher",
 	"where_to": "wohin",
-	"which": "welche",
 	"who_is": "wer ist",
+	"whose": "dessen",
 	"why_not": "warum nicht"
 }

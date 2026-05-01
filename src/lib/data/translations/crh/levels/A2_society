@@ -1,0 +1,14 @@
+﻿{
+	"army": "ordu",
+	"citizen": "vatandaş",
+	"crime": "cinayet",
+	"criminal": "cinayetçi",
+	"government": "ükümet",
+	"instruction": "talimat",
+	"law": "qanun",
+	"politics": "siyaset",
+	"president": "prezident",
+	"sale": "satuv",
+	"society": "cemiyet",
+	"soldier": "asker"
+}

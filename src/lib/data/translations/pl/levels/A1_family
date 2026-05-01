@@ -1,0 +1,20 @@
+﻿{
+	"aunt": "ciotka",
+	"child": "dziecko",
+	"family": "rodzina",
+	"father": "ojciec",
+	"friend": "przyjaciel",
+	"grandfather": "dziadek",
+	"grandmother": "babcia",
+	"husband": "mąż",
+	"marry": "poślubić",
+	"mother": "matka",
+	"parents": "rodzice",
+	"partner": "partner",
+	"sister": "siostra",
+	"sister_older": "siostra",
+	"sister_younger": "siostra",
+	"son": "syn",
+	"uncle": "wujek",
+	"wife": "żona"
+}

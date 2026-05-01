@@ -1,8 +1,8 @@
-{
-	"any_questions": "sual bar mı?",
+﻿{
 	"are_you": "siz",
 	"can_you": "yapa bilesiñizmi",
 	"do_you": "sizniñ",
+	"explain": "añlatmaq",
 	"how_come": "nasıl olsa",
 	"how_far": "ne qadar uzaq",
 	"how_long": "ne qadar vaqıt",
@@ -15,12 +15,9 @@
 	"i_think": "belli",
 	"is_it": "bu",
 	"of_course": "elbette",
-	"pardon": "afu etiñiz",
-	"problem": "mesele",
 	"repeat": "tekrarlamaq",
 	"since_when": "ne vaqıttan berli",
 	"speak_slowly": "yavaş aytıñız",
-	"sure": "emin",
 	"until_when": "ne vaqıtqa qadar",
 	"what_about": "ne aqqında",
 	"what_color": "ne tüs",
@@ -30,7 +27,7 @@
 	"what_time": "saat qaç",
 	"where_from": "qaydan",
 	"where_to": "qayda",
-	"which": "qaysı",
 	"who_is": "kim bu",
+	"whose": "kimniñ",
 	"why_not": "neden olmaz"
 }

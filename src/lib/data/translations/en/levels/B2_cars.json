@@ -1,1 +1,12 @@
-﻿{}
+﻿{
+	"brake": "brake",
+	"exhaust": "exhaust",
+	"exhaust_options": "exhaust",
+	"filter": "filter",
+	"gear": "gear",
+	"hood": "hood",
+	"radiator": "radiator",
+	"shock_absorber": "shock absorber",
+	"spark_plug": "spark plug",
+	"steering_wheel": "steering wheel"
+}

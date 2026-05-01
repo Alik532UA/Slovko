@@ -1,0 +1,18 @@
+﻿{
+	"boss": "Chef",
+	"business": "Geschäft",
+	"class": "Klasse",
+	"classroom": "Klassenzimmer",
+	"company": "Firma",
+	"course": "Kurs",
+	"exam": "Prüfung",
+	"homework": "Hausaufgaben",
+	"job": "Job",
+	"lesson": "Lektion",
+	"office": "Büro",
+	"school": "Schule",
+	"student": "Teilnehmer",
+	"teacher": "Lehrer",
+	"test": "Test",
+	"university": "Universität"
+}

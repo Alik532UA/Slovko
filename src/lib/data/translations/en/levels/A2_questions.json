@@ -1,8 +1,8 @@
-{
-	"any_questions": "any questions",
+﻿{
 	"are_you": "are you",
 	"can_you": "can you",
 	"do_you": "do you",
+	"explain": "explain",
 	"how_come": "how come",
 	"how_far": "how far",
 	"how_long": "how long",
@@ -15,12 +15,9 @@
 	"i_think": "I think",
 	"is_it": "is it",
 	"of_course": "of course",
-	"pardon": "pardon",
-	"problem": "problem",
 	"repeat": "repeat",
 	"since_when": "since when",
 	"speak_slowly": "speak slowly",
-	"sure": "sure",
 	"until_when": "until when",
 	"what_about": "what about",
 	"what_color": "what color",
@@ -30,7 +27,7 @@
 	"what_time": "what time",
 	"where_from": "where from",
 	"where_to": "where to",
-	"which": "which",
 	"who_is": "who is",
+	"whose": "whose",
 	"why_not": "why not"
 }

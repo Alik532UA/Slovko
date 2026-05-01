@@ -1,14 +1,13 @@
-{
-	"red": "rot",
+﻿{
+	"black": "schwarz",
 	"blue": "blau",
 	"blue_dark": "dunkelblau",
 	"blue_light": "hellblau",
-	"green": "grün",
-	"yellow": "gelb",
-	"black": "schwarz",
-	"white": "weiß",
 	"brown": "braun",
-	"purple": "lila",
 	"color": "Farbe",
-	"pink": "rosa"
+	"green": "grün",
+	"pink": "rosa",
+	"red": "rot",
+	"white": "weiß",
+	"yellow": "gelb"
 }

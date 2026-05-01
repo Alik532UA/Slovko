@@ -1,8 +1,8 @@
-{
-	"any_questions": "zijn er vragen?",
+﻿{
 	"are_you": "bent u",
 	"can_you": "kunt u",
 	"do_you": "doet u",
+	"explain": "uitleggen",
 	"how_come": "hoe komt het",
 	"how_far": "hoe ver",
 	"how_long": "hoe lang",
@@ -15,12 +15,9 @@
 	"i_think": "ik denk",
 	"is_it": "is het",
 	"of_course": "natuurlijk",
-	"pardon": "kwijtschelding van straf",
-	"problem": "probleem",
 	"repeat": "herhalen",
 	"since_when": "sinds wanneer",
 	"speak_slowly": "spreek langzaam",
-	"sure": "zeker",
 	"until_when": "tot wanneer",
 	"what_about": "hoe zit het met",
 	"what_color": "welke kleur",
@@ -30,7 +27,7 @@
 	"what_time": "hoe laat",
 	"where_from": "waarvandaan",
 	"where_to": "waarheen",
-	"which": "welke",
 	"who_is": "wie is",
+	"whose": "wiens",
 	"why_not": "waarom niet"
 }

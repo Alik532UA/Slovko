@@ -1,13 +1,18 @@
-{
-	"room": "oda",
-	"money": "aqça",
+﻿{
 	"airport": "ava limanı",
-	"stop": "toqtamaq",
 	"bag": "çanta",
 	"bank_finance": "banka",
-	"bank_river": "kenar",
+	"camp": "lager qurmaq",
 	"hotel": "musafirhane",
-	"ticket": "bilet",
+	"information": "malümat",
 	"map": "harita",
-	"price": "fiyat"
+	"money": "aqça",
+	"price": "fiyat",
+	"room": "oda",
+	"stop": "toqtamaq",
+	"ticket": "bilet",
+	"tour": "tur",
+	"tourist": "turist",
+	"trip": "seyaat",
+	"vacation": "tatil"
 }

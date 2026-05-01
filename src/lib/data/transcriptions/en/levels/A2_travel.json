@@ -1,19 +1,17 @@
-{
-	"camp": "/kæmp/",
+﻿{
+	"boarding": "/ˈbɔːrdɪŋ/",
 	"camp_verb": "/kæmp/",
+	"cancel": "/ˈkænsl/",
 	"credit_card": "/ˈkrɛdɪt kɑːrd/",
+	"distance": "/ˈdɪстəнс/",
 	"flight": "/flaɪt/",
+	"found": "/faʊnd/",
 	"gate": "/ɡeɪt/",
-	"holiday": "/ˈhɒlədeɪ/",
 	"holiday_celebration": "/ˈhɒlədeɪ/",
 	"holiday_vacation": "/ˈhɒlədeɪ/",
-	"information": "/ˌɪnfərˈmeɪʃn/",
 	"journey": "/ˈdʒɜːrni/",
+	"luggage": "/ˈlʌɡɪdʒ/",
 	"passport": "/ˈpɑːspɔːrt/",
 	"platform": "/ˈplætfɔːrm/",
-	"tour": "/tʊər/",
-	"tourist": "/ˈtʊərɪst/",
-	"trip": "/trɪp/",
-	"boarding": "/ˈbɔːrdɪŋ/",
-	"front": "/frʌnt/"
+	"tourism": "/ˈтʊərɪzm/"
 }

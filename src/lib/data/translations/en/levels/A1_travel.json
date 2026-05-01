@@ -1,12 +1,19 @@
-{
-	"room": "room",
-	"money": "money",
+﻿{
 	"airport": "airport",
-	"stop": "stop",
 	"bag": "bag",
 	"bank_finance": "bank",
+	"camp": "camp",
+	"holiday": "holiday",
 	"hotel": "hotel",
-	"ticket": "ticket",
+	"information": "information",
 	"map": "map",
-	"price": "price"
+	"money": "money",
+	"price": "price",
+	"room": "room",
+	"stop": "stop",
+	"ticket": "ticket",
+	"tour": "tour",
+	"tourist": "tourist",
+	"trip": "trip",
+	"vacation": "vacation"
 }

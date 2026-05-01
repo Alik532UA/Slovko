@@ -1,0 +1,22 @@
+﻿{
+	"arm": "qol",
+	"arm_body": "qol",
+	"arm_weapon": "silâ",
+	"body": "vücut",
+	"ear": "qulaq",
+	"eye": "köz",
+	"face": "yüz",
+	"finger": "parmaq",
+	"foot": "taban",
+	"hair": "saç",
+	"hand": "el",
+	"head": "baş",
+	"health": "sağlıq",
+	"heart": "yürek",
+	"hospital": "hastahane",
+	"leg": "ayaq",
+	"leg_full": "ayaq",
+	"mouth": "avur",
+	"nose": "burun",
+	"tooth": "tiş"
+}

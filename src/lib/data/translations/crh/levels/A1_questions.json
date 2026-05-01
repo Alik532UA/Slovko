@@ -1,14 +1,16 @@
-{
+﻿{
 	"excuse_me": "afu etiñiz",
-	"mean_verb": "añlamına kelmek",
-	"understand": "añlamaq",
-	"explain": "añlatmaq",
-	"what": "ne",
-	"who": "kim",
-	"when": "ne vaqıt",
-	"why": "ne içün",
 	"how": "nasıl",
-	"really": "kerçekten",
 	"maybe": "belki",
-	"mean": "añlamına kelmek"
+	"mean": "añlamına kelmek",
+	"mean_verb": "añlamına kelmek",
+	"problem": "mesele",
+	"really": "kerçekten",
+	"sure": "emin",
+	"understand": "añlamaq",
+	"what": "ne",
+	"when": "ne vaqıt",
+	"which": "qaysı",
+	"who": "kim",
+	"why": "ne içün"
 }

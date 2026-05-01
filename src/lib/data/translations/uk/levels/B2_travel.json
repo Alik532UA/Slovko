@@ -1,3 +1,7 @@
 ﻿{
-	"departure_leave": "відправлення"
+	"airline": "авіакомпанія",
+	"bank_river": "берег",
+	"continent": "континент",
+	"departure_leave": "відправлення",
+	"fare": "вартість проїзду"
 }

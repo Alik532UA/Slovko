@@ -1,14 +1,16 @@
-{
+﻿{
 	"excuse_me": "Entschuldigung",
-	"mean_verb": "bedeuten",
-	"understand": "verstehen",
-	"explain": "erklären",
-	"what": "was",
-	"who": "wer",
-	"when": "wann",
-	"why": "warum",
 	"how": "wie",
-	"really": "wirklich",
 	"maybe": "vielleicht",
-	"mean": "bedeuten"
+	"mean": "bedeuten",
+	"mean_verb": "bedeuten",
+	"problem": "Problem",
+	"really": "wirklich",
+	"sure": "sicher",
+	"understand": "verstehen",
+	"what": "was",
+	"when": "wann",
+	"which": "welche",
+	"who": "wer",
+	"why": "warum"
 }

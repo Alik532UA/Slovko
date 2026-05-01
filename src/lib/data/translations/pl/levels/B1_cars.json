@@ -1,5 +1,13 @@
-{
-	"battery_electric": "akumulator",
+﻿{
+	"battery": "akumulator",
 	"battery_artillery": "bateria",
-	"battery": "akumulator"
+	"battery_electric": "akumulator",
+	"mechanic": "mechanik",
+	"pedal": "pedał",
+	"piston": "tłok",
+	"suspension": "zawieszenie",
+	"taillight": "tylne światło",
+	"transmission": "skrzynia biegów",
+	"trunk": "bagażnik",
+	"wiper": "wycieraczka"
 }

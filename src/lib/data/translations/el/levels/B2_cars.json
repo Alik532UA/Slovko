@@ -1,1 +1,12 @@
-﻿{}
+﻿{
+	"brake": "φρένο",
+	"exhaust": "εξάτμιση",
+	"exhaust_options": "εξαντλώ τις επιλογές",
+	"filter": "φίλτρο",
+	"gear": "ταχύτητα",
+	"hood": "καπό",
+	"radiator": "ψυγείο",
+	"shock_absorber": "αμορτισέρ",
+	"spark_plug": "μπουζί",
+	"steering_wheel": "τιμόνι"
+}

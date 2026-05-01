@@ -1,3 +1,7 @@
 ﻿{
-	"departure_leave": "Abfahrt"
+	"airline": "Fluggesellschaft",
+	"bank_river": "Ufer",
+	"continent": "Kontinent",
+	"departure_leave": "Abfahrt",
+	"fare": "Fahrpreis"
 }

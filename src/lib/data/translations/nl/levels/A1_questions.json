@@ -1,14 +1,16 @@
-{
+﻿{
 	"excuse_me": "pardon",
-	"mean_verb": "betekenen",
-	"understand": "begrijpen",
-	"explain": "uitleggen",
-	"what": "wat",
-	"who": "wie",
-	"when": "wanneer",
-	"why": "waarom",
 	"how": "hoe",
-	"really": "echt",
 	"maybe": "misschien",
-	"mean": "betekenen"
+	"mean": "betekenen",
+	"mean_verb": "betekenen",
+	"problem": "probleem",
+	"really": "echt",
+	"sure": "zeker",
+	"understand": "begrijpen",
+	"what": "wat",
+	"when": "wanneer",
+	"which": "welke",
+	"who": "wie",
+	"why": "waarom"
 }

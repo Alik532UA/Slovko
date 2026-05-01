@@ -1,3 +1,7 @@
 ﻿{
-	"departure_leave": "vertrek"
+	"airline": "luchtvaartmaatschappij",
+	"bank_river": "oever",
+	"continent": "werelddeel",
+	"departure_leave": "vertrek",
+	"fare": "tarief"
 }

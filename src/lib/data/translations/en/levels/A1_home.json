@@ -1,20 +1,21 @@
-{
-	"table": "table",
-	"chair": "chair",
-	"bed": "bed",
+﻿{
+	"bath": "bath",
 	"bathroom": "bathroom",
+	"bed": "bed",
 	"bedroom": "bedroom",
-	"wall": "wall",
+	"chair": "chair",
+	"clock": "clock",
 	"computer": "computer",
 	"cup": "cup",
-	"knife": "knife",
-	"fork": "fork",
-	"spoon": "spoon",
-	"clock": "clock",
-	"living_room": "living room",
 	"glass": "glass",
+	"knife": "knife",
+	"living_room": "living room",
+	"plant": "plant",
+	"plastic": "plastic",
 	"plate": "plate",
+	"shower": "shower",
 	"stove": "stove",
-	"sink": "sink",
-	"balcony": "balcony"
+	"table": "table",
+	"toilet": "toilet",
+	"wall": "wall"
 }

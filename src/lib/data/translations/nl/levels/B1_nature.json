@@ -1,8 +1,15 @@
-{
+﻿{
+	"bush": "struik",
+	"cave": "grot",
+	"desert": "woestijn",
 	"earth_planet": "aarde",
 	"flood": "overstroming",
+	"fog": "mist",
 	"jungle": "jungle",
-	"landscape": "landschap",
+	"lightning": "bliksem",
+	"rainbow": "regenboog",
+	"root": "wortel",
+	"sand": "zand",
 	"scenery": "landschap",
-	"valley": "vallei"
+	"seed": "zaad"
 }

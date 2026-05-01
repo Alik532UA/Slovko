@@ -1,4 +1,4 @@
-{
+﻿{
 	"animal": "zwierzę",
 	"bird": "ptak",
 	"cat": "kot",
@@ -10,13 +10,9 @@
 	"fish": "ryba",
 	"fly": "mucha",
 	"fox": "lis",
-	"goat": "koza",
 	"horse": "koń",
-	"monkey": "małpa",
+	"lion": "lew",
+	"mouse": "mysz",
 	"pig": "świnia",
-	"rabbit": "królik",
-	"spider": "pająk",
-	"tiger": "tygrys",
-	"wolf": "wilk",
-	"duck": "kaczka"
+	"rabbit": "królik"
 }

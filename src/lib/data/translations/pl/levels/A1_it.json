@@ -1,3 +1,10 @@
-{
-	"cloud": "chmura"
+﻿{
+	"camera": "kamera",
+	"internet": "internet",
+	"keyboard": "klawiatura",
+	"memory": "pamięć",
+	"print": "drukować",
+	"program": "program",
+	"search": "szukać",
+	"video": "wideo"
 }

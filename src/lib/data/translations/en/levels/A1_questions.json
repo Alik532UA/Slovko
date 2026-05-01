@@ -1,14 +1,16 @@
-{
+﻿{
 	"excuse_me": "excuse me",
-	"mean_verb": "mean",
-	"understand": "understand",
-	"explain": "explain",
-	"what": "what",
-	"who": "who",
-	"when": "when",
-	"why": "why",
 	"how": "how",
-	"really": "really",
 	"maybe": "maybe",
-	"mean": "mean"
+	"mean": "mean",
+	"mean_verb": "mean",
+	"problem": "problem",
+	"really": "really",
+	"sure": "sure",
+	"understand": "understand",
+	"what": "what",
+	"when": "when",
+	"which": "which",
+	"who": "who",
+	"why": "why"
 }

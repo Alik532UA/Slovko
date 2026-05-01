@@ -1,13 +1,18 @@
-{
-	"room": "Zimmer",
-	"money": "Geld",
+﻿{
 	"airport": "Flughafen",
-	"stop": "stoppen",
 	"bag": "Tasche",
 	"bank_finance": "Bank",
-	"bank_river": "Ufer",
+	"camp": "zelten",
 	"hotel": "Hotelbetrieb",
-	"ticket": "Ticket",
+	"information": "Informationen",
 	"map": "Karte",
-	"price": "Preis"
+	"money": "Geld",
+	"price": "Preis",
+	"room": "Zimmer",
+	"stop": "stoppen",
+	"ticket": "Ticket",
+	"tour": "Tour",
+	"tourist": "Tourist",
+	"trip": "Ausflug",
+	"vacation": "Urlaub"
 }

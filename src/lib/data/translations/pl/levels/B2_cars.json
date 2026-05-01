@@ -1,1 +1,12 @@
-﻿{}
+﻿{
+	"brake": "hamulec",
+	"exhaust": "wydech",
+	"exhaust_options": "wyczerpywać opcje",
+	"filter": "filtr",
+	"gear": "bieg",
+	"hood": "maska",
+	"radiator": "chłodnica",
+	"shock_absorber": "amortyzator",
+	"spark_plug": "świeca zapłonowa",
+	"steering_wheel": "kierownica"
+}

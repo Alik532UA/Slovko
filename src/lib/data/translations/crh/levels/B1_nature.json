@@ -1,8 +1,15 @@
-{
+﻿{
+	"bush": "terekçik",
+	"cave": "qoba",
+	"desert": "çöl",
 	"earth_planet": "Dünya",
 	"flood": "suv basuv",
+	"fog": "tuman",
 	"jungle": "orman",
-	"landscape": "manzara",
+	"lightning": "yıldırım",
+	"rainbow": "ebemquşağı",
+	"root": "tamır",
+	"sand": "qum",
 	"scenery": "manzara",
-	"valley": "dere"
+	"seed": "urluq"
 }

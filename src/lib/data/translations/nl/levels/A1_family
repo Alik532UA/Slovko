@@ -1,0 +1,20 @@
+﻿{
+	"aunt": "tante",
+	"child": "kind",
+	"family": "familie",
+	"father": "vader",
+	"friend": "vriend",
+	"grandfather": "grootvader",
+	"grandmother": "grootmoeder",
+	"husband": "echtgenoot",
+	"marry": "trouwen",
+	"mother": "moeder",
+	"parents": "ouders",
+	"partner": "partner",
+	"sister": "zus",
+	"sister_older": "zus",
+	"sister_younger": "zus",
+	"son": "zoon",
+	"uncle": "oom",
+	"wife": "echtgenote"
+}

@@ -1,12 +1,16 @@
-{
+﻿{
+	"bicycle": "velosiped",
+	"boat": "qayıq",
 	"bus": "avtobus",
 	"car": "araba",
 	"door": "qapı",
 	"key": "anahtar",
 	"light": "aydın",
 	"light_color": "aydın",
+	"oil": "yağ",
 	"plane": "uçaq",
 	"road": "yol",
+	"seat": "yer",
 	"street": "soqaq",
 	"taxi": "taksi",
 	"train": "tren",

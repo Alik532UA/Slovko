@@ -1,12 +1,19 @@
-{
+﻿{
+	"battery": "Batterie",
+	"battery_artillery": "Geschützbatterie",
+	"battery_electric": "Batterie",
 	"battery_life": "Batterie",
-	"fuel_energy": "Kraftstoff",
-	"signal_phone": "Signal",
-	"insurance": "Versicherung",
 	"engine_motor": "Motor",
 	"fuel": "Treibstoff",
-	"signal": "Signal",
-	"battery_electric": "Batterie",
-	"battery_artillery": "Geschützbatterie",
-	"battery": "Batterie"
+	"fuel_energy": "Kraftstoff",
+	"insurance": "Versicherung",
+	"mechanic": "Mechaniker",
+	"pedal": "Pedal",
+	"piston": "Kolben",
+	"signal_phone": "Signal",
+	"suspension": "Aufhängung",
+	"taillight": "Rücklicht",
+	"transmission": "Getriebe",
+	"trunk": "Kofferraum",
+	"wiper": "Scheibenwischer"
 }

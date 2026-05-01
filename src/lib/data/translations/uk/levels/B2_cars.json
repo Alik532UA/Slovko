@@ -1,1 +1,12 @@
-﻿{}
+﻿{
+	"brake": "гальмо",
+	"exhaust": "вихлопна система",
+	"exhaust_options": "виснажувати",
+	"filter": "фільтр",
+	"gear": "передача",
+	"hood": "капот",
+	"radiator": "радіатор",
+	"shock_absorber": "амортизатор",
+	"spark_plug": "свічка запалювання",
+	"steering_wheel": "кермо"
+}

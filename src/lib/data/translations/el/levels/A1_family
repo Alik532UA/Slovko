@@ -1,0 +1,20 @@
+﻿{
+	"aunt": "θεία",
+	"child": "παιδί",
+	"family": "οικογένεια",
+	"father": "πατέρας",
+	"friend": "φίλος",
+	"grandfather": "παππούς",
+	"grandmother": "γιαγιά",
+	"husband": "άνδρας",
+	"marry": "παντρεύομαι",
+	"mother": "μητέρα",
+	"parents": "γονείς",
+	"partner": "σύντροφος",
+	"sister": "αδελφή",
+	"sister_older": "αδελφή",
+	"sister_younger": "αδελφή",
+	"son": "γιος",
+	"uncle": "θείος",
+	"wife": "γυναίκα"
+}

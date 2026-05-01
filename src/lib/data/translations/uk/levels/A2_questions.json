@@ -1,8 +1,8 @@
-{
-	"any_questions": "є питання?",
+﻿{
 	"are_you": "чи ви є",
 	"can_you": "чи можете ви",
 	"do_you": "чи ви",
+	"explain": "пояснювати",
 	"how_come": "як так",
 	"how_far": "як далеко",
 	"how_long": "як довго",
@@ -15,12 +15,9 @@
 	"i_think": "я думаю",
 	"is_it": "чи це",
 	"of_course": "звичайно",
-	"pardon": "перепрошую",
-	"problem": "проблема",
 	"repeat": "повторювати",
 	"since_when": "з яких пір",
 	"speak_slowly": "говорити повільно",
-	"sure": "впевнений",
 	"until_when": "доки",
 	"what_about": "як щодо",
 	"what_color": "який колір",
@@ -30,7 +27,7 @@
 	"what_time": "котра година",
 	"where_from": "звідки",
 	"where_to": "куди",
-	"which": "який",
 	"who_is": "хто це",
+	"whose": "чий",
 	"why_not": "чому ні"
 }

@@ -1,11 +1,7 @@
 ﻿{
-	"accelerate": "επιταχύνω",
-	"accumulate": "συσσωρεύω",
+	"accurate": "ακριβής",
 	"acknowledge_recognize": "αναγνωρίζω",
-	"allocate": "κατανέμω",
-	"analyze": "αναλύω",
 	"apply_job": "κάνω αίτηση για δουλειά",
-	"appoint": "διορίζω",
 	"appoint_job": "διορίζω",
 	"appraise": "εκτιμώ",
 	"appropriate": "κατάλληλος",
@@ -17,7 +13,6 @@
 	"assume": "υποθέτω",
 	"assume_suppose": "υποθέτω",
 	"assure_promise": "διαβεβαιώνω",
-	"authorize": "εξουσιοδοτώ",
 	"compose_create": "συνθέτω",
 	"compromise": "συμβιβασμός",
 	"condemn_criticize": "καταδικάζω",
@@ -25,12 +20,11 @@
 	"exaggerate_overstate": "υπερβάλλω",
 	"formulate_create": "διατυπώνω",
 	"inspire_motivate": "εμπνέω",
+	"justify": "δικαιολογώ",
 	"mediate_negotiate": "μεσολαβώ",
 	"pinpoint_identify": "εντοπίζω",
 	"pledge_promise": "υπόσχομαι επίσημα",
-	"serve_general": "υπηρετώ",
-	"simulate_imitate": "προσομοιώνω",
-	"align": "ευθυγραμμίζω",
 	"scan_look": "σαρώνω με το βλέμμα",
-	"abolish": "καταργώ"
+	"serve_general": "υπηρετώ",
+	"simulate_imitate": "προσομοιώνω"
 }

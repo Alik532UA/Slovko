@@ -1,3 +1,6 @@
 ﻿{
-	"departure_leave": "departure"
+	"airline": "airline",
+	"continent": "continent",
+	"departure_leave": "departure",
+	"fare": "fare"
 }

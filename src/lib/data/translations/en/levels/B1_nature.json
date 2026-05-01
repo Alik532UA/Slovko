@@ -1,8 +1,15 @@
-{
+﻿{
+	"bush": "bush",
+	"cave": "cave",
+	"desert": "desert",
 	"earth_planet": "earth",
 	"flood": "flood",
+	"fog": "fog",
 	"jungle": "jungle",
-	"landscape": "landscape",
+	"lightning": "lightning",
+	"rainbow": "rainbow",
+	"root": "root",
+	"sand": "sand",
 	"scenery": "scenery",
-	"valley": "valley"
+	"seed": "seed"
 }

@@ -1,14 +1,13 @@
-{
-	"red": "qırmızı",
+﻿{
+	"black": "qara",
 	"blue": "mavı",
 	"blue_dark": "tünd mavı",
 	"blue_light": "aciq mavı",
-	"green": "yeşil",
-	"yellow": "sarı",
-	"black": "qara",
-	"white": "beyaz",
 	"brown": "qonur",
-	"purple": "erğuvan",
 	"color": "renk",
-	"pink": "pembe"
+	"green": "yeşil",
+	"pink": "pembe",
+	"red": "qırmızı",
+	"white": "beyaz",
+	"yellow": "sarı"
 }

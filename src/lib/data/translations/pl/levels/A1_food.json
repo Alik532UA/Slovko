@@ -1,8 +1,9 @@
-{
+﻿{
 	"apple": "jabłko",
 	"banana": "banan",
 	"beer": "piwo",
 	"bread": "chleb",
+	"butter": "masło",
 	"cake": "ciasto",
 	"cheese": "ser",
 	"chocolate": "czekolada",
@@ -10,15 +11,24 @@
 	"drink_noun": "napój",
 	"egg": "jajko",
 	"fruit": "owoc",
+	"ice_cream": "lody",
 	"juice": "sok",
 	"meat": "mięso",
 	"milk": "mleko",
+	"onion": "cebula",
 	"orange_color": "pomarańczowy",
 	"orange_fruit": "pomarańcza",
+	"pepper": "pieprz",
+	"pizza": "pizza",
+	"potato": "ziemniak",
+	"rice": "ryż",
+	"salad": "sałatka",
 	"salt": "sól",
-	"sandwich": "kanapka",
+	"soup": "zupa",
 	"sugar": "cukier",
 	"tea": "herbata",
+	"tomato": "pomidor",
 	"vegetable": "warzywo",
-	"water": "woda"
+	"water": "woda",
+	"wine": "wino"
 }

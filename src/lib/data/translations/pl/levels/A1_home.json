@@ -1,5 +1,5 @@
-{
-	"balcony": "balkon",
+﻿{
+	"bath": "kąpiel",
 	"bathroom": "łazienka",
 	"bed": "łóżko",
 	"bedroom": "sypialnia",
@@ -7,14 +7,15 @@
 	"clock": "zegar",
 	"computer": "komputer",
 	"cup": "filiżanka",
-	"fork": "widelec",
 	"glass": "szklanka",
 	"knife": "nóż",
 	"living_room": "salon",
+	"plant": "roślina",
+	"plastic": "plastik",
 	"plate": "talerz",
-	"sink": "zlewozmywak",
-	"spoon": "łyżka",
+	"shower": "prysznic",
 	"stove": "kuchenka",
 	"table": "stół",
+	"toilet": "toaleta",
 	"wall": "ściana"
 }

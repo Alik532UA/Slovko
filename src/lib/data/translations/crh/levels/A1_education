@@ -1,0 +1,18 @@
+﻿{
+	"boss": "başlıq",
+	"business": "biznes",
+	"class": "sınıf",
+	"classroom": "sınıf",
+	"company": "şirket",
+	"course": "kurs",
+	"exam": "imtian",
+	"homework": "ev vazifesi",
+	"job": "iş",
+	"lesson": "ders",
+	"office": "idare",
+	"school": "mektep",
+	"student": "talebe",
+	"teacher": "oca",
+	"test": "sınav",
+	"university": "universitet"
+}

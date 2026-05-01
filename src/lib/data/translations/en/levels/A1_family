@@ -1,0 +1,20 @@
+﻿{
+	"aunt": "aunt",
+	"child": "child",
+	"family": "family",
+	"father": "father",
+	"friend": "friend",
+	"grandfather": "grandfather",
+	"grandmother": "grandmother",
+	"husband": "husband",
+	"marry": "marry",
+	"mother": "mother",
+	"parents": "parents",
+	"partner": "partner",
+	"sister": "sister",
+	"sister_older": "sister",
+	"sister_younger": "sister",
+	"son": "son",
+	"uncle": "uncle",
+	"wife": "wife"
+}

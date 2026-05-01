@@ -1,20 +1,21 @@
-{
-	"table": "masa",
-	"chair": "oturğıç",
-	"bed": "yataq",
+﻿{
+	"bath": "yuvunuv",
 	"bathroom": "yuvunuv odası",
+	"bed": "yataq",
 	"bedroom": "yuqu odası",
-	"wall": "divar",
+	"chair": "oturğıç",
+	"clock": "saat",
 	"computer": "kompyuter",
 	"cup": "fincan",
-	"knife": "pıçaq",
-	"fork": "sançqı",
-	"spoon": "qaşıq",
-	"clock": "saat",
-	"living_room": "oturuv odası",
 	"glass": "stakan",
+	"knife": "pıçaq",
+	"living_room": "oturuv odası",
+	"plant": "ösimlik",
+	"plastic": "plastik",
 	"plate": "tabaq",
+	"shower": "duş",
 	"stove": "ocaq",
-	"sink": "rakovina",
-	"balcony": "balkon"
+	"table": "masa",
+	"toilet": "hacethane",
+	"wall": "divar"
 }

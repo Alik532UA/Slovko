@@ -1,11 +1,7 @@
 ﻿{
-	"accelerate": "tezleştirmek",
-	"accumulate": "toplamaq",
+	"accurate": "doğru",
 	"acknowledge_recognize": "tanımaq",
-	"allocate": "ayırmaq",
-	"analyze": "talil etmek",
 	"apply_job": "muracaat etmek",
-	"appoint": "tayin etmek",
 	"appoint_job": "tayin etmek",
 	"appraise": "baalamaq",
 	"appropriate": "uyğun",
@@ -17,7 +13,6 @@
 	"assume": "farz etmek",
 	"assume_suppose": "farz etmek",
 	"assure_promise": "inandırmaq",
-	"authorize": "yetki bermek",
 	"compose_create": "bestelemek",
 	"compromise": "uzlaşuv",
 	"condemn_criticize": "mahküm etmek",
@@ -25,12 +20,11 @@
 	"exaggerate_overstate": "mubalağa etmek",
 	"formulate_create": "ifade etmek",
 	"inspire_motivate": "ilham bermek",
+	"justify": "aqllamaq",
 	"mediate_negotiate": "ara bulmaq",
 	"pinpoint_identify": "belgilemek",
 	"pledge_promise": "vade etmek",
-	"serve_general": "hızmet etmek",
-	"simulate_imitate": "benzetmek",
-	"align": "tüzeltmek",
 	"scan_look": "közden keçirmek",
-	"abolish": "bitirmek"
+	"serve_general": "hızmet etmek",
+	"simulate_imitate": "benzetmek"
 }

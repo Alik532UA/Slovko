@@ -1,12 +1,19 @@
-{
+﻿{
+	"battery": "акумулятор",
+	"battery_artillery": "батарея",
+	"battery_electric": "акумулятор",
 	"battery_life": "батарея",
-	"fuel_energy": "паливо",
-	"signal_phone": "сигнал",
-	"insurance": "страхування",
 	"engine_motor": "двигун",
 	"fuel": "паливо",
-	"signal": "сигнал",
-	"battery_electric": "акумулятор",
-	"battery_artillery": "батарея",
-	"battery": "акумулятор"
+	"fuel_energy": "паливо",
+	"insurance": "страхування",
+	"mechanic": "механік",
+	"pedal": "педаль",
+	"piston": "поршень",
+	"signal_phone": "сигнал",
+	"suspension": "підвіска",
+	"taillight": "задній ліхтар",
+	"transmission": "коробка передач",
+	"trunk": "багажник",
+	"wiper": "двірник"
 }

@@ -1,8 +1,15 @@
-{
+﻿{
+	"bush": "Busch",
+	"cave": "Höhle",
+	"desert": "Wüste",
 	"earth_planet": "Erde",
 	"flood": "Flut",
+	"fog": "Nebel",
 	"jungle": "Dschungel",
-	"landscape": "Landschaft",
+	"lightning": "Blitz",
+	"rainbow": "Regenbogen",
+	"root": "Wurzel",
+	"sand": "Sand",
 	"scenery": "Landschaft",
-	"valley": "Tal"
+	"seed": "Samen"
 }
