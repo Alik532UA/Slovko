@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	/**
 	 * +error.svelte - Global Error Boundary
 	 * Shows when a fatal error occurs during rendering or loading.

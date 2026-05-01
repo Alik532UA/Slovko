@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	/**
 	 * LevelTopicModal — Вибір рівня або теми
 	 * Використовує BaseModal для сучасного дизайну

@@ -1,4 +1,4 @@
-import fs from "fs";
+﻿import fs from "fs";
 
 const nlA1 = {
 	hello: "hallo",

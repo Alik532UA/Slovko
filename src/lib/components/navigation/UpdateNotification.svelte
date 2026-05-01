@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { RefreshCw, ShieldCheck, AlertTriangle } from "lucide-svelte";
 	import { applyUpdate, skipUpdate } from "$lib/services/versionService";

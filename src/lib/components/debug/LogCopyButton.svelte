@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { dev } from "$app/environment";
 	import { logService } from "$lib/services/logService.svelte";
 	import { hardReset } from "$lib/services/resetService";

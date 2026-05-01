@@ -1,4 +1,4 @@
-﻿{
+{
 	"abandon": "покидати",
 	"absorb": "поглинати",
 	"abundance": "достаток",
@@ -17,6 +17,8 @@
 	"administer_justice": "здійснювати правосуддя",
 	"administer_manage": "керувати",
 	"administration": "адміністрація",
+	"adopt": "усиновлювати",
+	"advance": "прогрес",
 	"advice": "порада",
 	"advocate_cause": "відстоювати справу",
 	"advocate_verb": "відстоювати",
@@ -291,6 +293,7 @@
 	"extend_lengthen": "розширювати",
 	"facilitate_help": "сприяти",
 	"fall_out": "посваритися",
+	"famine": "голод",
 	"fetch": "принести",
 	"fluctuate": "коливатися",
 	"fluctuate_change": "коливатися",
@@ -352,8 +355,7 @@
 	"propose_suggest": "пропонувати",
 	"prosecute_law": "переслідувати",
 	"provoke_cause": "провокувати",
-	"qualify_meet": "відповідати вимогам",
-	"query_question": "запитувати",
+	"query_question": "запит",
 	"realise_verb": "усвідомлювати",
 	"recall_remember": "згадувати",
 	"recognise_verb": "розпізнавати / визнавати",

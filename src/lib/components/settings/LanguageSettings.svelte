@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	/**
 	 * LanguageSettings — Налаштування мов
 	 * Красиве вікно з прапорами

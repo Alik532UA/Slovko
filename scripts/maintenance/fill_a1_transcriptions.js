@@ -1,4 +1,4 @@
-import fs from 'fs';
+﻿import fs from 'fs';
 import path from 'path';
 
 const TRANSCRIPTIONS_DIR = 'src/lib/data/transcriptions/en/levels';

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Analytics Service - Handles Google Analytics 4 integration
  */
 

@@ -1523,7 +1523,7 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	},
 	qualify: {
 		base: "qualify",
-		specific: ["qualify_meet"]
+		specific: ["qualify_meet", "qualify_gain"]
 	},
 	race: {
 		base: "race",

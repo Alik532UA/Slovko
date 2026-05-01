@@ -1,16 +1,21 @@
 ﻿{
 	"abolish": "bitirmek",
+	"abortion": "abort",
 	"absence": "yoqluq",
+	"absent": "yoq",
+	"absurd": "absurd",
 	"abuse": "suiistimal etmek",
 	"academy": "akademiya",
 	"accelerate": "tezleştirmek",
 	"acceptance": "qabul etüv",
+	"accessible": "yolu bar",
 	"accord": "anlaşma",
 	"accordance": "uyğunlıq",
 	"accountability": "mesuliyet",
 	"accumulate": "toplamaq",
 	"accumulation": "toplama",
 	"accusation": "qabaatlav",
+	"accustomed": "alışqan",
 	"acknowledgement": "tasdıqlav",
 	"acquisition": "aluv",
 	"activation": "faalleştirüv",
@@ -245,9 +250,5 @@
 	"reproduce": "çoğaltmaq",
 	"restrain": "toqtatmaq",
 	"router": "yönlendirici",
-	"testify": "şaitlik etmek",
-	"abortion": "abort",
-	"absent": "yoq",
-	"absurd": "absurd",
-	"accessible": "yolu bar"
+	"testify": "şaitlik etmek"
 }

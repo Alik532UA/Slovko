@@ -1,4 +1,4 @@
-import fs from "fs";
+﻿import fs from "fs";
 import path from "path";
 
 const enPhrasesDir = "src/lib/data/translations/en/phrases";

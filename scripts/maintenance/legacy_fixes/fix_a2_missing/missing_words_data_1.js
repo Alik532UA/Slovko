@@ -1,4 +1,4 @@
-export const missingWords = {
+﻿export const missingWords = {
 	admit_verb: {
 		uk: "визнавати",
 		en: "admit",

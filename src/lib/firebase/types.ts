@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Firestore Types - типи для документів Firestore
  * Забезпечує type-safety при роботі з базою даних
  */

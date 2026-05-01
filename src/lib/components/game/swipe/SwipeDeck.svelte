@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { gameState } from "$lib/stores/gameState.svelte";
 	import { getGameController } from "$lib/context/gameContext";
 	import { logService } from "$lib/services/logService.svelte";

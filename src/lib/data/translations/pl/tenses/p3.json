@@ -1,0 +1,62 @@
+﻿{
+  "present_simple": {
+    "aff": "Oni mówią po angielsku",
+    "neg": "Oni nie mówią po angielsku",
+    "ques": "Czy oni mówią po angielsku?"
+  },
+  "past_simple": {
+    "aff": "Oni mówili po angielsku",
+    "neg": "Oni nie mówili po angielsku",
+    "ques": "Czy oni mówili po angielsku?"
+  },
+  "future_simple": {
+    "aff": "Oni będą mówić po angielsku",
+    "neg": "Oni nie będą mówić po angielsku",
+    "ques": "Czy oni będą mówić po angielsku?"
+  },
+  "present_continuous": {
+    "aff": "Oni teraz mówią po angielsku",
+    "neg": "Oni teraz nie mówią po angielsku",
+    "ques": "Czy oni teraz mówią po angielsku?"
+  },
+  "past_continuous": {
+    "aff": "Oni wtedy mówili po angielsku",
+    "neg": "Oni wtedy nie mówili po angielsku",
+    "ques": "Czy oni wtedy mówili po angielsku?"
+  },
+  "future_continuous": {
+    "aff": "Oni będą wtedy mówić po angielsku",
+    "neg": "Oni nie będą wtedy mówić po angielsku",
+    "ques": "Czy oni będą wtedy mówić po angielsku?"
+  },
+  "present_perfect": {
+    "aff": "Oni już rozmawiali po angielsku",
+    "neg": "Oni jeszcze nie rozmawiali po angielsku",
+    "ques": "Czy oni już rozmawiali po angielsku?"
+  },
+  "past_perfect": {
+    "aff": "Oni już wcześniej rozmawiali po angielsku",
+    "neg": "Oni wcześniej nie rozmawiali po angielsku",
+    "ques": "Czy oni wcześniej rozmawiali po angielsku?"
+  },
+  "future_perfect": {
+    "aff": "Oni porozmawiają po angielsku do tego czasu",
+    "neg": "Oni nie porozmawiają po angielsku do tego czasu",
+    "ques": "Czy oni porozmawiają po angielsku do tego czasu?"
+  },
+  "present_perfect_continuous": {
+    "aff": "Oni mówią по angielsku od dawna",
+    "neg": "Oni nie mówią po angielsku od dawna",
+    "ques": "Czy oni mówią po angielsku od dawna?"
+  },
+  "past_perfect_continuous": {
+    "aff": "Oni długo mówili po angielsku do tego czasu",
+    "neg": "Oni długo nie mówili po angielsku do tego czasu",
+    "ques": "Czy oni długo mówili po angielsku do tego czasu?"
+  },
+  "future_perfect_continuous": {
+    "aff": "Oni będą długo mówić po angielsku do tego czasu",
+    "neg": "Oni nie będą długo mówić po angielsku do tego czasu",
+    "ques": "Czy oni będą długo mówić po angielsku do tego czasu?"
+  }
+}

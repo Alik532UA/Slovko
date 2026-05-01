@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import type { InteractionEvent } from "$lib/firebase/PresenceService.svelte";
 	import { _ } from "svelte-i18n";
 	import UserAvatar from "../friends/UserAvatar.svelte";

@@ -1,4 +1,4 @@
-﻿{
+{
 	"access": "access",
 	"access_code": "access",
 	"account": "account",
@@ -85,6 +85,7 @@
 	"claim_statement": "claim",
 	"collapse_noun": "collapse",
 	"collapse_verb": "collapse",
+	"collision": "collision",
 	"come_across": "come across",
 	"come_up_with": "come up with",
 	"command": "command",
@@ -569,5 +570,6 @@
 	"would_auxiliary_alt": "would",
 	"yeah": "yeah",
 	"you_singular": "you",
-	"your_singular": "your"
+	"your_singular": "your",
+	"wage": "wage"
 }

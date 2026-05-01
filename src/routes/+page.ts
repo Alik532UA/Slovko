@@ -1,4 +1,4 @@
-import { gameOrchestrator } from "$lib/services/gameOrchestrator";
+﻿import { gameOrchestrator } from "$lib/services/gameOrchestrator";
 import { errorHandler } from "$lib/services/errorHandler";
 import type { PageLoad } from "./$types";
 

@@ -1,4 +1,4 @@
-﻿{
+{
 	"abundance": "abundance",
 	"abuse_insult": "abuse",
 	"abuse_misuse": "abuse",
@@ -15,6 +15,8 @@
 	"administer_justice": "administer justice",
 	"administer_manage": "administer",
 	"administration": "administration",
+	"adopt": "adopt",
+	"advance": "advance",
 	"advice": "advice",
 	"advocate_cause": "advocate",
 	"advocate_verb": "advocate",
@@ -289,6 +291,7 @@
 	"extend_lengthen": "extend",
 	"facilitate_help": "facilitate",
 	"fall_out": "fall out",
+	"famine": "famine",
 	"fetch": "fetch",
 	"fluctuate": "fluctuate",
 	"fluctuate_change": "fluctuate",
@@ -350,7 +353,6 @@
 	"propose_suggest": "propose",
 	"prosecute_law": "prosecute",
 	"provoke_cause": "provoke",
-	"qualify_meet": "qualify",
 	"query_question": "query",
 	"realise_verb": "realise",
 	"recall_remember": "recall",

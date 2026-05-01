@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	/**
 	 * GameBoard.svelte — Ігрове поле
 	 * Композиція: рендерить WordCard компоненти

@@ -1,4 +1,4 @@
-﻿{
+{
 	"access": "dostęp",
 	"access_code": "dostęp",
 	"account": "konto",
@@ -85,6 +85,7 @@
 	"claim_statement": "twierdzenie",
 	"collapse_noun": "zapaść",
 	"collapse_verb": "zawalać się",
+	"collision": "kolizja",
 	"come_across": "natknąć się",
 	"come_up_with": "wymyślić",
 	"command": "polecenie",
@@ -546,7 +547,6 @@
 	"visible": "widoczny",
 	"visible_sign": "widoczny",
 	"volume_sound": "głośność",
-	"wage_hourly": "stawka godzinowa",
 	"warn_caution": "ostrzegać",
 	"waste_misuse": "marnować",
 	"wave_verb": "machać",
@@ -574,5 +574,6 @@
 	"would_auxiliary_alt": "by",
 	"yeah": "tak",
 	"you_singular": "ty",
-	"your_singular": "twój"
+	"your_singular": "twój",
+	"wage": "stawka godzinowa"
 }

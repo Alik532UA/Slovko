@@ -1,4 +1,4 @@
-import { localStorageProvider, sessionStorageProvider } from "./storage/storageProvider";
+﻿import { localStorageProvider, sessionStorageProvider } from "./storage/storageProvider";
 
 /**
  * Reset Service — Повне очищення даних додатка

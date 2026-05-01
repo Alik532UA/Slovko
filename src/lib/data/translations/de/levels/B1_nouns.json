@@ -1,4 +1,4 @@
-﻿{
+{
 	"access": "Zugang",
 	"access_code": "Zugang",
 	"account": "Konto",
@@ -85,6 +85,7 @@
 	"claim_statement": "Behauptung",
 	"collapse_noun": "Einsturz",
 	"collapse_verb": "zusammenbrechen",
+	"collision": "Kollision",
 	"come_across": "stoßen auf",
 	"come_up_with": "sich einfallen lassen",
 	"command": "Befehl",
@@ -569,5 +570,6 @@
 	"would_auxiliary_alt": "würde",
 	"yeah": "ja",
 	"you_singular": "du",
-	"your_singular": "dein"
+	"your_singular": "dein",
+	"wage": "Lohn"
 }

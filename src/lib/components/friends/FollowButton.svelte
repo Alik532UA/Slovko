@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { UserPlus, UserCheck, Loader2, Users } from "lucide-svelte";
 	import { FriendsService } from "$lib/firebase/FriendsService";

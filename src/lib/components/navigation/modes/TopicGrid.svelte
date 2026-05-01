@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { ALL_TOPICS } from "$lib/types/index";
 	import { APP_ICONS, type AppIconId } from "$lib/config/icons";

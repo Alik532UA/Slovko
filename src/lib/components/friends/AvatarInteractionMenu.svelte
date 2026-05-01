@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { Hand, UserPlus, UserCheck, Loader2 } from "lucide-svelte";
 	import { PresenceService } from "$lib/firebase/PresenceService.svelte";
 	import { FriendsService } from "$lib/firebase/FriendsService";

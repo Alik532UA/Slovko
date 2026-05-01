@@ -1,4 +1,4 @@
-﻿{
+{
 	"abundance": "/əˈbʌndəns/",
 	"abuse_insult": "/əˈbjuːz/",
 	"abuse_misuse": "/əˈbjuːz/",
@@ -17,6 +17,8 @@
 	"administer_justice": "/ədˈmɪнɪстər/",
 	"administer_manage": "/ədˈmɪнɪстər/",
 	"administration": "/ədˌmɪnɪˈstreɪʃn/",
+	"adopt": "/əˈdɒpt/",
+	"advance": "/ədˈvɑːns/",
 	"advice": "/ədˈvaɪs/",
 	"advocate_cause": "/ˈædvəкɛɪт/",
 	"advocate_verb": "/ˈædvəкɛɪт/",
@@ -281,6 +283,7 @@
 	"exploit_use": "/ɪкˈsplɒɪт/",
 	"extend_lengthen": "/ɪкˈsтɛнd/",
 	"facilitate_help": "/fəˈsɪlɪтɛɪт/",
+	"famine": "/ˈfæmɪn/",
 	"fetch": "/fɛтʃ/",
 	"fluctuate": "/ˈflʌктʃuɛɪт/",
 	"fluctuate_change": "/ˈflʌктʃuɛɪт/",
@@ -334,7 +337,6 @@
 	"propose_suggest": "/prəˈpəʊz/",
 	"prosecute_law": "/ˈprɒsɪkjuːт/",
 	"provoke_cause": "/prəˈvəʊк/",
-	"qualify_meet": "/ˈkwɒlɪfaɪ/",
 	"query_question": "/ˈkwɪəri/",
 	"realise_verb": "/ˈrɪəlaɪz/",
 	"recall_remember": "/rɪˈkɔːl/",

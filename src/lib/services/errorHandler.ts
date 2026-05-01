@@ -1,4 +1,4 @@
-import { logService } from "./logService.svelte";
+﻿import { logService } from "./logService.svelte";
 import { notificationStore } from "../stores/notificationStore.svelte";
 
 interface ErrorOptions {

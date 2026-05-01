@@ -1,4 +1,4 @@
-import { browser } from "$app/environment";
+﻿import { browser } from "$app/environment";
 import { logService } from "../services/logService.svelte";
 
 /**

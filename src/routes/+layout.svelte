@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	/**
 	 * Root Layout — Ініціалізація i18n та глобальні стилі
 	 */

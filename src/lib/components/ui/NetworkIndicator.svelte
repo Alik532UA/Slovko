@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { networkStore } from "$lib/stores/network.svelte";
 	import { APP_ICONS } from "$lib/config/icons";
 	import { fade } from "svelte/transition";

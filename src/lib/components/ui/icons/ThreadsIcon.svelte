@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	/**
 	 * ThreadsIcon — Кастомна SVG іконка для Threads
 	 */

@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { Send, AlertTriangle, CheckCircle2 } from "lucide-svelte";
 	import { FeedbackService } from "$lib/firebase/FeedbackService";

@@ -1,4 +1,4 @@
-const fs = require('fs');
+﻿const fs = require('fs');
 const updates = {
   crh: {
     'profile.leaderboardGuestMessage': 'Reytingde kösterilmek ve başqalarıman yarışmaq içün kirtiniñiz.',

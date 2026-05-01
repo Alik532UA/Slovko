@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Speech Service — озвучування слів через Web Speech API
  * Final stable version for iOS/Android/Desktop
  */

@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { Target, Trophy } from "lucide-svelte";
 	import { navigationState } from "../../controllers/NavigationState.svelte";

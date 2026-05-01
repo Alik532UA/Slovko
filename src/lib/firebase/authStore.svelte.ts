@@ -1,4 +1,4 @@
-import { logService } from "../services/logService.svelte";
+﻿import { logService } from "../services/logService.svelte";
 import { AuthService } from "./AuthService";
 import { SyncService } from "./SyncService.svelte";
 import { PresenceService } from "./PresenceService.svelte";

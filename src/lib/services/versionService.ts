@@ -1,4 +1,4 @@
-import { versionStore } from "../stores/versionStore.svelte";
+﻿import { versionStore } from "../stores/versionStore.svelte";
 import { base } from "$app/paths";
 import { logService } from "./logService.svelte";
 import { localStorageProvider } from "./storage/storageProvider";

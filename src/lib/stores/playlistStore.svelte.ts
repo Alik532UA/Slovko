@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Playlist Store — Stores user collections (Favorites, Mistakes, Extra + Custom)
  * Persisted to localStorage
  */

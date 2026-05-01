@@ -1,4 +1,4 @@
-﻿{
+{
 	"abandon": "verlaten",
 	"absorb": "absorberen",
 	"abundance": "overvloed",
@@ -17,7 +17,6 @@
 	"acquire": "verwerven",
 	"acquire_obtain": "verwerven",
 	"action_doing": "actie",
-	"actual_fact": "feitelijk",
 	"adapt": "aanpassen",
 	"address_verb": "aanspreken",
 	"adjust": "aanpassen",
@@ -28,7 +27,6 @@
 	"advance": "vooruitgang",
 	"advice": "advies",
 	"advocate_cause": "pleiten voor",
-	"advocate_noun": "voorstander",
 	"advocate_verb": "bepleiten",
 	"affect": "beïnvloeden",
 	"agency": "agentschap",
@@ -362,7 +360,6 @@
 	"propose_suggest": "voorstellen",
 	"prosecute_law": "vervolgen",
 	"provoke_cause": "provoceren",
-	"qualify_meet": "kwalificeren",
 	"query_question": "bevragen",
 	"realise_verb": "realiseren",
 	"recall_remember": "zich herinneren",

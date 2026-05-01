@@ -1,4 +1,4 @@
-﻿{
+{
 	"aberration": "sapuv",
 	"aberration_deviation": "sapuv",
 	"aberration_mental": "yañlışlıq",
@@ -309,16 +309,10 @@
 	"exert_pressure": "qullanmaq",
 	"exhale_air": "nefes bermek",
 	"exile_leader": "sürgün etmek",
-	"fireplace_kamin": "kamin",
-	"fireplace_ocaq": "ocaq",
 	"fit_healthy": "sağlam",
 	"gift": "bahiş",
+	"good_morning": "hayır sabahlar",
 	"hard_solid": "qattı",
 	"hard_tough": "qattı",
-	"holiday_1": "bayram",
-	"holiday_tatil": "tatil",
-	"mad": "delice",
-	"pot_pot": "tencere",
-	"towel_havl": "havlı",
-	"towel_towel": "peskir"
+	"mad": "delice"
 }

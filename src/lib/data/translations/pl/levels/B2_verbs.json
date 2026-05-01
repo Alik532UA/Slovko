@@ -1,6 +1,8 @@
 ﻿{
+	"accommodate": "zakwaterować",
 	"accurate": "dokładny",
 	"acknowledge_recognize": "uznać",
+	"adequate": "adekwatny",
 	"apply_job": "aplikować o pracę",
 	"appoint_job": "powołać na stanowisko",
 	"appraise": "oceniać",
@@ -26,6 +28,5 @@
 	"pledge_promise": "deklarować / obiecywać",
 	"scan_look": "skanować wzrokiem",
 	"serve_general": "służyć",
-	"simulate_imitate": "symulować / imitować",
-	"accommodate": "zakwaterować"
+	"simulate_imitate": "symulować / imitować"
 }

@@ -1,4 +1,4 @@
-import { settingsStore } from "../stores/settingsStore.svelte";
+﻿import { settingsStore } from "../stores/settingsStore.svelte";
 import type { AppSettings } from "../data/schemas";
 import { logService } from "./logService.svelte";
 

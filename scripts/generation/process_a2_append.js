@@ -1,4 +1,4 @@
-import fs from "fs";
+﻿import fs from "fs";
 
 const ANALYSIS_FILE = "a2_analysis.json";
 const LEVEL_FILE = "src/lib/data/words/levels/A2.json";

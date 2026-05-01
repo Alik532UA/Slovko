@@ -1,4 +1,4 @@
-const fs = require('fs');
+﻿const fs = require('fs');
 const path = require('path');
 const langs = ['uk', 'en', 'de', 'crh', 'nl', 'el', 'pl'];
 

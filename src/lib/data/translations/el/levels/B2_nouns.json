@@ -1,4 +1,4 @@
-﻿{
+{
 	"abandon": "εγκαταλείπω",
 	"absorb": "απορροφώ",
 	"abundance": "αφθονία",
@@ -23,6 +23,8 @@
 	"administer_justice": "απονέμω δικαιοσύνη",
 	"administer_manage": "διοικώ",
 	"administration": "διοίκηση",
+	"adopt": "υιοθετώ",
+	"advance": "πρόοδος",
 	"advice": "συμβουλή",
 	"advocate_cause": "υποστηρίζω σκοπό",
 	"advocate_verb": "υποστηρίζω",
@@ -297,6 +299,7 @@
 	"extend_lengthen": "επεκτείνω",
 	"facilitate_help": "διευκολύνω",
 	"fall_out": "τσακώνομαι",
+	"famine": "λιμός",
 	"fetch": "φέρνω",
 	"fluctuate": "παρουσιάζω διακυμάνσεις",
 	"fluctuate_change": "παρουσιάζω διακυμάνσεις",
@@ -358,7 +361,6 @@
 	"propose_suggest": "προτείνω",
 	"prosecute_law": "διώκω ποινικά",
 	"provoke_cause": "προκαλώ",
-	"qualify_meet": "πληρώ τις προϋποθέσεις",
 	"query_question": "ρωτώ",
 	"realise_verb": "συνειδητοποιώ",
 	"recall_remember": "ανακαλώ",

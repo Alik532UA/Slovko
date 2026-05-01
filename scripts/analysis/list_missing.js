@@ -1,4 +1,4 @@
-import fs from "fs";
+﻿import fs from "fs";
 
 const args = process.argv.slice(2);
 if (args.length < 2) {

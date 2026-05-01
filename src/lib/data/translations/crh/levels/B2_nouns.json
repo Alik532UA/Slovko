@@ -1,4 +1,4 @@
-﻿{
+{
 	"abandon": "tastamaq",
 	"absorb": "emmek",
 	"abundance": "bolluq",
@@ -23,6 +23,8 @@
 	"administer_justice": "adaletni yerine ketirmek",
 	"administer_manage": "idare etmek",
 	"administration": "idare",
+	"adopt": "evlatlıqqa almaq",
+	"advance": "ilerleme",
 	"advice": "mesleat",
 	"advocate_cause": "qorçalamaq",
 	"advocate_verb": "mudafaa etmek",
@@ -297,6 +299,7 @@
 	"extend_lengthen": "uzatmaq",
 	"facilitate_help": "yardım etmek",
 	"fall_out": "dava etmek",
+	"famine": "clıq",
 	"fetch": "ketirmek",
 	"fluctuate": "deñişmek",
 	"fluctuate_change": "deñişmek",
@@ -358,7 +361,6 @@
 	"propose_suggest": "teklif etmek",
 	"prosecute_law": "makemege bermek",
 	"provoke_cause": "qozğamaq",
-	"qualify_meet": "ihtisası olmaq",
 	"query_question": "soramaq",
 	"realise_verb": "añlamaq",
 	"recall_remember": "hatırlamaq",

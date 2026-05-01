@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Скрипт для аналізу багатозначних слів у перекладах
  * Запуск: node scripts/analysis/analyze_polysemy.js
  *

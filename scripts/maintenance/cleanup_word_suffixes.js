@@ -1,4 +1,4 @@
-const fs = require('fs');
+﻿const fs = require('fs');
 const path = require('path');
 
 const wordsDir = path.join(process.cwd(), 'src/lib/data/words/levels');

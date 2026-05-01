@@ -1,4 +1,4 @@
-﻿{
+{
 	"access": "доступ",
 	"access_code": "доступ",
 	"account": "рахунок",
@@ -85,6 +85,7 @@
 	"claim_statement": "заява",
 	"collapse_noun": "крах",
 	"collapse_verb": "руйнуватися",
+	"collision": "зіткнення",
 	"come_across": "випадково зустріти",
 	"come_up_with": "придумати",
 	"command": "команда",
@@ -569,5 +570,6 @@
 	"would_auxiliary_alt": "би",
 	"yeah": "так",
 	"you_singular": "ти",
-	"your_singular": "твій"
+	"your_singular": "твій",
+	"wage": "зарплата"
 }

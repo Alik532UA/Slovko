@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Version Store - відстеження версії додатка
  */
 export const versionStore = (() => {

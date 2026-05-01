@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Storage Provider Interface
  * Defines how data should be persisted.
  */

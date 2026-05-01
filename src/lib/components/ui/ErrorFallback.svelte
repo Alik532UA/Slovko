@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	/**
 	 * ErrorFallback — Component to show when a boundary catches an error.
 	 */

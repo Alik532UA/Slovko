@@ -1,4 +1,4 @@
-﻿{
+{
 	"abandon": "porzucać",
 	"absorb": "wchłaniać",
 	"abundance": "obfitość",
@@ -21,6 +21,8 @@
 	"administer_justice": "wymierzać sprawiedliwość",
 	"administer_manage": "zarządzać",
 	"administration": "administracja",
+	"adopt": "adoptować",
+	"advance": "postęp",
 	"advice": "rada",
 	"advocate_cause": "popierać sprawę",
 	"advocate_verb": "popierać / orędować",
@@ -293,6 +295,7 @@
 	"extend_lengthen": "przedłużać / rozszerzać",
 	"facilitate_help": "ułatwiać / wspomagać",
 	"fall_out": "pokłócić się",
+	"famine": "głód",
 	"fetch": "przynosić",
 	"fluctuate": "wahać się / ulegać wahaniom",
 	"fluctuate_change": "wahać się / ulegać wahaniom",
@@ -354,7 +357,6 @@
 	"propose_suggest": "proponować / sugerować",
 	"prosecute_law": "oskarżać / ścigać sądownie",
 	"provoke_cause": "prowokować / wywoływać",
-	"qualify_meet": "kwalifikować się / spełniać wymogi",
 	"query_question": "zapytanie",
 	"realise_verb": "uświadamiać sobie",
 	"recall_remember": "przypominać sobie",

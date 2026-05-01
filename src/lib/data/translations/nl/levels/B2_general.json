@@ -1,4 +1,4 @@
-﻿{
+{
 	"aberration": "afwijking",
 	"aberration_deviation": "afwijking",
 	"aberration_mental": "dwaling",
@@ -309,16 +309,10 @@
 	"exert_pressure": "uitoefenen",
 	"exhale_air": "uitademen",
 	"exile_leader": "verbannen",
-	"fireplace_kamin": "open haard",
-	"fireplace_ocaq": "open haard",
 	"fit_healthy": "fit",
 	"gift": "cadeau",
+	"good_morning": "goedemorgen",
 	"hard_solid": "vast",
 	"hard_tough": "taai",
-	"holiday_1": "vakantie",
-	"holiday_tatil": "vakantie",
-	"mad": "waanzinnig",
-	"pot_pot": "pot",
-	"towel_havl": "handdoek",
-	"towel_towel": "handdoek"
+	"mad": "waanzinnig"
 }

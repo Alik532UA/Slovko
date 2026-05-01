@@ -1,6 +1,8 @@
 ﻿{
+	"accommodate": "yerleştirmek",
 	"accurate": "doğru",
 	"acknowledge_recognize": "tanımaq",
+	"adequate": "yeterli",
 	"apply_job": "muracaat etmek",
 	"appoint_job": "tayin etmek",
 	"appraise": "baalamaq",
@@ -26,6 +28,5 @@
 	"pledge_promise": "vade etmek",
 	"scan_look": "közden keçirmek",
 	"serve_general": "hızmet etmek",
-	"simulate_imitate": "benzetmek",
-	"accommodate": "yerleştirmek"
+	"simulate_imitate": "benzetmek"
 }

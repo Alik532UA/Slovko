@@ -1,0 +1,62 @@
+﻿{
+  "present_simple": {
+    "aff": "On ciężko pracuje",
+    "neg": "On nie pracuje ciężko",
+    "ques": "Czy on ciężko pracuje?"
+  },
+  "past_simple": {
+    "aff": "On ciężko pracował",
+    "neg": "On nie pracował ciężko",
+    "ques": "Czy on ciężko pracował?"
+  },
+  "future_simple": {
+    "aff": "On będzie ciężko pracował",
+    "neg": "On nie będzie pracował ciężko",
+    "ques": "Czy on będzie ciężko pracował?"
+  },
+  "present_continuous": {
+    "aff": "On teraz ciężko pracuje",
+    "neg": "On teraz nie pracuje ciężko",
+    "ques": "Czy on teraz ciężko pracuje?"
+  },
+  "past_continuous": {
+    "aff": "On wtedy ciężko pracował",
+    "neg": "On wtedy nie pracował ciężko",
+    "ques": "Czy on wtedy ciężko pracował?"
+  },
+  "future_continuous": {
+    "aff": "On będzie wtedy ciężko pracował",
+    "neg": "On nie będzie wtedy ciężko pracował",
+    "ques": "Czy on będzie wtedy ciężko pracował?"
+  },
+  "present_perfect": {
+    "aff": "On już ciężko popracował",
+    "neg": "On jeszcze nie popracował ciężko",
+    "ques": "Czy on już ciężko popracował?"
+  },
+  "past_perfect": {
+    "aff": "On ciężko pracował już wcześniej",
+    "neg": "On nie pracował ciężko wcześniej",
+    "ques": "Czy on ciężko pracował wcześniej?"
+  },
+  "future_perfect": {
+    "aff": "On ciężko popracuje do tego czasu",
+    "neg": "On nie popracuje ciężko do tego czasu",
+    "ques": "Czy on ciężko popracuje do tego czasu?"
+  },
+  "present_perfect_continuous": {
+    "aff": "On ciężko pracuje od dłuższego czasu",
+    "neg": "On nie pracuje ciężko od dłuższego czasu",
+    "ques": "Czy on ciężko pracuje od dłuższego czasu?"
+  },
+  "past_perfect_continuous": {
+    "aff": "On długo pracował ciężko do tego czasu",
+    "neg": "On nie pracował długo ciężko do tego czasu",
+    "ques": "Czy on długo pracował ciężko do tego czasu?"
+  },
+  "future_perfect_continuous": {
+    "aff": "On będzie długo ciężko pracował do tego czasu",
+    "neg": "On nie będzie długo ciężko pracował do tego czasu",
+    "ques": "Czy on będzie długo ciężko pracował do tego czasu?"
+  }
+}

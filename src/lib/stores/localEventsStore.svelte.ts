@@ -1,4 +1,4 @@
-import type { InteractionEvent } from "../firebase/PresenceService.svelte";
+﻿import type { InteractionEvent } from "../firebase/PresenceService.svelte";
 import { gameFeedbackHandler } from "../services/gameFeedbackHandler";
 
 class LocalEventsStore {

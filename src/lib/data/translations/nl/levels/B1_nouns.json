@@ -1,4 +1,4 @@
-﻿{
+{
 	"access": "toegang",
 	"access_code": "toegang",
 	"account": "rekening",
@@ -569,5 +569,6 @@
 	"would_auxiliary_alt": "zou",
 	"yeah": "ja",
 	"you_singular": "jij",
-	"your_singular": "jouw"
+	"your_singular": "jouw",
+	"wage": "loon"
 }

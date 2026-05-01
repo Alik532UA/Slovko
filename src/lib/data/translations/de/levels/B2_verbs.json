@@ -1,6 +1,8 @@
 ﻿{
+	"accommodate": "unterbringen",
 	"accurate": "genau",
 	"acknowledge_recognize": "anerkennen",
+	"adequate": "angemessen",
 	"apply_job": "bewerben",
 	"appoint_job": "ernennen",
 	"appraise": "bewerten",
@@ -26,6 +28,5 @@
 	"pledge_promise": "versprechen",
 	"scan_look": "überfliegen",
 	"serve_general": "dienen",
-	"simulate_imitate": "simulieren",
-	"accommodate": "unterbringen"
+	"simulate_imitate": "simulieren"
 }

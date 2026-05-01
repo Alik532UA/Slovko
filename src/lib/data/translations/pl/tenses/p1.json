@@ -1,0 +1,62 @@
+﻿{
+  "present_simple": {
+    "aff": "Chodzę do szkoły",
+    "neg": "Nie chodzę do szkoły",
+    "ques": "Czy chodzę do szkoły?"
+  },
+  "past_simple": {
+    "aff": "Chodziłem do szkoły",
+    "neg": "Nie chodziłem do szkoły",
+    "ques": "Czy chodziłem do szkoły?"
+  },
+  "future_simple": {
+    "aff": "Pójdę do szkoły",
+    "neg": "Nie pójdę do szkoły",
+    "ques": "Czy pójdę do szkoły?"
+  },
+  "present_continuous": {
+    "aff": "Idę do szkoły",
+    "neg": "Nie idę do szkoły",
+    "ques": "Czy idę do szkoły?"
+  },
+  "past_continuous": {
+    "aff": "Szedłem do szkoły",
+    "neg": "Nie szedłem do szkoły",
+    "ques": "Czy szedłem do szkoły?"
+  },
+  "future_continuous": {
+    "aff": "Będę szedł do szkoły",
+    "neg": "Nie będę szedł do szkoły",
+    "ques": "Czy będę szedł do szkoły?"
+  },
+  "present_perfect": {
+    "aff": "Poszedłem do szkoły",
+    "neg": "Nie poszedłem do szkoły",
+    "ques": "Czy poszedłem do szkoły?"
+  },
+  "past_perfect": {
+    "aff": "Poszedłem do szkoły wcześniej",
+    "neg": "Nie poszedłem do szkoły wcześniej",
+    "ques": "Czy poszedłem do szkoły wcześniej?"
+  },
+  "future_perfect": {
+    "aff": "Pójdę do szkoły do tego czasu",
+    "neg": "Nie pójdę do szkoły do tego czasu",
+    "ques": "Czy pójdę do szkoły do tego czasu?"
+  },
+  "present_perfect_continuous": {
+    "aff": "Chodzę do szkoły od dłuższego czasu",
+    "neg": "Nie chodzę do szkoły od dłuższego czasu",
+    "ques": "Czy chodzę do szkoły od dłuższego czasu?"
+  },
+  "past_perfect_continuous": {
+    "aff": "Chodziłem do szkoły przez długi czas",
+    "neg": "Nie chodziłem do szkoły przez długi czas",
+    "ques": "Czy chodziłem do szkoły przez długi czas?"
+  },
+  "future_perfect_continuous": {
+    "aff": "Będę chodził do szkoły przez długi czas",
+    "neg": "Nie będę chodził do szkoły przez długi czas",
+    "ques": "Czy będę chodził do szkoły przez długi час?"
+  }
+}

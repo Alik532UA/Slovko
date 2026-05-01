@@ -1,6 +1,8 @@
 ﻿{
+	"accommodate": "φιλοξενώ",
 	"accurate": "ακριβής",
 	"acknowledge_recognize": "αναγνωρίζω",
+	"adequate": "επαρκής",
 	"apply_job": "κάνω αίτηση για δουλειά",
 	"appoint_job": "διορίζω",
 	"appraise": "εκτιμώ",
@@ -26,6 +28,5 @@
 	"pledge_promise": "υπόσχομαι επίσημα",
 	"scan_look": "σαρώνω με το βλέμμα",
 	"serve_general": "υπηρετώ",
-	"simulate_imitate": "προσομοιώνω",
-	"accommodate": "φιλοξενώ"
+	"simulate_imitate": "προσομοιώνω"
 }

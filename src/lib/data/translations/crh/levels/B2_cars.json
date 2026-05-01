@@ -1,10 +1,8 @@
-﻿{
+{
 	"brake": "tormoz",
 	"exhaust": "egzoz",
 	"exhaust_options": "bitirmek",
 	"filter": "filtr",
-	"gas_gas": "benzin",
-	"gas_gaz": "gaz",
 	"gear": "vites",
 	"hood": "kapot",
 	"radiator": "radiator",

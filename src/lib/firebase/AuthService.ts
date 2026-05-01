@@ -1,4 +1,4 @@
-import { logService } from "../services/logService.svelte";
+﻿import { logService } from "../services/logService.svelte";
 import {
 	signInAnonymously,
 	signOut as fbSignOut,

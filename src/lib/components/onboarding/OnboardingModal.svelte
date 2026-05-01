@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { onMount } from "svelte";
 	import { fade, fly } from "svelte/transition";
 	import { waitLocale, _ } from "svelte-i18n";

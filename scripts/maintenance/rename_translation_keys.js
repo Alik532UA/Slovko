@@ -1,4 +1,4 @@
-const fs = require('fs');
+﻿const fs = require('fs');
 const path = require('path');
 
 const translationsDir = path.join(process.cwd(), 'src/lib/data/translations');

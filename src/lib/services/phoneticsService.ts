@@ -1,4 +1,4 @@
-import { IPA_TO_UK } from "../data/ipa-maps/map-ipa-to-uk";
+﻿import { IPA_TO_UK } from "../data/ipa-maps/map-ipa-to-uk";
 import { IPA_TO_CRH } from "../data/ipa-maps/map-ipa-to-crh";
 import { IPA_TO_NL } from "../data/ipa-maps/map-ipa-to-nl";
 import { IPA_TO_DE } from "../data/ipa-maps/map-ipa-to-de";

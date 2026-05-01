@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { Key, LogOut, Trash2 } from "lucide-svelte";
 

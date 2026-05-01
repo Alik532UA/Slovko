@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	/**
 	 * VoiceSelectionModal.svelte
 	 * Modal for selecting a specific system voice for pronunciation.

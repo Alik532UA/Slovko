@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { logService } from "$lib/services/logService.svelte";
 	import { Save, Shield } from "lucide-svelte";
 	import { _ } from "svelte-i18n";

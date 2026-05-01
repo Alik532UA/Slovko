@@ -1,4 +1,4 @@
-﻿{
+{
 	"access": "πρόσβαση",
 	"access_code": "κωδικός πρόσβασης",
 	"account": "λογαριασμός",
@@ -85,6 +85,7 @@
 	"claim_statement": "ισχυρισμός",
 	"collapse_noun": "κατάρρευση",
 	"collapse_verb": "καταρρέω",
+	"collision": "σύγκρουση",
 	"come_across": "συναντώ τυχαία",
 	"come_up_with": "επινοώ",
 	"command": "οδηγία",
@@ -569,5 +570,6 @@
 	"would_auxiliary_alt": "θα ήθελα",
 	"yeah": "ναι",
 	"you_singular": "εσύ",
-	"your_singular": "δικός σου"
+	"your_singular": "δικός σου",
+	"wage": "μισθός"
 }

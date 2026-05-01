@@ -1,4 +1,4 @@
-﻿[
+[
 	"car",
 	"bus",
 	"truck",
@@ -26,8 +26,6 @@
 	"light_weight",
 	"light_color",
 	"oil",
-	"gas_gas",
-	"gas_gaz",
 	"battery_electric",
 	"battery_artillery",
 	"key",

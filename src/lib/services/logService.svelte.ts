@@ -1,4 +1,4 @@
-import { browser, dev } from "$app/environment";
+﻿import { browser, dev } from "$app/environment";
 import { sessionStorageProvider } from "./storage/storageProvider";
 
 const MAX_RECENT_LOGS = 1000;

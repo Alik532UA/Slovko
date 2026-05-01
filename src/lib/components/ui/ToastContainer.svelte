@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { notificationStore } from "$lib/stores/notificationStore.svelte";
 	import { logService } from "$lib/services/logService.svelte";
 	import { X, ClipboardCopy } from "lucide-svelte";

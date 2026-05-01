@@ -1,4 +1,4 @@
-export const missingWords2 = {
+﻿export const missingWords2 = {
 	bite: {
 		uk: "кусати",
 		en: "bite",

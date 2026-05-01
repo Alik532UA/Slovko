@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
     import { SyncService } from "$lib/firebase/SyncService.svelte";
     import { fade } from "svelte/transition";
 </script>

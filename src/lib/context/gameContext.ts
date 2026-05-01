@@ -1,4 +1,4 @@
-import { setContext, getContext } from "svelte";
+﻿import { setContext, getContext } from "svelte";
 import type { GameController } from "$lib/services/gameController";
 
 const GAME_CONTROLLER_KEY = Symbol("GAME_CONTROLLER");

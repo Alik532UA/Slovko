@@ -1,5 +1,4 @@
-﻿{
-	"I_pronoun": "я",
+{
 	"aberration": "відхилення",
 	"aberration_deviation": "відхилення",
 	"aberration_mental": "заблудження",
@@ -315,12 +314,5 @@
 	"good_morning": "доброго ранку",
 	"hard_solid": "твердий",
 	"hard_tough": "твердий",
-	"like_verb": "подобатися",
-	"live_verb": "жити",
-	"mad": "шалений",
-	"no_negation": "ні",
-	"than_conjunction": "ніж",
-	"too_adverb": "надто",
-	"until_conjunction": "до",
-	"while_conjunction": "поки"
+	"mad": "шалений"
 }

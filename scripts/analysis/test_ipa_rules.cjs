@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Test script for IPA generation rules
  */
 const fs = require("fs");

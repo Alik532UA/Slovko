@@ -1,4 +1,4 @@
-import fs from 'fs';
+﻿import fs from 'fs';
 import path from 'path';
 
 const semanticsPath = 'src/lib/data/semantics.ts';

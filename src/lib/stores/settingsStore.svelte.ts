@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Settings Store — SSoT для налаштувань додатку
  * Svelte 5 Runes + localStorage persistence
  */

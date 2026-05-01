@@ -1,4 +1,4 @@
-import type { ActiveCard } from "../types";
+﻿import type { ActiveCard } from "../types";
 
 /**
  * Сервіс для керування аудіо-відгуками у грі.

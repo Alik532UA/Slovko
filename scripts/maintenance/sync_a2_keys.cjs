@@ -1,4 +1,4 @@
-const fs = require("fs");
+﻿const fs = require("fs");
 const path = require("path");
 
 // Fixed path: __dirname is scripts/maintenance, so we need to go up twice

@@ -1,4 +1,4 @@
-import fs from "fs";
+﻿import fs from "fs";
 import path from "path";
 
 const mapping = JSON.parse(fs.readFileSync("polysemy_migration.json", "utf8"));

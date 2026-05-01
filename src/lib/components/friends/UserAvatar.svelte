@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import {
 		User as UserIcon,
 		Cat,

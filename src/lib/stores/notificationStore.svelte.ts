@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Notification Store
  * Manages global toast notifications for the application.
  */

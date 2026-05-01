@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { fade, scale } from "svelte/transition";
 	import { X } from "lucide-svelte";

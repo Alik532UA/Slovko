@@ -1,4 +1,4 @@
-import fs from "fs";
+﻿import fs from "fs";
 
 const reportData = JSON.parse(
 	fs.readFileSync("translation_issues_report.json", "utf8"),

@@ -1,10 +1,8 @@
-﻿{
+{
 	"brake": "rem",
 	"exhaust": "uitlaat",
 	"exhaust_options": "uitputten",
 	"filter": "filteren",
-	"gas_gas": "benzine",
-	"gas_gaz": "gas",
 	"gear": "versnelling",
 	"hood": "motorkap",
 	"radiator": "radiator",

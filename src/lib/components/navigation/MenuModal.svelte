@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	/**
 	 * MenuModal — Випадаюче меню додатка (Dropdown)
 	 */

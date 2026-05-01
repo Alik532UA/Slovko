@@ -1,4 +1,4 @@
-import { auth, db } from "../firebase/config";
+﻿import { auth, db } from "../firebase/config";
 import { FriendsService, type FollowRecord, type UserProfile } from "../firebase/FriendsService";
 import { logService } from "../services/logService.svelte";
 import { collection, onSnapshot } from "firebase/firestore";

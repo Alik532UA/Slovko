@@ -1,4 +1,4 @@
-import { ref, onValue, set, onDisconnect, serverTimestamp, onChildAdded, remove, query, orderByChild, limitToLast, type Unsubscribe, push, startAt } from "firebase/database";
+﻿import { ref, onValue, set, onDisconnect, serverTimestamp, onChildAdded, remove, query, orderByChild, limitToLast, type Unsubscribe, push, startAt } from "firebase/database";
 import { rtdb, auth } from "./config";
 import { logService } from "../services/logService.svelte";
 

@@ -1,4 +1,4 @@
-import type { gameState as GameStateType } from "../stores/gameState.svelte";
+﻿import type { gameState as GameStateType } from "../stores/gameState.svelte";
 import { settingsStore } from "../stores/settingsStore.svelte";
 import { playlistStore } from "../stores/playlistStore.svelte";
 import { logService } from "./logService.svelte";

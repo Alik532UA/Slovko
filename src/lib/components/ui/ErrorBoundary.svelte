@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { AlertTriangle, Copy, RotateCcw } from "lucide-svelte";
 	import { settingsStore } from "$lib/stores/settingsStore.svelte";

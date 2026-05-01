@@ -1,4 +1,4 @@
-import { logService } from "./logService.svelte";
+﻿import { logService } from "./logService.svelte";
 import { progressStore } from "../stores/progressStore.svelte";
 import { playlistStore } from "../stores/playlistStore.svelte";
 import { browser } from "$app/environment";

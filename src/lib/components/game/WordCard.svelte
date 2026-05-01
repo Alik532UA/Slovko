@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	/**
 	 * WordCard.svelte — Картка слова
 	 * SoC: тільки відображення та передача подій

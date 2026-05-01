@@ -1,4 +1,4 @@
-﻿{
+{
 	"ability": "/əˈbɪləti/",
 	"amount": "/əˈmaʊнт/",
 	"architect": "/ˈɑːkɪтɛкт/",
@@ -222,5 +222,9 @@
 	"whole": "/həʊl/",
 	"wooden": "/ˈwʊdн/",
 	"yard": "/jɑːd/",
-	"yourself": "/jɔːˈsɛlf/"
+	"yourself": "/jɔːˈsɛlf/",
+	"murder_noun": "/ˈmɜːdə/",
+	"target_noun": "/ˈтɑːrɡɪт/",
+	"transport_noun": "/тræнsˈpɔːrт/",
+	"wave_noun": "/wɛɪv/"
 }

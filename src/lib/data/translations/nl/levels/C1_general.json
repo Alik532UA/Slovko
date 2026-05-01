@@ -1,10 +1,14 @@
 ﻿{
 	"abolish": "afschaffen",
+	"abortion": "abortus",
 	"absence": "afwezigheid",
+	"absent": "afwezig",
+	"absurd": "absurd",
 	"abuse": "misbruiken",
 	"academy": "academie",
 	"accelerate": "versnellen",
 	"acceptance": "acceptatie",
+	"accessible": "toegankelijk",
 	"accord": "akkoord",
 	"accordance": "overeenstemming",
 	"accountability": "verantwoordelijkheid",
@@ -217,6 +221,7 @@
 	"embody": "belichamen",
 	"embrace": "omarmen",
 	"emergence": "opkomst",
+	"emission": "uitstoot",
 	"emit": "uitstralen",
 	"enact": "uitvaardigen",
 	"endorse": "onderschrijven",
@@ -245,9 +250,5 @@
 	"reproduce": "reproduceren",
 	"restrain": "bedwingen",
 	"router": "router",
-	"testify": "getuigen",
-	"abortion": "abortus",
-	"absent": "afwezig",
-	"absurd": "absurd",
-	"accessible": "toegankelijk"
+	"testify": "getuigen"
 }

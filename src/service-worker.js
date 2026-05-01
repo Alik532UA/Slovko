@@ -1,4 +1,4 @@
-/// <reference types="@sveltejs/kit" />
+﻿/// <reference types="@sveltejs/kit" />
 import { build, files, prerendered, version } from "$service-worker";
 
 // Назва кешу з версією для автоматичного оновлення

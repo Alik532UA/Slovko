@@ -1,10 +1,8 @@
-﻿{
+{
 	"brake": "Bremse",
 	"exhaust": "Auspuff",
 	"exhaust_options": "erschöpfen",
 	"filter": "Filter",
-	"gas_gas": "Benzin",
-	"gas_gaz": "Gas",
 	"gear": "Gang",
 	"hood": "Motorhaube",
 	"radiator": "Kühler",

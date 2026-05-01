@@ -1,4 +1,4 @@
-﻿{
+{
 	"access": "irişim",
 	"access_code": "irişim",
 	"account": "esap",
@@ -85,6 +85,7 @@
 	"claim_statement": "iddia",
 	"collapse_noun": "yığıluv",
 	"collapse_verb": "yığılmaq",
+	"collision": "toquşuv",
 	"come_across": "rastkelmek",
 	"come_up_with": "uydurmaq",
 	"command": "emir",
@@ -568,5 +569,6 @@
 	"would_auxiliary_alt": "-di",
 	"yeah": "e",
 	"you_singular": "sen",
-	"your_singular": "seniñ"
+	"your_singular": "seniñ",
+	"wage": "maaş"
 }

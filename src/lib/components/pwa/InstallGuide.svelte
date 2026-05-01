@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { Share, PlusSquare, MoreVertical, MonitorDown, Grid2X2Plus, AlertCircle } from "lucide-svelte";
 	import BaseModal from "../ui/BaseModal.svelte";

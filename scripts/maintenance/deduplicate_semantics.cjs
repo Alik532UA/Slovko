@@ -1,4 +1,4 @@
-const fs = require('fs');
+﻿const fs = require('fs');
 const content = fs.readFileSync('src/lib/data/semantics.ts', 'utf8');
 
 // Регулярний вираз для пошуку блоків семантики

@@ -1,4 +1,4 @@
-﻿{
+{
 	"aberration": "Abweichung",
 	"aberration_deviation": "Abweichung",
 	"aberration_mental": "Verirrung",
@@ -309,16 +309,10 @@
 	"exert_pressure": "ausüben",
 	"exhale_air": "ausatmen",
 	"exile_leader": "verbannen",
-	"fireplace_kamin": "Kamin",
-	"fireplace_ocaq": "Kamin",
 	"fit_healthy": "fit",
 	"gift": "Geschenk",
+	"good_morning": "guten Morgen",
 	"hard_solid": "hart",
 	"hard_tough": "hart",
-	"holiday_1": "Ferien",
-	"holiday_tatil": "Ferien",
-	"mad": "wahnsinnig",
-	"pot_pot": "Topf",
-	"towel_havl": "Handtuch",
-	"towel_towel": "Handtuch"
+	"mad": "wahnsinnig"
 }

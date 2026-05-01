@@ -1,4 +1,4 @@
-import { logService } from "./logService.svelte";
+﻿import { logService } from "./logService.svelte";
 /**
  * transcriptionService.ts
  * Сервіс-фасад для генерації транскрипції.

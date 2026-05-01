@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { LayoutGrid, Users, TriangleAlert } from "lucide-svelte";
 	import { logService } from "../../services/logService.svelte";
