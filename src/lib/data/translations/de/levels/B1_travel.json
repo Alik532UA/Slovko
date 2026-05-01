@@ -1,4 +1,6 @@
 ﻿{
+	"accommodation": "Unterkunft",
+	"accommodation_living": "Unterkunft",
 	"arrival": "Ankunft",
 	"backpack": "Rucksack",
 	"baggage": "Gepäck",
@@ -8,6 +10,7 @@
 	"cabin_plane": "Flugzeugkabine",
 	"cabin_ship": "Kabine",
 	"canal": "Kanal",
+	"customs": "Zoll",
 	"departure": "Abfahrt",
 	"emergency": "Notfall",
 	"expedition": "Expedition",

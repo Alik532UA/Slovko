@@ -1,4 +1,6 @@
 ﻿{
+	"accommodation": "zakwaterowanie",
+	"accommodation_living": "zakwaterowanie",
 	"arrival": "przyjazd",
 	"backpack": "plecak",
 	"baggage": "bagaż",
@@ -8,6 +10,7 @@
 	"cabin_plane": "kabina samolotu",
 	"cabin_ship": "kajuta",
 	"canal": "kanał",
+	"customs": "cło",
 	"departure": "odjazd",
 	"emergency": "nagły wypadek",
 	"expedition": "wyprawa",

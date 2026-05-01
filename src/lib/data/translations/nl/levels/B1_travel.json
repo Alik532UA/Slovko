@@ -1,4 +1,6 @@
 ﻿{
+	"accommodation": "accommodatie",
+	"accommodation_living": "accommodatie",
 	"arrival": "aankomst",
 	"backpack": "rugzak",
 	"baggage": "bagage",
@@ -8,6 +10,7 @@
 	"cabin_plane": "cabine",
 	"cabin_ship": "hut",
 	"canal": "kanaal",
+	"customs": "douane",
 	"departure": "vertrek",
 	"emergency": "noodgeval",
 	"expedition": "expeditie",

@@ -1,11 +1,11 @@
 ﻿{
-	"app_store": "aplikacja",
+	"app_store": "sklep z aplikacjami",
 	"battery_life": "żywotność baterii",
 	"cable": "kabel",
-	"cable_tv": "kabel",
+	"cable_tv": "telewizja kablowa",
 	"chip": "czip",
 	"chip_computer": "czip",
-	"data_privacy": "dane",
+	"data_privacy": "prywatność danych",
 	"database": "baza danych",
 	"database_management": "baza danych",
 	"download_file": "pobierać",
@@ -25,7 +25,7 @@
 	"server_computer": "serwer",
 	"software_program": "oprogramowanie",
 	"upload": "wysłać",
-	"user_interface": "użytkownik",
+	"user_interface": "interfejs użytkownika",
 	"virus_computer": "wirus",
 	"wifi": "wifi",
 	"wifi_connection": "wifi"

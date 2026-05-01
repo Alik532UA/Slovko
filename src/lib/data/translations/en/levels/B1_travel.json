@@ -1,4 +1,6 @@
 ﻿{
+	"accommodation": "accommodation",
+	"accommodation_living": "accommodation",
 	"arrival": "arrival",
 	"backpack": "backpack",
 	"baggage": "baggage",
@@ -8,6 +10,7 @@
 	"cabin_plane": "cabin",
 	"cabin_ship": "cabin",
 	"canal": "canal",
+	"customs": "customs",
 	"departure": "departure",
 	"emergency": "emergency",
 	"expedition": "expedition",

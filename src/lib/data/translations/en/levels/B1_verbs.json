@@ -18,6 +18,7 @@
 	"generate": "generate",
 	"investigate": "investigate",
 	"modify": "modify",
+	"monitor_verb": "monitor",
 	"motivate": "motivate",
 	"negotiate": "negotiate",
 	"nominate": "nominate",

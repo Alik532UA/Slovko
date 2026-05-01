@@ -1,10 +1,10 @@
 ﻿{
-	"app_store": "appje",
+	"app_store": "app store",
 	"cable": "kabel",
-	"cable_tv": "kabel",
+	"cable_tv": "kabeltelevisie",
 	"chip": "chip",
 	"chip_computer": "chip",
-	"data_privacy": "gegevens",
+	"data_privacy": "gegevensbescherming",
 	"database": "database",
 	"database_management": "databasebeheer",
 	"download_file": "downloaden",
@@ -15,7 +15,7 @@
 	"folder_document": "map",
 	"hardware_computer": "hardware",
 	"microphone": "microfoon",
-	"monitor": "monitoren",
+	"monitor": "monitor",
 	"password": "wachtwoord",
 	"password_security": "wachtwoord",
 	"processor": "verwerker",
@@ -26,6 +26,6 @@
 	"upload": "uploaden",
 	"user_interface": "gebruikersinterface",
 	"virus_computer": "virus",
-	"wifi": "wifin",
-	"wifi_connection": "wifin"
+	"wifi": "wifi",
+	"wifi_connection": "wifi"
 }

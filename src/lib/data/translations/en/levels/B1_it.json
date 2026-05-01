@@ -1,10 +1,10 @@
 ﻿{
-	"app_store": "app",
+	"app_store": "app store",
 	"cable": "cable",
-	"cable_tv": "cable",
+	"cable_tv": "cable TV",
 	"chip": "chip",
 	"chip_computer": "chip",
-	"data_privacy": "data",
+	"data_privacy": "data privacy",
 	"database": "database",
 	"database_management": "database",
 	"download_file": "download",
@@ -24,7 +24,7 @@
 	"server_computer": "server",
 	"software_program": "software",
 	"upload": "upload",
-	"user_interface": "user",
+	"user_interface": "user interface",
 	"virus_computer": "virus",
 	"wifi": "wifi",
 	"wifi_connection": "wifi"

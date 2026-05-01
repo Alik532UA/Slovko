@@ -1,4 +1,6 @@
 ﻿{
+	"accommodation": "κατάλυμα",
+	"accommodation_living": "κατάλυμα",
 	"arrival": "άφιξη",
 	"backpack": "σακίδιο",
 	"baggage": "αποσκευές",
@@ -8,6 +10,7 @@
 	"cabin_plane": "θάλαμος επιβατών",
 	"cabin_ship": "καμπίνα",
 	"canal": "κανάλι",
+	"customs": "τελωνείο",
 	"departure": "αναχώρηση",
 	"emergency": "έκτακτη ανάγκη",
 	"expedition": "αποστολή",
@@ -24,5 +27,5 @@
 	"terminal": "τερματικός σταθμός",
 	"timetable": "χρονοδιάγραμμα",
 	"visa": "βίζα",
-	"voyage": "ταξίδι"
+	"voyage": "θαλάσσιο ταξίδι"
 }
