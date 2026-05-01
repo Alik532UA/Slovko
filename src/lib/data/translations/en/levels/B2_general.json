@@ -190,8 +190,6 @@
 	"augment_income": "augment",
 	"authenticate_user": "authenticate",
 	"authorize_access": "authorize",
-	"back_body": "back",
-	"back_direction": "back",
 	"banish_exile": "banish",
 	"bear": "bear",
 	"before_position": "before",

@@ -13,12 +13,12 @@
 	"sea": "morze",
 	"season": "pora roku",
 	"snow": "śnieg",
-	"spring": "wiosna",
 	"spring_season": "wiosna",
 	"star": "gwiazda",
 	"summer": "lato",
 	"sun": "słońce",
 	"tree": "drzewo",
 	"wind": "wiatr",
-	"winter": "zima"
+	"winter": "zima",
+	"sky": "niebo"
 }
