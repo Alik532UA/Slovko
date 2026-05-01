@@ -224,17 +224,26 @@ export class GameDataService {
 											const lvl = await loadLevel(l);
 											const multiplier = multipliers[levelId] || 1;
 											lvl.words.forEach((w) => {
+												// Фільтруємо слова без перекладу в будь-якій з мов
+												if (!sourceTranslations[w] || !targetTranslations[w]) {
+													logService.warn("data", `Word "${w}" from level ${l} missing translation. Skipping.`);
+													return;
+												}
 												wordLevels[w] = l;
 												for (let i = 0; i < multiplier; i++) {
 													words.push(w);
 												}
-											});
-										}),
+											});										}),
 									);
 								} else {
 									const lvl = await loadLevel(levelId as CEFRLevel);
 									const multiplier = multipliers[levelId] || 1;
 									lvl.words.forEach((w) => {
+										// Фільтруємо слова без перекладу в будь-якій з мов
+										if (!sourceTranslations[w] || !targetTranslations[w]) {
+											logService.warn("data", `Word "${w}" from level ${levelId} missing translation. Skipping.`);
+											return;
+										}
 										wordLevels[w] = levelId;
 										for (let i = 0; i < multiplier; i++) {
 											words.push(w);
@@ -249,6 +258,11 @@ export class GameDataService {
 								const topic = await loadTopic(id);
 								topic.words.forEach((w) => {
 									if (!wordLevels[w]) {
+										// Фільтруємо слова без перекладу
+										if (!sourceTranslations[w] || !targetTranslations[w]) {
+											logService.warn("data", `Word "${w}" from topic ${id} missing translation. Skipping.`);
+											return;
+										}
 										wordLevels[w] = id;
 										words.push(w);
 									}
@@ -261,6 +275,11 @@ export class GameDataService {
 								const phraseLevel = await loadPhrasesLevel(id as CEFRLevel);
 								const multiplier = multipliers[id] || 1;
 								phraseLevel.words.forEach((w) => {
+									// Фільтруємо слова без перекладу
+									if (!sourceTranslations[w] || !targetTranslations[w]) {
+										logService.warn("data", `Phrase "${w}" missing translation. Skipping.`);
+										return;
+									}
 									wordLevels[w] = id;
 									for (let i = 0; i < multiplier; i++) {
 										words.push(w);
