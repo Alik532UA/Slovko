@@ -1,10 +1,13 @@
-﻿{
+{
 	"bush": "struik",
 	"cave": "grot",
+	"cliff": "klif",
 	"desert": "woestijn",
 	"earth_planet": "aarde",
+	"environment_nature": "milieu",
 	"flood": "overstroming",
 	"fog": "mist",
+	"global_warming": "opwarming van de aarde",
 	"jungle": "jungle",
 	"lightning": "bliksem",
 	"rainbow": "regenboog",

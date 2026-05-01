@@ -1,10 +1,13 @@
-﻿{
+{
 	"bush": "кущ",
 	"cave": "печера",
+	"cliff": "скеля",
 	"desert": "пустеля",
 	"earth_planet": "земля",
+	"environment_nature": "навколишнє середовище",
 	"flood": "повінь",
 	"fog": "туман",
+	"global_warming": "глобальне потепління",
 	"jungle": "джунглі",
 	"lightning": "блискавка",
 	"rainbow": "веселка",

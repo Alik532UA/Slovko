@@ -1,10 +1,13 @@
-﻿{
+{
 	"bush": "bush",
 	"cave": "cave",
+	"cliff": "cliff",
 	"desert": "desert",
 	"earth_planet": "earth",
+	"environment_nature": "environment",
 	"flood": "flood",
 	"fog": "fog",
+	"global_warming": "global warming",
 	"jungle": "jungle",
 	"lightning": "lightning",
 	"rainbow": "rainbow",

@@ -1,15 +1,18 @@
-﻿{
+{
 	"bush": "θάμνος",
 	"cave": "σπηλιά",
+	"cliff": "γκρεμός",
 	"desert": "έρημος",
 	"earth_planet": "Γη",
+	"environment_nature": "περιβάλλον",
 	"flood": "πλημμύρα",
 	"fog": "ομίχλη",
+	"global_warming": "υπερθέρμανση του πλανήτη",
 	"jungle": "ζούγκλα",
 	"lightning": "αστραπή",
 	"rainbow": "ουράνιο τόξο",
 	"root": "ρίζα",
 	"sand": "άμμος",
-	"scenery": "θέα",
+	"scenery": "τοπίο",
 	"seed": "σπόρος"
 }

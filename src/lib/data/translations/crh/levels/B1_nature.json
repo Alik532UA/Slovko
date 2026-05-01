@@ -1,11 +1,14 @@
-﻿{
+{
 	"bush": "terekçik",
 	"cave": "qoba",
+	"cliff": "yalıyar",
 	"desert": "çöl",
 	"earth_planet": "Dünya",
+	"environment_nature": "etraf müit",
 	"flood": "suv basuv",
 	"fog": "tuman",
-	"jungle": "orman",
+	"global_warming": "küresel isiv",
+	"jungle": "cuñgle",
 	"lightning": "yıldırım",
 	"rainbow": "ebemquşağı",
 	"root": "tamır",
