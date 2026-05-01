@@ -14,7 +14,11 @@ function scanDir(dir, lang) {
             scanDir(fullPath, lang);
         } else if (item.endsWith(".json") && !item.includes("semantics.json") && !item.includes("tenses")) {
             try {
-                const content = JSON.parse(fs.readFileSync(fullPath, "utf8"));
+                let contentStr = fs.readFileSync(fullPath, "utf8");
+                if (contentStr.charCodeAt(0) === 0xFEFF) {
+                    contentStr = contentStr.slice(1);
+                }
+                const content = JSON.parse(contentStr);
                 for (const [key, value] of Object.entries(content)) {
                     if (key === "id" || key === "version") continue;
                     if (!translationMap[key]) translationMap[key] = {};
@@ -43,6 +47,7 @@ for (const [key, translations] of Object.entries(translationMap)) {
         const suffix = key.split("_").pop();
         for (const [lang, value] of Object.entries(translations)) {
             if (lang === "en") continue;
+            if (typeof value !== 'string') continue;
             // Перевірка чи переклад містить контекст (напр. "апельсин (фрукт)")
             if (value.includes("(") || value.includes("（")) {
                 issues.push(`[${lang}] Порушення правила суфікса: містить пояснення в дужках.`);
@@ -51,14 +56,14 @@ for (const [key, translations] of Object.entries(translationMap)) {
     }
 
     // 2. Семантична неузгодженість (Bridge Shadow)
-    // Шукаємо ключі без суфіксів, які в різних мовах мають занадто різні за змістом переклади
-    // Це складно автоматизувати на 100%, але ми можемо помітити "фразіологічність"
-    const values = Object.values(translations);
-    const hasLongTranslation = values.some(v => v.split(" ").length > 3);
-    const hasShortTranslation = values.some(v => v.split(" ").length === 1);
-    
-    if (hasLongTranslation && hasShortTranslation && !key.includes("_")) {
-        issues.push("Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою.");
+    const values = Object.values(translations).filter(v => typeof v === 'string');
+    if (values.length > 0) {
+        const hasLongTranslation = values.some(v => v.split(" ").length > 3);
+        const hasShortTranslation = values.some(v => v.split(" ").length === 1);
+        
+        if (hasLongTranslation && hasShortTranslation && !key.includes("_")) {
+            issues.push("Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою.");
+        }
     }
 
     // 3. Відсутність у Any-to-Any системі
