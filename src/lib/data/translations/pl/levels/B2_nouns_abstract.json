@@ -1,4 +1,4 @@
-{
+﻿{
 	"absence": "nieobecność",
 	"abundance": "obfitość",
 	"account_for": "wyjaśniać / stanowić",
@@ -112,5 +112,7 @@
 	"sponsorship": "sponsoring",
 	"indication": "wskazanie",
 	"implication": "konsekwencja",
-	"confusion": "zamieszanie"
+	"confusion": "zamieszanie",
+	"accent": "akcent",
+	"acceptance": "akceptacja / przyjęcie"
 }

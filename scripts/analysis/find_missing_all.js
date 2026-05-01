@@ -15,7 +15,9 @@ levels.forEach((level) => {
 	const wordsFile = path.join(baseDir, "words/levels", `${level}.json`);
 	if (!fs.existsSync(wordsFile)) return;
 
-	const wordsData = JSON.parse(fs.readFileSync(wordsFile, "utf8"));
+	const rawW = fs.readFileSync(wordsFile, "utf8");
+	const cleanW = rawW.charCodeAt(0) === 0xfeff ? rawW.slice(1) : rawW;
+	const wordsData = JSON.parse(cleanW);
 	const allWords = new Set(wordsData.words);
 
 	report[level] = {};
@@ -31,7 +33,9 @@ levels.forEach((level) => {
 		let missing = [];
 
 		if (fs.existsSync(transPath)) {
-			const transData = JSON.parse(fs.readFileSync(transPath, "utf8"));
+		const raw = fs.readFileSync(transPath, "utf8");
+			const clean = raw.charCodeAt(0) === 0xfeff ? raw.slice(1) : raw;
+			const transData = JSON.parse(clean);
 			const transKeys = new Set(Object.keys(transData));
 
 			allWords.forEach((word) => {
@@ -53,7 +57,9 @@ levels.forEach((level) => {
 levels.forEach((level) => {
 	const wordsFile = path.join(baseDir, "words/levels", `${level}.json`);
 	if (!fs.existsSync(wordsFile)) return;
-	const wordsData = JSON.parse(fs.readFileSync(wordsFile, "utf8"));
+	const rawW = fs.readFileSync(wordsFile, "utf8");
+	const cleanW = rawW.charCodeAt(0) === 0xfeff ? rawW.slice(1) : rawW;
+	const wordsData = JSON.parse(cleanW);
 	const allWords = new Set(wordsData.words);
 
 	const transFile = path.join(
@@ -63,7 +69,9 @@ levels.forEach((level) => {
 	);
 	let missing = [];
 	if (fs.existsSync(transFile)) {
-		const transData = JSON.parse(fs.readFileSync(transFile, "utf8"));
+		const rawT = fs.readFileSync(transFile, "utf8");
+		const cleanT = rawT.charCodeAt(0) === 0xfeff ? rawT.slice(1) : rawT;
+		const transData = JSON.parse(cleanT);
 		const transKeys = new Set(Object.keys(transData));
 		allWords.forEach((word) => {
 			if (!transKeys.has(word)) missing.push(word);

@@ -1,4 +1,4 @@
-{
+﻿{
 	"accelerate": "beschleunigen",
 	"accumulate": "ansammeln",
 	"acknowledge_recognize": "anerkennen",
@@ -31,5 +31,6 @@
 	"serve_general": "dienen",
 	"simulate_imitate": "simulieren",
 	"align": "ausrichten",
-	"scan_look": "überfliegen"
+	"scan_look": "überfliegen",
+	"abolish": "abschaffen"
 }

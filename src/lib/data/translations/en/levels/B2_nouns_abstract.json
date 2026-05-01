@@ -1,11 +1,7 @@
-{
-	"ability": "ability",
+﻿{
 	"abortion": "abortion",
 	"absence": "absence",
 	"abuse": "abuse",
-	"accent": "accent",
-	"acceptance": "acceptance",
-	"access": "access",
 	"abundance": "abundance",
 	"account_for": "account for",
 	"account_for_verb": "account for",
@@ -118,5 +114,9 @@
 	"sponsorship": "sponsorship",
 	"indication": "indication",
 	"implication": "implication",
-	"confusion": "confusion"
+	"confusion": "confusion",
+	"accent": "accent",
+	"acceptance": "acceptance",
+	"ability": "ability",
+	"access": "access"
 }

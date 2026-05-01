@@ -1,4 +1,4 @@
-{
+﻿{
 	"accurate": "/ˈækjərət/",
 	"advertise": "/ˈædvətaɪz/",
 	"apologize": "/əˈpɒlədʒaɪz/",
@@ -113,5 +113,7 @@
 	"warn_caution": "/wɔːrn/",
 	"wave_verb": "/weɪv/",
 	"work_out": "/wɜːrk aʊt/",
-	"lead_verb": "/liːd/"
+	"lead_verb": "/liːd/",
+	"abandon": "/əˈbændən/",
+	"absorb": "/əbˈzɔːb/"
 }

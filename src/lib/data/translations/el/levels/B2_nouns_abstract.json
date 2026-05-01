@@ -1,4 +1,4 @@
-{
+﻿{
 	"absence": "απουσία",
 	"abundance": "αφθονία",
 	"account_for": "αιτιολογώ",
@@ -112,5 +112,7 @@
 	"sponsorship": "χορηγία",
 	"indication": "ένδειξη",
 	"implication": "επίπτωση",
-	"confusion": "σύγχυση"
+	"confusion": "σύγχυση",
+	"accent": "προφορά",
+	"acceptance": "αποδοχή"
 }

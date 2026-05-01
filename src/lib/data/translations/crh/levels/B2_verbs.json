@@ -1,4 +1,4 @@
-{
+﻿{
 	"accelerate": "tezleştirmek",
 	"accumulate": "toplamaq",
 	"acknowledge_recognize": "tanımaq",
@@ -31,5 +31,6 @@
 	"serve_general": "hızmet etmek",
 	"simulate_imitate": "benzetmek",
 	"align": "tüzeltmek",
-	"scan_look": "közden keçirmek"
+	"scan_look": "közden keçirmek",
+	"abolish": "bitirmek"
 }

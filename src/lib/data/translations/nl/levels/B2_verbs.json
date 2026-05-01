@@ -1,4 +1,4 @@
-{
+﻿{
 	"accelerate": "versnellen",
 	"accumulate": "accumuleren",
 	"acknowledge_recognize": "erkennen",
@@ -33,5 +33,6 @@
 	"serve_general": "dienen als",
 	"simulate_imitate": "simuleren",
 	"align": "uitlijnen",
-	"scan_look": "vluchtig bekijken"
+	"scan_look": "vluchtig bekijken",
+	"abolish": "afschaffen"
 }

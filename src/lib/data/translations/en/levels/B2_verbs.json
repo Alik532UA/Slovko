@@ -1,8 +1,4 @@
-{
-	"abandon": "abandon",
-	"abolish": "abolish",
-	"absorb": "absorb",
-	"accept": "accept",
+﻿{
 	"accommodate": "accommodate",
 	"accompany": "accompany",
 	"accomplish": "accomplish",
@@ -42,5 +38,9 @@
 	"serve_general": "serve",
 	"simulate_imitate": "simulate",
 	"align": "align",
-	"scan_look": "scan"
+	"scan_look": "scan",
+	"abolish": "abolish",
+	"abandon": "abandon",
+	"absorb": "absorb",
+	"accept": "accept"
 }

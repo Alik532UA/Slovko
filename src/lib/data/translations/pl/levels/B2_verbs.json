@@ -1,4 +1,4 @@
-{
+﻿{
 	"accelerate": "przyspieszać",
 	"accumulate": "gromadzić",
 	"acknowledge_recognize": "uznać",
@@ -31,5 +31,6 @@
 	"serve_general": "służyć",
 	"simulate_imitate": "symulować / imitować",
 	"align": "wyrównać",
-	"scan_look": "skanować wzrokiem"
+	"scan_look": "skanować wzrokiem",
+	"abolish": "znosić"
 }

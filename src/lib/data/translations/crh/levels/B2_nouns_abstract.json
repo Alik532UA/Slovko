@@ -1,4 +1,4 @@
-{
+﻿{
 	"absence": "yoqluq",
 	"abundance": "bolluq",
 	"account_for": "izaat etmek",
@@ -112,5 +112,7 @@
 	"sponsorship": "sponsorlıq",
 	"indication": "köstergiç",
 	"implication": "netice",
-	"confusion": "qarışıqlıq"
+	"confusion": "qarışıqlıq",
+	"accent": "aksent",
+	"acceptance": "qabul etüv"
 }

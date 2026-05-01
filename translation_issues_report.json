@@ -1,0 +1,2459 @@
+[
+  {
+    "file": "src\\lib\\data\\translations\\uk\\levels\\A2_travel.json",
+    "lang": "uk",
+    "key": "station_2",
+    "value": "станція",
+    "issues": [
+      "Non-semantic key (numeric suffix)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\uk\\levels\\C2_general.json",
+    "lang": "uk",
+    "key": "apotheosis_2",
+    "value": "ідеал",
+    "enValue": "apotheosis",
+    "issues": [
+      "Non-semantic key (numeric suffix)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A1_general.json",
+    "lang": "crh",
+    "key": "park",
+    "value": "park",
+    "enValue": "park",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A1_general.json",
+    "lang": "crh",
+    "key": "radio",
+    "value": "radio",
+    "enValue": "radio",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A1_general.json",
+    "lang": "crh",
+    "key": "t_shirt",
+    "value": "t-shirt",
+    "enValue": "t-shirt",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A1_numbers.json",
+    "lang": "crh",
+    "key": "million",
+    "value": "million",
+    "enValue": "million",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_animals.json",
+    "lang": "crh",
+    "key": "zebra",
+    "value": "zebra",
+    "enValue": "zebra",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_animals.json",
+    "lang": "crh",
+    "key": "panda",
+    "value": "panda",
+    "enValue": "panda",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_animals.json",
+    "lang": "crh",
+    "key": "koala",
+    "value": "koala",
+    "enValue": "koala",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_cars.json",
+    "lang": "crh",
+    "key": "pedal",
+    "value": "pedal",
+    "enValue": "pedal",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_cars.json",
+    "lang": "crh",
+    "key": "radiator",
+    "value": "radiator",
+    "enValue": "radiator",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_cars.json",
+    "lang": "crh",
+    "key": "piston",
+    "value": "piston",
+    "enValue": "piston",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_education_work.json",
+    "lang": "crh",
+    "key": "printer_device",
+    "value": "printer",
+    "enValue": "printer",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_food.json",
+    "lang": "crh",
+    "key": "pizza",
+    "value": "pizza",
+    "enValue": "pizza",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_food.json",
+    "lang": "crh",
+    "key": "burger",
+    "value": "burger",
+    "enValue": "burger",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_general.json",
+    "lang": "crh",
+    "key": "festival",
+    "value": "festival",
+    "enValue": "festival",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_general.json",
+    "lang": "crh",
+    "key": "holiday_1",
+    "value": "bayram",
+    "issues": [
+      "Non-semantic key (numeric suffix)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_general.json",
+    "lang": "crh",
+    "key": "metal",
+    "value": "metal",
+    "enValue": "metal",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_general.json",
+    "lang": "crh",
+    "key": "model",
+    "value": "model",
+    "enValue": "model",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_general.json",
+    "lang": "crh",
+    "key": "normal",
+    "value": "normal",
+    "enValue": "normal",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_general.json",
+    "lang": "crh",
+    "key": "opera",
+    "value": "opera",
+    "enValue": "opera",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_general.json",
+    "lang": "crh",
+    "key": "pilot",
+    "value": "pilot",
+    "enValue": "pilot",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_general.json",
+    "lang": "crh",
+    "key": "plan",
+    "value": "plan",
+    "enValue": "plan",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_general.json",
+    "lang": "crh",
+    "key": "set",
+    "value": "set",
+    "enValue": "set",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_general.json",
+    "lang": "crh",
+    "key": "sport",
+    "value": "sport",
+    "enValue": "sport",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_general.json",
+    "lang": "crh",
+    "key": "station_2",
+    "value": "stantsiya",
+    "enValue": "station",
+    "issues": [
+      "Non-semantic key (numeric suffix)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_general.json",
+    "lang": "crh",
+    "key": "supermarket",
+    "value": "supermarket",
+    "enValue": "supermarket",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_general.json",
+    "lang": "crh",
+    "key": "tennis",
+    "value": "tennis",
+    "enValue": "tennis",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_home.json",
+    "lang": "crh",
+    "key": "sofa",
+    "value": "sofa",
+    "enValue": "sofa",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_it.json",
+    "lang": "crh",
+    "key": "internet",
+    "value": "internet",
+    "enValue": "internet",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_it.json",
+    "lang": "crh",
+    "key": "modem",
+    "value": "modem",
+    "enValue": "modem",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_it.json",
+    "lang": "crh",
+    "key": "usb",
+    "value": "usb",
+    "enValue": "usb",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\A2_it.json",
+    "lang": "crh",
+    "key": "disk",
+    "value": "disk",
+    "enValue": "disk",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\B1_adjectives.json",
+    "lang": "crh",
+    "key": "protest",
+    "value": "protest",
+    "enValue": "protest",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\B1_adjectives.json",
+    "lang": "crh",
+    "key": "protest_event",
+    "value": "protest",
+    "enValue": "protest",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\B1_education_work.json",
+    "lang": "crh",
+    "key": "professor",
+    "value": "professor",
+    "enValue": "professor",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\B1_it.json",
+    "lang": "crh",
+    "key": "video",
+    "value": "video",
+    "enValue": "video",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\B1_it.json",
+    "lang": "crh",
+    "key": "wifi_connection",
+    "value": "wifi",
+    "enValue": "wifi",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\B1_nouns_concrete.json",
+    "lang": "crh",
+    "key": "bet",
+    "value": "bet",
+    "enValue": "bet",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\B1_nouns_concrete.json",
+    "lang": "crh",
+    "key": "risk",
+    "value": "risk",
+    "enValue": "risk",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\B1_nouns_concrete.json",
+    "lang": "crh",
+    "key": "set_collection",
+    "value": "set",
+    "enValue": "set",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\B1_travel.json",
+    "lang": "crh",
+    "key": "terminal",
+    "value": "terminal",
+    "enValue": "terminal",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\B2_adjectives.json",
+    "lang": "crh",
+    "key": "agent",
+    "value": "agent",
+    "enValue": "agent",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\B2_nouns_concrete.json",
+    "lang": "crh",
+    "key": "drama",
+    "value": "drama",
+    "enValue": "drama",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\B2_nouns_concrete.json",
+    "lang": "crh",
+    "key": "arena",
+    "value": "arena",
+    "enValue": "arena",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\C2_general.json",
+    "lang": "crh",
+    "key": "apotheosis_2",
+    "value": "ideal",
+    "enValue": "apotheosis",
+    "issues": [
+      "Non-semantic key (numeric suffix)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\crh\\levels\\C2_general.json",
+    "lang": "crh",
+    "key": "alibi",
+    "value": "alibi",
+    "enValue": "alibi",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_adjectives.json",
+    "lang": "nl",
+    "key": "warm",
+    "value": "warm",
+    "enValue": "warm",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_adverbs_prepositions.json",
+    "lang": "nl",
+    "key": "in",
+    "value": "in",
+    "enValue": "in",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_animals.json",
+    "lang": "nl",
+    "key": "wolf",
+    "value": "wolf",
+    "enValue": "wolf",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_body_health.json",
+    "lang": "nl",
+    "key": "hand",
+    "value": "hand",
+    "enValue": "hand",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_body_health.json",
+    "lang": "nl",
+    "key": "arm",
+    "value": "arm",
+    "enValue": "arm",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_body_health.json",
+    "lang": "nl",
+    "key": "arm_body",
+    "value": "arm",
+    "enValue": "arm",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_cars.json",
+    "lang": "nl",
+    "key": "bus",
+    "value": "bus",
+    "enValue": "bus",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_cars.json",
+    "lang": "nl",
+    "key": "taxi",
+    "value": "taxi",
+    "enValue": "taxi",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_education_work.json",
+    "lang": "nl",
+    "key": "student",
+    "value": "student",
+    "enValue": "student",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_food.json",
+    "lang": "nl",
+    "key": "water",
+    "value": "water",
+    "enValue": "water",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_food.json",
+    "lang": "nl",
+    "key": "fruit",
+    "value": "fruit",
+    "enValue": "fruit",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_general.json",
+    "lang": "nl",
+    "key": "lunch",
+    "value": "lunch",
+    "enValue": "lunch",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_general.json",
+    "lang": "nl",
+    "key": "menu",
+    "value": "menu",
+    "enValue": "menu",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_general.json",
+    "lang": "nl",
+    "key": "open_adj",
+    "value": "open",
+    "enValue": "open",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_general.json",
+    "lang": "nl",
+    "key": "pen",
+    "value": "pen",
+    "enValue": "pen",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_general.json",
+    "lang": "nl",
+    "key": "radio",
+    "value": "radio",
+    "enValue": "radio",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_general.json",
+    "lang": "nl",
+    "key": "sorry",
+    "value": "sorry",
+    "enValue": "sorry",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_general.json",
+    "lang": "nl",
+    "key": "station",
+    "value": "station",
+    "enValue": "station",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_home.json",
+    "lang": "nl",
+    "key": "computer",
+    "value": "computer",
+    "enValue": "computer",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_nature.json",
+    "lang": "nl",
+    "key": "wind",
+    "value": "wind",
+    "enValue": "wind",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_nature.json",
+    "lang": "nl",
+    "key": "winter",
+    "value": "winter",
+    "enValue": "winter",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_pronouns_people.json",
+    "lang": "nl",
+    "key": "man",
+    "value": "man",
+    "enValue": "man",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_time.json",
+    "lang": "nl",
+    "key": "later",
+    "value": "later",
+    "enValue": "later",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_time.json",
+    "lang": "nl",
+    "key": "week",
+    "value": "week",
+    "enValue": "week",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_time.json",
+    "lang": "nl",
+    "key": "weekend",
+    "value": "weekend",
+    "enValue": "weekend",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A1_travel.json",
+    "lang": "nl",
+    "key": "hotel",
+    "value": "hotel",
+    "enValue": "hotel",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_abstract_concepts.json",
+    "lang": "nl",
+    "key": "detail",
+    "value": "detail",
+    "enValue": "detail",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_abstract_concepts.json",
+    "lang": "nl",
+    "key": "detail_info",
+    "value": "detail",
+    "enValue": "detail",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_animals.json",
+    "lang": "nl",
+    "key": "octopus",
+    "value": "octopus",
+    "enValue": "octopus",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_animals.json",
+    "lang": "nl",
+    "key": "zebra",
+    "value": "zebra",
+    "enValue": "zebra",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_animals.json",
+    "lang": "nl",
+    "key": "panda",
+    "value": "panda",
+    "enValue": "panda",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_animals.json",
+    "lang": "nl",
+    "key": "rat",
+    "value": "rat",
+    "enValue": "rat",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_animals.json",
+    "lang": "nl",
+    "key": "worm",
+    "value": "worm",
+    "enValue": "worm",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_animals.json",
+    "lang": "nl",
+    "key": "walrus",
+    "value": "walrus",
+    "enValue": "walrus",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_cars.json",
+    "lang": "nl",
+    "key": "garage",
+    "value": "garage",
+    "enValue": "garage",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_cars.json",
+    "lang": "nl",
+    "key": "dashboard",
+    "value": "dashboard",
+    "enValue": "dashboard",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_cars.json",
+    "lang": "nl",
+    "key": "bumper",
+    "value": "bumper",
+    "enValue": "bumper",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_cars.json",
+    "lang": "nl",
+    "key": "radiator",
+    "value": "radiator",
+    "enValue": "radiator",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_education_work.json",
+    "lang": "nl",
+    "key": "test",
+    "value": "test",
+    "enValue": "test",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_education_work.json",
+    "lang": "nl",
+    "key": "diploma",
+    "value": "diploma",
+    "enValue": "diploma",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_education_work.json",
+    "lang": "nl",
+    "key": "printer_device",
+    "value": "printer",
+    "enValue": "printer",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_family_relationships.json",
+    "lang": "nl",
+    "key": "partner",
+    "value": "partner",
+    "enValue": "partner",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_food.json",
+    "lang": "nl",
+    "key": "pizza",
+    "value": "pizza",
+    "enValue": "pizza",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_food.json",
+    "lang": "nl",
+    "key": "ham",
+    "value": "ham",
+    "enValue": "ham",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_food.json",
+    "lang": "nl",
+    "key": "toast",
+    "value": "toast",
+    "enValue": "toast",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_food.json",
+    "lang": "nl",
+    "key": "jam_fruit",
+    "value": "jam",
+    "enValue": "jam",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_food.json",
+    "lang": "nl",
+    "key": "jam",
+    "value": "jam",
+    "enValue": "jam",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "baby",
+    "value": "baby",
+    "enValue": "baby",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "concert",
+    "value": "concert",
+    "enValue": "concert",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "fit",
+    "value": "fit",
+    "enValue": "fit",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "fit_healthy",
+    "value": "fit",
+    "enValue": "fit",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "gas",
+    "value": "gas",
+    "enValue": "gas",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "gas_fuel",
+    "value": "gas",
+    "enValue": "gas",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "gas_substance",
+    "value": "gas",
+    "enValue": "gas",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "holiday_1",
+    "value": "vakantie",
+    "issues": [
+      "Non-semantic key (numeric suffix)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "instrument",
+    "value": "instrument",
+    "enValue": "instrument",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "intelligent",
+    "value": "intelligent",
+    "enValue": "intelligent",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "land",
+    "value": "land",
+    "enValue": "land",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "lift_elevator",
+    "value": "lift",
+    "enValue": "lift",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "machine",
+    "value": "machine",
+    "enValue": "machine",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "model",
+    "value": "model",
+    "enValue": "model",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "museum",
+    "value": "museum",
+    "enValue": "museum",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "object",
+    "value": "object",
+    "enValue": "object",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "opera",
+    "value": "opera",
+    "enValue": "opera",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "over",
+    "value": "over",
+    "enValue": "over",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "perfect",
+    "value": "perfect",
+    "enValue": "perfect",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "plan",
+    "value": "plan",
+    "enValue": "plan",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "ring",
+    "value": "ring",
+    "enValue": "ring",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "ring_jewel",
+    "value": "ring",
+    "enValue": "ring",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "route",
+    "value": "route",
+    "enValue": "route",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "set",
+    "value": "set",
+    "enValue": "set",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "sport",
+    "value": "sport",
+    "enValue": "sport",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "station_2",
+    "value": "station",
+    "enValue": "station",
+    "issues": [
+      "Non-semantic key (numeric suffix)",
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "station_bahnhof",
+    "value": "station",
+    "enValue": "station",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "team",
+    "value": "team",
+    "enValue": "team",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "tennis",
+    "value": "tennis",
+    "enValue": "tennis",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_general.json",
+    "lang": "nl",
+    "key": "wild",
+    "value": "wild",
+    "enValue": "wild",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_home.json",
+    "lang": "nl",
+    "key": "lamp",
+    "value": "lamp",
+    "enValue": "lamp",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_home.json",
+    "lang": "nl",
+    "key": "oven",
+    "value": "oven",
+    "enValue": "oven",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_home.json",
+    "lang": "nl",
+    "key": "plant",
+    "value": "plant",
+    "enValue": "plant",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_it.json",
+    "lang": "nl",
+    "key": "internet",
+    "value": "internet",
+    "enValue": "internet",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_it.json",
+    "lang": "nl",
+    "key": "camera",
+    "value": "camera",
+    "enValue": "camera",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_it.json",
+    "lang": "nl",
+    "key": "laptop",
+    "value": "laptop",
+    "enValue": "laptop",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_it.json",
+    "lang": "nl",
+    "key": "bluetooth",
+    "value": "bluetooth",
+    "enValue": "bluetooth",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_it.json",
+    "lang": "nl",
+    "key": "website",
+    "value": "website",
+    "enValue": "website",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_it.json",
+    "lang": "nl",
+    "key": "browser",
+    "value": "browser",
+    "enValue": "browser",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_it.json",
+    "lang": "nl",
+    "key": "login",
+    "value": "login",
+    "enValue": "login",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_it.json",
+    "lang": "nl",
+    "key": "audio",
+    "value": "audio",
+    "enValue": "audio",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_it.json",
+    "lang": "nl",
+    "key": "router",
+    "value": "router",
+    "enValue": "router",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_it.json",
+    "lang": "nl",
+    "key": "modem",
+    "value": "modem",
+    "enValue": "modem",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_it.json",
+    "lang": "nl",
+    "key": "usb",
+    "value": "usb",
+    "enValue": "usb",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_it.json",
+    "lang": "nl",
+    "key": "drive_it",
+    "value": "drive",
+    "enValue": "drive",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_nature.json",
+    "lang": "nl",
+    "key": "storm",
+    "value": "storm",
+    "enValue": "storm",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_travel.json",
+    "lang": "nl",
+    "key": "station_stop",
+    "value": "station",
+    "enValue": "station",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\A2_travel.json",
+    "lang": "nl",
+    "key": "station_transport",
+    "value": "station",
+    "enValue": "station",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_abstract_concepts.json",
+    "lang": "nl",
+    "key": "horror",
+    "value": "horror",
+    "enValue": "horror",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_abstract_concepts.json",
+    "lang": "nl",
+    "key": "humor",
+    "value": "humor",
+    "enValue": "humor",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_abstract_concepts.json",
+    "lang": "nl",
+    "key": "talent",
+    "value": "talent",
+    "enValue": "talent",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_abstract_concepts.json",
+    "lang": "nl",
+    "key": "effect_result",
+    "value": "effect",
+    "enValue": "effect",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_abstract_concepts.json",
+    "lang": "nl",
+    "key": "effect",
+    "value": "effect",
+    "enValue": "effect",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_adjectives.json",
+    "lang": "nl",
+    "key": "argument",
+    "value": "argument",
+    "enValue": "argument",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_adjectives.json",
+    "lang": "nl",
+    "key": "argument_reason",
+    "value": "argument",
+    "enValue": "argument",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_adjectives.json",
+    "lang": "nl",
+    "key": "contract",
+    "value": "contract",
+    "enValue": "contract",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_adjectives.json",
+    "lang": "nl",
+    "key": "contract_agreement",
+    "value": "contract",
+    "enValue": "contract",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_adjectives.json",
+    "lang": "nl",
+    "key": "crash",
+    "value": "crash",
+    "enValue": "crash",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_adjectives.json",
+    "lang": "nl",
+    "key": "crash_accident",
+    "value": "crash",
+    "enValue": "crash",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_adjectives.json",
+    "lang": "nl",
+    "key": "gadget_electronic",
+    "value": "gadget",
+    "enValue": "gadget",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_home.json",
+    "lang": "nl",
+    "key": "tv",
+    "value": "tv",
+    "enValue": "tv",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_it.json",
+    "lang": "nl",
+    "key": "chip",
+    "value": "chip",
+    "enValue": "chip",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_it.json",
+    "lang": "nl",
+    "key": "chip_computer",
+    "value": "chip",
+    "enValue": "chip",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_it.json",
+    "lang": "nl",
+    "key": "code",
+    "value": "code",
+    "enValue": "code",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_it.json",
+    "lang": "nl",
+    "key": "database",
+    "value": "database",
+    "enValue": "database",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_it.json",
+    "lang": "nl",
+    "key": "document",
+    "value": "document",
+    "enValue": "document",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_it.json",
+    "lang": "nl",
+    "key": "hardware",
+    "value": "hardware",
+    "enValue": "hardware",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_it.json",
+    "lang": "nl",
+    "key": "hardware_computer",
+    "value": "hardware",
+    "enValue": "hardware",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_it.json",
+    "lang": "nl",
+    "key": "server",
+    "value": "server",
+    "enValue": "server",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_it.json",
+    "lang": "nl",
+    "key": "software",
+    "value": "software",
+    "enValue": "software",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_it.json",
+    "lang": "nl",
+    "key": "software_program",
+    "value": "software",
+    "enValue": "software",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_it.json",
+    "lang": "nl",
+    "key": "video",
+    "value": "video",
+    "enValue": "video",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_it.json",
+    "lang": "nl",
+    "key": "virus",
+    "value": "virus",
+    "enValue": "virus",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nature.json",
+    "lang": "nl",
+    "key": "jungle",
+    "value": "jungle",
+    "enValue": "jungle",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_abstract.json",
+    "lang": "nl",
+    "key": "conflict",
+    "value": "conflict",
+    "enValue": "conflict",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_abstract.json",
+    "lang": "nl",
+    "key": "experiment_science",
+    "value": "experiment",
+    "enValue": "experiment",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_abstract.json",
+    "lang": "nl",
+    "key": "type",
+    "value": "type",
+    "enValue": "type",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "architect",
+    "value": "architect",
+    "enValue": "architect",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "bitter",
+    "value": "bitter",
+    "enValue": "bitter",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "blind",
+    "value": "blind",
+    "enValue": "blind",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "coach",
+    "value": "coach",
+    "enValue": "coach",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "college",
+    "value": "college",
+    "enValue": "college",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "complex",
+    "value": "complex",
+    "enValue": "complex",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "concept",
+    "value": "concept",
+    "enValue": "concept",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "context",
+    "value": "context",
+    "enValue": "context",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "contrast",
+    "value": "contrast",
+    "enValue": "contrast",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "direct",
+    "value": "direct",
+    "enValue": "direct",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "direct_adj",
+    "value": "direct",
+    "enValue": "direct",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "link_website",
+    "value": "link",
+    "enValue": "link",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "machine_car",
+    "value": "machine",
+    "enValue": "machine",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "machine_mechanism",
+    "value": "machine",
+    "enValue": "machine",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "marketing_strategy",
+    "value": "marketing",
+    "enValue": "marketing",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "media",
+    "value": "media",
+    "enValue": "media",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "mix_noun",
+    "value": "mix",
+    "enValue": "mix",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "object_noun",
+    "value": "object",
+    "enValue": "object",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "plant_botany",
+    "value": "plant",
+    "enValue": "plant",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "product",
+    "value": "product",
+    "enValue": "product",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "senior",
+    "value": "senior",
+    "enValue": "senior",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "set_collection",
+    "value": "set",
+    "enValue": "set",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "start_noun",
+    "value": "start",
+    "enValue": "start",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "volume",
+    "value": "volume",
+    "enValue": "volume",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_nouns_concrete.json",
+    "lang": "nl",
+    "key": "volume_sound",
+    "value": "volume",
+    "enValue": "volume",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_society_law.json",
+    "lang": "nl",
+    "key": "president",
+    "value": "president",
+    "enValue": "president",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_travel.json",
+    "lang": "nl",
+    "key": "hostel",
+    "value": "hostel",
+    "enValue": "hostel",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_travel.json",
+    "lang": "nl",
+    "key": "souvenir",
+    "value": "souvenir",
+    "enValue": "souvenir",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_travel.json",
+    "lang": "nl",
+    "key": "terminal",
+    "value": "terminal",
+    "enValue": "terminal",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_travel.json",
+    "lang": "nl",
+    "key": "brochure",
+    "value": "brochure",
+    "enValue": "brochure",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_travel.json",
+    "lang": "nl",
+    "key": "cruise",
+    "value": "cruise",
+    "enValue": "cruise",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B1_travel.json",
+    "lang": "nl",
+    "key": "resort",
+    "value": "resort",
+    "enValue": "resort",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B2_adjectives.json",
+    "lang": "nl",
+    "key": "argument_logic",
+    "value": "argument",
+    "enValue": "argument",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B2_it.json",
+    "lang": "nl",
+    "key": "scan_medical",
+    "value": "scan",
+    "enValue": "scan",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B2_it.json",
+    "lang": "nl",
+    "key": "scan_digital",
+    "value": "scan",
+    "enValue": "scan",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B2_it.json",
+    "lang": "nl",
+    "key": "scan",
+    "value": "scan",
+    "enValue": "scan",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B2_nouns_abstract.json",
+    "lang": "nl",
+    "key": "aspect",
+    "value": "aspect",
+    "enValue": "aspect",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B2_nouns_abstract.json",
+    "lang": "nl",
+    "key": "element",
+    "value": "element",
+    "enValue": "element",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B2_nouns_abstract.json",
+    "lang": "nl",
+    "key": "element_noun",
+    "value": "element",
+    "enValue": "element",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B2_nouns_concrete.json",
+    "lang": "nl",
+    "key": "alcohol",
+    "value": "alcohol",
+    "enValue": "alcohol",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B2_nouns_concrete.json",
+    "lang": "nl",
+    "key": "concept_idea",
+    "value": "concept",
+    "enValue": "concept",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B2_nouns_concrete.json",
+    "lang": "nl",
+    "key": "discipline",
+    "value": "discipline",
+    "enValue": "discipline",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B2_nouns_concrete.json",
+    "lang": "nl",
+    "key": "doctrine",
+    "value": "doctrine",
+    "enValue": "doctrine",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B2_nouns_concrete.json",
+    "lang": "nl",
+    "key": "drama",
+    "value": "drama",
+    "enValue": "drama",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\B2_nouns_concrete.json",
+    "lang": "nl",
+    "key": "arena",
+    "value": "arena",
+    "enValue": "arena",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\C2_general.json",
+    "lang": "nl",
+    "key": "alibi",
+    "value": "alibi",
+    "enValue": "alibi",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\C2_general.json",
+    "lang": "nl",
+    "key": "anticlimax",
+    "value": "anticlimax",
+    "enValue": "anticlimax",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\C2_general.json",
+    "lang": "nl",
+    "key": "apartheid",
+    "value": "apartheid",
+    "enValue": "apartheid",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\nl\\levels\\C2_general.json",
+    "lang": "nl",
+    "key": "apotheosis_2",
+    "value": "idealisering",
+    "enValue": "apotheosis",
+    "issues": [
+      "Non-semantic key (numeric suffix)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\A1_adverbs_prepositions.json",
+    "lang": "de",
+    "key": "in",
+    "value": "in",
+    "enValue": "in",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\A1_food.json",
+    "lang": "de",
+    "key": "orange_color",
+    "value": "orange",
+    "enValue": "orange",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\A2_general.json",
+    "lang": "de",
+    "key": "cool",
+    "value": "cool",
+    "enValue": "cool",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\A2_general.json",
+    "lang": "de",
+    "key": "cool_awesome",
+    "value": "cool",
+    "enValue": "cool",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\A2_general.json",
+    "lang": "de",
+    "key": "fit",
+    "value": "fit",
+    "enValue": "fit",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\A2_general.json",
+    "lang": "de",
+    "key": "fit_healthy",
+    "value": "fit",
+    "enValue": "fit",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\A2_general.json",
+    "lang": "de",
+    "key": "holiday_1",
+    "value": "Ferien",
+    "issues": [
+      "Non-semantic key (numeric suffix)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\A2_general.json",
+    "lang": "de",
+    "key": "modern",
+    "value": "modern",
+    "enValue": "modern",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\A2_general.json",
+    "lang": "de",
+    "key": "normal",
+    "value": "normal",
+    "enValue": "normal",
+    "issues": [
+      "Potential missing translation (value equals key)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\A2_general.json",
+    "lang": "de",
+    "key": "station_2",
+    "value": "Bahnhof",
+    "enValue": "station",
+    "issues": [
+      "Non-semantic key (numeric suffix)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\A2_general.json",
+    "lang": "de",
+    "key": "wild",
+    "value": "wild",
+    "enValue": "wild",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\B1_adjectives.json",
+    "lang": "de",
+    "key": "digital",
+    "value": "digital",
+    "enValue": "digital",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\B1_adjectives.json",
+    "lang": "de",
+    "key": "emotional",
+    "value": "emotional",
+    "enValue": "emotional",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\B1_adjectives.json",
+    "lang": "de",
+    "key": "global",
+    "value": "global",
+    "enValue": "global",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\B1_adjectives.json",
+    "lang": "de",
+    "key": "illegal",
+    "value": "illegal",
+    "enValue": "illegal",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\B1_adjectives.json",
+    "lang": "de",
+    "key": "international",
+    "value": "international",
+    "enValue": "international",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\B1_adjectives.json",
+    "lang": "de",
+    "key": "national",
+    "value": "national",
+    "enValue": "national",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\B1_home.json",
+    "lang": "de",
+    "key": "tv",
+    "value": "tv",
+    "enValue": "tv",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\B1_nouns_concrete.json",
+    "lang": "de",
+    "key": "bitter",
+    "value": "bitter",
+    "enValue": "bitter",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\B1_nouns_concrete.json",
+    "lang": "de",
+    "key": "blind",
+    "value": "blind",
+    "enValue": "blind",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\B1_nouns_concrete.json",
+    "lang": "de",
+    "key": "national_day",
+    "value": "national",
+    "enValue": "national",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\B1_nouns_concrete.json",
+    "lang": "de",
+    "key": "relevant",
+    "value": "relevant",
+    "enValue": "relevant",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\B1_nouns_concrete.json",
+    "lang": "de",
+    "key": "relevant_info",
+    "value": "relevant",
+    "enValue": "relevant",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\C2_general.json",
+    "lang": "de",
+    "key": "alluvial",
+    "value": "alluvial",
+    "enValue": "alluvial",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\C2_general.json",
+    "lang": "de",
+    "key": "ambivalent",
+    "value": "ambivalent",
+    "enValue": "ambivalent",
+    "issues": [
+      "Missing translation (matches English value)"
+    ]
+  },
+  {
+    "file": "src\\lib\\data\\translations\\de\\levels\\C2_general.json",
+    "lang": "de",
+    "key": "apotheosis_2",
+    "value": "Verherrlichung",
+    "enValue": "apotheosis",
+    "issues": [
+      "Non-semantic key (numeric suffix)"
+    ]
+  }
+]

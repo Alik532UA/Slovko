@@ -1,4 +1,4 @@
-{
+﻿{
 	"absence": "afwezigheid",
 	"abundance": "overvloed",
 	"account_for": "verklaren / goed zijn voor",
@@ -113,5 +113,7 @@
 	"sponsorship": "sponsoring",
 	"indication": "indicatie",
 	"implication": "implicatie",
-	"confusion": "verwarring"
+	"confusion": "verwarring",
+	"accent": "accentteken",
+	"acceptance": "acceptatie"
 }
