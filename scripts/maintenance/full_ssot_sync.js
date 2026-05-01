@@ -29,7 +29,11 @@ files.forEach(file => {
         return;
     }
 
-    const data = JSON.parse(fs.readFileSync(path.join(TRANS_DIR, file), 'utf8'));
+    let content = fs.readFileSync(path.join(TRANS_DIR, file), 'utf8');
+    if (content.startsWith('\ufeff')) {
+        content = content.substring(1);
+    }
+    const data = JSON.parse(content);
     Object.keys(data).forEach(key => {
         masterLists[levelPrefix].add(key);
     });
@@ -51,11 +55,16 @@ LEVELS.forEach(lvl => {
     // 4. Update the Master List files
     const masterPath = path.join(WORDS_DIR, `${lvl}.json`);
     if (fs.existsSync(masterPath)) {
-        const masterData = JSON.parse(fs.readFileSync(masterPath, 'utf8'));
+        let masterContent = fs.readFileSync(masterPath, 'utf8');
+        const hasBOM = masterContent.startsWith('\ufeff');
+        if (hasBOM) {
+            masterContent = masterContent.substring(1);
+        }
+        const masterData = JSON.parse(masterContent);
         const oldSize = masterData.words.length;
         masterData.words = uniqueWords.sort();
         
-                fs.writeFileSync(masterPath, JSON.stringify(masterData, null, '\t') + '\n');
+        fs.writeFileSync(masterPath, (hasBOM ? '\ufeff' : '') + JSON.stringify(masterData, null, '\t') + '\n');
         console.log(`[${lvl}] Updated: ${oldSize} -> ${uniqueWords.length} words.`);
     } else {
         console.log(`[${lvl}] Skipping (file not found).`);
