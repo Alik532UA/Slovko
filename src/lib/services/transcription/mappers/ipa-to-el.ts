@@ -1,4 +1,4 @@
-/**
+﻿/**
  * IPA to Greek (EL) Mapper
  * Converts standard IPA symbols to "folk" Greek phonetic transcription.
  * For example: /b/ -> μπ, /d/ -> ντ, /ʃ/ -> σ.

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * IPA to German (DE) Mapper
  * Converts standard IPA symbols to "folk" German phonetic transcription (Aussprachehilfe).
  * For example: /ʃ/ -> sch, /v/ -> w, /tʃ/ -> tsch.

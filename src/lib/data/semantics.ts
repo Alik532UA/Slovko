@@ -1,4 +1,4 @@
-import type { SemanticGroup } from "../types";
+﻿import type { SemanticGroup } from "../types";
 
 /**
  * Центральний реєстр семантичних зв'язків (Schema).

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * IPA to Crimean Tatar (CRH) Mapper
  * Converts standard IPA symbols to "folk" Latin transcription.
  * For example: /ʃ/ -> ş, /tʃ/ -> ç, /ŋ/ -> ñ.

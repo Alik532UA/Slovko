@@ -17,22 +17,31 @@ levels.forEach(lvl => {
     const files = fs.readdirSync(TSCR_DIR).filter(f => f.startsWith(lvl + '_'));
     files.forEach(file => {
         const filePath = path.join(TSCR_DIR, file);
-        const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-        Object.entries(data).forEach(([k, v]) => {
-            if (v && v.length > 2) {
-                // If it's a base word (no suffix), or just store whatever we have
-                // but prefer base words as source for others
-                if (!k.includes('_')) {
-                    globalTranscriptions[k] = v;
-                } else {
-                     // also store suffix words if they have transcription (for other levels)
-                    const basePart = k.split('_')[0];
-                    if (!globalTranscriptions[basePart]) {
-                        globalTranscriptions[basePart] = v;
+        let rawData = fs.readFileSync(filePath, 'utf8');
+        // Strip BOM
+        if (rawData.charCodeAt(0) === 0xFEFF) {
+            rawData = rawData.slice(1);
+        }
+        try {
+            const data = JSON.parse(rawData);
+            Object.entries(data).forEach(([k, v]) => {
+                if (v && v.length > 2) {
+                    // If it's a base word (no suffix), or just store whatever we have
+                    // but prefer base words as source for others
+                    if (!k.includes('_')) {
+                        globalTranscriptions[k] = v;
+                    } else {
+                         // also store suffix words if they have transcription (for other levels)
+                        const basePart = k.split('_')[0];
+                        if (!globalTranscriptions[basePart]) {
+                            globalTranscriptions[basePart] = v;
+                        }
                     }
                 }
-            }
-        });
+            });
+        } catch (e) {
+            console.warn(`⚠️ Failed to parse ${file}: ${e.message}`);
+        }
     });
 });
 
@@ -42,29 +51,44 @@ levels.forEach(lvl => {
     const files = fs.readdirSync(TSCR_DIR).filter(f => f.startsWith(lvl + '_'));
     files.forEach(file => {
         const filePath = path.join(TSCR_DIR, file);
-        const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-        const newData = { ...data };
-        let changed = false;
+        let rawData = fs.readFileSync(filePath, 'utf8');
+        let hasBOM = false;
+        if (rawData.charCodeAt(0) === 0xFEFF) {
+            rawData = rawData.slice(1);
+            hasBOM = true;
+        }
 
-        Object.keys(data).forEach(key => {
-            if (!data[key] || data[key].length < 2) {
-                const base = key.split('_')[0];
-                if (globalTranscriptions[base]) {
-                    newData[key] = globalTranscriptions[base];
-                    changed = true;
-                    totalRecovered++;
-                } else if (globalTranscriptions[key]) {
-                    // unexpected case: key is missing here but found in global map (other file)
-                     newData[key] = globalTranscriptions[key];
-                     changed = true;
-                     totalRecovered++;
+        try {
+            const data = JSON.parse(rawData);
+            const newData = { ...data };
+            let changed = false;
+
+            Object.keys(data).forEach(key => {
+                if (!data[key] || data[key].length < 2 || data[key] === '//') {
+                    const base = key.split('_')[0];
+                    if (globalTranscriptions[base]) {
+                        newData[key] = globalTranscriptions[base];
+                        changed = true;
+                        totalRecovered++;
+                    } else if (globalTranscriptions[key]) {
+                        // unexpected case: key is missing here but found in global map (other file)
+                         newData[key] = globalTranscriptions[key];
+                         changed = true;
+                         totalRecovered++;
+                    }
                 }
-            }
-        });
+            });
 
-        if (changed) {
-            fs.writeFileSync(filePath, JSON.stringify(newData, null, '\t') + '\n');
-            console.log(`[${file}] Recovered transcriptions.`);
+            if (changed) {
+                let output = JSON.stringify(newData, null, '\t') + '\n';
+                if (hasBOM) {
+                    output = '\uFEFF' + output;
+                }
+                fs.writeFileSync(filePath, output, 'utf8');
+                console.log(`[${file}] Recovered transcriptions.`);
+            }
+        } catch (e) {
+            // console.warn(`⚠️ Failed to parse ${file} in phase 2: ${e.message}`);
         }
     });
 });
