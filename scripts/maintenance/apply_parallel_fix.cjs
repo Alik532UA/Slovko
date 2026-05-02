@@ -31,27 +31,27 @@ function applyTranslations(translations) {
     });
 }
 
-const batch5 = {
-    "imprison": { uk: "ув'язнювати", pl: "uwięzić", de: "ins Gefängnis werfen", nl: "gevangenzetten", el: "φυλακίζω", crh: "aps etmek" },
-    "imprisonment": { uk: "ув'язнення", pl: "uwięzienie", de: "Haft", nl: "gevangenisstraf", el: "φυλάκιση", crh: "aps" },
-    "inability": { uk: "нездатність", pl: "niezdolność", de: "Unfähigkeit", nl: "onvermogen", el: "ανικανότητα", crh: "qabiliyetsizlik" },
-    "inadequate": { uk: "неадекватний", pl: "nieadekwatny", de: "unangemessen", nl: "ontoereikend", el: "ανεπαρκής", crh: "yetersiz" },
-    "inappropriate": { uk: "неналежний", pl: "nieodpowiedni", de: "unangemessen", nl: "ongepast", el: "ακατάλληλος", crh: "uyğunsız" },
-    "incarcerate": { uk: "ув'язнювати", pl: "uwięzić", de: "einsperren", nl: "opsluiten", el: "εγκλείω", crh: "aps etmek" },
-    "incarceration": { uk: "ув'язнення", pl: "uwięzienie", de: "Einkerkerung", nl: "opsluiting", el: "εγκλεισμός", crh: "aps" },
-    "incidence": { uk: "рівень захворюваності", pl: "częstość występowania", de: "Häufigkeit", nl: "incidentie", el: "συχνότητα εμφάνισης", crh: "rastkelüv" },
-    "inclined": { uk: "схильний", pl: "skłonny", de: "geneigt", nl: "geneigd", el: "προδιατεθειμένος", crh: "meyilli" },
-    "inclusion": { uk: "включення", pl: "włączenie", de: "Inklusion", nl: "insluiting", el: "ένταξη", crh: "içine aluv" },
-    "incur": { uk: "зазнати", pl: "ponieść", de: "übernehmen", nl: "oplopen", el: "υφίσταμαι", crh: "oğramaq" },
-    "indicator": { uk: "показник", pl: "wskaźnik", de: "Indikator", nl: "indicator", el: "δείκτης", crh: "köstergiç" },
-    "indictment": { uk: "обвинувальний акт", pl: "akt oskarżenia", de: "Anklage", nl: "aanklacht", el: "κατηγορητήριο", crh: "qabaatlav" },
-    "indigenous": { uk: "корінний", pl: "rdzenny", de: "eingeboren", nl: "inheems", el: "αυτόχθων", crh: "yerli" },
-    "indulge": { uk: "потурати", pl: "pobłażać", de: "verwöhnen", nl: "verwennen", el: "ενδίδω", crh: "berilmek" },
-    "inequality": { uk: "нерівність", pl: "nierówność", de: "Ungleichheit", nl: "ongelijkheid", el: "ανισότητα", crh: "musaviysizlik" },
-    "infamous": { uk: "ганебний", pl: "cieszący się złą sławą", de: "berüchtigt", nl: "berucht", el: "διαβόητος", crh: "rezi" },
-    "infant": { uk: "немовля", pl: "niemowlę", de: "Säugling", nl: "baby", el: "βρέφος", crh: "bebek" },
-    "inflict": { uk: "завдавати", pl: "wymierzać", de: "zufügen", nl: "toebrengen", el: "επιβάλλω", crh: "uydurmaq" },
-    "influential": { uk: "впливовий", pl: "wpływowy", de: "einflussreich", nl: "invloedrijk", el: "σημαντικός", crh: "itibarlı" }
+const batch6 = {
+    "inherent": { uk: "властивий", pl: "nieodłączny", de: "inhärent", nl: "inherent", el: "εγγενής", crh: "esaslı" },
+    "inhibit": { uk: "пригнічувати", pl: "hamować", de: "hemmen", nl: "remmen", el: "παρεμποδίζω", crh: "kederlemek" },
+    "injustice": { uk: "несправедливість", pl: "niesprawiedliwość", de: "Ungerechtigkeit", nl: "onrecht", el: "αδικία", crh: "musaviysizlik" },
+    "inmate": { uk: "в'язень", pl: "więzień", de: "Insasse", nl: "gedetineerde", el: "κρατούμενος", crh: "mahbüs" },
+    "inquire": { uk: "запитувати", pl: "dowiadywać się", de: "anfragen", nl: "informeren", el: "ρωτώ", crh: "soraştırmaq" },
+    "insertion": { uk: "вставка", pl: "wstawienie", de: "Einfügung", nl: "invoeging", el: "εισαγωγή", crh: "qoyuv" },
+    "insider": { uk: "інсайдер", pl: "informator", de: "Insider", nl: "insider", el: "γνώστης εκ των έσω", crh: "içten kimese" },
+    "inspection": { uk: "огляд", pl: "kontrola", de: "Inspektion", nl: "inspectie", el: "επιθεώρηση", crh: "teftiş" },
+    "inspiration": { uk: "натхнення", pl: "inspiracja", de: "Inspiration", nl: "inspiratie", el: "έμπνευση", crh: "ilham" },
+    "instinct": { uk: "інстинкт", pl: "instynkt", de: "Instinkt", nl: "instinct", el: "ένστικτο", crh: "iç-duyğu" },
+    "institutional": { uk: "інституційний", pl: "instytucjonalny", de: "institutionell", nl: "institutioneel", el: "θεσμικός", crh: "teşkilâtlı" },
+    "instruct": { uk: "інструктувати", pl: "instruować", de: "anweisen", nl: "instrueren", el: "καθοδηγώ", crh: "ögretmek" },
+    "instrumental": { uk: "інструментальний", pl: "pomocny", de: "instrumental", nl: "instrumentaal", el: "καθοριστικός", crh: "aletli" },
+    "insufficient": { uk: "недостатній", pl: "niewystarczający", de: "unzureichend", nl: "onvoldoende", el: "ανεπαρκής", crh: "yetersiz" },
+    "insult": { uk: "образа", pl: "zniewaga", de: "Beleidigung", nl: "belediging", el: "προσβολή", crh: "aqaret" },
+    "intact": { uk: "неушкоджений", pl: "nienaruszony", de: "intakt", nl: "intact", el: "ανέπαφος", crh: "sap-sağlam" },
+    "intake": { uk: "споживання", pl: "spożycie", de: "Einnahme", nl: "inname", el: "πρόσληψη", crh: "aluv" },
+    "integral": { uk: "невід'ємний", pl: "integralny", de: "integral", nl: "integraal", el: "αναπόσπαστος", crh: "esas" },
+    "integrated": { uk: "інтегрований", pl: "zintegrowany", de: "integriert", nl: "geïntegreerd", el: "ολοκληρωμένος", crh: "qatışqan" },
+    "integration": { uk: "інтеграція", pl: "integracja", de: "Integration", nl: "integratie", el: "ενσωμάτωση", crh: "birleşüv" }
 };
 
-applyTranslations(batch5);
+applyTranslations(batch6);
