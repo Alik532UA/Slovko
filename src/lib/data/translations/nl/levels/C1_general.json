@@ -1,4 +1,4 @@
-﻿{
+{
 	"abolish": "afschaffen",
 	"abortion": "abortus",
 	"absence": "afwezigheid",
@@ -183,7 +183,8 @@
 	"discredit": "discrediteren",
 	"discrimination": "discriminatie",
 	"disgust": "verafschuwen",
-	"dispose_of": "verwijderen",
+	"dispose": "beschikken",
+	"dispose_of": "beschikken",
 	"disprove": "weerleggen",
 	"dispute": "geschil",
 	"distinction": "onderscheid",
