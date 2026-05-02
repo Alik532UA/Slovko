@@ -1,4 +1,4 @@
-﻿const fs = require('fs');
+const fs = require('fs');
 const path = require('path');
 
 function applyTranslations(translations) {
@@ -17,13 +17,9 @@ function applyTranslations(translations) {
             let changed = false;
 
             Object.keys(content).forEach(key => {
-                const searchKey = key.toLowerCase();
-                if (translations[key] || translations[searchKey]) {
-                    const trans = translations[key] || translations[searchKey];
-                    if (trans[lang]) {
-                        content[key] = trans[lang];
-                        changed = true;
-                    }
+                if (translations[key] && translations[key][lang]) {
+                    content[key] = translations[key][lang];
+                    changed = true;
                 }
             });
 
@@ -35,28 +31,15 @@ function applyTranslations(translations) {
     });
 }
 
-const batch127 = {
-    "do": { crh: "yapmaq" },
-    "flat": { crh: "yassı" },
-    "kind": { crh: "turlı" },
-    "let": { crh: "musaade etmek" },
-    "lot": { crh: "çoq" },
-    "may": { crh: "-ıp bilmek" },
-    "must": { crh: "kerek" },
-    "the": { crh: "the" },
-    "pet": { crh: "ev ayvanı" },
-    "piston": { crh: "piston" },
-    "federal": { crh: "federal" },
-    "risk": { crh: "risk" },
-    "buck": { crh: "dollar" },
-    "dime": { crh: "on tsentlik" },
-    "grant": { crh: "grant" },
-    "virtual": { crh: "virtual" },
-    "disk": { crh: "disk" },
-    "cult": { crh: "fırqa" },
-    "cynical": { crh: "kinik" },
-    "default": { crh: "tışlama" },
-    "quota": { crh: "kvota" }
+const batchParens = {
+    "bank_(money)": { uk: "банк", el: "τράπεζα", de: "Bank", nl: "bank", pl: "bank", crh: "bank" },
+    "bank_(river)": { uk: "берег", el: "όχθη", de: "Ufer", nl: "oever", pl: "brzeg", crh: "kenar" },
+    "rock_(music)": { uk: "рок-музика", el: "ροκ", de: "Rockmusik", nl: "rock", pl: "rock", crh: "rok" },
+    "rock_(stone)": { uk: "камінь", el: "πέτρα", de: "Stein", nl: "rots", pl: "kamień", crh: "taş" },
+    "set_(group)": { uk: "набір", el: "σετ", de: "Set", nl: "set", pl: "zestaw", crh: "taqım" },
+    "set_(put)": { uk: "встановлювати", el: "θέτω", de: "setzen", nl: "zetten", pl: "ustawiać", crh: "qoymaq" },
+    "counter_(long_flat_surface)": { uk: "прилавок", el: "πάγκος", de: "Theke", nl: "balie", pl: "lada", crh: "tezgâh" },
+    "counter_(argue_against)": { uk: "заперечувати", el: "αντικρούω", de: "entgegenwirken", nl: "tegenwerken", pl: "przeciwdziałać", crh: "qarşı turmaq" }
 };
 
-applyTranslations(batch127);
+applyTranslations(batchParens);

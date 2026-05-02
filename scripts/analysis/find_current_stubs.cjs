@@ -1,4 +1,4 @@
-﻿const fs = require('fs');
+const fs = require('fs');
 const path = require('path');
 
 const langs = ['uk', 'el', 'de', 'nl', 'pl', 'crh'];
@@ -21,8 +21,9 @@ langs.forEach(lang => {
         }
 
         Object.entries(content).forEach(([key, val]) => {
-            const cleanKey = key.split('_')[0].split('(')[0].trim().toLowerCase();
-            const cleanVal = val.toLowerCase();
+            const baseKey = key.split('_')[0].split('(')[0].trim().toLowerCase();
+            const cleanVal = val.toLowerCase().trim();
+            const cleanKey = key.toLowerCase().trim();
             
             const ignored = [
                 'cd', 'dvd', 'usb', 'atm', 'bluetooth', 'aids', 'pizza', 'taxi', 'film', 'bus', 'test', 'partner', 'baby', 'bank', 'baseball', 'blog', 'cent', 'club', 'radio', 'hotel', 'tennis', 'internet', 'monitor', 'museum', 'opera', 'piano', 'plus', 'robot', 'safari', 'ski', 'sport', 'yoga', 'zebra', 'zero',
@@ -46,10 +47,13 @@ langs.forEach(lang => {
                 'rail', 'scenario', 'screening', 'sector', 'specialist', 'thesis', 'trigger', 'vast', 'via', 'workshop', 'database', 'agenda', 'aspect', 'discipline', 'senior', 'resort', 'activist', 'adolescent', 'alert', 'audit', 'buffer', 'columnist', 'commentator', 'communist', 'correspondent', 'counseling', 'dam', 'defect', 'demon', 'dictator',
                 'dip', 'diploma', 'doctrine', 'donor', 'filmmaker', 'genocide', 'guerrilla', 'hint', 'horizon', 'indicator', 'inherent', 'instinct', 'intact', 'interface', 'manuscript', 'module', 'momentum', 'non-profit', 'outlet', 'precedent', 'premier', 'privilege', 'protocol', 'rebel', 'residue', 'sentiment', 'socialist', 'spectrum', 'spotlight', 'stereotype',
                 'supervisor', 'transcript', 'consensus', 'decorum', 'french', 'gym', 'moment', 'ocean', 'ok', 'supermarket', 'melon', 'metal', 'parking', 'region', 'worse', 'plaster', 'sudden', 'folder', 'limit', 'port', 'standard', 'honor', 'amulet', 'era', 'gang', 'patrol', 'patron', 'ranking', 'regulator',
-                'the', 'piston', 'federal', 'risk', 'grant', 'virtual', 'disk'
+                'the', 'piston', 'federal', 'risk', 'grant', 'virtual', 'disk',
+                'tradition', 'amphitheater', 'rest', 'mine', 'race', 'strip'
             ];
             
-            if (cleanKey === cleanVal && key.length > 1 && !ignored.includes(cleanKey)) {
+            const isStub = (cleanVal === cleanKey) || (cleanVal === baseKey);
+            
+            if (isStub && key.length > 1 && !ignored.includes(baseKey)) {
                 if (!stubs[lang]) stubs[lang] = [];
                 stubs[lang].push({ file, key, val });
             }
