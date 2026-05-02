@@ -1,17 +1,15 @@
 ﻿{
-	"bush": "terekçik",
-	"cave": "qoba",
-	"cliff": "yalıyar",
 	"earth_planet": "Dünya",
 	"environment_nature": "etraf müit",
 	"flood": "suv basuv",
 	"fog": "tuman",
 	"global_warming": "küresel isiv",
 	"jungle": "cuñgle",
+	"leaf": "yapraq",
 	"lightning": "yıldırım",
 	"rainbow": "ebemquşağı",
-	"root": "tamır",
 	"sand": "qum",
 	"scenery": "manzara",
-	"seed": "urluq"
+	"seed": "urluq",
+	"soil": "topraq"
 }

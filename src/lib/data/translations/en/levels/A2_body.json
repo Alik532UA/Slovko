@@ -1,9 +1,13 @@
 ﻿{
 	"accident": "accident",
+	"accident_chance": "accident",
+	"accident_event": "accident",
 	"blood": "blood",
 	"brain": "brain",
 	"clap_hands": "clap",
 	"comb_hair": "comb",
+	"finger": "finger",
+	"heart": "heart",
 	"knee": "knee",
 	"neck": "neck",
 	"shoulder": "shoulder",

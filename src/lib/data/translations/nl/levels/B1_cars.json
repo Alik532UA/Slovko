@@ -6,14 +6,14 @@
 	"engine_motor": "motor",
 	"fuel": "brandstof",
 	"fuel_energy": "brandstof",
-	"insurance": "verzekering",
-	"mechanic": "monteur",
+	"garage": "garage",
+	"highway": "snelweg",
 	"pedal": "pedaal",
 	"piston": "zuiger",
+	"signal": "signaal",
 	"signal_phone": "signaal",
-	"suspension": "ophanging",
 	"taillight": "achterlicht",
-	"transmission": "transmissie",
+	"tire": "band",
 	"trunk": "kofferbak",
 	"wiper": "ruitenwisser"
 }

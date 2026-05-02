@@ -1,5 +1,4 @@
 ﻿{
-	"apartment": "квартира",
 	"bath": "ванна",
 	"bathroom": "ванна кімната",
 	"bed": "ліжко",
@@ -9,13 +8,13 @@
 	"computer": "комп'ютер",
 	"cup": "чашка",
 	"glass": "склянка",
-	"knife": "ніж",
+	"glass_cup": "стакан",
+	"glass_material": "скло",
 	"living_room": "вітальня",
 	"plant": "рослина",
-	"plastic": "пластик",
-	"plate": "тарілка",
+	"plant_botany": "рослина",
+	"plant_factory": "завод",
 	"shower": "душ",
-	"stove": "плита",
 	"table": "стіл",
 	"toilet": "туалет",
 	"wall": "стіна"

@@ -1,6 +1,13 @@
 ﻿{
 	"balcony": "balkon",
+	"ceiling": "sufit",
+	"iron": "prasować",
+	"iron_noun": "iron",
+	"iron_verb": "prasować",
+	"pan": "patelnia",
 	"pillow": "poduszka",
 	"shampoo": "szampon",
+	"shelf": "półka",
+	"sink": "zlewozmywak",
 	"vase": "waza"
 }

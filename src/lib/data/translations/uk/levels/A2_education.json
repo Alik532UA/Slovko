@@ -1,12 +1,11 @@
 ﻿{
 	"blackboard": "класна дошка",
+	"boss": "начальник",
 	"degree_academic": "науковий ступінь",
 	"manager": "менеджер",
 	"notebook_paper": "зошит",
 	"physics": "фізика",
 	"printer_device": "принтер",
-	"profession": "професія",
 	"professor": "професор",
-	"rubber": "гумка",
 	"salary": "зарплата"
 }

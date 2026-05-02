@@ -1,6 +1,13 @@
 ﻿{
 	"balcony": "balkon",
+	"ceiling": "tavan",
+	"iron": "ütilemek",
+	"iron_noun": "iron",
+	"iron_verb": "ütilemek",
+	"pan": "tava",
 	"pillow": "yastıq",
 	"shampoo": "şampuan",
+	"shelf": "raf",
+	"sink": "rakovina",
 	"vase": "vaza"
 }

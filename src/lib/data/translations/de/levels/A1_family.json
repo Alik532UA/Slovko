@@ -1,5 +1,7 @@
 ﻿{
 	"aunt": "Tante",
+	"aunt_maternal": "Tante",
+	"aunt_paternal": "Tante",
 	"child": "Kind",
 	"family": "Familie",
 	"father": "Vater",
@@ -7,7 +9,6 @@
 	"grandfather": "Großvater",
 	"grandmother": "Großmutter",
 	"husband": "Ehemann",
-	"marry": "heiraten",
 	"mother": "Mutter",
 	"parents": "Eltern",
 	"partner": "Partner",
@@ -16,5 +17,7 @@
 	"sister_younger": "Schwester",
 	"son": "Sohn",
 	"uncle": "Onkel",
+	"uncle_maternal": "Onkel",
+	"uncle_paternal": "Onkel",
 	"wife": "Ehefrau"
 }

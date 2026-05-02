@@ -1,17 +1,15 @@
 ﻿{
-	"bush": "struik",
-	"cave": "grot",
-	"cliff": "klif",
 	"earth_planet": "aarde",
 	"environment_nature": "milieu",
 	"flood": "overstroming",
 	"fog": "mist",
 	"global_warming": "opwarming van de aarde",
 	"jungle": "jungle",
+	"leaf": "blad",
 	"lightning": "bliksem",
 	"rainbow": "regenboog",
-	"root": "wortel",
 	"sand": "zand",
 	"scenery": "landschap",
-	"seed": "zaad"
+	"seed": "zaad",
+	"soil": "grond"
 }

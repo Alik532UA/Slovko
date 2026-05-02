@@ -1,12 +1,11 @@
 ﻿{
 	"blackboard": "yazı tabağı",
+	"boss": "başlıq",
 	"degree_academic": "derece",
 	"manager": "mudir",
 	"notebook_paper": "defter",
 	"physics": "fizika",
 	"printer_device": "printer",
-	"profession": "zenaat",
 	"professor": "professor",
-	"rubber": "silgi",
 	"salary": "maaş"
 }

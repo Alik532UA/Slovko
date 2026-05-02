@@ -1,10 +1,5 @@
 ﻿{
 	"camera": "camera",
 	"internet": "internet",
-	"keyboard": "keyboard",
-	"memory": "memory",
-	"print": "print",
-	"program": "program",
-	"search": "search",
 	"video": "video"
 }

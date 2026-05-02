@@ -1,1 +1,7 @@
-﻿{}
+﻿{
+	"filter": "Filter",
+	"gear": "Gang",
+	"pump": "Pumpe",
+	"suspension": "Aufhängung",
+	"transmission": "Getriebe"
+}

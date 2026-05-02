@@ -1,6 +1,10 @@
-{
+﻿{
+	"mosquito": "mosquito",
+	"rat": "rat",
 	"squirrel": "squirrel",
 	"starfish": "starfish",
 	"walrus": "walrus",
-	"whale": "whale"
+	"whale": "whale",
+	"wolf": "wolf",
+	"worm": "worm"
 }

@@ -1,6 +1,12 @@
 ﻿{
-	"browser": "πρόγραμμα περιήγησης",
+	"database": "βάση δεδομένων",
+	"delete": "διαγραφή",
+	"disk": "δίσκος",
 	"drive_it": "μονάδα δίσκου",
+	"monitor": "οθόνη",
+	"monitor_screen": "monitor",
+	"monitor_verb": "παρακολουθώ",
+	"password": "κωδικός πρόσβασης",
 	"scan_digital": "ψηφιακή σάρωση",
 	"scan_medical": "ιατρική σάρωση"
 }

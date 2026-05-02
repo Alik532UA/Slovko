@@ -6,13 +6,15 @@
 	"hill": "Hügel",
 	"insect": "Insekt",
 	"lake": "See",
-	"leaf": "Blatt",
+	"moon": "Mond",
 	"rock_stone": "Stein",
-	"soil": "Boden",
+	"season": "Jahreszeit",
+	"sky": "Himmel",
 	"stone": "Stein",
 	"storm": "Sturm",
 	"thunder": "Donner",
 	"valley": "Tal",
+	"wind": "Wind",
 	"wood_bos": "Wald",
 	"wood_holz": "Holz"
 }

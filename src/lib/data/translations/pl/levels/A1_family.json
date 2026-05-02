@@ -1,5 +1,7 @@
 ﻿{
 	"aunt": "ciotka",
+	"aunt_maternal": "stryjna/ciotka",
+	"aunt_paternal": "ciotka",
 	"child": "dziecko",
 	"family": "rodzina",
 	"father": "ojciec",
@@ -7,7 +9,6 @@
 	"grandfather": "dziadek",
 	"grandmother": "babcia",
 	"husband": "mąż",
-	"marry": "poślubić",
 	"mother": "matka",
 	"parents": "rodzice",
 	"partner": "partner",
@@ -16,5 +17,7 @@
 	"sister_younger": "siostra",
 	"son": "syn",
 	"uncle": "wujek",
+	"uncle_maternal": "wujek",
+	"uncle_paternal": "wujek",
 	"wife": "żona"
 }

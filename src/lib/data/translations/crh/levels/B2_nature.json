@@ -1,4 +1,8 @@
 ﻿{
+	"bush": "terekçik",
+	"cave": "qoba",
+	"cliff": "yalıyar",
 	"landscape": "manzara",
+	"root": "tamır",
 	"volcano": "yanardağ"
 }

@@ -6,13 +6,15 @@
 	"hill": "wzgórze",
 	"insect": "owad",
 	"lake": "jezioro",
-	"leaf": "liść",
+	"moon": "księżyc",
 	"rock_stone": "kamień",
-	"soil": "gleba",
+	"season": "pora roku",
+	"sky": "niebo",
 	"stone": "kamień",
 	"storm": "burza",
 	"thunder": "grzmot",
 	"valley": "dolina",
+	"wind": "wiatr",
 	"wood_bos": "las",
 	"wood_holz": "drewno"
 }

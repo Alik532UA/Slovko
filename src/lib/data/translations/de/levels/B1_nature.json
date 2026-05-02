@@ -1,17 +1,15 @@
 ﻿{
-	"bush": "Busch",
-	"cave": "Höhle",
-	"cliff": "Klippe",
 	"earth_planet": "Erde",
 	"environment_nature": "Umwelt",
 	"flood": "Flut",
 	"fog": "Nebel",
 	"global_warming": "Erderwärmung",
 	"jungle": "Dschungel",
+	"leaf": "Blatt",
 	"lightning": "Blitz",
 	"rainbow": "Regenbogen",
-	"root": "Wurzel",
 	"sand": "Sand",
 	"scenery": "Landschaft",
-	"seed": "Samen"
+	"seed": "Samen",
+	"soil": "Boden"
 }

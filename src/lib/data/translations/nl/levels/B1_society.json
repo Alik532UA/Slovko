@@ -2,9 +2,9 @@
 	"court": "rechtbank",
 	"discount": "korting",
 	"headline": "kop",
-	"identification": "identificatie",
+	"nation": "natie",
+	"politics": "politiek",
 	"queue": "wachtrij",
 	"receipt": "bonnetje",
-	"signature": "handtekening",
 	"vote": "stemmen"
 }

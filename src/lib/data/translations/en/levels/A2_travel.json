@@ -1,13 +1,12 @@
 ﻿{
 	"atm": "ATM",
 	"boarding": "boarding",
+	"camp": "camp",
+	"camp_noun": "camp",
 	"camp_verb": "camp",
-	"cancel": "cancel",
 	"cash": "cash",
 	"credit_card": "credit card",
-	"delay": "delay",
 	"distance": "distance",
-	"found": "found",
 	"gate": "gate",
 	"guide": "guide",
 	"holiday_celebration": "holiday",
@@ -18,5 +17,6 @@
 	"station_stop": "station",
 	"station_transport": "station",
 	"ticket_office": "ticket office",
+	"tour": "tour",
 	"tourism": "tourism"
 }

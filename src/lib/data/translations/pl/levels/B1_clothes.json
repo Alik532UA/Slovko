@@ -1,4 +1,7 @@
 ﻿{
+	"cap": "czapka",
 	"cotton": "bawełna",
-	"glove": "rękawiczka"
+	"glove": "rękawiczka",
+	"leather": "skóra",
+	"wool": "wełna"
 }

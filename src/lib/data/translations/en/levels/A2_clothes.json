@@ -1,11 +1,7 @@
 ﻿{
-	"cap": "cap",
-	"leather": "leather",
-	"pants": "pants",
 	"purse": "purse",
 	"sock": "sock",
 	"suit": "suit",
 	"tie_clothes": "tie",
-	"uniform": "uniform",
-	"wool": "wool"
+	"uniform": "uniform"
 }

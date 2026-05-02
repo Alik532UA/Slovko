@@ -1,4 +1,7 @@
 ﻿{
+	"cap": "Mütze",
 	"cotton": "Baumwolle",
-	"glove": "Handschuh"
+	"glove": "Handschuh",
+	"leather": "Leder",
+	"wool": "Wolle"
 }

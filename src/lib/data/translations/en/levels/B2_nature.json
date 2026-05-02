@@ -1,4 +1,8 @@
 ﻿{
+	"bush": "bush",
+	"cave": "cave",
+	"cliff": "cliff",
 	"landscape": "landscape",
+	"root": "root",
 	"volcano": "volcano"
 }

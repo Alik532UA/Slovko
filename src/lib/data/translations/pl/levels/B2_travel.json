@@ -1,4 +1,17 @@
-{
+﻿{
+	"booking": "rezerwacja",
+	"cabin": "kajuta",
+	"cabin_plane": "kabina samolotu",
+	"cabin_ship": "kajuta",
+	"canal": "kanał",
+	"cancel": "anulować",
+	"delay": "opóźnienie",
 	"departure_leave": "odjazd / odlot",
-	"fare": "opłata"
+	"fare": "opłata",
+	"found": "znaleźć",
+	"harbor": "port",
+	"immigration": "imigracja",
+	"resort": "kurort",
+	"terminal": "terminal",
+	"visa": "wiza"
 }

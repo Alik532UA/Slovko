@@ -1,12 +1,10 @@
 ﻿{
 	"army": "army",
-	"citizen": "citizen",
 	"crime": "crime",
 	"criminal": "criminal",
 	"government": "government",
 	"instruction": "instruction",
 	"law": "law",
-	"politics": "politics",
 	"president": "president",
 	"sale": "sale",
 	"society": "society",

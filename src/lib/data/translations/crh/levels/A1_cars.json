@@ -6,13 +6,14 @@
 	"door": "qapı",
 	"key": "anahtar",
 	"light": "aydın",
+	"light_brightness": "ışıq",
 	"light_color": "aydın",
-	"oil": "yağ",
+	"light_weight": "yengil",
 	"plane": "uçaq",
 	"road": "yol",
-	"seat": "yer",
 	"street": "soqaq",
 	"taxi": "taksi",
 	"train": "tren",
+	"truck": "yük arabası",
 	"window": "pencere"
 }

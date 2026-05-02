@@ -6,10 +6,14 @@
 	"door": "двері",
 	"key": "ключ",
 	"light": "світлий",
+	"light_brightness": "світло",
 	"light_color": "світлий",
-	"oil": "олія",
+	"light_weight": "легкий",
 	"plane": "літак",
-	"seat": "місце",
+	"road": "дорога",
+	"street": "вулиця",
 	"taxi": "таксі",
-	"train": "потяг"
+	"train": "потяг",
+	"truck": "вантажівка",
+	"window": "вікно"
 }

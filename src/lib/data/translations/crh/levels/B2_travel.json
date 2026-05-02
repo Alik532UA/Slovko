@@ -1,4 +1,17 @@
-{
+﻿{
+	"booking": "yer ayırtuv",
+	"cabin": "kabina",
+	"cabin_plane": "tayyare kabinası",
+	"cabin_ship": "kabina",
+	"canal": "kanal",
+	"cancel": "iptal etmek",
+	"delay": "keçiktirmek",
 	"departure_leave": "yolğa çıquv",
-	"fare": "yol parası"
+	"fare": "yol parası",
+	"found": "qurmaq",
+	"harbor": "liman",
+	"immigration": "immigratsiya",
+	"resort": "kurort",
+	"terminal": "terminal",
+	"visa": "viza"
 }

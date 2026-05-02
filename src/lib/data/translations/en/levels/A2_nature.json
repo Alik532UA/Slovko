@@ -6,13 +6,15 @@
 	"hill": "hill",
 	"insect": "insect",
 	"lake": "lake",
-	"leaf": "leaf",
+	"moon": "moon",
 	"rock_stone": "rock",
-	"soil": "soil",
+	"season": "season",
+	"sky": "sky",
 	"stone": "stone",
 	"storm": "storm",
 	"thunder": "thunder",
 	"valley": "valley",
+	"wind": "wind",
 	"wood_bos": "wood",
 	"wood_holz": "wood"
 }

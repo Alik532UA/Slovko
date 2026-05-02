@@ -6,19 +6,15 @@
 	"flower": "bloem",
 	"ice": "ijs",
 	"island": "eiland",
-	"moon": "maan",
 	"mountain": "berg",
 	"rain": "regen",
 	"river": "rivier",
 	"sea": "zee",
-	"season": "seizoen",
 	"snow": "sneeuw",
 	"spring_season": "lente",
 	"star": "ster",
 	"summer": "zomer",
 	"sun": "zon",
 	"tree": "boom",
-	"wind": "wind",
-	"winter": "winter",
-	"sky": "hemel"
+	"winter": "winter"
 }

@@ -1,12 +1,11 @@
 ﻿{
 	"blackboard": "blackboard",
+	"boss": "boss",
 	"degree_academic": "degree",
 	"manager": "manager",
 	"notebook_paper": "notebook",
 	"physics": "physics",
 	"printer_device": "printer",
-	"profession": "profession",
 	"professor": "professor",
-	"rubber": "rubber",
 	"salary": "salary"
 }

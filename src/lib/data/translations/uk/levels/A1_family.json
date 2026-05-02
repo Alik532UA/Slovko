@@ -1,12 +1,23 @@
 ﻿{
 	"aunt": "тітка",
+	"aunt_maternal": "тітка",
+	"aunt_paternal": "тітка",
 	"child": "дитина",
 	"family": "сім'я",
 	"father": "тато",
+	"friend": "друг",
 	"grandfather": "дідусь",
 	"grandmother": "бабуся",
-	"marry": "одружуватися",
+	"husband": "чоловік",
+	"mother": "мати",
 	"parents": "батьки",
 	"partner": "партнер",
-	"uncle": "дядько"
+	"sister": "сестра",
+	"sister_older": "sister",
+	"sister_younger": "sister",
+	"son": "син",
+	"uncle": "дядько",
+	"uncle_maternal": "дядько",
+	"uncle_paternal": "дядько",
+	"wife": "дружина"
 }

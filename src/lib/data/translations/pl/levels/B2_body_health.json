@@ -1,0 +1,23 @@
+﻿{
+	"ambulance": "karetka",
+	"breast": "pierś",
+	"cheek": "policzek",
+	"cure": "leczyć",
+	"cure_medicine": "lekarstwo",
+	"cure_verb": "leczyć",
+	"elbow": "łokieć",
+	"heal": "goić się",
+	"healthcare": "opieka zdrowotna",
+	"hip": "biodro",
+	"immune": "odporny",
+	"infection": "infekcja",
+	"medication": "leki",
+	"obesity": "otyłość",
+	"organ": "organ",
+	"palm": "dłoń",
+	"physician": "lekarz",
+	"protein": "białko",
+	"surgeon": "chirurg",
+	"surgery": "chirurgia",
+	"wound": "rana"
+}

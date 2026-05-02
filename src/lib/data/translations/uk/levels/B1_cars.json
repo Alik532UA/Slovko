@@ -6,14 +6,14 @@
 	"engine_motor": "двигун",
 	"fuel": "паливо",
 	"fuel_energy": "паливо",
-	"insurance": "страхування",
-	"mechanic": "механік",
+	"garage": "гараж",
+	"highway": "шосе",
 	"pedal": "педаль",
 	"piston": "поршень",
+	"signal": "сигнал",
 	"signal_phone": "сигнал",
-	"suspension": "підвіска",
 	"taillight": "задній ліхтар",
-	"transmission": "коробка передач",
+	"tire": "шина",
 	"trunk": "багажник",
 	"wiper": "двірник"
 }

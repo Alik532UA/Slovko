@@ -1,6 +1,10 @@
-{
+﻿{
+	"mosquito": "komar",
+	"rat": "szczur",
 	"squirrel": "wiewiórka",
 	"starfish": "rozgwiazda",
 	"walrus": "mors",
-	"whale": "wieloryb"
+	"whale": "wieloryb",
+	"wolf": "wilk",
+	"worm": "robak"
 }

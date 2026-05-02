@@ -6,13 +6,14 @@
 	"door": "door",
 	"key": "key",
 	"light": "light",
+	"light_brightness": "light",
 	"light_color": "light",
-	"oil": "oil",
+	"light_weight": "light",
 	"plane": "plane",
 	"road": "road",
-	"seat": "seat",
 	"street": "street",
 	"taxi": "taxi",
 	"train": "train",
+	"truck": "truck",
 	"window": "window"
 }

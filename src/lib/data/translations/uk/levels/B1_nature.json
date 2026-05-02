@@ -1,17 +1,15 @@
 ﻿{
-	"bush": "кущ",
-	"cave": "печера",
-	"cliff": "скеля",
 	"earth_planet": "земля",
 	"environment_nature": "навколишнє середовище",
 	"flood": "повінь",
 	"fog": "туман",
 	"global_warming": "глобальне потепління",
 	"jungle": "джунглі",
+	"leaf": "лист",
 	"lightning": "блискавка",
 	"rainbow": "веселка",
-	"root": "корінь",
 	"sand": "пісок",
 	"scenery": "краєвид",
-	"seed": "насіння"
+	"seed": "насіння",
+	"soil": "ґрунт"
 }

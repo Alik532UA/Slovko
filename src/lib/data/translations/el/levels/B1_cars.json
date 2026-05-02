@@ -6,14 +6,14 @@
 	"engine_motor": "μηχανή",
 	"fuel": "καύσιμο",
 	"fuel_energy": "καύσιμο",
-	"insurance": "ασφάλεια",
-	"mechanic": "μηχανικός",
+	"garage": "γκαράζ",
+	"highway": "αυτοκινητόδρομος",
 	"pedal": "πεντάλ",
 	"piston": "έμβολο",
+	"signal": "σήμα",
 	"signal_phone": "σήμα",
-	"suspension": "ανάρτηση",
 	"taillight": "πίσω φως",
-	"transmission": "σασμάν",
+	"tire": "λάστιχο",
 	"trunk": "πορτμπαγκάζ",
 	"wiper": "υαλοκαθαριστήρας"
 }

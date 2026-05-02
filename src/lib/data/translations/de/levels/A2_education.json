@@ -1,12 +1,11 @@
 ﻿{
 	"blackboard": "Tafel",
+	"boss": "Chef",
 	"degree_academic": "akademischer Grad",
 	"manager": "Manager",
 	"notebook_paper": "Notizbuch",
 	"physics": "Physik",
 	"printer_device": "Drucker",
-	"profession": "Beruf",
 	"professor": "Professor",
-	"rubber": "Radiergummi",
 	"salary": "Gehalt"
 }

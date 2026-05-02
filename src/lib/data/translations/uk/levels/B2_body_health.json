@@ -1,0 +1,23 @@
+﻿{
+	"ambulance": "швидка допомога",
+	"breast": "груди",
+	"cheek": "щока",
+	"cure": "лікувати",
+	"cure_medicine": "ліки",
+	"cure_verb": "лікувати",
+	"elbow": "лікоть",
+	"heal": "зцілювати",
+	"healthcare": "охорона здоров'я",
+	"hip": "кульша",
+	"immune": "імунний",
+	"infection": "інфекція",
+	"medication": "медикаменти",
+	"obesity": "ожиріння",
+	"organ": "орган",
+	"palm": "долоня",
+	"physician": "терапевт",
+	"protein": "білок",
+	"surgeon": "хірург",
+	"surgery": "хірургія",
+	"wound": "рана"
+}

@@ -1,17 +1,15 @@
 ﻿{
-	"bush": "bush",
-	"cave": "cave",
-	"cliff": "cliff",
 	"earth_planet": "earth",
 	"environment_nature": "environment",
 	"flood": "flood",
 	"fog": "fog",
 	"global_warming": "global warming",
 	"jungle": "jungle",
+	"leaf": "leaf",
 	"lightning": "lightning",
 	"rainbow": "rainbow",
-	"root": "root",
 	"sand": "sand",
 	"scenery": "scenery",
-	"seed": "seed"
+	"seed": "seed",
+	"soil": "soil"
 }

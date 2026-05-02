@@ -1,4 +1,17 @@
-{
+﻿{
+	"booking": "boeking",
+	"cabin": "hut",
+	"cabin_plane": "cabine",
+	"cabin_ship": "hut",
+	"canal": "kanaal",
+	"cancel": "annuleren",
+	"delay": "vertragen",
 	"departure_leave": "vertrek",
-	"fare": "tarief"
+	"fare": "tarief",
+	"found": "oprichten",
+	"harbor": "haven",
+	"immigration": "immigratie",
+	"resort": "resort",
+	"terminal": "terminal",
+	"visa": "visum"
 }

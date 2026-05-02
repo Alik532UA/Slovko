@@ -1,6 +1,12 @@
 ﻿{
-	"browser": "браузер",
+	"database": "база даних",
+	"delete": "видалити",
+	"disk": "диск",
 	"drive_it": "привід",
+	"monitor": "монітор",
+	"monitor_screen": "monitor",
+	"monitor_verb": "спостерігати",
+	"password": "пароль",
 	"scan_digital": "сканування",
 	"scan_medical": "сканування"
 }

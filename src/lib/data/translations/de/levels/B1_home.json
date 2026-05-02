@@ -1,6 +1,13 @@
 ﻿{
 	"balcony": "Balkon",
+	"ceiling": "Decke",
+	"iron": "bügeln",
+	"iron_noun": "iron",
+	"iron_verb": "bügeln",
+	"pan": "Pfanne",
 	"pillow": "Kissen",
 	"shampoo": "Shampoo",
+	"shelf": "Regal",
+	"sink": "Spüle",
 	"vase": "Vase"
 }

@@ -1,6 +1,10 @@
-{
+﻿{
+	"mosquito": "Mücke",
+	"rat": "Ratte",
 	"squirrel": "Eichhörnchen",
 	"starfish": "Seestern",
 	"walrus": "Walross",
-	"whale": "Wal"
+	"whale": "Wal",
+	"wolf": "Wolf",
+	"worm": "Wurm"
 }

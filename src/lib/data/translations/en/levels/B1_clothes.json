@@ -1,4 +1,7 @@
 ﻿{
+	"cap": "cap",
 	"cotton": "cotton",
-	"glove": "glove"
+	"glove": "glove",
+	"leather": "leather",
+	"wool": "wool"
 }

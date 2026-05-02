@@ -1,9 +1,13 @@
 ﻿{
 	"accident": "аварія",
+	"accident_chance": "випадок",
+	"accident_event": "нещасний випадок",
 	"blood": "кров",
 	"brain": "мозок",
 	"clap_hands": "плескати в долоні",
 	"comb_hair": "розчісувати",
+	"finger": "палець",
+	"heart": "серце",
 	"knee": "коліно",
 	"neck": "шия",
 	"shoulder": "плече",

@@ -1,6 +1,12 @@
 ﻿{
-	"browser": "przeglądarka",
+	"database": "baza danych",
+	"delete": "usunąć",
+	"disk": "dysk",
 	"drive_it": "napęd",
+	"monitor": "monitor",
+	"monitor_screen": "monitor",
+	"monitor_verb": "monitorować",
+	"password": "hasło",
 	"scan_digital": "skanowanie",
 	"scan_medical": "badanie"
 }

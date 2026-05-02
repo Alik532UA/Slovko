@@ -1,13 +1,12 @@
 ﻿{
 	"atm": "atm",
 	"boarding": "επιβίβαση",
+	"camp": "κατασκηνώνω",
+	"camp_noun": "camp",
 	"camp_verb": "κατασκηνώνω",
-	"cancel": "ακυρώνω",
 	"cash": "μετρητά",
 	"credit_card": "πιστωτική κάρτα",
-	"delay": "καθυστερώ",
 	"distance": "απόσταση",
-	"found": "ιδρύω",
 	"gate": "πύλη",
 	"guide": "οδηγός",
 	"holiday_celebration": "γιορτή",
@@ -15,10 +14,9 @@
 	"lost": "χάθηκα",
 	"luggage": "αποσκευές",
 	"platform": "αποβάθρα",
-	"station_2": "σταθμός",
-	"station_bahnhof": "σταθμός",
 	"station_stop": "σταθμός",
 	"station_transport": "σταθμός",
 	"ticket_office": "εκδοτήριο εισιτηρίων",
+	"tour": "περιήγηση",
 	"tourism": "τουρισμός"
 }

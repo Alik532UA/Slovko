@@ -2,9 +2,9 @@
 	"court": "court",
 	"discount": "discount",
 	"headline": "headline",
-	"identification": "identification",
+	"nation": "nation",
+	"politics": "politics",
 	"queue": "queue",
 	"receipt": "receipt",
-	"signature": "signature",
 	"vote": "vote"
 }

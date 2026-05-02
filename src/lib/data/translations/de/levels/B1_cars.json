@@ -6,14 +6,14 @@
 	"engine_motor": "Motor",
 	"fuel": "Treibstoff",
 	"fuel_energy": "Kraftstoff",
-	"insurance": "Versicherung",
-	"mechanic": "Mechaniker",
+	"garage": "Garage",
+	"highway": "Autobahn",
 	"pedal": "Pedal",
 	"piston": "Kolben",
+	"signal": "Signal",
 	"signal_phone": "Signal",
-	"suspension": "Aufhängung",
 	"taillight": "Rücklicht",
-	"transmission": "Getriebe",
+	"tire": "Reifen",
 	"trunk": "Kofferraum",
 	"wiper": "Scheibenwischer"
 }

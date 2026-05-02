@@ -6,13 +6,14 @@
 	"door": "deur",
 	"key": "sleutel",
 	"light": "licht",
+	"light_brightness": "licht",
 	"light_color": "licht",
-	"oil": "olie",
+	"light_weight": "licht",
 	"plane": "vliegtuig",
 	"road": "weg",
-	"seat": "stoel",
 	"street": "straat",
 	"taxi": "taxi",
 	"train": "trein",
+	"truck": "vrachtwagen",
 	"window": "raam"
 }

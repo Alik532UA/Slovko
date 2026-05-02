@@ -1,13 +1,12 @@
 ﻿{
 	"atm": "pinautomaat",
 	"boarding": "boarden",
+	"camp": "kamperen",
+	"camp_noun": "camp",
 	"camp_verb": "kamperen",
-	"cancel": "annuleren",
 	"cash": "contant geld",
 	"credit_card": "creditcard",
-	"delay": "vertragen",
 	"distance": "afstand",
-	"found": "oprichten",
 	"gate": "poort",
 	"guide": "gids",
 	"holiday_celebration": "feestdag",
@@ -18,5 +17,6 @@
 	"station_stop": "station",
 	"station_transport": "station",
 	"ticket_office": "loket",
+	"tour": "toer",
 	"tourism": "toerisme"
 }

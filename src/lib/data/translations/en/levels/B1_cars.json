@@ -6,14 +6,14 @@
 	"engine_motor": "engine",
 	"fuel": "fuel",
 	"fuel_energy": "fuel",
-	"insurance": "insurance",
-	"mechanic": "mechanic",
+	"garage": "garage",
+	"highway": "highway",
 	"pedal": "pedal",
 	"piston": "piston",
+	"signal": "signal",
 	"signal_phone": "signal",
-	"suspension": "suspension",
 	"taillight": "taillight",
-	"transmission": "transmission",
+	"tire": "tire",
 	"trunk": "trunk",
 	"wiper": "wiper"
 }

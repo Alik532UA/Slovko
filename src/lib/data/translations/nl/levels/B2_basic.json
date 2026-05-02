@@ -1,4 +1,7 @@
-{
+﻿{
+	"dig": "graven",
+	"melt": "smelten",
 	"rob": "beroven",
-	"spill": "morsen"
+	"spill": "morsen",
+	"spoil": "bederven"
 }

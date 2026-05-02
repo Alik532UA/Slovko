@@ -1,1 +1,7 @@
-﻿{}
+﻿{
+	"filter": "filteren",
+	"gear": "versnelling",
+	"pump": "pomp",
+	"suspension": "ophanging",
+	"transmission": "transmissie"
+}

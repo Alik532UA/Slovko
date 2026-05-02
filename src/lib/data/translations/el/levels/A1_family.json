@@ -1,5 +1,7 @@
 ﻿{
 	"aunt": "θεία",
+	"aunt_maternal": "θεία",
+	"aunt_paternal": "θεία",
 	"child": "παιδί",
 	"family": "οικογένεια",
 	"father": "πατέρας",
@@ -7,7 +9,6 @@
 	"grandfather": "παππούς",
 	"grandmother": "γιαγιά",
 	"husband": "άνδρας",
-	"marry": "παντρεύομαι",
 	"mother": "μητέρα",
 	"parents": "γονείς",
 	"partner": "σύντροφος",
@@ -16,5 +17,7 @@
 	"sister_younger": "αδελφή",
 	"son": "γιος",
 	"uncle": "θείος",
+	"uncle_maternal": "θείος",
+	"uncle_paternal": "θείος",
 	"wife": "γυναίκα"
 }

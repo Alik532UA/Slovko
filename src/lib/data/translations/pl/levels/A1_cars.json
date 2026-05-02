@@ -6,13 +6,14 @@
 	"door": "drzwi",
 	"key": "klucz",
 	"light": "jasny",
+	"light_brightness": "jasny",
 	"light_color": "jasny",
-	"oil": "olej",
+	"light_weight": "lekki",
 	"plane": "samolot",
 	"road": "droga",
-	"seat": "siedzenie",
 	"street": "ulica",
 	"taxi": "taksówka",
 	"train": "pociąg",
+	"truck": "ciężarówka",
 	"window": "okno"
 }

@@ -1,13 +1,12 @@
 ﻿{
 	"atm": "bankomat",
 	"boarding": "uçaqqa minüv",
+	"camp": "lager qurmaq",
+	"camp_noun": "camp",
 	"camp_verb": "lager qurmaq",
-	"cancel": "iptal etmek",
 	"cash": "nağd para",
 	"credit_card": "kredit kartası",
-	"delay": "keçiktirmek",
 	"distance": "mesafe",
-	"found": "qurmaq",
 	"gate": "qapı",
 	"guide": "gid",
 	"holiday_celebration": "bayram",
@@ -18,5 +17,6 @@
 	"station_stop": "stantsiya",
 	"station_transport": "stantsiya",
 	"ticket_office": "kassa",
+	"tour": "tur",
 	"tourism": "turizm"
 }

@@ -1,5 +1,7 @@
 ﻿{
 	"aunt": "ala",
+	"aunt_maternal": "tize",
+	"aunt_paternal": "ala",
 	"child": "bala",
 	"family": "aile",
 	"father": "baba",
@@ -7,7 +9,6 @@
 	"grandfather": "qartbaba",
 	"grandmother": "bita",
 	"husband": "aqay",
-	"marry": "evlenmek",
 	"mother": "ana",
 	"parents": "ana-baba",
 	"partner": "ortaq",
@@ -16,5 +17,7 @@
 	"sister_younger": "siñil",
 	"son": "oğul",
 	"uncle": "emce",
+	"uncle_maternal": "dayı",
+	"uncle_paternal": "amca",
 	"wife": "hanım"
 }

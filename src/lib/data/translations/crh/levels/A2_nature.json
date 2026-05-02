@@ -6,13 +6,15 @@
 	"hill": "töpe",
 	"insect": "böcek",
 	"lake": "köl",
-	"leaf": "yapraq",
+	"moon": "ay",
 	"rock_stone": "taş",
-	"soil": "topraq",
+	"season": "mevsim",
+	"sky": "kök",
 	"stone": "taş",
 	"storm": "fırtına",
 	"thunder": "kök gürüldevi",
 	"valley": "dere",
+	"wind": "yel",
 	"wood_bos": "orman",
 	"wood_holz": "tahta"
 }

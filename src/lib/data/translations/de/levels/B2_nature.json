@@ -1,4 +1,8 @@
 ﻿{
+	"bush": "Busch",
+	"cave": "Höhle",
+	"cliff": "Klippe",
 	"landscape": "Landschaft",
+	"root": "Wurzel",
 	"volcano": "Vulkan"
 }

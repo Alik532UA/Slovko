@@ -6,19 +6,15 @@
 	"flower": "квітка",
 	"ice": "лід",
 	"island": "острів",
-	"moon": "місяць",
 	"mountain": "гора",
 	"rain": "дощ",
 	"river": "річка",
 	"sea": "море",
-	"season": "пора року",
 	"snow": "сніг",
 	"spring_season": "весна",
 	"star": "зірка",
 	"summer": "літо",
 	"sun": "сонце",
 	"tree": "дерево",
-	"wind": "вітер",
-	"winter": "зима",
-	"sky": "небо"
+	"winter": "зима"
 }

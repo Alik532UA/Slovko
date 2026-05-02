@@ -1,9 +1,13 @@
 ﻿{
 	"accident": "wypadek",
+	"accident_chance": "przypadek",
+	"accident_event": "wypadek",
 	"blood": "krew",
 	"brain": "mózg",
 	"clap_hands": "klaskać",
 	"comb_hair": "czesać",
+	"finger": "palec",
+	"heart": "serce",
 	"knee": "kolano",
 	"neck": "szyja",
 	"shoulder": "ramię",

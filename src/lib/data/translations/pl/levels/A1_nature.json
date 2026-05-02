@@ -6,19 +6,15 @@
 	"flower": "kwiat",
 	"ice": "lód",
 	"island": "wyspa",
-	"moon": "księżyc",
 	"mountain": "góra",
 	"rain": "deszcz",
 	"river": "rzeka",
 	"sea": "morze",
-	"season": "pora roku",
 	"snow": "śnieg",
 	"spring_season": "wiosna",
 	"star": "gwiazda",
 	"summer": "lato",
 	"sun": "słońce",
 	"tree": "drzewo",
-	"wind": "wiatr",
-	"winter": "zima",
-	"sky": "niebo"
+	"winter": "zima"
 }

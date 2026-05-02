@@ -1,10 +1,12 @@
-{
+﻿{
 	"brake": "tormoz",
 	"exhaust": "egzoz",
 	"exhaust_options": "bitirmek",
-	"filter": "filtr",
-	"gear": "vites",
 	"hood": "kapot",
+	"insurance": "sigorta",
+	"license": "ehliyet",
+	"license_document": "vesiqa",
+	"mechanic": "mehanik",
 	"radiator": "radiator",
 	"shock_absorber": "amortizator",
 	"spark_plug": "ateşleme bujisi",

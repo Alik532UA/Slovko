@@ -1,4 +1,7 @@
 ﻿{
+	"cap": "pet",
 	"cotton": "katoen",
-	"glove": "handschoen"
+	"glove": "handschoen",
+	"leather": "leer",
+	"wool": "wol"
 }

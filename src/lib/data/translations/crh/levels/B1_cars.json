@@ -6,14 +6,14 @@
 	"engine_motor": "motor",
 	"fuel": "yaqıt",
 	"fuel_energy": "yaqıt",
-	"insurance": "sigorta",
-	"mechanic": "mehanik",
+	"garage": "garaj",
+	"highway": "şosse",
 	"pedal": "pedal",
 	"piston": "piston",
+	"signal": "işaret",
 	"signal_phone": "işaret",
-	"suspension": "süspansiyon",
 	"taillight": "art far",
-	"transmission": "vites qutusı",
+	"tire": "şina",
 	"trunk": "yükyeri",
 	"wiper": "silecegi"
 }

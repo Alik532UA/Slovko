@@ -1,4 +1,7 @@
-{
+﻿{
+	"dig": "dig",
+	"melt": "melt",
 	"rob": "rob",
-	"spill": "spill"
+	"spill": "spill",
+	"spoil": "spoil"
 }

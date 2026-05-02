@@ -1,17 +1,15 @@
 ﻿{
-	"bush": "krzak",
-	"cave": "jaskinia",
-	"cliff": "klif",
 	"earth_planet": "Ziemia",
 	"environment_nature": "środowisko",
 	"flood": "powódź",
 	"fog": "mgła",
 	"global_warming": "globalne ocieplenie",
 	"jungle": "dżungla",
+	"leaf": "liść",
 	"lightning": "piorun",
 	"rainbow": "tęcza",
-	"root": "korzeń",
 	"sand": "piasek",
 	"scenery": "krajobraz",
-	"seed": "nasiono"
+	"seed": "nasiono",
+	"soil": "gleba"
 }

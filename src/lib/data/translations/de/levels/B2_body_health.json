@@ -1,0 +1,23 @@
+﻿{
+	"ambulance": "Krankenwagen",
+	"breast": "Brust",
+	"cheek": "Wange",
+	"cure": "heilen",
+	"cure_medicine": "Heilung",
+	"cure_verb": "heilen",
+	"elbow": "Ellbogen",
+	"heal": "heilen",
+	"healthcare": "Gesundheitswesen",
+	"hip": "Hüfte",
+	"immune": "immun",
+	"infection": "Infektion",
+	"medication": "Medikament",
+	"obesity": "Fettleibigkeit",
+	"organ": "Organ",
+	"palm": "Handfläche",
+	"physician": "Arzt",
+	"protein": "Protein",
+	"surgeon": "Chirurg",
+	"surgery": "Chirurgie",
+	"wound": "Wunde"
+}

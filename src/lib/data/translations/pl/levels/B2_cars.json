@@ -1,10 +1,12 @@
-{
+﻿{
 	"brake": "hamulec",
 	"exhaust": "wydech",
 	"exhaust_options": "wyczerpywać opcje",
-	"filter": "filtr",
-	"gear": "bieg",
 	"hood": "maska",
+	"insurance": "ubezpieczenie",
+	"license": "prawo jazdy",
+	"license_document": "licencja",
+	"mechanic": "mechanik",
 	"radiator": "chłodnica",
 	"shock_absorber": "amortyzator",
 	"spark_plug": "świeca zapłonowa",

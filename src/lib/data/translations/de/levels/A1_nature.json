@@ -6,19 +6,15 @@
 	"flower": "Blume",
 	"ice": "Eis",
 	"island": "Insel",
-	"moon": "Mond",
 	"mountain": "Berg",
 	"rain": "Regen",
 	"river": "Fluss",
 	"sea": "Meer",
-	"season": "Jahreszeit",
 	"snow": "Schnee",
 	"spring_season": "Frühling",
 	"star": "Stern",
 	"summer": "Sommer",
 	"sun": "Sonne",
 	"tree": "Baum",
-	"wind": "Wind",
-	"winter": "Winter",
-	"sky": "Himmel"
+	"winter": "Winter"
 }

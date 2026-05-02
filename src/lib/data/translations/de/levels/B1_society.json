@@ -2,9 +2,9 @@
 	"court": "Gericht",
 	"discount": "Rabatt",
 	"headline": "Schlagzeile",
-	"identification": "Identifikation",
+	"nation": "Nation",
+	"politics": "Politik",
 	"queue": "Warteschlange",
 	"receipt": "Quittung",
-	"signature": "Unterschrift",
 	"vote": "wählen"
 }

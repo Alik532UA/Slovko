@@ -1,11 +1,7 @@
 ﻿{
-	"cap": "pet",
-	"leather": "leer",
-	"pants": "broek",
 	"purse": "handtas",
 	"sock": "sok",
 	"suit": "pak",
 	"tie_clothes": "das",
-	"uniform": "homogeen",
-	"wool": "wol"
+	"uniform": "homogeen"
 }

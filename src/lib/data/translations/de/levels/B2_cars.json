@@ -1,10 +1,12 @@
-{
+﻿{
 	"brake": "Bremse",
 	"exhaust": "Auspuff",
 	"exhaust_options": "erschöpfen",
-	"filter": "Filter",
-	"gear": "Gang",
 	"hood": "Motorhaube",
+	"insurance": "Versicherung",
+	"license": "Führerschein",
+	"license_document": "Lizenz",
+	"mechanic": "Mechaniker",
 	"radiator": "Kühler",
 	"shock_absorber": "Stoßdämpfer",
 	"spark_plug": "Zündkerze",

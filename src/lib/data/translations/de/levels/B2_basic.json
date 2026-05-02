@@ -1,4 +1,7 @@
-{
+﻿{
+	"dig": "graben",
+	"melt": "schmelzen",
 	"rob": "rauben",
-	"spill": "verschütten"
+	"spill": "verschütten",
+	"spoil": "verderben"
 }

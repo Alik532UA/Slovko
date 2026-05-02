@@ -1,6 +1,13 @@
 ﻿{
 	"balcony": "balkon",
+	"ceiling": "plafond",
+	"iron": "strijken",
+	"iron_noun": "iron",
+	"iron_verb": "strijken",
+	"pan": "pannen",
 	"pillow": "kussen",
 	"shampoo": "shampoo ",
+	"shelf": "plank",
+	"sink": "gootsteen",
 	"vase": "vaas"
 }

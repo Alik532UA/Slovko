@@ -4,7 +4,7 @@
 	"beer": "bier",
 	"bread": "brood",
 	"butter": "boter",
-	"cake": "taart",
+	"cake": "ciasto",
 	"cheese": "kaas",
 	"chocolate": "chocolade",
 	"coffee": "koffie",
@@ -30,5 +30,5 @@
 	"tomato": "tomaat",
 	"vegetable": "groente",
 	"water": "water",
-	"wine": "wijn"
+	"wine": "wino"
 }

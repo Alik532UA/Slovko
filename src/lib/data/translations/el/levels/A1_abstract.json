@@ -1,14 +1,17 @@
 ﻿{
 	"beginning": "αρχή",
+	"beginning_start": "αρχή",
 	"example": "παράδειγμα",
 	"feeling": "συναίσθημα",
 	"future": "μέλλον",
 	"idea": "ιδέα",
 	"life": "ζωή",
 	"love": "αγαπώ",
-	"mind": "μυαλό",
 	"past": "παρελθόν",
 	"present": "παρόν",
-	"success": "επιτυχία",
-	"thought": "σκέψη"
+	"present_current": "τωρινός",
+	"present_gift": "δώρο",
+	"present_here": "παρών",
+	"present_time": "παρόν",
+	"success": "επιτυχία"
 }

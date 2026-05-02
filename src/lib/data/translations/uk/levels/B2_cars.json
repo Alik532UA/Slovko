@@ -1,10 +1,12 @@
-{
+﻿{
 	"brake": "гальмо",
 	"exhaust": "вихлопна система",
 	"exhaust_options": "виснажувати",
-	"filter": "фільтр",
-	"gear": "передача",
 	"hood": "капот",
+	"insurance": "страхування",
+	"license": "права",
+	"license_document": "ліцензія",
+	"mechanic": "механік",
 	"radiator": "радіатор",
 	"shock_absorber": "амортизатор",
 	"spark_plug": "свічка запалювання",

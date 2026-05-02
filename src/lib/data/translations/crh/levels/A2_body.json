@@ -1,9 +1,13 @@
 ﻿{
 	"accident": "qaza",
+	"accident_chance": "tesadüf",
+	"accident_event": "qaza",
 	"blood": "qan",
 	"brain": "beyin",
 	"clap_hands": "el çırpmaq",
 	"comb_hair": "daramaq",
+	"finger": "parmaq",
+	"heart": "yürek",
 	"knee": "tiz",
 	"neck": "boyun",
 	"shoulder": "omuz",

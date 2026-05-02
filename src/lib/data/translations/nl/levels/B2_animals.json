@@ -1,6 +1,10 @@
-{
+﻿{
+	"mosquito": "mug",
+	"rat": "rat",
 	"squirrel": "eekhoorn",
 	"starfish": "zeester",
 	"walrus": "walrus",
-	"whale": "walvis"
+	"whale": "walvis",
+	"wolf": "wolf",
+	"worm": "worm"
 }

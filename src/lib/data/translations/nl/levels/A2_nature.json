@@ -6,13 +6,15 @@
 	"hill": "heuvel",
 	"insect": "insekt",
 	"lake": "meer",
-	"leaf": "blad",
+	"moon": "maan",
 	"rock_stone": "rots",
-	"soil": "grond",
+	"season": "seizoen",
+	"sky": "hemel",
 	"stone": "steen",
 	"storm": "storm",
 	"thunder": "donder",
 	"valley": "vallei",
+	"wind": "wind",
 	"wood_bos": "bos",
 	"wood_holz": "hout"
 }

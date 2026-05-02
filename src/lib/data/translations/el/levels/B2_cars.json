@@ -1,10 +1,12 @@
-{
+﻿{
 	"brake": "φρένο",
 	"exhaust": "εξάτμιση",
 	"exhaust_options": "εξαντλώ τις επιλογές",
-	"filter": "φίλτρο",
-	"gear": "ταχύτητα",
 	"hood": "καπό",
+	"insurance": "ασφάλεια",
+	"license": "άδεια",
+	"license_document": "άδεια",
+	"mechanic": "μηχανικός",
 	"radiator": "ψυγείο",
 	"shock_absorber": "αμορτισέρ",
 	"spark_plug": "μπουζί",

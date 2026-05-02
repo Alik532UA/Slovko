@@ -1,6 +1,12 @@
 ﻿{
-	"browser": "browser",
+	"database": "database",
+	"delete": "delete",
+	"disk": "disk",
 	"drive_it": "drive",
+	"monitor": "monitor",
+	"monitor_screen": "monitor",
+	"monitor_verb": "monitor",
+	"password": "password",
 	"scan_digital": "scan",
 	"scan_medical": "scan"
 }

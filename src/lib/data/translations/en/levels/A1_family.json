@@ -1,5 +1,7 @@
 ﻿{
 	"aunt": "aunt",
+	"aunt_maternal": "aunt",
+	"aunt_paternal": "aunt",
 	"child": "child",
 	"family": "family",
 	"father": "father",
@@ -7,7 +9,6 @@
 	"grandfather": "grandfather",
 	"grandmother": "grandmother",
 	"husband": "husband",
-	"marry": "marry",
 	"mother": "mother",
 	"parents": "parents",
 	"partner": "partner",
@@ -16,5 +17,7 @@
 	"sister_younger": "sister",
 	"son": "son",
 	"uncle": "uncle",
+	"uncle_maternal": "uncle",
+	"uncle_paternal": "uncle",
 	"wife": "wife"
 }

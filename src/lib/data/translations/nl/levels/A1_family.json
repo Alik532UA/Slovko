@@ -1,5 +1,7 @@
 ﻿{
 	"aunt": "tante",
+	"aunt_maternal": "tante",
+	"aunt_paternal": "tante",
 	"child": "kind",
 	"family": "familie",
 	"father": "vader",
@@ -7,7 +9,6 @@
 	"grandfather": "grootvader",
 	"grandmother": "grootmoeder",
 	"husband": "echtgenoot",
-	"marry": "trouwen",
 	"mother": "moeder",
 	"parents": "ouders",
 	"partner": "partner",
@@ -16,5 +17,7 @@
 	"sister_younger": "zus",
 	"son": "zoon",
 	"uncle": "oom",
+	"uncle_maternal": "oom",
+	"uncle_paternal": "oom",
 	"wife": "echtgenote"
 }

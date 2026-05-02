@@ -1,12 +1,11 @@
 ﻿{
 	"blackboard": "πίνακας",
+	"boss": "αφεντικό",
 	"degree_academic": "πτυχίο",
 	"manager": "διευθυντής",
 	"notebook_paper": "τετράδιο",
 	"physics": "φυσική",
 	"printer_device": "εκτυπωτής",
-	"profession": "επάγγελμα",
 	"professor": "καθηγητής",
-	"rubber": "γόμα",
 	"salary": "μισθός"
 }

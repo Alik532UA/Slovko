@@ -1,0 +1,23 @@
+﻿{
+	"ambulance": "acele yardım",
+	"breast": "köküs",
+	"cheek": "yañaq",
+	"cure": "tedavi etmek",
+	"cure_medicine": "ilâc",
+	"cure_verb": "tedavi etmek",
+	"elbow": "dirsek",
+	"heal": "sağalmaq",
+	"healthcare": "sağlıq saqlav",
+	"hip": "yan",
+	"immune": "immunitet",
+	"infection": "infektsiya",
+	"medication": "ilâclar",
+	"obesity": "semizlik",
+	"organ": "organ",
+	"palm": "avuç",
+	"physician": "hekim",
+	"protein": "protein",
+	"surgeon": "cerrah",
+	"surgery": "operatsiya",
+	"wound": "yara"
+}

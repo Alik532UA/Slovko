@@ -226,8 +226,24 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		specific: ["assign_role", "assign_task"]
 	},
 	at: {
-		base: "at",
-		specific: ["at_place", "at_time"]
+	        base: "at",
+	        specific: ["at_place", "at_time"]
+	},
+	bank: {
+	        base: "bank",
+	        specific: ["bank_finance", "bank_river"]
+	},
+	blonde: {
+	        base: "blonde",
+	        specific: ["blonde_color", "blonde_person"]
+	},
+	boot: {
+	        base: "boot",
+	        specific: ["boot_car", "boot_shoe"]
+	},
+	capital: {
+		base: "capital",
+		specific: ["capital_city", "capital_money"]
 	},
 	attachment: {
 		base: "attachment",

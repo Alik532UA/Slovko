@@ -1,1 +1,7 @@
-﻿{}
+﻿{
+	"filter": "filter",
+	"gear": "gear",
+	"pump": "pump",
+	"suspension": "suspension",
+	"transmission": "transmission"
+}

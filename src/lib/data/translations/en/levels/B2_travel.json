@@ -1,4 +1,17 @@
-{
+﻿{
+	"booking": "booking",
+	"cabin": "cabin",
+	"cabin_plane": "cabin",
+	"cabin_ship": "cabin",
+	"canal": "canal",
+	"cancel": "cancel",
+	"delay": "delay",
 	"departure_leave": "departure",
-	"fare": "fare"
+	"fare": "fare",
+	"found": "found",
+	"harbor": "harbor",
+	"immigration": "immigration",
+	"resort": "resort",
+	"terminal": "terminal",
+	"visa": "visa"
 }

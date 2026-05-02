@@ -1,13 +1,12 @@
 ﻿{
 	"atm": "Geldautomat",
 	"boarding": "Besteigen",
+	"camp": "zelten",
+	"camp_noun": "camp",
 	"camp_verb": "zelten",
-	"cancel": "absagen",
 	"cash": "Bargeld",
 	"credit_card": "Kreditkarte",
-	"delay": "verzögern",
 	"distance": "Entfernung",
-	"found": "gründen",
 	"gate": "Tor",
 	"guide": "Führer",
 	"holiday_celebration": "Feiertag",
@@ -18,5 +17,6 @@
 	"station_stop": "Station",
 	"station_transport": "Bahnhof",
 	"ticket_office": "Fahrkartenschalter",
+	"tour": "Tour",
 	"tourism": "Tourismus"
 }

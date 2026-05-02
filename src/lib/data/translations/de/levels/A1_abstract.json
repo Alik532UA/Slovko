@@ -1,14 +1,17 @@
 ﻿{
 	"beginning": "Beginn",
+	"beginning_start": "Beginn",
 	"example": "Beispiel",
 	"feeling": "Gefühl",
 	"future": "Zukunft",
 	"idea": "Idee",
 	"life": "Leben",
 	"love": "lieben",
-	"mind": "Verstand",
 	"past": "Vergangenheit",
 	"present": "Gegenwart",
-	"success": "Erfolg",
-	"thought": "Gedanke"
+	"present_current": "gegenwärtig",
+	"present_gift": "Geschenk",
+	"present_here": "anwesend",
+	"present_time": "Gegenwart",
+	"success": "Erfolg"
 }

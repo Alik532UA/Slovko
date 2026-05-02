@@ -1,13 +1,12 @@
 ﻿{
 	"atm": "банкомат",
 	"boarding": "посадка",
+	"camp": "жити в наметі",
+	"camp_noun": "camp",
 	"camp_verb": "жити в наметі",
-	"cancel": "скасовувати",
 	"cash": "готівка",
 	"credit_card": "кредитна картка",
-	"delay": "затримувати",
 	"distance": "відстань",
-	"found": "засновувати",
 	"gate": "ворота",
 	"guide": "гід",
 	"holiday_celebration": "свято",
@@ -15,10 +14,9 @@
 	"lost": "загублений",
 	"luggage": "багаж",
 	"platform": "платформа",
-	"station_2": "станція",
-	"station_bahnhof": "вокзал",
 	"station_stop": "вокзал",
 	"station_transport": "станція",
 	"ticket_office": "каса",
+	"tour": "тур",
 	"tourism": "туризм"
 }
