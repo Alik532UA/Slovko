@@ -31,27 +31,27 @@ function applyTranslations(translations) {
     });
 }
 
-const batch14 = {
-    "municipal": { uk: "муніципальний", pl: "miejski", de: "kommunal", nl: "gemeentelijk", el: "δημοτικός", crh: "belediyege ait" },
-    "mutual": { uk: "взаємний", pl: "wzajemny", de: "gegenseitig", nl: "wederzijds", el: "αμοιβαίος", crh: "qarşılıqlı" },
-    "namely": { uk: "а саме", pl: "mianowicie", de: "nämlich", nl: "namelijk", el: "δηλαδή", crh: "yani" },
-    "nationwide": { uk: "загальнонаціональний", pl: "ogólnokrajowy", de: "bundesweit", nl: "landelijk", el: "πανεθνικός", crh: "memleket miqyası" },
-    "naval": { uk: "військово-морський", pl: "morski", de: "maritim", nl: "maritiem", el: "ναυτικός", crh: "deñizge ait" },
-    "neglect": { uk: "нехтувати", pl: "zaniedbywać", de: "vernachlässigen", nl: "verwaarlozen", el: "παραμελώ", crh: "ihmal etmek" },
-    "neighboring": { uk: "сусідній", pl: "sąsiedni", de: "benachbart", nl: "naburig", el: "γειτονικός", crh: "qomşu" },
-    "neighbouring": { uk: "сусідній", pl: "sąsiedni", de: "benachbart", nl: "naburig", el: "γειτονικός", crh: "qomşu" },
-    "nest": { uk: "гніздо", pl: "gniazdo", de: "Nest", nl: "nest", el: "φωλιά", crh: "yuva" },
-    "newsletter": { uk: "інформаційний бюлетень", pl: "biuletyn", de: "Newsletter", nl: "nieuwsbrief", el: "ενημερωτικό δελτίο", crh: "haber kâğıtı" },
-    "niche": { uk: "ніша", pl: "nisza", de: "Nische", nl: "nis", el: "κόγχη", crh: "hücre" },
-    "noble": { uk: "шляхетний", pl: "szlachetny", de: "adelig", nl: "nobel", el: "ευγενής", crh: "asil" },
-    "nod": { uk: "кивати", pl: "skinienie głową", de: "nicken", nl: "knikken", el: "νεύμα", crh: "baş sallamaq" },
-    "nomination": { uk: "номінація", pl: "nominacja", de: "Nominierung", nl: "nominatie", el: "υποψηφιότητα", crh: "namzetlik" },
-    "nominee": { uk: "номінант", pl: "nominowany", de: "Nominierter", nl: "genomineerde", el: "υποψήφιος", crh: "namzet" },
-    "non-profit": { uk: "неприбутковий", pl: "non-profit", de: "gemeinnützig", nl: "non-profit", el: "μη κερδοσκοπικός", crh: "fayda kötermegen" },
-    "nonetheless": { uk: "тим не менш", pl: "niemniej jednak", de: "nichtsdestotrotz", nl: "niettemin", el: "παρ' όλα αυτά", crh: "oña baqmadan" },
-    "nonprofit": { uk: "неприбутковий", pl: "non-profit", de: "gemeinnützig", nl: "non-profit", el: "μη κερδοσκοπικός", crh: "fayda kötermegen" },
-    "noon": { uk: "полудень", pl: "południe", de: "Mittag", nl: "middag", el: "μεσημέρι", crh: "öle" },
-    "notable": { uk: "помітний", pl: "godny uwagi", de: "bemerkenswert", nl: "opmerkelijk", el: "αξιοσημείωτος", crh: "diqqatqa lâyıq" }
+const batch15 = {
+    "notably": { uk: "зокрема", pl: "w szczególności", de: "insbesondere", nl: "met name", el: "ιδίως", crh: "hususan" },
+    "notorious": { uk: "горезвісний", pl: "cieszący się złą sławą", de: "berüchtigt", nl: "berucht", el: "διαβόητος", crh: "belli (fena cihetten)" },
+    "nursery": { uk: "дитячий садок", pl: "żłobek", de: "Kindergarten", nl: "crèche", el: "βρεφονηπιακός σταθμός", crh: "bala bağçası" },
+    "objection": { uk: "заперечення", pl: "sprzeciw", de: "Einwand", nl: "bezwaar", el: "ένσταση", crh: "itiraz" },
+    "obsess": { uk: "переслідувати", pl: "mieć obsesję", de: "besessen sein", nl: "obsederen", el: "έχω εμμονή", crh: "tüşüncelerinden çıqarmaq" },
+    "obsession": { uk: "одержимість", pl: "obsesja", de: "Besessenheit", nl: "obsessie", el: "εμμονή", crh: "sevda" },
+    "occasional": { uk: "випадковий", pl: "sporadyczny", de: "gelegentlich", nl: "incidenteel", el: "περιστασιακός", crh: "ba'zı vaqıtları" },
+    "occurrence": { uk: "випадок", pl: "zdarzenie", de: "Vorkommen", nl: "voorval", el: "γεγονός", crh: "vaqia" },
+    "odds": { uk: "шанси", pl: "szanse", de: "Chancen", nl: "kansen", el: "πιθανότητες", crh: "ihtimal" },
+    "offering": { uk: "пропозиція", pl: "oferta", de: "Angebot", nl: "aanbod", el: "προσφορά", crh: "bağış" },
+    "offspring": { uk: "потомство", pl: "potomstwo", de: "Nachwuchs", nl: "nakomelingen", el: "απόγονος", crh: "nesil" },
+    "operational": { uk: "оперативний", pl: "operacyjny", de: "betriebsbereit", nl: "operationeel", el: "επιχειρησιακός", crh: "işleyicideli" },
+    "optical": { uk: "оптичний", pl: "optyczny", de: "optisch", nl: "optisch", el: "οπτικός", crh: "optik" },
+    "optimism": { uk: "оптимізм", pl: "optymizm", de: "Optimismus", nl: "optimisme", el: "αισιοδοξία", crh: "optimizm" },
+    "oral": { uk: "усний", pl: "ustny", de: "mündlich", nl: "mondeling", el: "προφορικός", crh: "ağızdan" },
+    "organizational": { uk: "організаційний", pl: "organizacyjny", de: "organisatorisch", nl: "organisatorisch", el: "οργανωτικός", crh: "teşkilâtlı" },
+    "orientation": { uk: "орієнтація", pl: "orientacja", de: "Orientierung", nl: "oriëntatie", el: "προσανατολισμός", crh: "yöneliş" },
+    "outbreak": { uk: "спалах", pl: "wybuch", de: "Ausbruch", nl: "uitbraak", el: "ξέσπασμα", crh: "başlanğıç" },
+    "outing": { uk: "прогулянка", pl: "wycieczka", de: "Ausflug", nl: "uitje", el: "εκδρομή", crh: "gezinti" },
+    "outlet": { uk: "торгова точка", pl: "punkt sprzedaży", de: "Verkaufsstelle", nl: "outlet", el: "διέξοδος", crh: "çıqış" }
 };
 
-applyTranslations(batch14);
+applyTranslations(batch15);
