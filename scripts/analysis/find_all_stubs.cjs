@@ -14,7 +14,6 @@ langs.forEach(lang => {
         const content = JSON.parse(contentStr.replace(/^\uFEFF/, ''));
         
         Object.entries(content).forEach(([key, val]) => {
-            // If translation equals the key, it's a stub
             if (key.toLowerCase() === val.toLowerCase() && key.length > 2) {
                 if (!stubs[key]) stubs[key] = { file, langs: [] };
                 stubs[key].langs.push(lang);
@@ -27,5 +26,6 @@ const sortedKeys = Object.keys(stubs).sort();
 const result = {};
 sortedKeys.forEach(k => result[k] = stubs[k]);
 
+if (!fs.existsSync('.temp')) fs.mkdirSync('.temp');
 fs.writeFileSync('.temp/all_stubs.json', JSON.stringify(result, null, 2));
 console.log('Total unique stub keys found:', sortedKeys.length);
