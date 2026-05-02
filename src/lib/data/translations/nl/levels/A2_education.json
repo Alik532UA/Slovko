@@ -1,10 +1,6 @@
 ﻿{
 	"blackboard": "schoolbord",
-	"career": "carrière",
 	"degree_academic": "graad",
-	"geography": "aardrijkskunde",
-	"interview": "sollicitatiegesprek",
-	"library": "bibliotheek",
 	"manager": "verantwoordelijke",
 	"notebook_paper": "schrift",
 	"physics": "natuurkunde",
@@ -12,6 +8,5 @@
 	"profession": "beroep",
 	"professor": "hoogleraar",
 	"rubber": "gum",
-	"salary": "salaris",
-	"skill": "vaardigheid"
+	"salary": "salaris"
 }

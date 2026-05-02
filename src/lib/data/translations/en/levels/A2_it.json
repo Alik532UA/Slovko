@@ -9,7 +9,6 @@
 	"delete": "delete",
 	"disk": "disk",
 	"document": "document",
-	"email": "email",
 	"headphone": "headphone",
 	"image": "image",
 	"laptop": "laptop",
@@ -25,6 +24,5 @@
 	"speaker": "speaker",
 	"usb": "usb",
 	"user": "user",
-	"virus": "virus",
-	"website": "website"
+	"virus": "virus"
 }

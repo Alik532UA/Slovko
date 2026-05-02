@@ -1,10 +1,6 @@
 ﻿{
 	"blackboard": "yazı tabağı",
-	"career": "karyera",
 	"degree_academic": "derece",
-	"geography": "coğrafiya",
-	"interview": "mülâqat",
-	"library": "kitaphane",
 	"manager": "mudir",
 	"notebook_paper": "defter",
 	"physics": "fizika",
@@ -12,6 +8,5 @@
 	"profession": "zenaat",
 	"professor": "professor",
 	"rubber": "silgi",
-	"salary": "maaş",
-	"skill": "ustalıq"
+	"salary": "maaş"
 }

@@ -1,10 +1,6 @@
 ﻿{
 	"blackboard": "tablica",
-	"career": "kariera",
 	"degree_academic": "stopień",
-	"geography": "geografia",
-	"interview": "rozmowa kwalifikacyjna",
-	"library": "biblioteka",
 	"manager": "menedżer",
 	"notebook_paper": "zeszyt",
 	"physics": "fizyka",
@@ -12,6 +8,5 @@
 	"profession": "zawód",
 	"professor": "profesor",
 	"rubber": "gumka",
-	"salary": "wynagrodzenie",
-	"skill": "umiejętność"
+	"salary": "wynagrodzenie"
 }

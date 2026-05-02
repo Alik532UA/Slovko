@@ -87,6 +87,7 @@ export function transliterateUkToLatin(text: string): string {
 }
 
 export function generateUkIPA(text: string): string {
+	if (!text) return "";
 	return text
 		.toLowerCase()
 		.split("")

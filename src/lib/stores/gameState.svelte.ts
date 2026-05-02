@@ -225,6 +225,8 @@ function createGameState() {
 		},
 
 		getAvailableWords(needed: number): WordKey[] {
+			if (currentWords.length === 0) return [];
+
 			const selected: WordKey[] = [];
 			const currentlyOnBoard = new Set(
 				sourceCards
@@ -240,7 +242,11 @@ function createGameState() {
 					wordPool = shuffle([...currentWords]);
 				}
 
-				const w = wordPool.pop()!;
+				const w = wordPool.pop();
+				if (!w) {
+					attempts++;
+					continue;
+				}
 
 				if (currentlyOnBoard.has(w) || selected.includes(w)) {
 					const randomIndex = Math.floor(Math.random() * (wordPool.length + 1));

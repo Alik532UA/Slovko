@@ -9,7 +9,6 @@
 	"delete": "διαγραφή",
 	"disk": "δίσκος",
 	"document": "έγγραφο",
-	"email": "email",
 	"headphone": "ακουστικά",
 	"image": "εικόνα",
 	"laptop": "φορητός υπολογιστής",
@@ -25,6 +24,5 @@
 	"speaker": "ηχείο",
 	"usb": "usb",
 	"user": "χρήστης",
-	"virus": "ιός",
-	"website": "ιστότοπος"
+	"virus": "ιός"
 }

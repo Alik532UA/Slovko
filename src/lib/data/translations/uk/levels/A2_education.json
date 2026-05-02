@@ -1,10 +1,6 @@
 ﻿{
 	"blackboard": "класна дошка",
-	"career": "кар'єра",
 	"degree_academic": "науковий ступінь",
-	"geography": "географія",
-	"interview": "співбесіда",
-	"library": "бібліотека",
 	"manager": "менеджер",
 	"notebook_paper": "зошит",
 	"physics": "фізика",
@@ -12,6 +8,5 @@
 	"profession": "професія",
 	"professor": "професор",
 	"rubber": "гумка",
-	"salary": "зарплата",
-	"skill": "навичка"
+	"salary": "зарплата"
 }

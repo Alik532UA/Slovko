@@ -1,10 +1,6 @@
 ﻿{
 	"blackboard": "πίνακας",
-	"career": "καριέρα",
 	"degree_academic": "πτυχίο",
-	"geography": "γεωγραφία",
-	"interview": "συνέντευξη",
-	"library": "βιβλιοθήκη",
 	"manager": "διευθυντής",
 	"notebook_paper": "τετράδιο",
 	"physics": "φυσική",
@@ -12,6 +8,5 @@
 	"profession": "επάγγελμα",
 	"professor": "καθηγητής",
 	"rubber": "γόμα",
-	"salary": "μισθός",
-	"skill": "δεξιότητα"
+	"salary": "μισθός"
 }

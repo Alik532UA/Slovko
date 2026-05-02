@@ -9,7 +9,6 @@
 	"delete": "usunąć",
 	"disk": "dysk",
 	"document": "dokument",
-	"email": "e-mail",
 	"headphone": "słuchawki",
 	"image": "obraz",
 	"laptop": "laptop",
@@ -25,6 +24,5 @@
 	"speaker": "głośnik",
 	"usb": "usb",
 	"user": "użytkownik",
-	"virus": "wirus",
-	"website": "strona internetowa"
+	"virus": "wirus"
 }

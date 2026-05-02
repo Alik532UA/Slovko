@@ -38,6 +38,7 @@ const CRH_IPA_MAP: Record<string, string> = {
 };
 
 export function generateCrhIPA(text: string): string {
+	if (!text) return "";
 	return text
 		.toLowerCase()
 		.split("")

@@ -1,8 +1,6 @@
 ﻿{
-	"audio": "Audio",
 	"browser": "Browser",
 	"drive_it": "Laufwerk",
-	"hardware": "Hardware",
 	"scan_digital": "Scan",
 	"scan_medical": "Scan"
 }

@@ -505,6 +505,7 @@ export function getTranslation(
 	translations: TranslationDictionary,
 	language: Language = "uk",
 ): string {
+	if (!word) return "";
 	let translation = translations[word];
 	const baseKey = getBaseKey(word);
 

@@ -9,7 +9,6 @@
 	"delete": "verwijderen",
 	"disk": "schijf",
 	"document": "document",
-	"email": "e-mail",
 	"headphone": "koptelefoon",
 	"image": "afbeelding",
 	"laptop": "laptop",
@@ -25,6 +24,5 @@
 	"speaker": "luidspreker",
 	"usb": "usb",
 	"user": "gebruiker",
-	"virus": "virus",
-	"website": "website"
+	"virus": "virus"
 }

@@ -9,7 +9,6 @@
 	"delete": "silmek",
 	"disk": "disk",
 	"document": "vesiqa",
-	"email": "e-poçta",
 	"headphone": "qulaqlıq",
 	"image": "resim",
 	"laptop": "tizüstü bilgisayar",
@@ -25,6 +24,5 @@
 	"speaker": "hoparlör",
 	"usb": "usb",
 	"user": "qullanıcı",
-	"virus": "virüs",
-	"website": "sayt"
+	"virus": "virüs"
 }
