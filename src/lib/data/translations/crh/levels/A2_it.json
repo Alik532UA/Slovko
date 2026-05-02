@@ -1,6 +1,6 @@
 ﻿{
 	"app": "uyğulama",
-	"bluetooth": "bluetooth",
+	"bluetooth": "Bluetooth",
 	"cloud": "bulut",
 	"code": "kod",
 	"copy": "kopiya etmek",
@@ -23,7 +23,7 @@
 	"search_noun": "qıdırıv",
 	"search_verb": "qıdırmaq",
 	"speaker": "hoparlör",
-	"usb": "usb",
+	"usb": "USB",
 	"user": "qullanıcı",
 	"virus": "virüs"
 }

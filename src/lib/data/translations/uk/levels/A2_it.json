@@ -1,6 +1,6 @@
 ﻿{
 	"app": "додаток",
-	"bluetooth": "блютуз",
+	"bluetooth": "Bluetooth",
 	"cloud": "хмара",
 	"code": "код",
 	"copy": "копіювати",
@@ -23,7 +23,7 @@
 	"search_noun": "пошук",
 	"search_verb": "шукати",
 	"speaker": "динамік",
-	"usb": "юсб",
+	"usb": "USB",
 	"user": "користувач",
 	"virus": "вірус"
 }

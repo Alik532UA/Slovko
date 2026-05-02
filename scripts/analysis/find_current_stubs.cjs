@@ -25,7 +25,7 @@ langs.forEach(lang => {
             const cleanKey = key.split('_')[0].split('(')[0].trim().toLowerCase();
             const cleanVal = val.toLowerCase();
             
-            if (cleanKey === cleanVal && key.length > 1) {
+            if (cleanKey === cleanVal && key.length > 1 && !['cd', 'dvd', 'usb', 'atm', 'bluetooth', 'aids'].includes(cleanKey)) {
                 if (!stubs[lang]) stubs[lang] = [];
                 stubs[lang].push({ file, key, val });
             }

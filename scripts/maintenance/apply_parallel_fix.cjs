@@ -17,8 +17,9 @@ function applyTranslations(translations) {
             let changed = false;
 
             Object.keys(content).forEach(key => {
-                if (translations[key] && translations[key][lang]) {
-                    content[key] = translations[key][lang];
+                const searchKey = key.toLowerCase();
+                if (translations[searchKey] && translations[searchKey][lang]) {
+                    content[key] = translations[searchKey][lang];
                     changed = true;
                 }
             });
@@ -31,40 +32,37 @@ function applyTranslations(translations) {
     });
 }
 
-const batch52 = {
-    "villager": { uk: "селянин", pl: "mieszkaniec wsi", de: "Dorfbewohner", nl: "dorpsbewoner", el: "χωρικός", crh: "köylü" },
-    "violation": { uk: "порушення", pl: "naruszenie", de: "Verletzung", nl: "schending", el: "παραβίαση", crh: "bozuv" },
-    "virtue": { uk: "доброчесність", pl: "cnota", de: "Tugend", nl: "deugd", el: "αρετή", crh: "fazilet" },
-    "vocal": { uk: "вокальний / голосний", pl: "wokalny", de: "vokal", nl: "vocaal", el: "φωνητικός", crh: "sesli" },
-    "vow": { uk: "обітниця", pl: "ślubowanie", de: "Gelübde", nl: "gelofte", el: "όρκος", crh: "ant" },
-    "vulnerability": { uk: "вразливість", pl: "wrażliwość", de: "Verwundbarkeit", nl: "kwetsbaarheid", el: "τρωτότητα", crh: "zayıflıq" },
-    "vulnerable": { uk: "вразливий", pl: "wrażliwy", de: "verwundbar", nl: "kwetsbaar", el: "ευάλωτος", crh: "zayıf" },
-    "ward": { uk: "палата / підопічний", pl: "oddział / podopieczny", de: "Station / Mündel", nl: "afdeling", el: "θάλαμος", crh: "qorçalangan" },
-    "warehouse": { uk: "склад", pl: "magazyn", de: "Lagerhaus", nl: "magazijn", el: "αποθήκη", crh: "anbar" },
-    "warfare": { uk: "війна", pl: "wojna", de: "Kriegführung", nl: "oorlogsvoering", el: "πόλεμος", crh: "cenk" },
-    "warrior": { uk: "воїн", pl: "wojownik", de: "Krieger", nl: "krijger", el: "πολεμιστής", crh: "cenkçi" },
-    "weaken": { uk: "послаблювати", pl: "osłabiać", de: "schwächen", nl: "verzwakken", el: "εξασθενώ", crh: "zayıflatmaq" },
-    "weave": { uk: "ткати / плести", pl: "tkać", de: "weben", nl: "weven", el: "υφαίνω", crh: "toqumaq" },
-    "weed": { uk: "бур'ян", pl: "chwast", de: "Unkraut", nl: "onkruid", el: "αγριόχορτο", crh: "ot" },
-    "well-being": { uk: "добробут", pl: "dobrostan", de: "Wohlbefinden", nl: "welzijn", el: "ευεξία", crh: "eyilik" },
-    "whatsoever": { uk: "будь-який", pl: "jakikolwiek", de: "überhaupt", nl: "wat dan ook", el: "οποιοσδήποτε", crh: "kim olsa" },
-    "whereby": { uk: "за допомогою якого", pl: "za pomocą którego", de: "wodurch", nl: "waarbij", el: "με το οποίο", crh: "onıñnen" },
-    "whilst": { uk: "в той час як", pl: "podczas gdy", de: "während", nl: "terwijl", el: "ενώ", crh: "eken" },
-    "whip": { uk: "батіг", pl: "bicz", de: "Peitsche", nl: "zweep", el: "μαστίγιο", crh: "qamçı" },
-    "wholly": { uk: "цілком", pl: "całkowicie", de: "völlig", nl: "volledig", el: "εξ ολοκλήρου", crh: "tamamile" },
-    "widen": { uk: "розширювати", pl: "poszerzać", de: "erweitern", nl: "verbreden", el: "διευρύνω", crh: "kenişletmek" },
-    "widow": { uk: "вдова", pl: "wdowa", de: "Witwe", nl: "weduwe", el: "χήρα", crh: "tul qadın" },
-    "width": { uk: "ширина", pl: "szerokość", de: "Breite", nl: "breedte", el: "πλάτος", crh: "kenişlik" },
-    "willingness": { uk: "готовність", pl: "gotowość", de: "Bereitschaft", nl: "bereidheid", el: "προθυμία", crh: "razılıq" },
-    "wipe": { uk: "витирати", pl: "wycierać", de: "wischen", nl: "vegen", el: "σκουπίζω", crh: "silmek" },
-    "wit": { uk: "дотепність", pl: "dowcip", de: "Witz", nl: "gevatheid", el: "πνεύμα", crh: "aqıl" },
-    "withdrawal": { uk: "відкликання / вилучення", pl: "wycofanie", de: "Rückzug", nl: "opname", el: "απόσυρση", crh: "keri çekilüv" },
-    "workout": { uk: "тренування", pl: "trening", de: "Training", nl: "training", el: "γυμναστική", crh: "meşq" },
-    "worship": { uk: "поклоніння", pl: "uwielbienie", de: "Anbetung", nl: "aanbidding", el: "λατρεία", crh: "ibadet" },
-    "worthwhile": { uk: "вартий уваги", pl: "wart zachodu", de: "lohnenswert", nl: "de moeite waard", el: "αξιόλογος", crh: "faydalı" },
-    "worthy": { uk: "гідний", pl: "godny", de: "würdig", nl: "waardig", el: "άξιος", crh: "lâyıq" },
-    "yell": { uk: "кричати", pl: "krzyczeць", de: "schreien", nl: "schreeuwen", el: "ουρλιάζω", crh: "baqırmaq" },
-    "youngster": { uk: "юнак / підліток", pl: "młodzieniec", de: "Jugendlicher", nl: "jongere", el: "νεαρός", crh: "genç" }
+const batch66 = {
+    "initial": { uk: "початковий", el: "αρχικός", de: "anfänglich", nl: "aanvankelijk", pl: "początkowy", crh: "başlanğıç" },
+    "initially": { uk: "спочатку", el: "αρχικά", de: "anfangs", nl: "aanvankelijk", pl: "początkowo", crh: "başta" },
+    "initiative": { uk: "ініціатива", el: "πρωτοβουλία", de: "Initiative", nl: "initiatief", pl: "inicjatywa", crh: "teşebbüs" },
+    "inner": { uk: "внутрішній", el: "εσωτερικός", de: "innerer", nl: "binnenste", pl: "wewnętrzny", crh: "içki" },
+    "insight": { uk: "розуміння / інсайт", el: "διορατικότητα", de: "Einblick", nl: "inzicht", pl: "wgląd", crh: "añlayış" },
+    "instance": { uk: "екземпляр / випадок", el: "περίπτωση", de: "Instanz", nl: "instantie", pl: "instancja / przypadek", crh: "misal" },
+    "institute": { uk: "інститут", el: "ινστιτούτο", de: "Institut", nl: "instituut", pl: "instytut", crh: "institut" },
+    "institution": { uk: "установа", el: "ίδρυμα", de: "Institution", nl: "instelling", pl: "instytucja", crh: "müessise" },
+    "intended": { uk: "призначений", el: "προοριζόμενος", de: "beabsichtigt", nl: "bedoeld", pl: "przeznaczony", crh: "niyet etilgen" },
+    "intense": { uk: "інтенсивний", el: "έντονος", de: "intensiv", nl: "intens", pl: "intensywny", crh: "şiddetli" },
+    "investigation": { uk: "розслідування", el: "έρευνα", de: "Untersuchung", nl: "onderzoek", pl: "dochodzenie", crh: "tahqiqat" },
+    "investment": { uk: "інвестиція", el: "επένδυση", de: "Investition", nl: "investering", pl: "inwestycja", crh: "investitsiya" },
+    "judgement": { uk: "судження", el: "κρίση", de: "Urteil", nl: "oordeel", pl: "osąd", crh: "üküm" },
+    "junior": { uk: "молодший", el: "νεότερος", de: "Junior", nl: "junior", pl: "młodszy", crh: "kiçik" },
+    "labour": { uk: "праця", el: "εργασία", de: "Arbeit", nl: "arbeid", pl: "praca", crh: "emek" },
+    "largely": { uk: "значною мірою", el: "κυρίως", de: "größtenteils", nl: "grotendeels", pl: "w dużej mierze", crh: "eskiden" },
+    "leadership": { uk: "лідерство", el: "ηγεσία", de: "Führung", nl: "leiderschap", pl: "przywództwo", crh: "yolbaşçılıq" },
+    "league": { uk: "ліга", el: "λίγκα", de: "Liga", nl: "competitie", pl: "liga", crh: "liga" },
+    "licence": { uk: "ліцензія", el: "άδεια", de: "Lizenz", nl: "licentie", pl: "licencja", crh: "litsenziya" },
+    "limited": { uk: "обмежений", el: "περιορισμένος", de: "begrenzt", nl: "beperkt", pl: "ograniczony", crh: "sıñırlı" },
+    "lively": { uk: "жвавий", el: "ζωντανός", de: "lebhaft", nl: "levendig", pl: "ożywiony", crh: "canlı" },
+    "load": { uk: "завантаження / вантаж", el: "φορτίο", de: "Last", nl: "lading", pl: "ładunek", crh: "yük" },
+    "loan": { uk: "позика", el: "δάνειο", de: "Kredit", nl: "lening", pl: "pożyczka", crh: "borç" },
+    "lord": { uk: "лорд / господь", el: "λόρδος", de: "Herr", nl: "heer", pl: "pan", crh: "rabbim" },
+    "lower": { uk: "нижчий", el: "χαμηλότερος", de: "niedriger", nl: "lager", pl: "niższy", crh: "alçaq" },
+    "lung": { uk: "легеня", el: "πνεύμονας", de: "Lunge", nl: "long", pl: "płuco", crh: "öpke" },
+    "mass": { uk: "маса", el: "μάζα", de: "Masse", nl: "massa", pl: "masa", crh: "kütle" },
+    "massive": { uk: "масивний", el: "τεράστιος", de: "massiv", nl: "massief", pl: "masywny", crh: "balaban" },
+    "master": { uk: "майстер", el: "δάσκαλος / κύριος", de: "Meister", nl: "meester", pl: "mistrz", crh: "usta" },
+    "matching": { uk: "відповідний", el: "ταιριαστός", de: "passend", nl: "bijpassend", pl: "pasujący", crh: "uyğun" }
 };
 
-applyTranslations(batch52);
+applyTranslations(batch66);
