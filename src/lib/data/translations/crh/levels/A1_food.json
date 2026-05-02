@@ -10,7 +10,7 @@
 	"coffee": "qave",
 	"drink_noun": "içimlik",
 	"egg": "yumurta",
-	"fruit": "meyva",
+	"fruit": "yemiş",
 	"ice_cream": "buzlavat",
 	"juice": "şerbet",
 	"meat": "et",
@@ -27,6 +27,6 @@
 	"tea": "çay",
 	"tomato": "domates",
 	"vegetable": "sebze",
-	"water": "suv",
+	"water": "su",
 	"wine": "şarap"
 }

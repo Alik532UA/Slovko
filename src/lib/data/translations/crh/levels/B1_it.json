@@ -9,8 +9,8 @@
 	"download_file": "endirme",
 	"file": "fayl",
 	"file_folder": "fayl",
-	"folder": "qapçıq",
-	"folder_document": "qapçıq",
+	"folder": "qatlam",
+	"folder_document": "qatlam",
 	"hardware_computer": "teçizat",
 	"keyboard": "klaviatura",
 	"microphone": "mikrofon",
@@ -28,5 +28,5 @@
 	"user_interface": "qullanıcı ara yüzü",
 	"virus_computer": "virüs",
 	"wifi": "Wi-Fi",
-	"wifi_connection": "wifi"
+	"wifi_connection": "Wi-Fi"
 }
