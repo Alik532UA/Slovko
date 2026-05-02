@@ -31,27 +31,27 @@ function applyTranslations(translations) {
     });
 }
 
-const batch10 = {
-    "limb": { uk: "кінцівка", pl: "kończyna", de: "Gliedmaße", nl: "ledemaat", el: "άκρο", crh: "ayaq-qol" },
-    "line-up": { uk: "склад", pl: "skład", de: "Aufstellung", nl: "opstelling", el: "σύνθεση", crh: "terkip" },
-    "linear": { uk: "лінійний", pl: "liniowy", de: "linear", nl: "lineair", el: "γραμμικός", crh: "sızıqlı" },
-    "lineup": { uk: "склад", pl: "skład", de: "Aufstellung", nl: "opstelling", el: "σύνθεση", crh: "terkip" },
-    "linger": { uk: "затримуватися", pl: "zwlekać", de: "verweilen", nl: "dralen", el: "χρονοτριβώ", crh: "lengerlemek" },
-    "listing": { uk: "список", pl: "wykaz", de: "Auflistung", nl: "lijst", el: "κατάλογος", crh: "cedvel" },
-    "liter": { uk: "літр", pl: "litr", de: "Liter", nl: "liter", el: "λίτρο", crh: "litra" },
-    "literacy": { uk: "грамотність", pl: "umiejętność czytania", de: "Lese- und Schreibfähigkeit", nl: "geletterdheid", el: "αλφαβητισμός", crh: "okuma-yazuv qabiliyeti" },
-    "liver": { uk: "печінка", pl: "wątroba", de: "Leber", nl: "lever", el: "συκάτι", crh: "bağır" },
-    "lobby": { uk: "лобі", pl: "lobby", de: "Lobby", nl: "lobby", el: "λόμπι", crh: "lobi" },
-    "log": { uk: "журнал", pl: "dziennik", de: "Protokoll", nl: "logboek", el: "αρχείο καταγραφής", crh: "kütük" },
-    "logic": { uk: "логіка", pl: "logika", de: "Logik", nl: "logica", el: "λογική", crh: "mantıq" },
-    "long-standing": { uk: "давній", pl: "długoletni", de: "langjährig", nl: "langdurig", el: "μακροχρόνιος", crh: "ezeliy" },
-    "long-time": { uk: "давній", pl: "dawny", de: "langjährig", nl: "langdurig", el: "μακροχρόνιος", crh: "uzaq vaqıt" },
-    "longtime": { uk: "давній", pl: "dawny", de: "langjährig", nl: "langdurig", el: "μακροχρόνιος", crh: "uzaq vaqıt" },
-    "loom": { uk: "маячити", pl: "wyłaniać się", de: "sich abzeichnen", nl: "opdoemen", el: "διαφαίνομαι", crh: "körünmek" },
-    "loop": { uk: "петля", pl: "pętla", de: "Schleife", nl: "lus", el: "βρόχος", crh: "sırma" },
-    "loyalty": { uk: "лояльність", pl: "lojalność", de: "Loyalität", nl: "loyaliteit", el: "πίστη", crh: "sadıqlıq" },
-    "machinery": { uk: "обладнання", pl: "maszyny", de: "Maschinen", nl: "machines", el: "μηχανήματα", crh: "maşinalar" },
-    "magical": { uk: "магічний", pl: "magiczny", de: "magisch", nl: "magisch", el: "μαγικός", crh: "tılsımlı" }
+const batch11 = {
+    "magistrate": { uk: "суддя", pl: "sędzia pokoju", de: "Magistrat", nl: "magistraat", el: "δικαστής", crh: "hakim" },
+    "magnetic": { uk: "магнітний", pl: "magnetyczny", de: "magnetisch", nl: "magnetisch", el: "μαγνητικός", crh: "mıqnatisiy" },
+    "magnitude": { uk: "величина", pl: "wielkość", de: "Größe", nl: "grootte", el: "μέγεθος", crh: "büyüklik" },
+    "mainland": { uk: "материк", pl: "ląd stały", de: "Festland", nl: "vasteland", el: "ηπειρωτική χώρα", crh: "qara" },
+    "mainstream": { uk: "основний потік", pl: "główny nurt", de: "Mainstream", nl: "mainstream", el: "κυρίαρχη τάση", crh: "umumiy aqım" },
+    "maintenance": { uk: "обслуговування", pl: "konserwacja", de: "Wartung", nl: "onderhoud", el: "συντήρηση", crh: "baquv" },
+    "mandate": { uk: "мандат", pl: "mandat", de: "Mandat", nl: "mandaat", el: "εντολή", crh: "vekâlet" },
+    "mandatory": { uk: "обов'язковий", pl: "obowiązkowy", de: "verpflichtend", nl: "verplicht", el: "υποχρεωτικός", crh: "mecburiy" },
+    "manifest": { uk: "маніфест", pl: "manifest", de: "manifest", nl: "manifest", el: "έκδηλος", crh: "beyan" },
+    "manipulation": { uk: "маніпуляція", pl: "manipulacja", de: "Manipulation", nl: "manipulatie", el: "χειραγώγηση", crh: "manipulyatsiya" },
+    "manuscript": { uk: "рукопис", pl: "rękopis", de: "Manuskript", nl: "manuscript", el: "χειρόγραφο", crh: "qol yazması" },
+    "marginal": { uk: "незначний", pl: "marginalny", de: "marginal", nl: "marginaal", el: "οριακός", crh: "ehemmiyetsiz" },
+    "marine": { uk: "морський", pl: "morski", de: "Meeres-", nl: "marien", el: "θαλάσσιος", crh: "deñizge ait" },
+    "marketplace": { uk: "ринок", pl: "rynek", de: "Marktplatz", nl: "marktplaats", el: "αγορά", crh: "bazar meydanı" },
+    "mask": { uk: "маска", pl: "maska", de: "Maske", nl: "masker", el: "μάσκα", crh: "maska" },
+    "massacre": { uk: "різанина", pl: "masakra", de: "Massaker", nl: "bloedbad", el: "σφαγή", crh: "qatliâm" },
+    "mathematical": { uk: "математичний", pl: "matematyczny", de: "mathematisch", nl: "wiskundig", el: "μαθηματικός", crh: "riyaziy" },
+    "mature": { uk: "зрілий", pl: "dojrzały", de: "reif", nl: "volwassen", el: "ώριμος", crh: "olğun" },
+    "maximize": { uk: "максимізувати", pl: "maksymalizować", de: "maximieren", nl: "maximaliseren", el: "μεγιστοποιώ", crh: "maksimalleştirmek" },
+    "meaningful": { uk: "значущий", pl: "znaczący", de: "bedeutungsvoll", nl: "zinvol", el: "ουσιαστικός", crh: "manalı" }
 };
 
-applyTranslations(batch10);
+applyTranslations(batch11);
