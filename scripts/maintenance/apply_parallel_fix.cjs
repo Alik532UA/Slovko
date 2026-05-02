@@ -31,27 +31,27 @@ function applyTranslations(translations) {
     });
 }
 
-const batch11 = {
-    "magistrate": { uk: "суддя", pl: "sędzia pokoju", de: "Magistrat", nl: "magistraat", el: "δικαστής", crh: "hakim" },
-    "magnetic": { uk: "магнітний", pl: "magnetyczny", de: "magnetisch", nl: "magnetisch", el: "μαγνητικός", crh: "mıqnatisiy" },
-    "magnitude": { uk: "величина", pl: "wielkość", de: "Größe", nl: "grootte", el: "μέγεθος", crh: "büyüklik" },
-    "mainland": { uk: "материк", pl: "ląd stały", de: "Festland", nl: "vasteland", el: "ηπειρωτική χώρα", crh: "qara" },
-    "mainstream": { uk: "основний потік", pl: "główny nurt", de: "Mainstream", nl: "mainstream", el: "κυρίαρχη τάση", crh: "umumiy aqım" },
-    "maintenance": { uk: "обслуговування", pl: "konserwacja", de: "Wartung", nl: "onderhoud", el: "συντήρηση", crh: "baquv" },
-    "mandate": { uk: "мандат", pl: "mandat", de: "Mandat", nl: "mandaat", el: "εντολή", crh: "vekâlet" },
-    "mandatory": { uk: "обов'язковий", pl: "obowiązkowy", de: "verpflichtend", nl: "verplicht", el: "υποχρεωτικός", crh: "mecburiy" },
-    "manifest": { uk: "маніфест", pl: "manifest", de: "manifest", nl: "manifest", el: "έκδηλος", crh: "beyan" },
-    "manipulation": { uk: "маніпуляція", pl: "manipulacja", de: "Manipulation", nl: "manipulatie", el: "χειραγώγηση", crh: "manipulyatsiya" },
-    "manuscript": { uk: "рукопис", pl: "rękopis", de: "Manuskript", nl: "manuscript", el: "χειρόγραφο", crh: "qol yazması" },
-    "marginal": { uk: "незначний", pl: "marginalny", de: "marginal", nl: "marginaal", el: "οριακός", crh: "ehemmiyetsiz" },
-    "marine": { uk: "морський", pl: "morski", de: "Meeres-", nl: "marien", el: "θαλάσσιος", crh: "deñizge ait" },
-    "marketplace": { uk: "ринок", pl: "rynek", de: "Marktplatz", nl: "marktplaats", el: "αγορά", crh: "bazar meydanı" },
-    "mask": { uk: "маска", pl: "maska", de: "Maske", nl: "masker", el: "μάσκα", crh: "maska" },
-    "massacre": { uk: "різанина", pl: "masakra", de: "Massaker", nl: "bloedbad", el: "σφαγή", crh: "qatliâm" },
-    "mathematical": { uk: "математичний", pl: "matematyczny", de: "mathematisch", nl: "wiskundig", el: "μαθηματικός", crh: "riyaziy" },
-    "mature": { uk: "зрілий", pl: "dojrzały", de: "reif", nl: "volwassen", el: "ώριμος", crh: "olğun" },
-    "maximize": { uk: "максимізувати", pl: "maksymalizować", de: "maximieren", nl: "maximaliseren", el: "μεγιστοποιώ", crh: "maksimalleştirmek" },
-    "meaningful": { uk: "значущий", pl: "znaczący", de: "bedeutungsvoll", nl: "zinvol", el: "ουσιαστικός", crh: "manalı" }
+const batch12 = {
+    "meantime": { uk: "тим часом", pl: "tymczasem", de: "Zwischenzeit", nl: "tussentijd", el: "εν τω μεταξύ", crh: "bu arada" },
+    "medieval": { uk: "середньовічний", pl: "średniowieczny", de: "mittelalterlich", nl: "middeleeuws", el: "μεσαιωνικός", crh: "orta asırğa ait" },
+    "meditation": { uk: "медитація", pl: "medytacja", de: "Meditation", nl: "meditatie", el: "διαλογισμός", crh: "tefekkür" },
+    "melody": { uk: "мелодія", pl: "melodia", de: "Melodie", nl: "melodie", el: "μελωδία", crh: "ezgi" },
+    "memo": { uk: "пам'ятка", pl: "notatka służbowa", de: "Memo", nl: "memo", el: "σημείωμα", crh: "hatırlatuv" },
+    "memoir": { uk: "мемуари", pl: "pamiętnik", de: "Memoiren", nl: "memoires", el: "απομνημόνευμα", crh: "hâtıralar" },
+    "memorial": { uk: "меморіал", pl: "pomnik", de: "Denkmal", nl: "gedenkteken", el: "μνημείο", crh: "eykel" },
+    "mentor": { uk: "наставник", pl: "mentor", de: "Mentor", nl: "mentor", el: "μέντορας", crh: "mürşid" },
+    "merchant": { uk: "купець", pl: "kupiec", de: "Kaufmann", nl: "koopman", el: "έμπορος", crh: "tüccar" },
+    "mercy": { uk: "милосердя", pl: "miłosierdzie", de: "Gnade", nl: "genade", el: "έλεος", crh: "merhamet" },
+    "mere": { uk: "простий", pl: "zwyczajny", de: "bloß", nl: "louter", el: "απλός", crh: "adi" },
+    "merely": { uk: "лише", pl: "jedynie", de: "lediglich", nl: "slechts", el: "απλώς", crh: "ancaq" },
+    "merger": { uk: "злиття", pl: "fuzja", de: "Fusion", nl: "fusie", el: "συγχώνευση", crh: "birleşüv" },
+    "merit": { uk: "заслуга", pl: "zasługa", de: "Verdienst", nl: "verdienste", el: "αξία", crh: "liyqat" },
+    "methodology": { uk: "методологія", pl: "metodologia", de: "Methodik", nl: "methodologie", el: "μεθοδολογία", crh: "metodologiya" },
+    "midst": { uk: "посеред", pl: "pośród", de: "Mitte", nl: "midden", el: "μέσω", crh: "ortasında" },
+    "migration": { uk: "міграція", pl: "migracja", de: "Migration", nl: "migratie", el: "μετανάστευση", crh: "icret" },
+    "militant": { uk: "бойовик", pl: "bojownik", de: "militant", nl: "militant", el: "μαχητικός", crh: "uruşqan" },
+    "militia": { uk: "ополчення", pl: "milicja", de: "Miliz", nl: "militie", el: "πολιτοφυλακή", crh: "halq ordusı" },
+    "mill": { uk: "млин", pl: "młyn", de: "Mühle", nl: "molen", el: "μύλος", crh: "degirmen" }
 };
 
-applyTranslations(batch11);
+applyTranslations(batch12);
