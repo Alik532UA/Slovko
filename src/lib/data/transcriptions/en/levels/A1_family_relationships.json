@@ -1,1 +1,27 @@
-﻿{}
+{
+	"aunt_maternal": "/ɑːnt/",
+	"aunt_paternal": "/ɑːnt/",
+	"brother": "/ˈbrʌðər/",
+	"brother_male": "/ˈbrʌðər/",
+	"brother_older": "/ˈbrʌðər/",
+	"brother_younger": "/ˈbrʌðər/",
+	"child": "/tʃaɪld/",
+	"cousin_female": "/ˈkʌzn/",
+	"cousin_male": "/ˈkʌzn/",
+	"family": "/ˈfæməli/",
+	"father": "/ˈfɑːðər/",
+	"friend": "/frɛnd/",
+	"grandfather": "/ˈɡrænfɑːðər/",
+	"grandmother": "/ˈɡrænmʌðər/",
+	"husband": "/ˈhʌzbənd/",
+	"married": "/ˈmærid/",
+	"mother": "/ˈmʌðər/",
+	"parents": "/ˈpeərənts/",
+	"partner": "/ˈpɑːrtnər/",
+	"sister_older": "/ˈsɪstər/",
+	"sister_younger": "/ˈsɪstər/",
+	"son": "/sʌn/",
+	"uncle_maternal": "/ˈʌŋkl/",
+	"uncle_paternal": "/ˈʌŋkl/",
+	"wife": "/waɪf/"
+}

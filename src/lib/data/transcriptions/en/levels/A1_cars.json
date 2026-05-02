@@ -1,4 +1,4 @@
-﻿{
+{
 	"bicycle": "/ˈbaɪsɪkl/",
 	"boat": "/bəʊt/",
 	"bus": "/bʌs/",
@@ -6,15 +6,20 @@
 	"door": "/dɔːr/",
 	"key": "/kiː/",
 	"light": "/laɪt/",
+	"light_brightness": "/laɪt/",
 	"light_color": "/laɪt/",
+	"light_weight": "/laɪt/",
 	"oil": "/ɔɪl/",
+	"oil_food": "/ɔɪl/",
+	"oil_fuel": "/ɔɪl/",
 	"plane": "/pleɪn/",
 	"road": "/rəʊd/",
 	"seat": "/siːt/",
 	"street": "/striːt/",
 	"taxi": "/ˈtæksi/",
+	"traffic": "/ˈtræfɪk/",
+	"traffic_light": "/ˈtræfɪк/",
 	"train": "/treɪn/",
-	"window": "/ˈwɪndəʊ/",
-	"oil_food": "/ɔɪl/",
-	"oil_fuel": "/ɔɪl/"
+	"truck": "/trʌk/",
+	"window": "/ˈwɪndəʊ/"
 }

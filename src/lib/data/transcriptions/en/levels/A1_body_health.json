@@ -1,1 +1,18 @@
-﻿{}
+{
+	"arm_body": "/ɑːm/",
+	"arm_weapon": "/ɑːm/",
+	"body": "/ˈbɒdi/",
+	"ear": "/ɪə/",
+	"eye": "/aɪ/",
+	"face": "/feɪs/",
+	"foot": "/fʊt/",
+	"hair": "/heə/",
+	"hand": "/hænd/",
+	"head": "/hɛd/",
+	"health": "/hɛlθ/",
+	"hospital": "/ˈhɒspɪtl/",
+	"leg_full": "/lɛɡ/",
+	"mouth": "/maʊθ/",
+	"nose": "/nəʊz/",
+	"tooth": "/tuːθ/"
+}

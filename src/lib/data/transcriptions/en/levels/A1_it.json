@@ -1,11 +1,17 @@
-﻿{
+{
 	"camera": "/ˈkæmərə/",
+	"computer": "/kəmˈpjuːtər/",
+	"drive": "/draɪv/",
+	"drive_it": "/draɪv/",
+	"email": "/ˈiːmeɪl/",
 	"internet": "/ˈɪntənɛt/",
 	"keyboard": "/ˈkiːbɔːd/",
 	"memory": "/ˈmɛməri/",
+	"mouse": "/maʊs/",
 	"print": "/prɪnt/",
 	"program": "/ˈprəʊɡræm/",
 	"search": "/sɜːtʃ/",
+	"search_noun": "/sɜːtʃ/",
 	"video": "/ˈvɪdiəʊ/",
-	"search_noun": "/sɜːtʃ/"
+	"website": "/ˈwebsaɪt/"
 }

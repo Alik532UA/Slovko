@@ -1,4 +1,4 @@
-﻿{
+{
 	"amazed": "/əˈmeɪzd/",
 	"annoyed": "/əˈнɔɪd/",
 	"charming": "/ˈtʃɑːrmɪŋ/",
@@ -36,13 +36,17 @@
 	"rough": "/rʌf/",
 	"sensible": "/ˈsɛнsəbl/",
 	"sensitive": "/ˈsɛнsəтɪv/",
+	"silly": "/ˈsɪli/",
 	"solid_material": "/ˈsɒlɪd/",
 	"species_biological": "/ˈspiːʃiːz/",
 	"stressed": "/strɛст/",
 	"subject_topic": "/ˈsʌbdʒɪкт/",
 	"temporary": "/ˈтɛmprəri/",
+	"temporary_job": "/ˈтɛmprəri/",
 	"that_demonstrative": "/ðæt/",
 	"to_infinitive": "/tuː/",
+	"ugly": "/ˈʌɡ.li/",
+	"ugly_adj": "/ˈʌɡli/",
 	"unfair_treatment": "/ˌʌнˈfɛr/",
 	"unique": "/juˈнiːк/",
 	"unknown_person": "/ˌʌнˈнəʊн/",
@@ -53,6 +57,5 @@
 	"us_dative": "/ʌs/",
 	"visible": "/ˈvɪzəbl/",
 	"you_plural": "/juː/",
-	"your_plural": "/jɔːr/",
-	"temporary_job": "/ˈтɛmprəri/"
+	"your_plural": "/jɔːr/"
 }

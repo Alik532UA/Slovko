@@ -1,4 +1,4 @@
-﻿{
+{
 	"animal": "/ˈænɪməl/",
 	"bird": "/bɜːd/",
 	"cat": "/kæt/",
@@ -9,11 +9,14 @@
 	"elephant": "/ˈɛlɪfənt/",
 	"fish": "/fɪʃ/",
 	"fly": "/flaɪ/",
+	"fly_action": "/flaɪ/",
+	"fly_insect": "/flaɪ/",
 	"fox": "/fɒks/",
 	"horse": "/hɔːs/",
 	"lion": "/ˈlaɪən/",
 	"mouse": "/maʊs/",
 	"pig": "/pɪɡ/",
 	"rabbit": "/ˈræbɪt/",
-	"fly_action": "/flaɪ/"
+	"sheep": "/ʃiːp/",
+	"snake": "/sneɪk/"
 }

@@ -1,13 +1,22 @@
-﻿{
+{
 	"air": "/eə/",
+	"animal": "/ˈænɪməl/",
 	"autumn": "/ˈɔːtəm/",
 	"beach": "/biːtʃ/",
+	"bird": "/bɜːd/",
 	"fire": "/ˈfaɪər/",
+	"fish": "/fɪʃ/",
 	"flower": "/ˈflaʊə/",
+	"fruit": "/fruːt/",
 	"ice": "/aɪs/",
+	"ice_cream": "/ˌaɪs ˈkriːm/",
 	"island": "/ˈaɪlənd/",
 	"moon": "/muːn/",
 	"mountain": "/ˈmaʊntən/",
+	"ocean": "/ˈəʊʃn/",
+	"plant": "/plɑːnt/",
+	"plant_botany": "/plɑːnt/",
+	"plant_factory": "/plɑːnt/",
 	"rain": "/reɪn/",
 	"river": "/ˈrɪvə/",
 	"sea": "/siː/",
@@ -20,6 +29,8 @@
 	"summer": "/ˈsʌmər/",
 	"sun": "/sʌn/",
 	"tree": "/triː/",
+	"vegetable": "/ˈvɛdʒtəbl/",
+	"water": "/ˈwɔːtər/",
 	"wind": "/wɪnd/",
 	"winter": "/ˈwɪntər/"
 }

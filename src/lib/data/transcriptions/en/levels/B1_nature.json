@@ -1,8 +1,23 @@
-﻿{
+{
+	"branch": "/brɑːntʃ/",
+	"branch_office": "/brɑːntʃ/",
+	"branch_tak": "/brɑːntʃ/",
+	"branch_tree": "/brɑːntʃ/",
 	"bush": "/bʊʃ/",
+	"earthquake": "/ˈɜːrθkweɪk/",
 	"environment_nature": "/ɪnˈvaɪrənmənt/",
+	"flood": "/flʌd/",
+	"fog": "/fɒɡ/",
+	"jungle": "/ˈdʒʌŋɡ(ə)l/",
+	"leaf": "/liːf/",
+	"lightning": "/ˈlaɪtnɪŋ/",
 	"planet_earth": "/ˈplænɪt/",
+	"rainbow": "/ˈreɪnbəʊ/",
 	"rare_species": "/rɛər/",
 	"root": "/ruːt/",
+	"sand": "/sænd/",
+	"scenery": "/ˈsiːnəri/",
+	"seed": "/siːd/",
+	"soil": "/sɔɪl/",
 	"universe_cosmos": "/ˈjuːnɪvɜːrs/"
 }

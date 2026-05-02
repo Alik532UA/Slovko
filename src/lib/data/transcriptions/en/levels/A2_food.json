@@ -1,8 +1,9 @@
-﻿{
+{
 	"bacon": "/ˈbeɪkən/",
 	"berry": "/ˈbɛri/",
 	"burger": "/ˈbɜːrɡər/",
 	"cherry": "/ˈtʃɛri/",
+	"cookie": "/ˈkʊki/",
 	"cucumber": "/ˈkjuːkʌmbər/",
 	"fry": "/fraɪ/",
 	"honey": "/ˈhʌni/",
@@ -10,6 +11,10 @@
 	"jam_traffic": "/dʒæm/",
 	"lemon": "/ˈlɛmən/",
 	"melon": "/ˈmɛlən/",
+	"nut": "/nʌt/",
+	"oil": "/ɔɪl/",
+	"oil_food": "/ɔɪl/",
+	"oil_fuel": "/ɔɪl/",
 	"oven": "/ˈʌvn/",
 	"pan": "/pæn/",
 	"pasta_food": "/ˈpæstə/",
@@ -23,5 +28,6 @@
 	"sausage_small": "/ˈsɒsɪdʒ/",
 	"sausage_wurst": "/ˈsɒs.ɪdʒ/",
 	"steak": "/steɪk/",
-	"strawberry": "/ˈstrɔːbəri/"
+	"strawberry": "/ˈstrɔːbəri/",
+	"toast": "/toʊst/"
 }

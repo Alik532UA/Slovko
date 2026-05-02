@@ -1,6 +1,10 @@
-﻿{
+{
+	"mosquito": "/məˈskiːtoʊ/",
+	"rat": "/ræt/",
 	"squirrel": "/ˈskwɪrəl/",
 	"starfish": "/ˈstɑːfɪʃ/",
 	"walrus": "/ˈwɔːlrəs/",
-	"whale": "/weɪl/"
+	"whale": "/weɪl/",
+	"wolf": "/wʊlf/",
+	"worm": "/wɜːrm/"
 }

@@ -1,4 +1,4 @@
-﻿{
+{
 	"brilliant": "/ˈbrɪljəнт/",
 	"clean_pure": "/kliːn/",
 	"empty": "/ˈɛmp.ti/",
@@ -6,10 +6,13 @@
 	"honest": "/ˈɒнɪст/",
 	"lazy": "/ˈleɪzi/",
 	"light_weight": "/laɪt/",
+	"low": "/ləʊ/",
 	"permanent": "/ˈpɜːrməнəнт/",
+	"permanent_job": "/ˈpɜːrməнəнт/",
 	"pure": "/pjʊər/",
 	"regular": "/ˈrɛɡjələr/",
 	"relaxed": "/rɪˈlækст/",
+	"safe": "/seɪf/",
 	"shocked": "/ʃɒкт/",
 	"silly": "/ˈsɪli/",
 	"smooth": "/smuːð/",
@@ -24,7 +27,6 @@
 	"ugly_adj": "/ˈʌɡli/",
 	"unknown": "/ˌʌнˈнəʊн/",
 	"upset": "/ˌʌpˈsɛт/",
-	"weak": "/wiːk/",
-	"permanent_job": "/ˈpɜːrməнəнт/",
-	"upset_adj": "/ˌʌpˈsɛт/"
+	"upset_adj": "/ˌʌpˈsɛт/",
+	"weak": "/wiːk/"
 }

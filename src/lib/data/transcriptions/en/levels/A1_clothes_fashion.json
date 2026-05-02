@@ -1,1 +1,17 @@
-﻿{}
+{
+	"boot": "/buːt/",
+	"clothes": "/kləʊðz/",
+	"coat": "/kəʊt/",
+	"dress": "/drɛs/",
+	"dress_up": "/drɛs ʌp/",
+	"hat": "/hæt/",
+	"jacket": "/ˈdʒækɪt/",
+	"jeans": "/dʒiːnz/",
+	"pants": "/pænts/",
+	"shirt": "/ʃɜːt/",
+	"skirt": "/skɜːt/",
+	"sweater": "/ˈswetə(r)/",
+	"umbrella": "/ʌmˈbrɛlə/",
+	"watch_clock": "/wɒtʃ/",
+	"watch_verb": "/wɒtʃ/"
+}
