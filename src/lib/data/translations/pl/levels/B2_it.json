@@ -2,11 +2,7 @@
 	"database": "baza danych",
 	"delete": "usunąć",
 	"disk": "dysk",
-	"drive_it": "prowadzenie",
 	"monitor": "monitor",
 	"monitor_screen": "monitor",
-	"monitor_verb": "monitorować",
-	"password": "hasło",
-	"scan_digital": "skanować",
-	"scan_medical": "badanie"
+	"password": "hasło"
 }

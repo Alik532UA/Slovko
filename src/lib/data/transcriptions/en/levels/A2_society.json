@@ -1,14 +1,4 @@
 ﻿{
-	"army": "/ˈɑːmi/",
 	"citizen": "/ˈsɪtɪzn/",
-	"crime": "/kraɪm/",
-	"criminal": "/ˈkrɪmɪnl/",
-	"government": "/ˈɡʌv(ə)nm(ə)nt/",
-	"instruction": "/ɪnˈstrʌkʃən/",
-	"law": "/lɔː/",
-	"politics": "/ˈpɒlətɪks/",
-	"president": "/ˈprɛzɪdənt/",
-	"sale": "/seɪl/",
-	"society": "/səˈsaɪəti/",
-	"soldier": "/ˈsəʊldʒər/"
+	"politics": "/ˈpɒlətɪks/"
 }

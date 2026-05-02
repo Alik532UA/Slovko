@@ -11,9 +11,7 @@
 	"acquire": "verwerven",
 	"acquire_knowledge": "verwerven",
 	"acquire_obtain": "verwerven",
-	"address_verb": "aanspreken",
 	"adequate": "voldoende",
-	"apply_job": "solliciteren",
 	"appoint_job": "benoemen",
 	"appraise": "taxeren",
 	"appropriate": "gepast",
@@ -43,9 +41,7 @@
 	"pledge_promise": "beloven",
 	"rely": "vertrouwen",
 	"scan_look": "vluchtig bekijken",
-	"serve_general": "dienen als",
 	"simulate_imitate": "simuleren",
 	"trust": "vertrouwen",
-	"trust_noun": "vertrouwen",
-	"trust_verb": "vertrouwen"
+	"trust_noun": "vertrouwen"
 }

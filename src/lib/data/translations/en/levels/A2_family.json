@@ -1,10 +1,6 @@
 ﻿{
-	"cousin_female": "cousin",
-	"cousin_male": "cousin",
 	"granddaughter": "granddaughter",
 	"grandson": "grandson",
 	"marry": "marry",
-	"single": "single",
-	"uncle_maternal": "uncle",
-	"uncle_paternal": "uncle"
+	"single": "single"
 }

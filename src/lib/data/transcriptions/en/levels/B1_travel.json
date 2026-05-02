@@ -1,22 +1,5 @@
 ﻿{
-	"arrival": "/əˈraɪv(ə)l/",
-	"backpack": "/ˈbækpæk/",
-	"baggage": "/ˈbægɪdʒ/",
-	"brochure": "/ˈbroʊʃʊər/",
-	"cabin": "/ˈkæbɪн/",
 	"cabin_plane": "/ˈkæbɪн/",
 	"cabin_ship": "/ˈkæbɪн/",
-	"canal": "/kəˈнæl/",
-	"departure": "/dɪˈpɑːtʃə/",
-	"expedition": "/ˌɛkspɪˈdɪʃəн/",
-	"ferry": "/ˈfɛri/",
-	"harbor": "/ˈhɑːrbər/",
-	"hostel": "/ˈhɒst(ə)l/",
-	"immigration": "/ˌɪmɪˈɡrɛɪʃəн/",
-	"resort": "/rɪˈzɔːrт/",
-	"sightseeing": "/ˈsaɪtˌsiːɪŋ/",
-	"souvenir": "/ˌsuːvəˈnɪə/",
-	"terminal": "/ˈtɜːmɪn(ə)l/",
-	"visa": "/ˈviːzə/",
-	"voyage": "/ˈvɔɪɪdʒ/"
+	"resort": "/rɪˈzɔːrт/"
 }

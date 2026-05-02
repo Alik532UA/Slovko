@@ -1,10 +1,6 @@
 ﻿{
-	"cousin_female": "kuzynka",
-	"cousin_male": "kuzyn",
 	"granddaughter": "wnuczka",
 	"grandson": "wnuk",
 	"marry": "poślubić",
-	"single": "wolny",
-	"uncle_maternal": "wujek",
-	"uncle_paternal": "wujek"
+	"single": "wolny"
 }

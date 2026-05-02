@@ -11,9 +11,7 @@
 	"acquire": "erwerben",
 	"acquire_knowledge": "erwerben",
 	"acquire_obtain": "erwerben",
-	"address_verb": "ansprechen",
 	"adequate": "angemessen",
-	"apply_job": "bewerben",
 	"appoint_job": "ernennen",
 	"appraise": "bewerten",
 	"appropriate": "angemessen",
@@ -43,9 +41,7 @@
 	"pledge_promise": "versprechen",
 	"rely": "verlassen",
 	"scan_look": "überfliegen",
-	"serve_general": "dienen",
 	"simulate_imitate": "simulieren",
 	"trust": "vertrauen",
-	"trust_noun": "Vertrauen",
-	"trust_verb": "vertrauen"
+	"trust_noun": "Vertrauen"
 }

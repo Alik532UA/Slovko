@@ -1,5 +1,4 @@
 ﻿{
-	"earth_yer": "yer",
 	"forest": "orman",
 	"grass": "ot",
 	"hill": "töpe",
@@ -12,7 +11,5 @@
 	"storm": "fırtına",
 	"thunder": "kök gürüldevi",
 	"valley": "dere",
-	"wind": "yel",
-	"wood_bos": "orman",
-	"wood_holz": "tahta"
+	"wind": "yel"
 }

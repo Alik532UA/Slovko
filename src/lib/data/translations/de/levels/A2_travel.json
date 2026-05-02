@@ -9,14 +9,9 @@
 	"distance": "Entfernung",
 	"gate": "Tor",
 	"guide": "Führer",
-	"holiday_celebration": "Feiertag",
-	"holiday_vacation": "Urlaub",
 	"lost": "verloren",
 	"luggage": "Gepäck",
 	"platform": "Gleis",
-	"station_stop": "Haltestelle",
-	"station_transport": "Station",
-	"ticket_office": "Fahrkartenschalter",
 	"tour": "Tour",
 	"tourism": "Tourismus"
 }

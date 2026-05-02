@@ -2,19 +2,13 @@
 	"beat": "besiegen",
 	"beat_win": "besiegen",
 	"chat_talk": "chatten",
-	"design_plan": "entwerfen",
-	"design_style": "gestalten",
-	"design_verb": "entwerfen",
-	"film_verb": "filmen",
 	"greet": "grüßen",
 	"hug": "umarmen",
 	"pick": "wählen",
 	"pick_choose": "wählen",
 	"pick_up_object": "aufheben",
-	"post_verb": "versenden",
 	"seem": "scheinen",
 	"skate": "Eislaufen",
 	"ski": "Ski fahren",
-	"sneeze": "niesen",
-	"spell_verb": "buchstabieren"
+	"sneeze": "niesen"
 }

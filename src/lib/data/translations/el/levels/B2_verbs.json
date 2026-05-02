@@ -11,9 +11,7 @@
 	"acquire": "αποκτώ",
 	"acquire_knowledge": "αποκτώ",
 	"acquire_obtain": "αποκτώ",
-	"address_verb": "απευθύνομαι",
 	"adequate": "επαρκής",
-	"apply_job": "κάνω αίτηση για δουλειά",
 	"appoint_job": "διορίζω",
 	"appraise": "εκτιμώ",
 	"appropriate": "κατάλληλος",
@@ -43,9 +41,7 @@
 	"pledge_promise": "υπόσχομαι επίσημα",
 	"rely": "βασίζομαι",
 	"scan_look": "σαρώνω με το βλέμμα",
-	"serve_general": "υπηρετώ",
 	"simulate_imitate": "προσομοιώνω",
 	"trust": "εμπιστεύομαι",
-	"trust_noun": "εμπιστοσύνη",
-	"trust_verb": "εμπιστεύομαι"
+	"trust_noun": "εμπιστοσύνη"
 }

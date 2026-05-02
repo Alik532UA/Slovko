@@ -2,11 +2,7 @@
 	"database": "Datenbank",
 	"delete": "löschen",
 	"disk": "Datenträger",
-	"drive_it": "Fahren",
 	"monitor": "Monitor",
 	"monitor_screen": "Monitor",
-	"monitor_verb": "überwachen",
-	"password": "Passwort",
-	"scan_digital": "scannen",
-	"scan_medical": "Scan"
+	"password": "Passwort"
 }

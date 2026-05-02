@@ -1,5 +1,4 @@
 ﻿{
-	"earth_yer": "aarde",
 	"forest": "bos",
 	"grass": "gras",
 	"hill": "heuvel",
@@ -12,7 +11,5 @@
 	"storm": "storm",
 	"thunder": "donder",
 	"valley": "vallei",
-	"wind": "wind",
-	"wood_bos": "bos",
-	"wood_holz": "hout"
+	"wind": "wind"
 }

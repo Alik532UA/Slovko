@@ -11,9 +11,7 @@
 	"acquire": "nabyć",
 	"acquire_knowledge": "zdobywać wiedzę",
 	"acquire_obtain": "nabywać",
-	"address_verb": "zwracać się",
 	"adequate": "adekwatny",
-	"apply_job": "aplikować o pracę",
 	"appoint_job": "powołać na stanowisko",
 	"appraise": "oceniać",
 	"appropriate": "odpowiedni",
@@ -43,9 +41,7 @@
 	"pledge_promise": "deklarować / obiecywać",
 	"rely": "polegać",
 	"scan_look": "skanować wzrokiem",
-	"serve_general": "służyć",
 	"simulate_imitate": "symulować / imitować",
 	"trust": "ufać",
-	"trust_noun": "zaufanie",
-	"trust_verb": "ufać"
+	"trust_noun": "zaufanie"
 }

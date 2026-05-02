@@ -2,11 +2,7 @@
 	"database": "база даних",
 	"delete": "видалити",
 	"disk": "диск",
-	"drive_it": "водіння",
 	"monitor": "монітор",
 	"monitor_screen": "монітор",
-	"monitor_verb": "спостерігати",
-	"password": "пароль",
-	"scan_digital": "сканувати",
-	"scan_medical": "сканування"
+	"password": "пароль"
 }

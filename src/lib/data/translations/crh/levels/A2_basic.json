@@ -2,19 +2,13 @@
 	"beat": "yeñmek",
 	"beat_win": "yeñmek",
 	"chat_talk": "laflamaq",
-	"design_plan": "tasarlamaq",
-	"design_style": "dizayn",
-	"design_verb": "tasarlamaq",
-	"film_verb": "filmge almaq",
 	"greet": "selamlaşmaq",
 	"hug": "quçaqlamaq",
 	"pick": "saylamaq",
 	"pick_choose": "saylamaq",
 	"pick_up_object": "kötürmek",
-	"post_verb": "poçta ile yibermek",
 	"seem": "körünmek",
 	"skate": "buzda taymaq",
 	"ski": "çanğıda taymaq",
-	"sneeze": "aqsırmaq",
-	"spell_verb": "ariflermek"
+	"sneeze": "aqsırmaq"
 }

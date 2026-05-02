@@ -31,15 +31,17 @@ function applyTranslations(translations) {
     });
 }
 
-const batchParens = {
-    "bank_(money)": { uk: "банк", el: "τράπεζα", de: "Bank", nl: "bank", pl: "bank", crh: "bank" },
-    "bank_(river)": { uk: "берег", el: "όχθη", de: "Ufer", nl: "oever", pl: "brzeg", crh: "kenar" },
-    "rock_(music)": { uk: "рок-музика", el: "ροκ", de: "Rockmusik", nl: "rock", pl: "rock", crh: "rok" },
-    "rock_(stone)": { uk: "камінь", el: "πέτρα", de: "Stein", nl: "rots", pl: "kamień", crh: "taş" },
-    "set_(group)": { uk: "набір", el: "σετ", de: "Set", nl: "set", pl: "zestaw", crh: "taqım" },
-    "set_(put)": { uk: "встановлювати", el: "θέτω", de: "setzen", nl: "zetten", pl: "ustawiać", crh: "qoymaq" },
-    "counter_(long_flat_surface)": { uk: "прилавок", el: "πάγκος", de: "Theke", nl: "balie", pl: "lada", crh: "tezgâh" },
-    "counter_(argue_against)": { uk: "заперечувати", el: "αντικρούω", de: "entgegenwirken", nl: "tegenwerken", pl: "przeciwdziałać", crh: "qarşı turmaq" }
+const batchFinalClean = {
+    "hey_exclam.": { uk: "ей!", el: "έι!", de: "hey!", nl: "hé!", pl: "hej!", crh: "ey!" },
+    "oh_exclam.": { uk: "о!", el: "ω!", de: "oh!", nl: "oh!", pl: "o!", crh: "o!" },
+    "ok_exclam.": { uk: "окей!", el: "εντάξει!", de: "okay!", nl: "oké!", pl: "okej!", crh: "eyi!" },
+    "the_definite_article": { uk: "означений артикль", el: "οριστικό άρθρο", de: "bestimmter Artikel", nl: "bepaald lidwoord", pl: "przedimek określony", crh: "belirli artikul" },
+    "adj._a": { uk: "прикметник", el: "επίθετο", de: "Adjektiv", nl: "bijvoeglijk naamwoord", pl: "przymiotnik", crh: "sıfat" },
+    "ah_exclam.": { uk: "а!", el: "α!", de: "ach!", nl: "ach!", pl: "ach!", crh: "a!" },
+    "wow_exclam.": { uk: "ого!", el: "ουάου!", de: "wow!", nl: "wauw!", pl: "wow!", crh: "maşalla!" },
+    "zone_n": { uk: "зона", el: "ζώνη", de: "Zone", nl: "zone", pl: "strefa", crh: "zona" },
+    "smartphone": { uk: "смартфон", el: "έξυπνο τηλέφωνο", de: "Smartphone", nl: "smartphone", pl: "smartfon", crh: "smartfon" },
+    "aids": { uk: "СНІД", el: "AIDS", de: "AIDS", nl: "aids", pl: "AIDS", crh: "AİDS" }
 };
 
-applyTranslations(batchParens);
+applyTranslations(batchFinalClean);

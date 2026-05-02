@@ -11,9 +11,7 @@
 	"acquire": "набувати",
 	"acquire_knowledge": "здобувати",
 	"acquire_obtain": "здобувати",
-	"address_verb": "звертатися",
 	"adequate": "адекватний",
-	"apply_job": "подавати заявку",
 	"appoint_job": "призначати",
 	"appraise": "оцінювати",
 	"appropriate": "доречний",
@@ -43,9 +41,7 @@
 	"pledge_promise": "обіцяти",
 	"rely": "покладатися",
 	"scan_look": "швидко переглядати",
-	"serve_general": "служити",
 	"simulate_imitate": "імітувати",
 	"trust": "довіряти",
-	"trust_noun": "довіра",
-	"trust_verb": "довіряти"
+	"trust_noun": "довіра"
 }

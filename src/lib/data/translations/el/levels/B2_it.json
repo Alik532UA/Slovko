@@ -2,11 +2,7 @@
 	"database": "βάση δεδομένων",
 	"delete": "διαγραφή",
 	"disk": "δίσκος",
-	"drive_it": "οδήγηση",
 	"monitor": "οθόνη",
 	"monitor_screen": "οθόνη",
-	"monitor_verb": "παρακολουθώ",
-	"password": "κωδικός πρόσβασης",
-	"scan_digital": "σκανάρω",
-	"scan_medical": "εξέταση"
+	"password": "κωδικός πρόσβασης"
 }

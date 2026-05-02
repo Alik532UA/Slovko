@@ -19,7 +19,8 @@ function clean() {
             const files = fs.readdirSync(lDir).filter(f => f.startsWith(level + '_'));
             for (const file of files) {
                 const p = path.join(lDir, file);
-                const data = JSON.parse(fs.readFileSync(p, 'utf8'));
+                const content = fs.readFileSync(p, 'utf8');
+                const data = JSON.parse(content.replace(/^\uFEFF/, ''));
                 const nextData = {};
                 let changed = false;
                 for (const [k, v] of Object.entries(data)) {
@@ -28,7 +29,7 @@ function clean() {
                 }
                 if (changed) {
                     if (Object.keys(nextData).length === 0) fs.unlinkSync(p);
-                    else fs.writeFileSync(p, JSON.stringify(nextData, null, '\t') + '\n');
+                    else fs.writeFileSync(p, '\uFEFF' + JSON.stringify(nextData, null, '\t') + '\n', 'utf8');
                 }
             }
         }
@@ -38,7 +39,8 @@ function clean() {
         const files = fs.readdirSync(TSCR_DIR).filter(f => f.startsWith(level + '_'));
         for (const file of files) {
             const p = path.join(TSCR_DIR, file);
-            const data = JSON.parse(fs.readFileSync(p, 'utf8'));
+            const content = fs.readFileSync(p, 'utf8');
+            const data = JSON.parse(content.replace(/^\uFEFF/, ''));
             const nextData = {};
             let changed = false;
             for (const [k, v] of Object.entries(data)) {
@@ -47,7 +49,7 @@ function clean() {
             }
             if (changed) {
                 if (Object.keys(nextData).length === 0) fs.unlinkSync(p);
-                else fs.writeFileSync(p, JSON.stringify(nextData, null, '\t') + '\n');
+                else fs.writeFileSync(p, '\uFEFF' + JSON.stringify(nextData, null, '\t') + '\n', 'utf8');
             }
         }
     }

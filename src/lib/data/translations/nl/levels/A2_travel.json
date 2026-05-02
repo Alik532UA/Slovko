@@ -9,14 +9,9 @@
 	"distance": "afstand",
 	"gate": "poort",
 	"guide": "gids",
-	"holiday_celebration": "feestdag",
-	"holiday_vacation": "vakantie",
 	"lost": "verloren",
 	"luggage": "bagage",
 	"platform": "perron",
-	"station_stop": "halte",
-	"station_transport": "station",
-	"ticket_office": "loket",
 	"tour": "toer",
 	"tourism": "toerisme"
 }

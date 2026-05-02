@@ -1,10 +1,6 @@
 ﻿{
-	"cousin_female": "Cousine",
-	"cousin_male": "Kusine",
 	"granddaughter": "Enkelin",
 	"grandson": "Enkel",
 	"marry": "heiraten",
-	"single": "ledig",
-	"uncle_maternal": "Onkel",
-	"uncle_paternal": "Onkel"
+	"single": "ledig"
 }

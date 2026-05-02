@@ -2,19 +2,13 @@
 	"beat": "verslaan",
 	"beat_win": "verslaan",
 	"chat_talk": "kletsen",
-	"design_plan": "ontwerpen",
-	"design_style": "vormgeven",
-	"design_verb": "ontwerpen",
-	"film_verb": "filmen",
 	"greet": "groeten",
 	"hug": "knuffelen",
 	"pick": "kiezen",
 	"pick_choose": "kiezen",
 	"pick_up_object": "oppakken",
-	"post_verb": "posten",
 	"seem": "schijnen",
 	"skate": "schaatsen",
 	"ski": "skiën",
-	"sneeze": "niezen",
-	"spell_verb": "spellen"
+	"sneeze": "niezen"
 }

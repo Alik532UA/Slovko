@@ -2,19 +2,13 @@
 	"beat": "beat",
 	"beat_win": "beat",
 	"chat_talk": "chat",
-	"design_plan": "design",
-	"design_style": "design",
-	"design_verb": "design",
-	"film_verb": "film",
 	"greet": "greet",
 	"hug": "hug",
 	"pick": "pick",
 	"pick_choose": "pick",
 	"pick_up_object": "pick up",
-	"post_verb": "post",
 	"seem": "seem",
 	"skate": "skate",
 	"ski": "ski",
-	"sneeze": "sneeze",
-	"spell_verb": "spell"
+	"sneeze": "sneeze"
 }

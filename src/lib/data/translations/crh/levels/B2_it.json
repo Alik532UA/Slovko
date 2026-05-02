@@ -2,11 +2,7 @@
 	"database": "malümat bazası",
 	"delete": "silmek",
 	"disk": "disk",
-	"drive_it": "aydama",
 	"monitor": "ekran",
 	"monitor_screen": "monitor",
-	"monitor_verb": "közetmek",
-	"password": "parol",
-	"scan_digital": "taramak",
-	"scan_medical": "taramak"
+	"password": "parol"
 }

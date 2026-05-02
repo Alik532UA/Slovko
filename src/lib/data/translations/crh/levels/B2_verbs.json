@@ -11,9 +11,7 @@
 	"acquire": "almaq",
 	"acquire_knowledge": "almaq",
 	"acquire_obtain": "almaq",
-	"address_verb": "hitap etmek",
 	"adequate": "yeterli",
-	"apply_job": "muracaat etmek",
 	"appoint_job": "tayin etmek",
 	"appraise": "baalamaq",
 	"appropriate": "uyğun",
@@ -43,9 +41,7 @@
 	"pledge_promise": "vade etmek",
 	"rely": "itimat etmek",
 	"scan_look": "közden keçirmek",
-	"serve_general": "hızmet etmek",
 	"simulate_imitate": "benzetmek",
 	"trust": "güvenmek",
-	"trust_noun": "inan",
-	"trust_verb": "güvenmek"
+	"trust_noun": "inan"
 }
