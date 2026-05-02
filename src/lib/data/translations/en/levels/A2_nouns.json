@@ -41,6 +41,8 @@
 	"choice": "choice",
 	"circle": "circle",
 	"coach": "coach",
+	"coach_bus": "bus",
+	"coach_instructor": "instructor",
 	"coast": "coast",
 	"community": "community",
 	"competition": "competition",

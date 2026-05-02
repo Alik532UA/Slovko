@@ -4,6 +4,8 @@
 	"clutch": "clutch",
 	"dashboard": "dashboard",
 	"fan": "fan",
+	"fan_admirer": "admirer",
+	"fan_device": "device",
 	"headlight": "headlight",
 	"jack": "jack",
 	"mirror": "mirror",

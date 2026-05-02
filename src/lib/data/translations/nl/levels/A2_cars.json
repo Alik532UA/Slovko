@@ -4,6 +4,8 @@
 	"clutch": "koppeling",
 	"dashboard": "dashboard",
 	"fan": "fan / ventilator",
+	"fan_admirer": "fan",
+	"fan_device": "ventilator",
 	"headlight": "koplamp",
 	"jack": "krik",
 	"mirror": "spiegel",

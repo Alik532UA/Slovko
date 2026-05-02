@@ -35,7 +35,10 @@ files.forEach(file => {
     }
     const data = JSON.parse(content);
     Object.keys(data).forEach(key => {
-        masterLists[levelPrefix].add(key);
+        const baseKey = key.split('_')[0].split('(')[0].trim().toLowerCase();
+        if (baseKey && baseKey.length > 1) {
+            masterLists[levelPrefix].add(baseKey);
+        }
     });
 });
 
