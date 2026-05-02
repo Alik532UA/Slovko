@@ -31,27 +31,27 @@ function applyTranslations(translations) {
     });
 }
 
-const batch6 = {
-    "inherent": { uk: "властивий", pl: "nieodłączny", de: "inhärent", nl: "inherent", el: "εγγενής", crh: "esaslı" },
-    "inhibit": { uk: "пригнічувати", pl: "hamować", de: "hemmen", nl: "remmen", el: "παρεμποδίζω", crh: "kederlemek" },
-    "injustice": { uk: "несправедливість", pl: "niesprawiedliwość", de: "Ungerechtigkeit", nl: "onrecht", el: "αδικία", crh: "musaviysizlik" },
-    "inmate": { uk: "в'язень", pl: "więzień", de: "Insasse", nl: "gedetineerde", el: "κρατούμενος", crh: "mahbüs" },
-    "inquire": { uk: "запитувати", pl: "dowiadywać się", de: "anfragen", nl: "informeren", el: "ρωτώ", crh: "soraştırmaq" },
-    "insertion": { uk: "вставка", pl: "wstawienie", de: "Einfügung", nl: "invoeging", el: "εισαγωγή", crh: "qoyuv" },
-    "insider": { uk: "інсайдер", pl: "informator", de: "Insider", nl: "insider", el: "γνώστης εκ των έσω", crh: "içten kimese" },
-    "inspection": { uk: "огляд", pl: "kontrola", de: "Inspektion", nl: "inspectie", el: "επιθεώρηση", crh: "teftiş" },
-    "inspiration": { uk: "натхнення", pl: "inspiracja", de: "Inspiration", nl: "inspiratie", el: "έμπνευση", crh: "ilham" },
-    "instinct": { uk: "інстинкт", pl: "instynkt", de: "Instinkt", nl: "instinct", el: "ένστικτο", crh: "iç-duyğu" },
-    "institutional": { uk: "інституційний", pl: "instytucjonalny", de: "institutionell", nl: "institutioneel", el: "θεσμικός", crh: "teşkilâtlı" },
-    "instruct": { uk: "інструктувати", pl: "instruować", de: "anweisen", nl: "instrueren", el: "καθοδηγώ", crh: "ögretmek" },
-    "instrumental": { uk: "інструментальний", pl: "pomocny", de: "instrumental", nl: "instrumentaal", el: "καθοριστικός", crh: "aletli" },
-    "insufficient": { uk: "недостатній", pl: "niewystarczający", de: "unzureichend", nl: "onvoldoende", el: "ανεπαρκής", crh: "yetersiz" },
-    "insult": { uk: "образа", pl: "zniewaga", de: "Beleidigung", nl: "belediging", el: "προσβολή", crh: "aqaret" },
-    "intact": { uk: "неушкоджений", pl: "nienaruszony", de: "intakt", nl: "intact", el: "ανέπαφος", crh: "sap-sağlam" },
-    "intake": { uk: "споживання", pl: "spożycie", de: "Einnahme", nl: "inname", el: "πρόσληψη", crh: "aluv" },
-    "integral": { uk: "невід'ємний", pl: "integralny", de: "integral", nl: "integraal", el: "αναπόσπαστος", crh: "esas" },
-    "integrated": { uk: "інтегрований", pl: "zintegrowany", de: "integriert", nl: "geïntegreerd", el: "ολοκληρωμένος", crh: "qatışqan" },
-    "integration": { uk: "інтеграція", pl: "integracja", de: "Integration", nl: "integratie", el: "ενσωμάτωση", crh: "birleşüv" }
+const batch7 = {
+    "integrity": { uk: "цілісність", pl: "integralność", de: "Integrität", nl: "integriteit", el: "ακεραιότητα", crh: "bütünlik" },
+    "intensify": { uk: "посилювати", pl: "nasilać", de: "intensivieren", nl: "intensiveren", el: "εντείνω", crh: "küçleştirüv" },
+    "intensity": { uk: "інтенсивність", pl: "intensywność", de: "Intensität", nl: "intensiteit", el: "ένταση", crh: "küç" },
+    "intensive": { uk: "інтенсивний", pl: "intensywny", de: "intensiv", nl: "intensief", el: "εντατικός", crh: "küçlü" },
+    "intent": { uk: "намір", pl: "zamiar", de: "Absicht", nl: "intentie", el: "πρόθεση", crh: "niyet" },
+    "interactive": { uk: "інтерактивний", pl: "interaktywny", de: "interaktiv", nl: "interactief", el: "διαδραστικός", crh: "interaktiv" },
+    "interface": { uk: "інтерфейс", pl: "interfejs", de: "Schnittstelle", nl: "interface", el: "διεπαφή", crh: "arayüz" },
+    "interfere": { uk: "втручатися", pl: "ingerować", de: "stören", nl: "interfereren", el: "παρεμβαίνω", crh: "qatışmaq" },
+    "interference": { uk: "втручання", pl: "ingerencja", de: "Interferenz", nl: "inmenging", el: "παρεμβολή", crh: "qatışuv" },
+    "interim": { uk: "проміжний", pl: "tymczasowy", de: "vorläufig", nl: "tussentijds", el: "προσωρινός", crh: "vaqtınca" },
+    "interior": { uk: "інтер'єр", pl: "wnętrze", de: "Innenraum", nl: "interieur", el: "εσωτερικό", crh: "iç" },
+    "intermediate": { uk: "середній", pl: "średniozaawansowany", de: "mittel", nl: "gemiddeld", el: "ενδιάμεσος", crh: "orta" },
+    "intersection": { uk: "перехрестя", pl: "skrzyżowanie", de: "Kreuzung", nl: "kruispunt", el: "διασταύρωση", crh: "çat" },
+    "intervention": { uk: "втручання", pl: "interwencja", de: "Intervention", nl: "interventie", el: "παρέμβαση", crh: "qarışuv" },
+    "intimate": { uk: "інтимний", pl: "intymny", de: "intim", nl: "intiem", el: "οικείος", crh: "yakın" },
+    "intriguing": { uk: "інтригуючий", pl: "intrygujący", de: "faszinierend", nl: "intrigerend", el: "ιντριγκαδόρικος", crh: "meraklı" },
+    "inventory": { uk: "інвентар", pl: "inwentarz", de: "Inventar", nl: "inventaris", el: "απογραφή", crh: "cedvel" },
+    "investigator": { uk: "слідчий", pl: "śledczy", de: "Ermittler", nl: "onderzoeker", el: "ερευνητής", crh: "teftişçi" },
+    "invisible": { uk: "невидимий", pl: "niewidoczny", de: "unsichtbar", nl: "onzichtbaar", el: "αόρατος", crh: "körünmez" },
+    "ironic": { uk: "іронічний", pl: "ironiczny", de: "ironisch", nl: "ironisch", el: "ειρωνικός", crh: "alaylı" }
 };
 
-applyTranslations(batch6);
+applyTranslations(batch7);
