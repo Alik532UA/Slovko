@@ -31,27 +31,27 @@ function applyTranslations(translations) {
     });
 }
 
-const batch9 = {
-    "lawsuit": { uk: "судовий позов", pl: "pozew sądowy", de: "Klage", nl: "rechtszaak", el: "αγωγή", crh: "dava" },
-    "layout": { uk: "макет", pl: "układ", de: "Layout", nl: "lay-out", el: "διάταξη", crh: "sırma" },
-    "leak": { uk: "витік", pl: "przeciek", de: "Leck", nl: "lek", el: "διαρροή", crh: "sızuv" },
-    "leap": { uk: "стрибок", pl: "skok", de: "Sprung", nl: "sprong", el: "άλμα", crh: "sıçrav" },
-    "legacy": { uk: "спадщина", pl: "dziedzictwo", de: "Vermächtnis", nl: "erfenis", el: "κληρονομιά", crh: "miras" },
-    "legendary": { uk: "легендарний", pl: "legendarny", de: "legendär", nl: "legendarisch", el: "θρυλικός", crh: "efsaneviy" },
-    "legislation": { uk: "законодавство", pl: "ustawodawstwo", de: "Gesetzgebung", nl: "wetgeving", el: "νομοθεσία", crh: "qanuniyet" },
-    "legislative": { uk: "законодавчий", pl: "ustawodawczy", de: "legislativ", nl: "wetgevend", el: "νομοθετικός", crh: "qanun berici" },
-    "legislature": { uk: "законодавчий орган", pl: "legislatura", de: "Legislative", nl: "wetgevende macht", el: "νομοθετικό σώμα", crh: "qanuniyet meclisi" },
-    "legitimate": { uk: "законний", pl: "legalny", de: "legitim", nl: "legitiem", el: "νόμιμος", crh: "qanuniy" },
-    "lengthy": { uk: "тривалий", pl: "długotrwały", de: "langwierig", nl: "langdurig", el: "μακροσκελής", crh: "uzun" },
-    "lesbian": { uk: "лесбійка", pl: "lesbijka", de: "lesbisch", nl: "lesbisch", el: "λεσβία", crh: "lezbiyanka" },
-    "lesser": { uk: "менший", pl: "mniejszy", de: "geringer", nl: "minder", el: "mikρότερος", crh: "ufaq" },
-    "lethal": { uk: "смертельний", pl: "śmiertelny", de: "tödlich", nl: "dodelijk", el: "θανατηφόρος", crh: "öldürijilik" },
-    "liable": { uk: "відповідальний", pl: "odpowiedzialny", de: "haftbar", nl: "aansprakelijk", el: "υπεύθυνος", crh: "mesul" },
-    "liberal": { uk: "ліберальний", pl: "liberalny", de: "liberal", nl: "liberaal", el: "φιλελεύθερος", crh: "liberal" },
-    "liberation": { uk: "визволення", pl: "wyzwolenie", de: "Befreiung", nl: "bevrijding", el: "απελευθέρωση", crh: "azat etüv" },
-    "liberty": { uk: "свобода", pl: "wolność", de: "Freiheit", nl: "vrijheid", el: "ελευθερία", crh: "hürriyet" },
-    "lifelong": { uk: "довічний", pl: "dożywotni", de: "lebenslang", nl: "levenslang", el: "ισόβιος", crh: "ömürlik" },
-    "likelihood": { uk: "ймовірність", pl: "prawdopodobieństwo", de: "Wahrscheinlichkeit", nl: "waarschijnlijkheid", el: "πιθανότητα", crh: "ihtimal" }
+const batch10 = {
+    "limb": { uk: "кінцівка", pl: "kończyna", de: "Gliedmaße", nl: "ledemaat", el: "άκρο", crh: "ayaq-qol" },
+    "line-up": { uk: "склад", pl: "skład", de: "Aufstellung", nl: "opstelling", el: "σύνθεση", crh: "terkip" },
+    "linear": { uk: "лінійний", pl: "liniowy", de: "linear", nl: "lineair", el: "γραμμικός", crh: "sızıqlı" },
+    "lineup": { uk: "склад", pl: "skład", de: "Aufstellung", nl: "opstelling", el: "σύνθεση", crh: "terkip" },
+    "linger": { uk: "затримуватися", pl: "zwlekać", de: "verweilen", nl: "dralen", el: "χρονοτριβώ", crh: "lengerlemek" },
+    "listing": { uk: "список", pl: "wykaz", de: "Auflistung", nl: "lijst", el: "κατάλογος", crh: "cedvel" },
+    "liter": { uk: "літр", pl: "litr", de: "Liter", nl: "liter", el: "λίτρο", crh: "litra" },
+    "literacy": { uk: "грамотність", pl: "umiejętność czytania", de: "Lese- und Schreibfähigkeit", nl: "geletterdheid", el: "αλφαβητισμός", crh: "okuma-yazuv qabiliyeti" },
+    "liver": { uk: "печінка", pl: "wątroba", de: "Leber", nl: "lever", el: "συκάτι", crh: "bağır" },
+    "lobby": { uk: "лобі", pl: "lobby", de: "Lobby", nl: "lobby", el: "λόμπι", crh: "lobi" },
+    "log": { uk: "журнал", pl: "dziennik", de: "Protokoll", nl: "logboek", el: "αρχείο καταγραφής", crh: "kütük" },
+    "logic": { uk: "логіка", pl: "logika", de: "Logik", nl: "logica", el: "λογική", crh: "mantıq" },
+    "long-standing": { uk: "давній", pl: "długoletni", de: "langjährig", nl: "langdurig", el: "μακροχρόνιος", crh: "ezeliy" },
+    "long-time": { uk: "давній", pl: "dawny", de: "langjährig", nl: "langdurig", el: "μακροχρόνιος", crh: "uzaq vaqıt" },
+    "longtime": { uk: "давній", pl: "dawny", de: "langjährig", nl: "langdurig", el: "μακροχρόνιος", crh: "uzaq vaqıt" },
+    "loom": { uk: "маячити", pl: "wyłaniać się", de: "sich abzeichnen", nl: "opdoemen", el: "διαφαίνομαι", crh: "körünmek" },
+    "loop": { uk: "петля", pl: "pętla", de: "Schleife", nl: "lus", el: "βρόχος", crh: "sırma" },
+    "loyalty": { uk: "лояльність", pl: "lojalność", de: "Loyalität", nl: "loyaliteit", el: "πίστη", crh: "sadıqlıq" },
+    "machinery": { uk: "обладнання", pl: "maszyny", de: "Maschinen", nl: "machines", el: "μηχανήματα", crh: "maşinalar" },
+    "magical": { uk: "магічний", pl: "magiczny", de: "magisch", nl: "magisch", el: "μαγικός", crh: "tılsımlı" }
 };
 
-applyTranslations(batch9);
+applyTranslations(batch10);
