@@ -31,27 +31,27 @@ function applyTranslations(translations) {
     });
 }
 
-const batch15 = {
-    "notably": { uk: "зокрема", pl: "w szczególności", de: "insbesondere", nl: "met name", el: "ιδίως", crh: "hususan" },
-    "notorious": { uk: "горезвісний", pl: "cieszący się złą sławą", de: "berüchtigt", nl: "berucht", el: "διαβόητος", crh: "belli (fena cihetten)" },
-    "nursery": { uk: "дитячий садок", pl: "żłobek", de: "Kindergarten", nl: "crèche", el: "βρεφονηπιακός σταθμός", crh: "bala bağçası" },
-    "objection": { uk: "заперечення", pl: "sprzeciw", de: "Einwand", nl: "bezwaar", el: "ένσταση", crh: "itiraz" },
-    "obsess": { uk: "переслідувати", pl: "mieć obsesję", de: "besessen sein", nl: "obsederen", el: "έχω εμμονή", crh: "tüşüncelerinden çıqarmaq" },
-    "obsession": { uk: "одержимість", pl: "obsesja", de: "Besessenheit", nl: "obsessie", el: "εμμονή", crh: "sevda" },
-    "occasional": { uk: "випадковий", pl: "sporadyczny", de: "gelegentlich", nl: "incidenteel", el: "περιστασιακός", crh: "ba'zı vaqıtları" },
-    "occurrence": { uk: "випадок", pl: "zdarzenie", de: "Vorkommen", nl: "voorval", el: "γεγονός", crh: "vaqia" },
-    "odds": { uk: "шанси", pl: "szanse", de: "Chancen", nl: "kansen", el: "πιθανότητες", crh: "ihtimal" },
-    "offering": { uk: "пропозиція", pl: "oferta", de: "Angebot", nl: "aanbod", el: "προσφορά", crh: "bağış" },
-    "offspring": { uk: "потомство", pl: "potomstwo", de: "Nachwuchs", nl: "nakomelingen", el: "απόγονος", crh: "nesil" },
-    "operational": { uk: "оперативний", pl: "operacyjny", de: "betriebsbereit", nl: "operationeel", el: "επιχειρησιακός", crh: "işleyicideli" },
-    "optical": { uk: "оптичний", pl: "optyczny", de: "optisch", nl: "optisch", el: "οπτικός", crh: "optik" },
-    "optimism": { uk: "оптимізм", pl: "optymizm", de: "Optimismus", nl: "optimisme", el: "αισιοδοξία", crh: "optimizm" },
-    "oral": { uk: "усний", pl: "ustny", de: "mündlich", nl: "mondeling", el: "προφορικός", crh: "ağızdan" },
-    "organizational": { uk: "організаційний", pl: "organizacyjny", de: "organisatorisch", nl: "organisatorisch", el: "οργανωτικός", crh: "teşkilâtlı" },
-    "orientation": { uk: "орієнтація", pl: "orientacja", de: "Orientierung", nl: "oriëntatie", el: "προσανατολισμός", crh: "yöneliş" },
-    "outbreak": { uk: "спалах", pl: "wybuch", de: "Ausbruch", nl: "uitbraak", el: "ξέσπασμα", crh: "başlanğıç" },
-    "outing": { uk: "прогулянка", pl: "wycieczka", de: "Ausflug", nl: "uitje", el: "εκδρομή", crh: "gezinti" },
-    "outlet": { uk: "торгова точка", pl: "punkt sprzedaży", de: "Verkaufsstelle", nl: "outlet", el: "διέξοδος", crh: "çıqış" }
+const batch16 = {
+    "outlook": { uk: "прогноз / світогляд", pl: "perspektywa", de: "Aussicht", nl: "vooruitzicht", el: "προοπτική", crh: "baqış açısı" },
+    "outrage": { uk: "обурення", pl: "oburzenie", de: "Empörung", nl: "verontwaardiging", el: "αγανάκτηση", crh: "ğadap" },
+    "outsider": { uk: "сторонній", pl: "osoba z zewnątrz", de: "Außenseiter", nl: "buitenstaander", el: "ξένος", crh: "tışarıdan kimese" },
+    "overly": { uk: "надмірно", pl: "nadmiernie", de: "übermäßig", nl: "overmatig", el: "υπερβολικά", crh: "ziyade" },
+    "oversee": { uk: "наглядати", pl: "nadzorować", de: "beaufsichtigen", nl: "toezien op", el: "επιβλέπω", crh: "nezaret etmek" },
+    "overturn": { uk: "перекинути", pl: "wywrócić", de: "umwerfen", nl: "omverwerpen", el: "ανατρέπω", crh: "yuvarlamaq" },
+    "overwhelm": { uk: "перевантажувати", pl: "przytłaczać", de: "überwältigen", nl: "overweldigen", el: "κατακλύζω", crh: "bastırmaq" },
+    "overwhelming": { uk: "переважний", pl: "przytłaczający", de: "überwältigend", nl: "overweldigend", el: "συντριπτικός", crh: "balaban" },
+    "pad": { uk: "подушечка", pl: "podkładka", de: "Polster", nl: "kussen", el: "μαξιλαράκι", crh: "yastıçıq" },
+    "parameter": { uk: "параметр", pl: "parametr", de: "Parameter", nl: "parameter", el: "παράμετρος", crh: "parametr" },
+    "parental": { uk: "батьківський", pl: "rodzicielski", de: "elterlich", nl: "ouderlijk", el: "γονικός", crh: "ana-babağa ait" },
+    "parish": { uk: "парафія", pl: "parafia", de: "Gemeinde", nl: "parochie", el: "ενορία", crh: "cemaat" },
+    "parliamentary": { uk: "парламентський", pl: "parlamentarny", de: "parlamentarisch", nl: "parlementair", el: "κοινοβουλευτικός", crh: "parlament" },
+    "partial": { uk: "частковий", pl: "częściowy", de: "teilweise", nl: "gedeeltelijk", el: "μερικός", crh: "qısmiy" },
+    "partially": { uk: "частково", pl: "częściowo", de: "teilweise", nl: "gedeeltelijk", el: "εν μέρει", crh: "qısmen" },
+    "passing": { uk: "проходження", pl: "mijanie", de: "Vorbeigehen", nl: "voorbijgaan", el: "πέρασμα", crh: "keçüv" },
+    "passive": { uk: "пасивний", pl: "pasywny", de: "passiv", nl: "passief", el: "παθητικός", crh: "pasiv" },
+    "pastor": { uk: "пастор", pl: "pastor", de: "Pastor", nl: "pastor", el: "πάστορας", crh: "pastor" },
+    "patent": { uk: "патент", pl: "patent", de: "Patent", nl: "patent", el: "πατέντα", crh: "patent" },
+    "pathway": { uk: "шлях", pl: "ścieżka", de: "Pfad", nl: "pad", el: "μονοπάτι", crh: "yol" }
 };
 
-applyTranslations(batch15);
+applyTranslations(batch16);
