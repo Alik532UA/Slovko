@@ -31,27 +31,27 @@ function applyTranslations(translations) {
     });
 }
 
-const batch4 = {
-    "hint": { uk: "підказка", pl: "wskazówka", de: "Hinweis", nl: "hint", el: "υπαινιγμός", crh: "işaret" },
-    "homeland": { uk: "батьківщина", pl: "ojczyzna", de: "Heimat", nl: "vaderland", el: "πατρίδα", crh: "vatan" },
-    "hopeful": { uk: "сповнений надії", pl: "pełen nadziei", de: "hoffnungsvoll", nl: "hoopvol", el: "ελπιδοφόρος", crh: "ümütli" },
-    "horizon": { uk: "горизонт", pl: "horyzont", de: "Horizont", nl: "horizon", el: "ορίζοντας", crh: "ufuq" },
-    "horn": { uk: "ріг", pl: "róg", de: "Horn", nl: "hoorn", el: "κέρας", crh: "müyüz" },
-    "hostage": { uk: "заручник", pl: "zakładnik", de: "Geisel", nl: "gijzelaar", el: "όμηρος", crh: "yesir" },
-    "hostile": { uk: "ворожий", pl: "wrogi", de: "feindlich", nl: "vijandig", el: "εχθρικός", crh: "duşman" },
-    "hostility": { uk: "ворожість", pl: "wrogość", de: "Feindseligkeit", nl: "vijandigheid", el: "εχθρότητα", crh: "duşmanlıq" },
-    "humanitarian": { uk: "гуманітарний", pl: "humanitarny", de: "humanitär", nl: "humanitair", el: "ανθρωπιστικός", crh: "insaniy" },
-    "humanity": { uk: "людство", pl: "ludzkość", de: "Menschheit", nl: "mensheid", el: "ανθρωπότητα", crh: "insaniyet" },
-    "humble": { uk: "покірний", pl: "pokorny", de: "bescheiden", nl: "nederig", el: "ταπεινός", crh: "mütevazı" },
-    "hydrogen": { uk: "водень", pl: "wodór", de: "Wasserstoff", nl: "waterstof", el: "υδρογόνο", crh: "vodorod" },
-    "ideological": { uk: "ідеологічний", pl: "ideologiczny", de: "ideologisch", nl: "ideologisch", el: "ιδεολογικός", crh: "ideologik" },
-    "ideology": { uk: "ідеологія", pl: "ideologia", de: "Ideologie", nl: "ideologie", el: "ιδεολογία", crh: "ideologiya" },
-    "idiot": { uk: "ідіот", pl: "idiota", de: "Idiot", nl: "idioot", el: "ηλίθιος", crh: "ahmaq" },
-    "ignorance": { uk: "невігластво", pl: "ignorancja", de: "Unwissenheit", nl: "onwetendheid", el: "άγνοια", crh: "bilmesizlik" },
-    "imagery": { uk: "образи", pl: "obrazowanie", de: "Bilderwelt", nl: "beeldspraak", el: "εικόνες", crh: "timsaller" },
-    "immense": { uk: "величезний", pl: "ogromny", de: "immens", nl: "immens", el: "τεράστιος", crh: "asra" },
-    "imminent": { uk: "неминучий", pl: "nieuchronny", de: "bevorstehend", nl: "dreigend", el: "επικείμενος", crh: "yaqın" },
-    "implementation": { uk: "впровадження", pl: "wdrożenie", de: "Umsetzung", nl: "implementatie", el: "εφαρμογή", crh: "тормушқа ашырув" }
+const batch5 = {
+    "imprison": { uk: "ув'язнювати", pl: "uwięzić", de: "ins Gefängnis werfen", nl: "gevangenzetten", el: "φυλακίζω", crh: "aps etmek" },
+    "imprisonment": { uk: "ув'язнення", pl: "uwięzienie", de: "Haft", nl: "gevangenisstraf", el: "φυλάκιση", crh: "aps" },
+    "inability": { uk: "нездатність", pl: "niezdolność", de: "Unfähigkeit", nl: "onvermogen", el: "ανικανότητα", crh: "qabiliyetsizlik" },
+    "inadequate": { uk: "неадекватний", pl: "nieadekwatny", de: "unangemessen", nl: "ontoereikend", el: "ανεπαρκής", crh: "yetersiz" },
+    "inappropriate": { uk: "неналежний", pl: "nieodpowiedni", de: "unangemessen", nl: "ongepast", el: "ακατάλληλος", crh: "uyğunsız" },
+    "incarcerate": { uk: "ув'язнювати", pl: "uwięzić", de: "einsperren", nl: "opsluiten", el: "εγκλείω", crh: "aps etmek" },
+    "incarceration": { uk: "ув'язнення", pl: "uwięzienie", de: "Einkerkerung", nl: "opsluiting", el: "εγκλεισμός", crh: "aps" },
+    "incidence": { uk: "рівень захворюваності", pl: "częstość występowania", de: "Häufigkeit", nl: "incidentie", el: "συχνότητα εμφάνισης", crh: "rastkelüv" },
+    "inclined": { uk: "схильний", pl: "skłonny", de: "geneigt", nl: "geneigd", el: "προδιατεθειμένος", crh: "meyilli" },
+    "inclusion": { uk: "включення", pl: "włączenie", de: "Inklusion", nl: "insluiting", el: "ένταξη", crh: "içine aluv" },
+    "incur": { uk: "зазнати", pl: "ponieść", de: "übernehmen", nl: "oplopen", el: "υφίσταμαι", crh: "oğramaq" },
+    "indicator": { uk: "показник", pl: "wskaźnik", de: "Indikator", nl: "indicator", el: "δείκτης", crh: "köstergiç" },
+    "indictment": { uk: "обвинувальний акт", pl: "akt oskarżenia", de: "Anklage", nl: "aanklacht", el: "κατηγορητήριο", crh: "qabaatlav" },
+    "indigenous": { uk: "корінний", pl: "rdzenny", de: "eingeboren", nl: "inheems", el: "αυτόχθων", crh: "yerli" },
+    "indulge": { uk: "потурати", pl: "pobłażać", de: "verwöhnen", nl: "verwennen", el: "ενδίδω", crh: "berilmek" },
+    "inequality": { uk: "нерівність", pl: "nierówność", de: "Ungleichheit", nl: "ongelijkheid", el: "ανισότητα", crh: "musaviysizlik" },
+    "infamous": { uk: "ганебний", pl: "cieszący się złą sławą", de: "berüchtigt", nl: "berucht", el: "διαβόητος", crh: "rezi" },
+    "infant": { uk: "немовля", pl: "niemowlę", de: "Säugling", nl: "baby", el: "βρέφος", crh: "bebek" },
+    "inflict": { uk: "завдавати", pl: "wymierzać", de: "zufügen", nl: "toebrengen", el: "επιβάλλω", crh: "uydurmaq" },
+    "influential": { uk: "впливовий", pl: "wpływowy", de: "einflussreich", nl: "invloedrijk", el: "σημαντικός", crh: "itibarlı" }
 };
 
-applyTranslations(batch4);
+applyTranslations(batch5);
