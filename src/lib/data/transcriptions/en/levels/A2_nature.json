@@ -1,25 +1,8 @@
-{
+﻿{
+	"branch": "/brɑːntʃ/",
 	"branch_tak": "/brɑːntʃ/",
-	"cloud": "/klaʊd/",
-	"desert": "/ˈdɛzərt/",
-	"earth_planet": "/ɜːrθ/",
-	"earth_yer": "/ɜːrθ/",
-	"forest": "/ˈfɒrɪst/",
-	"grass": "/ɡrɑːs/",
-	"hill": "/hɪl/",
-	"insect": "/ˈɪnsɛkt/",
-	"lake": "/leɪk/",
 	"leaf": "/liːf/",
-	"moon": "/muːn/",
+	"rock": "/rɒк/",
 	"rock_stone": "/rɒk/",
-	"season": "/ˈsiːzn/",
-	"sky": "/skaɪ/",
-	"soil": "/sɔɪl/",
-	"stone": "/stəʊn/",
-	"storm": "/stɔːm/",
-	"thunder": "/ˈθʌndər/",
-	"valley": "/ˈvæli/",
-	"wind": "/wɪnd/",
-	"wood_bos": "/wʊd/",
-	"wood_holz": "/wʊd/"
+	"soil": "/sɔɪl/"
 }

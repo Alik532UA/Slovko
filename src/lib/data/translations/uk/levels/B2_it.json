@@ -1,8 +1,5 @@
 ﻿{
-	"database": "база даних",
 	"delete": "видалити",
 	"disk": "диск",
-	"monitor": "монітор",
-	"monitor_screen": "монітор",
-	"password": "пароль"
+	"monitor_screen": "монітор"
 }

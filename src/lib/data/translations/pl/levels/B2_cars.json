@@ -4,10 +4,11 @@
 	"exhaust_options": "wyczerpywać opcje",
 	"hood": "maska",
 	"insurance": "ubezpieczenie",
-	"license": "prawo jazdy",
 	"mechanic": "mechanik",
 	"radiator": "grzejnik",
 	"shock_absorber": "amortyzator",
+	"spark": "świeca zapłonowa",
 	"spark_plug": "świeca zapłonowa",
+	"steering": "kierownica",
 	"steering_wheel": "kierownica"
 }

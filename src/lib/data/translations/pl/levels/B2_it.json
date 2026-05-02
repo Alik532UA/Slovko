@@ -1,8 +1,5 @@
 ﻿{
-	"database": "baza danych",
 	"delete": "usunąć",
 	"disk": "dysk",
-	"monitor": "monitor",
-	"monitor_screen": "monitor",
-	"password": "hasło"
+	"monitor_screen": "monitor"
 }

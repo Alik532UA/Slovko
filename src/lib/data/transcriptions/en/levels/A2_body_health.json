@@ -1,17 +1,7 @@
-{
+﻿{
 	"accident": "/ˈæksɪdənt/",
 	"accident_chance": "/ˈæksɪdənt/",
 	"accident_event": "/ˈæksɪdəнт/",
-	"blood": "/blʌd/",
-	"brain": "/breɪn/",
-	"clap_hands": "/klæp/",
-	"comb_hair": "/koʊm/",
-	"finger": "/ˈfɪŋɡər/",
-	"heart": "/hɑːrt/",
-	"knee": "/niː/",
-	"medicine_field": "/ˈmɛdsн/",
-	"neck": "/nɛk/",
-	"shoulder": "/ˈʃəʊldər/",
-	"stomach": "/ˈstʌmək/",
-	"voice": "/vɔɪs/"
+	"medicine": "/ˈmɛdsн/",
+	"medicine_field": "/ˈmɛdsн/"
 }

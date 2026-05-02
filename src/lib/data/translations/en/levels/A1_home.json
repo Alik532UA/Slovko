@@ -16,6 +16,8 @@
 	"plant_factory": "plant",
 	"shower": "shower",
 	"table": "table",
+	"table_data": "data grid",
+	"table_furniture": "furniture",
 	"toilet": "toilet",
 	"wall": "wall"
 }

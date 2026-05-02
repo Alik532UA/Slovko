@@ -8,6 +8,8 @@
 	"document": "document",
 	"headphone": "headphone",
 	"image": "image",
+	"image_picture": "picture",
+	"image_reputation": "reputation",
 	"laptop": "laptop",
 	"link": "link",
 	"login": "login",

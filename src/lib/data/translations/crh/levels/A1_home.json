@@ -16,6 +16,8 @@
 	"plant_factory": "zavod",
 	"shower": "duş",
 	"table": "masa",
+	"table_data": "cedvel",
+	"table_furniture": "masa",
 	"toilet": "hacethane",
 	"wall": "divar"
 }

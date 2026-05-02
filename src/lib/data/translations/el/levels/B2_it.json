@@ -1,8 +1,5 @@
 ﻿{
-	"database": "βάση δεδομένων",
 	"delete": "διαγραφή",
 	"disk": "δίσκος",
-	"monitor": "οθόνη",
-	"monitor_screen": "οθόνη",
-	"password": "κωδικός πρόσβασης"
+	"monitor_screen": "οθόνη"
 }

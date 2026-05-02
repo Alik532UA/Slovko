@@ -1,8 +1,5 @@
 ﻿{
-	"database": "database",
 	"delete": "delete",
 	"disk": "disk",
-	"monitor": "monitor",
-	"monitor_screen": "monitor",
-	"password": "password"
+	"monitor_screen": "monitor"
 }

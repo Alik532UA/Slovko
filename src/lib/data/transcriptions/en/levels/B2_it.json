@@ -1,16 +1,4 @@
-{
-	"audio": "/ˈɔːdiəʊ/",
+﻿{
 	"browser": "/ˈbraʊzər/",
-	"database": "/ˈdeɪtəbeɪs/",
-	"database_management": "/ˈdeɪtəbeɪs/",
-	"delete": "/dɪˈliːt/",
-	"disk": "/dɪsk/",
-	"drive_it": "/draɪv/",
-	"filter": "/ˈfɪltər/",
-	"monitor": "/ˈmɒнɪтər/",
-	"monitor_screen": "/ˈmɒнɪтər/",
-	"monitor_verb": "/ˈmɒнɪтər/",
-	"password": "/ˈpɑːswɜːrd/",
-	"password_security": "/ˈpɑːswɜːrd/",
-	"scan_look": "/skæn/"
+	"filter": "/ˈfɪltər/"
 }

@@ -1,6 +1,8 @@
 ﻿{
 	"ant": "ant",
+	"bat": "bat",
 	"bat_animal": "bat",
+	"bat_sports": "sports",
 	"butterfly": "butterfly",
 	"camel": "camel",
 	"crab": "crab",

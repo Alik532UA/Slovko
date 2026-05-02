@@ -1,10 +1,11 @@
-{
+﻿{
 	"animal": "/ˈænɪməl/",
 	"bird": "/bɜːd/",
 	"cat": "/kæt/",
 	"chicken": "/ˈtʃɪkɪn/",
 	"cow": "/kaʊ/",
 	"dog": "/dɒɡ/",
+	"duck": "/dʌk/",
 	"duck_animal": "/dʌk/",
 	"elephant": "/ˈɛlɪfənt/",
 	"fish": "/fɪʃ/",

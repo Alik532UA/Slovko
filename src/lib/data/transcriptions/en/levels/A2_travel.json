@@ -1,22 +1,4 @@
-{
-	"airline": "/ˈɛəlaɪn/",
-	"atm": "/ˌeɪ tiː ˈɛm/",
-	"boarding": "/ˈbɔːrdɪŋ/",
-	"camp_verb": "/kæmp/",
+﻿{
 	"cancel": "/ˈkænsl/",
-	"cash": "/kæʃ/",
-	"continent": "/ˈkɒнтɪнɛнт/",
-	"credit_card": "/ˈkrɛdɪt kɑːrd/",
-	"distance": "/ˈdɪстəнс/",
-	"found": "/faʊnd/",
-	"gate": "/ɡeɪt/",
-	"guide": "/ɡaɪd/",
-	"holiday_celebration": "/ˈhɒlədeɪ/",
-	"holiday_vacation": "/ˈhɒlədeɪ/",
-	"lost": "/lɒст/",
-	"luggage": "/ˈlʌɡɪdʒ/",
-	"platform": "/ˈplætfɔːrm/",
-	"reception": "/rɪˈsɛpʃn/",
-	"tour": "/tʊər/",
-	"tourism": "/ˈтʊərɪzm/"
+	"found": "/faʊnd/"
 }

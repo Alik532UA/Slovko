@@ -1,8 +1,5 @@
 ﻿{
-	"database": "Datenbank",
 	"delete": "löschen",
 	"disk": "Datenträger",
-	"monitor": "Monitor",
-	"monitor_screen": "Monitor",
-	"password": "Passwort"
+	"monitor_screen": "Monitor"
 }

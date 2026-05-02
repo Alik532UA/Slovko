@@ -1,15 +1,12 @@
-{
+﻿{
 	"brake": "/breɪk/",
 	"exhaust": "/ɪɡˈzɔːst/",
 	"exhaust_options": "/ɪɡˈzɔːст/",
 	"gear": "/ɡɪər/",
 	"hood": "/hʊd/",
-	"insurance": "/ɪнˈʃʊərəнс/",
-	"license": "/ˈlaɪsəns/",
-	"license_document": "/ˈlaɪsəns/",
-	"mechanic": "/məˈkæнɪк/",
 	"radiator": "/ˈreɪdieɪtər/",
-	"shock_absorber": "/ˈʃɒk əbˌzɔːrbər/",
+	"spark": "/ˈspɑːrk plʌɡ/",
 	"spark_plug": "/ˈspɑːrk plʌɡ/",
+	"steering": "/ˈstɪərɪŋ wiːl/",
 	"steering_wheel": "/ˈstɪərɪŋ wiːl/"
 }

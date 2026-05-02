@@ -1,8 +1,5 @@
 ﻿{
-	"database": "database",
 	"delete": "verwijderen",
 	"disk": "schijf",
-	"monitor": "monitor",
-	"monitor_screen": "monitor",
-	"password": "wachtwoord"
+	"monitor_screen": "monitor"
 }

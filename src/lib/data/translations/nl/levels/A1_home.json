@@ -16,6 +16,8 @@
 	"plant_factory": "fabriek",
 	"shower": "douche",
 	"table": "tafel",
+	"table_data": "tabel",
+	"table_furniture": "tafel",
 	"toilet": "wc",
 	"wall": "muur"
 }

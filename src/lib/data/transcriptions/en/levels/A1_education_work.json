@@ -1,24 +1,10 @@
-{
-	"business": "/ˈbɪznɪs/",
+﻿{
 	"career": "/kəˈrɪə(r)/",
-	"class": "/klɑːs/",
-	"classroom": "/ˈklæsruːm/",
-	"company": "/ˈkʌmpəni/",
 	"course": "/kɔːrs/",
-	"exam": "/ɪɡˈzæm/",
 	"geography": "/dʒiˈɒɡrəfi/",
-	"homework": "/ˈhəʊmwɜːk/",
+	"interview": "/ˈɪntərvjuː/",
 	"interview_job": "/ˈɪntərvjuː/",
-	"job": "/dʒɑːb/",
 	"lesson": "/ˈlɛsn/",
 	"library": "/ˈlaɪbrəri/",
-	"office": "/ˈɒfɪs/",
-	"school": "/skuːl/",
-	"skill": "/skɪl/",
-	"student": "/ˈstjuːdnt/",
-	"teacher": "/ˈtiːtʃər/",
-	"test": "/tɛst/",
-	"university": "/ˌjuːnɪˈvɜːrsəti/",
-	"work": "/wɜːk/",
-	"work_out": "/wɜːrk aʊt/"
+	"skill": "/skɪl/"
 }

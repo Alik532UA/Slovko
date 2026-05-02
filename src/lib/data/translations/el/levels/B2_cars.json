@@ -4,10 +4,11 @@
 	"exhaust_options": "εξαντλώ τις επιλογές",
 	"hood": "καπό",
 	"insurance": "ασφάλεια",
-	"license": "άδεια",
 	"mechanic": "μηχανικός",
 	"radiator": "ψυγείο",
 	"shock_absorber": "αμορτισέρ",
+	"spark": "μπουζί",
 	"spark_plug": "μπουζί",
+	"steering": "τιμόνι",
 	"steering_wheel": "τιμόνι"
 }

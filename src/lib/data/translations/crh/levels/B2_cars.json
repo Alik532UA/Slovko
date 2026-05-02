@@ -4,10 +4,11 @@
 	"exhaust_options": "bitirmek",
 	"hood": "kapot",
 	"insurance": "sigorta",
-	"license": "ehliyet",
 	"mechanic": "mehanik",
 	"radiator": "radiator",
 	"shock_absorber": "amortizator",
+	"spark": "ateşleme bujisi",
 	"spark_plug": "ateşleme bujisi",
+	"steering": "rul",
 	"steering_wheel": "rul"
 }

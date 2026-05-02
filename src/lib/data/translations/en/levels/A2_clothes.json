@@ -2,6 +2,10 @@
 	"purse": "purse",
 	"sock": "sock",
 	"suit": "suit",
+	"suit_clothing": "clothes",
+	"suit_lawsuit": "lawsuit",
+	"suit_verb": "to be suitable",
+	"tie": "tie",
 	"tie_clothes": "tie",
 	"uniform": "uniform"
 }

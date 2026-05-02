@@ -1,7 +1,4 @@
-{
-	"accident": "/ˈæksɪdənt/",
-	"accident_chance": "/ˈæksɪdənt/",
-	"accident_event": "/ˈæksɪdəнт/",
+﻿{
 	"belt": "/bɛlt/",
 	"bumper": "/ˈbʌmpər/",
 	"clutch": "/klʌtʃ/",
@@ -14,18 +11,14 @@
 	"license_document": "/ˈlaɪsəns/",
 	"mirror": "/ˈmɪrər/",
 	"motorcycle": "/ˈməʊtəˌsaɪkl/",
-	"oil": "/ɔɪl/",
-	"oil_food": "/ɔɪl/",
-	"oil_fuel": "/ɔɪl/",
 	"pump": "/pʌmp/",
-	"seat": "/siːt/",
 	"ship": "/ʃɪp/",
 	"sign": "/saɪn/",
 	"sign_symbol": "/saɪn/",
 	"sign_verb": "/saɪn/",
 	"signal": "/ˈsɪɡn(ə)l/",
+	"spare": "/ˌspɛər ˈtaɪər/",
 	"spare_tire": "/ˌspɛər ˈtaɪər/",
 	"tire": "/ˈtaɪər/",
-	"truck": "/trʌk/",
 	"wheel": "/wiːl/"
 }

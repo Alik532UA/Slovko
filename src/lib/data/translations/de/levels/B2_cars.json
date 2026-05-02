@@ -4,10 +4,11 @@
 	"exhaust_options": "erschöpfen",
 	"hood": "Motorhaube",
 	"insurance": "Versicherung",
-	"license": "Führerschein",
 	"mechanic": "Mechaniker",
 	"radiator": "Heizkörper",
 	"shock_absorber": "Stoßdämpfer",
+	"spark": "Zündkerze",
 	"spark_plug": "Zündkerze",
+	"steering": "Lenkrad",
 	"steering_wheel": "Lenkrad"
 }

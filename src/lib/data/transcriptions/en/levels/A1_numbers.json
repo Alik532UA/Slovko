@@ -16,8 +16,6 @@
 	"nineteen": "/ˌnaɪnˈtiːn/",
 	"ninety": "/ˈnaɪnti/",
 	"one": "/wʌn/",
-	"second": "/ˈsɛkənd/",
-	"second_ord": "/ˈsɛkənd/",
 	"seven": "/ˈsɛvn/",
 	"seventeen": "/ˌsɛvnˈtiːn/",
 	"seventy": "/ˈsɛvnti/",
@@ -32,6 +30,5 @@
 	"three": "/θriː/",
 	"twelve": "/twɛlv/",
 	"twenty": "/ˈtwɛnti/",
-	"two": "/tuː/",
-	"second_ordinal": "/ˈsɛkənd/"
+	"two": "/tuː/"
 }

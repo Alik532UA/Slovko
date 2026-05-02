@@ -1,4 +1,4 @@
-{
+﻿{
 	"bath": "/bɑːθ/",
 	"bathroom": "/ˈbɑːθruːm/",
 	"bed": "/bɛd/",
@@ -7,27 +7,17 @@
 	"clock": "/klɒk/",
 	"computer": "/kəmˈpjuːtər/",
 	"cup": "/kʌp/",
-	"door": "/dɔːr/",
-	"floor_ground": "/flɔːr/",
-	"floor_level": "/flɔːr/",
-	"garden_orchard": "/ˈɡɑːdn/",
-	"garden_yard": "/ˈɡɑːdn/",
 	"glass": "/ɡlɑːs/",
-	"glass_cup": "/ɡlɑːs/",
 	"glass_material": "/ɡlɑːs/",
 	"knife": "/naɪf/",
+	"living": "/ˈlɪvɪŋ/",
 	"living_room": "/ˈlɪvɪŋ rʊm/",
-	"painting": "/ˈpeɪntɪŋ/",
 	"plant": "/plɑːnt/",
-	"plant_botany": "/plɑːnt/",
-	"plant_factory": "/plɑːnt/",
 	"plastic": "/ˈplæstɪk/",
 	"plate": "/pleɪt/",
 	"shower": "/ˈʃaʊər/",
 	"stove": "/stoʊv/",
 	"table": "/ˈteɪbl/",
 	"toilet": "/ˈtɔɪlɪt/",
-	"tv": "/ˌtiː ˈviː/",
-	"wall": "/wɔːl/",
-	"window": "/ˈwɪndəʊ/"
+	"wall": "/wɔːl/"
 }

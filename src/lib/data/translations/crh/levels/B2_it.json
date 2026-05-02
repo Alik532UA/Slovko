@@ -1,8 +1,5 @@
 ﻿{
-	"database": "malümat bazası",
 	"delete": "silmek",
 	"disk": "disk",
-	"monitor": "ekran",
-	"monitor_screen": "monitor",
-	"password": "parol"
+	"monitor_screen": "monitor"
 }

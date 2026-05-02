@@ -13,6 +13,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "abolish",
 		specific: ["abolish_law", "abolish_system"]
 	},
+
+	above: {
+		base: "above",
+		specific: ["above_position", "above_mention"]
+	},
 	abuse: {
 		base: "abuse",
 		specific: ["abuse_insult", "abuse_misuse"]
@@ -230,17 +235,42 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	        specific: ["at_place", "at_time"]
 	},
 
+
+	band: {
+		base: "band",
+		specific: ["band_music", "band_strip"]
+	},
 	bar: {
 		base: "bar",
 		specific: ["bar_tavern", "bar_rod"]
+	},
+
+	bat: {
+		base: "bat",
+		specific: ["bat_animal", "bat_sports"]
+	},
+
+	bill: {
+		base: "bill",
+		specific: ["bill_invoice", "bill_parliament", "bill_beak", "bill_money"]
 	},
 	blonde: {
 	        base: "blonde",
 	        specific: ["blonde_color", "blonde_person"]
 	},
+
+	bond: {
+		base: "bond",
+		specific: ["bond_relation", "bond_finance"]
+	},
 	boot: {
 	        base: "boot",
 	        specific: ["boot_car", "boot_shoe"]
+	},
+
+	can: {
+		base: "can",
+		specific: ["can_ability", "can_container"]
 	},
 	capital: {
 		base: "capital",
@@ -374,6 +404,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "carry",
 		specific: ["carry_on", "carry_out"]
 	},
+
+	cast: {
+		base: "cast",
+		specific: ["cast_actors", "cast_throw", "cast_medical"]
+	},
 	catch_up: {
 		base: "catch_up",
 		specific: ["catch_up_with"]
@@ -381,6 +416,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	cease: {
 		base: "cease",
 		specific: ["cease_fire", "cease_stop"]
+	},
+
+	cell: {
+		base: "cell",
+		specific: ["cell_biology", "cell_prison", "cell_phone"]
 	},
 	character: {
 		base: "character",
@@ -397,6 +437,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	charge: {
 		base: "charge",
 		specific: ["charge_battery", "charge_electric", "charge_fee"]
+	},
+
+	chart: {
+		base: "chart",
+		specific: ["chart_diagram", "chart_music"]
 	},
 	check: {
 		base: "check",
@@ -436,6 +481,16 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		specific: ["clear_obvious", "clear_transparent"]
 	},
 
+
+	climb: {
+		base: "climb",
+		specific: ["climb_action", "climb_increase"]
+	},
+
+	clip: {
+		base: "clip",
+		specific: ["clip_video", "clip_fastener"]
+	},
 	coach: {
 		base: "coach",
 		specific: ["coach_instructor", "coach_bus"]
@@ -615,6 +670,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	cope: {
 		base: "cope",
 		specific: ["cope_with"]
+	},
+
+	core: {
+		base: "core",
+		specific: ["core_center", "core_essential"]
 	},
 	correct: {
 		base: "correct",
@@ -821,6 +881,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "disgust",
 		specific: ["disgust_feeling"]
 	},
+
+	dish: {
+		base: "dish",
+		specific: ["dish_plate", "dish_food"]
+	},
 	disprove: {
 		base: "disprove",
 		specific: ["disprove_theory"]
@@ -965,6 +1030,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "emit",
 		specific: ["emit_light"]
 	},
+
+	employment: {
+		base: "employment",
+		specific: ["employment_job", "employment_hiring"]
+	},
 	enact: {
 		base: "enact",
 		specific: ["enact_law"]
@@ -1075,9 +1145,19 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "exploit",
 		specific: ["exploit_use"]
 	},
+
+	extent: {
+		base: "extent",
+		specific: ["extent_size", "extent_degree"]
+	},
 	facilitate: {
 		base: "facilitate",
 		specific: ["facilitate_help"]
+	},
+
+	facility: {
+		base: "facility",
+		specific: ["facility_building", "facility_amenity"]
 	},
 	failure: {
 		base: "failure",
@@ -1109,6 +1189,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "fight",
 		specific: ["fight_action", "fight_event"]
 	},
+
+	firm: {
+		base: "firm",
+		specific: ["firm_company", "firm_hard"]
+	},
 	fit: {
 		base: "fit",
 		specific: ["fit_healthy"]
@@ -1133,6 +1218,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "flat",
 		specific: ["flat_adj", "flat_apartment", "flat_surface"]
 	},
+
+	flight: {
+		base: "flight",
+		specific: ["flight_plane", "flight_stairs"]
+	},
 	float: {
 		base: "float",
 		specific: ["float_verb"]
@@ -1148,6 +1238,26 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	fly: {
 		base: "fly",
 		specific: ["fly_action", "fly_insect"]
+	},
+
+	formerly: {
+		base: "formerly",
+		specific: ["formerly_past", "formerly_previously"]
+	},
+
+	foundation: {
+		base: "foundation",
+		specific: ["foundation_base", "foundation_organization"]
+	},
+
+	fraction: {
+		base: "fraction",
+		specific: ["fraction_math", "fraction_part"]
+	},
+
+	framework: {
+		base: "framework",
+		specific: ["framework_structure", "framework_software"]
 	},
 	free: {
 		base: "free",
@@ -1173,9 +1283,19 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "gas",
 		specific: ["gas_fuel", "gas_station", "gas_substance"]
 	},
+
+	gender: {
+		base: "gender",
+		specific: ["gender_sex", "gender_social"]
+	},
 	get: {
 		base: "get",
 		specific: ["get_along_with", "get_away", "get_back", "get_by", "get_off_transport", "get_on_transport", "get_over_illness", "get_rid_of", "get_up"]
+	},
+
+	gig: {
+		base: "gig",
+		specific: ["gig_concert", "gig_job"]
 	},
 	give: {
 		base: "give",
@@ -1201,6 +1321,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "guard",
 		specific: ["guard_person"]
 	},
+
+	hand: {
+		base: "hand",
+		specific: ["hand_body", "hand_verb"]
+	},
 	hang: {
 		base: "hang",
 		specific: ["hang_out", "hang_verb"]
@@ -1216,6 +1341,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	her: {
 		base: "her",
 		specific: ["her_possessive", "her_pronoun"]
+	},
+
+	highly: {
+		base: "highly",
+		specific: ["highly_degree", "highly_position"]
 	},
 	him: {
 		base: "him",
@@ -1237,9 +1367,19 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "holiday",
 		specific: ["holiday_celebration", "holiday_vacation"]
 	},
+
+	host: {
+		base: "host",
+		specific: ["host_entertainer", "host_biology", "host_server"]
+	},
 	how: {
 		base: "how",
 		specific: ["how_come", "how_far", "how_long", "how_many", "how_much", "how_often", "how_old"]
+	},
+
+	however: {
+		base: "however",
+		specific: ["however_contrast", "however_degree"]
 	},
 	hurt: {
 		base: "hurt",
@@ -1256,6 +1396,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	illustrate: {
 		base: "illustrate",
 		specific: ["illustrate_explain"]
+	},
+
+	image: {
+		base: "image",
+		specific: ["image_picture", "image_reputation"]
 	},
 	impose: {
 		base: "impose",
@@ -1305,6 +1450,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	keep: {
 		base: "keep",
 		specific: ["keep_hold", "keep_on", "keep_store", "keep_up"]
+	},
+
+	key: {
+		base: "key",
+		specific: ["key_lock", "key_piano", "key_essential"]
 	},
 	kind: {
 		base: "kind",
@@ -1407,6 +1557,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "mine",
 		specific: ["mine_possessive", "mine_excavation"]
 	},
+
+	minor: {
+		base: "minor",
+		specific: ["minor_small", "minor_underage"]
+	},
 	miss: {
 		base: "miss",
 		specific: ["miss_action", "miss_sad"]
@@ -1418,6 +1573,16 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	monitor: {
 		base: "monitor",
 		specific: ["monitor_screen", "monitor_verb"]
+	},
+
+
+	mount: {
+		base: "mount",
+		specific: ["mount_mountain", "mount_attach"]
+	},
+	mud: {
+		base: "mud",
+		specific: ["mud_wet_earth", "mud_slander"]
 	},
 	murder: {
 		base: "murder",
@@ -1432,6 +1597,16 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "nail",
 		specific: ["nail_finger", "nail_metal"]
 	},
+
+	native: {
+		base: "native",
+		specific: ["native_local", "native_born"]
+	},
+
+	neither: {
+		base: "neither",
+		specific: ["neither_pronoun", "neither_conjunction"]
+	},
 	nicely: {
 		base: "nicely",
 		specific: ["nicely_kindly", "nicely_well"]
@@ -1445,6 +1620,21 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		specific: ["object_noun", "object_verb"]
 	},
 
+
+
+	objective: {
+		base: "objective",
+		specific: ["objective_goal", "objective_neutral"]
+	},
+	occasionally: {
+		base: "occasionally",
+		specific: ["occasionally_sometimes", "occasionally_rarely"]
+	},
+
+	occupation: {
+		base: "occupation",
+		specific: ["occupation_job", "occupation_military"]
+	},
 	odd: {
 		base: "odd",
 		specific: ["odd_strange", "odd_number"]
@@ -1453,6 +1643,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "offend",
 		specific: ["offend_insult"]
 	},
+
+	offensive: {
+		base: "offensive",
+		specific: ["offensive_insulting", "offensive_attack"]
+	},
 	offer: {
 		base: "offer",
 		specific: ["offer_noun", "offer_verb"]
@@ -1460,6 +1655,21 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	oil: {
 		base: "oil",
 		specific: ["oil_food", "oil_fuel"]
+	},
+
+
+	opening: {
+		base: "opening",
+		specific: ["opening_gap", "opening_ceremony"]
+	},
+	opinion: {
+		base: "opinion",
+		specific: ["opinion_belief", "opinion_view"]
+	},
+
+	option: {
+		base: "option",
+		specific: ["option_choice", "option_feature"]
 	},
 	or: {
 		base: "or",
@@ -1488,6 +1698,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	parent: {
 		base: "parent",
 		specific: ["parent_father", "parent_mother"]
+	},
+
+	particularly: {
+		base: "particularly",
+		specific: ["particularly_especially", "particularly_specifically"]
 	},
 	party: {
 		base: "party",
@@ -1525,6 +1740,16 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "pie",
 		specific: ["pie_baked", "pie_pie"]
 	},
+
+	pitch: {
+		base: "pitch",
+		specific: ["pitch_sound", "pitch_field", "pitch_throw"]
+	},
+
+	plain: {
+		base: "plain",
+		specific: ["plain_simple", "plain_prairie"]
+	},
 	plant: {
 		base: "plant",
 		specific: ["plant_botany", "plant_factory"]
@@ -1557,6 +1782,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "promotion",
 		specific: ["promotion_job"]
 	},
+
+	proper: {
+		base: "proper",
+		specific: ["proper_correct", "proper_social"]
+	},
 	prosecute: {
 		base: "prosecute",
 		specific: ["prosecute_law"]
@@ -1576,6 +1806,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	public: {
 		base: "public",
 		specific: ["public_transport"]
+	},
+
+	pupil: {
+		base: "pupil",
+		specific: ["pupil_student", "pupil_eye"]
 	},
 	pure: {
 		base: "pure",
@@ -1641,6 +1876,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "reproduce",
 		specific: ["reproduce_copy"]
 	},
+
+	resolution: {
+		base: "resolution",
+		specific: ["resolution_decision", "resolution_screen"]
+	},
 	respect: {
 		base: "respect",
 		specific: ["respect_noun", "respect_verb"]
@@ -1689,6 +1929,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "save",
 		specific: ["save_keep", "save_rescue", "save_store"]
 	},
+
+	scale: {
+		base: "scale",
+		specific: ["scale_size", "scale_weighing"]
+	},
 	scan: {
 		base: "scan",
 		specific: ["scan_digital", "scan_medical"]
@@ -1704,6 +1949,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	second: {
 		base: "second",
 		specific: ["second_ord", "second_ordinal", "second_time"]
+	},
+
+	secure: {
+		base: "secure",
+		specific: ["secure_safe", "secure_protect"]
 	},
 	sense: {
 		base: "sense",
@@ -1806,9 +2056,19 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "square",
 		specific: ["square_place", "square_shape"]
 	},
+
+	stable: {
+		base: "stable",
+		specific: ["stable_steady", "stable_animal"]
+	},
 	stage: {
 		base: "stage",
 		specific: ["stage_phase", "stage_theater"]
+	},
+
+	stall: {
+		base: "stall",
+		specific: ["stall_shop", "stall_engine"]
 	},
 	stand: {
 		base: "stand",
@@ -1822,9 +2082,19 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "state",
 		specific: ["state_condition", "state_country", "state_declare"]
 	},
+
+	statement: {
+		base: "statement",
+		specific: ["statement_declaration", "statement_financial"]
+	},
 	station: {
 		base: "station",
 		specific: ["station_2", "station_bahnhof", "station_stop", "station_transport"]
+	},
+
+	still: {
+		base: "still",
+		specific: ["still_continuing", "still_motionless"]
 	},
 	stock: {
 		base: "stock",
@@ -1837,6 +2107,21 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	store: {
 		base: "store",
 		specific: ["store_shop", "store_verb"]
+	},
+
+
+	strike: {
+		base: "strike",
+		specific: ["strike_hit", "strike_protest"]
+	},
+	string: {
+		base: "string",
+		specific: ["string_thread", "string_computer"]
+	},
+
+	stroke: {
+		base: "stroke",
+		specific: ["stroke_medical", "stroke_hit"]
 	},
 	stuff: {
 		base: "stuff",
@@ -1853,6 +2138,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	subscribe: {
 		base: "subscribe",
 		specific: ["subscribe_sign"]
+	},
+
+	suit: {
+		base: "suit",
+		specific: ["suit_clothing", "suit_lawsuit", "suit_verb"]
 	},
 	supervise: {
 		base: "supervise",
@@ -1871,6 +2161,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		specific: ["surround_area"]
 	},
 
+
+	table: {
+		base: "table",
+		specific: ["table_furniture", "table_data"]
+	},
 	tablet: {
 		base: "tablet",
 		specific: ["tablet_device", "tablet_pill"]
@@ -1882,6 +2177,16 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	talk: {
 		base: "talk",
 		specific: ["talk_noun", "talk_verb"]
+	},
+
+	tank: {
+		base: "tank",
+		specific: ["tank_military", "tank_container"]
+	},
+
+	tap: {
+		base: "tap",
+		specific: ["tap_faucet", "tap_touch"]
 	},
 	target: {
 		base: "target",
@@ -1919,6 +2224,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "then",
 		specific: ["then_sequence", "then_time"]
 	},
+
+	therefore: {
+		base: "therefore",
+		specific: ["therefore_consequence", "therefore_reason"]
+	},
 	these: {
 		base: "these",
 		specific: ["these_pronoun"]
@@ -1942,6 +2252,21 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	time: {
 		base: "time",
 		specific: ["time_abstract", "time_clock"]
+	},
+
+
+	timing: {
+		base: "timing",
+		specific: ["timing_pace", "timing_schedule"]
+	},
+	tin: {
+		base: "tin",
+		specific: ["tin_metal", "tin_container"]
+	},
+
+	tissue: {
+		base: "tissue",
+		specific: ["tissue_paper", "tissue_biology"]
 	},
 	to: {
 		base: "to",
@@ -1975,6 +2300,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	trial: {
 		base: "trial",
 		specific: ["trial_court", "trial_test"]
+	},
+
+	trick: {
+		base: "trick",
+		specific: ["trick_deception", "trick_skill"]
 	},
 	trust: {
 		base: "trust",
@@ -2131,6 +2461,11 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	work: {
 		base: "work",
 		specific: ["work_out"]
+	},
+
+	worth: {
+		base: "worth",
+		specific: ["worth_value", "worth_deserving"]
 	},
 	would: {
 		base: "would",

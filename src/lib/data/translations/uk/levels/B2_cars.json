@@ -4,10 +4,11 @@
 	"exhaust_options": "виснажувати",
 	"hood": "капот",
 	"insurance": "страхування",
-	"license": "права",
 	"mechanic": "механік",
 	"radiator": "радіатор",
 	"shock_absorber": "амортизатор",
+	"spark": "свічка запалювання",
 	"spark_plug": "свічка запалювання",
+	"steering": "кермо",
 	"steering_wheel": "кермо"
 }
