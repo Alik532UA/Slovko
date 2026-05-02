@@ -31,27 +31,27 @@ function applyTranslations(translations) {
     });
 }
 
-const batch13 = {
-    "minimal": { uk: "мінімальний", pl: "minimalny", de: "minimal", nl: "minimaal", el: "ελάχιστος", crh: "en az" },
-    "minimize": { uk: "мінімізувати", pl: "minimalizować", de: "minimieren", nl: "minimaliseren", el: "ελαχιστοποιώ", crh: "minimalleştirmek" },
-    "mining": { uk: "видобуток корисних копалин", pl: "górnictwo", de: "Bergbau", nl: "mijnbouw", el: "εξόρυξη", crh: "madencilik" },
-    "ministry": { uk: "міністерство", pl: "ministerstwo", de: "Ministerium", nl: "ministerie", el: "υπουργείο", crh: "nazirlik" },
-    "miracle": { uk: "чудо", pl: "cud", de: "Wunder", nl: "wonder", el: "θαύμα", crh: "mucize" },
-    "misery": { uk: "страждання", pl: "nędza", de: "Elend", nl: "ellende", el: "δυστυχία", crh: "sefalet" },
-    "misleading": { uk: "оманливий", pl: "wprowadzający в błąd", de: "irreführend", nl: "misleidend", el: "παραπλανητικός", crh: "aldatıcı" },
-    "missile": { uk: "ракета", pl: "pocisk", de: "Rakete", nl: "raket", el: "πύραυλος", crh: "raketa" },
-    "mob": { uk: "натовп", pl: "tłum", de: "Pöbel", nl: "menigte", el: "όχλος", crh: "qalabalıq" },
-    "mobility": { uk: "мобільність", pl: "mobilność", de: "Mobilität", nl: "mobiliteit", el: "κινητικότητα", crh: "areketlilik" },
-    "mobilize": { uk: "мобілізувати", pl: "mobilizować", de: "mobilisieren", nl: "mobiliseren", el: "κινητοποιώ", crh: "seferber etmek" },
-    "moderate": { uk: "помірний", pl: "umiarkowany", de: "moderat", nl: "gematigd", el: "μέτριος", crh: "orta" },
-    "modification": { uk: "модифікація", pl: "modyfikacja", de: "Modifikation", nl: "modificatie", el: "τροποποίηση", crh: "deñişiklik" },
-    "module": { uk: "модуль", pl: "moduł", de: "Modul", nl: "module", el: "μονάδα", crh: "modul" },
-    "momentum": { uk: "імпульс", pl: "rozpęd", de: "Schwung", nl: "momentum", el: "ορμή", crh: "tezlik" },
-    "monk": { uk: "монах", pl: "mnich", de: "Mönch", nl: "monnik", el: "μοναχός", crh: "rahip" },
-    "monopoly": { uk: "монополія", pl: "monopol", de: "Monopol", nl: "monopolie", el: "μονοπώλιο", crh: "inhisar" },
-    "morality": { uk: "мораль", pl: "moralność", de: "Moral", nl: "moraliteit", el: "ηθική", crh: "ahlâq" },
-    "motive": { uk: "мотив", pl: "motyw", de: "Motiv", nl: "motief", el: "κίνητρο", crh: "sebep" },
-    "motorist": { uk: "автомобіліст", pl: "kierowca", de: "Autofahrer", nl: "automobilist", el: "οδηγός αυτοκινήτου", crh: "aydayıcı" }
+const batch14 = {
+    "municipal": { uk: "муніципальний", pl: "miejski", de: "kommunal", nl: "gemeentelijk", el: "δημοτικός", crh: "belediyege ait" },
+    "mutual": { uk: "взаємний", pl: "wzajemny", de: "gegenseitig", nl: "wederzijds", el: "αμοιβαίος", crh: "qarşılıqlı" },
+    "namely": { uk: "а саме", pl: "mianowicie", de: "nämlich", nl: "namelijk", el: "δηλαδή", crh: "yani" },
+    "nationwide": { uk: "загальнонаціональний", pl: "ogólnokrajowy", de: "bundesweit", nl: "landelijk", el: "πανεθνικός", crh: "memleket miqyası" },
+    "naval": { uk: "військово-морський", pl: "morski", de: "maritim", nl: "maritiem", el: "ναυτικός", crh: "deñizge ait" },
+    "neglect": { uk: "нехтувати", pl: "zaniedbywać", de: "vernachlässigen", nl: "verwaarlozen", el: "παραμελώ", crh: "ihmal etmek" },
+    "neighboring": { uk: "сусідній", pl: "sąsiedni", de: "benachbart", nl: "naburig", el: "γειτονικός", crh: "qomşu" },
+    "neighbouring": { uk: "сусідній", pl: "sąsiedni", de: "benachbart", nl: "naburig", el: "γειτονικός", crh: "qomşu" },
+    "nest": { uk: "гніздо", pl: "gniazdo", de: "Nest", nl: "nest", el: "φωλιά", crh: "yuva" },
+    "newsletter": { uk: "інформаційний бюлетень", pl: "biuletyn", de: "Newsletter", nl: "nieuwsbrief", el: "ενημερωτικό δελτίο", crh: "haber kâğıtı" },
+    "niche": { uk: "ніша", pl: "nisza", de: "Nische", nl: "nis", el: "κόγχη", crh: "hücre" },
+    "noble": { uk: "шляхетний", pl: "szlachetny", de: "adelig", nl: "nobel", el: "ευγενής", crh: "asil" },
+    "nod": { uk: "кивати", pl: "skinienie głową", de: "nicken", nl: "knikken", el: "νεύμα", crh: "baş sallamaq" },
+    "nomination": { uk: "номінація", pl: "nominacja", de: "Nominierung", nl: "nominatie", el: "υποψηφιότητα", crh: "namzetlik" },
+    "nominee": { uk: "номінант", pl: "nominowany", de: "Nominierter", nl: "genomineerde", el: "υποψήφιος", crh: "namzet" },
+    "non-profit": { uk: "неприбутковий", pl: "non-profit", de: "gemeinnützig", nl: "non-profit", el: "μη κερδοσκοπικός", crh: "fayda kötermegen" },
+    "nonetheless": { uk: "тим не менш", pl: "niemniej jednak", de: "nichtsdestotrotz", nl: "niettemin", el: "παρ' όλα αυτά", crh: "oña baqmadan" },
+    "nonprofit": { uk: "неприбутковий", pl: "non-profit", de: "gemeinnützig", nl: "non-profit", el: "μη κερδοσκοπικός", crh: "fayda kötermegen" },
+    "noon": { uk: "полудень", pl: "południe", de: "Mittag", nl: "middag", el: "μεσημέρι", crh: "öle" },
+    "notable": { uk: "помітний", pl: "godny uwagi", de: "bemerkenswert", nl: "opmerkelijk", el: "αξιοσημείωτος", crh: "diqqatqa lâyıq" }
 };
 
-applyTranslations(batch13);
+applyTranslations(batch14);
