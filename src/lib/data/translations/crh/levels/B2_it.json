@@ -7,6 +7,6 @@
 	"monitor_screen": "monitor",
 	"monitor_verb": "közetmek",
 	"password": "parol",
-	"scan_digital": "skaner",
-	"scan_medical": "skaner"
+	"scan_digital": "taramak",
+	"scan_medical": "taramak"
 }

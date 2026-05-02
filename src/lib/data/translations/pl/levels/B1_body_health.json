@@ -10,7 +10,7 @@
 	"deaf": "głuchy",
 	"drug_medicine": "lekarstwo",
 	"eyebrow": "brew",
-	"fitness": "sprawność",
+	"fitness": "fitness",
 	"injure": "ranić",
 	"injured": "ranny",
 	"medicine_drug": "lekarstwo",
@@ -22,5 +22,5 @@
 	"plaster": "plaster",
 	"sexual_health": "zdrowie seksualne",
 	"sweat": "pot",
-	"symptom": "objaw"
+	"symptom": "symptom"
 }

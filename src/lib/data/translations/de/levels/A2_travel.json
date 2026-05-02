@@ -1,6 +1,6 @@
 ﻿{
 	"atm": "Geldautomat",
-	"boarding": "Boarding",
+	"boarding": "Einstieg",
 	"camp": "zelten",
 	"camp_noun": "Lager",
 	"camp_verb": "zelten",
@@ -14,7 +14,7 @@
 	"lost": "verloren",
 	"luggage": "Gepäck",
 	"platform": "Gleis",
-	"station_stop": "Station",
+	"station_stop": "Haltestelle",
 	"station_transport": "Bahnhof",
 	"ticket_office": "Fahrkartenschalter",
 	"tour": "Tour",
