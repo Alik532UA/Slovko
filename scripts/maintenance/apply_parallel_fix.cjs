@@ -31,27 +31,40 @@ function applyTranslations(translations) {
     });
 }
 
-const batch16 = {
-    "outlook": { uk: "прогноз / світогляд", pl: "perspektywa", de: "Aussicht", nl: "vooruitzicht", el: "προοπτική", crh: "baqış açısı" },
-    "outrage": { uk: "обурення", pl: "oburzenie", de: "Empörung", nl: "verontwaardiging", el: "αγανάκτηση", crh: "ğadap" },
-    "outsider": { uk: "сторонній", pl: "osoba z zewnątrz", de: "Außenseiter", nl: "buitenstaander", el: "ξένος", crh: "tışarıdan kimese" },
-    "overly": { uk: "надмірно", pl: "nadmiernie", de: "übermäßig", nl: "overmatig", el: "υπερβολικά", crh: "ziyade" },
-    "oversee": { uk: "наглядати", pl: "nadzorować", de: "beaufsichtigen", nl: "toezien op", el: "επιβλέπω", crh: "nezaret etmek" },
-    "overturn": { uk: "перекинути", pl: "wywrócić", de: "umwerfen", nl: "omverwerpen", el: "ανατρέπω", crh: "yuvarlamaq" },
-    "overwhelm": { uk: "перевантажувати", pl: "przytłaczać", de: "überwältigen", nl: "overweldigen", el: "κατακλύζω", crh: "bastırmaq" },
-    "overwhelming": { uk: "переважний", pl: "przytłaczający", de: "überwältigend", nl: "overweldigend", el: "συντριπτικός", crh: "balaban" },
-    "pad": { uk: "подушечка", pl: "podkładka", de: "Polster", nl: "kussen", el: "μαξιλαράκι", crh: "yastıçıq" },
-    "parameter": { uk: "параметр", pl: "parametr", de: "Parameter", nl: "parameter", el: "παράμετρος", crh: "parametr" },
-    "parental": { uk: "батьківський", pl: "rodzicielski", de: "elterlich", nl: "ouderlijk", el: "γονικός", crh: "ana-babağa ait" },
-    "parish": { uk: "парафія", pl: "parafia", de: "Gemeinde", nl: "parochie", el: "ενορία", crh: "cemaat" },
-    "parliamentary": { uk: "парламентський", pl: "parlamentarny", de: "parlamentarisch", nl: "parlementair", el: "κοινοβουλευτικός", crh: "parlament" },
-    "partial": { uk: "частковий", pl: "częściowy", de: "teilweise", nl: "gedeeltelijk", el: "μερικός", crh: "qısmiy" },
-    "partially": { uk: "частково", pl: "częściowo", de: "teilweise", nl: "gedeeltelijk", el: "εν μέρει", crh: "qısmen" },
-    "passing": { uk: "проходження", pl: "mijanie", de: "Vorbeigehen", nl: "voorbijgaan", el: "πέρασμα", crh: "keçüv" },
-    "passive": { uk: "пасивний", pl: "pasywny", de: "passiv", nl: "passief", el: "παθητικός", crh: "pasiv" },
-    "pastor": { uk: "пастор", pl: "pastor", de: "Pastor", nl: "pastor", el: "πάστορας", crh: "pastor" },
-    "patent": { uk: "патент", pl: "patent", de: "Patent", nl: "patent", el: "πατέντα", crh: "patent" },
-    "pathway": { uk: "шлях", pl: "ścieżka", de: "Pfad", nl: "pad", el: "μονοπάτι", crh: "yol" }
+const batch52 = {
+    "villager": { uk: "селянин", pl: "mieszkaniec wsi", de: "Dorfbewohner", nl: "dorpsbewoner", el: "χωρικός", crh: "köylü" },
+    "violation": { uk: "порушення", pl: "naruszenie", de: "Verletzung", nl: "schending", el: "παραβίαση", crh: "bozuv" },
+    "virtue": { uk: "доброчесність", pl: "cnota", de: "Tugend", nl: "deugd", el: "αρετή", crh: "fazilet" },
+    "vocal": { uk: "вокальний / голосний", pl: "wokalny", de: "vokal", nl: "vocaal", el: "φωνητικός", crh: "sesli" },
+    "vow": { uk: "обітниця", pl: "ślubowanie", de: "Gelübde", nl: "gelofte", el: "όρκος", crh: "ant" },
+    "vulnerability": { uk: "вразливість", pl: "wrażliwość", de: "Verwundbarkeit", nl: "kwetsbaarheid", el: "τρωτότητα", crh: "zayıflıq" },
+    "vulnerable": { uk: "вразливий", pl: "wrażliwy", de: "verwundbar", nl: "kwetsbaar", el: "ευάλωτος", crh: "zayıf" },
+    "ward": { uk: "палата / підопічний", pl: "oddział / podopieczny", de: "Station / Mündel", nl: "afdeling", el: "θάλαμος", crh: "qorçalangan" },
+    "warehouse": { uk: "склад", pl: "magazyn", de: "Lagerhaus", nl: "magazijn", el: "αποθήκη", crh: "anbar" },
+    "warfare": { uk: "війна", pl: "wojna", de: "Kriegführung", nl: "oorlogsvoering", el: "πόλεμος", crh: "cenk" },
+    "warrior": { uk: "воїн", pl: "wojownik", de: "Krieger", nl: "krijger", el: "πολεμιστής", crh: "cenkçi" },
+    "weaken": { uk: "послаблювати", pl: "osłabiać", de: "schwächen", nl: "verzwakken", el: "εξασθενώ", crh: "zayıflatmaq" },
+    "weave": { uk: "ткати / плести", pl: "tkać", de: "weben", nl: "weven", el: "υφαίνω", crh: "toqumaq" },
+    "weed": { uk: "бур'ян", pl: "chwast", de: "Unkraut", nl: "onkruid", el: "αγριόχορτο", crh: "ot" },
+    "well-being": { uk: "добробут", pl: "dobrostan", de: "Wohlbefinden", nl: "welzijn", el: "ευεξία", crh: "eyilik" },
+    "whatsoever": { uk: "будь-який", pl: "jakikolwiek", de: "überhaupt", nl: "wat dan ook", el: "οποιοσδήποτε", crh: "kim olsa" },
+    "whereby": { uk: "за допомогою якого", pl: "za pomocą którego", de: "wodurch", nl: "waarbij", el: "με το οποίο", crh: "onıñnen" },
+    "whilst": { uk: "в той час як", pl: "podczas gdy", de: "während", nl: "terwijl", el: "ενώ", crh: "eken" },
+    "whip": { uk: "батіг", pl: "bicz", de: "Peitsche", nl: "zweep", el: "μαστίγιο", crh: "qamçı" },
+    "wholly": { uk: "цілком", pl: "całkowicie", de: "völlig", nl: "volledig", el: "εξ ολοκλήρου", crh: "tamamile" },
+    "widen": { uk: "розширювати", pl: "poszerzać", de: "erweitern", nl: "verbreden", el: "διευρύνω", crh: "kenişletmek" },
+    "widow": { uk: "вдова", pl: "wdowa", de: "Witwe", nl: "weduwe", el: "χήρα", crh: "tul qadın" },
+    "width": { uk: "ширина", pl: "szerokość", de: "Breite", nl: "breedte", el: "πλάτος", crh: "kenişlik" },
+    "willingness": { uk: "готовність", pl: "gotowość", de: "Bereitschaft", nl: "bereidheid", el: "προθυμία", crh: "razılıq" },
+    "wipe": { uk: "витирати", pl: "wycierać", de: "wischen", nl: "vegen", el: "σκουπίζω", crh: "silmek" },
+    "wit": { uk: "дотепність", pl: "dowcip", de: "Witz", nl: "gevatheid", el: "πνεύμα", crh: "aqıl" },
+    "withdrawal": { uk: "відкликання / вилучення", pl: "wycofanie", de: "Rückzug", nl: "opname", el: "απόσυρση", crh: "keri çekilüv" },
+    "workout": { uk: "тренування", pl: "trening", de: "Training", nl: "training", el: "γυμναστική", crh: "meşq" },
+    "worship": { uk: "поклоніння", pl: "uwielbienie", de: "Anbetung", nl: "aanbidding", el: "λατρεία", crh: "ibadet" },
+    "worthwhile": { uk: "вартий уваги", pl: "wart zachodu", de: "lohnenswert", nl: "de moeite waard", el: "αξιόλογος", crh: "faydalı" },
+    "worthy": { uk: "гідний", pl: "godny", de: "würdig", nl: "waardig", el: "άξιος", crh: "lâyıq" },
+    "yell": { uk: "кричати", pl: "krzyczeць", de: "schreien", nl: "schreeuwen", el: "ουρλιάζω", crh: "baqırmaq" },
+    "youngster": { uk: "юнак / підліток", pl: "młodzieniec", de: "Jugendlicher", nl: "jongere", el: "νεαρός", crh: "genç" }
 };
 
-applyTranslations(batch16);
+applyTranslations(batch52);
