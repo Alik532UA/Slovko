@@ -5,23 +5,11 @@
 
 | Ключ | Проблеми | EN | UK | EL | NL | DE | CRH | PL |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `disagree` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | disagree | не погоджуватися | διαφωνώ | niet mee eens zijn | widersprechen | razı olmamaq | nie zgadzać się |
 | `have_auxiliary` | [uk] Порушення правила суфікса: містить пояснення в дужках. | have auxiliary | мати (допом.) | έχω | hebben | haben | sahip olmaq | mieć |
 | `neither` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | neither | ні той, ні інший | ούτε | noch | weder | ne ... ne de | ani |
 | `used_to` | [uk] Порушення правила суфікса: містить пояснення в дужках. | used to | раніше (робив) | συνήθιζα | vroeger | pflegte zu | yapmaqta edim | kiedyś |
 | `highly_position` | [uk] Порушення правила суфікса: містить пояснення в дужках. | position | високо (в ієрархії) | ψηλά | hooggeplaatst | hochrangig | üstün | wysoko |
-| `contribute` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | contribute | робити внесок / сприяти | δωρίζω / συνεισφέρω | doneren / bijdragen | spenden / beitragen | isse qoşmaq | wpłacać / przyczyniać się |
 | `throughout` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | throughout | по всьому | καθ' όλη τη διάρκεια | doorheen | durchaus | boyunca | przez |
-| `workplace` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | workplace | робоче місце | ασφάλεια στο χώρο εργασίας | werkplek | Arbeitsplatz | iş yeri | miejsce pracy |
-| `pretend` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | pretend | прикидатися | προσποιούμαι | doen alsof | so tun als ob | özüni köstermek | udawać |
-| `frustrate` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | frustrate | перешкоджати | ματαίω | frustreren | frustrieren | engel olmaq | krzyżować plany / uniemożliwiać |
-| `lyric` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | lyric | ліричний / текст пісні | στίχος | songtekst | Liedtext | lirika | tekst piosenki |
-| `timing` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | timing | час / розрахунок часу | συγχρονισμός | timing | Timing | vaqıtlauv | wyczucie czasu |
-| `consequently` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | consequently | отже / як наслідок | κατά συνέπεια | bijgevolg | folglich | neticede | w konsekwencji |
-| `adoption` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | adoption | прийняття | υιοθεσία | adoptie | Annahme an Kindes Statt | evlâtlıqqa aluv | adopcja / przyjęcie |
-| `allowance` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | allowance | допомога / кишенькові гроші | επίδομα / ανοχή | toelage | Taschengeld / Zulage | maaş | zasiłek / dodatek / kieszonkowe |
-| `resolution` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | resolution | вирішення / роздільна здатність | απόφαση | resolutie | Beschluss / Auflösung | qarar | uchwała / rozdzielczość |
-| `derive` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | derive | отримувати | προέρχομαι | afleiden | ableiten | almaq | wywyodzić się / pochodzić |
 | `overlook` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | overlook | не помічати | παραβλέπω | over het hoofd zien | übersehen | közden qaçırmaq | przeoczyć |
 | `abstruse` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | abstruse | незрозумілий | δυσνόητος | ondoordringbaar | abstrus | añlaması qıyın | zawiły / trudny do zrozumienia |
 | `acquiesce` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | acquiesce | поступатися | συγκατατίθεμαι | berusten | einwilligen | boyun egmek | przystawać na coś / godzić się |
