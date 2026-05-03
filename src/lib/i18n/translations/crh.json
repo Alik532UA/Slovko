@@ -311,9 +311,11 @@
 		},
 		"or": "ya da",
 		"learn": "Ögrenmek",
-		"reset": "Sıfırlama",
-		"ok": "Anlaşıldı",
+		"reset": "Sıfırla",
+		"ok": "Anladım",
+		"mix": "mix",
 		"tooltips": {
+
 			"streak": "Doğru cevaplar serisi",
 			"accuracy": "Doğruluk",
 			"selectLevel": "Seviye ya da tema saylav",

@@ -311,9 +311,11 @@
 		},
 		"or": "of",
 		"learn": "Leren",
-		"reset": "Resetten",
+		"reset": "Reset",
 		"ok": "Begrepen",
+		"mix": "mix",
 		"tooltips": {
+
 			"streak": "Reeks goede antwoorden",
 			"accuracy": "Antwoord nauwkeurigheid",
 			"selectLevel": "Selecteer niveau of onderwerp",

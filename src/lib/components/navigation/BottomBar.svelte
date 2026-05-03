@@ -19,10 +19,9 @@
 
 		const formatLabel = (ids: string[], i18nPrefix: string) => {
 			if (ids.length === 0) return "";
+			if (ids.length > 1) return $_("common.mix");
 
-			const first = $_(`${i18nPrefix}.${ids[0]}`);
-
-			return ids.length > 1 ? `${first} + ${ids.length - 1}` : first;
+			return $_(`${i18nPrefix}.${ids[0]}`);
 		};
 
 		if (mode === "levels") {
@@ -34,10 +33,10 @@
 		} else if (mode === "tenses") {
 			return formatLabel(currentTenses, "tenses");
 		} else if (mode === "playlists" && currentPlaylists.length > 0) {
-			const p = playlistStore.getPlaylist(currentPlaylists[0]);
-			const first = p ? (p.isSystem ? $_(p.name) : p.name) : currentPlaylists[0];
+			if (currentPlaylists.length > 1) return $_("common.mix");
 
-			return currentPlaylists.length > 1 ? `${first} + ${currentPlaylists.length - 1}` : first;
+			const p = playlistStore.getPlaylist(currentPlaylists[0]);
+			return p ? (p.isSystem ? $_(p.name) : p.name) : currentPlaylists[0];
 		}
 		return "";
 	});
@@ -161,16 +160,19 @@
 	aria-label={$_("common.navigation") || "Level navigation"}
 >
 	<BaseTooltip text={$_("common.tooltips.prev")}>
-		<button
-			class="nav-btn"
-			onclick={() => goPrev()}
-			disabled={!canGoPrev}
-			aria-label={$_("common.tooltips.prev") || "Previous level"}
-			data-testid="prev-level-btn"
-			title=""
-		>
-			<ChevronLeft size={32} />
-		</button>
+		{#if canGoPrev}
+			<button
+				class="nav-btn"
+				onclick={() => goPrev()}
+				aria-label={$_("common.tooltips.prev") || "Previous level"}
+				data-testid="prev-level-btn"
+				title=""
+			>
+				<ChevronLeft size={32} />
+			</button>
+		{:else}
+			<div class="nav-placeholder"></div>
+		{/if}
 	</BaseTooltip>
 
 	<BaseTooltip text={$_("common.tooltips.selectLevel")}>
@@ -187,16 +189,19 @@
 	</BaseTooltip>
 
 	<BaseTooltip text={$_("common.tooltips.next")}>
-		<button
-			class="nav-btn"
-			onclick={() => goNext()}
-			disabled={!canGoNext}
-			aria-label={$_("common.tooltips.next") || "Next level"}
-			data-testid="next-level-btn"
-			title=""
-		>
-			<ChevronRight size={32} />
-		</button>
+		{#if canGoNext}
+			<button
+				class="nav-btn"
+				onclick={() => goNext()}
+				aria-label={$_("common.tooltips.next") || "Next level"}
+				data-testid="next-level-btn"
+				title=""
+			>
+				<ChevronRight size={32} />
+			</button>
+		{:else}
+			<div class="nav-placeholder"></div>
+		{/if}
 	</BaseTooltip>
 </div>
 
@@ -245,6 +250,11 @@
 	.nav-btn:disabled {
 		opacity: 0.3;
 		cursor: not-allowed;
+	}
+
+	.nav-placeholder {
+		width: 48px; /* 32px icon + 2 * 0.5rem (8px) padding */
+		height: 48px;
 	}
 
 	/* Only apply hover effect on devices that support hover (mouse) to avoid sticky hover on mobile */

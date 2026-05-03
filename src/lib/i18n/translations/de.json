@@ -313,6 +313,7 @@
 		"learn": "Lernen",
 		"reset": "Zurücksetzen",
 		"ok": "Verstanden",
+		"mix": "mix",
 		"tooltips": {
 			"streak": "Serie richtiger Antworten",
 			"accuracy": "Antwortgenauigkeit",

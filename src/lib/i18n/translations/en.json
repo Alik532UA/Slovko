@@ -350,6 +350,7 @@
 		"learn": "Learn",
 		"reset": "Reset",
 		"ok": "Got it",
+		"mix": "mix",
 		"tooltips": {
 			"streak": "Match streak",
 			"accuracy": "Answer accuracy",
