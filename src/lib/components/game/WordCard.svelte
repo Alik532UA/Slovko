@@ -36,6 +36,13 @@
 		testid,
 	}: Props = $props();
 
+	// Отримуємо значення властивостей на момент створення компонента.
+	// Оскільки ми використовуємо {#key card.id} у GameBoard.svelte, для кожної нової картки
+	// створюється новий екземпляр компонента. Фіксація цих значень гарантує, що
+	// під час анімації "ульоту" старої картки її контент не зміниться на контент нової картки.
+	// При цьому статус (card.status) залишається реактивним для відображення змін станів.
+	const { text, transcription, language } = card;
+
 	let longPressTimer: ReturnType<typeof setTimeout> | null = null;
 	let isLongPress = false;
 	let startPos = { x: 0, y: 0 };
@@ -61,7 +68,7 @@
 
 		// Озвучуємо слово одразу при натисканні
 		if (enablePronunciation && card.status !== "selected") {
-			speakText(card.text, card.language);
+			speakText(text, language);
 		}
 
 		// Зовнішній обробник для драгу
@@ -146,23 +153,23 @@
 	onpointerleave={handlePointerLeave}
 	oncontextmenu={handleContextMenu}
 	onclick={handleClick}
-	aria-label="{card.text}{card.transcription && showTranscription ? `, ${card.transcription}` : ''}"
+	aria-label="{text}{transcription && showTranscription ? `, ${transcription}` : ''}"
 	aria-current={card.status === "selected" ? "true" : undefined}
 	aria-disabled={card.status === "correct" || card.status === "wrong"}
 	data-testid={testid || `word-card-${card.id}`}
 	style="--blur-delay: {3000 + appearanceDelay}ms"
 >
 	{#if wordSnippet}
-		{@render wordSnippet(card.text)}
+		{@render wordSnippet(text)}
 	{:else}
-		<span class="word-text">{card.text}</span>
+		<span class="word-text">{text}</span>
 	{/if}
 
-	{#if card.transcription && showTranscription}
+	{#if transcription && showTranscription}
 		{#if transcriptionSnippet}
-			{@render transcriptionSnippet(card.transcription)}
+			{@render transcriptionSnippet(transcription)}
 		{:else}
-			<span class="transcription">{card.transcription}</span>
+			<span class="transcription">{transcription}</span>
 		{/if}
 	{/if}
 </button>
