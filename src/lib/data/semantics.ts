@@ -1,4 +1,4 @@
-﻿import type { SemanticGroup } from "../types";
+import type { SemanticGroup } from "../types";
 
 /**
  * Центральний реєстр семантичних зв'язків (Schema).
@@ -144,7 +144,7 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	},
 	apotheosis: {
 		base: "apotheosis",
-		specific: ["apotheosis_2", "apotheosis_apotheose"]
+		specific: ["apotheosis_ideal", "apotheosis_deification"]
 	},
 	appeal: {
 		base: "appeal",
@@ -2097,7 +2097,7 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	},
 	station: {
 		base: "station",
-		specific: ["station_2", "station_bahnhof", "station_stop", "station_transport"]
+		specific: ["station_generic", "station_bahnhof", "station_stop", "station_transport"]
 	},
 
 	still: {

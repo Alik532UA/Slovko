@@ -185,7 +185,7 @@
 		color: var(--text-on-card);
 		/* Робимо фон 90% (transparent 10%), щоб було видно блюр */
 		background: color-mix(in srgb, var(--card-bg), transparent 10%);
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		border: 1px solid transparent;
 		border-radius: 12px;
 		cursor: pointer;
 		opacity: 1;

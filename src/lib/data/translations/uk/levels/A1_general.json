@@ -636,7 +636,7 @@
 	"statement_declaration": "заява",
 	"statement_financial": "виписка",
 	"station": "станція",
-	"station_2": "станція",
+	"station_generic": "станція",
 	"station_bahnhof": "вокзал",
 	"station_stop": "зупинка",
 	"station_transport": "станція",

@@ -22,7 +22,7 @@ const translationsMap = {
     "fireplace_kamin": { en: "fireplace", uk: "камін", el: "τζάκι", nl: "open haard", de: "Kamin", crh: "kamin", pl: "kominek" },
     "fireplace_ocaq": { en: "fireplace", uk: "вогнище", el: "εστία", nl: "open haard", de: "Kamin", crh: "ocaq", pl: "palenisko" },
     "good_morning": { en: "good morning", uk: "доброго ранку", el: "καλημέρα", nl: "goedemorgen", de: "guten Morgen", crh: "hayır sabahlar", pl: "dzień dobry" },
-    "holiday_1": { en: "holiday", uk: "свято", el: "γιορτή", nl: "vakantie", de: "Ferien", crh: "bayрам", pl: "święto" },
+    "holiday_celebration": { en: "holiday", uk: "свято", el: "γιορτή", nl: "vakantie", de: "Ferien", crh: "bayрам", pl: "święto" },
     "holiday_tatil": { en: "holiday", uk: "відпустка", el: "διακοπές", nl: "vakantie", de: "Ferien", crh: "tatil", pl: "wakacje" },
     "like_verb": { en: "like", uk: "подобатися", el: "μου αρέσει", nl: "houden van", de: "mögen", crh: "beğenmek", pl: "lubić" },
     "live_verb": { en: "live", uk: "жити", el: "ζω", nl: "wonen", de: "leben", crh: "yaşamaq", pl: "żyć" },

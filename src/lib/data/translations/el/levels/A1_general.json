@@ -636,7 +636,7 @@
 	"statement_declaration": "δήλωση",
 	"statement_financial": "κατάσταση λογαριασμού",
 	"station": "σταθμός",
-	"station_2": "σταθμός",
+	"station_generic": "σταθμός",
 	"station_bahnhof": "σταθμός",
 	"station_stop": "στάση",
 	"station_transport": "σταθμός",

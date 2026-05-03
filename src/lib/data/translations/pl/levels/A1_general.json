@@ -636,7 +636,7 @@
 	"statement_declaration": "oświadczenie",
 	"statement_financial": "wyciąg",
 	"station": "stacja",
-	"station_2": "stacja",
+	"station_generic": "stacja",
 	"station_bahnhof": "dworzec",
 	"station_stop": "przystanek",
 	"station_transport": "stacja",

@@ -27,7 +27,7 @@ const DATA = {
     "jam_jam": "варення",
     "pie_pie": "пиріг",
     "sausage_wurst": "ковбаса",
-    "station_2": "станція",
+    "station_generic": "станція",
     "station_bahnhof": "вокзал",
     "wood_bos": "ліс",
     "wood_holz": "деревина",
@@ -70,7 +70,7 @@ const DATA = {
     "pie_pie": "πίτα",
     "sausage_wurst": "λουκάνικο",
     "sheep": "πρόβατο",
-    "station_2": "σταθμός",
+    "station_generic": "σταθμός",
     "station_bahnhof": "σταθμός",
     "wood_bos": "δάσος",
     "wood_holz": "ξύλο",
@@ -99,7 +99,7 @@ const FILES = [
     
     { lang: 'uk', level: 'A2', file: 'A2_nature.json', keys: ['branch_tak', 'earth_yer', 'wood_bos', 'wood_holz'] },
     { lang: 'uk', level: 'A2', file: 'A2_food.json', keys: ['jam_jam', 'pie_pie', 'sausage_wurst'] },
-    { lang: 'uk', level: 'A2', file: 'A2_travel.json', keys: ['station_2', 'station_bahnhof'] },
+    { lang: 'uk', level: 'A2', file: 'A2_travel.json', keys: ['station_generic', 'station_bahnhof'] },
     
     { lang: 'el', level: 'A2', file: 'A2_nature.json', keys: ['branch_tak', 'earth_yer', 'wood_bos', 'wood_holz', 'garden'] },
     { lang: 'el', level: 'A2', file: 'A2_family_relationships.json', keys: ['brother_male'] },
@@ -111,7 +111,7 @@ const FILES = [
     { lang: 'el', level: 'A2', file: 'A2_education_work.json', keys: ['office'] },
     { lang: 'el', level: 'A2', file: 'A2_pronouns_people.json', keys: ['our', 'your'] },
     { lang: 'el', level: 'A2', file: 'A2_animals.json', keys: ['sheep'] },
-    { lang: 'el', level: 'A2', file: 'A2_travel.json', keys: ['station_2', 'station_bahnhof'] },
+    { lang: 'el', level: 'A2', file: 'A2_travel.json', keys: ['station_generic', 'station_bahnhof'] },
 
     { lang: 'crh', level: 'B1', file: 'B1_general.json', keys: ['bell', 'brand'] },
     { lang: 'crh', level: 'B1', file: 'B1_verbs.json', keys: ['boil', 'bother'] },

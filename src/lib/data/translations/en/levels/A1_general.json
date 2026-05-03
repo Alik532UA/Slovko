@@ -636,7 +636,7 @@
 	"statement_declaration": "declaration",
 	"statement_financial": "financial",
 	"station": "station",
-	"station_2": "station",
+	"station_generic": "station",
 	"station_bahnhof": "station",
 	"station_stop": "station",
 	"station_transport": "station",
