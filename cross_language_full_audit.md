@@ -5,24 +5,16 @@
 
 | Ключ | Проблеми | EN | UK | EL | NL | DE | CRH | PL |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `disagree` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | disagree | не погоджуватися | διαφωνώ | niet mee eens zijn | nicht zustimmen | razı olmamaq | nie zgadzać się |
-| `fit` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | fit | підходити / у формі | ταιριάζω | passen | passen | uydurmaq | pasować |
+| `disagree` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | disagree | не погоджуватися | διαφωνώ | niet mee eens zijn | widersprechen | razı olmamaq | nie zgadzać się |
 | `have_auxiliary` | [uk] Порушення правила суфікса: містить пояснення в дужках. | have auxiliary | мати (допом.) | έχω | hebben | haben | sahip olmaq | mieć |
-| `mine` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | mine | мій | δικός μου / ορυχείο | mijn | mein / Mine | menimki | mój |
 | `neither` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | neither | ні той, ні інший | ούτε | noch | weder | ne ... ne de | ani |
 | `used_to` | [uk] Порушення правила суфікса: містить пояснення в дужках. | used to | раніше (робив) | συνήθιζα | vroeger | pflegte zu | yapmaqta edim | kiedyś |
 | `highly_position` | [uk] Порушення правила суфікса: містить пояснення в дужках. | position | високо (в ієрархії) | ψηλά | hooggeplaatst | hochrangig | üstün | wysoko |
-| `cure` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | cure | ліки | θεραπεία / θεραπεύω | genezing | Heilung | ilâc / tedavi etmek | lekarstwo |
-| `confidence` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | confidence | впевненість | αυτοπεποίθηση / εμπιστοσύνη | zelfvertrouwen / vertrouwen | Selbstvertrauen / Vertrauen | özüne inam | pewność siebie / zaufanie |
 | `contribute` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | contribute | робити внесок / сприяти | δωρίζω / συνεισφέρω | doneren / bijdragen | spenden / beitragen | isse qoşmaq | wpłacać / przyczyniać się |
 | `throughout` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | throughout | по всьому | καθ' όλη τη διάρκεια | doorheen | durchaus | boyunca | przez |
 | `workplace` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | workplace | робоче місце | ασφάλεια στο χώρο εργασίας | werkplek | Arbeitsplatz | iş yeri | miejsce pracy |
-| `pretend` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | pretend | прикидатися | προσποιούμαι | doen alsof | so tun als ob | özüni... kibi köstermek | udawać |
-| `cabin` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | cabin | салон літака | θάλαμος επιβατών / καμπίνα | cabine | Flugzeugkabine | tayyare kabinası / kabina | kabina samolotu |
+| `pretend` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | pretend | прикидатися | προσποιούμαι | doen alsof | so tun als ob | özüni köstermek | udawać |
 | `frustrate` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | frustrate | перешкоджати | ματαίω | frustreren | frustrieren | engel olmaq | krzyżować plany / uniemożliwiać |
-| `unfold` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | unfold | розгортатися | ξεδιπλώνω | ontvouwen | entfalten | açılmaq | rozwijać się / odsłaniać |
-| `apprehensive` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | apprehensive | тривожний | ανήσυχος | bezorgd | besorgt | qorqaq | pełen obaw / lękliwy |
-| `conceive` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | conceive | задумувати | συλλαμβάνω | bedenken | konzipieren | tüşünip çıqarmaq | począć pomysł / powziąć |
 | `lyric` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | lyric | ліричний / текст пісні | στίχος | songtekst | Liedtext | lirika | tekst piosenki |
 | `timing` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | timing | час / розрахунок часу | συγχρονισμός | timing | Timing | vaqıtlauv | wyczucie czasu |
 | `consequently` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | consequently | отже / як наслідок | κατά συνέπεια | bijgevolg | folglich | neticede | w konsekwencji |
