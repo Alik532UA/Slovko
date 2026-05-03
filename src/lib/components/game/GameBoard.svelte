@@ -75,33 +75,42 @@
 	function handleDragMove(e: PointerEvent) {
 		if (!dragState.active || !dragState.startPoint) return;
 		dragState.currentPoint = { x: e.clientX, y: e.clientY };
+		
+		// Ховаємо лінію/оверлей на мить, щоб знайти елемент ПІД нею (іноді SVG drag-overlay перекриває картки)
+		const svgOverlay = document.querySelector('.drag-overlay') as HTMLElement;
+		if (svgOverlay) svgOverlay.style.pointerEvents = 'none';
+
 		const elements = document.elementsFromPoint(e.clientX, e.clientY);
 		let foundCardId: string | null = null;
 		for (const el of elements) {
-			const testId = el.getAttribute("data-testid");
-			if (testId?.startsWith("word-card-")) { foundCardId = testId.replace("word-card-", ""); break; }
-			const closest = el.closest('[data-testid^="word-card-"]');
-			if (closest) { foundCardId = closest.getAttribute("data-testid")!.replace("word-card-", ""); break; }
+			const cardId = el.getAttribute("data-card-id");
+			if (cardId) { foundCardId = cardId; break; }
+			const closest = el.closest('[data-card-id]');
+			if (closest) { foundCardId = closest.getAttribute("data-card-id"); break; }
 		}
+		
 		if (foundCardId) {
 			const targetCard = [...gameState.sourceCards, ...gameState.targetCards].find(c => c.id === foundCardId);
 			dragState.hoveredCardId = (targetCard && targetCard.language !== dragState.sourceCard?.language && targetCard.status !== "correct") ? foundCardId : null;
 		} else { dragState.hoveredCardId = null; }
+		
+		console.log("[DragMove] elements:", elements.length, "foundCardId:", foundCardId, "hovered:", dragState.hoveredCardId);
 	}
 
-	function handleDragEnd() {
+	function handleDragEnd(e?: PointerEvent) {
+		console.log("[DragEnd] active:", dragState.active, "hovered:", dragState.hoveredCardId, "source:", dragState.sourceCard?.id);
 		if (!dragState.active) return;
+		
 		if (dragState.hoveredCardId && dragState.sourceCard) {
 			const targetCard = [...gameState.sourceCards, ...gameState.targetCards].find(c => c.id === dragState.hoveredCardId);
 			if (targetCard) {
+				console.log("[DragEnd] Select cards:", dragState.sourceCard.id, targetCard.id);
 				// Якщо початкова картка ще не вибрана, ми маємо її вибрати
 				if (gameState.selectedCard?.id !== dragState.sourceCard.id) {
 					gameController.selectCard(dragState.sourceCard);
 				}
-				// Невелика затримка, щоб Svelte встиг оновити стан першої картки (це необхідно для коректної анімації або логіки перевірки)
-				setTimeout(() => {
-					gameController.selectCard(targetCard);
-				}, 10);
+				// Викликаємо одразу, щоб уникнути race condition з подією click на parent елементах
+				gameController.selectCard(targetCard);
 			}
 		}
 		dragState = { active: false, startPoint: null, currentPoint: null, sourceCard: null, hoveredCardId: null };
