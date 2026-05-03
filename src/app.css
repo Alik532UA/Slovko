@@ -7,6 +7,7 @@
 :root,
 [data-theme="dark-gray"] {
 	--bg-primary: #23272f;
+	--bg-image: url("/background/bg-dark-v01.webp");
 	--bg-secondary: #43464e;
 	--text-primary: #eaeaea;
 	--text-secondary: #a0a0a0;
@@ -106,6 +107,7 @@
 /* Light Gray */
 [data-theme="light-gray"] {
 	--bg-primary: #f5f6fa;
+	--bg-image: url("/background/bg-winter-v01.webp");
 	--bg-secondary: #e0e1e6;
 	--text-primary: #1f2937;
 	--text-secondary: #4b5563;
@@ -164,6 +166,7 @@
 /* Orange (Ubuntu-like) */
 [data-theme="orange"] {
 	--bg-primary: linear-gradient(135deg, #77216f, #e95420);
+	--bg-image: url("/background/bg-orange-purple-v01.webp");
 	--bg-secondary: rgba(255, 255, 255, 0.1);
 	--text-primary: #ffffff;
 	--text-secondary: #e2e8f0;
@@ -214,13 +217,12 @@
 	--icon-btn-text: #ffffff;
 	--icon-btn-active-bg: #ffffff;
 	--icon-btn-active-text: #e95420;
-
-	background-attachment: fixed;
 }
 
 /* Green */
 [data-theme="green"] {
 	--bg-primary: #b2f7b8;
+	--bg-image: url("/background/bg-light-green-v01.webp");
 	--bg-secondary: #e6ffe6;
 	--text-primary: #064e3b;
 	--text-secondary: #065f46;
@@ -286,17 +288,47 @@
 	-webkit-tap-highlight-color: transparent;
 }
 
-html,
+html {
+	background: var(--bg-primary);
+}
+
 body {
 	height: 100%;
 	height: calc(var(--vh, 1vh) * 100);
 	height: 100dvh; /* Dynamic viewport height */
 	font-family: var(--font-family);
-	background: var(--bg-primary);
 	color: var(--text-primary);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	overflow: hidden; /* Prevent elastic scrolling on mobile if desired */
+}
+
+/* Background layer with blur */
+body::before {
+	content: "";
+	position: fixed;
+	top: -20px;
+	left: -20px;
+	right: -20px;
+	bottom: -20px;
+	background: var(--bg-image) center/cover no-repeat;
+	filter: blur(10px);
+	z-index: -1;
+	pointer-events: none;
+	transition: opacity 0.3s ease, filter 0.3s ease;
+	opacity: 0;
+}
+
+html[data-bg-type="image"] body::before {
+	opacity: 1;
+}
+
+html[data-bg-blur="sharp"] body::before {
+	filter: blur(0);
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 }
 
 body {
