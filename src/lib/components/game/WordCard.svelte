@@ -6,7 +6,7 @@
 	 */
 	import type { ActiveCard } from "$lib/types/index";
 	import { speakText } from "$lib/services/speechService";
-	import type { Snippet } from "svelte";
+	import { untrack, type Snippet } from "svelte";
 
 	interface Props {
 		card: ActiveCard;
@@ -41,7 +41,11 @@
 	// створюється новий екземпляр компонента. Фіксація цих значень гарантує, що
 	// під час анімації "ульоту" старої картки її контент не зміниться на контент нової картки.
 	// При цьому статус (card.status) залишається реактивним для відображення змін станів.
-	const { text, transcription, language } = card;
+	const { text, transcription, language } = untrack(() => ({
+		text: card.text,
+		transcription: card.transcription,
+		language: card.language,
+	}));
 
 	let longPressTimer: ReturnType<typeof setTimeout> | null = null;
 	let isLongPress = false;
