@@ -98,8 +98,8 @@
 	"generation": "generation",
 	"intention": "intention",
 	"issue": "issue",
-	"issue_edition": "edition",
-	"issue_problem": "problem",
+	"issue_edition": "issue",
+	"issue_problem": "issue",
 	"location": "location",
 	"neighbourhood": "neighbourhood",
 	"passion": "passion",
@@ -114,5 +114,5 @@
 	"substance": "substance",
 	"translation": "translation",
 	"worth": "worth",
-	"worth_value": "value"
+	"worth_value": "worth"
 }

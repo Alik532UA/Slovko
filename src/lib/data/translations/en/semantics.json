@@ -438,8 +438,8 @@
 		"facility_building": "building",
 		"failure_defeat": "defeat",
 		"failure_lack": "lack",
-		"fair_exhibition": "exhibition",
-		"fair_just": "just",
+		"fair_exhibition": "exhibition/fair",
+		"fair_just": "just/fair",
 		"fairly_honestly": "honestly",
 		"fairly_quite": "quite",
 		"fall_autumn": "autumn",
@@ -982,6 +982,12 @@
 		"you_pronoun": "pronoun",
 		"you_singular": "singular",
 		"your_plural": "plural",
-		"your_singular": "singular"
+		"your_singular": "singular",
+		"customer_client": "client",
+		"customer_buyer": "buyer/shopper",
+		"may_month": "month",
+		"may_modal": "modal verb",
+		"type_kind": "kind/sort",
+		"type_write": "on keyboard"
 	}
 }

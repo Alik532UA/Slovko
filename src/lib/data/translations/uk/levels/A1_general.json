@@ -754,5 +754,11 @@
 	"yourself": "ти сам",
 	"match_suit": "підходити",
 	"last_final": "останній",
-	"last_previous": "минулий"
+	"last_previous": "минулий",
+	"customer_client": "клієнт",
+	"customer_buyer": "покупець",
+	"may_month": "травень",
+	"may_modal": "може",
+	"type_kind": "тип",
+	"type_write": "друкувати"
 }

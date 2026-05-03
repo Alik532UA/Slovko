@@ -93,7 +93,7 @@
 	"basic": "basic",
 	"careless": "careless",
 	"category": "category",
-	"clause_legal": "legal",
+	"clause_legal": "clause",
 	"coal": "coal",
 	"colored": "colored",
 	"coloured": "coloured",
@@ -139,10 +139,10 @@
 	"located": "located",
 	"magic": "magic",
 	"marketing": "marketing",
-	"nail_metal": "metal",
+	"nail_metal": "nail",
 	"narrative": "narrative",
 	"native": "native",
-	"native_local": "local",
+	"native_local": "native",
 	"old-fashioned": "old-fashioned",
 	"old_fashioned": "old fashioned",
 	"organized": "organized",
@@ -180,7 +180,7 @@
 	"suitable": "suitable",
 	"summary": "summary",
 	"tent": "tent",
-	"tin_metal": "metal",
+	"tin_metal": "tin",
 	"unable": "unable",
 	"uncomfortable": "uncomfortable",
 	"unemployed": "unemployed",
@@ -191,5 +191,5 @@
 	"violent": "violent",
 	"warning": "warning",
 	"wing": "wing",
-	"worth_deserving": "deserving"
+	"worth_deserving": "worth"
 }

@@ -684,6 +684,23 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "corrupt",
 		specific: ["corrupt_system"]
 	},
+	customer: {
+		base: "customer",
+		specific: ["customer_client", "customer_buyer"]
+	},
+	fair: {
+		base: "fair",
+		specific: ["fair_just", "fair_exhibition"]
+	},
+	may: {
+		base: "may",
+		specific: ["may_month", "may_modal"]
+	},
+	type: {
+		base: "type",
+		specific: ["type_kind", "type_write"]
+	},
+
 	courage: {
 		base: "courage",
 		specific: ["courage_bravery", "courage_manliness"]
