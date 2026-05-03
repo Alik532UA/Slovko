@@ -1,4 +1,4 @@
-{
+﻿{
 	"burden": "burden",
 	"consistency": "consistency",
 	"constraint": "constraint",
@@ -228,7 +228,7 @@
 	"glimpse": "glimpse",
 	"grace": "grace",
 	"grasp": "grasp",
-	"grave": "grave_(for_dead_person) / grave_(serious)",
+	"grave": "grave",
 	"grave_(for_dead_person)": "grave_(for_dead_person)",
 	"grave_(serious)": "grave_(serious)",
 	"grid": "grid",
@@ -514,7 +514,7 @@
 	"straightforward": "straightforward",
 	"strain": "strain",
 	"strand": "strand",
-	"strip": "strip_(long_narrow_piece) / strip_(remove_clothes/a_layer)",
+	"strip": "strip",
 	"strip_(long_narrow_piece)": "strip_(long_narrow_piece)",
 	"strip_(remove_clothes/a_layer)": "strip_(remove_clothes/a_layer)",
 	"stumble": "stumble",
