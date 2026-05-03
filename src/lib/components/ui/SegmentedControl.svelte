@@ -4,12 +4,12 @@
 	 * Дизайн уніфіковано з картками статистики та лідерборду
 	 */
 	import { _ } from "svelte-i18n";
-	import type { Component } from "svelte";
+	import type { ComponentType, SvelteComponent } from "svelte";
 
 	interface Option {
 		id: string;
 		label?: string;
-		icon?: Component<any>;
+		icon?: ComponentType<SvelteComponent>;
 		testId?: string;
 		disabled?: boolean;
 		title?: string;

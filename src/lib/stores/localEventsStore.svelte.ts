@@ -7,13 +7,13 @@ class LocalEventsStore {
     addAchievement(streak: number) {
         this.events.push({
             id: crypto.randomUUID(),
-            type: "daily_goal_reached" as any, // Cast as any so it doesn't conflict with PresenceService if we remove it from there
+            type: "daily_goal_reached",
             uid: "local_system",
             profile: { name: "", photoURL: null },
             timestamp: Date.now(),
             state: "expanded",
             streak,
-        } as InteractionEvent);
+        });
 
         gameFeedbackHandler.playSuccessSound(0.3);
         gameFeedbackHandler.vibrate(100);
@@ -22,13 +22,13 @@ class LocalEventsStore {
     addLeaderGapReached(gap: number) {
         this.events.push({
             id: crypto.randomUUID(),
-            type: "leader_gap_reached" as any,
+            type: "leader_gap_reached",
             uid: "local_system",
             profile: { name: "", photoURL: null },
             timestamp: Date.now(),
             state: "expanded",
             gap,
-        } as InteractionEvent);
+        });
 
         gameFeedbackHandler.playSuccessSound(0.2);
     }
@@ -36,12 +36,12 @@ class LocalEventsStore {
     addLeaderOvertaken() {
         this.events.push({
             id: crypto.randomUUID(),
-            type: "leader_overtaken" as any,
+            type: "leader_overtaken",
             uid: "local_system",
             profile: { name: "", photoURL: null },
             timestamp: Date.now(),
             state: "expanded",
-        } as InteractionEvent);
+        });
 
         gameFeedbackHandler.playSuccessSound(0.5);
         gameFeedbackHandler.vibrate(200);

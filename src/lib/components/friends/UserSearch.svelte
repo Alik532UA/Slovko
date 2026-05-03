@@ -8,6 +8,7 @@
 	} from "lucide-svelte";
 	import {
 		FriendsService,
+		type UserProfile,
 	} from "$lib/firebase/FriendsService";
 	import { PresenceService, type DiscoveryUser } from "$lib/firebase/PresenceService.svelte";
 	import { authStore } from "$lib/firebase/authStore.svelte";
@@ -26,7 +27,7 @@
 
 	// Search State
 	let searchQuery = $state("");
-	let searchResults = $state<any[]>([]);
+	let searchResults = $state<UserProfile[]>([]);
 	let isSearching = $state(false);
 
 	// Debounce search

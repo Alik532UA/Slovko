@@ -320,12 +320,12 @@
 		<ThemeModal onclose={() => navigationState.closeModal()} />
 	{:else if activeModal === "stats"}
 		<StatsModal
-			initialTab={$page.url.searchParams.get("tab") as any}
+			initialTab={$page.url.searchParams.get("tab") as "leaderboard" | "stats"}
 			onclose={() => navigationState.closeModal()}
 		/>
 	{:else if activeModal === "profile"}
 		<ProfileModal
-			initialTab={$page.url.searchParams.get("tab") as any}
+			initialTab={$page.url.searchParams.get("tab") as "friends" | "account"}
 			onclose={() => navigationState.closeModal()}
 		/>
 	{/if}

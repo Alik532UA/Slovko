@@ -16,7 +16,7 @@ function createPwaStore() {
 	let isInstalled = $state(false);
 	
 	const ua = browser ? window.navigator.userAgent : "";
-	let isIOS = $state(/iPad|iPhone|iPod/.test(ua) && !(window as any).MSStream);
+	let isIOS = $state(/iPad|iPhone|iPod/.test(ua) && !("MSStream" in window));
 	let isIosChrome = $state(isIOS && ua.indexOf('CriOS') > -1);
 	let isAndroid = $state(/Android/.test(ua));
 	
@@ -28,7 +28,7 @@ function createPwaStore() {
 
 		// Перевірка, чи вже встановлено
 		const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
-							 (window.navigator as any).standalone === true;
+							 ("standalone" in window.navigator && window.navigator.standalone === true);
 		isInstalled = isStandalone;
 
 		window.addEventListener("beforeinstallprompt", (e) => {

@@ -210,11 +210,12 @@ function createProgressStore() {
 		if (!browser) return DailyActivitySchema.parse({ date: getTodayDate() });
 
 		try {
-			const validated = localStorageProvider.getJson(ACTIVITY_STORAGE_KEY) as any;
-			if (validated) {
+			const raw = localStorageProvider.getJson(ACTIVITY_STORAGE_KEY);
+			const result = DailyActivitySchema.safeParse(raw);
+			if (result.success) {
 				const today = getTodayDate();
-				if (validated.date === today) {
-					return DailyActivitySchema.parse(validated);
+				if (result.data.date === today) {
+					return result.data;
 				}
 			}
 		} catch (e) {
