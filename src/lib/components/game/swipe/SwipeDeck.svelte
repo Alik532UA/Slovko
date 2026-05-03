@@ -133,7 +133,7 @@
 			>
 				<p>
 					{settingsStore.value.mode === "playlists"
-						? settingsStore.value.currentPlaylist === "mistakes"
+						? settingsStore.value.currentPlaylists.includes("mistakes")
 							? $_("playlists.emptyMistakes")
 							: $_("playlists.empty")
 						: $_("levels.underConstruction")}

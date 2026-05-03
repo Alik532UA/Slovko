@@ -32,7 +32,7 @@ export interface UserSettingsData {
 	mode: "levels" | "topics" | "phrases" | "playlists";
 	currentLevel: string[];
 	currentTopic: string[];
-	currentPlaylist: string | null;
+	currentPlaylists: string[];
 	hasCompletedOnboarding: boolean;
 	enablePronunciationSource: boolean;
 	enablePronunciationTarget: boolean;

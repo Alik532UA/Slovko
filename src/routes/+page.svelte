@@ -37,8 +37,8 @@
 				JSON.stringify(current.currentTopic) !== JSON.stringify(incoming.currentTopic) ||
 				JSON.stringify(current.currentTenses) !== JSON.stringify(incoming.currentTenses) ||
 				JSON.stringify(current.currentForms) !== JSON.stringify(incoming.currentForms) ||
+				JSON.stringify(current.currentPlaylists) !== JSON.stringify(incoming.currentPlaylists) ||
 				current.tenseQuantity !== incoming.tenseQuantity ||
-				current.currentPlaylist !== incoming.currentPlaylist ||
 				current.sourceLanguage !== incoming.sourceLanguage ||
 				current.targetLanguage !== incoming.targetLanguage ||
 				current.interactionMode !== incoming.interactionMode;

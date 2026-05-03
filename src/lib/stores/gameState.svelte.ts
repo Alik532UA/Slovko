@@ -46,7 +46,7 @@ function createGameState() {
 			currentTenses: [],
 			currentForms: [],
 			tenseQuantity: "3",
-			currentPlaylist: null,
+			currentPlaylists: [],
 			sourceLanguage: "en",
 			targetLanguage: "uk",
 		},

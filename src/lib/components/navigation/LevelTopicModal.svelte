@@ -78,6 +78,8 @@
 			selectedIds = [...settingsStore.value.currentTenses];
 			selectedForms = [...settingsStore.value.currentForms];
 			tenseQuantity = settingsStore.value.tenseQuantity;
+		} else if (activeTab === "playlists") {
+			selectedIds = [...settingsStore.value.currentPlaylists];
 		} else {
 			selectedIds = [];
 		}
@@ -93,6 +95,8 @@
 		// Відразу зберігаємо вибір у стор, щоб він не зникав
 		if (activeTab === "tenses") {
 			settingsStore.setTenses(selectedIds);
+		} else if (activeTab === "playlists") {
+			settingsStore.setPlaylist(selectedIds);
 		}
 	}
 
@@ -108,6 +112,12 @@
 			}
 		} else if (action === "clear") {
 			selectedIds = selectedIds.filter((i) => i !== id);
+		}
+
+		// Sync with store for real-time updates if needed, 
+		// but startLearning also does this.
+		if (activeTab === "playlists") {
+			settingsStore.setPlaylist(selectedIds);
 		}
 	}
 
@@ -168,6 +178,8 @@
 			url.searchParams.set("level", idsStr);
 		} else if (activeTab === "topics") {
 			url.searchParams.set("topic", idsStr);
+		} else if (activeTab === "playlists") {
+			url.searchParams.set("playlist", idsStr);
 		} else if (activeTab === "tenses") {
 			const formsStr = selectedForms.join(",");
 			url.searchParams.set("tense", idsStr);
@@ -178,22 +190,10 @@
 	}
 
 	function selectPlaylist(playlistId: PlaylistId) {
-		const url = new URL($page.url);
-		url.searchParams.delete("modal");
-		url.searchParams.delete("tab");
-		url.searchParams.delete("subtab");
-
-		url.searchParams.delete("level");
-		url.searchParams.delete("topic");
-		url.searchParams.delete("tense");
-		url.searchParams.delete("forms");
-		url.searchParams.delete("qty");
-		url.searchParams.delete("interaction");
-
-		url.searchParams.set("mode", "playlists");
-		url.searchParams.set("interaction", settingsStore.value.interactionMode);
-		url.searchParams.set("playlist", playlistId);
-		goto(url, { keepFocus: true, noScroll: true });
+		// This is legacy single-select, but we might want to keep it 
+		// if PlaylistGrid still uses it for something.
+		// However, we now prefer updateId.
+		updateId(playlistId, "add");
 	}
 </script>
 
@@ -240,33 +240,31 @@
 								/>
 								<TenseGrid {selectedIds} onselect={toggleId} />
 							{:else if activeTab === "playlists"}
-								<PlaylistGrid onselect={selectPlaylist} />
+								<PlaylistGrid {selectedIds} onchange={updateId} onselect={selectPlaylist} />
 							{/if}
 						</div>
 					{/key}
 				</div>
 
 				<!-- Actions -->
-				{#if activeTab !== "playlists"}
-					<div class="actions safe-scale-container" data-testid="level-topic-actions">
-						<button
-							class="action-btn secondary"
-							onclick={resetSelection}
-							disabled={selectedIds.length === 0}
-							data-testid="level-topic-reset-btn"
-						>
-							{$_("common.reset")}
-						</button>
-						<button
-							class="action-btn primary"
-							onclick={startLearning}
-							disabled={selectedIds.length === 0}
-							data-testid="level-topic-learn-btn"
-						>
-							{$_("common.learn")} ({selectedIds.length})
-						</button>
-					</div>
-				{/if}
+				<div class="actions safe-scale-container" data-testid="level-topic-actions">
+					<button
+						class="action-btn secondary"
+						onclick={resetSelection}
+						disabled={selectedIds.length === 0}
+						data-testid="level-topic-reset-btn"
+					>
+						{$_("common.reset")}
+					</button>
+					<button
+						class="action-btn primary"
+						onclick={startLearning}
+						disabled={selectedIds.length === 0}
+						data-testid="level-topic-learn-btn"
+					>
+						{$_("common.learn")} ({selectedIds.length})
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>

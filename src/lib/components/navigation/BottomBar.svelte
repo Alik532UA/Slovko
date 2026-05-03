@@ -14,7 +14,7 @@
 
 	// Отримати поточний лейбл
 	const currentLabel = $derived.by(() => {
-		const { mode, currentLevel, currentTopic, currentTenses, currentPlaylist } =
+		const { mode, currentLevel, currentTopic, currentTenses, currentPlaylists } =
 			settingsStore.value;
 
 		const formatLabel = (ids: string[], i18nPrefix: string) => {
@@ -33,12 +33,11 @@
 			return formatLabel(currentLevel, "levels");
 		} else if (mode === "tenses") {
 			return formatLabel(currentTenses, "tenses");
-		} else if (mode === "playlists" && currentPlaylist) {
-			const p = playlistStore.getPlaylist(currentPlaylist);
-			if (p) {
-				return p.isSystem ? $_(p.name) : p.name;
-			}
-			return $_(`playlists.${currentPlaylist}`);
+		} else if (mode === "playlists" && currentPlaylists.length > 0) {
+			const p = playlistStore.getPlaylist(currentPlaylists[0]);
+			const first = p ? (p.isSystem ? $_(p.name) : p.name) : currentPlaylists[0];
+
+			return currentPlaylists.length > 1 ? `${first} + ${currentPlaylists.length - 1}` : first;
 		}
 		return "";
 	});

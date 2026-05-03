@@ -239,7 +239,7 @@ const AppSettingsCoreSchema = z.object({
 	currentTenses: z.array(z.string()).default(["present_simple"]),
 	currentForms: z.array(z.enum(["aff", "neg", "ques"])).default(["aff", "neg", "ques"]),
 	tenseQuantity: z.enum(["1", "3", "many"]).default("3"),
-	currentPlaylist: z.string().nullable().default(null),
+	currentPlaylists: z.array(z.string()).default([]),
 	hasCompletedOnboarding: z.boolean().default(false),
 	enablePronunciationSource: z.boolean().default(true),
 	enablePronunciationTarget: z.boolean().default(false),
@@ -260,6 +260,12 @@ export const AppSettingsSchema = z.preprocess((val: unknown) => {
 
 	const v = val as Record<string, unknown>;
 	const result = { ...v };
+
+	// Migration from currentPlaylist (string) to currentPlaylists (array)
+	if (result.currentPlaylist && !result.currentPlaylists) {
+		result.currentPlaylists = [result.currentPlaylist as string];
+		delete result.currentPlaylist;
+	}
 
 	// Нормалізація currentLevel (може бути рядком "A1,A2" або поодиноким значенням)
 	if (typeof result.currentLevel === "string") {
@@ -299,6 +305,16 @@ export const AppSettingsSchema = z.preprocess((val: unknown) => {
 	}
 	if (!Array.isArray(result.currentForms)) {
 		result.currentForms = undefined;
+	}
+
+	// Нормалізація currentPlaylists
+	if (typeof result.currentPlaylists === "string") {
+		result.currentPlaylists = (result.currentPlaylists as string)
+			.split(",")
+			.filter(Boolean);
+	}
+	if (!Array.isArray(result.currentPlaylists)) {
+		result.currentPlaylists = undefined;
 	}
 
 	return result;
@@ -406,7 +422,7 @@ export const UrlParamsSchema = z.object({
 	tense: commaStringToArray,
 	forms: commaStringToArray,
 	qty: z.enum(["1", "3", "many"]).optional(),
-	playlist: z.string().optional(),
+	playlist: commaStringToArray,
 	source: z.enum(ALL_LANGUAGES).optional(),
 	target: z.enum(ALL_LANGUAGES).optional(),
 });

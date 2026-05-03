@@ -223,9 +223,16 @@ function createPlaylistStore() {
 		deletePlaylist(id: PlaylistId) {
 			if (id === "favorites" || id === "mistakes" || id === "extra") return;
 			
-			// Якщо видаляється активний плейліст - скидаємо налаштування на рівні
-			if (settingsStore.value.currentPlaylist === id) {
-				settingsStore.setLevel("A1");
+			// Якщо видаляється активний плейліст - прибираємо його з вибору
+			if (settingsStore.value.currentPlaylists.includes(id)) {
+				const remaining = settingsStore.value.currentPlaylists.filter(
+					(p) => p !== id,
+				);
+				if (remaining.length === 0) {
+					settingsStore.setLevel("A1");
+				} else {
+					settingsStore.setPlaylist(remaining);
+				}
 			}
 
 			state = {

@@ -50,7 +50,7 @@ class GameOrchestratorClass {
 		if (!currentSettings.hasCompletedOnboarding) {
 			requestSettings.mode = "levels";
 			requestSettings.currentLevel = ["A1"];
-			requestSettings.currentPlaylist = null;
+			requestSettings.currentPlaylists = [];
 		}
 
 		// 2. Збираємо snapshot плейлістів зі стору
@@ -98,8 +98,8 @@ class GameOrchestratorClass {
 		if (validated.qty && validated.qty !== settings.tenseQuantity) {
 			settings.tenseQuantity = validated.qty;
 		}
-		if (validated.playlist && validated.playlist !== settings.currentPlaylist) {
-			settings.currentPlaylist = validated.playlist;
+		if (validated.playlist && JSON.stringify(validated.playlist) !== JSON.stringify(settings.currentPlaylists)) {
+			settings.currentPlaylists = validated.playlist;
 		}
 		if (validated.source && validated.source !== settings.sourceLanguage) {
 			settings.sourceLanguage = validated.source;

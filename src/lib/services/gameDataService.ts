@@ -34,7 +34,7 @@ export interface GameData {
 		currentTenses: string[];
 		currentForms: string[];
 		tenseQuantity: string;
-		currentPlaylist: string | null;
+		currentPlaylists: string[];
 		sourceLanguage: string;
 		targetLanguage: string;
 	};
@@ -121,14 +121,14 @@ export class GameDataService {
 			currentTenses,
 			currentForms,
 			tenseQuantity,
-			currentPlaylist,
+			currentPlaylists,
 		} = settings;
 
 		logService.log("data", "Loading game data", {
 			mode,
 			currentLevel,
 			currentTopic,
-			currentTenses,
+			currentPlaylists,
 		});
 
 		let sourceTranslations: TranslationDictionary = {};
@@ -153,49 +153,63 @@ export class GameDataService {
 			targetTranscriptions = tgtTscr;
 
 			// 2. Load Words Pool
-			if (mode === "playlists" && currentPlaylist) {
-				let playlistWords: (string | CustomWord)[] = [];
-				if (currentPlaylist === "mistakes") {
-					playlistWords = playlists.mistakes.map((m) => m.pair.id);
-				} else if (currentPlaylist === "favorites") {
-					playlistWords = playlists.favorites.map((p) => p.id);
-				} else if (currentPlaylist === "extra") {
-					playlistWords = playlists.extra.map((p) => p.id);
-				} else {
-					const customP = playlists.custom.find((p) => p.id === currentPlaylist);
-					if (customP) playlistWords = customP.words;
-				}
-
-				logService.log(
-					"data",
-					`Extracting words from playlist "${currentPlaylist}":`,
-					playlistWords,
-				);
-
-				playlistWords.forEach((w) => {
-					if (typeof w === "string") {
-						const hasSource = !!sourceTranslations[w];
-						const hasTarget = !!targetTranslations[w];
-
-						if (hasSource || hasTarget) {
-							words.push(w);
-							wordLevels[w] = currentPlaylist; // Tag as playlist ID
-						} else {
-							logService.warn(
-								"data",
-								`Word "${w}" from playlist not found in any dictionary. Filtering out.`,
-							);
-						}
-					} else if (w && typeof w === "object") {
-						const id = w.id || `custom-${Date.now()}`;
-						// Map neutral left/right to game dictionaries
-						sourceTranslations[id] = w.left || "";
-						targetTranslations[id] = w.right || "";
-						if (w.transcription) sourceTranscriptions[id] = w.transcription;
-						words.push(id);
-						wordLevels[id] = currentPlaylist;
-					}
+			if (mode === "playlists" && currentPlaylists && currentPlaylists.length > 0) {
+				const multipliers: Record<string, number> = {};
+				currentPlaylists.forEach((id) => {
+					multipliers[id] = (multipliers[id] || 0) + 1;
 				});
+				const uniquePlaylists = Object.keys(multipliers);
+
+				for (const pId of uniquePlaylists) {
+					const multiplier = multipliers[pId];
+					let playlistWords: (string | CustomWord)[] = [];
+
+					if (pId === "mistakes") {
+						playlistWords = playlists.mistakes.map((m) => m.pair.id);
+					} else if (pId === "favorites") {
+						playlistWords = playlists.favorites.map((p) => p.id);
+					} else if (pId === "extra") {
+						playlistWords = playlists.extra.map((p) => p.id);
+					} else {
+						const customP = playlists.custom.find((p) => p.id === pId);
+						if (customP) playlistWords = customP.words;
+					}
+
+					logService.log(
+						"data",
+						`Extracting words from playlist "${pId}" (x${multiplier}):`,
+						playlistWords,
+					);
+
+					playlistWords.forEach((w) => {
+						if (typeof w === "string") {
+							const hasSource = !!sourceTranslations[w];
+							const hasTarget = !!targetTranslations[w];
+
+							if (hasSource || hasTarget) {
+								for (let i = 0; i < multiplier; i++) {
+									words.push(w);
+								}
+								wordLevels[w] = pId;
+							} else {
+								logService.warn(
+									"data",
+									`Word "${w}" from playlist not found in any dictionary. Filtering out.`,
+								);
+							}
+						} else if (w && typeof w === "object") {
+							const id = w.id || `custom-${Date.now()}`;
+							// Map neutral left/right to game dictionaries
+							sourceTranslations[id] = w.left || "";
+							targetTranslations[id] = w.right || "";
+							if (w.transcription) sourceTranscriptions[id] = w.transcription;
+							for (let i = 0; i < multiplier; i++) {
+								words.push(id);
+							}
+							wordLevels[id] = pId;
+						}
+					});
+				}
 			} else {
 				const ids = mode === "topics" ? currentTopic : currentLevel;
 
@@ -361,7 +375,7 @@ export class GameDataService {
 				currentTenses: [...currentTenses],
 				currentForms: [...currentForms],
 				tenseQuantity,
-				currentPlaylist,
+				currentPlaylists: [...currentPlaylists],
 				sourceLanguage,
 				targetLanguage,
 			},

@@ -44,35 +44,37 @@
 	$effect(() => {
 		// Підписуємось лише на необхідні сигнали
 		const mode = settingsStore.value.mode;
-		const playlistId = settingsStore.value.currentPlaylist;
+		const playlistIds = settingsStore.value.currentPlaylists;
 		const data = gameData;
-		
+
 		// Отримуємо актуальний список слів для плейлиста
-		const currentPlaylistWords = (mode === 'playlists' && playlistId)
-			? (playlistStore.getPlaylist(playlistId)?.words || [])
+		const currentPlaylistWords = (mode === "playlists" && playlistIds.length > 0)
+			? playlistIds.flatMap((id) => playlistStore.getPlaylist(id)?.words || [])
 			: [];
-		
+
 		// Використовуємо хеш для перевірки змін
 		// (для об'єктів CustomWord використовуємо JSON, для рядків - просто join)
-		const playlistWordsHash = currentPlaylistWords.map(w => typeof w === 'string' ? w : w.id).join(',');
+		const playlistWordsHash = currentPlaylistWords
+			.map((w) => (typeof w === "string" ? w : w.id))
+			.join(",");
 
 		untrack(() => {
 			if (!data) return;
 
 			// Створюємо унікальний ключ конфігурації на основі даних
 			const currentDataKey = JSON.stringify(data.settings);
-			
+
 			const isNewData = currentDataKey !== lastDataKey;
-			const isPlaylistChanged = mode === 'playlists' && playlistWordsHash !== lastPlaylistHash;
+			const isPlaylistChanged = mode === "playlists" && playlistWordsHash !== lastPlaylistHash;
 
 			if (isNewData) {
 				// Сценарій 1: Прийшли абсолютно нові дані (навігація, зміна URL)
 				lastDataKey = currentDataKey;
 				lastPlaylistHash = playlistWordsHash;
 
-				logService.log("game", "Initializing game board (New Data)", { 
-					mode: data.settings.mode, 
-					playlistId: data.settings.currentPlaylist 
+				logService.log("game", "Initializing game board (New Data)", {
+					mode: data.settings.mode,
+					playlistIds: data.settings.currentPlaylists,
 				});
 				gameController.initGame(data);
 			} else if (isPlaylistChanged) {
@@ -323,7 +325,7 @@
 			<div class="empty-state-message" role="status" data-testid="game-empty-message">
 				<p>
 					{settingsStore.value.mode === "playlists"
-						? settingsStore.value.currentPlaylist === "mistakes"
+						? settingsStore.value.currentPlaylists.includes("mistakes")
 							? $_("playlists.emptyMistakes")
 							: $_("playlists.empty")
 						: $_("levels.underConstruction")}

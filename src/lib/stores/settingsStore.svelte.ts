@@ -51,7 +51,7 @@ function createSettingsStore() {
 					if (!validatedData.hasCompletedOnboarding) {
 						validatedData.mode = "levels";
 						validatedData.currentLevel = ["A1"];
-						validatedData.currentPlaylist = null;
+						validatedData.currentPlaylists = [];
 					}
 
 					logService.log("settings", "Validated settings:", validatedData);
@@ -191,11 +191,12 @@ function createSettingsStore() {
 			saveSettings();
 		},
 
-		setPlaylist(playlistId: PlaylistId) {
+		setPlaylist(playlistId: PlaylistId | PlaylistId[]) {
 			logService.log("settings", "setPlaylist:", playlistId);
+			const playlists = Array.isArray(playlistId) ? playlistId : [playlistId];
 			settings = {
 				...settings,
-				currentPlaylist: playlistId,
+				currentPlaylists: playlists,
 				mode: "playlists",
 			};
 			saveSettings();

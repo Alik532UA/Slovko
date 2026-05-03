@@ -38,6 +38,7 @@ export class UrlSyncService {
 		const topicsChanged = JSON.stringify(current.currentTopic) !== JSON.stringify(dataSettings.currentTopic);
 		const tensesChanged = JSON.stringify(current.currentTenses) !== JSON.stringify(dataSettings.currentTenses);
 		const formsChanged = JSON.stringify(current.currentForms) !== JSON.stringify(dataSettings.currentForms);
+		const playlistsChanged = JSON.stringify(current.currentPlaylists) !== JSON.stringify(dataSettings.currentPlaylists);
 
 		if (
 			current.mode !== dataSettings.mode ||
@@ -45,8 +46,8 @@ export class UrlSyncService {
 			topicsChanged ||
 			tensesChanged ||
 			formsChanged ||
+			playlistsChanged ||
 			current.tenseQuantity !== dataSettings.tenseQuantity ||
-			current.currentPlaylist !== dataSettings.currentPlaylist ||
 			current.sourceLanguage !== dataSettings.sourceLanguage ||
 			current.targetLanguage !== dataSettings.targetLanguage ||
 			current.interactionMode !== dataSettings.interactionMode
@@ -59,7 +60,7 @@ export class UrlSyncService {
 				currentTenses: dataSettings.currentTenses,
 				currentForms: dataSettings.currentForms,
 				tenseQuantity: dataSettings.tenseQuantity,
-				currentPlaylist: dataSettings.currentPlaylist,
+				currentPlaylists: dataSettings.currentPlaylists,
 				sourceLanguage: dataSettings.sourceLanguage,
 				targetLanguage: dataSettings.targetLanguage,
 				interactionMode: dataSettings.interactionMode,
@@ -79,6 +80,7 @@ export class UrlSyncService {
 		const topicsStr = s.currentTopic.join(",");
 		const tensesStr = s.currentTenses.join(",");
 		const formsStr = s.currentForms.join(",");
+		const playlistsStr = s.currentPlaylists.join(",");
 
 		// Перевіряємо чи потрібно оновлювати
 		const currentSource = url.searchParams.get("source");
@@ -99,7 +101,7 @@ export class UrlSyncService {
 				url.searchParams.get("forms") !== formsStr ||
 				url.searchParams.get("qty") !== s.tenseQuantity
 			)) ||
-			(s.mode === "playlists" && s.currentPlaylist && url.searchParams.get("playlist") !== s.currentPlaylist);
+			(s.mode === "playlists" && url.searchParams.get("playlist") !== playlistsStr);
 
 		if (!needsUpdate) return null;
 
@@ -140,8 +142,8 @@ export class UrlSyncService {
 			url.searchParams.delete("level");
 			url.searchParams.delete("topic");
 			url.searchParams.delete("playlist");
-		} else if (s.mode === "playlists" && s.currentPlaylist) {
-			url.searchParams.set("playlist", s.currentPlaylist);
+		} else if (s.mode === "playlists" && s.currentPlaylists.length > 0) {
+			url.searchParams.set("playlist", playlistsStr);
 			url.searchParams.delete("level");
 			url.searchParams.delete("topic");
 			url.searchParams.delete("tense");

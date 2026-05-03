@@ -40,9 +40,9 @@ export class GameController {
 		// Використовуємо налаштування з даних, якщо вони є, інакше зі стору
 		const activeSettings = preloadedData?.settings || settingsStore.value;
 		const currentMode = activeSettings.mode;
-		const currentPlaylist = activeSettings.currentPlaylist;
+		const currentPlaylists = activeSettings.currentPlaylists;
 
-		logService.log("game", "initGame starting", { mode: currentMode, playlist: currentPlaylist });
+		logService.log("game", "initGame starting", { mode: currentMode, playlists: currentPlaylists });
 
 		this.gameState.setLoading(true);
 		this.gameState.setError(null);
@@ -152,7 +152,7 @@ export class GameController {
 
 		const levelId = card1.level || card2.level || this.getCurrentContextId();
 		const isMistakesPlaylist =
-			settingsStore.value.currentPlaylist === "mistakes";
+			settingsStore.value.currentPlaylists.includes("mistakes");
 		this.feedbackHandler.handleCorrect(
 			card1.wordKey,
 			levelId,
@@ -225,11 +225,11 @@ export class GameController {
 	}
 
 	private getCurrentContextId(): string {
-		const { mode, currentLevel, currentTopic, currentTenses, currentPlaylist } =
+		const { mode, currentLevel, currentTopic, currentTenses, currentPlaylists } =
 			settingsStore.value;
 		if (mode === "topics") return currentTopic.join(",");
 		if (mode === "tenses") return currentTenses.join(",");
-		if (mode === "playlists") return currentPlaylist || "mixed";
+		if (mode === "playlists") return currentPlaylists.join(",") || "mixed";
 		return currentLevel.join(","); // levels or phrases
 	}
 

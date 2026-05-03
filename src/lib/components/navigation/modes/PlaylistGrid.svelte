@@ -15,16 +15,29 @@
 	import PlaylistModal from "../PlaylistModal.svelte";
 	import { PLAYLIST_ICONS_MAP, type AppIconId } from "$lib/config/icons";
 	import type { PlaylistId } from "$lib/types/index";
+	import { Check, Minus } from "lucide-svelte";
 
 	interface Props {
+		selectedIds?: string[];
+		onchange?: (id: string, action: "add" | "remove" | "clear") => void;
 		onselect: (id: PlaylistId) => void;
 	}
 
-	let { onselect }: Props = $props();
+	let { selectedIds = [], onchange, onselect }: Props = $props();
 
 	let showPlaylistModal = $state(false);
 	let editingPlaylistId = $state<PlaylistId | undefined>(undefined);
 	let showImportOptions = $state(false);
+
+	function handleSelect(id: PlaylistId) {
+		if (onchange) {
+			const count = selectedIds.filter((sid) => sid === id).length;
+			if (count === 0) onchange(id, "add");
+			else onchange(id, "clear");
+		} else {
+			onselect(id);
+		}
+	}
 
 	function openPlaylistModal(id?: PlaylistId) {
 		editingPlaylistId = id;
@@ -84,83 +97,121 @@
 	<!-- System Playlists -->
 	{#each [playlistStore.systemPlaylists.favorites, playlistStore.systemPlaylists.mistakes, playlistStore.systemPlaylists.extra] as p (p.id)}
 		{@const Icon = PLAYLIST_ICONS_MAP[p.id === "mistakes" ? "RotateCcw" : p.id === "favorites" ? "Heart" : "Bookmark"]}
-		<!-- svelte-ignore a11y_click_events_have_key_events -->
-		<div
-			class="item topic-item {p.id}"
-			class:selected={settingsStore.value.currentPlaylist === p.id}
-			onclick={() => onselect(p.id)}
-			onkeydown={(e) => e.key === "Enter" && onselect(p.id)}
-			role="button"
-			tabindex="0"
-			data-testid="playlist-{p.id}"
-		>
-			<span class="item-icon">
-				{#if Icon}<Icon size={24} />{/if}
-			</span>
-			<div class="item-info">
-				<span class="item-title" data-testid="playlist-title-{p.id}">{$_(p.name)}</span>
-				<span class="word-count" data-testid="playlist-count-{p.id}"
-					>{$_("playlists.wordsCount", { values: { count: p.words.length } })}</span
-				>
+		{@const count = selectedIds.filter((sid) => sid === p.id).length}
+		<div class="playlist-wrapper">
+			<!-- svelte-ignore a11y_click_events_have_key_events -->
+			<div
+				class="item topic-item {p.id}"
+				class:selected={count > 0}
+				onclick={() => handleSelect(p.id)}
+				onkeydown={(e) => e.key === "Enter" && handleSelect(p.id)}
+				role="button"
+				tabindex="0"
+				data-testid="playlist-{p.id}"
+			>
+				<div class="check-indicator">
+					{#if count > 0}
+						<Check size={14} />
+					{/if}
+				</div>
+				<span class="item-icon">
+					{#if Icon}<Icon size={24} />{/if}
+				</span>
+				<div class="item-info">
+					<span class="item-title" data-testid="playlist-title-{p.id}">{$_(p.name)}</span>
+					<span class="word-count" data-testid="playlist-count-{p.id}"
+						>{$_("playlists.wordsCount", { values: { count: p.words.length } })}</span
+					>
+				</div>
+				<div class="actions">
+					<button
+						class="action-btn"
+						onclick={(e) => {
+							e.stopPropagation();
+							openPlaylistModal(p.id);
+						}}
+						title={$_("common.edit")}
+						data-testid="playlist-edit-{p.id}"
+					>
+						<Settings2 size={18} />
+					</button>
+				</div>
 			</div>
-			<div class="actions">
-				<button
-					class="action-btn"
-					onclick={(e) => {
-						e.stopPropagation();
-						openPlaylistModal(p.id);
-					}}
-					title={$_("common.edit")}
-					data-testid="playlist-edit-{p.id}"
-				>
-					<Settings2 size={18} />
-				</button>
-			</div>
+			{#if count > 0 && onchange}
+				<div class="multiplier-controls" onclick={(e) => e.stopPropagation()} role="presentation">
+					<button class="ctrl-btn" onclick={() => onchange(p.id, "remove")}>
+						<Minus size={14} />
+					</button>
+					<span class="count-badge">x{count}</span>
+					<button class="ctrl-btn" onclick={() => onchange(p.id, "add")} disabled={count >= 5}>
+						<Plus size={14} />
+					</button>
+				</div>
+			{/if}
 		</div>
 	{/each}
 
 	<!-- Custom Playlists -->
 	{#each playlistStore.customPlaylists as p (p.id)}
 		{@const Icon = PLAYLIST_ICONS_MAP[(p.icon as AppIconId) || "Bookmark"] || Bookmark}
-		<!-- svelte-ignore a11y_click_events_have_key_events -->
-		<div
-			class="item topic-item custom-playlist"
-			style="border-color: {p.color}"
-			class:selected={settingsStore.value.currentPlaylist === p.id}
-			onclick={() => onselect(p.id)}
-			onkeydown={(e) => e.key === "Enter" && onselect(p.id)}
-			role="button"
-			tabindex="0"
-			data-testid="playlist-custom-{p.id}"
-		>
-			<span class="item-icon" style="color: {p.color}">
-				<Icon size={24} />
-			</span>
-			<div class="item-info">
-				<span class="item-title" data-testid="playlist-custom-title-{p.id}">{p.name}</span>
-				<span class="word-count" data-testid="playlist-custom-count-{p.id}"
-					>{$_("playlists.wordsCount", { values: { count: p.words.length } })}</span
-				>
+		{@const count = selectedIds.filter((sid) => sid === p.id).length}
+		<div class="playlist-wrapper">
+			<!-- svelte-ignore a11y_click_events_have_key_events -->
+			<div
+				class="item topic-item custom-playlist"
+				style="border-color: {p.color}"
+				class:selected={count > 0}
+				onclick={() => handleSelect(p.id)}
+				onkeydown={(e) => e.key === "Enter" && handleSelect(p.id)}
+				role="button"
+				tabindex="0"
+				data-testid="playlist-custom-{p.id}"
+			>
+				<div class="check-indicator">
+					{#if count > 0}
+						<Check size={14} />
+					{/if}
+				</div>
+				<span class="item-icon" style="color: {p.color}">
+					<Icon size={24} />
+				</span>
+				<div class="item-info">
+					<span class="item-title" data-testid="playlist-custom-title-{p.id}">{p.name}</span>
+					<span class="word-count" data-testid="playlist-custom-count-{p.id}"
+						>{$_("playlists.wordsCount", { values: { count: p.words.length } })}</span
+					>
+				</div>
+				<div class="actions">
+					<button
+						class="action-btn"
+						onclick={(e) => {
+							e.stopPropagation();
+							openPlaylistModal(p.id);
+						}}
+						data-testid="playlist-edit-{p.id}"
+					>
+						<Settings2 size={18} />
+					</button>
+					<button
+						class="action-btn danger"
+						onclick={(e) => deletePlaylist(p.id, e)}
+						data-testid="playlist-delete-{p.id}"
+					>
+						<Trash2 size={18} />
+					</button>
+				</div>
 			</div>
-			<div class="actions">
-				<button
-					class="action-btn"
-					onclick={(e) => {
-						e.stopPropagation();
-						openPlaylistModal(p.id);
-					}}
-					data-testid="playlist-edit-{p.id}"
-				>
-					<Settings2 size={18} />
-				</button>
-				<button
-					class="action-btn danger"
-					onclick={(e) => deletePlaylist(p.id, e)}
-					data-testid="playlist-delete-{p.id}"
-				>
-					<Trash2 size={18} />
-				</button>
-			</div>
+			{#if count > 0 && onchange}
+				<div class="multiplier-controls" onclick={(e) => e.stopPropagation()} role="presentation">
+					<button class="ctrl-btn" onclick={() => onchange(p.id, "remove")}>
+						<Minus size={14} />
+					</button>
+					<span class="count-badge">x{count}</span>
+					<button class="ctrl-btn" onclick={() => onchange(p.id, "add")} disabled={count >= 5}>
+						<Plus size={14} />
+					</button>
+				</div>
+			{/if}
 		</div>
 	{/each}
 
@@ -247,6 +298,12 @@
 		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 	}
 
+	.playlist-wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
 	.item {
 		display: flex;
 		align-items: center;
@@ -260,6 +317,74 @@
 		min-height: 72px;
 		gap: 0.75rem;
 		text-align: left;
+		position: relative;
+	}
+
+	.check-indicator {
+		position: absolute;
+		top: -8px;
+		right: -8px;
+		width: 24px;
+		height: 24px;
+		border-radius: 50%;
+		border: 2px solid var(--card-border);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: transparent;
+		transition: all 0.2s;
+		background: var(--card-bg);
+		z-index: 3;
+	}
+
+	.item.selected .check-indicator {
+		background: var(--accent);
+		border-color: var(--accent);
+		color: white;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+	}
+
+	.multiplier-controls {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		border-radius: 12px;
+		padding: 0.25rem;
+	}
+
+	.ctrl-btn {
+		background: var(--bg-primary);
+		border: none;
+		color: var(--text-secondary);
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 24px;
+		height: 24px;
+		border-radius: 8px;
+		transition: all 0.2s;
+	}
+
+	.ctrl-btn:hover:not(:disabled) {
+		background: var(--accent);
+		color: white;
+	}
+
+	.ctrl-btn:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	.count-badge {
+		font-weight: 700;
+		font-size: 0.9rem;
+		color: var(--text-primary);
+		min-width: 1.5rem;
+		text-align: center;
 	}
 
 	.topic-item.favorites { border-color: var(--playlist-favorites-border); }
