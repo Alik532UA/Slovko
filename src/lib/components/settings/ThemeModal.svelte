@@ -17,6 +17,14 @@
 	function selectTheme(theme: AppTheme) {
 		settingsStore.setTheme(theme);
 	}
+
+	function setBgType(type: "solid" | "image") {
+		settingsStore.setBgType(type);
+	}
+
+	function setBgBlur(blur: "blurred" | "sharp") {
+		settingsStore.setBgBlur(blur);
+	}
 </script>
 
 <BaseModal {onclose} testid="theme-modal" maxWidth="480px">
@@ -51,6 +59,44 @@
 				</button>
 			{/each}
 		</div>
+
+		<div class="settings-section">
+			<h3>{$_("settings.background") || "Background"}</h3>
+			<div class="segmented-control horizontal">
+				<button
+					class:active={settingsStore.value.bgType === "solid"}
+					onclick={() => setBgType("solid")}
+				>
+					{$_("settings.bg_solid") || "Solid"}
+				</button>
+				<button
+					class:active={settingsStore.value.bgType === "image"}
+					onclick={() => setBgType("image")}
+				>
+					{$_("settings.bg_image") || "Image"}
+				</button>
+			</div>
+		</div>
+
+		{#if settingsStore.value.bgType === "image"}
+			<div class="settings-section">
+				<h3>{$_("settings.image_style") || "Image Style"}</h3>
+				<div class="segmented-control horizontal">
+					<button
+						class:active={settingsStore.value.bgBlur === "blurred"}
+						onclick={() => setBgBlur("blurred")}
+					>
+						{$_("settings.bg_blurred") || "Blurred"}
+					</button>
+					<button
+						class:active={settingsStore.value.bgBlur === "sharp"}
+						onclick={() => setBgBlur("sharp")}
+					>
+						{$_("settings.bg_sharp") || "Sharp"}
+					</button>
+				</div>
+			</div>
+		{/if}
 
 		<div class="modal-footer">
 			<button
@@ -89,6 +135,51 @@
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.settings-section {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		margin-bottom: 1.25rem;
+	}
+
+	.settings-section h3 {
+		margin: 0;
+		font-size: 1rem;
+		font-weight: 600;
+		color: var(--text-secondary);
+	}
+
+	/* Segmented Control Styles */
+	.segmented-control {
+		display: flex;
+		background: var(--bg-secondary);
+		border: 1px solid var(--border);
+		border-radius: 12px;
+		padding: 4px;
+		gap: 4px;
+	}
+
+	.segmented-control button {
+		flex: 1;
+		padding: 0.6rem;
+		border-radius: 8px;
+		font-weight: 500;
+		color: var(--text-secondary);
+		transition: all 0.2s ease;
+	}
+
+	.segmented-control button.active {
+		background: var(--accent);
+		color: white;
+		box-shadow: var(--shadow-sm);
+	}
+
+	.segmented-control button:hover:not(.active) {
+		background: var(--bg-hover);
+		color: var(--text-primary);
 	}
 
 	.theme-card {

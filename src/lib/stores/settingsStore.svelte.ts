@@ -262,6 +262,16 @@ function createSettingsStore() {
 			saveSettings();
 		},
 
+		setBgType(type: "solid" | "image") {
+			settings = { ...settings, bgType: type };
+			saveSettings();
+		},
+
+		setBgBlur(blur: "blurred" | "sharp") {
+			settings = { ...settings, bgBlur: blur };
+			saveSettings();
+		},
+
 		completeOnboarding() {
 			settings = { ...settings, hasCompletedOnboarding: true };
 			saveSettings();

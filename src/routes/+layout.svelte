@@ -276,9 +276,11 @@
 	});
 
 	$effect(() => {
-		const theme = settingsStore.value.theme;
+		const { theme, bgType, bgBlur, interfaceLanguage } = settingsStore.value;
 		document.documentElement.setAttribute("data-theme", theme);
-		document.documentElement.lang = settingsStore.value.interfaceLanguage;
+		document.documentElement.setAttribute("data-bg-type", bgType);
+		document.documentElement.setAttribute("data-bg-blur", bgBlur);
+		document.documentElement.lang = interfaceLanguage;
 		
 		const isDark = theme === "dark-gray" || theme === "orange";
 		const meta = document.querySelector('meta[name="color-scheme"]');
