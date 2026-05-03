@@ -18,6 +18,8 @@
 	--card-bg: #43464e;
 	--card-border: #565a63;
 	--card-hover-border: #6b6f7a;
+	--text-on-accent: #ffffff;
+	--text-on-card: var(--text-primary);
 	--font-family:
 		"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
@@ -118,6 +120,8 @@
 	--card-bg: #ffffff;
 	--card-border: #e5e7eb;
 	--card-hover-border: #9ca3af;
+	--text-on-accent: #ffffff;
+	--text-on-card: var(--text-primary);
 
 	/* States */
 	--selected-bg: rgba(var(--accent-rgb), 0.1);
@@ -174,12 +178,14 @@
 	--accent-rgb: 233, 84, 32;
 	--accent-hover: #c74316;
 	--border: rgba(255, 255, 255, 0.2);
-	--card-bg: rgba(255, 255, 255, 0.15);
+	--card-bg: #3d0a35; /* Темно-пурпурний для контрасту з білим текстом */
 	--card-border: rgba(255, 255, 255, 0.3);
 	--card-hover-border: rgba(255, 255, 255, 0.5);
+	--text-on-accent: #ffffff;
+	--text-on-card: #ffffff;
 
 	/* States */
-	--selected-bg: rgba(255, 255, 255, 0.25);
+	--selected-bg: #77216f;
 	--selected-border: #ffffff;
 	--correct-bg: #2ecc71;
 	--correct-border: #ffffff;
@@ -233,6 +239,8 @@
 	--card-bg: #e6ffe6;
 	--card-border: #a7f3d0;
 	--card-hover-border: #34d399;
+	--text-on-accent: #ffffff;
+	--text-on-card: var(--text-primary);
 
 	/* States */
 	--selected-bg: #dcfce7;

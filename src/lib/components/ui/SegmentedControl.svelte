@@ -90,13 +90,17 @@
 		border-radius: 20px;
 		position: relative;
 		border: 1px solid rgba(255, 255, 255, 0.05);
-		gap: 0;
+		gap: 2px;
 		width: 100%;
 		max-width: 100%;
 		margin: 0 auto;
 		overflow: hidden;
 		align-items: stretch;
 		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+	}
+
+	.segmented-control.horizontal {
+		flex-wrap: wrap;
 	}
 
 	.slider-container {
@@ -110,7 +114,7 @@
 	}
 
 	.segment-btn {
-		flex: 1;
+		flex: 1 1 auto;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -127,13 +131,18 @@
 		z-index: 1;
 		font-size: 0.85rem;
 		text-align: center;
-		min-width: 0;
+		min-width: max-content;
 		position: relative;
 		align-self: stretch;
 	}
 
+	.segment-btn.active {
+		background: rgba(255, 255, 255, 0.05);
+	}
+
 	.segmented-control.vertical {
 		min-height: 75px;
+		flex-wrap: nowrap;
 	}
 
 	.segmented-control.vertical .segment-btn {
@@ -143,6 +152,8 @@
 		font-size: 0.7rem;
 		justify-content: center;
 		align-items: center;
+		flex: 1;
+		min-width: 0;
 	}
 
 	.segment-btn:hover:not(.disabled):not(.active) {
@@ -151,7 +162,7 @@
 	}
 
 	.segment-btn.active {
-		color: white;
+		color: var(--text-on-accent);
 	}
 
 	.icon-box {
@@ -169,7 +180,7 @@
 
 	.segment-btn.active .icon-box {
 		background: var(--accent) !important;
-		color: white !important; /* Біла іконка на акцентному фоні */
+		color: var(--text-on-accent) !important; /* Текст/іконка на акцентному фоні */
 		transform: scale(1.1);
 		box-shadow: 0 4px 10px rgba(var(--accent-rgb), 0.3);
 	}
@@ -209,7 +220,7 @@
 
 	/* Спеціальний стан тексту для активних елементів */
 	.segment-btn.active .label {
-		color: white;
+		color: var(--text-on-accent);
 	}
 
 	.label {

@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
 	/**
 	 * WordCard.svelte — Картка слова
 	 * SoC: тільки відображення та передача подій
@@ -46,8 +46,7 @@
 	function handlePointerDown(e: PointerEvent) {
 		if (!isInteractable()) return;
 
-		// Озвучуємо слово одразу при натисканні (працює на всіх платформах).
-		// iOS unlock відбувається централізовано в +layout.svelte (capture-phase click).
+		// Озвучуємо слово одразу при натисканні
 		if (enablePronunciation && card.status !== "selected") {
 			speakText(card.text, card.language);
 		}
@@ -66,7 +65,6 @@
 	function handlePointerMove(e: PointerEvent) {
 		if (longPressTimer) {
 			const dist = Math.hypot(e.clientX - startPos.x, e.clientY - startPos.y);
-			// Якщо зміщення більше 10px, вважаємо це початком руху і скасовуємо лонг-прес
 			if (dist > 10) {
 				clearTimeout(longPressTimer);
 				longPressTimer = null;
@@ -92,29 +90,23 @@
 	}
 
 	function handleContextMenu(e: MouseEvent) {
-		// Запобігаємо відкриттю стандартного меню браузера
 		e.preventDefault();
 		e.stopPropagation();
-
-		// Викликаємо меню (використовуємо той самий колбек, що і для лонг-пресу)
 		if (onlongpress) {
 			onlongpress(e as unknown as PointerEvent);
 		}
 	}
 
 	function handleClick(e: MouseEvent) {
-		// Запобігаємо спливанню події
 		e.stopPropagation();
 
 		if (isLongPress) {
-			// Delay clearing the flag to catch trailing events on iOS
 			setTimeout(() => {
 				isLongPress = false;
 			}, 50);
 			return;
 		}
 
-		// Якщо картка вже в особливому стані, ігноруємо клік
 		if (
 			card.status === "correct" ||
 			card.status === "wrong"
@@ -168,27 +160,30 @@
 		padding: 0.5rem;
 		font-size: clamp(0.9rem, 2.2vh, 1.15rem);
 		font-weight: 500;
-		color: var(--text-primary);
-		background: var(--card-bg);
-		border: 2px solid var(--card-border);
+		color: var(--text-on-card);
+		/* Робимо фон напівпрозорим (30%), щоб було видно блюр від батьківського елемента */
+		background: color-mix(in srgb, var(--card-bg), transparent 30%);
+		border: 1px solid rgba(255, 255, 255, 0.1);
 		border-radius: 12px;
 		cursor: pointer;
-		transition:
-			transform 0.15s ease,
-			background-color 0.4s ease,
-			border-color 0.4s ease,
-			box-shadow 0.4s ease,
-			opacity 0.3s ease,
-			scale 0.3s ease;
+		opacity: 1;
 		user-select: none;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 		gap: 0.2rem;
-		overflow: hidden; /* Запобігаємо виходу за межі */
-		touch-action: none; /* Забороняємо скрол браузера при свайпі з картки (для малювання ліній) */
-		-webkit-user-select: none; /* iOS Safari fix */
+		overflow: hidden;
+		touch-action: none;
+		-webkit-user-select: none;
+		transform: translateZ(0);
+
+		transition:
+			transform 0.15s ease,
+			background-color 0.4s ease,
+			border-color 0.4s ease,
+			box-shadow 0.4s ease,
+			opacity 0.3s ease;
 	}
 
 	.word-text {
@@ -196,163 +191,138 @@
 		word-break: break-word;
 		line-height: 1.15;
 		max-width: 100%;
+		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 	}
 
 	.transcription {
 		font-size: clamp(0.6rem, 1.5vh, 0.8rem);
-		color: var(--text-secondary);
+		color: var(--text-on-card);
+		opacity: 0.7;
 		font-weight: 400;
 		line-height: 1;
 	}
 
 	.word-card:hover {
-		transform: scale(var(--hover-scale));
+		transform: scale(var(--hover-scale)) translateZ(0);
 		border-color: var(--card-hover-border);
 		z-index: 2;
+		background: color-mix(in srgb, var(--card-bg), transparent 10%);
 	}
 
 	.word-card:active {
-		transform: scale(var(--active-scale));
+		transform: scale(var(--active-scale)) translateZ(0);
 	}
 
-	/* Remove specific disabled styling or keep it if needed for visual indication that it's matched */
 	.word-card.correct {
-		background: var(--correct-bg);
+		background: color-mix(in srgb, var(--correct-bg), transparent 50%);
 		border-color: var(--correct-border);
 		animation: correctFade 0.8s ease-out forwards;
-		cursor: default; /* Show it's not clickable */
+		cursor: default;
 	}
 
-	/* Ensure hover doesn't trigger on correct cards */
 	.word-card.correct:hover {
-		transform: none; /* override hover lift */
+		transform: none;
 		border-color: var(--correct-border);
 	}
 
-	/* Вибрана картка */
 	.word-card.selected {
-		background: var(--selected-bg);
+		background: color-mix(in srgb, var(--selected-bg), transparent 30%);
 		border-color: var(--selected-border);
 		animation: selectedPulse 2s infinite ease-in-out;
+		box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.3);
 	}
 
 	.word-card.dimmed {
 		filter: brightness(0.4) blur(2px);
 		pointer-events: none;
-		opacity: 0.8;
+		opacity: 0.4;
 	}
 
 	@keyframes selectedPulse {
-		0%,
-		100% {
-			box-shadow: 0 0 0 rgba(58, 143, 214, 0);
+		0%, 100% {
+			transform: scale(1) translateZ(0);
+			box-shadow: 0 0 5px rgba(var(--accent-rgb), 0.2);
 		}
 		50% {
-			box-shadow: 0 0 12px rgba(58, 143, 214, 0.3);
+			transform: scale(1.02) translateZ(0);
+			box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.5);
 		}
 	}
 
-	/* Правильна відповідь — зелений спалах + 25% прозорість */
-	/* ... rest of animations same ... */
 	@keyframes correctFade {
 		0% {
-			opacity: 1;
-			transform: scale(1);
+			background-color: color-mix(in srgb, var(--correct-bg), transparent 0%);
+			transform: scale(1) translateZ(0);
 		}
 		20% {
-			opacity: 1;
-			transform: scale(1.08);
+			background-color: color-mix(in srgb, var(--correct-bg), transparent 0%);
+			transform: scale(1.08) translateZ(0);
 		}
 		100% {
-			opacity: 0.25;
-			transform: scale(0.95);
+			background-color: color-mix(in srgb, var(--correct-bg), transparent 50%);
+			transform: scale(0.95) translateZ(0);
 		}
 	}
 
-	/* Неправильна відповідь — червоне блимання */
 	.word-card.wrong {
 		animation: shake 0.4s ease-in-out;
-		background: var(--wrong-bg);
+		background: color-mix(in srgb, var(--wrong-bg), transparent 30%);
 		border-color: var(--wrong-border);
 	}
 
-	/* Підказка — плавне блимання */
 	.word-card.hint {
 		animation: hintPulse 2s ease-in-out infinite;
-		will-change: transform, background-color, border-color, box-shadow;
 	}
 
 	.word-card.hint-slow {
 		animation: hintPulse 5s ease-in-out infinite;
-		will-change: transform, background-color, border-color, box-shadow;
 	}
 
 	@keyframes hintPulse {
 		0% {
 			transform: scale(1);
 			background-color: var(--card-bg);
-			border-color: var(--card-border);
 			box-shadow: 0 0 0 rgba(233, 84, 32, 0);
 		}
 		50% {
 			transform: scale(1.03);
 			background-color: rgba(233, 84, 32, 0.18);
-			border-color: var(--accent);
 			box-shadow: 0 0 30px rgba(233, 84, 32, 0.45);
 		}
 		100% {
 			transform: scale(1);
 			background-color: var(--card-bg);
-			border-color: var(--card-border);
 			box-shadow: 0 0 0 rgba(233, 84, 32, 0);
 		}
 	}
 
 	@keyframes shake {
-		0%,
-		100% {
-			transform: translateX(0);
-		}
-		20% {
-			transform: translateX(-8px);
-		}
-		40% {
-			transform: translateX(8px);
-		}
-		60% {
-			transform: translateX(-6px);
-		}
-		80% {
-			transform: translateX(6px);
-		}
+		0%, 100% { transform: translateX(0); }
+		20% { transform: translateX(-8px); }
+		40% { transform: translateX(8px); }
+		60% { transform: translateX(-6px); }
+		80% { transform: translateX(6px); }
 	}
 
-	/* Адаптивність для малих екранів */
 	@media (max-width: 480px) {
 		.word-card {
 			border-radius: 8px;
-			padding: 0.2rem; /* Мінімальні відступи */
+			padding: 0.2rem;
 			gap: 0.1rem;
 		}
-
-		.word-text {
-			font-size: clamp(0.8rem, 4vw, 1rem); /* Трохи менший шрифт */
-		}
+		.word-text { font-size: clamp(0.8rem, 4vw, 1rem); }
 	}
 
-	/* Адаптивність для екранів з малою висотою (ландшафт на мобільному) */
 	@media (max-height: 600px) {
 		.word-card {
-			padding: 0.15rem; /* Ще менші відступи */
-			gap: 0; /* Прибираємо gap, якщо місця мало */
+			padding: 0.15rem;
+			gap: 0;
 			min-height: auto;
 		}
-
 		.word-text {
 			line-height: 1.1;
 			font-size: clamp(0.75rem, 3.5vh, 1rem);
 		}
-
 		.transcription {
 			font-size: 0.7em;
 			margin-top: 1px;

@@ -1,8 +1,6 @@
-﻿<script lang="ts">
+<script lang="ts">
 	/**
 	 * GameBoard.svelte — Ігрове поле
-	 * Композиція: рендерить WordCard компоненти
-	 * Фіксовані позиції карток через slots
 	 */
 	import { gameState } from "$lib/stores/gameState.svelte";
 	import { getGameController } from "$lib/context/gameContext";
@@ -14,6 +12,7 @@
 	import WordReportModal from "./WordReportModal.svelte";
 	import { untrack } from "svelte";
 	import { fade } from "svelte/transition";
+	import { cubicOut, quadInOut } from "svelte/easing";
 	import { _ } from "svelte-i18n";
 	import type { ActiveCard, WordPair } from "$lib/types/index";
 	import type { GameData } from "$lib/services/gameDataService";
@@ -21,250 +20,108 @@
 	let { gameData }: { gameData?: GameData } = $props();
 	const gameController = getGameController();
 
-	let contextMenu = $state<{
-		cardId: string;
-		wordKey: string;
-		language: string;
-		text: string;
-	} | null>(null);
+	let contextMenu = $state<{cardId: string; wordKey: string; language: string; text: string;} | null>(null);
+	let reportingData = $state<{wordKey: string; pair: WordPair;} | null>(null);
 
-	let reportingData = $state<{
-		wordKey: string;
-		pair: WordPair;
-	} | null>(null);
-
-	// Службові змінні для відстеження попереднього стану (не реактивні)
 	let lastDataKey = "";
 	let lastPlaylistHash = "";
 
-	/**
-	 * Реактивна ініціалізація та перезавантаження гри.
-	 * Використовує точкові залежності (fine-grained reactivity).
-	 */
 	$effect(() => {
-		// Підписуємось лише на необхідні сигнали
 		const mode = settingsStore.value.mode;
 		const playlistIds = settingsStore.value.currentPlaylists;
 		const data = gameData;
-
-		// Отримуємо актуальний список слів для плейлиста
 		const currentPlaylistWords = (mode === "playlists" && playlistIds.length > 0)
-			? playlistIds.flatMap((id) => playlistStore.getPlaylist(id)?.words || [])
-			: [];
-
-		// Використовуємо хеш для перевірки змін
-		// (для об'єктів CustomWord використовуємо JSON, для рядків - просто join)
-		const playlistWordsHash = currentPlaylistWords
-			.map((w) => (typeof w === "string" ? w : w.id))
-			.join(",");
+			? playlistIds.flatMap((id) => playlistStore.getPlaylist(id)?.words || []) : [];
+		const playlistWordsHash = currentPlaylistWords.map((w) => (typeof w === "string" ? w : w.id)).join(",");
 
 		untrack(() => {
 			if (!data) return;
-
-			// Створюємо унікальний ключ конфігурації на основі даних
 			const currentDataKey = JSON.stringify(data.settings);
-
 			const isNewData = currentDataKey !== lastDataKey;
 			const isPlaylistChanged = mode === "playlists" && playlistWordsHash !== lastPlaylistHash;
 
 			if (isNewData) {
-				// Сценарій 1: Прийшли абсолютно нові дані (навігація, зміна URL)
 				lastDataKey = currentDataKey;
 				lastPlaylistHash = playlistWordsHash;
-
-				logService.log("game", "Initializing game board (New Data)", {
-					mode: data.settings.mode,
-					playlistIds: data.settings.currentPlaylists,
-				});
 				gameController.initGame(data);
 			} else if (isPlaylistChanged) {
-				// Сценарій 2: Дані ті самі, але локально змінився плейлист
-				
-				if (lastPlaylistHash) {
-					const oldList = lastPlaylistHash.split(',').filter(Boolean);
-					const newList = playlistWordsHash.split(',').filter(Boolean);
-					const removed = oldList.filter(x => !newList.includes(x));
-					const added = newList.filter(x => !oldList.includes(x));
-					
-					if (removed.length) logService.log("game", "PLAYLIST UPDATE: Removing words:", removed);
-					if (added.length) logService.log("game", "PLAYLIST UPDATE: Adding words:", added);
-				}
-
 				lastPlaylistHash = playlistWordsHash;
-
-				logService.log("game", "Refreshing game board due to playlist change");
 				gameController.initGame();
 			}
 		});
 	});
 
 	function handleLongPress(e: PointerEvent, card: ActiveCard) {
-		contextMenu = {
-			cardId: card.id,
-			wordKey: card.wordKey,
-			language: card.language,
-			text: card.text,
-		};
+		contextMenu = { cardId: card.id, wordKey: card.wordKey, language: card.language, text: card.text };
 	}
 
 	function openReport(wordKey: string) {
 		const pair = gameState.constructWordPair(wordKey, settingsStore.value);
-		if (pair) {
-			reportingData = { wordKey, pair };
-		}
+		if (pair) reportingData = { wordKey, pair };
 	}
 
 	// --- Drag & Drop Logic ---
-	let dragState = $state<{
-		active: boolean;
-		startPoint: { x: number; y: number } | null;
-		currentPoint: { x: number; y: number } | null;
-		sourceCard: ActiveCard | null;
-		hoveredCardId: string | null;
-	}>({
-		active: false,
-		startPoint: null,
-		currentPoint: null,
-		sourceCard: null,
-		hoveredCardId: null,
-	});
-
-	// Динамічний розрахунок товщини лінії залежно від відстані
+	let dragState = $state<{active: boolean; startPoint: { x: number; y: number } | null; currentPoint: { x: number; y: number } | null; sourceCard: ActiveCard | null; hoveredCardId: string | null;}>({ active: false, startPoint: null, currentPoint: null, sourceCard: null, hoveredCardId: null });
 	const dragStrokeWidth = $derived.by(() => {
 		if (!dragState.startPoint || !dragState.currentPoint) return 10;
-		const dx = dragState.currentPoint.x - dragState.startPoint.x;
-		const dy = dragState.currentPoint.y - dragState.startPoint.y;
-		const distance = Math.sqrt(dx * dx + dy * dy);
-		
-		// Початкова товщина 10px, зменшується до 4px при розтягуванні на 500px (ефект гуми)
-		return Math.max(4, 10 - (distance / 500) * 6);
+		return Math.max(4, 10 - (Math.hypot(dragState.currentPoint.x - dragState.startPoint.x, dragState.currentPoint.y - dragState.startPoint.y) / 500) * 6);
 	});
 
 	function handleDragStart(e: PointerEvent, card: ActiveCard) {
-		// Ігноруємо якщо вже йде процес або картка в "фінальному" стані
 		if (card.status === "correct" || card.status === "wrong") return;
-
-		dragState = {
-			active: true,
-			startPoint: { x: e.clientX, y: e.clientY },
-			currentPoint: { x: e.clientX, y: e.clientY },
-			sourceCard: card,
-			hoveredCardId: null,
-		};
+		dragState = { active: true, startPoint: { x: e.clientX, y: e.clientY }, currentPoint: { x: e.clientX, y: e.clientY }, sourceCard: card, hoveredCardId: null };
 	}
 
 	function handleDragMove(e: PointerEvent) {
 		if (!dragState.active || !dragState.startPoint) return;
-
 		dragState.currentPoint = { x: e.clientX, y: e.clientY };
-
-		// Якщо ми почали реальний рух (більше 5px), скидаємо старий вибір (тапом),
-		// щоб не було конфлікту візуалів (синій vs помаранчевий)
-		const dist = Math.hypot(
-			e.clientX - dragState.startPoint.x,
-			e.clientY - dragState.startPoint.y
-		);
-		
-		if (dist > 5 && gameState.selectedCard) {
-			if (gameState.selectedCard.id !== dragState.sourceCard?.id) {
-				gameState.updateCardStatus(gameState.selectedCard.id, "idle");
-			}
-			gameState.setSelectedCard(null);
-		}
-
-		// Hit testing для підсвічування
 		const elements = document.elementsFromPoint(e.clientX, e.clientY);
-		// Шукаємо елемент, який є WordCard (має data-testid починаючий з word-card-)
-		// Або батьківський враппер.
-		// Найпростіше: ми передамо data-card-id в WordCard (через враппер або сам компонент)
-		// Але оскільки WordCard - це кнопка, ми шукаємо кнопку з певним атрибутом.
-		
 		let foundCardId: string | null = null;
 		for (const el of elements) {
 			const testId = el.getAttribute("data-testid");
-			if (testId && testId.startsWith("word-card-")) {
-				foundCardId = testId.replace("word-card-", "");
-				break;
-			}
-			// Також перевіримо батьків, якщо elementsFromPoint повернув child
+			if (testId?.startsWith("word-card-")) { foundCardId = testId.replace("word-card-", ""); break; }
 			const closest = el.closest('[data-testid^="word-card-"]');
-			if (closest) {
-				foundCardId = closest.getAttribute("data-testid")!.replace("word-card-", "");
-				break;
-			}
+			if (closest) { foundCardId = closest.getAttribute("data-testid")!.replace("word-card-", ""); break; }
 		}
-
-		// Не підсвічуємо, якщо це та сама картка або з тієї ж колонки
 		if (foundCardId) {
-			// Тут ми не маємо прямого доступу до об'єкта картки за ID швидко, 
-			// але можемо перевірити в sourceCards/targetCards
 			const targetCard = [...gameState.sourceCards, ...gameState.targetCards].find(c => c.id === foundCardId);
-			
-			if (targetCard && targetCard.language !== dragState.sourceCard?.language && targetCard.status !== "correct") {
-				dragState.hoveredCardId = foundCardId;
-			} else {
-				dragState.hoveredCardId = null;
-			}
-		} else {
-			dragState.hoveredCardId = null;
-		}
+			dragState.hoveredCardId = (targetCard && targetCard.language !== dragState.sourceCard?.language && targetCard.status !== "correct") ? foundCardId : null;
+		} else { dragState.hoveredCardId = null; }
 	}
 
 	function handleDragEnd() {
 		if (!dragState.active) return;
-
-		// Якщо ми відпустили над валідною ціллю
 		if (dragState.hoveredCardId && dragState.sourceCard) {
 			const targetCard = [...gameState.sourceCards, ...gameState.targetCards].find(c => c.id === dragState.hoveredCardId);
 			if (targetCard) {
-				// Виконуємо послідовний вибір: спочатку джерело (якщо ще не вибране), потім ціль
-				// Але gameController.selectCard має логіку "toggle".
-				// Тому надійніше:
-				// 1. Якщо джерело ще не вибране -> вибрати.
-				// 2. Вибрати ціль.
-				
-				// Важливо: selectCard перевіряє gameState.selectedCard.
-				// Якщо нічого не вибрано - вибирає. Якщо вибрано - матчить.
-				
-				// Сценарій 1: Нічого не вибрано. Drag A -> B.
-				// selectCard(A) -> A selected. selectCard(B) -> Match attempt.
-				
-				// Сценарій 2: Вибрано C. Drag A -> B.
-				// selectCard(A) -> C deselect, A selected. selectCard(B) -> Match attempt.
-				
-				// Сценарій 3: Вибрано A. Drag A -> B.
-				// selectCard(A) -> A deselected (Toggle logic!). PROBLEM.
-				
-				// Тому нам треба перевірити поточний стан.
-				const currentSelected = gameState.selectedCard;
-				
-				if (currentSelected?.id === dragState.sourceCard.id) {
-					// Вже вибрана, просто вибираємо другу
-					gameController.selectCard(targetCard);
-				} else {
-					// Не вибрана (або вибрана інша).
-					gameController.selectCard(dragState.sourceCard);
-					// Невелика затримка або синхронно? selectCard синхронний (окрім анімацій).
-					// Але якщо ми викликаємо підряд, стан може не встигнути оновитись в сторі, якщо там є асинхронність?
-					// В Svelte 5 runes стан миттєвий.
-					gameController.selectCard(targetCard);
-				}
+				if (gameState.selectedCard?.id === dragState.sourceCard.id) { gameController.selectCard(targetCard); }
+				else { gameController.selectCard(dragState.sourceCard); gameController.selectCard(targetCard); }
 			}
-		} else {
-			// Якщо відпустили в порожнечу - нічого не робимо, або можна вибирати картку (як клік)
-			// Але клік і так спрацює через onclick, якщо рух був малий.
-			// Якщо рух великий -> це скасування.
-			
-			// Можна додати логіку: якщо drag був дуже коротким (< 10px), то це клік, і нехай onclick обробить.
-			// Якщо довгий - то це спроба драгу, яка провалилась -> нічого не робимо.
 		}
+		dragState = { active: false, startPoint: null, currentPoint: null, sourceCard: null, hoveredCardId: null };
+	}
 
-		dragState = {
-			active: false,
-			startPoint: null,
-			currentPoint: null,
-			sourceCard: null,
-			hoveredCardId: null,
+	/**
+	 * Спеціальна транзиція для ефекту скла з направленим рухом.
+	 * t: 0.0 -> 1.0 (in), 1.0 -> 0.0 (out)
+	 * u: 1.0 -> 0.0 (in), 0.0 -> 1.0 (out)
+	 */
+	function glassTransition(node: HTMLElement, { duration = 800, delay = 0, x = 0, entrance = true }) {
+		return {
+			delay,
+			duration,
+			easing: entrance ? cubicOut : quadInOut,
+			css: (t: number, u: number) => {
+				const blur = t * 16;
+				const currentX = u * x;
+				return `
+					opacity: ${t};
+					backdrop-filter: blur(${blur}px) saturate(${100 + t * 80}%);
+					-webkit-backdrop-filter: blur(${blur}px) saturate(${100 + t * 80}%);
+					transform: translateX(${currentX}px) scale(${0.95 + t * 0.05}) translateZ(0);
+					will-change: backdrop-filter, opacity, transform;
+				`;
+			}
 		};
 	}
 </script>
@@ -281,73 +138,36 @@
 			<span class="error-icon" aria-hidden="true">⚠️</span>
 			<h3>{$_("errors.loadFailed")}</h3>
 			<p>{gameState.error}</p>
-			<button type="button" class="retry-button" onclick={() => gameController.initGame()}>
-				{$_("common.retry")}
-			</button>
+			<button type="button" class="retry-button" onclick={() => gameController.initGame()}>{$_("common.retry")}</button>
 		</div>
 	</div>
 {:else}
-	<!-- SVG Overlay for Drag Line -->
 	{#if dragState.active && dragState.startPoint && dragState.currentPoint}
 		<svg class="drag-overlay" aria-hidden="true">
-			<line 
-				x1={dragState.startPoint.x} 
-				y1={dragState.startPoint.y} 
-				x2={dragState.currentPoint.x} 
-				y2={dragState.currentPoint.y} 
-				stroke="var(--selected-border)" 
-				stroke-width={dragStrokeWidth} 
-				stroke-linecap="round"
-				opacity="0.6"
-			/>
+			<line x1={dragState.startPoint.x} y1={dragState.startPoint.y} x2={dragState.currentPoint.x} y2={dragState.currentPoint.y} stroke="var(--selected-border)" stroke-width={dragStrokeWidth} stroke-linecap="round" opacity="0.6"/>
 		</svg>
 	{/if}
 
-	<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-	<!-- svelte-ignore a11y_click_events_have_key_events -->
-	<section
-		class="game-board"
-		onclick={(e) => {
-			// Очищаємо вибір тільки якщо клікнули саме по фону, а не по картці
-			if (e.target === e.currentTarget) {
-				gameState.setSelectedCard(null);
-			}
-		}}
-		onkeydown={(e) => {
-			if (e.key === "Escape") gameState.setSelectedCard(null);
-		}}
-		role="main"
-		tabindex="-1"
-		aria-label="Game Board"
-		data-testid="game-board"
-	>
+	<section class="game-board" onclick={(e) => { if (e.target === e.currentTarget) gameState.setSelectedCard(null); }} onkeydown={(e) => { if (e.key === "Escape") gameState.setSelectedCard(null); }} role="main" tabindex="-1" aria-label="Game Board" data-testid="game-board">
 		{#if gameState.sourceCards.length === 0}
 			<div class="empty-state-message" role="status" data-testid="game-empty-message">
-				<p>
-					{settingsStore.value.mode === "playlists"
-						? settingsStore.value.currentPlaylists.includes("mistakes")
-							? $_("playlists.emptyMistakes")
-							: $_("playlists.empty")
-						: $_("levels.underConstruction")}
-				</p>
+				<p>{settingsStore.value.mode === "playlists" ? settingsStore.value.currentPlaylists.includes("mistakes") ? $_("playlists.emptyMistakes") : $_("playlists.empty") : $_("levels.underConstruction")}</p>
 			</div>
 		{:else}
 			<div class="column source safe-scale-container" role="list" aria-label="Source words" data-testid="column-source">
 				{#each gameState.sourceCards as card, i (i)}
 					<div class="card-slot" role="listitem">
-						{#key card.id}
+						{#key card.id + lastDataKey}
 							<div
 								class="card-wrapper"
-								in:fade={{ duration: 400, delay: 200 }}
-								out:fade={{ duration: 300 }}
+								in:glassTransition={{ duration: 3000, delay: i * 150, x: -50, entrance: true }}
+								out:glassTransition={{ duration: 1000, delay: i * 100, x: -50, entrance: false }}
 								data-testid="card-slot-source-{i}"
 							>
 								<WordCard
 									{card}
-									showTranscription={settingsStore.value
-										.showTranscriptionSource}
-									enablePronunciation={settingsStore.value
-										.enablePronunciationSource}
+									showTranscription={settingsStore.value.showTranscriptionSource}
+									enablePronunciation={settingsStore.value.enablePronunciationSource}
 									isDimmed={contextMenu !== null && contextMenu.cardId !== card.id}
 									onclick={() => gameController.selectCard(card)}
 									onpointerdown={(e: PointerEvent) => handleDragStart(e, card)}
@@ -365,19 +185,17 @@
 			<div class="column target safe-scale-container" role="list" aria-label="Target translations" data-testid="column-target">
 				{#each gameState.targetCards as card, i (i)}
 					<div class="card-slot" role="listitem">
-						{#key card.id}
+						{#key card.id + lastDataKey}
 							<div
 								class="card-wrapper"
-								in:fade={{ duration: 400, delay: 200 }}
-								out:fade={{ duration: 300 }}
+								in:glassTransition={{ duration: 3000, delay: (i + 4) * 150, x: 50, entrance: true }}
+								out:glassTransition={{ duration: 1000, delay: i * 100, x: 50, entrance: false }}
 								data-testid="card-slot-target-{i}"
 							>
 								<WordCard
 									{card}
-									showTranscription={settingsStore.value
-										.showTranscriptionTarget}
-									enablePronunciation={settingsStore.value
-										.enablePronunciationTarget}
+									showTranscription={settingsStore.value.showTranscriptionTarget}
+									enablePronunciation={settingsStore.value.enablePronunciationTarget}
 									isDimmed={contextMenu !== null && contextMenu.cardId !== card.id}
 									onclick={() => gameController.selectCard(card)}
 									onpointerdown={(e: PointerEvent) => handleDragStart(e, card)}
@@ -395,165 +213,29 @@
 	</section>
 
 	{#if contextMenu}
-		<CardContextMenu
-			wordKey={contextMenu.wordKey}
-			language={contextMenu.language}
-			text={contextMenu.text}
-			onclose={() => (contextMenu = null)}
-			onreport={() => openReport(contextMenu!.wordKey)}
-		/>
+		<CardContextMenu wordKey={contextMenu.wordKey} language={contextMenu.language} text={contextMenu.text} onclose={() => (contextMenu = null)} onreport={() => openReport(contextMenu!.wordKey)}/>
 	{/if}
-
 	{#if reportingData}
-		<WordReportModal
-			wordKey={reportingData.wordKey}
-			sourceTranslation={reportingData.pair.source}
-			targetTranslation={reportingData.pair.target}
-			onclose={() => (reportingData = null)}
-		/>
+		<WordReportModal wordKey={reportingData.wordKey} sourceTranslation={reportingData.pair.source} targetTranslation={reportingData.pair.target} onclose={() => (reportingData = null)}/>
 	{/if}
 {/if}
 
 <style>
-	.drag-overlay {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		pointer-events: none;
-		z-index: 9999;
-	}
-
-	.card-hover-highlight {
-		position: absolute;
-		inset: 0; /* Align perfectly with card edges */
-		border: 2px solid var(--selected-border);
-		border-radius: 12px; /* Match WordCard border-radius */
-		pointer-events: none;
-		z-index: 10;
-		box-shadow: 0 0 10px rgba(58, 143, 214, 0.3);
-		animation: pulse-highlight 2s infinite ease-in-out;
-	}
-	
-	@keyframes pulse-highlight {
-		0% { opacity: 0.5; transform: scale(1); }
-		50% { opacity: 1; transform: scale(1.004); }
-		100% { opacity: 0.5; transform: scale(1); }
-	}
-
-	.game-board {
-		display: flex;
-		gap: 1rem;
-		width: 100%;
-		max-width: 500px;
-		height: 100%;
-		max-height: 1000px;
-		margin: 0 auto;
-		padding: 1rem;
-		position: relative;
-		outline: none;
-		-webkit-tap-highlight-color: transparent;
-		user-select: none;
-	}
-
-	.column {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-		height: 95%;
-	}
-
-	.card-slot {
-		flex: 1;
-		min-height: 0;
-		display: grid;
-		place-items: stretch;
-	}
-
-	.card-wrapper {
-		grid-area: 1 / 1;
-		width: 100%;
-		height: 100%;
-		display: flex;
-		position: relative;
-		transition: z-index 0.2s;
-	}
-
-	.card-wrapper:hover {
-		z-index: 2;
-	}
-
-	.empty-state-message {
-		width: 100%;
-		height: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		text-align: center;
-		padding: 2rem;
-		color: var(--text-secondary);
-		font-size: 1rem;
-		line-height: 1.5;
-	}
-
-	.error-overlay {
-		position: absolute;
-		inset: 0;
-		background: var(--bg-primary);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		z-index: 10;
-		padding: 2rem;
-	}
-
-	.error-content {
-		text-align: center;
-		max-width: 300px;
-	}
-
-	.error-icon {
-		font-size: 3rem;
-		display: block;
-		margin-bottom: 1rem;
-	}
-
-	.error-content h3 {
-		margin-bottom: 0.5rem;
-		color: var(--text-primary);
-	}
-
-	.error-content p {
-		color: var(--text-secondary);
-		font-size: 0.9rem;
-		margin-bottom: 1.5rem;
-	}
-
-	.retry-button {
-		background: var(--accent);
-		color: white;
-		border: none;
-		padding: 0.75rem 1.5rem;
-		border-radius: 8px;
-		font-weight: 600;
-		cursor: pointer;
-		transition: opacity 0.2s;
-	}
-
-	.retry-button:hover {
-		opacity: 0.9;
-	}
-
-	@media (max-width: 480px) {
-		.game-board {
-			gap: 0.5rem;
-			padding: 0.5rem;
-		}
-
-		.column {
-			gap: 0.5rem;
-		}
-	}
+	.drag-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
+	.card-hover-highlight { position: absolute; inset: 0; border: 2px solid var(--selected-border); border-radius: 12px; pointer-events: none; z-index: 10; box-shadow: 0 0 10px rgba(58, 143, 214, 0.3); animation: pulse-highlight 2s infinite ease-in-out; }
+	@keyframes pulse-highlight { 0% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.004); } 100% { opacity: 0.5; transform: scale(1); } }
+	.game-board { display: flex; gap: 1rem; width: 100%; max-width: 500px; height: 100%; max-height: 1000px; margin: 0 auto; padding: 1rem; position: relative; outline: none; -webkit-tap-highlight-color: transparent; user-select: none; }
+	.column { flex: 1; display: flex; flex-direction: column; gap: 0.75rem; height: 95%; }
+	.card-slot { flex: 1; min-height: 0; display: grid; place-items: stretch; }
+	.card-wrapper { grid-area: 1 / 1; width: 100%; height: 100%; display: flex; position: relative; transition: z-index 0.2s; }
+	.card-wrapper:hover { z-index: 2; }
+	.empty-state-message { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; text-align: center; padding: 2rem; color: var(--text-secondary); font-size: 1rem; line-height: 1.5; }
+	.error-overlay { position: absolute; inset: 0; background: var(--bg-primary); display: flex; justify-content: center; align-items: center; z-index: 10; padding: 2rem; }
+	.error-content { text-align: center; max-width: 300px; }
+	.error-icon { font-size: 3rem; display: block; margin-bottom: 1rem; }
+	.error-content h3 { margin-bottom: 0.5rem; color: var(--text-primary); }
+	.error-content p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem; }
+	.retry-button { background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; }
+	.retry-button:hover { opacity: 0.9; }
+	@media (max-width: 480px) { .game-board { gap: 0.5rem; padding: 0.5rem; } .column { gap: 0.5rem; } }
 </style>
