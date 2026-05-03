@@ -1,4 +1,4 @@
-﻿{
+{
 	"apologize": "verontschuldigen",
 	"appreciate": "waarderen",
 	"arrest": "arresteren",
@@ -22,5 +22,27 @@
 	"supply": "leveren",
 	"translate": "vertalen",
 	"trust": "vertrouwen",
-	"trust_verb": "vertrouwen"
+	"trust_verb": "vertrouwen",
+	"admire": "bewonderen",
+	"admit": "toelaten",
+	"admit_verb": "toevoegen",
+	"advise": "adviseren",
+	"afford": "zich veroorloven",
+	"approach": "aanpak / naderen",
+	"approach_method": "aanpak",
+	"approach_verb": "naderen",
+	"collapse_verb": "instorten",
+	"decorate": "versieren",
+	"donate": "doneren",
+	"frozen": "bevroren",
+	"graduate": "afgestudeerde",
+	"keen": "enthousiast",
+	"mix_verb": "mixen",
+	"private": "privé",
+	"revise": "herzien",
+	"specialize": "specialiseren",
+	"spoken": "gesproken",
+	"sudden": "plotseling",
+	"summarize": "samenvatten",
+	"written": "geschreven"
 }

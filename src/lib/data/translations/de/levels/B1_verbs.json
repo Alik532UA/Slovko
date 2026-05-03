@@ -1,4 +1,4 @@
-﻿{
+{
 	"apologize": "entschuldigen",
 	"appreciate": "schätzen",
 	"arrest": "verhaften",
@@ -22,5 +22,27 @@
 	"supply": "liefern",
 	"translate": "übersetzen",
 	"trust": "vertrauen",
-	"trust_verb": "vertrauen"
+	"trust_verb": "vertrauen",
+	"admire": "bewundern",
+	"admit": "zugeben",
+	"admit_verb": "zugeben",
+	"advise": "raten",
+	"afford": "sich leisten",
+	"approach": "Ansatz / nähern",
+	"approach_method": "Ansatz",
+	"approach_verb": "nähern",
+	"collapse_verb": "zusammenbrechen",
+	"decorate": "dekorieren",
+	"donate": "spenden",
+	"frozen": "gefroren",
+	"graduate": "Absolvent",
+	"keen": "begeistert",
+	"mix_verb": "mischen",
+	"private": "privat",
+	"revise": "überarbeiten",
+	"specialize": "spezialisieren",
+	"spoken": "gesprochen",
+	"sudden": "plötzlich",
+	"summarize": "zusammenfassen",
+	"written": "geschrieben"
 }

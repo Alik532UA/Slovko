@@ -1,4 +1,4 @@
-﻿{
+{
 	"absolutely": "απόλυτα",
 	"apart": "εκτός από",
 	"apart_from": "εκτός από",
@@ -35,5 +35,30 @@
 	"therefore_reason": "γι' αυτό",
 	"totally": "εντελώς",
 	"unless": "εκτός αν",
-	"yearly": "ετήσια"
+	"yearly": "ετήσια",
+	"approximately": "περίπου",
+	"automatically": "αυτόματα",
+	"currently": "επί του παρόντος",
+	"directly": "απευθείας",
+	"effectively": "αποτελεσματικά",
+	"equally": "εξίσου",
+	"generally": "γενικά",
+	"heavily": "βαριά",
+	"incredibly": "απίστευτα",
+	"lonely": "μόνος",
+	"mainly": "κυρίως",
+	"naturally": "φυσικά",
+	"necessarily": "αναγκαστικά",
+	"obviously": "προφανώς",
+	"originally": "αρχικά",
+	"personally": "προσωπικά",
+	"properly": "σωστά",
+	"rarely": "σπάνια",
+	"regularly": "τακτικά",
+	"similarly": "ομοίως",
+	"specifically": "συγκεκριμένα",
+	"strongly": "έντονα",
+	"successfully": "επιτυχώς",
+	"surely": "σίγουρα",
+	"typically": "συνήθως"
 }

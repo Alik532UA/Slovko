@@ -1,4 +1,4 @@
-﻿{
+{
 	"absolutely": "абсолютно",
 	"apart": "крім",
 	"apart_from": "крім",
@@ -35,5 +35,30 @@
 	"therefore_reason": "тому",
 	"totally": "повністю",
 	"unless": "якщо не",
-	"yearly": "щороку"
+	"yearly": "щороку",
+	"approximately": "приблизно",
+	"automatically": "автоматично",
+	"currently": "наразі",
+	"directly": "безпосередньо",
+	"effectively": "ефективно",
+	"equally": "однаково",
+	"generally": "загалом",
+	"heavily": "сильно",
+	"incredibly": "неймовірно",
+	"lonely": "самотній",
+	"mainly": "головним чином",
+	"naturally": "природно",
+	"necessarily": "обов'язково",
+	"obviously": "очевидно",
+	"originally": "спочатку",
+	"personally": "особисто",
+	"properly": "правильно",
+	"rarely": "рідко",
+	"regularly": "регулярно",
+	"similarly": "аналогічно",
+	"specifically": "зокрема",
+	"strongly": "сильно",
+	"successfully": "успішно",
+	"surely": "безумовно",
+	"typically": "зазвичай"
 }

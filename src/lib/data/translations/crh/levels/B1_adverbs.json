@@ -1,4 +1,4 @@
-﻿{
+{
 	"absolutely": "mutlaqa",
 	"apart": "başqa",
 	"apart_from": "başqa",
@@ -35,5 +35,30 @@
 	"therefore_reason": "şunıñ içün",
 	"totally": "tamamınen",
 	"unless": "eger... degilse",
-	"yearly": "er yıl"
+	"yearly": "er yıl",
+	"approximately": "teqriben",
+	"automatically": "öz-özünden",
+	"currently": "şimdi",
+	"directly": "doğrudan",
+	"effectively": "tesirli",
+	"equally": "beraber",
+	"generally": "umumiy olaraq",
+	"heavily": "ağır",
+	"incredibly": "inanılmaz derecede",
+	"lonely": "yalıñız",
+	"mainly": "esasen",
+	"naturally": "tabiiy ki",
+	"necessarily": "şartlı sürette",
+	"obviously": "belli ki",
+	"originally": "aslında",
+	"personally": "şahsen",
+	"properly": "dogru",
+	"rarely": "seyrek",
+	"regularly": "muntazam sürette",
+	"similarly": "aynı şekilde",
+	"specifically": "hususan",
+	"strongly": "kürlü",
+	"successfully": "muvaffaqiyetnen",
+	"surely": "elbette",
+	"typically": "adettegi kibi"
 }

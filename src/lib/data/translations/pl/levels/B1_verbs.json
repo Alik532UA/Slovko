@@ -1,4 +1,4 @@
-﻿{
+{
 	"apologize": "przepraszać",
 	"appreciate": "doceniać",
 	"arrest": "aresztować",
@@ -22,5 +22,27 @@
 	"supply": "zaopatrywać",
 	"translate": "tłumaczyć",
 	"trust": "ufać",
-	"trust_verb": "ufać"
+	"trust_verb": "ufać",
+	"admire": "podziwiać",
+	"admit": "przyznać",
+	"admit_verb": "przyznawać",
+	"advise": "radzić",
+	"afford": "pozwolić sobie",
+	"approach": "podejście / zbliżać się",
+	"approach_method": "podejście",
+	"approach_verb": "zbliżać się",
+	"collapse_verb": "zawalać się",
+	"decorate": "dekorować",
+	"donate": "ofiarować",
+	"frozen": "zamrożony",
+	"graduate": "absolwent",
+	"keen": "chętny",
+	"mix_verb": "mieszać",
+	"private": "prywatny",
+	"revise": "poprawiać / nowelizować",
+	"specialize": "specjalizować się",
+	"spoken": "mówiony",
+	"sudden": "nagły",
+	"summarize": "podsumować",
+	"written": "pisemny"
 }

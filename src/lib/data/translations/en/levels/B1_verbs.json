@@ -1,4 +1,4 @@
-﻿{
+{
 	"apologize": "apologize",
 	"appreciate": "appreciate",
 	"arrest": "arrest",
@@ -22,5 +22,27 @@
 	"supply": "supply",
 	"translate": "translate",
 	"trust": "trust",
-	"trust_verb": "trust"
+	"trust_verb": "trust",
+	"admire": "admire",
+	"admit": "admit",
+	"admit_verb": "admit",
+	"advise": "advise",
+	"afford": "afford",
+	"approach": "approach",
+	"approach_method": "approach",
+	"approach_verb": "approach",
+	"collapse_verb": "collapse",
+	"decorate": "decorate",
+	"donate": "donate",
+	"frozen": "frozen",
+	"graduate": "graduate",
+	"keen": "keen",
+	"mix_verb": "mix",
+	"private": "private",
+	"revise": "revise",
+	"specialize": "specialize",
+	"spoken": "spoken",
+	"sudden": "sudden",
+	"summarize": "summarize",
+	"written": "written"
 }

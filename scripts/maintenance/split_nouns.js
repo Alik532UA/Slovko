@@ -21,7 +21,8 @@ function processNouns(level) {
         const nounsPath = path.join(TRANS_DIR, lang, 'levels', `${level}_nouns.json`);
         if (!fs.existsSync(nounsPath)) continue;
         console.log(`📦 Splitting nouns for ${lang}/${level}...`);
-        const data = JSON.parse(fs.readFileSync(nounsPath, 'utf8'));
+        const content = fs.readFileSync(nounsPath, 'utf8').replace(/^\uFEFF/, '');
+        const data = JSON.parse(content);
         const abstract = {};
         const concrete = {};
         for (const [key, value] of Object.entries(data)) {
@@ -39,7 +40,8 @@ function processTranscriptionNouns(level) {
     const nounsPath = path.join(transDir, `${level}_nouns.json`);
     if (!fs.existsSync(nounsPath)) return;
     console.log(`🎤 Splitting transcription nouns for ${level}...`);
-    const data = JSON.parse(fs.readFileSync(nounsPath, 'utf8'));
+    const content = fs.readFileSync(nounsPath, 'utf8').replace(/^\uFEFF/, '');
+    const data = JSON.parse(content);
     const abstract = {};
     const concrete = {};
     for (const [key, value] of Object.entries(data)) {
@@ -51,7 +53,7 @@ function processTranscriptionNouns(level) {
     fs.unlinkSync(nounsPath);
 }
 
-['B1', 'B2'].forEach(lvl => {
+['B1', 'B2', 'C1'].forEach(lvl => {
     processNouns(lvl);
     processTranscriptionNouns(lvl);
 });

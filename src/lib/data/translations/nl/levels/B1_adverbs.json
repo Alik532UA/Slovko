@@ -1,4 +1,4 @@
-﻿{
+{
 	"absolutely": "absoluut",
 	"apart": "afgezien van",
 	"apart_from": "afgezien van",
@@ -35,5 +35,30 @@
 	"therefore_reason": "vandaar",
 	"totally": "totaal",
 	"unless": "tenzij",
-	"yearly": "jaarlijks"
+	"yearly": "jaarlijks",
+	"approximately": "ongeveer",
+	"automatically": "automatisch",
+	"currently": "momenteel",
+	"directly": "direct",
+	"effectively": "effectief",
+	"equally": "gelijk",
+	"generally": "over het algemeen",
+	"heavily": "zwaar",
+	"incredibly": "ongelooflijk",
+	"lonely": "eenzaam",
+	"mainly": "voornamelijk",
+	"naturally": "natuurlijk",
+	"necessarily": "noodzakelijkerwijs",
+	"obviously": "duidelijk",
+	"originally": "oorspronkelijk",
+	"personally": "persoonlijk",
+	"properly": "juist",
+	"rarely": "zelden",
+	"regularly": "regelmatig",
+	"similarly": "vergelijkbaar",
+	"specifically": "specifiek",
+	"strongly": "sterk",
+	"successfully": "met succes",
+	"surely": "zeker",
+	"typically": "typisch"
 }

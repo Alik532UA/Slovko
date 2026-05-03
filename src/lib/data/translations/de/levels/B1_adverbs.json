@@ -1,4 +1,4 @@
-﻿{
+{
 	"absolutely": "absolut",
 	"apart": "abgesehen von",
 	"apart_from": "abgesehen von",
@@ -35,5 +35,30 @@
 	"therefore_reason": "darum",
 	"totally": "total",
 	"unless": "es sei denn",
-	"yearly": "jährlich"
+	"yearly": "jährlich",
+	"approximately": "ungefähr",
+	"automatically": "automatisch",
+	"currently": "derzeit",
+	"directly": "direkt",
+	"effectively": "effektiv",
+	"equally": "gleichermaßen",
+	"generally": "im Allgemeinen",
+	"heavily": "schwer",
+	"incredibly": "unglaublich",
+	"lonely": "einsam",
+	"mainly": "hauptsächlich",
+	"naturally": "natürlich",
+	"necessarily": "notwendigerweise",
+	"obviously": "offensichtlich",
+	"originally": "ursprünglich",
+	"personally": "persönlich",
+	"properly": "richtig",
+	"rarely": "selten",
+	"regularly": "regelmäßig",
+	"similarly": "ähnlich",
+	"specifically": "insbesondere",
+	"strongly": "stark",
+	"successfully": "erfolgreich",
+	"surely": "sicherlich",
+	"typically": "typischerweise"
 }

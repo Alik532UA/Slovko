@@ -1,4 +1,4 @@
-﻿{
+{
 	"apologize": "bağışlav soramaq",
 	"appreciate": "qıymetlemek",
 	"arrest": "tutuklamaq",
@@ -22,5 +22,27 @@
 	"supply": "temin etmek",
 	"translate": "tercüme etmek",
 	"trust": "güvenmek",
-	"trust_verb": "güvenmek"
+	"trust_verb": "güvenmek",
+	"admire": "beğenmek",
+	"admit": "qabul etmek",
+	"admit_verb": "itiraf etmek",
+	"advise": "mesleat bermek",
+	"afford": "imkânı olmaq",
+	"approach": "yaqınlaşmaq",
+	"approach_method": "yaqınlaşmaq",
+	"approach_verb": "yaqınlaşmaq",
+	"collapse_verb": "yığılmaq",
+	"decorate": "donatmaq",
+	"donate": "bağışlamaq",
+	"frozen": "dondurılğan",
+	"graduate": "mezun",
+	"keen": "meraqlı",
+	"mix_verb": "qarıştırmaq",
+	"private": "hususiy",
+	"revise": "közden keçirmek",
+	"specialize": "ihtisas etmek",
+	"spoken": "sözli",
+	"sudden": "ansızın",
+	"summarize": "hülâsa etmek",
+	"written": "yazılı"
 }
