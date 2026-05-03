@@ -18,6 +18,8 @@
 		onlongpress?: (e: PointerEvent) => void;
 		wordSnippet?: Snippet<[string]>;
 		transcriptionSnippet?: Snippet<[string]>;
+		appearanceDelay?: number;
+		testid?: string;
 	}
 
 	let {
@@ -30,11 +32,22 @@
 		onlongpress,
 		wordSnippet,
 		transcriptionSnippet,
+		appearanceDelay = 0,
+		testid,
 	}: Props = $props();
 
 	let longPressTimer: ReturnType<typeof setTimeout> | null = null;
 	let isLongPress = false;
 	let startPos = { x: 0, y: 0 };
+
+	let isMountedForBlur = $state(false);
+
+	$effect(() => {
+		const timer = setTimeout(() => {
+			isMountedForBlur = true;
+		}, 3000 + appearanceDelay);
+		return () => clearTimeout(timer);
+	});
 
 	function isInteractable(): boolean {
 		return (
@@ -126,6 +139,7 @@
 	class:hint={card.status === "hint"}
 	class:hint-slow={card.status === "hint-slow"}
 	class:dimmed={isDimmed}
+	class:blurred={isMountedForBlur}
 	onpointerdown={handlePointerDown}
 	onpointermove={handlePointerMove}
 	onpointerup={handlePointerUp}
@@ -135,7 +149,8 @@
 	aria-label="{card.text}{card.transcription && showTranscription ? `, ${card.transcription}` : ''}"
 	aria-current={card.status === "selected" ? "true" : undefined}
 	aria-disabled={card.status === "correct" || card.status === "wrong"}
-	data-testid="word-card-{card.id}"
+	data-testid={testid || `word-card-${card.id}`}
+	style="--blur-delay: {3000 + appearanceDelay}ms"
 >
 	{#if wordSnippet}
 		{@render wordSnippet(card.text)}
@@ -161,8 +176,8 @@
 		font-size: clamp(0.9rem, 2.2vh, 1.15rem);
 		font-weight: 500;
 		color: var(--text-on-card);
-		/* Робимо фон напівпрозорим (30%), щоб було видно блюр від батьківського елемента */
-		background: color-mix(in srgb, var(--card-bg), transparent 30%);
+		/* Робимо фон 90% (transparent 10%), щоб було видно блюр */
+		background: color-mix(in srgb, var(--card-bg), transparent 10%);
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		border-radius: 12px;
 		cursor: pointer;
@@ -178,17 +193,30 @@
 		-webkit-user-select: none;
 		transform: translateZ(0);
 
+		/* Початковий стан: без блюру (для чистого руху) */
+		backdrop-filter: blur(0px) saturate(100%);
+		-webkit-backdrop-filter: blur(0px) saturate(100%);
+
 		transition:
 			transform 0.15s ease,
 			background-color 0.4s ease,
 			border-color 0.4s ease,
 			box-shadow 0.4s ease,
-			opacity 0.3s ease;
+			opacity 0.3s ease,
+			backdrop-filter 2s cubic-bezier(0.4, 0, 0.2, 1),
+			-webkit-backdrop-filter 2s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.word-card.blurred {
+		backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+		-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
 	}
 
 	.word-text {
 		text-align: center;
-		word-break: break-word;
+		overflow-wrap: anywhere;
+		word-break: normal;
+		text-wrap: balance;
 		line-height: 1.15;
 		max-width: 100%;
 		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);

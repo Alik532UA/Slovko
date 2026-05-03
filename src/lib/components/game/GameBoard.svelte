@@ -23,8 +23,8 @@
 	let contextMenu = $state<{cardId: string; wordKey: string; language: string; text: string;} | null>(null);
 	let reportingData = $state<{wordKey: string; pair: WordPair;} | null>(null);
 
-	let lastDataKey = "";
-	let lastPlaylistHash = "";
+	let lastDataKey = $state("");
+	let lastPlaylistHash = $state("");
 
 	$effect(() => {
 		const mode = settingsStore.value.mode;
@@ -102,7 +102,8 @@
 	}
 
 	/**
-	 * Спеціальна транзиція для ефекту скла з направленим рухом.
+	 * Спеціальна транзиція для направленого руху.
+	 * Ефект скла (блюр) тепер успадковується від WordCard через прозорість.
 	 * t: 0.0 -> 1.0 (in), 1.0 -> 0.0 (out)
 	 * u: 1.0 -> 0.0 (in), 0.0 -> 1.0 (out)
 	 */
@@ -112,14 +113,11 @@
 			duration,
 			easing: entrance ? cubicOut : quadInOut,
 			css: (t: number, u: number) => {
-				const blur = t * 16;
 				const currentX = u * x;
 				return `
 					opacity: ${t};
-					backdrop-filter: blur(${blur}px) saturate(${100 + t * 80}%);
-					-webkit-backdrop-filter: blur(${blur}px) saturate(${100 + t * 80}%);
 					transform: translateX(${currentX}px) scale(${0.95 + t * 0.05}) translateZ(0);
-					will-change: backdrop-filter, opacity, transform;
+					will-change: opacity, transform;
 				`;
 			}
 		};
@@ -148,6 +146,7 @@
 		</svg>
 	{/if}
 
+	<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 	<section class="game-board" onclick={(e) => { if (e.target === e.currentTarget) gameState.setSelectedCard(null); }} onkeydown={(e) => { if (e.key === "Escape") gameState.setSelectedCard(null); }} role="main" tabindex="-1" aria-label="Game Board" data-testid="game-board">
 		{#if gameState.sourceCards.length === 0}
 			<div class="empty-state-message" role="status" data-testid="game-empty-message">
@@ -165,6 +164,7 @@
 								data-testid="card-slot-source-{i}"
 							>
 								<WordCard
+									testid="word-card-src"
 									{card}
 									showTranscription={settingsStore.value.showTranscriptionSource}
 									enablePronunciation={settingsStore.value.enablePronunciationSource}
@@ -193,6 +193,7 @@
 								data-testid="card-slot-target-{i}"
 							>
 								<WordCard
+									testid="word-card-tgt"
 									{card}
 									showTranscription={settingsStore.value.showTranscriptionTarget}
 									enablePronunciation={settingsStore.value.enablePronunciationTarget}
@@ -234,10 +235,6 @@
 		display: flex;
 		position: relative;
 		transition: z-index 0.2s;
-		
-		/* Постійний стан ефекту скла після завершення анімації */
-		backdrop-filter: blur(16px) saturate(180%);
-		-webkit-backdrop-filter: blur(16px) saturate(180%);
 		opacity: 1;
 		transform: scale(1) translateZ(0);
 	}

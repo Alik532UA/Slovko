@@ -103,6 +103,16 @@
 		flex-wrap: wrap;
 	}
 
+	/* Disable slider track for wrapped horizontal controls since it relies on a single line */
+	.segmented-control.horizontal .slider-container {
+		display: none;
+	}
+	.segmented-control.horizontal .segment-btn.active {
+		background: rgba(255, 255, 255, 0.1);
+		border-radius: 14px;
+		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+	}
+
 	.slider-container {
 		position: absolute;
 		top: 5px;
@@ -134,6 +144,8 @@
 		min-width: max-content;
 		position: relative;
 		align-self: stretch;
+		white-space: nowrap; /* AC 4.1: never wrap text inside */
+		word-break: keep-all;
 	}
 
 	.segment-btn.active {
@@ -162,7 +174,7 @@
 	}
 
 	.segment-btn.active {
-		color: var(--text-on-accent);
+		color: var(--text-primary);
 	}
 
 	.icon-box {
@@ -220,7 +232,8 @@
 
 	/* Спеціальний стан тексту для активних елементів */
 	.segment-btn.active .label {
-		color: var(--text-on-accent);
+		color: var(--text-primary);
+		font-weight: 700;
 	}
 
 	.label {

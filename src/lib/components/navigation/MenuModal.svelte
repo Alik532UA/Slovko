@@ -229,7 +229,7 @@
 		align-items: center;
 		gap: 0.75rem;
 		padding: 0.7rem 1rem;
-		background: color-mix(in srgb, var(--bg-secondary) 90%, transparent);
+		background: color-mix(in srgb, var(--card-bg), transparent 10%);
 		border: 1px solid rgba(255, 255, 255, 0.05);
 		border-radius: 12px;
 		color: var(--text-primary);
@@ -238,11 +238,12 @@
 		text-align: left;
 		text-decoration: none;
 		width: 100%;
-		backdrop-filter: blur(8px);
+		backdrop-filter: blur(var(--glass-blur));
+		-webkit-backdrop-filter: blur(var(--glass-blur));
 	}
 
 	.menu-item:hover {
-		background: color-mix(in srgb, var(--bg-secondary) 100%, transparent);
+		background: color-mix(in srgb, var(--card-bg), transparent 5%);
 		color: var(--accent);
 		border-color: var(--accent);
 		transform: scale(1.02);
