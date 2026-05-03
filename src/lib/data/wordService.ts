@@ -549,7 +549,18 @@ export function getTranscription(
 	transcriptions: TranscriptionDictionary,
 	suppressWarning: boolean = false,
 ): string | undefined {
-	const transcription = transcriptions[word];
+	let transcription = transcriptions[word];
+
+	// Fallback to base key if specific key doesn't have a transcription
+	if (!transcription) {
+		const baseKey = getBaseKey(word);
+		if (baseKey && transcriptions[baseKey]) {
+			transcription = transcriptions[baseKey];
+			if (import.meta.env.DEV && !suppressWarning) {
+				logService.log("i18n", `[Transcription Fallback] "${word}" -> "${baseKey}" (${transcription})`);
+			}
+		}
+	}
 	
 	if (!transcription) {
 		if (import.meta.env.DEV && !suppressWarning) {

@@ -9,9 +9,9 @@
 	"by": "/baɪ/",
 	"by_agent": "/baɪ/",
 	"by_near": "/baɪ/",
-	"even": "/ˈiːvəн ɪf/",
-	"even_if": "/ˈiːvəн ɪf/",
-	"even_though": "/ˈiːvəн ðəʊ/",
+	"even": "/ˈiːvən ɪf/",
+	"even_if": "/ˈiːvən ɪf/",
+	"even_though": "/ˈiːvən ðəʊ/",
 	"however": "/haʊˈevə(r)/",
 	"in": "/ɪn/",
 	"in_case": "/ɪn keɪs/",
@@ -20,7 +20,7 @@
 	"in_spite_of": "/ɪn spaɪt ɒv/",
 	"next": "/nekst tuː/",
 	"next_to": "/nekst tuː/",
-	"quickly": "/ˈkwɪкli/",
+	"quickly": "/ˈkwɪkli/",
 	"so": "/soʊ ðæt/",
 	"so_that": "/soʊ ðæt/",
 	"to": "/tuː/",
@@ -38,6 +38,6 @@
 	"where_from": "/wɛər frɒm/",
 	"where_to": "/wɛər tuː/",
 	"without": "/wɪˈðaʊt/",
-	"without_preposition": "/wɪˈðaʊт/",
-	"without_preposition_alt": "/wɪˈðaʊт/"
+	"without_preposition": "/wɪˈðaʊt/",
+	"without_preposition_alt": "/wɪˈðaʊt/"
 }
