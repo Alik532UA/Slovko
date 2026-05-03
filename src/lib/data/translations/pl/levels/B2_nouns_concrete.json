@@ -1,4 +1,4 @@
-{
+﻿{
 	"accent": "akcent",
 	"accuracy": "dokładność",
 	"accuse": "oskarżać",
@@ -522,7 +522,6 @@
 	"bargain": "okazja",
 	"barrier": "bariera",
 	"basket": "koszyk",
-	"bear_(deal_with)": "znosić",
 	"beg": "błagać",
 	"betray": "zawodzić zaufanie",
 	"betray_trust": "zawodzić zaufanie",
@@ -609,7 +608,6 @@
 	"corrupt_system": "korumpować system",
 	"council": "rada",
 	"counter": "przeciwdziałać",
-	"counter_(long_flat_surface)": "lada",
 	"counteract": "przeciwdziałać efektowi",
 	"counteract_effect": "przeciwdziałać efektowi",
 	"county": "hrabstwo",
@@ -1267,5 +1265,6 @@
 	"wrap": "zawijać",
 	"wrist": "nadgarstek",
 	"zone": "strefa",
-	"zone_n": "strefa"
+	"zone_n": "strefa",
+	"counter_surface": "lada"
 }

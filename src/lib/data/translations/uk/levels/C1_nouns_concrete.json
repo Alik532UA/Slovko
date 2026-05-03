@@ -1,4 +1,4 @@
-{
+﻿{
 	"burden": "тягар",
 	"consistency": "послідовність",
 	"constraint": "обмеження",
@@ -128,7 +128,6 @@
 	"councilor": "радник",
 	"counsellor": "консультант",
 	"counselor": "консультант",
-	"counter_(argue_against)": "заперечувати",
 	"counterpart": "колега / двійник",
 	"coup": "переворот",
 	"courtesy": "ввічливість",
@@ -229,8 +228,6 @@
 	"grace": "грація",
 	"grasp": "зрозуміти",
 	"grave": "могила / серйозний",
-	"grave_(for_dead_person)": "могила",
-	"grave_(serious)": "серйозний",
 	"grid": "сітка",
 	"grief": "горе",
 	"grin": "посмішка",
@@ -515,8 +512,6 @@
 	"strain": "напруга / штам",
 	"strand": "нитка / берег",
 	"strip": "смужка / роздягатися",
-	"strip_(long_narrow_piece)": "смужка",
-	"strip_(remove_clothes/a_layer)": "роздягатися",
 	"stumble": "спотикатися",
 	"stun": "приголомшити",
 	"subscriber": "передплатник",
@@ -607,5 +602,10 @@
 	"worthwhile": "вартий уваги",
 	"worthy": "гідний",
 	"yell": "кричати",
-	"youngster": "юнак / підліток"
+	"youngster": "юнак / підліток",
+	"counter_argue": "заперечувати",
+	"grave_tomb": "могила",
+	"grave_serious": "серйозний",
+	"strip_piece": "смужка",
+	"strip_verb": "роздягатися"
 }

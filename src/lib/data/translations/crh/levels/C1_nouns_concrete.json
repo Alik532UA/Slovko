@@ -1,4 +1,4 @@
-{
+﻿{
 	"burden": "yük",
 	"consistency": "istikrar",
 	"constraint": "sınır",
@@ -128,7 +128,6 @@
 	"councilor": "meclis azası",
 	"counsellor": "mesleatçı",
 	"counselor": "keñeşçi",
-	"counter_(argue_against)": "qarşı turmaq",
 	"counterpart": "beñzeş",
 	"coup": "çeviriliş",
 	"courtesy": "nezaket",
@@ -229,8 +228,6 @@
 	"grace": "lütuf",
 	"grasp": "añlamaq",
 	"grave": "mezar / ciddiy",
-	"grave_(for_dead_person)": "mezar",
-	"grave_(serious)": "ciddiy",
 	"grid": "qafes",
 	"grief": "keder",
 	"grin": "sırıruv",
@@ -515,8 +512,6 @@
 	"strain": "kerginlik",
 	"strand": "yıltı",
 	"strip": "yırtma / soyulmaq",
-	"strip_(long_narrow_piece)": "yırtma",
-	"strip_(remove_clothes/a_layer)": "soyulmaq",
 	"stumble": "sürçmek",
 	"stun": "sersemletmek",
 	"subscriber": "aza",
@@ -607,5 +602,10 @@
 	"worthwhile": "faydalı",
 	"worthy": "lâyıq",
 	"yell": "baqırmaq",
-	"youngster": "genç"
+	"youngster": "genç",
+	"counter_argue": "qarşı turmaq",
+	"grave_tomb": "mezar",
+	"grave_serious": "ciddiy",
+	"strip_piece": "yırtma",
+	"strip_verb": "soyulmaq"
 }

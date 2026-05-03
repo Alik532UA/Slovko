@@ -1,4 +1,4 @@
-{
+﻿{
 	"accent": "Akzent",
 	"accuracy": "Genauigkeit",
 	"accuse": "beschuldigen",
@@ -522,7 +522,6 @@
 	"bargain": "Schnäppchen",
 	"barrier": "Barriere",
 	"basket": "Korb",
-	"bear_(deal_with)": "ertragen",
 	"beg": "betteln",
 	"betray": "verraten",
 	"betray_trust": "verraten",
@@ -609,7 +608,6 @@
 	"corrupt_system": "bestechen",
 	"council": "Rat",
 	"counter": "entgegenwirken",
-	"counter_(long_flat_surface)": "Theke",
 	"counteract": "entgegenwirken",
 	"counteract_effect": "entgegenwirken",
 	"county": "Bezirk",
@@ -1267,5 +1265,6 @@
 	"wrap": "einwickeln",
 	"wrist": "Handgelenk",
 	"zone": "Zone",
-	"zone_n": "Zone"
+	"zone_n": "Zone",
+	"counter_surface": "Theke"
 }

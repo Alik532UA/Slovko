@@ -1,4 +1,4 @@
-{
+﻿{
 	"accent": "προφορά",
 	"accuracy": "ακρίβεια",
 	"accuse": "κατηγορώ",
@@ -522,7 +522,6 @@
 	"bargain": "ευκαιρία",
 	"barrier": "εμπόδιο",
 	"basket": "καλάθι",
-	"bear_(deal_with)": "αντέχω",
 	"beg": "παρακαλώ",
 	"betray": "προδίδω",
 	"betray_trust": "προδίδω",
@@ -609,7 +608,6 @@
 	"corrupt_system": "διαφθείρω",
 	"council": "συμβούλιο",
 	"counter": "αντιδρώ",
-	"counter_(long_flat_surface)": "πάγκος",
 	"counteract": "εξουδετερώνω",
 	"counteract_effect": "εξουδετερώνω",
 	"county": "κομητεία",
@@ -1267,5 +1265,6 @@
 	"wrap": "τυλίγω",
 	"wrist": "καρπός",
 	"zone": "ζώνη",
-	"zone_n": "ζώνη"
+	"zone_n": "ζώνη",
+	"counter_surface": "πάγκος"
 }

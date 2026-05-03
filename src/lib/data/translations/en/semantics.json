@@ -988,6 +988,18 @@
 		"may_month": "month",
 		"may_modal": "modal verb",
 		"type_kind": "kind/sort",
-		"type_write": "on keyboard"
+		"type_write": "on keyboard",
+		"counter_surface": "surface",
+		"counter_argue": "argue against",
+		"grave_tomb": "tomb",
+		"grave_serious": "serious",
+		"like_pleasant": "find pleasant",
+		"like_similar": "similar",
+		"rest_remaining": "remaining part",
+		"rest_sleep": "sleep/relax",
+		"stick_wood": "piece of wood",
+		"stick_verb": "attach",
+		"strip_piece": "long narrow piece",
+		"strip_verb": "remove layer"
 	}
 }

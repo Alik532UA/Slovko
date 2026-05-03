@@ -1,4 +1,4 @@
-{
+﻿{
 	"burden": "ciężar",
 	"consistency": "spójność",
 	"constraint": "ograniczenie",
@@ -128,7 +128,6 @@
 	"councilor": "radny",
 	"counsellor": "doradca",
 	"counselor": "doradca",
-	"counter_(argue_against)": "przeciwdziałać",
 	"counterpart": "odpowiednik",
 	"coup": "zamach stanu",
 	"courtesy": "uprzejmość",
@@ -229,8 +228,6 @@
 	"grace": "wdzięk",
 	"grasp": "pojąć",
 	"grave": "grób / poważny",
-	"grave_(for_dead_person)": "grób",
-	"grave_(serious)": "poważny",
 	"grid": "siatka",
 	"grief": "żal",
 	"grin": "szeroki uśmiech",
@@ -515,8 +512,6 @@
 	"strain": "napięcie",
 	"strand": "nić",
 	"strip": "pasek / rozbierać się",
-	"strip_(long_narrow_piece)": "pasek",
-	"strip_(remove_clothes/a_layer)": "rozbierać się",
 	"stumble": "potknąć się",
 	"stun": "oszołomić",
 	"subscriber": "subskrybent",
@@ -607,5 +602,10 @@
 	"worthwhile": "wart zachodu",
 	"worthy": "godny",
 	"yell": "krzyczeć",
-	"youngster": "młodzieniec"
+	"youngster": "młodzieniec",
+	"counter_argue": "przeciwdziałać",
+	"grave_tomb": "grób",
+	"grave_serious": "poważny",
+	"strip_piece": "pasek",
+	"strip_verb": "rozbierać się"
 }

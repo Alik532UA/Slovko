@@ -1,4 +1,4 @@
-{
+﻿{
 	"accent": "aksent",
 	"accuracy": "doğrulıq",
 	"accuse": "suçlamaq",
@@ -522,7 +522,6 @@
 	"bargain": "pazarlıq",
 	"barrier": "toquntı",
 	"basket": "sepet",
-	"bear_(deal_with)": "dayanmaq",
 	"beg": "yalvarmaq",
 	"betray": "hainlik etmek",
 	"betray_trust": "hainlik etmek",
@@ -609,7 +608,6 @@
 	"corrupt_system": "bozmaq",
 	"council": "şura",
 	"counter": "qarşı turmaq",
-	"counter_(long_flat_surface)": "tezgâh",
 	"counteract": "qarşı turmaq",
 	"counteract_effect": "qarşı turmaq",
 	"county": "bölge",
@@ -1267,5 +1265,6 @@
 	"wrap": "sarmaq",
 	"wrist": "bilek",
 	"zone": "zona",
-	"zone_n": "zona"
+	"zone_n": "zona",
+	"counter_surface": "tezgâh"
 }

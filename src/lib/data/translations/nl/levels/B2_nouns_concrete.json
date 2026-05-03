@@ -1,4 +1,4 @@
-{
+﻿{
 	"accent": "accentteken",
 	"accuracy": "nauwkeurigheid",
 	"accuse": "beschuldigen",
@@ -522,7 +522,6 @@
 	"bargain": "koopje",
 	"barrier": "barrière",
 	"basket": "mand",
-	"bear_(deal_with)": "verdragen",
 	"beg": "smeken",
 	"betray": "verraden",
 	"betray_trust": "verraden",
@@ -609,7 +608,6 @@
 	"corrupt_system": "corrumperen",
 	"council": "raad",
 	"counter": "tegenwerken",
-	"counter_(long_flat_surface)": "balie",
 	"counteract": "tegenwerken",
 	"counteract_effect": "tegenwerken",
 	"county": "graafschap",
@@ -1267,5 +1265,6 @@
 	"wrap": "inpakken",
 	"wrist": "pols",
 	"zone": "zone",
-	"zone_n": "zone"
+	"zone_n": "zone",
+	"counter_surface": "balie"
 }

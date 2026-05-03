@@ -701,6 +701,56 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		specific: ["type_kind", "type_write"]
 	},
 
+	counter: {
+		base: "counter",
+		specific: ["counter_surface", "counter_argue"]
+	},
+	grave: {
+		base: "grave",
+		specific: ["grave_tomb", "grave_serious"]
+	},
+	like: {
+		base: "like",
+		specific: ["like_pleasant", "like_similar"]
+	},
+	rest: {
+		base: "rest",
+		specific: ["rest_remaining", "rest_sleep"]
+	},
+	stick: {
+		base: "stick",
+		specific: ["stick_wood", "stick_verb"]
+	},
+	strip: {
+		base: "strip",
+		specific: ["strip_piece", "strip_verb"]
+	},
+
+	counter: {
+		base: "counter",
+		specific: ["counter_surface", "counter_argue"]
+	},
+	grave: {
+		base: "grave",
+		specific: ["grave_tomb", "grave_serious"]
+	},
+	like: {
+		base: "like",
+		specific: ["like_pleasant", "like_similar"]
+	},
+	rest: {
+		base: "rest",
+		specific: ["rest_remaining", "rest_sleep"]
+	},
+	stick: {
+		base: "stick",
+		specific: ["stick_wood", "stick_verb"]
+	},
+	strip: {
+		base: "strip",
+		specific: ["strip_piece", "strip_verb"]
+	},
+
 	courage: {
 		base: "courage",
 		specific: ["courage_bravery", "courage_manliness"]

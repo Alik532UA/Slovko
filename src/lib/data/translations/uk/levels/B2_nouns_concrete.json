@@ -1,4 +1,4 @@
-{
+﻿{
 	"accent": "акцент",
 	"accuracy": "точність",
 	"accuse": "звинувачувати",
@@ -522,7 +522,6 @@
 	"bargain": "угода / вигідна покупка",
 	"barrier": "бар'єр",
 	"basket": "кошик",
-	"bear_(deal_with)": "витримувати",
 	"beg": "благати",
 	"betray": "зраджувати",
 	"betray_trust": "зраджувати",
@@ -609,7 +608,6 @@
 	"corrupt_system": "корумпувати",
 	"council": "рада",
 	"counter": "протидіяти",
-	"counter_(long_flat_surface)": "прилавок",
 	"counteract": "протидіяти",
 	"counteract_effect": "протидіяти",
 	"county": "округ",
@@ -1267,5 +1265,6 @@
 	"wrap": "загортати",
 	"wrist": "зап'ястя",
 	"zone": "зона",
-	"zone_n": "зона"
+	"zone_n": "зона",
+	"counter_surface": "прилавок"
 }

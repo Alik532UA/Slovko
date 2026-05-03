@@ -522,7 +522,6 @@
 	"bargain": "bargain",
 	"barrier": "barrier",
 	"basket": "basket",
-	"bear_(deal_with)": "bear_(deal_with)",
 	"beg": "beg",
 	"betray": "betray",
 	"betray_trust": "betray",
@@ -609,7 +608,6 @@
 	"corrupt_system": "corrupt",
 	"council": "council",
 	"counter": "counter",
-	"counter_(long_flat_surface)": "counter_(long_flat_surface)",
 	"counteract": "counteract",
 	"counteract_effect": "counteract",
 	"county": "county",
@@ -1267,5 +1265,6 @@
 	"wrap": "wrap",
 	"wrist": "wrist",
 	"zone": "zone",
-	"zone_n": "zone_n"
+	"zone_n": "zone n",
+	"counter_surface": "counter"
 }

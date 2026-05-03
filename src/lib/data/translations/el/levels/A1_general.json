@@ -43,7 +43,6 @@
 	"band_music": "συγκρότημα",
 	"band_strip": "λωρίδα",
 	"bank": "τράπεζα",
-	"bank_(money)": "τράπεζα",
 	"bank_finance": "τράπεζα",
 	"bank_river": "όχθη",
 	"baseball": "μπέιζμπολ",
@@ -364,7 +363,6 @@
 	"keep_up": "συμβαδίζω",
 	"kilometre": "χιλιόμετρο",
 	"kind": "ειδοσ",
-	"kind_(type)": "είδος",
 	"kind_nice": "ευγενικός",
 	"kind_type": "είδος",
 	"kitchen": "κουζίνα",
@@ -383,9 +381,6 @@
 	"lie": "ξαπλώνω",
 	"lie_false": "λέω ψέματα",
 	"lie_position": "ξαπλώνω",
-	"light_(from_the_sun/a_lamp)": "φως",
-	"like_(find_sb/sth_pleasant)": "μου αρέσει",
-	"like_(similar)": "σαν",
 	"line": "γραμμή",
 	"list": "λίστα",
 	"listen": "ακούω",
@@ -405,7 +400,6 @@
 	"market": "αγορά",
 	"married": "παντρεμένος",
 	"match": "αγώνας",
-	"match_(contest/correspond)": "αγώνας",
 	"match_fire": "σπίρτο",
 	"match_game": "αγώνας",
 	"match_verb": "ταιριάζω",
@@ -760,5 +754,7 @@
 	"may_month": "Μάιος",
 	"may_modal": "μπορεί",
 	"type_kind": "τύπος",
-	"type_write": "πληκτρολογώ"
+	"type_write": "πληκτρολογώ",
+	"like_pleasant": "μου αρέσει",
+	"like_similar": "σαν"
 }
