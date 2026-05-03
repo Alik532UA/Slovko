@@ -75,19 +75,45 @@ class LogService {
 
 	addToRecent(msg: string, args: unknown[]) {
 		const time = new Date().toISOString();
+		const MAX_ARG_LENGTH = 500;
 		const fullMsg = `${time} ${msg} ${args.map(a => {
 			try {
-				if (typeof a === 'object') return JSON.stringify(a);
-				return String(a);
+				let str = '';
+				if (typeof a === 'object' && a !== null) {
+					str = JSON.stringify(a);
+				} else {
+					str = String(a);
+				}
+				
+				if (str.length > MAX_ARG_LENGTH) {
+					return str.substring(0, MAX_ARG_LENGTH) + '... [truncated]';
+				}
+				return str;
 			} catch {
 				return String(a);
 			}
 		}).join(' ')}`;
+		
 		this.recentLogs.push(fullMsg);
 		if (this.recentLogs.length > MAX_RECENT_LOGS) this.recentLogs.shift();
+		
 		if (browser) {
-			sessionStorageProvider.setItem("logs", JSON.stringify(this.recentLogs));
-			window.__recentLogs = this.recentLogs;
+			try {
+				const logsJson = JSON.stringify(this.recentLogs);
+				// If logs are still too big (e.g. > 2MB), reduce the count more aggressively
+				if (logsJson.length > 2 * 1024 * 1024) {
+					while (this.recentLogs.length > 100) {
+						this.recentLogs.shift();
+					}
+					sessionStorageProvider.setItem("logs", JSON.stringify(this.recentLogs));
+				} else {
+					sessionStorageProvider.setItem("logs", logsJson);
+				}
+				window.__recentLogs = this.recentLogs;
+			} catch (e) {
+				// Fallback: clear logs if storage is still failing despite truncation
+				console.error("Failed to save logs to storage even after truncation", e);
+			}
 		}
 	}
 

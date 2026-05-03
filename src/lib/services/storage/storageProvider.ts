@@ -28,7 +28,11 @@ export class LocalStorageProvider implements StorageProvider {
 
 	setItem(key: string, value: string): void {
 		if (typeof window === "undefined") return;
-		localStorage.setItem(this.prefix + key, value);
+		try {
+			localStorage.setItem(this.prefix + key, value);
+		} catch (e) {
+			console.error(`LocalStorage Error: Failed to set item "${key}". Possibly quota exceeded.`, e);
+		}
 	}
 
 	removeItem(key: string): void {
@@ -80,7 +84,11 @@ export class SessionStorageProvider implements StorageProvider {
 
 	setItem(key: string, value: string): void {
 		if (typeof window === "undefined") return;
-		sessionStorage.setItem(this.prefix + key, value);
+		try {
+			sessionStorage.setItem(this.prefix + key, value);
+		} catch (e) {
+			console.error(`SessionStorage Error: Failed to set item "${key}". Possibly quota exceeded.`, e);
+		}
 	}
 
 	removeItem(key: string): void {
