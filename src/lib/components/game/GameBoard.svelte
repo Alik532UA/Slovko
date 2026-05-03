@@ -94,8 +94,14 @@
 		if (dragState.hoveredCardId && dragState.sourceCard) {
 			const targetCard = [...gameState.sourceCards, ...gameState.targetCards].find(c => c.id === dragState.hoveredCardId);
 			if (targetCard) {
-				if (gameState.selectedCard?.id === dragState.sourceCard.id) { gameController.selectCard(targetCard); }
-				else { gameController.selectCard(dragState.sourceCard); gameController.selectCard(targetCard); }
+				// Якщо початкова картка ще не вибрана, ми маємо її вибрати
+				if (gameState.selectedCard?.id !== dragState.sourceCard.id) {
+					gameController.selectCard(dragState.sourceCard);
+				}
+				// Невелика затримка, щоб Svelte встиг оновити стан першої картки (це необхідно для коректної анімації або логіки перевірки)
+				setTimeout(() => {
+					gameController.selectCard(targetCard);
+				}, 10);
 			}
 		}
 		dragState = { active: false, startPoint: null, currentPoint: null, sourceCard: null, hoveredCardId: null };
@@ -162,6 +168,7 @@
 								in:glassTransition={{ duration: 3000, delay: i * 150, x: -50, entrance: true }}
 								out:glassTransition={{ duration: 1000, delay: i * 100, x: -50, entrance: false }}
 								data-testid="card-slot-source-{i}"
+								data-card-id={card.id}
 							>
 								<WordCard
 									testid="word-card-src"
@@ -191,6 +198,7 @@
 								in:glassTransition={{ duration: 3000, delay: (i + 4) * 150, x: 50, entrance: true }}
 								out:glassTransition={{ duration: 1000, delay: i * 100, x: 50, entrance: false }}
 								data-testid="card-slot-target-{i}"
+								data-card-id={card.id}
 							>
 								<WordCard
 									testid="word-card-tgt"
