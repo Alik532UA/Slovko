@@ -254,7 +254,7 @@
 	}
 
 	.word-card.selected {
-		background: color-mix(in srgb, var(--selected-bg), transparent 30%);
+		background: rgba(var(--accent-rgb), 0.7);
 		border-color: var(--selected-border);
 		animation: selectedPulse 2s infinite ease-in-out;
 		box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.3);

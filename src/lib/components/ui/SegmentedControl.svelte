@@ -43,7 +43,9 @@
 </script>
 
 <div 
-	class="segmented-control {variant} {className}" 
+	class="segmented-control {className}"
+	class:horizontal={variant === "horizontal"}
+	class:vertical={variant === "vertical"}
 	data-testid={testid}
 >
 	<div class="slider-container">
@@ -108,9 +110,9 @@
 		display: none;
 	}
 	.segmented-control.horizontal .segment-btn.active {
-		background: rgba(255, 255, 255, 0.1);
+		background: rgba(var(--accent-rgb), 0.15);
 		border-radius: 14px;
-		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+		box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.2);
 	}
 
 	.slider-container {
