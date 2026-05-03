@@ -256,7 +256,7 @@
 	"tiny": "piepklein",
 	"trade": "handel",
 	"trade_verb": "handelen",
-	"trial": "proces / proef",
+	"trial": "proces",
 	"trial_court": "proces",
 	"trial_test": "proef",
 	"tube": "metro",
@@ -324,7 +324,7 @@
 	"clause_grammar": "bijzin",
 	"cloth": "doek",
 	"clue": "aanwijzing",
-	"collapse": "instorting / instorten",
+	"collapse": "instorting",
 	"collapse_noun": "instorting",
 	"comparison": "vergelijking",
 	"competitor": "concurrent",
@@ -534,5 +534,7 @@
 	"wonder": "zich afvragen",
 	"worldwide": "wereldwijd",
 	"throughout_space": "overal in",
-	"throughout_time": "gedurende"
+	"throughout_time": "gedurende",
+	"crash_accident": "crash",
+	"crash": "crash"
 }

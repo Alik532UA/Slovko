@@ -256,7 +256,7 @@
 	"tiny": "maleńki",
 	"trade": "handel",
 	"trade_verb": "handlować",
-	"trial": "proces / próba",
+	"trial": "proces",
 	"trial_court": "proces",
 	"trial_test": "próba",
 	"tube": "metro",
@@ -324,7 +324,7 @@
 	"clause_grammar": "zdanie składowe",
 	"cloth": "tkanina",
 	"clue": "trop",
-	"collapse": "zapaść / zawalać się",
+	"collapse": "zapaść",
 	"collapse_noun": "zapaść",
 	"comparison": "porównanie",
 	"competitor": "konkurent",
@@ -534,5 +534,7 @@
 	"wonder": "zastanawiać się",
 	"worldwide": "światowy",
 	"throughout_space": "po całym",
-	"throughout_time": "przez cały"
+	"throughout_time": "przez cały",
+	"crash_accident": "katastrofa",
+	"crash": "katastrofa"
 }

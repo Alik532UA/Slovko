@@ -1,4 +1,4 @@
-{
+﻿{
 	"apologize": "вибачатися",
 	"appreciate": "цінувати",
 	"arrest": "заарештовувати",
@@ -28,7 +28,7 @@
 	"admit_verb": "визнавати",
 	"advise": "радити",
 	"afford": "дозволити собі",
-	"approach": "підхід / наближатися",
+	"approach": "підхід",
 	"approach_method": "підхід",
 	"approach_verb": "наближатися",
 	"collapse_verb": "руйнуватися",
@@ -44,5 +44,6 @@
 	"spoken": "розмовний",
 	"sudden": "раптовий",
 	"summarize": "підсумовувати",
-	"written": "написаний"
+	"written": "написаний",
+	"crash_verb": "розбиватися"
 }

@@ -256,7 +256,7 @@
 	"tiny": "winzig",
 	"trade": "Handel",
 	"trade_verb": "handeln",
-	"trial": "Prozess / Versuch",
+	"trial": "Prozess",
 	"trial_court": "Prozess",
 	"trial_test": "Versuch",
 	"tube": "U-Bahn",
@@ -324,7 +324,7 @@
 	"clause_grammar": "Nebensatz",
 	"cloth": "Stoff",
 	"clue": "Hinweis",
-	"collapse": "Einsturz / zusammenbrechen",
+	"collapse": "Einsturz",
 	"collapse_noun": "Einsturz",
 	"comparison": "Vergleich",
 	"competitor": "Wettbewerber",
@@ -534,5 +534,7 @@
 	"wonder": "sich wundern",
 	"worldwide": "weltweit",
 	"throughout_space": "überall in",
-	"throughout_time": "während"
+	"throughout_time": "während",
+	"crash_accident": "Absturz",
+	"crash": "Absturz"
 }

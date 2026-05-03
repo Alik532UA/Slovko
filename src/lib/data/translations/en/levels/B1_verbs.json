@@ -1,4 +1,4 @@
-{
+﻿{
 	"apologize": "apologize",
 	"appreciate": "appreciate",
 	"arrest": "arrest",
@@ -44,5 +44,6 @@
 	"spoken": "spoken",
 	"sudden": "sudden",
 	"summarize": "summarize",
-	"written": "written"
+	"written": "written",
+	"crash_verb": "crash"
 }

@@ -1,4 +1,4 @@
-{
+﻿{
 	"apologize": "przepraszać",
 	"appreciate": "doceniać",
 	"arrest": "aresztować",
@@ -28,7 +28,7 @@
 	"admit_verb": "przyznawać",
 	"advise": "radzić",
 	"afford": "pozwolić sobie",
-	"approach": "podejście / zbliżać się",
+	"approach": "podejście",
 	"approach_method": "podejście",
 	"approach_verb": "zbliżać się",
 	"collapse_verb": "zawalać się",
@@ -44,5 +44,6 @@
 	"spoken": "mówiony",
 	"sudden": "nagły",
 	"summarize": "podsumować",
-	"written": "pisemny"
+	"written": "pisemny",
+	"crash_verb": "rozbijać się"
 }

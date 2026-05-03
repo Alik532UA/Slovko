@@ -1,4 +1,4 @@
-{
+﻿{
 	"apologize": "verontschuldigen",
 	"appreciate": "waarderen",
 	"arrest": "arresteren",
@@ -28,7 +28,7 @@
 	"admit_verb": "toevoegen",
 	"advise": "adviseren",
 	"afford": "zich veroorloven",
-	"approach": "aanpak / naderen",
+	"approach": "aanpak",
 	"approach_method": "aanpak",
 	"approach_verb": "naderen",
 	"collapse_verb": "instorten",
@@ -44,5 +44,6 @@
 	"spoken": "gesproken",
 	"sudden": "plotseling",
 	"summarize": "samenvatten",
-	"written": "geschreven"
+	"written": "geschreven",
+	"crash_verb": "crashen"
 }

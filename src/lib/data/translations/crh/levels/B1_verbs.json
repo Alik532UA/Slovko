@@ -1,4 +1,4 @@
-{
+﻿{
 	"apologize": "bağışlav soramaq",
 	"appreciate": "qıymetlemek",
 	"arrest": "tutuklamaq",
@@ -29,7 +29,7 @@
 	"advise": "mesleat bermek",
 	"afford": "imkânı olmaq",
 	"approach": "yaqınlaşmaq",
-	"approach_method": "yaqınlaşmaq",
+	"approach_method": "usul",
 	"approach_verb": "yaqınlaşmaq",
 	"collapse_verb": "yığılmaq",
 	"decorate": "donatmaq",
@@ -44,5 +44,6 @@
 	"spoken": "sözli",
 	"sudden": "ansızın",
 	"summarize": "hülâsa etmek",
-	"written": "yazılı"
+	"written": "yazılı",
+	"crash_verb": "parçalanmaq"
 }

@@ -1,4 +1,4 @@
-{
+﻿{
 	"apologize": "entschuldigen",
 	"appreciate": "schätzen",
 	"arrest": "verhaften",
@@ -28,7 +28,7 @@
 	"admit_verb": "zugeben",
 	"advise": "raten",
 	"afford": "sich leisten",
-	"approach": "Ansatz / nähern",
+	"approach": "Ansatz",
 	"approach_method": "Ansatz",
 	"approach_verb": "nähern",
 	"collapse_verb": "zusammenbrechen",
@@ -44,5 +44,6 @@
 	"spoken": "gesprochen",
 	"sudden": "plötzlich",
 	"summarize": "zusammenfassen",
-	"written": "geschrieben"
+	"written": "geschrieben",
+	"crash_verb": "abstürzen"
 }

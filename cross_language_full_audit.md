@@ -5,7 +5,6 @@
 
 | Ключ | Проблеми | EN | UK | EL | NL | DE | CRH | PL |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `cousin` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | cousin | двоюрідний брат / сестра | ξαδέρφη | nicht | Cousine | emce-tize balası | kuzynka |
 | `have` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | have | мати | έχω | heeft | haben, habe, hast, habt | saip olmaq | mieć |
 | `should` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | should | варто / слід (порада) | πρέπει | zou moeten | sollte | kerek | powinien |
 | `still` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | still | все ще / досі | ακόμα | nog steeds | immer noch | alâ da | nadal |
@@ -14,21 +13,17 @@
 | `disagree` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | disagree | не погоджуватися | διαφωνώ | niet mee eens zijn | nicht zustimmen | razı olmamaq | nie zgadzać się |
 | `fit` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | fit | підходити / у формі | ταιριάζω | passen | passen | uydurmaq | pasować |
 | `have_auxiliary` | [uk] Порушення правила суфікса: містить пояснення в дужках. | have auxiliary | мати (допом.) | έχω | hebben | haben | sahip olmaq | mieć |
-| `mine` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | mine | мій / шахта | δικός μου / ορυχείο | mijn | mein / Mine | menimki | mój / kopalnia |
+| `mine` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | mine | мій | δικός μου / ορυχείο | mijn | mein / Mine | menimki | mój |
 | `neither` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | neither | ні той, ні інший | ούτε | noch | weder | ne ... ne de | ani |
 | `used_to` | [uk] Порушення правила суфікса: містить пояснення в дужках. | used to | раніше (робив) | συνήθιζα | vroeger | pflegte zu | yapmaqta edim | kiedyś |
-| `crash` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | crash | аварія / розбиватися | σύγκρουση / συντρίβομαι | crash / crashen | Absturz / abstürzen | qaza / parçalanmaq | katastrofa / rozbijać się |
 | `highly_position` | [uk] Порушення правила суфікса: містить пояснення в дужках. | position | високо (в ієрархії) | ψηλά | hooggeplaatst | hochrangig | üstün | wysoko |
-| `cure` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | cure | ліки / лікувати | θεραπεία / θεραπεύω | genezing / genezen | Heilung / heilen | ilâc / tedavi etmek | lekarstwo / leczyć |
-| `confidence` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | confidence | впевненість / довіра | αυτοπεποίθηση / εμπιστοσύνη | zelfvertrouwen / vertrouwen | Selbstvertrauen / Vertrauen | özüne inam / itam | pewność siebie / zaufanie |
+| `cure` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | cure | ліки | θεραπεία / θεραπεύω | genezing | Heilung | ilâc / tedavi etmek | lekarstwo |
+| `confidence` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | confidence | впевненість | αυτοπεποίθηση / εμπιστοσύνη | zelfvertrouwen / vertrouwen | Selbstvertrauen / Vertrauen | özüne inam | pewność siebie / zaufanie |
 | `contribute` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | contribute | робити внесок / сприяти | δωρίζω / συνεισφέρω | doneren / bijdragen | spenden / beitragen | isse qoşmaq | wpłacać / przyczyniać się |
 | `throughout` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | throughout | по всьому | καθ' όλη τη διάρκεια | doorheen | durchaus | boyunca | przez |
-| `trial` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | trial | судовий процес / випробування | δίκη / δοκιμή | proces / proef | Prozess / Versuch | mahkeme / sınav | proces / próba |
 | `workplace` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | workplace | робоче місце | ασφάλεια στο χώρο εργασίας | werkplek | Arbeitsplatz | iş yeri | miejsce pracy |
-| `collapse` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | collapse | крах / руйнуватися | κατάρρευση / καταρρέω | instorting / instorten | Einsturz / zusammenbrechen | yığıluv / yığılmaq | zapaść / zawalać się |
 | `pretend` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | pretend | прикидатися | προσποιούμαι | doen alsof | so tun als ob | özüni... kibi köstermek | udawać |
-| `cabin` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | cabin | салон літака / каюта | θάλαμος επιβατών / καμπίνα | cabine / hut | Flugzeugkabine / Kabine | tayyare kabinası / kabina | kabina samolotu / kajuta |
-| `approach` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | approach | підхід / наближатися | προσέγγιση / πλησιάζω | aanpak / naderen | Ansatz / nähern | yaqınlaşmaq | podejście / zbliżać się |
+| `cabin` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | cabin | салон літака | θάλαμος επιβατών / καμπίνα | cabine | Flugzeugkabine | tayyare kabinası / kabina | kabina samolotu |
 | `frustrate` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | frustrate | перешкоджати | ματαίω | frustreren | frustrieren | engel olmaq | krzyżować plany / uniemożliwiać |
 | `unfold` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | unfold | розгортатися | ξεδιπλώνω | ontvouwen | entfalten | açılmaq | rozwijać się / odsłaniać |
 | `apprehensive` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | apprehensive | тривожний | ανήσυχος | bezorgd | besorgt | qorqaq | pełen obaw / lękliwy |
