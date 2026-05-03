@@ -1196,7 +1196,7 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	},
 	fit: {
 		base: "fit",
-		specific: ["fit_healthy"]
+		specific: ["fit_healthy", "fit_suit"]
 	},
 	figure: {
 		base: "figure",
@@ -1333,6 +1333,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	hard: {
 		base: "hard",
 		specific: ["hard_difficult", "hard_solid", "hard_tough"]
+	},
+	hardly: {
+		base: "hardly",
+		specific: ["hardly_barely", "hardly_unlikely"]
 	},
 	he: {
 		base: "he",
@@ -1476,6 +1480,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "leader",
 		specific: ["leader_person"]
 	},
+	last: {
+		base: "last",
+		specific: ["last_final", "last_previous"]
+	},
 	leave: {
 		base: "leave",
 		specific: ["leave_behind", "leave_depart", "leave_object", "leave_place"]
@@ -1534,7 +1542,7 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	},
 	match: {
 		base: "match",
-		specific: ["match_fire", "match_game"]
+		specific: ["match_fire", "match_game", "match_suit"]
 	},
 	matter: {
 		base: "matter",
@@ -2228,6 +2236,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	therefore: {
 		base: "therefore",
 		specific: ["therefore_consequence", "therefore_reason"]
+	},
+	throughout: {
+		base: "throughout",
+		specific: ["throughout_space", "throughout_time"]
 	},
 	these: {
 		base: "these",

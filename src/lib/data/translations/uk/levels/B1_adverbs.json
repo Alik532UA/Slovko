@@ -1,4 +1,4 @@
-{
+﻿{
 	"absolutely": "абсолютно",
 	"apart": "крім",
 	"apart_from": "крім",
@@ -11,7 +11,7 @@
 	"fairly_honestly": "чесно",
 	"fairly_quite": "досить",
 	"frequently": "часто",
-	"hardly": "ледве / навряд чи",
+	"hardly": "ледве",
 	"highly": "високо / дуже",
 	"highly_degree": "високо / дуже",
 	"highly_position": "високо (в ієрархії)",
@@ -60,5 +60,7 @@
 	"strongly": "сильно",
 	"successfully": "успішно",
 	"surely": "безумовно",
-	"typically": "зазвичай"
+	"typically": "зазвичай",
+	"hardly_barely": "ледве",
+	"hardly_unlikely": "навряд чи"
 }

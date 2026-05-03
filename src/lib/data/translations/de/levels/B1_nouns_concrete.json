@@ -1,4 +1,4 @@
-{
+﻿{
 	"advanced": "fortgeschritten",
 	"ahead": "voraus",
 	"alarm": "Alarm",
@@ -532,5 +532,7 @@
 	"weigh": "wiegen",
 	"whenever": "wann immer",
 	"wonder": "sich wundern",
-	"worldwide": "weltweit"
+	"worldwide": "weltweit",
+	"throughout_space": "überall in",
+	"throughout_time": "während"
 }

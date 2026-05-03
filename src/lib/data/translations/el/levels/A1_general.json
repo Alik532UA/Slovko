@@ -372,8 +372,6 @@
 	"language": "γλώσσα",
 	"large": "μεγάλος",
 	"last": "τελευταίος",
-	"last1": "τελευταίος",
-	"last1_(final)": "τελευταίος",
 	"laugh": "γελάω",
 	"learn": "μαθαίνω",
 	"left": "αριστερά",
@@ -592,9 +590,6 @@
 	"sandwich": "σάντουιτς",
 	"science": "επιστήμη",
 	"scientist": "επιστήμονας",
-	"second1": "δεύτερος",
-	"second1_(next_after_the_first)": "δεύτερος",
-	"second1_(unit_of_time)": "δευτερόλεπτο",
 	"section": "τμήμα",
 	"sell": "πουλάω",
 	"send": "στέλνω",
@@ -756,5 +751,8 @@
 	"you_plural": "εσείς",
 	"you_pronoun": "εσύ",
 	"you_singular": "εσύ",
-	"yourself": "ο εαυτός σου"
+	"yourself": "ο εαυτός σου",
+	"match_suit": "ταιριάζω",
+	"last_final": "τελευταίος",
+	"last_previous": "προηγούμενος"
 }

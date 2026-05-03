@@ -410,7 +410,6 @@
 	"language": "/ˈlæŋɡwɪdʒ/",
 	"large": "/lɑːrdʒ/",
 	"last": "/lɑːst/",
-	"last1_(final)": "/lɑːst/",
 	"laugh": "/læf/",
 	"learn": "/lɜːn/",
 	"leave": "/liːv/",
@@ -661,8 +660,6 @@
 	"science": "/ˈsaɪəнс/",
 	"scientist": "/ˈsaɪəntɪst/",
 	"second": "/ˈsekənd/",
-	"second1_(next_after_the_first)": "/ˈsekənd/",
-	"second1_(unit_of_time)": "/ˈsekənd/",
 	"second_ord": "/ˈsɛkənd/",
 	"second_ordinal": "/ˈsɛkənd/",
 	"second_time": "/ˈsɛkənd/",
@@ -876,5 +873,7 @@
 	"your_possessive": "/jɔːr/",
 	"your_singular": "/jɔːr/",
 	"yours": "/jɔːz/",
-	"yourself": "/jɔːˈself/"
+	"yourself": "/jɔːˈself/",
+	"last_final": "/lɑːst/",
+	"last_previous": "/lɑːst/"
 }

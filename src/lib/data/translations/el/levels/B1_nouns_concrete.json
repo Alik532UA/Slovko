@@ -1,4 +1,4 @@
-{
+﻿{
 	"advanced": "προχωρημένος",
 	"ahead": "μπροστά",
 	"alarm": "συναγερμός",
@@ -532,5 +532,7 @@
 	"weigh": "ζυγίζω",
 	"whenever": "όποτε",
 	"wonder": "αναρωτιέμαι",
-	"worldwide": "παγκόσμιος"
+	"worldwide": "παγκόσμιος",
+	"throughout_space": "σε όλο",
+	"throughout_time": "καθ' όλη τη διάρκεια"
 }

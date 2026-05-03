@@ -55,5 +55,6 @@
 	"unit": "unit",
 	"unit_component": "unit",
 	"unit_measure": "unit",
-	"weak": "weak"
+	"weak": "weak",
+	"fit_suit": "fit"
 }

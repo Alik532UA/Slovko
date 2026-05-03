@@ -55,5 +55,6 @@
 	"unit": "блок",
 	"unit_component": "блок",
 	"unit_measure": "одиниця",
-	"weak": "слабкий"
+	"weak": "слабкий",
+	"fit_suit": "підходити"
 }

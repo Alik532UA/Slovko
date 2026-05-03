@@ -1,4 +1,4 @@
-{
+﻿{
 	"absolutely": "absoluut",
 	"apart": "afgezien van",
 	"apart_from": "afgezien van",
@@ -60,5 +60,7 @@
 	"strongly": "sterk",
 	"successfully": "met succes",
 	"surely": "zeker",
-	"typically": "typisch"
+	"typically": "typisch",
+	"hardly_barely": "nauwelijks",
+	"hardly_unlikely": "onwaarschijnlijk"
 }

@@ -372,8 +372,6 @@
 	"language": "język",
 	"large": "duży",
 	"last": "ostatni",
-	"last1": "ostatni",
-	"last1_(final)": "ostatni",
 	"laugh": "śmiać się",
 	"learn": "uczyć się",
 	"left": "lewo",
@@ -592,9 +590,6 @@
 	"sandwich": "kanapka",
 	"science": "nauka",
 	"scientist": "naukowiec",
-	"second1": "drugi",
-	"second1_(next_after_the_first)": "drugi",
-	"second1_(unit_of_time)": "sekunda",
 	"section": "sekcja",
 	"sell": "sprzedawać",
 	"send": "wysyłać",
@@ -756,5 +751,8 @@
 	"you_plural": "wy",
 	"you_pronoun": "ty",
 	"you_singular": "ty",
-	"yourself": "siebie"
+	"yourself": "siebie",
+	"match_suit": "pasować",
+	"last_final": "ostatni",
+	"last_previous": "ubiegły"
 }

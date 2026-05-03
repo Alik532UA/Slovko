@@ -1,4 +1,4 @@
-{
+﻿{
 	"advanced": "gevorderd",
 	"ahead": "vooruit",
 	"alarm": "alarm",
@@ -532,5 +532,7 @@
 	"weigh": "wegen",
 	"whenever": "wanneer dan ook",
 	"wonder": "zich afvragen",
-	"worldwide": "wereldwijd"
+	"worldwide": "wereldwijd",
+	"throughout_space": "overal in",
+	"throughout_time": "gedurende"
 }

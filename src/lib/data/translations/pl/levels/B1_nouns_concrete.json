@@ -1,4 +1,4 @@
-{
+﻿{
 	"advanced": "zaawansowany",
 	"ahead": "z przodu",
 	"alarm": "alarm",
@@ -171,7 +171,7 @@
 	"punish": "karać",
 	"pure": "czysty",
 	"pure_water": "czysty",
-	"qualify": "kwalifikować się / spełniać wymogi",
+	"qualify": "kwalifikować się",
 	"qualify_gain": "uzyskać kwalifikacje",
 	"qualify_meet": "spełniać wymagania",
 	"range": "zakres",
@@ -532,5 +532,7 @@
 	"weigh": "ważyć",
 	"whenever": "kiedykolwiek",
 	"wonder": "zastanawiać się",
-	"worldwide": "światowy"
+	"worldwide": "światowy",
+	"throughout_space": "po całym",
+	"throughout_time": "przez cały"
 }

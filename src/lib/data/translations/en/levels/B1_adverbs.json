@@ -1,4 +1,4 @@
-{
+﻿{
 	"absolutely": "absolutely",
 	"apart": "apart from",
 	"apart_from": "apart from",
@@ -60,5 +60,7 @@
 	"strongly": "strongly",
 	"successfully": "successfully",
 	"surely": "surely",
-	"typically": "typically"
+	"typically": "typically",
+	"hardly_barely": "hardly",
+	"hardly_unlikely": "hardly"
 }

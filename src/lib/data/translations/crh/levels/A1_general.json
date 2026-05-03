@@ -372,8 +372,6 @@
 	"language": "til",
 	"large": "büyük",
 	"last": "soñki",
-	"last1": "soñki",
-	"last1_(final)": "soñki",
 	"laugh": "külmek",
 	"learn": "ögrenmek",
 	"left": "sol",
@@ -592,9 +590,6 @@
 	"sandwich": "sandviç",
 	"science": "ilim",
 	"scientist": "alim",
-	"second1": "ekinci",
-	"second1_(next_after_the_first)": "ekinci",
-	"second1_(unit_of_time)": "saniye",
 	"section": "bölük",
 	"sell": "satmaq",
 	"send": "yollamaq",
@@ -756,5 +751,8 @@
 	"you_plural": "siz",
 	"you_pronoun": "siz",
 	"you_singular": "sen",
-	"yourself": "özüñ"
+	"yourself": "özüñ",
+	"match_suit": "uymaq",
+	"last_final": "soñki",
+	"last_previous": "keçken"
 }

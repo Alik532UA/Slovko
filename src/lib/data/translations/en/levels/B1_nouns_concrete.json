@@ -1,4 +1,4 @@
-{
+﻿{
 	"advanced": "advanced",
 	"ahead": "ahead",
 	"alarm": "alarm",
@@ -532,5 +532,7 @@
 	"weigh": "weigh",
 	"whenever": "whenever",
 	"wonder": "wonder",
-	"worldwide": "worldwide"
+	"worldwide": "worldwide",
+	"throughout_space": "throughout",
+	"throughout_time": "throughout"
 }

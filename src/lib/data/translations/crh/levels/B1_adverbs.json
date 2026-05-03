@@ -1,4 +1,4 @@
-{
+﻿{
 	"absolutely": "mutlaqa",
 	"apart": "başqa",
 	"apart_from": "başqa",
@@ -60,5 +60,7 @@
 	"strongly": "kürlü",
 	"successfully": "muvaffaqiyetnen",
 	"surely": "elbette",
-	"typically": "adettegi kibi"
+	"typically": "adettegi kibi",
+	"hardly_barely": "küçnen",
+	"hardly_unlikely": "mümkün degil"
 }

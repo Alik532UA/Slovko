@@ -55,5 +55,6 @@
 	"unit": "eenheid",
 	"unit_component": "eenheid",
 	"unit_measure": "eenheid",
-	"weak": "zwak"
+	"weak": "zwak",
+	"fit_suit": "passen"
 }

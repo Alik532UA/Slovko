@@ -1,4 +1,4 @@
-{
+﻿{
 	"absolutely": "απόλυτα",
 	"apart": "εκτός από",
 	"apart_from": "εκτός από",
@@ -60,5 +60,7 @@
 	"strongly": "έντονα",
 	"successfully": "επιτυχώς",
 	"surely": "σίγουρα",
-	"typically": "συνήθως"
+	"typically": "συνήθως",
+	"hardly_barely": "σχεδόν καθόλου",
+	"hardly_unlikely": "απίθανο"
 }

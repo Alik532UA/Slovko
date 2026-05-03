@@ -1,4 +1,4 @@
-{
+﻿{
 	"advanced": "просунутий",
 	"ahead": "попереду",
 	"alarm": "тривога",
@@ -378,9 +378,9 @@
 	"helicopter": "вертоліт",
 	"highlight": "виділяти",
 	"host": "господар",
-	"host_biology": "хазяїн (біол.)",
+	"host_biology": "хазяїн",
 	"host_entertainer": "ведучий",
-	"host_server": "хост (IT)",
+	"host_server": "хост",
 	"hurricane": "ураган",
 	"hurry": "поспішати",
 	"impact": "вплив",
@@ -410,7 +410,7 @@
 	"mix_noun": "суміш",
 	"mixture": "суміш",
 	"mud": "бруд / багнюка",
-	"mud_slander": "бруд (наклеп)",
+	"mud_slander": "наклеп",
 	"mud_wet_earth": "багнюка",
 	"muscle": "м'яз",
 	"n.": "імен.",
@@ -532,5 +532,7 @@
 	"weigh": "важити",
 	"whenever": "коли завгодно",
 	"wonder": "цікавитися",
-	"worldwide": "всесвітній"
+	"worldwide": "всесвітній",
+	"throughout_space": "по всьому",
+	"throughout_time": "протягом"
 }

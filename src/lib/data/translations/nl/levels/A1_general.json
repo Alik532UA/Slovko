@@ -372,8 +372,6 @@
 	"language": "taal",
 	"large": "groot",
 	"last": "laatste",
-	"last1": "laatste",
-	"last1_(final)": "laatste",
 	"laugh": "lachen",
 	"learn": "leren",
 	"left": "links",
@@ -592,9 +590,6 @@
 	"sandwich": "boterham",
 	"science": "wetenschap",
 	"scientist": "wetenschapper",
-	"second1": "tweede",
-	"second1_(next_after_the_first)": "tweede",
-	"second1_(unit_of_time)": "seconde",
 	"section": "sectie",
 	"sell": "verkopen",
 	"send": "sturen",
@@ -756,5 +751,8 @@
 	"you_plural": "jullie",
 	"you_pronoun": "jij",
 	"you_singular": "jij",
-	"yourself": "jezelf"
+	"yourself": "jezelf",
+	"match_suit": "overeenkomen",
+	"last_final": "laatste",
+	"last_previous": "vorige"
 }

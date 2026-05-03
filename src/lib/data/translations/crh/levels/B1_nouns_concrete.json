@@ -1,4 +1,4 @@
-{
+﻿{
 	"advanced": "ilerlegen",
 	"ahead": "ögde",
 	"alarm": "telüke",
@@ -532,5 +532,7 @@
 	"weigh": "tartmaq",
 	"whenever": "ne vaqıt olsa",
 	"wonder": "meraq etmek",
-	"worldwide": "bütündünya"
+	"worldwide": "bütündünya",
+	"throughout_space": "er yerinde",
+	"throughout_time": "boyunca"
 }

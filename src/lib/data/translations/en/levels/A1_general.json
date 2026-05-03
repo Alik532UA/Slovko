@@ -372,8 +372,6 @@
 	"language": "language",
 	"large": "large",
 	"last": "last",
-	"last1": "last1",
-	"last1_(final)": "last1_(final)",
 	"laugh": "laugh",
 	"learn": "learn",
 	"left": "left",
@@ -592,9 +590,6 @@
 	"sandwich": "sandwich",
 	"science": "science",
 	"scientist": "scientist",
-	"second1": "second1",
-	"second1_(next_after_the_first)": "second1_(next_after_the_first)",
-	"second1_(unit_of_time)": "second1_(unit_of_time)",
 	"section": "section",
 	"sell": "sell",
 	"send": "send",
@@ -756,5 +751,8 @@
 	"you_plural": "you",
 	"you_pronoun": "you",
 	"you_singular": "you",
-	"yourself": "yourself"
+	"yourself": "yourself",
+	"match_suit": "match",
+	"last_final": "last",
+	"last_previous": "last"
 }
