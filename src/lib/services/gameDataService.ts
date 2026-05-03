@@ -198,7 +198,9 @@ export class GameDataService {
 								);
 							}
 						} else if (w && typeof w === "object") {
-							const id = w.id || `custom-${Date.now()}`;
+							// Кастомні слова отримують префікс 'custom:', щоб відрізнити їх від системних
+							// і вимкнути для них автоматичну генерацію транскрипцій.
+							const id = w.id ? `custom:${w.id}` : `custom:${Date.now()}`;
 							// Map neutral left/right to game dictionaries
 							sourceTranslations[id] = w.left || "";
 							targetTranslations[id] = w.right || "";

@@ -63,11 +63,14 @@ function createCardPair(
 		lang: Language,
 		dict: TranscriptionDictionary,
 	): string | undefined => {
-		// 1. Спробуємо отримати статичну транскрипцію (наприклад, для EN)
+		// 1. Спробуємо отримати статичну транскрипцію (з БД або вказану користувачем для кастомних слів)
 		const staticTscr = getTranscription(wordKey, dict, true);
 		if (staticTscr) return staticTscr;
 
-		// 2. Якщо немає статичної, генеруємо за 2-ступеневим алгоритмом
+		// 2. Якщо це кастомне слово (створене користувачем), не "придумуємо" транскрипцію
+		if (wordKey.startsWith("custom:")) return undefined;
+
+		// 3. Якщо немає статичної і це системне слово, генеруємо за 2-ступеневим алгоритмом
 		// (Текст -> IPA -> Мова Інтерфейсу)
 		return generateRulesIPA(text, lang, interfaceLanguage || "uk");
 	};
