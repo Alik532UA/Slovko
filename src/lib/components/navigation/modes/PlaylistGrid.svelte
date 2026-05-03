@@ -9,7 +9,6 @@
 		Trash2,
 		Upload,
 	} from "lucide-svelte";
-	import { settingsStore } from "$lib/stores/settingsStore.svelte";
 	import { playlistStore } from "$lib/stores/playlistStore.svelte";
 	import { notificationStore } from "$lib/stores/notificationStore.svelte";
 	import PlaylistModal from "../PlaylistModal.svelte";

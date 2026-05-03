@@ -292,7 +292,7 @@ class SyncServiceClass {
 		logService.log("sync", `Sync initialized for user: ${uid}`);
 
 		if (dev && typeof window !== "undefined") {
-			(window as any).wordApp = {
+			(window as unknown as { wordApp: unknown }).wordApp = {
 				sync: this,
 				stats: statisticsState,
 				restorePoints: (amount: number, reason: string) => this.restorePoints(amount, reason),
@@ -676,7 +676,7 @@ class SyncServiceClass {
 		};
 	}
 
-	private mergeArrays<T>(local: T[], cloud: T[], getId: (item: T) => string = (i: any) => i.id): T[] {
+	private mergeArrays<T>(local: T[], cloud: T[], getId: (item: T) => string = (i) => (i as unknown as { id: string }).id): T[] {
 		const map = new Map<string, T>();
 		cloud.forEach((item) => map.set(getId(item), item));
 		local.forEach((item) => map.set(getId(item), item));
