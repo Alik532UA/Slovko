@@ -227,7 +227,20 @@
 	.game-board { display: flex; gap: 1rem; width: 100%; max-width: 500px; height: 100%; max-height: 1000px; margin: 0 auto; padding: 1rem; position: relative; outline: none; -webkit-tap-highlight-color: transparent; user-select: none; }
 	.column { flex: 1; display: flex; flex-direction: column; gap: 0.75rem; height: 95%; }
 	.card-slot { flex: 1; min-height: 0; display: grid; place-items: stretch; }
-	.card-wrapper { grid-area: 1 / 1; width: 100%; height: 100%; display: flex; position: relative; transition: z-index 0.2s; }
+	.card-wrapper {
+		grid-area: 1 / 1;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		position: relative;
+		transition: z-index 0.2s;
+		
+		/* Постійний стан ефекту скла після завершення анімації */
+		backdrop-filter: blur(16px) saturate(180%);
+		-webkit-backdrop-filter: blur(16px) saturate(180%);
+		opacity: 1;
+		transform: scale(1) translateZ(0);
+	}
 	.card-wrapper:hover { z-index: 2; }
 	.empty-state-message { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; text-align: center; padding: 2rem; color: var(--text-secondary); font-size: 1rem; line-height: 1.5; }
 	.error-overlay { position: absolute; inset: 0; background: var(--bg-primary); display: flex; justify-content: center; align-items: center; z-index: 10; padding: 2rem; }
