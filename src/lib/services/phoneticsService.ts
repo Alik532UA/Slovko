@@ -2,6 +2,8 @@
 import { IPA_TO_CRH } from "../data/ipa-maps/map-ipa-to-crh";
 import { IPA_TO_NL } from "../data/ipa-maps/map-ipa-to-nl";
 import { IPA_TO_DE } from "../data/ipa-maps/map-ipa-to-de";
+import { IPA_TO_PL } from "../data/ipa-maps/map-ipa-to-pl";
+import { IPA_TO_EL } from "../data/ipa-maps/map-ipa-to-el";
 import type { Language } from "../types";
 
 // Pre-sort keys by length descending for greedy matching
@@ -9,6 +11,8 @@ const UK_KEYS = Object.keys(IPA_TO_UK).sort((a, b) => b.length - a.length);
 const CRH_KEYS = Object.keys(IPA_TO_CRH).sort((a, b) => b.length - a.length);
 const NL_KEYS = Object.keys(IPA_TO_NL).sort((a, b) => b.length - a.length);
 const DE_KEYS = Object.keys(IPA_TO_DE).sort((a, b) => b.length - a.length);
+const PL_KEYS = Object.keys(IPA_TO_PL).sort((a, b) => b.length - a.length);
+const EL_KEYS = Object.keys(IPA_TO_EL).sort((a, b) => b.length - a.length);
 
 /**
  * Converts an IPA string to the target language's script/sounds
@@ -35,6 +39,14 @@ export function convertIPAToTarget(ipa: string, targetLang: Language): string {
 		case "de":
 			mapping = IPA_TO_DE;
 			keys = DE_KEYS;
+			break;
+		case "pl":
+			mapping = IPA_TO_PL;
+			keys = PL_KEYS;
+			break;
+		case "el":
+			mapping = IPA_TO_EL;
+			keys = EL_KEYS;
 			break;
 		case "en":
 			// English users see raw IPA (linguistic standard)

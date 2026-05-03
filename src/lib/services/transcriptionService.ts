@@ -11,12 +11,7 @@ import { generateNlIPA } from "./transcription/nl";
 import { generateDeIPA } from "./transcription/de";
 import { generateElIPA } from "./transcription/el";
 import { generatePlIPA } from "./transcription/pl";
-import { mapIpaToUk } from "./transcription/mappers/ipa-to-uk";
-import { mapIpaToNl } from "./transcription/mappers/ipa-to-nl";
-import { mapIpaToPl } from "./transcription/mappers/ipa-to-pl";
-import { mapIpaToEl } from "./transcription/mappers/ipa-to-el";
-import { mapIpaToCrh } from "./transcription/mappers/ipa-to-crh";
-import { mapIpaToDe } from "./transcription/mappers/ipa-to-de";
+import { convertIPAToTarget } from "./phoneticsService";
 
 /**
  * Генерує транскрипцію (легасі) або повертає undefined.
@@ -60,15 +55,7 @@ export function generateRulesIPA(
                 if (!ipa) return undefined;
 
                 // Крок 2: Мапимо IPA на символи мови інтерфейсу (Народна транскрипція)
-                if (uiLang === "uk") return mapIpaToUk(ipa);
-                if (uiLang === "nl") return mapIpaToNl(ipa);
-                if (uiLang === "pl") return mapIpaToPl(ipa);
-                if (uiLang === "el") return mapIpaToEl(ipa);
-                if (uiLang === "crh") return mapIpaToCrh(ipa);
-                if (uiLang === "de") return mapIpaToDe(ipa);
-
-                // Fallback: якщо мапера немає, повертаємо чистий IPA
-                return ipa;
+                return convertIPAToTarget(ipa, uiLang);
         } catch (e) {
                 logService.warn("debug", `IPA Generation failed for ${lang} (UI: ${uiLang}):`, e);
                 return undefined;
