@@ -2,7 +2,7 @@
  * IPA to Greek (el) mapping
  * Maps IPA sounds to Greek letters
  */
-export const ipaToElMap: Record<string, string> = {
+export const IPA_TO_EL: Record<string, string> = {
 	a: "α",
 	b: "μπ",
 	d: "δ",
