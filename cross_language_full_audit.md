@@ -1,14 +1,14 @@
 # 📊 Звіт про повну неузгодженість перекладів
 
 Аналіз проведено для мов: **en, uk, el, nl, de, crh, pl**
-Дата: 2026-05-03
+Дата: 2026-05-04
 
 | Ключ | Проблеми | EN | UK | EL | NL | DE | CRH | PL |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | `have_auxiliary` | [uk] Порушення правила суфікса: містить пояснення в дужках. | have auxiliary | мати (допом.) | έχω | hebben | haben | sahip olmaq | mieć |
 | `neither` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | neither | ні той, ні інший | ούτε | noch | weder | ne ... ne de | ani |
 | `used_to` | [uk] Порушення правила суфікса: містить пояснення в дужках. | used to | раніше (робив) | συνήθιζα | vroeger | pflegte zu | yapmaqta edim | kiedyś |
-| `highly_position` | [uk] Порушення правила суфікса: містить пояснення в дужках. | position | високо (в ієрархії) | ψηλά | hooggeplaatst | hochrangig | üstün | wysoko |
+| `highly_position` | [uk] Порушення правила суфікса: містить пояснення в дужках. | highly | високо (в ієрархії) | ψηλά | hooggeplaatst | hochrangig | üstün | wysoko |
 | `throughout` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | throughout | по всьому | καθ' όλη τη διάρκεια | doorheen | durchaus | boyunca | przez |
 | `overlook` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | overlook | не помічати | παραβλέπω | over het hoofd zien | übersehen | közden qaçırmaq | przeoczyć |
 | `abstruse` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | abstruse | незрозумілий | δυσνόητος | ondoordringbaar | abstrus | añlaması qıyın | zawiły / trudny do zrozumienia |
@@ -33,7 +33,7 @@
 | `divert` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | divert | відволікати / відводити | αποσπώ την προσοχή / εκτρέπω | afleiden / omleiden | ablenken / umleiten | başqa yaqqa çevirmek / yolunı deñiştirmek | odwracać uwagę / kierować ruchem |
 | `dwindle` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | dwindle | скорочуватися | φθίνω | slinken | schwinden | eksiltmek | kurczyć się / zanikać |
 | `embark` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | embark | починати справу | ξεκινώ | beginnen | beginnen | başlamaq | podejmować się / wyruszać в |
-| `endorse` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | endorse candidate / endorse | схвалювати | υποστηρίζω υποψήφιο / προσυπογράφω | onderschrijven | unterstützen / befürworten | desteklemek | poprzeć kandydata / popierać / zatwierdzać |
+| `endorse` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | endorse | схвалювати | υποστηρίζω υποψήφιο / προσυπογράφω | onderschrijven | unterstützen / befürworten | desteklemek | poprzeć kandydata / popierać / zatwierdzać |
 | `entail` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | entail | тягнути за собою | συνεπάγομαι | betekenen | mit sich bringen | masraf kerekirmek | pociągać za sobą koszty |
 | `exclude` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | exclude | виключати | αποκλείω | uitsluiten | ausschließen | çıqarmaq | wykluczać / nie dopuszczać |
 | `globe` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | globe | глобус / земна куля | υδρόγειος | werbol | Globus | küre | globus |
@@ -50,12 +50,13 @@
 | `arise` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | arise | виникати | προκύπτω | ontstaan | entstehen | meydana çıqmaq | powstawać / pojawiać się |
 | `abolish` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | abolish | скасовувати / ліквідовувати | καταργώ | afschaffen / opheffen | abschaffen / aufheben | bitirmek / yoq etmek | znosić / obalać |
 | `accede` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | accede | погоджуватися | συγκατατίθεμαι | instemmen | beitreten | razı olmaq | przystępować / zgadzać się |
+| `administer` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | administer | здійснювати правосуддя / керувати | απονέμω δικαιοσύνη / διοικώ | recht spreken / beheren | Recht sprechen / verwalten | adaletni yerine ketirmek / idare etmek | wymierzać sprawiedliwość / zarządzać |
 | `advocate` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | advocate | захисник / відстоювати / адвокат | συνήγορος / υποστηρίζω σκοπό / υποστηρικτής / υποστηρίζω | voorstander / pleiten voor / bepleiten | Befürworter / befürworten | qorçalayıcı / qorçalamaq / mudafaa etmek | rzecznik / obrońca / popierać sprawę / adwokat / popierać / orędować |
 | `apprise` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | apprise | повідомляти | ενημερώνω | op de hoogte stellen | unterrichten | bildirmek | powiadamiać / informować |
 | `articulate` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | articulate | чіткий / виразний / чітко формулювати | εύγλωττος / εκφέρω | duidelijk / verwoorden | artikuliert / artikulieren | açıq / açıq aytmaq | artykułowany / wyraźny / jasno wysławiać się |
 | `assemble` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | assemble | збирати | συγκροτώ | verzamelen | versammeln | toplamaq | montować zespół / gromadzić |
-| `assert` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | assert / assert rights | стверджувати / відстоювати | ισχυρίζομαι / διεκδικώ δικαιώματα | beweren | behaupten / geltend machen | iddia etmek | twierdzić / dochodzić roszczeń / dochodzić praw |
-| `attribute` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | attribute quality / attribute | приписувати | αποδίδω ποιότητα / αποδίδω | toeschrijven | zuschreiben | atf etmek / bağlamaq | przypisywać cechę / przypisywać źródło |
+| `assert` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | assert | стверджувати / відстоювати | ισχυρίζομαι / διεκδικώ δικαιώματα | beweren | behaupten / geltend machen | iddia etmek | twierdzić / dochodzić roszczeń / dochodzić praw |
+| `attribute` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | attribute | приписувати | αποδίδω ποιότητα / αποδίδω | toeschrijven | zuschreiben | atf etmek / bağlamaq | przypisywać cechę / przypisywać źródło |
 | `banish` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | banish | виганяти | εξορίζω | verbannen | verbannen | quvmaq | wygnać / skazać na banicję |
 | `collaborate` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | collaborate | співпрацювати | συνεργάζομαι σε έργο / συνεργάζομαι | samenwerken | zusammenarbeiten | işbirligi yapmaq / beraber çalışmaq | współpracować przy projekcie / współpracować |
 | `compensate` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | compensate | компенсувати | αποζημιώνω για απώλεια / αποζημιώνω | compenseren | kompensieren / entschädigen | zararnı ödemek / tölemek | rekompensować stratę / rekompensować / wynagradzać |
@@ -76,9 +77,13 @@
 | `insider` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | insider | інсайдер | γνώστης εκ των έσω | insider | Insider | içten kimese | informator |
 | `slash` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | slash | коса риска / скорочувати | κάθετος | schuine streep | Schrägstrich | sızıq | ukośnik |
 | `sophomore` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | sophomore | другокурсник | δευτεροετής | tweedejaars | Student im zweiten Jahr | ekinci курс talebesi | student drugiego roku |
+| `strip` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | strip | смужка / роздягатися | λωρίδα / γδύνομαι | strip / uitkleden | Streifen / ausziehen | yırtma / soyulmaq | pasek / rozbierać się |
 | `subtle` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | subtle | витончений / ледь помітний | διακριτικός | subtiel | subtil | ince | subtelny |
 | `suite` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | suite | номер люкс / набір | σουίτα | suite | Suite | suit | apartament |
 | `tenure` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | tenure | термін перебування на посаді | θητεία | ambtstermijn | Amtszeit | vazife müddeti | kadencja |
 | `whilst` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | whilst | в той час як | ενώ | terwijl | während | eken | podczas gdy |
 | `affiliate` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | affiliate | філія | θυγατρική | aansluiten | anschließen | şube | podmiot stowarzyszony / filia |
 | `alternate` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | alternate | чергувати | εναλλακτικός | afwisselen | wechseln | nevbetleşmek | naprzemienny / zmieniać się |
+| `adj.` | Відсутні переклади: en | ❌ | прикм. | επίθ. | bijv. nw. | Adj. | sif. | przym. |
+| `v.` | Відсутні переклади: en | ❌ | дієсл. | ρήμα | ww. | V. | fiil | czas. |
+| `n.` | Відсутні переклади: en | ❌ | імен. | ουσ. | znw. | N. | is. | rzecz. |
