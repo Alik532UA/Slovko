@@ -304,6 +304,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "bank",
 		specific: ["bank_finance", "bank_river"]
 	},
+	bargain: {
+		base: "bargain",
+		specific: ["bargain_deal", "bargain_purchase", "bargain_negotiate"]
+	},
 	base: {
 		base: "base",
 		specific: ["base_foundation", "base_military"]
@@ -407,7 +411,7 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 
 	cast: {
 		base: "cast",
-		specific: ["cast_actors", "cast_throw", "cast_medical"]
+		specific: ["cast_actors", "cast_throw", "cast_medical", "cast_shape"]
 	},
 	catch_up: {
 		base: "catch_up",
@@ -946,7 +950,7 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	},
 	divert: {
 		base: "divert",
-		specific: ["divert_attention", "divert_traffic"]
+		specific: ["divert_attention", "divert_traffic", "divert_amuse"]
 	},
 	divulge: {
 		base: "divulge",
@@ -1347,6 +1351,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "glass",
 		specific: ["glass_cup", "glass_material"]
 	},
+	globe: {
+		base: "globe",
+		specific: ["globe_earth", "globe_model"]
+	},
 	go: {
 		base: "go",
 		specific: ["go_foot", "go_on", "go_out", "go_vehicle"]
@@ -1463,6 +1471,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	initiate: {
 		base: "initiate",
 		specific: ["initiate_start"]
+	},
+	input: {
+		base: "input",
+		specific: ["input_data", "input_contribution"]
 	},
 	interpret: {
 		base: "interpret",
@@ -1716,6 +1728,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 		base: "opinion",
 		specific: ["opinion_belief", "opinion_view"]
 	},
+	oppose: {
+		base: "oppose",
+		specific: ["oppose_resist", "oppose_contrast"]
+	},
 
 	option: {
 		base: "option",
@@ -1740,6 +1756,14 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	our: {
 		base: "our",
 		specific: ["our_possessive"]
+	},
+	overlook: {
+		base: "overlook",
+		specific: ["overlook_miss", "overlook_view"]
+	},
+	overnight: {
+		base: "overnight",
+		specific: ["overnight_duration", "overnight_sudden"]
 	},
 	paint: {
 		base: "paint",
@@ -1793,7 +1817,7 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 
 	pitch: {
 		base: "pitch",
-		specific: ["pitch_sound", "pitch_field", "pitch_throw"]
+		specific: ["pitch_sound", "pitch_field", "pitch_throw", "pitch_sales", "pitch_setup"]
 	},
 
 	plain: {
@@ -1811,6 +1835,10 @@ export const semanticHierarchy: Record<string, SemanticGroup> = {
 	post: {
 		base: "post",
 		specific: ["post_office", "post_verb"]
+	},
+	pose: {
+		base: "pose",
+		specific: ["pose_position", "pose_model", "pose_question"]
 	},
 	power: {
 		base: "power",

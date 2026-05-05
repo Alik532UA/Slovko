@@ -1,14 +1,11 @@
 # 📊 Звіт про повну неузгодженість перекладів
 
 Аналіз проведено для мов: **en, uk, el, nl, de, crh, pl**
-Дата: 2026-05-04
+Дата: 2026-05-05
 
 | Ключ | Проблеми | EN | UK | EL | NL | DE | CRH | PL |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `have_auxiliary` | [uk] Порушення правила суфікса: містить пояснення в дужках. | have auxiliary | мати (допом.) | έχω | hebben | haben | sahip olmaq | mieć |
 | `neither` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | neither | ні той, ні інший | ούτε | noch | weder | ne ... ne de | ani |
-| `used_to` | [uk] Порушення правила суфікса: містить пояснення в дужках. | used to | раніше (робив) | συνήθιζα | vroeger | pflegte zu | yapmaqta edim | kiedyś |
-| `highly_position` | [uk] Порушення правила суфікса: містить пояснення в дужках. | highly | високо (в ієрархії) | ψηλά | hooggeplaatst | hochrangig | üstün | wysoko |
 | `throughout` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | throughout | по всьому | καθ' όλη τη διάρκεια | doorheen | durchaus | boyunca | przez |
 | `overlook` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | overlook | не помічати | παραβλέπω | over het hoofd zien | übersehen | közden qaçırmaq | przeoczyć |
 | `abstruse` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | abstruse | незрозумілий | δυσνόητος | ondoordringbaar | abstrus | añlaması qıyın | zawiły / trudny do zrozumienia |
@@ -17,7 +14,6 @@
 | `allude` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | allude | натякати | υπαινίσσομαι | zinspelen | anspielen | işaret etmek | robić aluzję / nawiązywać |
 | `amiss` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | amiss | не так | στραβά | verkeerd | falsch | yañlıш | nie tak / niewłaściwie |
 | `amphibian` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | amphibian | амфібія | αμφίβιο | amfibie | Amphibie | suvda ve quruda yaşağan | płaz / amfibia |
-| `bargain` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | bargain | угода / вигідна покупка | ευκαιρία | koopje | Schnäppchen | pazarlıq | okazja |
 | `cast` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | cast | акторський склад / кидати | θίασος | cast | Besetzung | taqım | obsada |
 | `cease` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | cease | припиняти | παύω | stoppen | aufhören | toqtatmaq | przerwać ogień / zaprzestać / przerwać |
 | `coincide` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | coincide | збігатися | συμπίπτουν / συμπίπτω | samenvallen | übereinstimmen | uymaq | zbiegać się в czasie / zbiegać się |
@@ -36,12 +32,8 @@
 | `endorse` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | endorse | схвалювати | υποστηρίζω υποψήφιο / προσυπογράφω | onderschrijven | unterstützen / befürworten | desteklemek | poprzeć kandydata / popierać / zatwierdzać |
 | `entail` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | entail | тягнути за собою | συνεπάγομαι | betekenen | mit sich bringen | masraf kerekirmek | pociągać za sobą koszty |
 | `exclude` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | exclude | виключати | αποκλείω | uitsluiten | ausschließen | çıqarmaq | wykluczać / nie dopuszczać |
-| `globe` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | globe | глобус / земна куля | υδρόγειος | werbol | Globus | küre | globus |
-| `input` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | input | введення / вхідні дані | εισροή | input | Eingabe | kiris | wkład |
-| `oppose` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | oppose | протистояти | αντιτίθεμαι | bestrijden | sich widersetzen | qarşı çıqmaq | sprzeciwiać się / stawiać opór |
-| `overnight` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | overnight | на ніч / раптово | ολονύχτιος | overnacht | über Nacht | geceleyin | przez noc |
+| `overnight` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | overnight | на ніч | κατά τη διάρκεια της νύχτας | overnacht | über Nacht | geceleyin | przez noc |
 | `pitch` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | pitch | висота звуку / подача | ύψος | toonhoogte | Tonhöhe | adım | boisko / wysokość dźwięku |
-| `pose` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | pose | поза / ставити запитання | ποζάρω | poseren | Haltung / darstellen | poz | pozować / stanowić |
 | `renounce` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | renounce | відмовлятися | απαρνούμαι | afzien van | verzichten | vazgeçmek | wyrzekać się / rezygnować |
 | `somehow` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | somehow | якось | κάπως | op de een of andere manier | irgendwie | nasıl olsa | jakoś |
 | `tailor` | Семантичний розрив: частина мов переклала одним словом, частина - цілою фразою. | tailor | пристосовувати | προσαρμόζω | aanpassen | anpassen | uyğunlaştırmaq | dostosowywać / szycie na miarę |

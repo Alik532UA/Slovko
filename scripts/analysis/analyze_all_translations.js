@@ -12,7 +12,19 @@ function scanDir(dir, lang) {
 		if (fs.statSync(fullPath).isDirectory()) {
 			scanDir(fullPath, lang);
 		} else if (item.endsWith(".json")) {
-			const content = JSON.parse(fs.readFileSync(fullPath, "utf8"));
+			// console.log(`Processing ${fullPath}`);
+			let raw = fs.readFileSync(fullPath, "utf8");
+			// Strip BOM if present
+			if (raw.charCodeAt(0) === 0xFEFF) {
+				raw = raw.slice(1);
+			}
+			let content;
+			try {
+				content = JSON.parse(raw);
+			} catch (e) {
+				console.error(`Error parsing ${fullPath}: ${e.message}`);
+				throw e;
+			}
 
 			// Завантажуємо англійський відповідник для порівняння
 			let enContent = {};
@@ -21,7 +33,11 @@ function scanDir(dir, lang) {
 				path.join(baseDir, "en"),
 			);
 			if (fs.existsSync(enPath)) {
-				enContent = JSON.parse(fs.readFileSync(enPath, "utf8"));
+				let enRaw = fs.readFileSync(enPath, "utf8");
+				if (enRaw.charCodeAt(0) === 0xFEFF) {
+					enRaw = enRaw.slice(1);
+				}
+				enContent = JSON.parse(enRaw);
 			}
 
 			for (const [key, value] of Object.entries(content)) {
