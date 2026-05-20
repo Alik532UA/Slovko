@@ -1,6 +1,6 @@
 ﻿import { ref, onValue, set, onDisconnect, serverTimestamp, onChildAdded, remove, query, orderByChild, limitToLast, type Unsubscribe, push, startAt } from "firebase/database";
 import { rtdb, auth } from "./config";
-import { logService } from "../services/logService.svelte";
+import { logService } from "../../services/logService.svelte";
 
 export type OnlineStatus = "online" | "offline";
 
@@ -432,7 +432,7 @@ class PresenceServiceClass {
 	}
 
 	private async handleFriendOnline(uid: string) {
-		const { friendsStore } = await import("../stores/friendsStore.svelte");
+		const { friendsStore } = await import("../../controllers/FriendsStore.svelte");
 		const profile = await friendsStore.getProfile(uid);
 		if (profile) {
 			this.addInteraction({

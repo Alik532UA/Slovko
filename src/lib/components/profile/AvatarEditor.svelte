@@ -19,7 +19,7 @@
 	import { logService } from "../../services/logService.svelte";
 	import { THEME_COLORS } from "../../config/colors";
 	import { untrack } from "svelte";
-	import { authStore } from "../../firebase/authStore.svelte";
+	import { authStore } from "../../controllers/AuthStore.svelte";
 	import { LANGUAGES } from "../../i18n/init";
 	import { base } from "$app/paths";
 
@@ -101,7 +101,7 @@
 			{:else if selectedColor.startsWith("flag-")}
 				{@const lang = selectedColor.replace("flag-", "")}
 				<div class="flag-bg-wrapper">
-					<img src="{base}/flags/{lang}.svg" alt={lang} class="flag-bg-img" />
+					<img src="{base}/svg/flags/{lang}.svg" alt={lang} class="flag-bg-img" />
 				</div>
 				{#if Icon}
 					<Icon size={86} color="white" />
@@ -137,7 +137,7 @@
 					aria-label="Flag {lang}"
 					data-testid="color-btn-flag-{lang}"
 				>
-					<img src="{base}/flags/{lang}.svg" alt={lang} class="flag-choice-img" />
+					<img src="{base}/svg/flags/{lang}.svg" alt={lang} class="flag-choice-img" />
 				</button>
 			{/each}
 
@@ -170,7 +170,7 @@
 														{#if selectedColor.startsWith("flag-")}
 															{@const lang = selectedColor.replace("flag-", "")}
 															<div class="flag-bg-wrapper">
-																<img src="{base}/flags/{lang}.svg" alt={lang} class="flag-bg-img" />
+																<img src="{base}/svg/flags/{lang}.svg" alt={lang} class="flag-bg-img" />
 															</div>
 														{/if}
 					

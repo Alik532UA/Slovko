@@ -4,7 +4,7 @@
  */
 
 import { browser } from "$app/environment";
-import { SyncService } from "../firebase/SyncService.svelte";
+import { SyncService } from "../services/firebase/SyncService.svelte";
 import { localStorageProvider } from "../services/storage/storageProvider";
 import { logService } from "../services/logService.svelte";
 import {

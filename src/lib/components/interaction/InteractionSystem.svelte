@@ -2,9 +2,9 @@
 	import {
 		PresenceService,
 		type InteractionEvent,
-	} from "$lib/firebase/PresenceService.svelte";
-	import { localEventsStore } from "$lib/stores/localEventsStore.svelte";
-	import { authStore } from "$lib/firebase/authStore.svelte";
+	} from "$lib/services/firebase/PresenceService.svelte";
+	import { localEventsStore } from "$lib/controllers/LocalEventsStore.svelte";
+	import { authStore } from "$lib/controllers/AuthStore.svelte";
 	import InteractionCapsule from "./InteractionCapsule.svelte";
 	import StatsModal from "../settings/StatsModal.svelte";
 	import { flip } from "svelte/animate";
@@ -48,7 +48,7 @@
 						showStatsModal = true;
 					} else if (event.type === "new_follower") {
 						const { FriendsService } =
-							await import("$lib/firebase/FriendsService");
+							await import("$lib/services/firebase/FriendsService");
 						await FriendsService.follow(event.uid, {
 							displayName: event.profile.name,
 							photoURL: event.profile.photoURL,

@@ -6,7 +6,7 @@
 	 */
 	import { _ } from "svelte-i18n";
 	import { Check } from "lucide-svelte";
-	import { settingsStore } from "$lib/stores/settingsStore.svelte";
+	import { settingsStore } from "$lib/controllers/SettingsStore.svelte";
 	import { logService } from "$lib/services/logService.svelte";
 	import type { Language } from "$lib/types/index";
 	import { findBestVoice } from "$lib/services/speechService";

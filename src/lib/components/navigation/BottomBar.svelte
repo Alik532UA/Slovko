@@ -4,11 +4,11 @@
 	 * ← (рівень/тема) →
 	 */
 	import { ChevronLeft, ChevronRight } from "lucide-svelte";
-	import { settingsStore } from "$lib/stores/settingsStore.svelte";
+	import { settingsStore } from "$lib/controllers/SettingsStore.svelte";
 	import { goto } from "$app/navigation";
 	import { _ } from "svelte-i18n";
 	import { ALL_LEVELS, ALL_TOPICS, ALL_TENSES, type CEFRLevel } from "$lib/types/index";
-	import { playlistStore } from "$lib/stores/playlistStore.svelte";
+	import { playlistStore } from "$lib/controllers/PlaylistStore.svelte";
 	import BaseTooltip from "../ui/BaseTooltip.svelte";
 	import { navigationState } from "$lib/controllers/NavigationState.svelte";
 

@@ -3,8 +3,8 @@
 	import { Target, Trophy } from "lucide-svelte";
 	import { navigationState } from "../../controllers/NavigationState.svelte";
 	import { page } from "$app/stores";
-	import { authStore } from "../../firebase/authStore.svelte";
-	import { progressStore } from "../../stores/progressStore.svelte";
+	import { authStore } from "../../controllers/AuthStore.svelte";
+	import { progressStore } from "../../controllers/ProgressStore.svelte";
 
 	// Sub-components
 	import ProfileStats from "../profile/ProfileStats.svelte";
@@ -13,7 +13,7 @@
 	import ErrorBoundary from "../ui/ErrorBoundary.svelte";
 	import BaseModal from "../ui/BaseModal.svelte";
 	import SegmentedControl from "../ui/SegmentedControl.svelte";
-	import { smoothHeight } from "../../actions/smoothHeight";
+	import { smoothHeight } from "../../utils/actions/smoothHeight";
 
 	interface Props {
 		onclose: () => void;

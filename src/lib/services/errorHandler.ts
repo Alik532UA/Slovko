@@ -1,5 +1,5 @@
 ﻿import { logService } from "./logService.svelte";
-import { notificationStore } from "../stores/notificationStore.svelte";
+import { notificationStore } from "../controllers/NotificationStore.svelte";
 
 interface ErrorOptions {
 	showToast?: boolean;

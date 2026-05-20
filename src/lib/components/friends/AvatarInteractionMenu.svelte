@@ -1,13 +1,13 @@
 ﻿<script lang="ts">
 	import { Hand, UserPlus, UserCheck, Loader2 } from "lucide-svelte";
-	import { PresenceService } from "$lib/firebase/PresenceService.svelte";
-	import { FriendsService } from "$lib/firebase/FriendsService";
-	import { friendsStore } from "$lib/stores/friendsStore.svelte";
-	import { authStore } from "$lib/firebase/authStore.svelte";
+	import { PresenceService } from "$lib/services/firebase/PresenceService.svelte";
+	import { FriendsService } from "$lib/services/firebase/FriendsService";
+	import { friendsStore } from "$lib/controllers/FriendsStore.svelte";
+	import { authStore } from "$lib/controllers/AuthStore.svelte";
 	import { _ } from "svelte-i18n";
 	import { fade } from "svelte/transition";
 	import { onMount, tick } from "svelte";
-	import { portal } from "$lib/actions/portal";
+	import { portal } from "$lib/utils/actions/portal";
 
 	interface Props {
 		uid: string;

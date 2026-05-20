@@ -1,6 +1,6 @@
-﻿import type { gameState as GameStateType } from "../stores/gameState.svelte";
-import { settingsStore } from "../stores/settingsStore.svelte";
-import { playlistStore } from "../stores/playlistStore.svelte";
+﻿import type { gameState as GameStateType } from "../controllers/GameState.svelte";
+import { settingsStore } from "../controllers/SettingsStore.svelte";
+import { playlistStore } from "../controllers/PlaylistStore.svelte";
 import { logService } from "./logService.svelte";
 import {
 	gameDataService,
@@ -309,7 +309,7 @@ export class GameController {
 	}
 }
 
-import { gameState } from "../stores/gameState.svelte";
+import { gameState } from "../controllers/GameState.svelte";
 
 export const gameController = new GameController(
 	gameState,

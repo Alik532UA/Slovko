@@ -1,8 +1,8 @@
 ﻿<script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { Send, AlertTriangle, CheckCircle2 } from "lucide-svelte";
-	import { FeedbackService } from "$lib/firebase/FeedbackService";
-	import { notificationStore } from "$lib/stores/notificationStore.svelte";
+	import { FeedbackService } from "$lib/services/firebase/FeedbackService";
+	import { notificationStore } from "$lib/controllers/NotificationStore.svelte";
 	import { fade } from "svelte/transition";
 	import BaseModal from "../ui/BaseModal.svelte";
 

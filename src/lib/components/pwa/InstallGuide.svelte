@@ -2,7 +2,7 @@
 	import { _ } from "svelte-i18n";
 	import { Share, PlusSquare, MoreVertical, MonitorDown, Grid2X2Plus, AlertCircle } from "lucide-svelte";
 	import BaseModal from "../ui/BaseModal.svelte";
-	import { pwaStore } from "../../stores/pwaStore.svelte";
+	import { pwaStore } from "../../controllers/PwaStore.svelte";
 	import { browser } from "$app/environment";
 
 	interface Props {

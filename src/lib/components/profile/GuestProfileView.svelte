@@ -1,7 +1,7 @@
 ﻿<script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { ShieldAlert } from "lucide-svelte";
-	import { authStore } from "../../firebase/authStore.svelte";
+	import { authStore } from "../../controllers/AuthStore.svelte";
 
 	interface Props {
 		isLinking: boolean;

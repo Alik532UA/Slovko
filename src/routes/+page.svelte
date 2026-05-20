@@ -3,7 +3,7 @@
 	 * Головна сторінка — Режим з'єднування пар
 	 */
 	import { _ } from "svelte-i18n";
-	import { settingsStore } from "$lib/stores/settingsStore.svelte";
+	import { settingsStore } from "$lib/controllers/SettingsStore.svelte";
 	import type { PageData } from "./$types";
 	import GameBoard from "$lib/components/game/GameBoard.svelte";
 	import GameStats from "$lib/components/game/GameStats.svelte";

@@ -2,8 +2,8 @@
 	import { _ } from "svelte-i18n";
 	import { LayoutGrid, Users, TriangleAlert } from "lucide-svelte";
 	import { logService } from "../../services/logService.svelte";
-	import { authStore } from "../../firebase/authStore.svelte";
-	import { AuthService } from "../../firebase/AuthService";
+	import { authStore } from "../../controllers/AuthStore.svelte";
+	import { AuthService } from "../../services/firebase/AuthService";
 	import { page } from "$app/stores";
 	import { navigationState } from "../../controllers/NavigationState.svelte";
 
@@ -16,7 +16,7 @@
 	import ErrorBoundary from "../ui/ErrorBoundary.svelte";
 	import ProfileHeader from "../profile/ProfileHeader.svelte";
 	import EmailAuthForm from "../profile/EmailAuthForm.svelte";
-	import { smoothHeight } from "../../actions/smoothHeight";
+	import { smoothHeight } from "../../utils/actions/smoothHeight";
 	import BaseModal from "../ui/BaseModal.svelte";
 	import SegmentedControl from "../ui/SegmentedControl.svelte";
 
@@ -127,7 +127,7 @@
 		successMessage = "";
 		try {
 			const { sendPasswordResetEmail } = await import("firebase/auth");
-			const { auth } = await import("$lib/firebase/config");
+			const { auth } = await import("$lib/services/firebase/config");
 			await sendPasswordResetEmail(auth, email);
 			successMessage = $_("profile.passwordResetSent");
 			setTimeout(() => {

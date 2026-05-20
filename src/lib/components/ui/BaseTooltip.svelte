@@ -1,7 +1,7 @@
 ﻿<script lang="ts">
 	import { fade } from "svelte/transition";
 	import { browser } from "$app/environment";
-	import { portal } from "$lib/actions/portal";
+	import { portal } from "$lib/utils/actions/portal";
 	import type { Snippet } from "svelte";
 
 	interface Props {

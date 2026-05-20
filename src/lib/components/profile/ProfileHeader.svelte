@@ -20,8 +20,8 @@
 		Zap,
 		Target,
 	} from "lucide-svelte";
-	import { authStore } from "../../firebase/authStore.svelte";
-	import { friendsStore } from "../../stores/friendsStore.svelte";
+	import { authStore } from "../../controllers/AuthStore.svelte";
+	import { friendsStore } from "../../controllers/FriendsStore.svelte";
 	import { logService } from "../../services/logService.svelte";
 
 	interface Props {
@@ -99,7 +99,7 @@
 				{#if isFlag}
 					{@const lang = rawColor.replace("flag-", "")}
 					<div class="flag-bg-wrapper">
-						<img src="{base}/flags/{lang}.svg" alt="" class="flag-bg-img" loading="lazy" width="100%" height="100%" />
+						<img src="{base}/svg/flags/{lang}.svg" alt="" class="flag-bg-img" loading="lazy" width="100%" height="100%" />
 					</div>
 				{/if}
 				{#if Icon}

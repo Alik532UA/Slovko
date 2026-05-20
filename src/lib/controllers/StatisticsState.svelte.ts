@@ -7,9 +7,9 @@
 	doc,
 	getDoc,
 } from "firebase/firestore";
-import { db, auth } from "../firebase/config";
+import { db, auth } from "../services/firebase/config";
 import { logService } from "../services/logService.svelte";
-import { progressStore } from "../stores/progressStore.svelte";
+import { progressStore } from "../controllers/ProgressStore.svelte";
 import { 
 	type DailyActivity, 
 	type LevelStats,

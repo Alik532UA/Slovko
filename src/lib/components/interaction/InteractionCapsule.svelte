@@ -1,5 +1,5 @@
 ﻿<script lang="ts">
-	import type { InteractionEvent } from "$lib/firebase/PresenceService.svelte";
+	import type { InteractionEvent } from "$lib/services/firebase/PresenceService.svelte";
 	import { _ } from "svelte-i18n";
 	import UserAvatar from "../friends/UserAvatar.svelte";
 	import { slide, scale } from "svelte/transition";

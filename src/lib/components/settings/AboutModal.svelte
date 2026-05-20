@@ -3,9 +3,9 @@
 	 * AboutModal — Про проєкт
 	 */
 	import { _ } from "svelte-i18n";
-	import { versionStore } from "$lib/stores/versionStore.svelte";
+	import { versionStore } from "$lib/controllers/VersionStore.svelte";
 	import { hardReset } from "$lib/services/resetService";
-	import { pwaStore } from "$lib/stores/pwaStore.svelte";
+	import { pwaStore } from "$lib/controllers/PwaStore.svelte";
 	import { Download, Instagram, Facebook, Linkedin } from "lucide-svelte";
 	import ThreadsIcon from "../ui/icons/ThreadsIcon.svelte";
 	import FeedbackModal from "./FeedbackModal.svelte";

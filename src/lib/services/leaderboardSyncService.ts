@@ -1,6 +1,6 @@
-﻿import { FriendsService } from "../firebase/FriendsService";
+﻿import { FriendsService } from "../services/firebase/FriendsService";
 import { logService } from "./logService.svelte";
-import { db } from "../firebase/config";
+import { db } from "../services/firebase/config";
 import { doc, getDoc } from "firebase/firestore";
 
 // Назви колекцій (використовуємо прямі значення, як і в інших сервісах)

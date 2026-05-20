@@ -2,13 +2,13 @@
 	import { onMount } from "svelte";
 	import { fade, fly } from "svelte/transition";
 	import { waitLocale, _ } from "svelte-i18n";
-	import { settingsStore } from "$lib/stores/settingsStore.svelte";
+	import { settingsStore } from "$lib/controllers/SettingsStore.svelte";
 	import { setInterfaceLanguage, LANGUAGES } from "$lib/i18n/init";
 	import { LANGUAGE_NAMES, type Language } from "$lib/types/index";
 	import { base } from "$app/paths";
 	import { Languages, Speech, Captions, Download, UserCheck, Heart, GraduationCap, Lightbulb } from "lucide-svelte";
 	import BaseModal from "$lib/components/ui/BaseModal.svelte";
-	import { pwaStore } from "$lib/stores/pwaStore.svelte";
+	import { pwaStore } from "$lib/controllers/PwaStore.svelte";
 	import InstallGuide from "../pwa/InstallGuide.svelte";
 	import { gameController } from "$lib/services/gameController";
 
@@ -177,7 +177,7 @@
 									(step === 2 && lang === settingsStore.value.targetLanguage)}
 								data-testid="onboarding-flag-{lang}"
 							>
-								<img src="{base}/flags/{lang}.svg" alt={LANGUAGE_NAMES[lang]} loading="lazy" width="80" height="54" />
+								<img src="{base}/svg/flags/{lang}.svg" alt={LANGUAGE_NAMES[lang]} loading="lazy" width="80" height="54" />
 								<span>{LANGUAGE_NAMES[lang]}</span>
 							</button>
 						{/each}

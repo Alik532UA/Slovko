@@ -5,7 +5,7 @@
 	 */
 	import { _ } from "svelte-i18n";
 	import { Speech, Captions } from "lucide-svelte";
-	import { settingsStore } from "$lib/stores/settingsStore.svelte";
+	import { settingsStore } from "$lib/controllers/SettingsStore.svelte";
 	import { logService } from "$lib/services/logService.svelte";
 	import VoiceSelectionModal from "./VoiceSelectionModal.svelte";
 	import { setInterfaceLanguage, LANGUAGES } from "$lib/i18n/init";
@@ -191,7 +191,7 @@
 							data-testid="interface-lang-{lang}"
 						>
 							<img
-								src="{base}/flags/{lang}.svg"
+								src="{base}/svg/flags/{lang}.svg"
 								alt=""
 								class="flag-img"
 								loading="lazy"
@@ -237,7 +237,7 @@
 									data-testid="source-lang-{lang}"
 								>
 									<img
-										src="{base}/flags/{lang}.svg"
+										src="{base}/svg/flags/{lang}.svg"
 										alt=""
 										class="flag-img"
 										loading="lazy"
@@ -312,7 +312,7 @@
 									data-testid="target-lang-{lang}"
 								>
 									<img
-										src="{base}/flags/{lang}.svg"
+										src="{base}/svg/flags/{lang}.svg"
 										alt=""
 										class="flag-img"
 										loading="lazy"

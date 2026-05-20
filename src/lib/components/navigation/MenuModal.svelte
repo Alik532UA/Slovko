@@ -18,8 +18,8 @@
 		TriangleAlert,
 		Layers,
 	} from "lucide-svelte";
-	import { SyncService } from "$lib/firebase/SyncService.svelte";
-	import { authStore } from "$lib/firebase/authStore.svelte";
+	import { SyncService } from "$lib/services/firebase/SyncService.svelte";
+	import { authStore } from "$lib/controllers/AuthStore.svelte";
 
 	interface Props {
 		onclose: () => void;

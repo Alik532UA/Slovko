@@ -1,5 +1,5 @@
 ﻿<script lang="ts">
-	import { notificationStore } from "$lib/stores/notificationStore.svelte";
+	import { notificationStore } from "$lib/controllers/NotificationStore.svelte";
 	import { logService } from "$lib/services/logService.svelte";
 	import { X, ClipboardCopy } from "lucide-svelte";
 	import { fade, fly } from "svelte/transition";

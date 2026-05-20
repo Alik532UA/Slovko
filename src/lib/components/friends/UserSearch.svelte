@@ -9,9 +9,9 @@
 	import {
 		FriendsService,
 		type UserProfile,
-	} from "$lib/firebase/FriendsService";
-	import { PresenceService, type DiscoveryUser } from "$lib/firebase/PresenceService.svelte";
-	import { authStore } from "$lib/firebase/authStore.svelte";
+	} from "$lib/services/firebase/FriendsService";
+	import { PresenceService, type DiscoveryUser } from "$lib/services/firebase/PresenceService.svelte";
+	import { authStore } from "$lib/controllers/AuthStore.svelte";
 	import { logService } from "$lib/services/logService.svelte";
 	import UserAvatar from "./UserAvatar.svelte";
 	import FollowButton from "./FollowButton.svelte";

@@ -2,10 +2,10 @@
 	/**
 	 * GameBoard.svelte — Ігрове поле
 	 */
-	import { gameState } from "$lib/stores/gameState.svelte";
-	import { getGameController } from "$lib/context/gameContext";
-	import { settingsStore } from "$lib/stores/settingsStore.svelte";
-	import { playlistStore } from "$lib/stores/playlistStore.svelte";
+	import { gameState } from "$lib/controllers/GameState.svelte";
+	import { getGameController } from "$lib/config/gameContext";
+	import { settingsStore } from "$lib/controllers/SettingsStore.svelte";
+	import { playlistStore } from "$lib/controllers/PlaylistStore.svelte";
 	import WordCard from "./WordCard.svelte";
 	import CardContextMenu from "./CardContextMenu.svelte";
 	import WordReportModal from "./WordReportModal.svelte";

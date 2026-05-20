@@ -1,9 +1,9 @@
 ﻿<script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { UserPlus, UserCheck, Loader2, Users } from "lucide-svelte";
-	import { FriendsService } from "$lib/firebase/FriendsService";
+	import { FriendsService } from "$lib/services/firebase/FriendsService";
 	import { logService } from "$lib/services/logService.svelte";
-	import { friendsStore } from "$lib/stores/friendsStore.svelte";
+	import { friendsStore } from "$lib/controllers/FriendsStore.svelte";
 
 	interface Props {
 		uid: string;

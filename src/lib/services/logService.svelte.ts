@@ -155,7 +155,7 @@ class LogService {
 	async logToRemote(action: string, details: Record<string, unknown>) {
 		try {
 			const sanitizedDetails = this.sanitizeDetails(details);
-			const { db, auth } = await import("../firebase/config");
+			const { db, auth } = await import("../services/firebase/config");
 			const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
 
 			const uid = auth.currentUser?.uid || "anonymous";

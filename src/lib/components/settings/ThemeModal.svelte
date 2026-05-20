@@ -1,5 +1,5 @@
 ﻿<script lang="ts">
-	import { settingsStore } from "$lib/stores/settingsStore.svelte";
+	import { settingsStore } from "$lib/controllers/SettingsStore.svelte";
 	import type { AppTheme } from "$lib/types/index";
 	import { Check } from "lucide-svelte";
 	import { _ } from "svelte-i18n";

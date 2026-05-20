@@ -1,5 +1,5 @@
 ﻿<script lang="ts">
-	import { playlistStore } from "$lib/stores/playlistStore.svelte";
+	import { playlistStore } from "$lib/controllers/PlaylistStore.svelte";
 	import { _ } from "svelte-i18n";
 	import { Heart, Bookmark, Volume2, AlertTriangle, X } from "lucide-svelte";
 	import { speakText } from "$lib/services/speechService";

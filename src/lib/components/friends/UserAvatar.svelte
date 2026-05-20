@@ -15,8 +15,8 @@
 		Zap,
 		Target,
 	} from "lucide-svelte";
-	import { PresenceService } from "$lib/firebase/PresenceService.svelte";
-	import { authStore } from "$lib/firebase/authStore.svelte";
+	import { PresenceService } from "$lib/services/firebase/PresenceService.svelte";
+	import { authStore } from "$lib/controllers/AuthStore.svelte";
 	import { logService } from "$lib/services/logService.svelte";
 	import { base } from "$app/paths";
 	import AvatarInteractionMenu from "./AvatarInteractionMenu.svelte";
@@ -129,7 +129,7 @@
 			{#if isFlagColor}
 				{@const lang = rawColor.replace("flag-", "")}
 				<div class="flag-bg-wrapper">
-					<img src="{base}/flags/{lang}.svg" alt="" class="flag-bg-img" loading="lazy" width="100%" height="100%" />
+					<img src="{base}/svg/flags/{lang}.svg" alt="" class="flag-bg-img" loading="lazy" width="100%" height="100%" />
 				</div>
 			{/if}
 			{#if Icon}

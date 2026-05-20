@@ -3,8 +3,8 @@
  * Persisted to localStorage
  */
 import { browser } from "$app/environment";
-import { SyncService } from "../firebase/SyncService.svelte";
-import { settingsStore } from "./settingsStore.svelte";
+import { SyncService } from "../services/firebase/SyncService.svelte";
+import { settingsStore } from "./SettingsStore.svelte";
 import { logService } from "../services/logService.svelte";
 import { localStorageProvider } from "../services/storage/storageProvider";
 import type { WordPair, PlaylistId, CustomWord, WordKey } from "../types";

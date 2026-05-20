@@ -1,6 +1,6 @@
 ﻿import { logService } from "./logService.svelte";
-import { progressStore } from "../stores/progressStore.svelte";
-import { playlistStore } from "../stores/playlistStore.svelte";
+import { progressStore } from "../controllers/ProgressStore.svelte";
+import { playlistStore } from "../controllers/PlaylistStore.svelte";
 import { browser } from "$app/environment";
 import type { WordPair } from "../types";
 

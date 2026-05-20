@@ -3,14 +3,14 @@
 	import {
 		FriendsService,
 		type FollowRecord,
-	} from "$lib/firebase/FriendsService";
+	} from "$lib/services/firebase/FriendsService";
 	import {
 		Users,
 		Loader2,
 		Settings,
 	} from "lucide-svelte";
 	import { logService } from "$lib/services/logService.svelte";
-	import { friendsStore } from "$lib/stores/friendsStore.svelte";
+	import { friendsStore } from "$lib/controllers/FriendsStore.svelte";
 	import ErrorBoundary from "../ui/ErrorBoundary.svelte";
 	import UserAvatar from "./UserAvatar.svelte";
 	import FollowButton from "./FollowButton.svelte";

@@ -1,8 +1,8 @@
-﻿import { auth, db } from "../firebase/config";
-import { FriendsService, type FollowRecord, type UserProfile } from "../firebase/FriendsService";
+﻿import { auth, db } from "../services/firebase/config";
+import { FriendsService, type FollowRecord, type UserProfile } from "../services/firebase/FriendsService";
 import { logService } from "../services/logService.svelte";
 import { collection, onSnapshot } from "firebase/firestore";
-import { settingsStore } from "./settingsStore.svelte";
+import { settingsStore } from "./SettingsStore.svelte";
 
 class FriendsStoreClass {
 	following = $state<FollowRecord[]>([]);
@@ -24,7 +24,7 @@ class FriendsStoreClass {
 				const uids = this.mutualFriends.map(f => f.uid);
 				if (uids.length > 0) {
 					// Використовуємо динамічний імпорт або відкладений доступ, щоб уникнути ReferenceError при ініціалізації
-					import("../firebase/PresenceService.svelte").then(({ PresenceService }) => {
+					import("../services/firebase/PresenceService.svelte").then(({ PresenceService }) => {
 						PresenceService.limitBackgroundTracking(uids, 20);
 					});
 				}
@@ -45,7 +45,7 @@ class FriendsStoreClass {
 
 		try {
 			// Гарантовано чекаємо, поки SyncService завантажить початкові налаштування з хмари
-			const { SyncService } = await import("../firebase/SyncService.svelte");
+			const { SyncService } = await import("../services/firebase/SyncService.svelte");
 			if (!SyncService.hasInitialData) {
 				logService.log("sync", "Postponing follower check: SyncService not ready");
 				return;
@@ -125,7 +125,7 @@ class FriendsStoreClass {
 			this.followersLoaded = true;
 			
 			// Спроба 1: Перевірити сповіщення при завантаженні списку
-			import("../firebase/SyncService.svelte").then(({ SyncService }) => {
+			import("../services/firebase/SyncService.svelte").then(({ SyncService }) => {
 				if (SyncService.hasInitialData && this.isFirstFollowerLoad) {
 					this.checkFollowerNotifications();
 				}
@@ -161,7 +161,7 @@ class FriendsStoreClass {
 	 * Викликає сповіщення про нового підписника
 	 */
 	private triggerFollowerNotification(follower: FollowRecord) {
-		import("../firebase/PresenceService.svelte").then(({ PresenceService }) => {
+		import("../services/firebase/PresenceService.svelte").then(({ PresenceService }) => {
 			// Не показуємо, якщо ми вже підписані у відповідь (можливо)
 			// Але зазвичай краще показати в будь-якому випадку як приємну подію
 			PresenceService.addFollowerNotification(follower.uid, {

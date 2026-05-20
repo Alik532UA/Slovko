@@ -2,8 +2,8 @@
 	import { logService } from "$lib/services/logService.svelte";
 	import { Save, Shield } from "lucide-svelte";
 	import { _ } from "svelte-i18n";
-	import { FriendsService } from "$lib/firebase/FriendsService";
-	import { authStore } from "$lib/firebase/authStore.svelte";
+	import { FriendsService } from "$lib/services/firebase/FriendsService";
+	import { authStore } from "$lib/controllers/AuthStore.svelte";
 	import { onMount } from "svelte";
 	import type { UserPrivacySettings } from "$lib/types/index";
 	import Toggle from "$lib/components/ui/Toggle.svelte";

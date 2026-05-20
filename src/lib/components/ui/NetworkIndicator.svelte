@@ -1,5 +1,5 @@
 ﻿<script lang="ts">
-	import { networkStore } from "$lib/stores/network.svelte";
+	import { networkStore } from "$lib/controllers/NetworkState.svelte";
 	import { APP_ICONS } from "$lib/config/icons";
 	import { fade } from "svelte/transition";
 

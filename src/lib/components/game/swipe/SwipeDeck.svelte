@@ -1,13 +1,13 @@
 ﻿<script lang="ts">
-	import { gameState } from "$lib/stores/gameState.svelte";
-	import { getGameController } from "$lib/context/gameContext";
+	import { gameState } from "$lib/controllers/GameState.svelte";
+	import { getGameController } from "$lib/config/gameContext";
 	import { logService } from "$lib/services/logService.svelte";
 	import { untrack } from "svelte";
 	import { fade, fly } from "svelte/transition";
 	import { _ } from "svelte-i18n";
-	import { playlistStore } from "$lib/stores/playlistStore.svelte";
+	import { playlistStore } from "$lib/controllers/PlaylistStore.svelte";
 	import type { GameData } from "$lib/services/gameDataService";
-	import { settingsStore } from "$lib/stores/settingsStore.svelte";
+	import { settingsStore } from "$lib/controllers/SettingsStore.svelte";
 	import { ArrowDown, ArrowUp } from "lucide-svelte";
 	import SwipeCard from "./SwipeCard.svelte";
 

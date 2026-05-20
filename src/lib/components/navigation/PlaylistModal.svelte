@@ -1,8 +1,8 @@
 ﻿<script lang="ts">
 	import { logService } from "$lib/services/logService.svelte";
 	import { _ } from "svelte-i18n";
-	import { playlistStore } from "$lib/stores/playlistStore.svelte";
-	import { settingsStore } from "$lib/stores/settingsStore.svelte";
+	import { playlistStore } from "$lib/controllers/PlaylistStore.svelte";
+	import { settingsStore } from "$lib/controllers/SettingsStore.svelte";
 	import { gameDataService } from "$lib/services/gameDataService";
 	import type {
 		PlaylistId,

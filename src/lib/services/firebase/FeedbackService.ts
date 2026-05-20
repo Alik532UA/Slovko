@@ -7,9 +7,9 @@
 } from "firebase/firestore";
 import { db, auth } from "./config";
 import { AuthService } from "./AuthService";
-import { versionStore } from "../stores/versionStore.svelte";
-import { settingsStore } from "../stores/settingsStore.svelte";
-import { logService } from "../services/logService.svelte";
+import { versionStore } from "../../controllers/VersionStore.svelte";
+import { settingsStore } from "../../controllers/SettingsStore.svelte";
+import { logService } from "../../services/logService.svelte";
 
 export type FeedbackCategory = "bug" | "improvement" | "contact";
 

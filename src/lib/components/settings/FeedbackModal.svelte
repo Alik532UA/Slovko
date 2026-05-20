@@ -13,7 +13,7 @@
 	import {
 		FeedbackService,
 		type FeedbackCategory,
-	} from "../../firebase/FeedbackService";
+	} from "../../services/firebase/FeedbackService";
 	import BaseModal from "../ui/BaseModal.svelte";
 
 	interface Props {

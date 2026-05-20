@@ -13,12 +13,12 @@
 	type Unsubscribe,
 } from "firebase/firestore";
 import { db, auth } from "./config";
-import { settingsStore } from "../stores/settingsStore.svelte";
-import { progressStore } from "../stores/progressStore.svelte";
-import { playlistStore } from "../stores/playlistStore.svelte";
-import { friendsStore } from "../stores/friendsStore.svelte";
-import { logService } from "../services/logService.svelte";
-import { statisticsState } from "../controllers/StatisticsState.svelte";
+import { settingsStore } from "../../controllers/SettingsStore.svelte";
+import { progressStore } from "../../controllers/ProgressStore.svelte";
+import { playlistStore } from "../../controllers/PlaylistStore.svelte";
+import { friendsStore } from "../../controllers/FriendsStore.svelte";
+import { logService } from "../logService.svelte";
+import { statisticsState } from "../../controllers/StatisticsState.svelte";
 import { dev } from "$app/environment";
 import {
 	AppSettingsSchema,
@@ -30,7 +30,7 @@ import {
 	type LevelStats,
 	type Playlist,
 	type WordProgress,
-} from "../data/schemas";
+} from "../../data/schemas";
 
 /** Стани синхронізації */
 export type SyncStatus = "idle" | "syncing" | "error" | "up-to-date" | "offline";

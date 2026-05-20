@@ -3,9 +3,9 @@
 	 * GameStats.svelte - Відображення статистики (стрік, швидкість)
 	 */
 	import { _ } from "svelte-i18n";
-	import { gameState } from "$lib/stores/gameState.svelte";
-	import { settingsStore } from "$lib/stores/settingsStore.svelte";
-	import { getGameController } from "$lib/context/gameContext";
+	import { gameState } from "$lib/controllers/GameState.svelte";
+	import { settingsStore } from "$lib/controllers/SettingsStore.svelte";
+	import { getGameController } from "$lib/config/gameContext";
 	import {
 		Flame,
 		Snowflake,

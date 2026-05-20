@@ -19,12 +19,12 @@
 		FriendsService,
 		LEADERBOARD_THRESHOLDS,
 		type LeaderboardEntry
-	} from "$lib/firebase/FriendsService";
-	import { authStore } from "$lib/firebase/authStore.svelte";
-	import { progressStore } from "$lib/stores/progressStore.svelte";
+	} from "$lib/services/firebase/FriendsService";
+	import { authStore } from "$lib/controllers/AuthStore.svelte";
+	import { progressStore } from "$lib/controllers/ProgressStore.svelte";
 	import UserAvatar from "../friends/UserAvatar.svelte";
 	import SegmentedControl from "../ui/SegmentedControl.svelte";
-	import { smoothHeight } from "$lib/actions/smoothHeight";
+	import { smoothHeight } from "$lib/utils/actions/smoothHeight";
 
 	let selectedLevel = $state("all");
 	let lastSelectedLevel = $state("all");

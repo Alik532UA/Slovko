@@ -9,8 +9,8 @@
 		Trash2,
 		Upload,
 	} from "lucide-svelte";
-	import { playlistStore } from "$lib/stores/playlistStore.svelte";
-	import { notificationStore } from "$lib/stores/notificationStore.svelte";
+	import { playlistStore } from "$lib/controllers/PlaylistStore.svelte";
+	import { notificationStore } from "$lib/controllers/NotificationStore.svelte";
 	import PlaylistModal from "../PlaylistModal.svelte";
 	import { PLAYLIST_ICONS_MAP, type AppIconId } from "$lib/config/icons";
 	import type { PlaylistId } from "$lib/types/index";

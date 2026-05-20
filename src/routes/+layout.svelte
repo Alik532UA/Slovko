@@ -6,15 +6,15 @@
 	import { initializeI18n } from "$lib/i18n/init";
 	import { isLoading } from "svelte-i18n";
 	import { checkForUpdates } from "$lib/services/versionService";
-	import { versionStore } from "$lib/stores/versionStore.svelte";
-	import { settingsStore } from "$lib/stores/settingsStore.svelte";
+	import { versionStore } from "$lib/controllers/VersionStore.svelte";
+	import { settingsStore } from "$lib/controllers/SettingsStore.svelte";
 	import UpdateNotification from "$lib/components/navigation/UpdateNotification.svelte";
 	import NetworkIndicator from "$lib/components/ui/NetworkIndicator.svelte";
 	import ToastContainer from "$lib/components/ui/ToastContainer.svelte";
 	import InteractionSystem from "$lib/components/interaction/InteractionSystem.svelte";
 	import OnboardingModal from "$lib/components/onboarding/OnboardingModal.svelte";
 	import MigrationOverlay from "$lib/components/ui/MigrationOverlay.svelte";
-	import { authStore } from "$lib/firebase/authStore.svelte";
+	import { authStore } from "$lib/controllers/AuthStore.svelte";
 	import { logService } from "$lib/services/logService.svelte";
 	import LogCopyButton from "$lib/components/debug/LogCopyButton.svelte";
 	import {
@@ -22,7 +22,7 @@
 		trackPageView,
 		trackEvent,
 	} from "$lib/services/analyticsService";
-	import { pwaStore } from "$lib/stores/pwaStore.svelte";
+	import { pwaStore } from "$lib/controllers/PwaStore.svelte";
 	import { page } from "$app/stores";
 	import { navigationState } from "$lib/controllers/NavigationState.svelte";
 	import { migrateStorageKeys } from "$lib/utils/storageMigration";
@@ -39,7 +39,7 @@
 
 	// Services Context Setup
 	import { gameController } from "$lib/services/gameController";
-	import { setGameController } from "$lib/context/gameContext";
+	import { setGameController } from "$lib/config/gameContext";
 	setGameController(gameController);
 
 	let { children } = $props();

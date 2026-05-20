@@ -2,7 +2,7 @@
 	import { _ } from "svelte-i18n";
 	import { RefreshCw, ShieldCheck, AlertTriangle } from "lucide-svelte";
 	import { applyUpdate, skipUpdate } from "$lib/services/versionService";
-	import { versionStore } from "$lib/stores/versionStore.svelte";
+	import { versionStore } from "$lib/controllers/VersionStore.svelte";
 	import { logService } from "$lib/services/logService.svelte";
 	import { fade, scale } from "svelte/transition";
 	import { onMount } from "svelte";
