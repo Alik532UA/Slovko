@@ -1,7 +1,7 @@
 {
 	"name": "slovko",
 	"private": true,
-	"version": "0.7.502",
+	"version": "0.7.503",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
@@ -22,6 +22,8 @@
 		"analyze:vocab": "node scripts/analysis/vocab_analysis.js",
 		"i18n:check": "node scripts/maintenance/check_translations.js",
 		"i18n:add:pl": "node scripts/maintenance/add_pl_translations.js",
+		"cleanup:monitor": "node scripts/maintenance/cleanup_monitor.cjs",
+		"find:placeholders": "node scripts/analysis/find_placeholders.js",
 		"analyze:polysemy": "node scripts/analysis/analyze_polysemy.js",
 		"analyze:cross": "node scripts/analysis/audit_cross_language.js",
 		"sync:full": "node scripts/maintenance/full_ssot_sync.js",
