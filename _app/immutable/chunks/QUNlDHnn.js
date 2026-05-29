@@ -1,0 +1,25 @@
+const n=`\uFEFF{
+	"belt": "ζώνη",
+	"bumper": "προφυλακτήρας",
+	"clutch": "συμπλέκτης",
+	"dashboard": "ταμπλό",
+	"fan": "οπαδός / ανεμιστήρας",
+	"fan_admirer": "οπαδός",
+	"fan_device": "ανεμιστήρας",
+	"headlight": "προβολέας",
+	"jack": "γρύλος",
+	"mirror": "καθρέφτης",
+	"motorcycle": "μοτοσικλέτα",
+	"oil": "λάδι",
+	"oil_food": "λάδι",
+	"oil_fuel": "πετρέλαιο",
+	"seat": "κάθισμα",
+	"ship": "πλοίο",
+	"sign": "σημάδι",
+	"sign_symbol": "σύμβολο",
+	"sign_verb": "υπογράφω",
+	"spare": "ρεζέρβα",
+	"spare_tire": "ρεζέρβα",
+	"wheel": "ρόδα"
+}
+`;export{n as default};

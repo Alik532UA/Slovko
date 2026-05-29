@@ -1,0 +1,20 @@
+const n=`\uFEFF{
+	"air": "powietrze",
+	"autumn": "jesień",
+	"beach": "plaża",
+	"fire": "ogień",
+	"flower": "kwiat",
+	"ice": "lód",
+	"island": "wyspa",
+	"mountain": "góra",
+	"rain": "deszcz",
+	"river": "rzeka",
+	"sea": "morze",
+	"snow": "śnieg",
+	"star": "gwiazda",
+	"summer": "lato",
+	"sun": "słońce",
+	"tree": "drzewo",
+	"winter": "zima"
+}
+`;export{n as default};

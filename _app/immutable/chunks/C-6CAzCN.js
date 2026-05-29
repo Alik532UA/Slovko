@@ -1,0 +1,10 @@
+const t=`\uFEFF{
+	"bring_up_child": "terbiyelemek",
+	"catch_up": "yetişmek",
+	"catch_up_with": "yetişmek",
+	"figure": "añlamaq",
+	"figure_out": "añlamaq",
+	"fill_in_form": "toldurmaq",
+	"try_on_clothes": "ölçemek"
+}
+`;export{t as default};

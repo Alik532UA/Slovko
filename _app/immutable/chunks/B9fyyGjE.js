@@ -1,0 +1,22 @@
+const n=`\uFEFF{
+	"animal": "ζώο",
+	"bird": "πουλί",
+	"cat": "γάτα",
+	"chicken": "κοτόπουλο",
+	"cow": "αγελάδα",
+	"dog": "σκύλος",
+	"duck": "πάπια",
+	"duck_animal": "πάπια",
+	"elephant": "ελέφαντας",
+	"fish": "ψάρι",
+	"fly": "μύγα",
+	"fly_action": "πετάω",
+	"fly_insect": "μύγα",
+	"fox": "αλεπού",
+	"horse": "άλογο",
+	"lion": "λιοντάρι",
+	"mouse": "ποντίκι",
+	"pig": "γουρούνι",
+	"rabbit": "κουνέλι"
+}
+`;export{n as default};

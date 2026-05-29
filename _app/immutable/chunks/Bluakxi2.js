@@ -1,0 +1,19 @@
+const n=`\uFEFF{
+	"accident": "ατύχημα",
+	"accident_chance": "σύμπτωση",
+	"accident_event": "ατύχημα",
+	"blood": "αίμα",
+	"brain": "εγκέφαλος",
+	"clap": "χειροκροτώ",
+	"clap_hands": "χειροκροτώ",
+	"comb": "χτενίζω",
+	"comb_hair": "χτενίζω",
+	"finger": "δάχτυλο",
+	"heart": "καρδιά",
+	"knee": "γόνατο",
+	"neck": "λαιμός",
+	"shoulder": "ώμος",
+	"stomach": "στομάχι",
+	"voice": "φωνή"
+}
+`;export{n as default};

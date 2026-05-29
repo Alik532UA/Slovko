@@ -1,0 +1,10 @@
+const t=`\uFEFF{
+	"court": "mahkeme",
+	"discount": "endirim",
+	"headline": "başlıq",
+	"nation": "millet",
+	"politics": "siyaset",
+	"queue": "sıra",
+	"receipt": "çek",
+	"vote": "rey bermek"
+}`;export{t as default};

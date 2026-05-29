@@ -1,0 +1,23 @@
+const n=`\uFEFF{
+	"arm": "arm",
+	"arm_body": "arm",
+	"arm_weapon": "wapen",
+	"body": "lichaam",
+	"ear": "oor",
+	"eye": "oog",
+	"face": "gezicht",
+	"foot": "voet",
+	"hair": "haar",
+	"hand": "hand",
+	"hand_body": "hand",
+	"hand_verb": "overhandigen",
+	"head": "hoofd",
+	"health": "gezondheid",
+	"hospital": "ziekenhuis",
+	"leg": "been",
+	"leg_full": "been",
+	"mouth": "mond",
+	"nose": "neus",
+	"tooth": "tand"
+}
+`;export{n as default};

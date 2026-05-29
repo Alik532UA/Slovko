@@ -1,0 +1,24 @@
+const t=`\uFEFF{
+	"bacon": "μπέικον",
+	"berry": "μούρο",
+	"burger": "μπέρκερ",
+	"cherry": "κεράσι",
+	"cookie": "μπισκότο",
+	"cucumber": "αγγούρι",
+	"lemon": "λεμόνι",
+	"melon": "πεπόνι",
+	"pasta": "ζυμαρικά",
+	"pasta_food": "ζυμαρικά",
+	"peach": "ροδάκινο",
+	"pear": "αχλάδι",
+	"pie": "πίτα",
+	"pie_baked": "πίτα",
+	"pie_pie": "πίτα",
+	"sausage": "λουκάνικο",
+	"sausage_small": "λουκάνικο",
+	"sausage_wurst": "λουκάνικο",
+	"steak": "μπριζόλα",
+	"strawberry": "φράουλα",
+	"toast": "τοστ"
+}
+`;export{t as default};

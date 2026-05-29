@@ -1,0 +1,12 @@
+const t=`\uFEFF{
+	"purse": "жіночий гаманець",
+	"sock": "шкарпетка",
+	"suit": "костюм",
+	"suit_clothing": "костюм",
+	"suit_lawsuit": "позов",
+	"suit_verb": "пасувати",
+	"tie": "краватка",
+	"tie_clothes": "краватка",
+	"uniform": "уніформа"
+}
+`;export{t as default};

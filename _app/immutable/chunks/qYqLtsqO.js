@@ -1,0 +1,9 @@
+const n=`\uFEFF{
+	"giraffe": "Giraffe",
+	"goat": "Ziege",
+	"goose": "Gans",
+	"penguin": "Pinguin",
+	"shark": "Hai",
+	"swan": "Schwan",
+	"zebra": "Zebra"
+}`;export{n as default};

@@ -1,0 +1,23 @@
+const t=`\uFEFF{
+	"aunt": "tante",
+	"aunt_maternal": "tante",
+	"aunt_paternal": "tante",
+	"child": "kind",
+	"family": "familie",
+	"father": "vader",
+	"friend": "vriend",
+	"grandfather": "grootvader",
+	"grandmother": "grootmoeder",
+	"husband": "echtgenoot",
+	"mother": "moeder",
+	"parents": "ouders",
+	"partner": "partner",
+	"sister": "zus",
+	"sister_older": "oudere zus",
+	"sister_younger": "jongere zus",
+	"son": "zoon",
+	"uncle": "oom",
+	"uncle_maternal": "oom",
+	"uncle_paternal": "oom",
+	"wife": "echtgenote"
+}`;export{t as default};

@@ -1,0 +1,11 @@
+const n=`\uFEFF{
+	"calm_down": "ηρεμώ",
+	"cheer": "φτιάχνω τη διάθεση",
+	"cheer_up": "φτιάχνω τη διάθεση",
+	"count_on_someone": "βασίζομαι σε κάποιον",
+	"let_down_disappoint": "απογοητεύω",
+	"make_up_story": "επινοώ",
+	"throw_away": "πετάω",
+	"write_down": "σημειώνω"
+}
+`;export{n as default};

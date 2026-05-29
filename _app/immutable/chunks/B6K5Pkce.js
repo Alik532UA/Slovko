@@ -1,0 +1,22 @@
+const t=`\uFEFF{
+	"battery": "battery",
+	"battery_artillery": "battery",
+	"battery_electric": "battery",
+	"battery_life": "battery",
+	"engine_motor": "engine",
+	"fuel": "fuel",
+	"fuel_energy": "fuel",
+	"garage": "garage",
+	"highway": "highway",
+	"license": "license",
+	"license_document": "license",
+	"pedal": "pedal",
+	"piston": "piston",
+	"signal": "signal",
+	"signal_phone": "signal",
+	"taillight": "taillight",
+	"tire": "tire",
+	"trunk": "trunk",
+	"wiper": "wiper"
+}
+`;export{t as default};

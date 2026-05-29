@@ -1,0 +1,25 @@
+const n=`\uFEFF{
+	"belt": "ремінь",
+	"bumper": "бампер",
+	"clutch": "зчеплення",
+	"dashboard": "приладова панель",
+	"fan": "фанат / вентилятор",
+	"fan_admirer": "фанат",
+	"fan_device": "вентилятор",
+	"headlight": "фара",
+	"jack": "домкрат",
+	"mirror": "дзеркало",
+	"motorcycle": "мотоцикл",
+	"oil": "олія",
+	"oil_food": "олія",
+	"oil_fuel": "нафта",
+	"seat": "місце",
+	"ship": "корабель",
+	"sign": "знак",
+	"sign_symbol": "знак",
+	"sign_verb": "підписувати",
+	"spare": "запасне колесо",
+	"spare_tire": "запасне колесо",
+	"wheel": "колесо"
+}
+`;export{n as default};

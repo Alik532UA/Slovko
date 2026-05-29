@@ -1,0 +1,14 @@
+const o=`\uFEFF{
+	"are_you": "czy jesteś?",
+	"can_you": "czy możesz?",
+	"do_you": "czy ty?",
+	"is_it": "czy to?",
+	"of_course": "oczywiście",
+	"since_when": "od kiedy?",
+	"speak_slowly": "mów powoli",
+	"until_when": "do kiedy?",
+	"who_is": "kto to?",
+	"whose": "czyj",
+	"why_not": "dlaczego nie?"
+}
+`;export{o as default};

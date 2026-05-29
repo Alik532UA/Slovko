@@ -1,0 +1,18 @@
+const t=`\uFEFF{
+	"accept": "qabul etmek",
+	"advertise": "reklama yapmaq",
+	"analyze": "talil etmek",
+	"apply": "qullanmaq",
+	"apply_job": "muracaat etmek",
+	"apply_use": "qullanmaq",
+	"avoid": "qaçınmaq",
+	"behave": "özüni tutmaq",
+	"climate": "iqlim",
+	"contain": "içinde olmaq",
+	"depend": "bağlı olmaq",
+	"identify": "tanımaq",
+	"organize": "tertiplemek",
+	"provide": "temin etmek",
+	"reduce": "eksiltmek"
+}
+`;export{t as default};

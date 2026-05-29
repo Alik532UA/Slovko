@@ -1,0 +1,27 @@
+const n=`\uFEFF{
+	"afternoon": "/ˌɑːftəˈnuːn/",
+	"day": "/deɪ/",
+	"evening": "/ˈiːvnɪŋ/",
+	"friday": "/ˈfraɪdeɪ/",
+	"hour": "/ˈaʊə/",
+	"later": "/ˈleɪtər/",
+	"minute": "/ˈmɪnɪt/",
+	"monday": "/ˈmʌndeɪ/",
+	"month": "/mʌnθ/",
+	"morning": "/ˈmɔːnɪŋ/",
+	"night": "/naɪt/",
+	"now": "/naʊ/",
+	"saturday": "/ˈsætədeɪ/",
+	"soon": "/suːn/",
+	"sunday": "/ˈsʌndeɪ/",
+	"thursday": "/ˈθɜːzdeɪ/",
+	"today": "/təˈdeɪ/",
+	"tomorrow": "/təˈmɒrəʊ/",
+	"tuesday": "/ˈtjuːzdeɪ/",
+	"wednesday": "/ˈwenzdeɪ/",
+	"week": "/wiːk/",
+	"weekend": "/ˌwiːkˈɛnd/",
+	"year": "/jɪər/",
+	"yesterday": "/ˈjestədeɪ/"
+}
+`;export{n as default};

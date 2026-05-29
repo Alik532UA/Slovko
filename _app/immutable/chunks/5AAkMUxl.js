@@ -1,0 +1,18 @@
+const t=`\uFEFF{
+	"beginning": "αρχή",
+	"beginning_start": "αρχή",
+	"example": "παράδειγμα",
+	"feeling": "συναίσθημα",
+	"future": "μέλλον",
+	"idea": "ιδέα",
+	"life": "ζωή",
+	"love": "αγαπώ",
+	"past": "παρελθόν",
+	"present": "παρόν",
+	"present_current": "τωρινός",
+	"present_gift": "δώρο",
+	"present_here": "παρών",
+	"present_time": "παρόν",
+	"success": "επιτυχία"
+}
+`;export{t as default};

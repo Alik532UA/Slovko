@@ -1,0 +1,23 @@
+const t=`\uFEFF{
+	"aunt": "ciotka",
+	"aunt_maternal": "stryjna/ciotka",
+	"aunt_paternal": "ciotka",
+	"child": "dziecko",
+	"family": "rodzina",
+	"father": "ojciec",
+	"friend": "przyjaciel",
+	"grandfather": "dziadek",
+	"grandmother": "babcia",
+	"husband": "mąż",
+	"mother": "matka",
+	"parents": "rodzice",
+	"partner": "partner",
+	"sister": "siostra",
+	"sister_older": "starsza siostra",
+	"sister_younger": "młodsza siostra",
+	"son": "syn",
+	"uncle": "wujek",
+	"uncle_maternal": "wujek",
+	"uncle_paternal": "wujek",
+	"wife": "żona"
+}`;export{t as default};

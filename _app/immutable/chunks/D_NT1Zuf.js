@@ -1,0 +1,26 @@
+const t=`\uFEFF[
+	"society",
+	"nation",
+	"politics",
+	"president",
+	"law",
+	"court",
+	"police",
+	"criminal",
+	"crime",
+	"security",
+	"vote",
+	"citizen",
+	"army",
+	"soldier",
+	"government",
+	"discount",
+	"headline",
+	"identification",
+	"instruction",
+	"queue",
+	"receipt",
+	"sale",
+	"signature"
+]
+`;export{t as default};

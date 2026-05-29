@@ -1,0 +1,14 @@
+const n=`\uFEFF{
+	"black": "schwarz",
+	"blue": "blau",
+	"blue_dark": "dunkelblau",
+	"blue_light": "hellblau",
+	"brown": "braun",
+	"color": "Farbe",
+	"green": "grün",
+	"pink": "rosa",
+	"red": "rot",
+	"white": "weiß",
+	"yellow": "gelb"
+}
+`;export{n as default};

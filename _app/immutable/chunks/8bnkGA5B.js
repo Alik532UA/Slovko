@@ -1,0 +1,20 @@
+const n=`\uFEFF{
+	"air": "ava",
+	"autumn": "küz",
+	"beach": "plâj",
+	"fire": "ateş",
+	"flower": "çiçek",
+	"ice": "buz",
+	"island": "ada",
+	"mountain": "dağ",
+	"rain": "yağmur",
+	"river": "ozen",
+	"sea": "deñiz",
+	"snow": "qar",
+	"star": "yıldız",
+	"summer": "yaz",
+	"sun": "kün",
+	"tree": "terek",
+	"winter": "qış"
+}
+`;export{n as default};

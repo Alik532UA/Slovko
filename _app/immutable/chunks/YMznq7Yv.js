@@ -1,0 +1,24 @@
+const t=`\uFEFF{
+	"bacon": "bekon",
+	"berry": "yilek",
+	"burger": "burger",
+	"cherry": "vişne",
+	"cookie": "kurabiye",
+	"cucumber": "hıyar",
+	"lemon": "limon",
+	"melon": "qavun",
+	"pasta": "makarna",
+	"pasta_food": "makarna",
+	"peach": "şeftali",
+	"pear": "armut",
+	"pie": "pasta",
+	"pie_baked": "pasta",
+	"pie_pie": "börek",
+	"sausage": "sucuk",
+	"sausage_small": "sucuk",
+	"sausage_wurst": "sosiska",
+	"steak": "stek",
+	"strawberry": "çilek",
+	"toast": "tost"
+}
+`;export{t as default};

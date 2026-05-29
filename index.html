@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="uk" translate="no">
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+		/>
+		<meta name="google" content="notranslate" />
+		<meta name="theme-color" content="#e95420" />
+		<link rel="manifest" href="./manifest.json" />
+		<link rel="icon" href="./favicon/favicon.png" />
+		<link rel="apple-touch-icon" href="./icon-192.png" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta
+			name="apple-mobile-web-app-status-bar-style"
+			content="black-translucent"
+		/>
+		<meta name="apple-mobile-web-app-title" content="Slovko" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="application-name" content="Slovko" />
+		<meta name="color-scheme" content="light dark" />
+		<script>
+			(function () {
+				try {
+					var PREFIX = "slovko_";
+					var stored = localStorage.getItem(PREFIX + "settings");
+					var theme = null;
+					if (stored) {
+						var parsed = JSON.parse(stored);
+						if (parsed.theme) {
+							theme = parsed.theme === "purple" ? "orange" : parsed.theme;
+						}
+					}
+					var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+					if (!theme) {
+						theme = prefersDark ? "dark-gray" : "light-gray";
+					}
+					document.documentElement.setAttribute("data-theme", theme);
+					
+					var isDark = theme === "dark-gray" || theme === "orange";
+					var meta = document.querySelector('meta[name="color-scheme"]');
+					if (meta) {
+						meta.setAttribute('content', isDark ? 'dark' : 'light dark');
+					}
+				} catch (e) {}
+			})();
+		</script>
+		<script>
+			// ============================================
+			// GLOBAL ERROR DIAGNOSTICS (before Svelte loads)
+			// Catches crashes that prevent the app from rendering
+			// ============================================
+			(function() {
+				var errors = [];
+				var overlayShown = false;
+				var appRendered = false;
+
+				function showOverlay() {
+					if (overlayShown) return;
+					overlayShown = true;
+
+					var overlay = document.createElement('div');
+					overlay.id = 'error-diagnostics';
+					overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:999999;' +
+						'background:rgba(20,20,40,0.97);color:#e0e0e0;font-family:system-ui,-apple-system,sans-serif;' +
+						'padding:1rem;overflow-y:auto;display:flex;flex-direction:column;align-items:center;';
+
+					var content = '<div style="max-width:500px;width:100%;text-align:center;padding-top:2rem;">' +
+						'<div style="font-size:3rem;margin-bottom:1rem;">⚠️</div>' +
+						'<h2 style="color:#fff;margin:0 0 0.5rem;">Помилка завантаження</h2>' +
+						'<p style="color:#a0a0a0;margin:0 0 1.5rem;font-size:0.9rem;">Додаток не зміг завантажитися. Скопіюйте інформацію нижче та надішліть розробнику.</p>' +
+						'<div style="display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.5rem;">' +
+						'<button id="err-copy-btn" style="padding:0.8rem 1.5rem;border-radius:8px;border:none;' +
+						'background:#3a8fd6;color:white;font-weight:600;font-size:1rem;cursor:pointer;">📋 Копіювати діагностику</button>' +
+						'<button id="err-clear-btn" style="padding:0.8rem 1.5rem;border-radius:8px;border:1px solid rgba(255,255,255,0.2);' +
+						'background:rgba(255,255,255,0.1);color:#ccc;font-weight:600;font-size:1rem;cursor:pointer;">🧹 Очистити кеш і перезавантажити</button>' +
+						'<button id="err-reload-btn" style="padding:0.8rem 1.5rem;border-radius:8px;border:1px solid rgba(255,255,255,0.2);' +
+						'background:rgba(255,255,255,0.1);color:#ccc;font-weight:600;font-size:1rem;cursor:pointer;">🔄 Просто перезавантажити</button>' +
+						'</div>' +
+						'<details open style="text-align:left;width:100%;">' +
+						'<summary style="cursor:pointer;color:#a0a0a0;margin-bottom:0.5rem;">Технічні деталі</summary>' +
+						'<pre id="err-details" style="background:rgba(0,0,0,0.3);padding:0.75rem;border-radius:8px;' +
+						'font-size:0.75rem;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word;max-height:300px;overflow-y:auto;color:#ccc;">' +
+						'</pre></details></div>';
+
+					overlay.innerHTML = content;
+					document.body.appendChild(overlay);
+
+					var diagText = getDiagnosticText();
+					document.getElementById('err-details').textContent = diagText;
+
+					document.getElementById('err-copy-btn').addEventListener('click', function() {
+						var btn = this;
+						try {
+							navigator.clipboard.writeText(diagText).then(function() {
+								btn.textContent = '✅ Скопійовано!';
+								setTimeout(function() { btn.textContent = '📋 Копіювати діагностику'; }, 2000);
+							});
+						} catch(e) {
+							// Fallback: select text
+							var pre = document.getElementById('err-details');
+							var range = document.createRange();
+							range.selectNodeContents(pre);
+							var sel = window.getSelection();
+							sel.removeAllRanges();
+							sel.addRange(range);
+							btn.textContent = '⚠️ Виділено — скопіюйте вручну';
+						}
+					});
+
+					document.getElementById('err-clear-btn').addEventListener('click', function() {
+						this.textContent = '⏳ Очищення...';
+						// Clear SW + Cache API (Slovko only)
+						Promise.resolve()
+							.then(function() {
+								if ('serviceWorker' in navigator) {
+									return navigator.serviceWorker.getRegistrations()
+										.then(function(regs) { return Promise.all(regs.map(function(r) { return r.unregister(); })); });
+								}
+							})
+							.then(function() {
+								if ('caches' in window) {
+									return caches.keys().then(function(keys) { 
+										return Promise.all(keys.filter(function(k) { return k.startsWith('slovko-'); }).map(function(k) { return caches.delete(k); })); 
+									});
+								}
+							})
+							.then(function() {
+								window.location.reload();
+							})
+							.catch(function() {
+								window.location.reload();
+							});
+					});
+
+					document.getElementById('err-reload-btn').addEventListener('click', function() {
+						window.location.reload();
+					});
+				}
+
+				function getDiagnosticText() {
+					var lines = [
+						'=== SLOVKO CRASH DIAGNOSTICS ===',
+						'Time: ' + new Date().toISOString(),
+						'URL: ' + window.location.href,
+						'UA: ' + navigator.userAgent,
+						'Screen: ' + screen.width + 'x' + screen.height,
+						'Viewport: ' + window.innerWidth + 'x' + window.innerHeight,
+						'Online: ' + navigator.onLine,
+						'SW: ' + ('serviceWorker' in navigator ? 'supported' : 'no'),
+						'',
+						'=== ERRORS (' + errors.length + ') ==='
+					];
+					errors.forEach(function(err, i) {
+						lines.push('[' + i + '] ' + err.type + ': ' + err.message);
+						if (err.message === 'Script error.') {
+							lines.push('    (Hint: This usually means a cross-origin error. Check CORS headers or script origin.)');
+						}
+						if (err.source) lines.push('    File: ' + err.source + ':' + err.line + ':' + err.col);
+						if (err.stack) lines.push('    Stack: ' + err.stack.substring(0, 500));
+					});
+
+					// Include recent application logs if available
+					if (window.__recentLogs && window.__recentLogs.length > 0) {
+						lines.push('');
+						lines.push('=== RECENT LOGS (last 20) ===');
+						var logs = window.__recentLogs.slice(-20);
+						logs.forEach(function(log) {
+							lines.push(log);
+						});
+					}
+
+					// Try to get localStorage info
+					try {
+						var PREFIX = "slovko_";
+						var cacheVer = localStorage.getItem(PREFIX + 'app_cache_version') || 'none';
+						lines.push('');
+						lines.push('=== CACHE ===');
+						lines.push('app_cache_version: ' + cacheVer);
+
+						var settingsRaw = localStorage.getItem(PREFIX + 'settings');
+						if (settingsRaw) {
+							var s = JSON.parse(settingsRaw);
+							lines.push('settings.mode: ' + (s.mode || 'undefined'));
+							lines.push('settings.theme: ' + (s.theme || 'undefined'));
+							lines.push('settings.hasCompletedOnboarding: ' + s.hasCompletedOnboarding);
+						} else {
+							lines.push('settings: NOT FOUND');
+						}
+					} catch(e) {
+						lines.push('localStorage read error: ' + e.message);
+					}
+
+					return lines.join('\n');
+				}
+
+				// Catch synchronous errors
+				window.onerror = function(message, source, line, col, error) {
+					var msg = String(message);
+					
+					// Ignore cross-origin / generic script errors (often from extensions/webviews)
+					if (msg === 'Script error.' && (!source || source === '') && line === 0) {
+						return;
+					}
+					// Ignore ResizeObserver harmless errors
+					if (msg.indexOf('ResizeObserver loop') !== -1) {
+						return;
+					}
+
+					errors.push({
+						type: 'onerror',
+						message: msg,
+						source: source,
+						line: line,
+						col: col,
+						stack: error ? error.stack : ''
+					});
+					showOverlay();
+				};
+
+				// Catch unhandled promise rejections
+				window.addEventListener('unhandledrejection', function(event) {
+					var reason = event.reason;
+					var msg = reason ? (reason.message || String(reason)) : 'Unknown rejection';
+					
+					// SMART RECOVERY: If a chunk failed to load (version mismatch), auto-reload ONCE
+					if (msg.indexOf('Failed to fetch dynamically imported module') !== -1) {
+						var PREFIX = "slovko_";
+						var lastReload = sessionStorage.getItem(PREFIX + 'last_chunk_reload');
+						var now = Date.now();
+						// Only auto-reload if we haven't done so in the last 10 seconds (loop protection)
+						if (!lastReload || (now - parseInt(lastReload)) > 10000) {
+							sessionStorage.setItem(PREFIX + 'last_chunk_reload', now.toString());
+							console.warn('Chunk load failed. Auto-reloading for version sync...');
+							window.location.reload();
+							return;
+						}
+					}
+
+					errors.push({
+						type: 'unhandledrejection',
+						message: msg,
+						stack: reason ? reason.stack : ''
+					});
+					showOverlay();
+				});
+
+				// Blank screen detector: if nothing renders within 15s, show diagnostics
+				setTimeout(function() {
+					if (appRendered) return;
+					// Check if the app actually rendered something
+					var appContainer = document.querySelector('.app-container');
+					var loadingSpinner = document.querySelector('.loading-spinner');
+					if (!appContainer && !loadingSpinner) {
+						errors.push({
+							type: 'timeout',
+							message: 'App did not render within 15 seconds. Possible silent crash or infinite loading.'
+						});
+						showOverlay();
+					}
+				}, 15000);
+
+				// Mark app as rendered when Svelte mounts
+				window.__markAppRendered = function() { appRendered = true; };
+			})();
+		</script>
+		<link href="./_app/immutable/entry/start.CocjRyzc.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/DL_Nqd0a.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/CnVlnL8z.js" rel="modulepreload">
+		<link href="./_app/immutable/entry/app.CT5-hrIG.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/IRYBzLwv.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/COSBSCXc.js" rel="modulepreload">
+		
+	</head>
+
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">
+			<script>
+				{
+					__sveltekit_d5ga7s = {
+						base: new URL(".", location).pathname.slice(0, -1),
+						assets: "/Slovko"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("./_app/immutable/entry/start.CocjRyzc.js"),
+						import("./_app/immutable/entry/app.CT5-hrIG.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+
+					if ('serviceWorker' in navigator) {
+						addEventListener('load', function () {
+							navigator.serviceWorker.register('./service-worker.js');
+						});
+					}
+				}
+			</script>
+		</div>
+	</body>
+</html>

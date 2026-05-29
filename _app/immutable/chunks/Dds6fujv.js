@@ -1,0 +1,23 @@
+const t=`\uFEFF{
+	"bicycle": "велосипед",
+	"boat": "човен",
+	"bus": "автобус",
+	"car": "машина",
+	"door": "двері",
+	"key": "ключ",
+	"key_essential": "ключовий",
+	"key_lock": "ключ",
+	"key_piano": "клавіша",
+	"light": "світлий",
+	"light_brightness": "світло",
+	"light_color": "світлий",
+	"light_weight": "легкий",
+	"plane": "літак",
+	"road": "дорога",
+	"street": "вулиця",
+	"taxi": "таксі",
+	"train": "потяг",
+	"truck": "вантажівка",
+	"window": "вікно"
+}
+`;export{t as default};

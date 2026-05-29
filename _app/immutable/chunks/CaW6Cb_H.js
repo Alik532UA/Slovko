@@ -1,0 +1,10 @@
+const n=`\uFEFF{
+	"bleed": "qanamaq",
+	"infect": "infektsiya bermek",
+	"inject": "ureklemek",
+	"injection": "injeksion",
+	"pregnancy": "boylulıq",
+	"prescription": "resep",
+	"pulse": "nabız"
+}
+`;export{n as default};

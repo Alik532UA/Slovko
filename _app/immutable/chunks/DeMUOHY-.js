@@ -1,0 +1,15 @@
+const n=`\uFEFF{
+	"brake": "φρένο",
+	"exhaust": "εξάτμιση",
+	"exhaust_options": "εξαντλώ τις επιλογές",
+	"hood": "καπό",
+	"insurance": "ασφάλεια",
+	"mechanic": "μηχανικός",
+	"radiator": "ψυγείο",
+	"shock_absorber": "αμορτισέρ",
+	"spark": "μπουζί",
+	"spark_plug": "μπουζί",
+	"steering": "τιμόνι",
+	"steering_wheel": "τιμόνι"
+}
+`;export{n as default};

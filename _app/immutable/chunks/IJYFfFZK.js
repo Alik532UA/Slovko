@@ -1,0 +1,25 @@
+const e=`\uFEFF{
+	"accommodation": "mesken",
+	"accommodation_living": "mesken",
+	"accommodation_yerleme": "yerleşme",
+	"arrival": "keliş",
+	"backpack": "arqa çantası",
+	"baggage": "yük",
+	"brochure": "risale",
+	"cabin": "tayyare kabinası",
+	"cabin_plane": "tayyare kabinası",
+	"cabin_ship": "kabina",
+	"customs": "gümrük",
+	"departure": "ketiş",
+	"emergency": "acil durum",
+	"expedition": "sefer",
+	"ferry": "parom",
+	"hostel": "hostel",
+	"reservation": "yer ayırtıluv",
+	"sightseeing": "gezip körme",
+	"souvenir": "hâtıra",
+	"suitcase": "camadan",
+	"timetable": "cedvel",
+	"voyage": "deñiz yolculığı"
+}
+`;export{e as default};

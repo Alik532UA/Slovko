@@ -1,0 +1,24 @@
+const t=`\uFEFF{
+	"bath": "kąpiel",
+	"bathroom": "łazienka",
+	"bed": "łóżko",
+	"bedroom": "sypialnia",
+	"chair": "krzesło",
+	"clock": "zegar",
+	"computer": "komputer",
+	"cup": "filiżanka",
+	"glass": "szklanka",
+	"glass_cup": "szklanka",
+	"glass_material": "szkło",
+	"living_room": "salon",
+	"plant": "roślina",
+	"plant_botany": "roślina",
+	"plant_factory": "zakład",
+	"shower": "prysznic",
+	"table": "stół",
+	"table_data": "tabela",
+	"table_furniture": "stół",
+	"toilet": "toaleta",
+	"wall": "ściana"
+}
+`;export{t as default};

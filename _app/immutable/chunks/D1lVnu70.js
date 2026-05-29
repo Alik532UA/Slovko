@@ -1,0 +1,25 @@
+const n=`\uFEFF{
+	"belt": "Gürtel",
+	"bumper": "Stoßstange",
+	"clutch": "Kupplung",
+	"dashboard": "Armaturenbrett",
+	"fan": "Fan / Ventilator",
+	"fan_admirer": "Fan",
+	"fan_device": "Ventilator",
+	"headlight": "Scheinwerfer",
+	"jack": "Wagenheber",
+	"mirror": "Spiegel",
+	"motorcycle": "Motorrad",
+	"oil": "Öl",
+	"oil_food": "Öl",
+	"oil_fuel": "Öl",
+	"seat": "Sitz",
+	"ship": "Schiff",
+	"sign": "Zeichen",
+	"sign_symbol": "Zeichen",
+	"sign_verb": "unterschreiben",
+	"spare": "Ersatzreifen",
+	"spare_tire": "Ersatzreifen",
+	"wheel": "Rad"
+}
+`;export{n as default};

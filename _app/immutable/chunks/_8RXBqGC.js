@@ -1,0 +1,14 @@
+const n=`\uFEFF{
+	"black": "μαύρο",
+	"blue": "μπλε",
+	"blue_dark": "μπλε",
+	"blue_light": "γαλάζιο",
+	"brown": "καφέ",
+	"color": "χρώμα",
+	"green": "πράσινο",
+	"pink": "ροζ",
+	"red": "κόκκινο",
+	"white": "άσπρο",
+	"yellow": "κίτρινο"
+}
+`;export{n as default};

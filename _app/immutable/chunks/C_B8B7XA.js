@@ -1,0 +1,16 @@
+const n=`\uFEFF{
+	"anybody": "ktokolwiek",
+	"anywhere": "gdziekolwiek",
+	"guy": "facet",
+	"herself": "sama",
+	"himself": "sam",
+	"itself": "samo",
+	"kid": "dziecko",
+	"lady": "dama",
+	"lady_noble": "dama",
+	"lady_woman": "pani",
+	"myself": "sam",
+	"ourselves": "sami",
+	"yourselves": "sami"
+}
+`;export{n as default};

@@ -1,0 +1,21 @@
+const n=`\uFEFF{
+	"ambulance": "ambulans",
+	"breast": "pierś",
+	"cheek": "policzek",
+	"elbow": "łokieć",
+	"heal": "goić się",
+	"healthcare": "opieka zdrowotna",
+	"hip": "biodro",
+	"immune": "odporny",
+	"infection": "infekcja",
+	"medication": "leki",
+	"obesity": "otyłość",
+	"organ": "organ",
+	"palm": "dłoń",
+	"physician": "lekarz",
+	"protein": "białko",
+	"surgeon": "chirurg",
+	"surgery": "chirurgia",
+	"wound": "rana"
+}
+`;export{n as default};

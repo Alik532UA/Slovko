@@ -1,0 +1,14 @@
+const n=`\uFEFF{
+	"flood": "πλημμύρα",
+	"fog": "ομίχλη",
+	"global_warming": "υπερθέρμανση του πλανήτη",
+	"jungle": "ζούγκλα",
+	"leaf": "φύλλο",
+	"lightning": "αστραπή",
+	"rainbow": "ουράνιο τόξο",
+	"sand": "άμμος",
+	"scenery": "τοπίο",
+	"seed": "σπόρος",
+	"soil": "έδαφος"
+}
+`;export{n as default};

@@ -1,0 +1,26 @@
+const n=`\uFEFF{
+	"air": "/eə/",
+	"autumn": "/ˈɔːtəm/",
+	"beach": "/biːtʃ/",
+	"fire": "/ˈfaɪər/",
+	"flower": "/ˈflaʊə/",
+	"ice": "/aɪs/",
+	"island": "/ˈaɪlənd/",
+	"moon": "/muːn/",
+	"mountain": "/ˈmaʊntən/",
+	"ocean": "/ˈəʊʃn/",
+	"rain": "/reɪn/",
+	"river": "/ˈrɪvə/",
+	"sea": "/siː/",
+	"season": "/ˈsiːzn/",
+	"sky": "/skaɪ/",
+	"smoke": "/smoʊk/",
+	"snow": "/snəʊ/",
+	"star": "/stɑːr/",
+	"summer": "/ˈsʌmər/",
+	"sun": "/sʌn/",
+	"tree": "/triː/",
+	"wind": "/wɪnd/",
+	"winter": "/ˈwɪntər/"
+}
+`;export{n as default};

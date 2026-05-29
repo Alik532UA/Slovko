@@ -1,0 +1,14 @@
+const n=`\uFEFF{
+	"black": "qara",
+	"blue": "mavı",
+	"blue_dark": "tünd mavı",
+	"blue_light": "aciq mavı",
+	"brown": "qonur",
+	"color": "renk",
+	"green": "yeşil",
+	"pink": "pembe",
+	"red": "qırmızı",
+	"white": "beyaz",
+	"yellow": "sarı"
+}
+`;export{n as default};

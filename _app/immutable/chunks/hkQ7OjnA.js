@@ -1,0 +1,26 @@
+const t=`\uFEFF{
+	"age_years": "вік",
+	"art_culture": "мистецтво",
+	"faith": "віра",
+	"freedom": "свобода",
+	"harm": "шкода",
+	"honor": "честь",
+	"humor": "гумор",
+	"imagination": "уява",
+	"joy": "радість",
+	"justice": "справедливість",
+	"patience": "терпіння",
+	"pride": "гордість",
+	"priority": "пріоритет",
+	"proof": "доказ",
+	"relief": "полегшення",
+	"shadow": "тінь",
+	"shame": "сором",
+	"shock": "шок",
+	"silence": "тиша",
+	"soul": "душа",
+	"victory": "перемога",
+	"weakness": "слабкість",
+	"wealth": "багатство"
+}
+`;export{t as default};

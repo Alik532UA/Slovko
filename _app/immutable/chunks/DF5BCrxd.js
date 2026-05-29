@@ -1,0 +1,26 @@
+const t=`\uFEFF{
+	"age_years": "ηλικία",
+	"art_culture": "τέχνη",
+	"faith": "πίστη",
+	"freedom": "ελευθερία",
+	"harm": "βλάβη",
+	"honor": "τιμή",
+	"humor": "χιούμορ",
+	"imagination": "φαντασία",
+	"joy": "χαρά",
+	"justice": "δικαιοσύνη",
+	"patience": "υπομονή",
+	"pride": "περηφάνια",
+	"priority": "προτεραιότητα",
+	"proof": "απόδειξη",
+	"relief": "ανακούφιση",
+	"shadow": "σκιά",
+	"shame": "ντροπή",
+	"shock": "σοκ",
+	"silence": "σιωπή",
+	"soul": "ψυχή",
+	"victory": "νίκη",
+	"weakness": "αδυναμία",
+	"wealth": "πλούτος"
+}
+`;export{t as default};

@@ -1,0 +1,26 @@
+const t=`\uFEFF{
+	"ant": "мураха",
+	"bat": "кажан",
+	"bat_animal": "кажан",
+	"bat_sports": "біта",
+	"butterfly": "метелик",
+	"camel": "верблюд",
+	"crab": "краб",
+	"dolphin": "дельфін",
+	"frog": "жаба",
+	"jellyfish": "медуза",
+	"kangaroo": "кенгуру",
+	"koala": "коала",
+	"lizard": "ящірка",
+	"lobster": "омар",
+	"monkey": "мавпа",
+	"octopus": "восьминіг",
+	"owl": "сова",
+	"panda": "панда",
+	"parrot": "папуга",
+	"snail": "равлик",
+	"spider": "павук",
+	"tiger": "тигр",
+	"turtle": "черепаха"
+}
+`;export{t as default};

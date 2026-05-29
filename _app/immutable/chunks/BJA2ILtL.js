@@ -1,0 +1,22 @@
+const t=`\uFEFF{
+	"airport": "αεροδρόμιο",
+	"bag": "τσάντα",
+	"holiday": "γιορτή",
+	"holiday_celebration": "γιορτή",
+	"holiday_vacation": "διακοπές",
+	"hotel": "ξενοδοχείο",
+	"information": "πληροφορίες",
+	"map": "χάρτης",
+	"money": "χρήματα",
+	"price": "τιμή",
+	"room": "δωμάτιο",
+	"stop": "σταματάω",
+	"stop_location": "στάση",
+	"stop_verb": "σταματάω",
+	"ticket": "εισιτήριο",
+	"ticket_office": "εκδοτήριο εισιτηρίων",
+	"tourist": "τουρίστας",
+	"trip": "ταξίδι",
+	"vacation": "διακοπές"
+}
+`;export{t as default};

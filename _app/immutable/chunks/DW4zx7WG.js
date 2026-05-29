@@ -1,0 +1,22 @@
+const n=`\uFEFF{
+	"animal": "тварина",
+	"bird": "птах",
+	"cat": "кіт",
+	"chicken": "курка",
+	"cow": "корова",
+	"dog": "собака",
+	"duck": "качка",
+	"duck_animal": "качка",
+	"elephant": "слон",
+	"fish": "риба",
+	"fly": "муха",
+	"fly_action": "літати",
+	"fly_insect": "муха",
+	"fox": "лисиця",
+	"horse": "кінь",
+	"lion": "лев",
+	"mouse": "миша",
+	"pig": "свиня",
+	"rabbit": "кролик"
+}
+`;export{n as default};

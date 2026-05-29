@@ -1,0 +1,24 @@
+const t=`\uFEFF{
+	"bath": "bad",
+	"bathroom": "badkamer",
+	"bed": "bed",
+	"bedroom": "slaapkamer",
+	"chair": "stoel",
+	"clock": "klok",
+	"computer": "computer",
+	"cup": "kopje",
+	"glass": "glas",
+	"glass_cup": "glas",
+	"glass_material": "glas",
+	"living_room": "woonkamer",
+	"plant": "plant",
+	"plant_botany": "plant",
+	"plant_factory": "fabriek",
+	"shower": "douche",
+	"table": "tafel",
+	"table_data": "tabel",
+	"table_furniture": "tafel",
+	"toilet": "wc",
+	"wall": "muur"
+}
+`;export{t as default};

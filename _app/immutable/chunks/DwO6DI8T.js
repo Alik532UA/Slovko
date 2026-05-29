@@ -1,0 +1,12 @@
+const n=`\uFEFF{
+	"balcony": "balkon",
+	"ceiling": "tavan",
+	"iron_noun": "temir",
+	"pan": "tava",
+	"pillow": "yastıq",
+	"shampoo": "şampun",
+	"shelf": "raf",
+	"sink": "rakovina",
+	"vase": "vaza"
+}
+`;export{n as default};

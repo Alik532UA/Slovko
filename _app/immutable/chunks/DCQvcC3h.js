@@ -1,0 +1,14 @@
+const n=`\uFEFF{
+	"are_you": "είστε",
+	"can_you": "μπορείτε",
+	"do_you": "εσείς",
+	"is_it": "είναι",
+	"of_course": "φυσικά",
+	"since_when": "από πότε",
+	"speak_slowly": "μιλήστε αργά",
+	"until_when": "μέχρι πότε",
+	"who_is": "ποιος είναι",
+	"whose": "ποιανού",
+	"why_not": "γιατί όχι"
+}
+`;export{n as default};

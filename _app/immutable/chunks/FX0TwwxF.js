@@ -1,0 +1,23 @@
+const a=`\uFEFF{
+	"aunt": "ala",
+	"aunt_maternal": "tize",
+	"aunt_paternal": "ala",
+	"child": "bala",
+	"family": "aile",
+	"father": "baba",
+	"friend": "dost",
+	"grandfather": "qartbaba",
+	"grandmother": "bita",
+	"husband": "aqay",
+	"mother": "ana",
+	"parents": "ana-baba",
+	"partner": "ortaq",
+	"sister": "abla",
+	"sister_older": "aba",
+	"sister_younger": "qız qardaş",
+	"son": "oğul",
+	"uncle": "emce",
+	"uncle_maternal": "dayı",
+	"uncle_paternal": "amca",
+	"wife": "hanım"
+}`;export{a as default};

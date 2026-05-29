@@ -1,0 +1,11 @@
+const n=`\uFEFF{
+	"calm_down": "заспокоїтися",
+	"cheer": "підбадьорити",
+	"cheer_up": "підбадьорити",
+	"count_on_someone": "розраховувати на",
+	"let_down_disappoint": "підвести",
+	"make_up_story": "вигадати",
+	"throw_away": "викидати",
+	"write_down": "записувати"
+}
+`;export{n as default};

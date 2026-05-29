@@ -1,0 +1,26 @@
+const t=`\uFEFF{
+	"age_years": "leeftijd",
+	"art_culture": "kunst",
+	"faith": "geloof",
+	"freedom": "vrijheid",
+	"harm": "schade",
+	"honor": "eer",
+	"humor": "humor",
+	"imagination": "verbeelding",
+	"joy": "vreugde",
+	"justice": "rechtvaardigheid",
+	"patience": "geduld",
+	"pride": "trots",
+	"priority": "prioriteit",
+	"proof": "bewijs",
+	"relief": "opluchting",
+	"shadow": "schaduw",
+	"shame": "schaamte",
+	"shock": "schok",
+	"silence": "stilte",
+	"soul": "ziel",
+	"victory": "overwinning",
+	"weakness": "zwakte",
+	"wealth": "rijkdom"
+}
+`;export{t as default};

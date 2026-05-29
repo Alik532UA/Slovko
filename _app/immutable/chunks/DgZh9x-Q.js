@@ -1,0 +1,17 @@
+const t=`\uFEFF{
+	"business": "бізнес",
+	"class": "клас",
+	"classroom": "класна кімната",
+	"company": "компанія",
+	"course": "курс",
+	"exam": "іспит",
+	"homework": "домашнє завдання",
+	"job": "робота",
+	"lesson": "урок",
+	"office": "офіс",
+	"school": "школа",
+	"student": "студент",
+	"teacher": "вчитель",
+	"test": "тест",
+	"university": "університет"
+}`;export{t as default};

@@ -1,0 +1,17 @@
+const t=`\uFEFF{
+	"business": "επιχείρηση",
+	"class": "τάξη",
+	"classroom": "αίθουσα",
+	"company": "εταιρεία",
+	"course": "μάθημα",
+	"exam": "εξέταση",
+	"homework": "εργασία",
+	"job": "δουλειά",
+	"lesson": "μάθημα",
+	"office": "γραφείο",
+	"school": "σχολείο",
+	"student": "φοιτητής",
+	"teacher": "δάσκαλος",
+	"test": "τεστ",
+	"university": "πανεπιστήμιο"
+}`;export{t as default};

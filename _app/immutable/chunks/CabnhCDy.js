@@ -1,0 +1,15 @@
+const t=`\uFEFF{
+	"booking": "yer ayırtuv",
+	"canal": "kanal",
+	"cancel": "iptal etmek",
+	"delay": "keçiktirmek",
+	"departure_leave": "yolğa çıquv",
+	"fare": "yol parası",
+	"found": "qurmaq",
+	"harbor": "liman",
+	"immigration": "icret",
+	"resort": "resort",
+	"terminal": "terminal",
+	"visa": "viza"
+}
+`;export{t as default};

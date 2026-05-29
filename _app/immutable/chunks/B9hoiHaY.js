@@ -1,0 +1,26 @@
+const a=`\uFEFF{
+	"ant": "qırmısqa",
+	"bat": "yarasa",
+	"bat_animal": "yarasa",
+	"bat_sports": "topuz",
+	"butterfly": "kebelek",
+	"camel": "töye",
+	"crab": "yengeç",
+	"dolphin": "yunus",
+	"frog": "baqa",
+	"jellyfish": "meduza",
+	"kangaroo": "kenguru",
+	"koala": "koala",
+	"lizard": "keseirtke",
+	"lobster": "omar",
+	"monkey": "maymun",
+	"octopus": "sekizayaq",
+	"owl": "bayquş",
+	"panda": "panda",
+	"parrot": "totuquş",
+	"snail": "salyangoz",
+	"spider": "örümcek",
+	"tiger": "qaplan",
+	"turtle": "tışbaqa"
+}
+`;export{a as default};

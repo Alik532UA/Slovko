@@ -1,0 +1,24 @@
+const n=`\uFEFF{
+	"aunt": "aunt",
+	"aunt_maternal": "aunt",
+	"aunt_paternal": "aunt",
+	"child": "child",
+	"family": "family",
+	"father": "father",
+	"friend": "friend",
+	"grandfather": "grandfather",
+	"grandmother": "grandmother",
+	"husband": "husband",
+	"mother": "mother",
+	"parents": "parents",
+	"partner": "partner",
+	"sister": "sister",
+	"sister_older": "sister",
+	"sister_younger": "sister",
+	"son": "son",
+	"uncle": "uncle",
+	"uncle_maternal": "uncle",
+	"uncle_paternal": "uncle",
+	"wife": "wife"
+}
+`;export{n as default};

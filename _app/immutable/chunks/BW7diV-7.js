@@ -1,0 +1,21 @@
+const n=`\uFEFF{
+	"ambulance": "acele yardım",
+	"breast": "köküs",
+	"cheek": "yañaq",
+	"elbow": "dirsek",
+	"heal": "sağalmaq",
+	"healthcare": "sağlıq saqlav",
+	"hip": "yan",
+	"immune": "immunitet",
+	"infection": "infektsiya",
+	"medication": "ilâclar",
+	"obesity": "semizlik",
+	"organ": "organ",
+	"palm": "avuç",
+	"physician": "hekim",
+	"protein": "protein",
+	"surgeon": "cerrah",
+	"surgery": "operatsiya",
+	"wound": "yara"
+}
+`;export{n as default};

@@ -1,0 +1,15 @@
+const a=`\uFEFF{
+	"brake": "hamulec",
+	"exhaust": "wydech",
+	"exhaust_options": "wyczerpywać opcje",
+	"hood": "maska",
+	"insurance": "ubezpieczenie",
+	"mechanic": "mechanik",
+	"radiator": "grzejnik",
+	"shock_absorber": "amortyzator",
+	"spark": "świeca zapłonowa",
+	"spark_plug": "świeca zapłonowa",
+	"steering": "kierownica",
+	"steering_wheel": "kierownica"
+}
+`;export{a as default};

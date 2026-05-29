@@ -1,0 +1,22 @@
+const t=`\uFEFF{
+	"airport": "luchthaven",
+	"bag": "tas",
+	"holiday": "vakantie",
+	"holiday_celebration": "feestdag",
+	"holiday_vacation": "vakantie",
+	"hotel": "hotel",
+	"information": "informatie",
+	"map": "kaart",
+	"money": "geld",
+	"price": "prijs",
+	"room": "kamer",
+	"stop": "stoppen",
+	"stop_location": "halte",
+	"stop_verb": "stoppen",
+	"ticket": "kaartje",
+	"ticket_office": "loket",
+	"tourist": "toerist",
+	"trip": "reis",
+	"vacation": "vakantie"
+}
+`;export{t as default};

@@ -1,0 +1,15 @@
+const e=`\uFEFF{
+	"brake": "Bremse",
+	"exhaust": "Auspuff",
+	"exhaust_options": "erschöpfen",
+	"hood": "Motorhaube",
+	"insurance": "Versicherung",
+	"mechanic": "Mechaniker",
+	"radiator": "Heizkörper",
+	"shock_absorber": "Stoßdämpfer",
+	"spark": "Zündkerze",
+	"spark_plug": "Zündkerze",
+	"steering": "Lenkrad",
+	"steering_wheel": "Lenkrad"
+}
+`;export{e as default};

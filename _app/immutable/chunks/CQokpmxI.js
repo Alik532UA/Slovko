@@ -1,0 +1,18 @@
+const n=`\uFEFF{
+	"accept": "приймати",
+	"advertise": "рекламувати",
+	"analyze": "аналізувати",
+	"apply": "застосовувати",
+	"apply_job": "подавати заявку",
+	"apply_use": "застосовувати",
+	"avoid": "уникати",
+	"behave": "поводитися",
+	"climate": "клімат",
+	"contain": "містити",
+	"depend": "залежати",
+	"identify": "ідентифікувати",
+	"organize": "організовувати",
+	"provide": "забезпечувати",
+	"reduce": "зменшувати"
+}
+`;export{n as default};

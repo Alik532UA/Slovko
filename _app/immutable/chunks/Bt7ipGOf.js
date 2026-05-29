@@ -1,0 +1,22 @@
+const t=`\uFEFF{
+	"battery": "batterij",
+	"battery_artillery": "batterij",
+	"battery_electric": "batterij",
+	"battery_life": "batterij",
+	"engine_motor": "motor",
+	"fuel": "brandstof",
+	"fuel_energy": "brandstof",
+	"garage": "garage",
+	"highway": "snelweg",
+	"license": "licentie",
+	"license_document": "licentie",
+	"pedal": "pedaal",
+	"piston": "zuiger",
+	"signal": "signaal",
+	"signal_phone": "signaal",
+	"taillight": "achterlicht",
+	"tire": "band",
+	"trunk": "kofferbak",
+	"wiper": "ruitenwisser"
+}
+`;export{t as default};

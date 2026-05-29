@@ -1,0 +1,17 @@
+const t=`\uFEFF{
+	"business": "zaken",
+	"class": "klas",
+	"classroom": "klaslokaal",
+	"company": "bedrijf",
+	"course": "cursus",
+	"exam": "examen",
+	"homework": "huiswerk",
+	"job": "baan",
+	"lesson": "les",
+	"office": "kantoor",
+	"school": "opleidingen",
+	"student": "student",
+	"teacher": "leraar",
+	"test": "test",
+	"university": "universiteit"
+}`;export{t as default};

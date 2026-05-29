@@ -1,0 +1,18 @@
+const t=`\uFEFF{
+	"atm": "банкомат",
+	"boarding": "посадка",
+	"camp": "жити в наметі",
+	"camp_noun": "табір",
+	"camp_verb": "жити в наметі",
+	"cash": "готівка",
+	"credit_card": "кредитна картка",
+	"distance": "відстань",
+	"gate": "ворота",
+	"guide": "гід",
+	"lost": "загублений",
+	"luggage": "багаж",
+	"platform": "платформа",
+	"tour": "тур",
+	"tourism": "туризм"
+}
+`;export{t as default};

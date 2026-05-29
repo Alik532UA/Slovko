@@ -1,0 +1,14 @@
+const n=`\uFEFF{
+	"flood": "overstroming",
+	"fog": "mist",
+	"global_warming": "opwarming van de aarde",
+	"jungle": "jungle",
+	"leaf": "blad",
+	"lightning": "bliksem",
+	"rainbow": "regenboog",
+	"sand": "zand",
+	"scenery": "landschap",
+	"seed": "zaad",
+	"soil": "grond"
+}
+`;export{n as default};

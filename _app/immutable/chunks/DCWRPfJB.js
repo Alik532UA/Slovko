@@ -1,0 +1,27 @@
+const t=`\uFEFF{
+	"brilliant": "/ˈbrɪljənt/",
+	"empty": "/ˈɛmp.ti/",
+	"honest": "/ˈɒnɪst/",
+	"lazy": "/ˈleɪzi/",
+	"permanent": "/ˈpɜːrmənənt/",
+	"permanent_job": "/ˈpɜːrmənənt/",
+	"pure": "/pjʊər/",
+	"regular": "/ˈrɛɡjələr/",
+	"relaxed": "/rɪˈlækst/",
+	"shocked": "/ʃɒkt/",
+	"silly": "/ˈsɪli/",
+	"smooth": "/smuːð/",
+	"solid": "/ˈsɒlɪd/",
+	"straight": "/streɪt/",
+	"strict": "/strɪkt/",
+	"surprised": "/səˈpraɪzd/",
+	"talented": "/ˈtæləntɪd/",
+	"technical": "/ˈtɛknɪkl/",
+	"ugly": "/ˈʌɡ.li/",
+	"ugly_adj": "/ˈʌɡli/",
+	"unknown": "/ˌʌnˈnəʊn/",
+	"upset": "/ˌʌpˈsɛt/",
+	"upset_adj": "/ˌʌpˈsɛt/",
+	"weak": "/wiːk/"
+}
+`;export{t as default};

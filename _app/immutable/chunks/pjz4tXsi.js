@@ -1,0 +1,23 @@
+const t=`\uFEFF{
+	"bicycle": "velosiped",
+	"boat": "qayıq",
+	"bus": "avtobus",
+	"car": "araba",
+	"door": "qapı",
+	"key": "anahtar",
+	"key_essential": "esas",
+	"key_lock": "anahtar",
+	"key_piano": "dügme",
+	"light": "aydın",
+	"light_brightness": "ışıq",
+	"light_color": "aydın",
+	"light_weight": "yengil",
+	"plane": "uçaq",
+	"road": "yol",
+	"street": "soqaq",
+	"taxi": "taksi",
+	"train": "tren",
+	"truck": "yük arabası",
+	"window": "pencere"
+}
+`;export{t as default};

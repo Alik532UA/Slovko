@@ -1,0 +1,12 @@
+const t=`\uFEFF{
+	"purse": "qadın cüzdanı",
+	"sock": "çoraq",
+	"suit": "kostyum",
+	"suit_clothing": "kostüm",
+	"suit_lawsuit": "dava",
+	"suit_verb": "uymaq",
+	"tie": "qalstuk",
+	"tie_clothes": "qalstuk",
+	"uniform": "forma"
+}
+`;export{t as default};

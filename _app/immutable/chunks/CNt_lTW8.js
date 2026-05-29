@@ -1,0 +1,25 @@
+const e=`\uFEFF{
+	"bandage": "sarğı",
+	"breath": "nefes",
+	"breathe": "nefes almaq",
+	"breathing": "nefes",
+	"chin": "çene",
+	"cough": "öksürük",
+	"cure": "ilâc",
+	"cure_medicine": "ilâc",
+	"cure_verb": "tedavi etmek",
+	"deaf": "sağır",
+	"eyebrow": "qaş",
+	"fitness": "fitness",
+	"injure": "yaralamaq",
+	"injured": "yaralanğan",
+	"mental_health": "aqliy sağlıq",
+	"obese": "semiz",
+	"painful": "avurtqan",
+	"pharmacy": "eczahane",
+	"plaster": "suvaq",
+	"sexual_health": "cinsiy sağlıq",
+	"sweat": "ter",
+	"symptom": "simptom"
+}
+`;export{e as default};

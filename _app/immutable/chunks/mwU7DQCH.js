@@ -1,0 +1,10 @@
+const r=`\uFEFF{
+	"mosquito": "komar",
+	"rat": "szczur",
+	"squirrel": "wiewiórka",
+	"starfish": "rozgwiazda",
+	"walrus": "mors",
+	"whale": "wieloryb",
+	"wolf": "wilk",
+	"worm": "robak"
+}`;export{r as default};

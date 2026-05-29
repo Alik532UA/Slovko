@@ -1,0 +1,19 @@
+const t=`\uFEFF{
+	"airport": "/ˈeəpɔːt/",
+	"bag": "/bæɡ/",
+	"camp": "/kæmp/",
+	"camp_noun": "/kæmp/",
+	"hotel": "/həʊˈtɛl/",
+	"information": "/ˌɪnfərˈmeɪʃn/",
+	"map": "/mæp/",
+	"money": "/ˈmʌni/",
+	"price": "/praɪs/",
+	"room": "/ruːm/",
+	"stop": "/stɒp/",
+	"ticket": "/ˈtɪkɪt/",
+	"ticket_office": "/ˈtɪkɪt ˈɒfɪs/",
+	"tour": "/tʊər/",
+	"tourist": "/ˈtʊərɪst/",
+	"trip": "/trɪp/"
+}
+`;export{t as default};

@@ -1,0 +1,15 @@
+const r=`\uFEFF{
+	"blackboard": "schoolbord",
+	"boss": "baas",
+	"degree": "graad",
+	"degree_academic": "graad",
+	"manager": "verantwoordelijke",
+	"notebook": "schrift",
+	"notebook_paper": "schrift",
+	"physics": "natuurkunde",
+	"printer": "printer",
+	"printer_device": "printer",
+	"professor": "professor",
+	"salary": "salaris"
+}
+`;export{r as default};

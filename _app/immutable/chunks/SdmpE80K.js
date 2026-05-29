@@ -1,0 +1,26 @@
+const n=`\uFEFF{
+	"age_years": "yaş",
+	"art_culture": "sanet",
+	"faith": "inanç",
+	"freedom": "erkinlik",
+	"harm": "zarar",
+	"honor": "şeref",
+	"humor": "yumor",
+	"imagination": "hayal",
+	"joy": "quvanç",
+	"justice": "adalet",
+	"patience": "sabır",
+	"pride": "gurur",
+	"priority": "öncelik",
+	"proof": "isbat",
+	"relief": "yengillik",
+	"shadow": "köletge",
+	"shame": "ayıp",
+	"shock": "şok",
+	"silence": "tınçlıq",
+	"soul": "can",
+	"victory": "ğalebe",
+	"weakness": "zayıflıq",
+	"wealth": "zenginlik"
+}
+`;export{n as default};

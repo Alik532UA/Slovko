@@ -1,0 +1,22 @@
+const t=`\uFEFF{
+	"battery": "акумулятор",
+	"battery_artillery": "батарея",
+	"battery_electric": "акумулятор",
+	"battery_life": "батарея",
+	"engine_motor": "двигун",
+	"fuel": "паливо",
+	"fuel_energy": "паливо",
+	"garage": "гараж",
+	"highway": "шосе",
+	"license": "ліцензія",
+	"license_document": "ліцензія",
+	"pedal": "педаль",
+	"piston": "поршень",
+	"signal": "сигнал",
+	"signal_phone": "сигнал",
+	"taillight": "задній ліхтар",
+	"tire": "шина",
+	"trunk": "багажник",
+	"wiper": "двірник"
+}
+`;export{t as default};

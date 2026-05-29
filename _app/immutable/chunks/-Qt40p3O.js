@@ -1,0 +1,22 @@
+const t=`\uFEFF{
+	"airport": "ava limanı",
+	"bag": "çanta",
+	"holiday": "bayram",
+	"holiday_celebration": "bayram",
+	"holiday_vacation": "tatil",
+	"hotel": "musafirhane",
+	"information": "malümat",
+	"map": "harita",
+	"money": "aqça",
+	"price": "fiyat",
+	"room": "oda",
+	"stop": "toqtamaq",
+	"stop_location": "toqtav",
+	"stop_verb": "toqtamaq",
+	"ticket": "bilet",
+	"ticket_office": "kassa",
+	"tourist": "turist",
+	"trip": "seyaat",
+	"vacation": "tatil"
+}
+`;export{t as default};

@@ -1,0 +1,15 @@
+const t=`\uFEFF{
+	"brake": "tormoz",
+	"exhaust": "egzoz",
+	"exhaust_options": "bitirmek",
+	"hood": "kapot",
+	"insurance": "sigorta",
+	"mechanic": "mehanik",
+	"radiator": "radiator",
+	"shock_absorber": "amortizator",
+	"spark": "ateşleme bujisi",
+	"spark_plug": "ateşleme bujisi",
+	"steering": "rul",
+	"steering_wheel": "rul"
+}
+`;export{t as default};

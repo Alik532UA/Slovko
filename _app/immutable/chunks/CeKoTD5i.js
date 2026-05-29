@@ -1,0 +1,25 @@
+const t=`\uFEFF{
+	"belt": "belt",
+	"bumper": "bumper",
+	"clutch": "clutch",
+	"dashboard": "dashboard",
+	"fan": "fan",
+	"fan_admirer": "fan",
+	"fan_device": "fan",
+	"headlight": "headlight",
+	"jack": "jack",
+	"mirror": "mirror",
+	"motorcycle": "motorcycle",
+	"oil": "oil",
+	"oil_food": "oil",
+	"oil_fuel": "oil",
+	"seat": "seat",
+	"ship": "ship",
+	"sign": "sign",
+	"sign_symbol": "sign",
+	"sign_verb": "sign",
+	"spare": "spare tire",
+	"spare_tire": "spare tire",
+	"wheel": "wheel"
+}
+`;export{t as default};

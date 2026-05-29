@@ -1,0 +1,21 @@
+const n=`\uFEFF{
+	"ambulance": "ασθενοφόρο",
+	"breast": "στήθος",
+	"cheek": "μάγουλο",
+	"elbow": "αγκώνας",
+	"heal": "θεραπεύομαι",
+	"healthcare": "υγειονομική περίθαλψη",
+	"hip": "γοφός",
+	"immune": "ανοσοποιητικός",
+	"infection": "λοίμωξη",
+	"medication": "φαρμακευτική αγωγή",
+	"obesity": "παχυσαρκία",
+	"organ": "όργανο",
+	"palm": "παλάμη",
+	"physician": "γιατρός",
+	"protein": "πρωτεΐνη",
+	"surgeon": "χειρουργός",
+	"surgery": "χειρουργική επέμβαση",
+	"wound": "πληγή"
+}
+`;export{n as default};

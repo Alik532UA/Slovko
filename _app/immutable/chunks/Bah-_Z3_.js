@@ -1,0 +1,23 @@
+const t=`\uFEFF{
+	"arm": "qol",
+	"arm_body": "qol",
+	"arm_weapon": "silâ",
+	"body": "vücut",
+	"ear": "qulaq",
+	"eye": "köz",
+	"face": "yüz",
+	"foot": "taban",
+	"hair": "saç",
+	"hand": "el",
+	"hand_body": "el",
+	"hand_verb": "bermek",
+	"head": "baş",
+	"health": "sağlıq",
+	"hospital": "hastahane",
+	"leg": "ayaq",
+	"leg_full": "ayaq",
+	"mouth": "avur",
+	"nose": "burun",
+	"tooth": "tiş"
+}
+`;export{t as default};

@@ -1,0 +1,27 @@
+const n=`\uFEFF{
+	"afternoon": "afternoon",
+	"day": "day",
+	"evening": "evening",
+	"friday": "Friday",
+	"hour": "hour",
+	"later": "later",
+	"minute": "minute",
+	"monday": "Monday",
+	"month": "month",
+	"morning": "morning",
+	"night": "night",
+	"now": "now",
+	"saturday": "Saturday",
+	"soon": "soon",
+	"sunday": "Sunday",
+	"thursday": "Thursday",
+	"today": "today",
+	"tomorrow": "tomorrow",
+	"tuesday": "Tuesday",
+	"wednesday": "Wednesday",
+	"week": "week",
+	"weekend": "weekend",
+	"year": "year",
+	"yesterday": "yesterday"
+}
+`;export{n as default};

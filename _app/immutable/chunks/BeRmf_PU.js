@@ -1,0 +1,26 @@
+const t=`\uFEFF{
+	"ant": "μυρμήγκι",
+	"bat": "νυχτερίδα",
+	"bat_animal": "νυχτερίδα",
+	"bat_sports": "ρόπαλο",
+	"butterfly": "πεταλούδα",
+	"camel": "καμήλα",
+	"crab": "κάβουρας",
+	"dolphin": "δελφίνι",
+	"frog": "βάτραχος",
+	"jellyfish": "μέδουσα",
+	"kangaroo": "καγκουρό",
+	"koala": "κοάλα",
+	"lizard": "σαύρα",
+	"lobster": "αστακός",
+	"monkey": "μαϊμού",
+	"octopus": "χταπόδι",
+	"owl": "κουκουβάγια",
+	"panda": "πάντα",
+	"parrot": "παπαγάλος",
+	"snail": "σαλιγκάρι",
+	"spider": "αράχνη",
+	"tiger": "τίγρης",
+	"turtle": "χελώνα"
+}
+`;export{t as default};

@@ -1,0 +1,14 @@
+const t=`\uFEFF{
+	"clothes": "clothes",
+	"coat": "coat",
+	"dress": "dress",
+	"dress_up": "dress up",
+	"hat": "hat",
+	"jacket": "jacket",
+	"jeans": "jeans",
+	"pants": "pants",
+	"shirt": "shirt",
+	"skirt": "skirt",
+	"umbrella": "umbrella"
+}
+`;export{t as default};

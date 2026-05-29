@@ -1,0 +1,10 @@
+const n=`\uFEFF{
+	"bleed": "bleed",
+	"infect": "infect",
+	"inject": "inject",
+	"injection": "injection",
+	"pregnancy": "pregnancy",
+	"prescription": "prescription",
+	"pulse": "pulse"
+}
+`;export{n as default};

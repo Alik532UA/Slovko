@@ -1,0 +1,16 @@
+const t=`\uFEFF{
+	"beat": "beat",
+	"beat_win": "beat",
+	"chat": "chat",
+	"chat_talk": "chat",
+	"greet": "greet",
+	"hug": "hug",
+	"pick": "pick",
+	"pick_choose": "pick",
+	"pick_up_object": "pick up",
+	"seem": "seem",
+	"skate": "skate",
+	"ski": "ski",
+	"sneeze": "sneeze"
+}
+`;export{t as default};

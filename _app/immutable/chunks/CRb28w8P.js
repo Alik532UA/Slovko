@@ -1,0 +1,14 @@
+const n=`\uFEFF{
+	"flood": "powódź",
+	"fog": "mgła",
+	"global_warming": "globalne ocieplenie",
+	"jungle": "dżungla",
+	"leaf": "liść",
+	"lightning": "piorun",
+	"rainbow": "tęcza",
+	"sand": "piasek",
+	"scenery": "krajobraz",
+	"seed": "nasiono",
+	"soil": "gleba"
+}
+`;export{n as default};

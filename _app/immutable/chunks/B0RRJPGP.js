@@ -1,0 +1,10 @@
+const t=`\uFEFF{
+	"bring_up_child": "ανατρέφω",
+	"catch_up": "προλαβαίνω",
+	"catch_up_with": "προλαβαίνω",
+	"figure": "καταλαβαίνω",
+	"figure_out": "καταλαβαίνω",
+	"fill_in_form": "συμπληρώνω",
+	"try_on_clothes": "δοκιμάζω"
+}
+`;export{t as default};

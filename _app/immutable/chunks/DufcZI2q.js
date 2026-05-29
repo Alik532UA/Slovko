@@ -1,0 +1,22 @@
+const n=`\uFEFF{
+	"animal": "dier",
+	"bird": "vogel",
+	"cat": "kat",
+	"chicken": "kip",
+	"cow": "koe",
+	"dog": "hond",
+	"duck": "eend",
+	"duck_animal": "eend",
+	"elephant": "olifant",
+	"fish": "vis",
+	"fly": "vlieg",
+	"fly_action": "vliegen",
+	"fly_insect": "vlieg",
+	"fox": "vos",
+	"horse": "paard",
+	"lion": "leeuw",
+	"mouse": "muis",
+	"pig": "varken",
+	"rabbit": "konijn"
+}
+`;export{n as default};

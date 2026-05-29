@@ -1,0 +1,18 @@
+const e=`\uFEFF{
+	"beginning": "beginning",
+	"beginning_start": "beginning",
+	"example": "example",
+	"feeling": "feeling",
+	"future": "future",
+	"idea": "idea",
+	"life": "life",
+	"love": "love",
+	"past": "past",
+	"present": "present",
+	"present_current": "present",
+	"present_gift": "present",
+	"present_here": "present",
+	"present_time": "present",
+	"success": "success"
+}
+`;export{e as default};

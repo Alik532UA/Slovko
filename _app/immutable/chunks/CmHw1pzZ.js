@@ -1,0 +1,25 @@
+const t=`\uFEFF{
+	"bandage": "επίδεσμος",
+	"breath": "αναπνοή",
+	"breathe": "αναπνέω",
+	"breathing": "αναπνοή",
+	"chin": "πηγούνι",
+	"cough": "βήχας",
+	"cure": "θεραπεία",
+	"cure_medicine": "θεραπεία",
+	"cure_verb": "θεραπεύω",
+	"deaf": "κωφός",
+	"eyebrow": "φρύδι",
+	"fitness": "φυσική κατάσταση",
+	"injure": "τραυματίζω",
+	"injured": "τραυματισμένος",
+	"mental_health": "ψυχική υγεία",
+	"obese": "παχύσαρκος",
+	"painful": "επώδυνος",
+	"pharmacy": "φαρμακείο",
+	"plaster": "τσιρότο",
+	"sexual_health": "σεξουαλική υγεία",
+	"sweat": "ιδρώτας",
+	"symptom": "σύμπτωμα"
+}
+`;export{t as default};

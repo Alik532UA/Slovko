@@ -1,0 +1,24 @@
+const t=`\uFEFF{
+	"bath": "ванна",
+	"bathroom": "ванна кімната",
+	"bed": "ліжко",
+	"bedroom": "спальня",
+	"chair": "стілець",
+	"clock": "годинник",
+	"computer": "комп'ютер",
+	"cup": "чашка",
+	"glass": "склянка",
+	"glass_cup": "стакан",
+	"glass_material": "скло",
+	"living_room": "вітальня",
+	"plant": "рослина",
+	"plant_botany": "рослина",
+	"plant_factory": "завод",
+	"shower": "душ",
+	"table": "стіл",
+	"table_data": "таблиця",
+	"table_furniture": "стіл",
+	"toilet": "туалет",
+	"wall": "стіна"
+}
+`;export{t as default};

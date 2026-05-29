@@ -1,0 +1,23 @@
+const t=`\uFEFF{
+	"arm": "arm",
+	"arm_body": "arm",
+	"arm_weapon": "arm",
+	"body": "body",
+	"ear": "ear",
+	"eye": "eye",
+	"face": "face",
+	"foot": "foot",
+	"hair": "hair",
+	"hand": "hand",
+	"hand_body": "body part",
+	"hand_verb": "hand over",
+	"head": "head",
+	"health": "health",
+	"hospital": "hospital",
+	"leg": "leg",
+	"leg_full": "leg",
+	"mouth": "mouth",
+	"nose": "nose",
+	"tooth": "tooth"
+}
+`;export{t as default};

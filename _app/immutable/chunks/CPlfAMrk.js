@@ -1,0 +1,19 @@
+const n=`\uFEFF{
+	"accident": "аварія",
+	"accident_chance": "випадок",
+	"accident_event": "нещасний випадок",
+	"blood": "кров",
+	"brain": "мозок",
+	"clap": "плескати в долоні",
+	"clap_hands": "плескати в долоні",
+	"comb": "розчісувати",
+	"comb_hair": "розчісувати",
+	"finger": "палець",
+	"heart": "серце",
+	"knee": "коліно",
+	"neck": "шия",
+	"shoulder": "плече",
+	"stomach": "шлунок",
+	"voice": "голос"
+}
+`;export{n as default};

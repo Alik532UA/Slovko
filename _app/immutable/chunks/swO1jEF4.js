@@ -1,0 +1,14 @@
+const t=`\uFEFF{
+	"clothes": "ρούχα",
+	"coat": "παλτό",
+	"dress": "φόρεμα",
+	"dress_up": "στολίζομαι",
+	"hat": "καπέλο",
+	"jacket": "ζακέτα",
+	"jeans": "τζιν",
+	"pants": "παντελόνι",
+	"shirt": "πουκάμισο",
+	"skirt": "φούστα",
+	"umbrella": "ομπρέλα"
+}
+`;export{t as default};

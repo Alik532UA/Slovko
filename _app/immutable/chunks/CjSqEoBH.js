@@ -1,0 +1,15 @@
+const e=`\uFEFF{
+	"brake": "brake",
+	"exhaust": "exhaust",
+	"exhaust_options": "exhaust",
+	"hood": "hood",
+	"insurance": "insurance",
+	"mechanic": "mechanic",
+	"radiator": "radiator",
+	"shock_absorber": "shock absorber",
+	"spark": "spark plug",
+	"spark_plug": "spark plug",
+	"steering": "steering wheel",
+	"steering_wheel": "steering wheel"
+}
+`;export{e as default};

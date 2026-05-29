@@ -1,0 +1,18 @@
+const t=`\uFEFF{
+	"atm": "ΑΤΜ",
+	"boarding": "επιβίβαση",
+	"camp": "κατασκηνώνω",
+	"camp_noun": "κατασκήνωση",
+	"camp_verb": "κατασκηνώνω",
+	"cash": "μετρητά",
+	"credit_card": "πιστωτική κάρτα",
+	"distance": "απόσταση",
+	"gate": "πύλη",
+	"guide": "οδηγός",
+	"lost": "χάθηκα",
+	"luggage": "αποσκευές",
+	"platform": "αποβάθρα",
+	"tour": "περιήγηση",
+	"tourism": "τουρισμός"
+}
+`;export{t as default};

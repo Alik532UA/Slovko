@@ -1,0 +1,11 @@
+const a=`\uFEFF{
+	"calm_down": "tınçlanmaq",
+	"cheer": "quvlandırmaq",
+	"cheer_up": "quvlandırmaq",
+	"count_on_someone": "inanmaq",
+	"let_down_disappoint": "hayal qırıqlığına oğratmaq",
+	"make_up_story": "uydurmaq",
+	"throw_away": "atıp tastamaq",
+	"write_down": "yazmaq"
+}
+`;export{a as default};

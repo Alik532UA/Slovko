@@ -1,0 +1,10 @@
+const t=`\uFEFF{
+	"mosquito": "κουνούπι",
+	"rat": "αρουραίος",
+	"squirrel": "σκίουρος",
+	"starfish": "αστερίας",
+	"walrus": "θαλάσσιος ίππος",
+	"whale": "φάλαινα",
+	"wolf": "λύκος",
+	"worm": "σκουλήκι"
+}`;export{t as default};

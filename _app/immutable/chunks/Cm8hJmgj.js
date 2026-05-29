@@ -1,0 +1,6 @@
+const n=`\uFEFF{
+	"be_over": "be over",
+	"run_out_of": "run out of",
+	"sit_down": "sit down"
+}
+`;export{n as default};

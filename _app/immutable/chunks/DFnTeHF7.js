@@ -1,0 +1,15 @@
+const n=`\uFEFF{
+	"booking": "boeking",
+	"canal": "kanaal",
+	"cancel": "annuleren",
+	"delay": "vertragen",
+	"departure_leave": "vertrek",
+	"fare": "tarief",
+	"found": "oprichten",
+	"harbor": "haven",
+	"immigration": "immigratie",
+	"resort": "resort",
+	"terminal": "terminal",
+	"visa": "visum"
+}
+`;export{n as default};
