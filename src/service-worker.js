@@ -1,5 +1,5 @@
 ﻿/// <reference types="@sveltejs/kit" />
-import { build, files, prerendered, version } from "$service-worker";
+import { base, build, files, prerendered, version } from "$service-worker";
 
 // Назва кешу з версією для автоматичного оновлення
 const CACHE = `slovko-cache-${version}`;
@@ -91,7 +91,7 @@ self.addEventListener("fetch", (event) => {
 				if (event.request.mode === "navigate") {
 					const fallback =
 						(await cache.match("/")) ||
-						(await cache.match("/Slovko/")) ||
+						(await cache.match(`${base}/`)) ||
 						(await cache.match("404.html"));
 					if (fallback) return fallback;
 				}
