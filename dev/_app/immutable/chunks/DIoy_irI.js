@@ -512,7 +512,7 @@ const t=`\uFEFF{
 	"pencil": "μολύβι",
 	"perfect": "τέλειος",
 	"period": "περίοδος",
-	"phone": "telefoono",
+	"phone": "τηλέφωνο",
 	"photo": "φωτογραφία",
 	"photograph": "φωτογραφία",
 	"phrase": "φράση",

@@ -1,5 +1,5 @@
 const n=`{
-	"abundance": "афθονία",
+	"abundance": "αφθονία",
 	"clarity": "σαφήνεια",
 	"collaboration": "συνεργασία",
 	"collision": "σύγκρουση",

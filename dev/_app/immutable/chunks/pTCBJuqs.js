@@ -23,7 +23,7 @@ const n=`\uFEFF{
 	"gregarious": "towarzyski",
 	"harangue": "tyrada",
 	"hedonism": "hedonizm",
-	"idiosyncrasy": "idiosynκραzja",
+	"idiosyncrasy": "idiosynkrazja",
 	"immutable": "niezmienny",
 	"incisive": "cięty",
 	"indolent": "leniwy",

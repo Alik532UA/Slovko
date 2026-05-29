@@ -68,7 +68,7 @@ const t=`\uFEFF{
 	"beverage": "içecek",
 	"bind": "bağlamaq",
 	"biography": "tercimieiyal",
-	"bishop": "piskoρos",
+	"bishop": "piskopos",
 	"bizarre": "acaip",
 	"blade": "bıçaq",
 	"blast": "patlav",

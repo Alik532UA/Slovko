@@ -300,7 +300,7 @@ const t=`\uFEFF{
 	"legislature": "νομοθετικό σώμα",
 	"lengthy": "μακροσκελής",
 	"lesbian": "λεσβία",
-	"lesser": "mikρότερος",
+	"lesser": "μικρότερος",
 	"liberty": "ελευθερία",
 	"lifelong": "ισόβιος",
 	"limb": "άκρο",

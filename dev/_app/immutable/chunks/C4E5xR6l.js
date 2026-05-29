@@ -69,7 +69,7 @@ const n=`{
 	"damaging": "schadelijk",
 	"decision-making": "besluitvorming",
 	"decisive": "beslissend",
-	"dedicated": "toεgewijd",
+	"dedicated": "toegewijd",
 	"deed": "daad",
 	"defensive": "verdedigend",
 	"denial": "ontkenning",
