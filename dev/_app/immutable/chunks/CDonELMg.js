@@ -516,7 +516,7 @@ const t=`\uFEFF{
 	"photograph": "photograph",
 	"phrase": "phrase",
 	"piano": "piano",
-	"picture": "photo",
+	"picture": "picture",
 	"picture_painting": "picture",
 	"picture_photo": "picture",
 	"piece": "piece",

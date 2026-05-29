@@ -1,0 +1,9 @@
+import{d as O,a as b,b as T,s as U,f as D,c as a,e as G}from"../chunks/IRYBzLwv.js";import{p as M,o as I,t as J,a as N,s as o,c as e,b as r,r as t,g as f,d as _}from"../chunks/CnVlnL8z.js";import{l as j,p as q}from"../chunks/BR1L07ak.js";var z=D('<div class="error-page svelte-1j96wlh"><div class="error-container svelte-1j96wlh"><div class="icon svelte-1j96wlh">⚠️</div> <h1 class="svelte-1j96wlh">Something went wrong</h1> <p class="status svelte-1j96wlh"> </p> <p class="message svelte-1j96wlh"> </p> <div class="actions svelte-1j96wlh"><button class="primary-btn svelte-1j96wlh">Reload App</button> <button class="secondary-btn svelte-1j96wlh"> </button></div> <details class="svelte-1j96wlh"><summary class="svelte-1j96wlh">Technical Details</summary> <pre class="svelte-1j96wlh"> </pre></details></div></div>');function P(y,$){M($,!0);const s=()=>G(q,"$page",x),[x,L]=U();let l=_(!1),c=_("");I(()=>{try{o(c,j.getRecentLogs(),!0)}catch{o(c,"Failed to retrieve logs.")}});async function R(){const g=`
+ERROR: ${s().status} 
+MESSAGE: ${s().error?.message||"Unknown error"}
+URL: ${s().url.href}
+UA: ${navigator.userAgent}
+----------------------------------------
+LOGS:
+${f(c)}
+`;try{await navigator.clipboard.writeText(g),o(l,!0),setTimeout(()=>o(l,!1),2e3)}catch(F){j.error("debug","Failed to copy logs:",F),alert("Failed to copy logs to clipboard. Check console.")}}function S(){window.location.reload()}var i=z(),u=e(i),n=r(e(u),4),k=e(n);t(n);var v=r(n,2),A=e(v,!0);t(v);var p=r(v,2),h=e(p),d=r(h,2),C=e(d,!0);t(d),t(p);var m=r(p,2),w=r(e(m),2),E=e(w,!0);t(w),t(m),t(u),t(i),J(g=>{a(k,`Error ${s().status??""}`),a(A,s().error?.message||"An unexpected error occurred."),a(C,f(l)?"Logs Copied! ✅":"Copy Debug Logs 📋"),a(E,g)},[()=>JSON.stringify(s().error,null,2)]),b("click",h,S),b("click",d,R),T(y,i),N(),L()}O(["click"]);export{P as component};
