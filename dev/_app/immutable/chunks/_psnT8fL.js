@@ -1,0 +1,14 @@
+const n=`\uFEFF{
+	"flood": "повінь",
+	"fog": "туман",
+	"global_warming": "глобальне потепління",
+	"jungle": "джунглі",
+	"leaf": "лист",
+	"lightning": "блискавка",
+	"rainbow": "веселка",
+	"sand": "пісок",
+	"scenery": "краєвид",
+	"seed": "насіння",
+	"soil": "ґрунт"
+}
+`;export{n as default};

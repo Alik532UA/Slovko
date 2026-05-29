@@ -1,0 +1,17 @@
+const t=`\uFEFF{
+	"business": "biznes",
+	"class": "sınıf",
+	"classroom": "sınıf",
+	"company": "şirket",
+	"course": "kurs",
+	"exam": "imtian",
+	"homework": "ev vazifesi",
+	"job": "iş",
+	"lesson": "ders",
+	"office": "idare",
+	"school": "mektep",
+	"student": "talebe",
+	"teacher": "oca",
+	"test": "test",
+	"university": "universitet"
+}`;export{t as default};

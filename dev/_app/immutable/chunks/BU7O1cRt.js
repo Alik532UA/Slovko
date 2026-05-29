@@ -1,0 +1,11 @@
+const n=`\uFEFF{
+	"calm_down": "kalmeren",
+	"cheer": "opvrolijken",
+	"cheer_up": "opvrolijken",
+	"count_on_someone": "rekenen op",
+	"let_down_disappoint": "teleurstellen",
+	"make_up_story": "verzinnen",
+	"throw_away": "weggooien",
+	"write_down": "opschrijven"
+}
+`;export{n as default};

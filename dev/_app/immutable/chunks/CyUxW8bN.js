@@ -1,0 +1,26 @@
+const t=`{
+	"bicycle": "/ˈbaɪsɪkl/",
+	"boat": "/bəʊt/",
+	"bus": "/bʌs/",
+	"car": "/kɑːr/",
+	"door": "/dɔːr/",
+	"key": "/kiː/",
+	"light": "/laɪt/",
+	"light_brightness": "/laɪt/",
+	"light_color": "/laɪt/",
+	"light_weight": "/laɪt/",
+	"oil": "/ɔɪl/",
+	"oil_food": "/ɔɪl/",
+	"oil_fuel": "/ɔɪl/",
+	"plane": "/pleɪn/",
+	"road": "/rəʊd/",
+	"seat": "/siːt/",
+	"street": "/striːt/",
+	"taxi": "/ˈtæksi/",
+	"traffic": "/ˈtræfɪk/",
+	"traffic_light": "/ˈtræfɪk/",
+	"train": "/treɪn/",
+	"truck": "/trʌk/",
+	"window": "/ˈwɪndəʊ/"
+}
+`;export{t as default};

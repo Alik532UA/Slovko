@@ -1,0 +1,11 @@
+const n=`\uFEFF{
+	"hello": "hɑˈloː",
+	"goodbye": "tɔt ˈzins",
+	"yes": "jaː",
+	"no": "neː",
+	"please": "ɑlstyˈblift",
+	"thank_you": "dɑŋk y",
+	"house": "hœy̯s",
+	"but_conjunction": "maːr"
+}
+`;export{n as default};

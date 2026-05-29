@@ -1,0 +1,14 @@
+const n=`\uFEFF{
+	"black": "чорний",
+	"blue": "синій",
+	"blue_dark": "синій",
+	"blue_light": "блакитний",
+	"brown": "коричневий",
+	"color": "колір",
+	"green": "зелений",
+	"pink": "рожевий",
+	"red": "червоний",
+	"white": "білий",
+	"yellow": "жовтий"
+}
+`;export{n as default};

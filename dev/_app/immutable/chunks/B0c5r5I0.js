@@ -1,0 +1,23 @@
+const t=`\uFEFF{
+	"arm": "рука",
+	"arm_body": "рука",
+	"arm_weapon": "зброя",
+	"body": "тіло",
+	"ear": "вухо",
+	"eye": "око",
+	"face": "обличчя",
+	"foot": "ступня",
+	"hair": "волосся",
+	"hand": "рука / кисть",
+	"hand_body": "рука",
+	"hand_verb": "передавати",
+	"head": "голова",
+	"health": "здоров'я",
+	"hospital": "лікарня",
+	"leg": "нога",
+	"leg_full": "нога",
+	"mouth": "рот",
+	"nose": "ніс",
+	"tooth": "зуб"
+}
+`;export{t as default};

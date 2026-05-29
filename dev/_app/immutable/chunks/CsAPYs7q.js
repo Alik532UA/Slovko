@@ -1,0 +1,22 @@
+const t=`\uFEFF{
+	"battery": "batareya",
+	"battery_artillery": "topçu batareyası",
+	"battery_electric": "batareya",
+	"battery_life": "batareya",
+	"engine_motor": "motor",
+	"fuel": "yaqıt",
+	"fuel_energy": "yaqıt",
+	"garage": "garaj",
+	"highway": "şosse",
+	"license": "vesiqa",
+	"license_document": "vesiqa",
+	"pedal": "pedal",
+	"piston": "piston",
+	"signal": "işaret",
+	"signal_phone": "işaret",
+	"taillight": "art far",
+	"tire": "şina",
+	"trunk": "yükyeri",
+	"wiper": "silecegi"
+}
+`;export{t as default};

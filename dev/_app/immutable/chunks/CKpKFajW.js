@@ -1,0 +1,24 @@
+const t=`\uFEFF{
+	"bacon": "бекон",
+	"berry": "ягода",
+	"burger": "бургер",
+	"cherry": "вишня",
+	"cookie": "печиво",
+	"cucumber": "огірок",
+	"lemon": "лимон",
+	"melon": "диня",
+	"pasta": "макарони",
+	"pasta_food": "макарони",
+	"peach": "персик",
+	"pear": "груша",
+	"pie": "пиріг",
+	"pie_baked": "пиріг",
+	"pie_pie": "пиріг",
+	"sausage": "сосиска",
+	"sausage_small": "сосиска",
+	"sausage_wurst": "ковбаса",
+	"steak": "стейк",
+	"strawberry": "полуниця",
+	"toast": "тост"
+}
+`;export{t as default};

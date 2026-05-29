@@ -1,0 +1,16 @@
+const n=`\uFEFF{
+	"anybody": "kimse",
+	"anywhere": "bir yerde",
+	"guy": "adam",
+	"herself": "özü",
+	"himself": "özü",
+	"itself": "özü",
+	"kid": "bala",
+	"lady": "hanımefendi",
+	"lady_noble": "hanımefendi",
+	"lady_woman": "hanım",
+	"myself": "özüm",
+	"ourselves": "özümüz",
+	"yourselves": "özüñiz"
+}
+`;export{n as default};

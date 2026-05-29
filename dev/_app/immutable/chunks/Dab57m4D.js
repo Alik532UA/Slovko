@@ -1,0 +1,16 @@
+const n=`\uFEFF{
+	"anybody": "хто-небудь",
+	"anywhere": "де-небудь",
+	"guy": "хлопець",
+	"herself": "вона сама",
+	"himself": "він сам",
+	"itself": "воно саме",
+	"kid": "дитина",
+	"lady": "леді",
+	"lady_noble": "леді",
+	"lady_woman": "пані",
+	"myself": "я сам",
+	"ourselves": "ми самі",
+	"yourselves": "ви самі"
+}
+`;export{n as default};

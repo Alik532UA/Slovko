@@ -1,0 +1,18 @@
+const a=`\uFEFF{
+	"accept": "akceptować",
+	"advertise": "reklamować",
+	"analyze": "analizować",
+	"apply": "stosować",
+	"apply_job": "aplikować o pracę",
+	"apply_use": "stosować",
+	"avoid": "unikać",
+	"behave": "zachowywać się",
+	"climate": "klimat",
+	"contain": "zawierać",
+	"depend": "zależeć",
+	"identify": "identyfikować",
+	"organize": "organizować",
+	"provide": "zapewniać",
+	"reduce": "redukować"
+}
+`;export{a as default};

@@ -1,0 +1,13 @@
+const n=`\uFEFF{
+	"army": "army",
+	"crime": "crime",
+	"criminal": "criminal",
+	"government": "government",
+	"instruction": "instruction",
+	"law": "law",
+	"president": "president",
+	"sale": "sale",
+	"society": "society",
+	"soldier": "soldier"
+}
+`;export{n as default};

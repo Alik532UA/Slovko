@@ -1,0 +1,21 @@
+const n=`\uFEFF{
+	"ambulance": "швидка допомога",
+	"breast": "груди",
+	"cheek": "щока",
+	"elbow": "лікоть",
+	"heal": "зцілювати",
+	"healthcare": "охорона здоров'я",
+	"hip": "кульша",
+	"immune": "імунний",
+	"infection": "інфекція",
+	"medication": "медикаменти",
+	"obesity": "ожиріння",
+	"organ": "орган",
+	"palm": "долоня",
+	"physician": "терапевт",
+	"protein": "білок",
+	"surgeon": "хірург",
+	"surgery": "хірургія",
+	"wound": "рана"
+}
+`;export{n as default};

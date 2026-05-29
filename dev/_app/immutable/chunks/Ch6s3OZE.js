@@ -1,0 +1,18 @@
+const t=`\uFEFF{
+	"atm": "bankomat",
+	"boarding": "wejście na pokład",
+	"camp": "obozować",
+	"camp_noun": "obóz",
+	"camp_verb": "obozować",
+	"cash": "gotówka",
+	"credit_card": "karta kredytowa",
+	"distance": "odległość",
+	"gate": "bramka",
+	"guide": "przewodnik",
+	"lost": "zgubiony",
+	"luggage": "bagaż",
+	"platform": "peron",
+	"tour": "wycieczka",
+	"tourism": "turystyka"
+}
+`;export{t as default};

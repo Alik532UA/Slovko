@@ -1,0 +1,22 @@
+const t=`\uFEFF{
+	"battery": "μπαταρία",
+	"battery_artillery": "πυροβολαρχία",
+	"battery_electric": "μπαταρία",
+	"battery_life": "διάρκεια μπαταρίας",
+	"engine_motor": "μηχανή",
+	"fuel": "καύσιμο",
+	"fuel_energy": "καύσιμο",
+	"garage": "γκαράζ",
+	"highway": "αυτοκινητόδρομος",
+	"license": "άδεια",
+	"license_document": "άδεια",
+	"pedal": "πεντάλ",
+	"piston": "έμβολο",
+	"signal": "σήμα",
+	"signal_phone": "σήμα",
+	"taillight": "πίσω φως",
+	"tire": "λάστιχο",
+	"trunk": "πορτμπαγκάζ",
+	"wiper": "υαλοκαθαριστήρας"
+}
+`;export{t as default};

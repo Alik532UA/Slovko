@@ -1,0 +1,25 @@
+const t=`\uFEFF{
+	"belt": "quşaq",
+	"bumper": "tampon",
+	"clutch": "debriyaj",
+	"dashboard": "panel",
+	"fan": "yelpaze",
+	"fan_admirer": "fanat",
+	"fan_device": "yelpaze",
+	"headlight": "far",
+	"jack": "domkrat",
+	"mirror": "küzgü",
+	"motorcycle": "motosiklet",
+	"oil": "yağ",
+	"oil_food": "yağ",
+	"oil_fuel": "yağ",
+	"seat": "yer",
+	"ship": "gemı",
+	"sign": "işaret",
+	"sign_symbol": "işaret",
+	"sign_verb": "imzalamaq",
+	"spare": "yedek teker",
+	"spare_tire": "yedek teker",
+	"wheel": "tekerlek"
+}
+`;export{t as default};

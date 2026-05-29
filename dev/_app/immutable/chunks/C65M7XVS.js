@@ -1,0 +1,25 @@
+const e=`\uFEFF{
+	"belt": "riem",
+	"bumper": "bumper",
+	"clutch": "koppeling",
+	"dashboard": "dashboard",
+	"fan": "fan / ventilator",
+	"fan_admirer": "fan",
+	"fan_device": "ventilator",
+	"headlight": "koplamp",
+	"jack": "krik",
+	"mirror": "spiegel",
+	"motorcycle": "motorfiets",
+	"oil": "olie",
+	"oil_food": "olie",
+	"oil_fuel": "olie",
+	"seat": "stoel",
+	"ship": "schip",
+	"sign": "teken",
+	"sign_symbol": "teken",
+	"sign_verb": "tekenen",
+	"spare": "reservewiel",
+	"spare_tire": "reservewiel",
+	"wheel": "wiel"
+}
+`;export{e as default};

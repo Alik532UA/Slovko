@@ -1,0 +1,27 @@
+const n=`\uFEFF{
+	"belt": "/bɛlt/",
+	"bumper": "/ˈbʌmpər/",
+	"clutch": "/klʌtʃ/",
+	"dashboard": "/ˈdæʃbɔːrd/",
+	"fan": "/fæn/",
+	"fan_admirer": "/fæn/",
+	"fan_device": "/dɪˈvaɪs/",
+	"garage": "/ˈɡærɑːʒ/",
+	"headlight": "/ˈhɛdlaɪt/",
+	"jack": "/dʒæk/",
+	"license": "/ˈlaɪsəns/",
+	"license_document": "/ˈlaɪsəns/",
+	"mirror": "/ˈmɪrər/",
+	"motorcycle": "/ˈməʊtəˌsaɪkl/",
+	"pump": "/pʌmp/",
+	"ship": "/ʃɪp/",
+	"sign": "/saɪn/",
+	"sign_symbol": "/saɪn/",
+	"sign_verb": "/saɪn/",
+	"signal": "/ˈsɪɡn(ə)l/",
+	"spare": "/ˌspɛər ˈtaɪər/",
+	"spare_tire": "/ˌspɛər ˈtaɪər/",
+	"tire": "/ˈtaɪər/",
+	"wheel": "/wiːl/"
+}
+`;export{n as default};

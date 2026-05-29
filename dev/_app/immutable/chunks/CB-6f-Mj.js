@@ -1,0 +1,24 @@
+const t=`\uFEFF{
+	"bath": "yuvunuv",
+	"bathroom": "yuvunuv odası",
+	"bed": "yataq",
+	"bedroom": "yuqu odası",
+	"chair": "oturğıç",
+	"clock": "saat",
+	"computer": "bilgisayar",
+	"cup": "fincan",
+	"glass": "stakan",
+	"glass_cup": "stakan",
+	"glass_material": "cam",
+	"living_room": "oturuv odası",
+	"plant": "ösümlik",
+	"plant_botany": "ösümlik",
+	"plant_factory": "zavod",
+	"shower": "duş",
+	"table": "masa",
+	"table_data": "cedvel",
+	"table_furniture": "masa",
+	"toilet": "hacethane",
+	"wall": "divar"
+}
+`;export{t as default};

@@ -1,0 +1,16 @@
+const a=`\uFEFF{
+	"beat": "yeñmek",
+	"beat_win": "yeñmek",
+	"chat": "laflamaq",
+	"chat_talk": "laflamaq",
+	"greet": "selamlaşmaq",
+	"hug": "quçaqlamaq",
+	"pick": "saylamaq",
+	"pick_choose": "saylamaq",
+	"pick_up_object": "kötürmek",
+	"seem": "körünmek",
+	"skate": "buzda taymaq",
+	"ski": "çanğıda taymaq",
+	"sneeze": "aqsırmaq"
+}
+`;export{a as default};

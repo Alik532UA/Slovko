@@ -1,0 +1,23 @@
+const n=`\uFEFF{
+	"aunt": "θεία",
+	"aunt_maternal": "θεία",
+	"aunt_paternal": "θεία",
+	"child": "παιδί",
+	"family": "οικογένεια",
+	"father": "πατέρας",
+	"friend": "φίλος",
+	"grandfather": "παππούς",
+	"grandmother": "γιαγιά",
+	"husband": "άνδρας",
+	"mother": "μητέρα",
+	"parents": "γονείς",
+	"partner": "σύντροφος",
+	"sister": "αδελφή",
+	"sister_older": "μεγαλύτερη αδελφή",
+	"sister_younger": "μικρότερη αδελφή",
+	"son": "γιος",
+	"uncle": "θείος",
+	"uncle_maternal": "θείος",
+	"uncle_paternal": "θείος",
+	"wife": "γυναίκα"
+}`;export{n as default};

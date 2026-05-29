@@ -1,0 +1,18 @@
+const n=`\uFEFF{
+	"accept": "αποδέχομαι",
+	"advertise": "διαφημίζω",
+	"analyze": "αναλύω",
+	"apply": "εφαρμόζω",
+	"apply_job": "κάνω αίτηση για δουλειά",
+	"apply_use": "εφαρμόζω",
+	"avoid": "αποφεύγω",
+	"behave": "συμπεριφέρομαι",
+	"climate": "κλίμα",
+	"contain": "περιέχω",
+	"depend": "εξαρτώμαι",
+	"identify": "αναγνωρίζω",
+	"organize": "οργανώνω",
+	"provide": "παρέχω",
+	"reduce": "μειώνω"
+}
+`;export{n as default};

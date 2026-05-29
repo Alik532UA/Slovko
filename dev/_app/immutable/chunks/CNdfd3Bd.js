@@ -1,0 +1,24 @@
+const e=`\uFEFF{
+	"bacon": "bacon",
+	"berry": "berry",
+	"burger": "burger",
+	"cherry": "cherry",
+	"cookie": "cookie",
+	"cucumber": "cucumber",
+	"lemon": "lemon",
+	"melon": "melon",
+	"pasta": "pasta",
+	"pasta_food": "pasta",
+	"peach": "peach",
+	"pear": "pear",
+	"pie": "pie",
+	"pie_baked": "pie",
+	"pie_pie": "pie",
+	"sausage": "sausage",
+	"sausage_small": "sausage",
+	"sausage_wurst": "sausage",
+	"steak": "steak",
+	"strawberry": "strawberry",
+	"toast": "toast"
+}
+`;export{e as default};

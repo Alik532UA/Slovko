@@ -1,0 +1,14 @@
+const n=`\uFEFF{
+	"are_you": "siz",
+	"can_you": "yapa bilesiñizmi",
+	"do_you": "sizniñ",
+	"is_it": "bu",
+	"of_course": "elbette",
+	"since_when": "ne vaqıttan berli",
+	"speak_slowly": "yavaş aytıñız",
+	"until_when": "ne vaqıtqa qadar",
+	"who_is": "kim bu",
+	"whose": "kimniñ",
+	"why_not": "neden olmaz"
+}
+`;export{n as default};

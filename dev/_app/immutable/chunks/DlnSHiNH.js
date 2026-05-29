@@ -1,0 +1,22 @@
+const t=`\uFEFF{
+	"battery": "akumulator",
+	"battery_artillery": "bateria",
+	"battery_electric": "akumulator",
+	"battery_life": "żywotność baterii",
+	"engine_motor": "silnik",
+	"fuel": "paliwo",
+	"fuel_energy": "paliwo",
+	"garage": "garaż",
+	"highway": "autostrada",
+	"license": "licencja",
+	"license_document": "licencja",
+	"pedal": "pedał",
+	"piston": "tłok",
+	"signal": "sygnał",
+	"signal_phone": "sygnał",
+	"taillight": "tylne światło",
+	"tire": "opona",
+	"trunk": "bagażnik",
+	"wiper": "wycieraczka"
+}
+`;export{t as default};

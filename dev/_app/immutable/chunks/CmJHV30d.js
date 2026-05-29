@@ -1,0 +1,12 @@
+const t=`\uFEFF{
+	"army": "στρατός",
+	"crime": "έγκλημα",
+	"criminal": "εγκληματίας",
+	"government": "κυβέρνηση",
+	"instruction": "οδηγία",
+	"law": "νόμος",
+	"president": "πρόεδρος",
+	"sale": "πώληση",
+	"society": "κοινωνία",
+	"soldier": "στρατιώτης"
+}`;export{t as default};

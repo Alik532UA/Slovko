@@ -1,0 +1,15 @@
+const t=`\uFEFF{
+	"brake": "rem",
+	"exhaust": "uitlaat",
+	"exhaust_options": "uitputten",
+	"hood": "motorkap",
+	"insurance": "verzekering",
+	"mechanic": "monteur",
+	"radiator": "radiator",
+	"shock_absorber": "schokdemper",
+	"spark": "bougie",
+	"spark_plug": "bougie",
+	"steering": "stuur",
+	"steering_wheel": "stuur"
+}
+`;export{t as default};

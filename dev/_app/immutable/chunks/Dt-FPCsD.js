@@ -1,0 +1,16 @@
+const t=`\uFEFF{
+	"beat": "νικώ",
+	"beat_win": "νικώ",
+	"chat": "κουβεντιάζω",
+	"chat_talk": "κουβεντιάζω",
+	"greet": "χαιρετώ",
+	"hug": "αγκαλιάζω",
+	"pick": "διαλέγω",
+	"pick_choose": "διαλέγω",
+	"pick_up_object": "σηκώνω",
+	"seem": "φαίνεται",
+	"skate": "κάνω πατίνια",
+	"ski": "κάνω σκι",
+	"sneeze": "φτερνίζομαι"
+}
+`;export{t as default};

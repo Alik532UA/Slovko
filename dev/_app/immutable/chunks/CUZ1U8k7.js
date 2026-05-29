@@ -1,0 +1,14 @@
+const n=`\uFEFF{
+	"black": "zwart",
+	"blue": "blauw",
+	"blue_dark": "donkerblauw",
+	"blue_light": "lichtblauw",
+	"brown": "bruin",
+	"color": "kleur",
+	"green": "groen",
+	"pink": "roze",
+	"red": "rood",
+	"white": "wit",
+	"yellow": "geel"
+}
+`;export{n as default};

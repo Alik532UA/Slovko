@@ -1,0 +1,20 @@
+const n=`\uFEFF{
+	"air": "повітря",
+	"autumn": "осінь",
+	"beach": "пляж",
+	"fire": "вогонь",
+	"flower": "квітка",
+	"ice": "лід",
+	"island": "острів",
+	"mountain": "гора",
+	"rain": "дощ",
+	"river": "річка",
+	"sea": "море",
+	"snow": "сніг",
+	"star": "зірка",
+	"summer": "літо",
+	"sun": "сонце",
+	"tree": "дерево",
+	"winter": "зима"
+}
+`;export{n as default};

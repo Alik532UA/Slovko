@@ -1,0 +1,16 @@
+const e=`\uFEFF{
+	"anybody": "iemand",
+	"anywhere": "ergens",
+	"guy": "vent",
+	"herself": "haarzelf",
+	"himself": "hemzelf",
+	"itself": "zichzelf",
+	"kid": "kind",
+	"lady": "dame",
+	"lady_noble": "dame",
+	"lady_woman": "mevrouw",
+	"myself": "mezelf",
+	"ourselves": "onszelf",
+	"yourselves": "jezelf"
+}
+`;export{e as default};

@@ -1,0 +1,26 @@
+const t=`\uFEFF{
+	"age_years": "Alter",
+	"art_culture": "Kunst",
+	"faith": "Glaube",
+	"freedom": "Freiheit",
+	"harm": "Schaden",
+	"honor": "Ehre",
+	"humor": "Humor",
+	"imagination": "Fantasie",
+	"joy": "Freude",
+	"justice": "Gerechtigkeit",
+	"patience": "Geduld",
+	"pride": "Stolz",
+	"priority": "Priorität",
+	"proof": "Beweis",
+	"relief": "Erleichterung",
+	"shadow": "Schatten",
+	"shame": "Schande",
+	"shock": "Schock",
+	"silence": "Stille",
+	"soul": "Seele",
+	"victory": "Sieg",
+	"weakness": "Schwäche",
+	"wealth": "Reichtum"
+}
+`;export{t as default};

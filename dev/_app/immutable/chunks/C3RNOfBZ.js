@@ -1,0 +1,18 @@
+const e=`\uFEFF{
+	"beginning": "başında",
+	"beginning_start": "başında",
+	"example": "misal",
+	"feeling": "duyğu",
+	"future": "kelecek",
+	"idea": "fikir",
+	"life": "ömür",
+	"love": "sevmek",
+	"past": "keçmiş",
+	"present": "şimdiki",
+	"present_current": "şimdiki",
+	"present_gift": "bahiş",
+	"present_here": "bar",
+	"present_time": "şimdiki",
+	"success": "muvafaqiyet"
+}
+`;export{e as default};

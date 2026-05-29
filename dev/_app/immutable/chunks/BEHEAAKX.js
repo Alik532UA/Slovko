@@ -1,0 +1,15 @@
+const n=`\uFEFF{
+	"accident": "/ˈæksɪdənt/",
+	"blood": "/blʌd/",
+	"brain": "/breɪn/",
+	"clap": "/klæp/",
+	"clap_hands": "/klæp/",
+	"comb": "/koʊm/",
+	"comb_hair": "/koʊm/",
+	"knee": "/niː/",
+	"neck": "/nɛk/",
+	"shoulder": "/ˈʃəʊldər/",
+	"stomach": "/ˈstʌmək/",
+	"voice": "/vɔɪs/"
+}
+`;export{n as default};

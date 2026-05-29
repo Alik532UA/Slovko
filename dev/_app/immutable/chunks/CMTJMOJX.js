@@ -1,0 +1,11 @@
+const n=`\uFEFF{
+	"calm_down": "calm down",
+	"cheer": "cheer up",
+	"cheer_up": "cheer up",
+	"count_on_someone": "count on",
+	"let_down_disappoint": "let down",
+	"make_up_story": "make up",
+	"throw_away": "throw away",
+	"write_down": "write down"
+}
+`;export{n as default};

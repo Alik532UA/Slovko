@@ -1,0 +1,16 @@
+const n=`\uFEFF{
+	"forest": "δάσος",
+	"grass": "γρασίδι",
+	"hill": "λόφος",
+	"insect": "έντομο",
+	"lake": "λίμνη",
+	"moon": "φεγγάρι",
+	"season": "εποχή",
+	"sky": "ουρανός",
+	"stone": "πέτρα",
+	"storm": "καταιγίδα",
+	"thunder": "κεραυνός",
+	"valley": "κοιλάδα",
+	"wind": "άνεμος"
+}
+`;export{n as default};

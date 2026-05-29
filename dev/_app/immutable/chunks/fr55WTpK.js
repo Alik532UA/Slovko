@@ -1,0 +1,24 @@
+const n=`\uFEFF{
+	"animal": "/ˈænɪməl/",
+	"bird": "/bɜːd/",
+	"cat": "/kæt/",
+	"chicken": "/ˈtʃɪkɪn/",
+	"cow": "/kaʊ/",
+	"dog": "/dɒɡ/",
+	"duck": "/dʌk/",
+	"duck_animal": "/dʌk/",
+	"elephant": "/ˈɛlɪfənt/",
+	"fish": "/fɪʃ/",
+	"fly": "/flaɪ/",
+	"fly_action": "/flaɪ/",
+	"fly_insect": "/flaɪ/",
+	"fox": "/fɒks/",
+	"horse": "/hɔːs/",
+	"lion": "/ˈlaɪən/",
+	"mouse": "/maʊs/",
+	"pig": "/pɪɡ/",
+	"rabbit": "/ˈræbɪt/",
+	"sheep": "/ʃiːp/",
+	"snake": "/sneɪk/"
+}
+`;export{n as default};

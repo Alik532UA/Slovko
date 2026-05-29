@@ -1,0 +1,15 @@
+const e=`\uFEFF{
+	"blackboard": "blackboard",
+	"boss": "boss",
+	"degree": "degree",
+	"degree_academic": "degree",
+	"manager": "manager",
+	"notebook": "notebook",
+	"notebook_paper": "notebook",
+	"physics": "physics",
+	"printer": "printer",
+	"printer_device": "printer",
+	"professor": "professor",
+	"salary": "salary"
+}
+`;export{e as default};

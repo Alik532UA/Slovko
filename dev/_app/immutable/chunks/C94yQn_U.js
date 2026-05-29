@@ -1,0 +1,14 @@
+const n=`\uFEFF{
+	"are_you": "чи ви є",
+	"can_you": "чи можете ви",
+	"do_you": "чи ви",
+	"is_it": "чи це",
+	"of_course": "звичайно",
+	"since_when": "з яких пір",
+	"speak_slowly": "говорити повільно",
+	"until_when": "доки",
+	"who_is": "хто це",
+	"whose": "чий",
+	"why_not": "чому ні"
+}
+`;export{n as default};

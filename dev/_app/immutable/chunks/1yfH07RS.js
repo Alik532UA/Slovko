@@ -1,0 +1,16 @@
+const n=`\uFEFF{
+	"forest": "las",
+	"grass": "trawa",
+	"hill": "wzgórze",
+	"insect": "owad",
+	"lake": "jezioro",
+	"moon": "księżyc",
+	"season": "pora roku",
+	"sky": "niebo",
+	"stone": "kamień",
+	"storm": "burza",
+	"thunder": "grzmot",
+	"valley": "dolina",
+	"wind": "wiatr"
+}
+`;export{n as default};

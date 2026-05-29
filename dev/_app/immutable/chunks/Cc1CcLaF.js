@@ -1,0 +1,25 @@
+const n=`\uFEFF{
+	"laboratory": "/ləˈbɒrətri/",
+	"laboratory_research": "/ləˈbɒrətri/",
+	"negotiation": "/nɪˌɡoʊʃiˈeɪʃn/",
+	"negotiation_skills": "/nɪˌɡoʊʃiˈeɪʃn/",
+	"practical": "/ˈpræktɪkl/",
+	"practical_skills": "/ˈpræktɪkl/",
+	"presentation": "/ˌprɛznˈteɪʃn/",
+	"presentation_slide": "/ˌprɛznˈteɪʃn/",
+	"previous": "/ˈpriːviəs/",
+	"previous_experience": "/ˈpriːviəs/",
+	"resignation": "/ˌrɛzɪɡˈneɪʃn/",
+	"resignation_letter": "/ˌrɛzɪɡˈneɪʃn/",
+	"sales": "/seɪlz/",
+	"sales_manager": "/seɪlz/",
+	"scientific": "/ˌsaɪənˈtɪfɪk/",
+	"scientific_research": "/ˌsaɪənˈtɪfɪk/",
+	"technological": "/ˌtɛknəˈlɒdʒɪkl/",
+	"technological_advance": "/ˌtɛknəˈlɒdʒɪkl/",
+	"unemployment": "/ˌʌnɪmˈplɔɪmənt/",
+	"unemployment_rate": "/ˌʌnɪmˈplɔɪmənt/",
+	"workplace": "/ˈwɜːrkpleɪs/",
+	"workplace_safety": "/ˈwɜːrkpleɪs/"
+}
+`;export{n as default};

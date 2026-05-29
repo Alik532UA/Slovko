@@ -1,0 +1,22 @@
+const t=`\uFEFF{
+	"airport": "аеропорт",
+	"bag": "сумка",
+	"holiday": "свято",
+	"holiday_celebration": "свято",
+	"holiday_vacation": "відпустка",
+	"hotel": "готель",
+	"information": "інформація",
+	"map": "карта",
+	"money": "гроші",
+	"price": "ціна",
+	"room": "кімната",
+	"stop": "зупинятися",
+	"stop_location": "зупинка",
+	"stop_verb": "зупинятися",
+	"ticket": "квиток",
+	"ticket_office": "каса",
+	"tourist": "турист",
+	"trip": "поїздка",
+	"vacation": "відпустка"
+}
+`;export{t as default};

@@ -1,0 +1,27 @@
+const n=`\uFEFF{
+	"afternoon": "απόγευμα",
+	"day": "ημέρα",
+	"evening": "βράδυ",
+	"friday": "Παρασκευή",
+	"hour": "ώρα",
+	"later": "αργότερα",
+	"minute": "λεπτό",
+	"monday": "Δευτέρα",
+	"month": "μήνας",
+	"morning": "πρωί",
+	"night": "νύχτα",
+	"now": "τώρα",
+	"saturday": "Σάββατο",
+	"soon": "σύντομα",
+	"sunday": "Κυριακή",
+	"thursday": "Πέμπτη",
+	"today": "σήμερα",
+	"tomorrow": "αύριο",
+	"tuesday": "Τρίτη",
+	"wednesday": "Τετάρτη",
+	"week": "εβδομάδα",
+	"weekend": "σαββατοκύριακο",
+	"year": "χρόνος",
+	"yesterday": "χθες"
+}
+`;export{n as default};

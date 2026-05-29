@@ -1,0 +1,18 @@
+const t=`\uFEFF{
+	"atm": "pinautomaat",
+	"boarding": "instappen",
+	"camp": "kamperen",
+	"camp_noun": "kamp",
+	"camp_verb": "kamperen",
+	"cash": "contant geld",
+	"credit_card": "creditcard",
+	"distance": "afstand",
+	"gate": "poort",
+	"guide": "gids",
+	"lost": "verloren",
+	"luggage": "bagage",
+	"platform": "perron",
+	"tour": "toer",
+	"tourism": "toerisme"
+}
+`;export{t as default};

@@ -1,0 +1,23 @@
+const t=`\uFEFF{
+	"arm": "μπράτσο",
+	"arm_body": "μπράτσο",
+	"arm_weapon": "όπλο",
+	"body": "σώμα",
+	"ear": "αυτί",
+	"eye": "μάτι",
+	"face": "πρόσωπο",
+	"foot": "πατούσα",
+	"hair": "μαλλιά",
+	"hand": "χέρι",
+	"hand_body": "χέρι",
+	"hand_verb": "παραδίδω",
+	"head": "κεφάλι",
+	"health": "υγεία",
+	"hospital": "νοσοκομείο",
+	"leg": "πόδι",
+	"leg_full": "πόδι",
+	"mouth": "στόμα",
+	"nose": "μύτη",
+	"tooth": "δόντι"
+}
+`;export{t as default};

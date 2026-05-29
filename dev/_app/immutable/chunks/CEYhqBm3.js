@@ -1,0 +1,19 @@
+const n=`\uFEFF{
+	"accident": "qaza",
+	"accident_chance": "tesadüf",
+	"accident_event": "qaza",
+	"blood": "qan",
+	"brain": "beyin",
+	"clap": "el çırpmaq",
+	"clap_hands": "el çırpmaq",
+	"comb": "daramaq",
+	"comb_hair": "daramaq",
+	"finger": "parmaq",
+	"heart": "yürek",
+	"knee": "tiz",
+	"neck": "boyun",
+	"shoulder": "omuz",
+	"stomach": "mide",
+	"voice": "ses"
+}
+`;export{n as default};

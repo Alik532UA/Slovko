@@ -1,0 +1,14 @@
+const t=`\uFEFF{
+	"clothes": "urba",
+	"coat": "palto",
+	"dress": "fistan",
+	"dress_up": "kiyinmek",
+	"hat": "qalpaq",
+	"jacket": "ceket",
+	"jeans": "cin",
+	"pants": "şalvar",
+	"shirt": "kömlek",
+	"skirt": "yubka",
+	"umbrella": "saun"
+}
+`;export{t as default};

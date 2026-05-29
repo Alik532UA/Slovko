@@ -1,0 +1,10 @@
+const n=`\uFEFF{
+	"bring_up_child": "erziehen",
+	"catch_up": "aufholen",
+	"catch_up_with": "aufholen",
+	"figure": "herausfinden",
+	"figure_out": "herausfinden",
+	"fill_in_form": "ausfüllen",
+	"try_on_clothes": "anprobieren"
+}
+`;export{n as default};

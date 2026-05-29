@@ -1,0 +1,15 @@
+const n=`\uFEFF{
+	"blackboard": "класна дошка",
+	"boss": "начальник",
+	"degree": "науковий ступінь",
+	"degree_academic": "науковий ступінь",
+	"manager": "менеджер",
+	"notebook": "зошит",
+	"notebook_paper": "зошит",
+	"physics": "фізика",
+	"printer": "принтер",
+	"printer_device": "принтер",
+	"professor": "професор",
+	"salary": "зарплата"
+}
+`;export{n as default};

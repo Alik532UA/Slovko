@@ -1,0 +1,10 @@
+const t=`\uFEFF{
+	"bring_up_child": "виховувати",
+	"catch_up": "наздогнати",
+	"catch_up_with": "наздогнати",
+	"figure": "з'ясувати",
+	"figure_out": "з'ясувати",
+	"fill_in_form": "заповнювати",
+	"try_on_clothes": "міряти"
+}
+`;export{t as default};

@@ -1,0 +1,12 @@
+const t=`\uFEFF{
+	"purse": "purse",
+	"sock": "sock",
+	"suit": "suit",
+	"suit_clothing": "clothes",
+	"suit_lawsuit": "suit",
+	"suit_verb": "to be suitable",
+	"tie": "tie",
+	"tie_clothes": "tie",
+	"uniform": "uniform"
+}
+`;export{t as default};

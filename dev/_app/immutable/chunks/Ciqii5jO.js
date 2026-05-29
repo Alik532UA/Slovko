@@ -1,0 +1,18 @@
+const e=`\uFEFF{
+	"accept": "accept",
+	"advertise": "advertise",
+	"analyze": "analyze",
+	"apply": "apply",
+	"apply_job": "apply",
+	"apply_use": "apply",
+	"avoid": "avoid",
+	"behave": "behave",
+	"climate": "climate",
+	"contain": "contain",
+	"depend": "depend",
+	"identify": "identify",
+	"organize": "organize",
+	"provide": "provide",
+	"reduce": "reduce"
+}
+`;export{e as default};

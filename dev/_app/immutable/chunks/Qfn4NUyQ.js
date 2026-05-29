@@ -1,0 +1,16 @@
+const n=`\uFEFF{
+	"forest": "ліс",
+	"grass": "трава",
+	"hill": "пагорб",
+	"insect": "комаха",
+	"lake": "озеро",
+	"moon": "місяць",
+	"season": "пора року",
+	"sky": "небо",
+	"stone": "камінь",
+	"storm": "шторм",
+	"thunder": "грім",
+	"valley": "долина",
+	"wind": "вітер"
+}
+`;export{n as default};

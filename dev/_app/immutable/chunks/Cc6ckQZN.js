@@ -1,0 +1,9 @@
+const n=`\uFEFF{
+	"fry": "смажити",
+	"garlic": "часник",
+	"grape": "виноград",
+	"pineapple": "ананас",
+	"watermelon": "кавун",
+	"yogurt": "йогурт"
+}
+`;export{n as default};

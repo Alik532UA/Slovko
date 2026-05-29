@@ -1,0 +1,16 @@
+const n=`\uFEFF{
+	"anybody": "οποιοσδήποτε",
+	"anywhere": "οπουδήποτε",
+	"guy": "τύπος",
+	"herself": "η ίδια",
+	"himself": "ο ίδιος",
+	"itself": "το ίδιο",
+	"kid": "παιδί",
+	"lady": "κυρία",
+	"lady_noble": "κυρία",
+	"lady_woman": "κυρία",
+	"myself": "εγώ ο ίδιος",
+	"ourselves": "εμείς οι ίδιοι",
+	"yourselves": "εσείς οι ίδιοι"
+}
+`;export{n as default};

@@ -1,0 +1,19 @@
+const n=`\uFEFF{
+	"accident": "Unfall",
+	"accident_chance": "Zufall",
+	"accident_event": "Unfall",
+	"blood": "Blut",
+	"brain": "Gehirn",
+	"clap": "klatschen",
+	"clap_hands": "klatschen",
+	"comb": "kämmen",
+	"comb_hair": "kämmen",
+	"finger": "Finger",
+	"heart": "Herz",
+	"knee": "Knie",
+	"neck": "Hals",
+	"shoulder": "Schulter",
+	"stomach": "Magen",
+	"voice": "Stimme"
+}
+`;export{n as default};

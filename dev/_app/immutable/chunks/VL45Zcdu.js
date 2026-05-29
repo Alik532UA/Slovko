@@ -1,0 +1,18 @@
+const t=`\uFEFF{
+	"atm": "atm",
+	"boarding": "boarding",
+	"camp": "camp",
+	"camp_noun": "camp",
+	"camp_verb": "camp",
+	"cash": "cash",
+	"credit_card": "credit card",
+	"distance": "distance",
+	"gate": "gate",
+	"guide": "guide",
+	"lost": "lost",
+	"luggage": "luggage",
+	"platform": "platform",
+	"tour": "tour",
+	"tourism": "tourism"
+}
+`;export{t as default};

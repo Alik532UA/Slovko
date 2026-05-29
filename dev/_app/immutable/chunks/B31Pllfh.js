@@ -1,0 +1,27 @@
+const n=`\uFEFF{
+	"afternoon": "middag",
+	"day": "dag",
+	"evening": "avond",
+	"friday": "vrijdag",
+	"hour": "uur",
+	"later": "later",
+	"minute": "minuut",
+	"monday": "maandag",
+	"month": "maand",
+	"morning": "ochtend",
+	"night": "nacht",
+	"now": "nu",
+	"saturday": "zaterdag",
+	"soon": "binnenkort",
+	"sunday": "zondag",
+	"thursday": "donderdag",
+	"today": "vandaag",
+	"tomorrow": "morgen",
+	"tuesday": "dinsdag",
+	"wednesday": "woensdag",
+	"week": "week",
+	"weekend": "weekend",
+	"year": "jaar",
+	"yesterday": "gisteren"
+}
+`;export{n as default};

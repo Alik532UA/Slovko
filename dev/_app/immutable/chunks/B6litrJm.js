@@ -1,0 +1,20 @@
+const n=`\uFEFF{
+	"aunt": "/ɑːnt/",
+	"child": "/tʃaɪld/",
+	"family": "/ˈfæməli/",
+	"father": "/ˈfɑːðər/",
+	"friend": "/frɛnd/",
+	"grandfather": "/ˈɡrænfɑːðər/",
+	"grandmother": "/ˈɡrænmʌðər/",
+	"husband": "/ˈhʌzbənd/",
+	"marry": "/ˈmæri/",
+	"mother": "/ˈmʌðər/",
+	"parents": "/ˈpeərənts/",
+	"partner": "/ˈpɑːrtnər/",
+	"sister": "/ˈsɪstər/",
+	"sister_older": "/ˈsɪstər/",
+	"sister_younger": "/ˈsɪstər/",
+	"son": "/sʌn/",
+	"uncle": "/ˈʌŋkl/",
+	"wife": "/waɪf/"
+}`;export{n as default};

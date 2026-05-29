@@ -1,0 +1,9 @@
+const n=`\uFEFF{
+	"fry": "bakken",
+	"garlic": "knoflook",
+	"grape": "druif",
+	"pineapple": "ananas",
+	"watermelon": "watermeloen",
+	"yogurt": "yoghurt"
+}
+`;export{n as default};

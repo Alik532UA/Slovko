@@ -1,0 +1,14 @@
+const n=`\uFEFF{
+	"are_you": "are you",
+	"can_you": "can you",
+	"do_you": "do you",
+	"is_it": "is it",
+	"of_course": "of course",
+	"since_when": "since when",
+	"speak_slowly": "speak slowly",
+	"until_when": "until when",
+	"who_is": "who is",
+	"whose": "whose",
+	"why_not": "why not"
+}
+`;export{n as default};

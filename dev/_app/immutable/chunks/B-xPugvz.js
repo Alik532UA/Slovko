@@ -1,0 +1,22 @@
+const t=`\uFEFF{
+	"airport": "airport",
+	"bag": "bag",
+	"holiday": "holiday",
+	"holiday_celebration": "holiday",
+	"holiday_vacation": "holiday",
+	"hotel": "hotel",
+	"information": "information",
+	"map": "map",
+	"money": "money",
+	"price": "price",
+	"room": "room",
+	"stop": "stop",
+	"stop_location": "stop",
+	"stop_verb": "stop",
+	"ticket": "ticket",
+	"ticket_office": "ticket office",
+	"tourist": "tourist",
+	"trip": "trip",
+	"vacation": "vacation"
+}
+`;export{t as default};

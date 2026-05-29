@@ -1,0 +1,26 @@
+const t=`\uFEFF{
+	"ant": "ant",
+	"bat": "bat",
+	"bat_animal": "bat",
+	"bat_sports": "bat",
+	"butterfly": "butterfly",
+	"camel": "camel",
+	"crab": "crab",
+	"dolphin": "dolphin",
+	"frog": "frog",
+	"jellyfish": "jellyfish",
+	"kangaroo": "kangaroo",
+	"koala": "koala",
+	"lizard": "lizard",
+	"lobster": "lobster",
+	"monkey": "monkey",
+	"octopus": "octopus",
+	"owl": "owl",
+	"panda": "panda",
+	"parrot": "parrot",
+	"snail": "snail",
+	"spider": "spider",
+	"tiger": "tiger",
+	"turtle": "turtle"
+}
+`;export{t as default};

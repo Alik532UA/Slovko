@@ -1,0 +1,18 @@
+const t=`\uFEFF{
+	"beginning": "початок",
+	"beginning_start": "початок",
+	"example": "приклад",
+	"feeling": "почуття",
+	"future": "майбутнє",
+	"idea": "ідея",
+	"life": "життя",
+	"love": "любити",
+	"past": "минуле",
+	"present": "теперішній",
+	"present_current": "теперішній",
+	"present_gift": "подарунок",
+	"present_here": "присутній",
+	"present_time": "теперішній",
+	"success": "успіх"
+}
+`;export{t as default};

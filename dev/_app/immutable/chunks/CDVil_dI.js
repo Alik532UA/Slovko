@@ -1,0 +1,27 @@
+const n=`\uFEFF{
+	"afternoon": "день",
+	"day": "день",
+	"evening": "вечір",
+	"friday": "п'ятниця",
+	"hour": "година",
+	"later": "пізніше",
+	"minute": "хвилина",
+	"monday": "понеділок",
+	"month": "місяць",
+	"morning": "ранок",
+	"night": "ніч",
+	"now": "зараз",
+	"saturday": "субота",
+	"soon": "скоро",
+	"sunday": "неділя",
+	"thursday": "четвер",
+	"today": "сьогодні",
+	"tomorrow": "завтра",
+	"tuesday": "вівторок",
+	"wednesday": "середа",
+	"week": "тиждень",
+	"weekend": "вихідні",
+	"year": "рік",
+	"yesterday": "вчора"
+}
+`;export{n as default};

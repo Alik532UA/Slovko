@@ -1,0 +1,14 @@
+const n=`\uFEFF{
+	"are_you": "sind Sie",
+	"can_you": "können Sie",
+	"do_you": "tun Sie",
+	"is_it": "ist es",
+	"of_course": "natürlich",
+	"since_when": "seit wann",
+	"speak_slowly": "langsam sprechen",
+	"until_when": "bis wann",
+	"who_is": "wer ist",
+	"whose": "dessen",
+	"why_not": "warum nicht"
+}
+`;export{n as default};

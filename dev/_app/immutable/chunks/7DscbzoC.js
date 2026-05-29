@@ -1,0 +1,25 @@
+const n=`\uFEFF{
+	"accommodation": "κατάλυμα",
+	"accommodation_living": "κατάλυμα",
+	"accommodation_yerleme": "τακτοποίηση",
+	"arrival": "άφιξη",
+	"backpack": "σακίδιο",
+	"baggage": "αποσκευές",
+	"brochure": "φυλλάδιο",
+	"cabin": "θάλαμος επιβατών",
+	"cabin_plane": "θάλαμος επιβατών",
+	"cabin_ship": "καμπίνα",
+	"customs": "τελωνείο",
+	"departure": "αναχώρηση",
+	"emergency": "έκτακτη ανάγκη",
+	"expedition": "αποστολή",
+	"ferry": "φέρι μποτ",
+	"hostel": "ξενώνας",
+	"reservation": "κράτηση",
+	"sightseeing": "περιήγηση στα αξιοθέατα",
+	"souvenir": "σουβενίρ",
+	"suitcase": "βαλίτσα",
+	"timetable": "χρονοδιάγραμμα",
+	"voyage": "θαλάσσιο ταξίδι"
+}
+`;export{n as default};

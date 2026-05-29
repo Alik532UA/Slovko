@@ -1,0 +1,25 @@
+const n=`\uFEFF{
+	"belt": "pas",
+	"bumper": "zderzak",
+	"clutch": "sprzęgło",
+	"dashboard": "deska rozdzielcza",
+	"fan": "fan / wentylator",
+	"fan_admirer": "fan",
+	"fan_device": "wentylator",
+	"headlight": "reflektor",
+	"jack": "podnośnik",
+	"mirror": "lusterko",
+	"motorcycle": "motocykl",
+	"oil": "olej",
+	"oil_food": "olej",
+	"oil_fuel": "ropa",
+	"seat": "siedzenie",
+	"ship": "statek",
+	"sign": "znak",
+	"sign_symbol": "znak",
+	"sign_verb": "podpisać",
+	"spare": "koło zapasowe",
+	"spare_tire": "koło zapasowe",
+	"wheel": "koło"
+}
+`;export{n as default};

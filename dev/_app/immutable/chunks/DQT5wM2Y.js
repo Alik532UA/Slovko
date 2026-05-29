@@ -1,0 +1,12 @@
+const t=`\uFEFF{
+	"army": "армія",
+	"crime": "злочин",
+	"criminal": "злочинець",
+	"government": "уряд",
+	"instruction": "інструкція",
+	"law": "закон",
+	"president": "президент",
+	"sale": "розпродаж",
+	"society": "суспільство",
+	"soldier": "солдат"
+}`;export{t as default};

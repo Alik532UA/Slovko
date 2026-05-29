@@ -1,0 +1,27 @@
+const n=`\uFEFF{
+	"afternoon": "üyle",
+	"day": "kün",
+	"evening": "aqşam",
+	"friday": "Cuma",
+	"hour": "saat",
+	"later": "soñra",
+	"minute": "daqiqa",
+	"monday": "Pazartesi",
+	"month": "ay",
+	"morning": "saba",
+	"night": "gece",
+	"now": "şimdi",
+	"saturday": "Cumartesi",
+	"soon": "tezden",
+	"sunday": "Pazar",
+	"thursday": "Perşembe",
+	"today": "bugün",
+	"tomorrow": "yarın",
+	"tuesday": "Salı",
+	"wednesday": "Çarşamba",
+	"week": "afta",
+	"weekend": "afta soñu",
+	"year": "yıl",
+	"yesterday": "tünevin"
+}
+`;export{n as default};

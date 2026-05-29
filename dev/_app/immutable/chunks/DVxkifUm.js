@@ -1,0 +1,15 @@
+const n=`\uFEFF{
+	"brake": "гальмо",
+	"exhaust": "вихлопна система",
+	"exhaust_options": "виснажувати",
+	"hood": "капот",
+	"insurance": "страхування",
+	"mechanic": "механік",
+	"radiator": "радіатор",
+	"shock_absorber": "амортизатор",
+	"spark": "свічка запалювання",
+	"spark_plug": "свічка запалювання",
+	"steering": "кермо",
+	"steering_wheel": "кермо"
+}
+`;export{n as default};

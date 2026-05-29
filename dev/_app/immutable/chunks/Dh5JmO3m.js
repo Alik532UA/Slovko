@@ -1,0 +1,24 @@
+const t=`\uFEFF{
+	"bath": "μπάνιο",
+	"bathroom": "μπάνιο",
+	"bed": "κρεβάτι",
+	"bedroom": "υπνοδωμάτιο",
+	"chair": "καρέκλα",
+	"clock": "ρολόι",
+	"computer": "υπολογιστής",
+	"cup": "φλιτζάνι",
+	"glass": "ποτήρι",
+	"glass_cup": "ποτήρι",
+	"glass_material": "γυαλί",
+	"living_room": "σαλόνι",
+	"plant": "φυτό",
+	"plant_botany": "φυτό",
+	"plant_factory": "εργοστάσιο",
+	"shower": "ντους",
+	"table": "τραπέζι",
+	"table_data": "πίνακας",
+	"table_furniture": "τραπέζι",
+	"toilet": "τουαλέτα",
+	"wall": "τοίχος"
+}
+`;export{t as default};

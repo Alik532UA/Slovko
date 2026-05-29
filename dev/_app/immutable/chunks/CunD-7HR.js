@@ -1,0 +1,21 @@
+const n=`\uFEFF{
+	"ambulance": "ambulance",
+	"breast": "breast",
+	"cheek": "cheek",
+	"elbow": "elbow",
+	"heal": "heal",
+	"healthcare": "healthcare",
+	"hip": "hip",
+	"immune": "immune",
+	"infection": "infection",
+	"medication": "medication",
+	"obesity": "obesity",
+	"organ": "organ",
+	"palm": "palm",
+	"physician": "physician",
+	"protein": "protein",
+	"surgeon": "surgeon",
+	"surgery": "surgery",
+	"wound": "wound"
+}
+`;export{n as default};

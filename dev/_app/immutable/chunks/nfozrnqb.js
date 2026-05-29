@@ -1,0 +1,23 @@
+const t=`\uFEFF{
+	"bicycle": "ποδήλατο",
+	"boat": "βάρκα",
+	"bus": "λεωφορείο",
+	"car": "αυτοκίνητο",
+	"door": "πόρτα",
+	"key": "κλειδί",
+	"key_essential": "βασικός",
+	"key_lock": "κλειδί",
+	"key_piano": "πλήκτρο",
+	"light": "φωτεινός",
+	"light_brightness": "φως",
+	"light_color": "φωτεινός",
+	"light_weight": "ελαφρύς",
+	"plane": "αεροπλάνο",
+	"road": "δρόμος",
+	"street": "δρόμος",
+	"taxi": "ταξί",
+	"train": "τρένο",
+	"truck": "φορτηγό",
+	"window": "παράθυρο"
+}
+`;export{t as default};

@@ -1,0 +1,15 @@
+const n=`\uFEFF{
+	"booking": "κράτηση",
+	"canal": "κανάλι",
+	"cancel": "ακυρώνω",
+	"delay": "καθυστερώ",
+	"departure_leave": "αναχώρηση",
+	"fare": "ναύλος",
+	"found": "ιδρύω",
+	"harbor": "λιμάνι",
+	"immigration": "μετανάστευση",
+	"resort": "θέρετρο",
+	"terminal": "τερματικός σταθμός",
+	"visa": "βίζα"
+}
+`;export{n as default};

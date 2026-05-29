@@ -1,0 +1,14 @@
+const n=`\uFEFF{
+	"flood": "flood",
+	"fog": "fog",
+	"global_warming": "global warming",
+	"jungle": "jungle",
+	"leaf": "leaf",
+	"lightning": "lightning",
+	"rainbow": "rainbow",
+	"sand": "sand",
+	"scenery": "scenery",
+	"seed": "seed",
+	"soil": "soil"
+}
+`;export{n as default};

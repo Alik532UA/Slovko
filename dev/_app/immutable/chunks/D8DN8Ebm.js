@@ -1,0 +1,16 @@
+const t=`\uFEFF{
+	"forest": "orman",
+	"grass": "ot",
+	"hill": "töpe",
+	"insect": "böcek",
+	"lake": "köl",
+	"moon": "ay",
+	"season": "mevsim",
+	"sky": "kök",
+	"stone": "taş",
+	"storm": "fırtına",
+	"thunder": "kök gürüldevi",
+	"valley": "dere",
+	"wind": "yel"
+}
+`;export{t as default};

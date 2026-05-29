@@ -1,0 +1,18 @@
+const t=`\uFEFF{
+	"atm": "Geldautomat",
+	"boarding": "Einstieg",
+	"camp": "zelten",
+	"camp_noun": "Lager",
+	"camp_verb": "zelten",
+	"cash": "Bargeld",
+	"credit_card": "Kreditkarte",
+	"distance": "Entfernung",
+	"gate": "Tor",
+	"guide": "Führer",
+	"lost": "verloren",
+	"luggage": "Gepäck",
+	"platform": "Gleis",
+	"tour": "Tour",
+	"tourism": "Tourismus"
+}
+`;export{t as default};

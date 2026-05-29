@@ -1,0 +1,18 @@
+const t=`\uFEFF{
+	"atm": "bankomat",
+	"boarding": "binüv",
+	"camp": "lager qurmaq",
+	"camp_noun": "düşerge",
+	"camp_verb": "lager qurmaq",
+	"cash": "nağd para",
+	"credit_card": "kredit kartası",
+	"distance": "mesafe",
+	"gate": "qapı",
+	"guide": "gid",
+	"lost": "ğayıp",
+	"luggage": "yük",
+	"platform": "platforma",
+	"tour": "tur",
+	"tourism": "turizm"
+}
+`;export{t as default};
