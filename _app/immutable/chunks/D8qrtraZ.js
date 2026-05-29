@@ -1,0 +1,23 @@
+const t=`\uFEFF{
+	"bicycle": "rower",
+	"boat": "łódź",
+	"bus": "autobus",
+	"car": "samochód",
+	"door": "drzwi",
+	"key": "klucz",
+	"key_essential": "kluczowy",
+	"key_lock": "klucz",
+	"key_piano": "klawisz",
+	"light": "jasny",
+	"light_brightness": "światło",
+	"light_color": "jasny",
+	"light_weight": "lekki",
+	"plane": "samolot",
+	"road": "droga",
+	"street": "ulica",
+	"taxi": "taksówka",
+	"train": "pociąg",
+	"truck": "ciężarówka",
+	"window": "okno"
+}
+`;export{t as default};
