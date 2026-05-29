@@ -319,7 +319,10 @@
 		"buttonSkip": "Pozostaw stary cache i kontynuuj",
 		"warning": "Dla stabilnego działania zaleca się aktualizację wersji. Aktualizacja zresetuje ustawienia lokalne. Jeśli jesteś zalogowany — Twoje postępy i playlisty są bezpiecznie zapisane w chmurze. W przypadku odmowy mogą wystąpić błędy.",
 		"yourVersion": "Twoja wersja",
-		"availableVersion": "Dostępna wersja"
+		"availableVersion": "Dostępna wersja",
+		"progressRemoving": "Usuwanie service workerów…",
+		"progressCache": "Czyszczenie pamięci podręcznej…",
+		"progressReload": "Przeładowanie…"
 	},
 	"language": {
 		"uk": "Ukraińskie",

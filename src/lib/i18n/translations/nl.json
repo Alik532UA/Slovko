@@ -288,7 +288,10 @@
 		"buttonSkip": "Oude cache behouden en doorgaan",
 		"warning": "Voor een stabiele werking wordt aanbevolen de versie bij te werken. Dit herstelt lokale instellingen. Als u bent ingelogd, worden uw voortgang en afspeellijsten veilig in de cloud opgeslagen. Overslaan kan fouten verooraken.",
 		"yourVersion": "Uw versie",
-		"availableVersion": "Beschikbare versie"
+		"availableVersion": "Beschikbare versie",
+		"progressRemoving": "Service workers verwijderen…",
+		"progressCache": "Cache wissen…",
+		"progressReload": "Herladen…"
 	},
 	"language": {
 		"uk": "Oekraïens",

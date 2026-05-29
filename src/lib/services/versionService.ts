@@ -124,12 +124,12 @@ export async function checkForUpdates() {
 /**
  * Виконує оновлення (застосовує нову версію)
  */
-export async function applyUpdate(targetVersion?: string) {
+export async function applyUpdate(targetVersion?: string, onProgress?: (step: "sw" | "cache") => void) {
 	logService.log("version", `applyUpdate called with target ${targetVersion}. Starting update process...`);
 
 	try {
 		logService.log("version", "Clearing caches and unregistering SW...");
-		await clearCaches();
+		await clearCaches(onProgress);
 		
 		localStorageProvider.removeItem(REFUSED_VERSION_KEY);
 		localStorageProvider.removeItem(REFUSED_AT_KEY);
@@ -171,7 +171,7 @@ export function skipUpdate() {
 	}
 }
 
-async function clearCaches() {
+async function clearCaches(onProgress?: (step: "sw" | "cache") => void) {
 	// 1. Очищення Service Workers (важливо дочекатися завершення)
 	if ("serviceWorker" in navigator) {
 		try {
@@ -182,6 +182,8 @@ async function clearCaches() {
 			logService.error("version", "SW unregistration failed:", e);
 		}
 	}
+
+	onProgress?.("sw");
 
 	// 2. Очищення Cache API
 	if ("caches" in window) {
@@ -198,4 +200,6 @@ async function clearCaches() {
 			logService.error("version", "Cache deletion failed:", e);
 		}
 	}
+
+	onProgress?.("cache");
 }

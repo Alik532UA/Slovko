@@ -12,6 +12,8 @@
 	}
 	let { version }: Props = $props();
 	let isUpdating = $state(false);
+	let updateStatus = $state("");
+	let progress = $state(0);
 
 	onMount(() => {
 		logService.log("version", "UpdateNotification mounted on screen.");
@@ -21,7 +23,17 @@
 		logService.log("version", "User clicked 'Update' button.");
 		if (isUpdating) return;
 		isUpdating = true;
-		await applyUpdate(version);
+		updateStatus = $_("updateNotification.progressRemoving") || "Видаляємо сервіс-воркери…";
+		progress = 20;
+		await applyUpdate(version, (step) => {
+			if (step === "sw") {
+				updateStatus = $_("updateNotification.progressCache") || "Очищуємо кеш…";
+				progress = 50;
+			} else if (step === "cache") {
+				updateStatus = $_("updateNotification.progressReload") || "Перезавантажуємо…";
+				progress = 90;
+			}
+		});
 	}
 
 	/** Ручна відмова — переносить на 5 днів */
@@ -97,6 +109,13 @@
 					{/if}
 					{$_("updateNotification.button")}
 				</button>
+
+				{#if isUpdating}
+					<div class="progress-container" data-testid="update-progress">
+						<div class="progress-bar" style="width: {progress}%"></div>
+					</div>
+					<span class="progress-status">{updateStatus}</span>
+				{/if}
 
 				<button
 					class="update-btn outline"
@@ -258,6 +277,33 @@
 		border-top-color: white;
 		border-radius: 50%;
 		animation: spin 1s linear infinite;
+	}
+
+	.progress-container {
+		width: 100%;
+		max-width: 360px;
+		height: 6px;
+		background: var(--border, rgba(255, 255, 255, 0.1));
+		border-radius: 3px;
+		overflow: hidden;
+	}
+
+	.progress-bar {
+		height: 100%;
+		background: var(--accent);
+		border-radius: 3px;
+		transition: width 0.4s ease;
+	}
+
+	.progress-status {
+		font-size: 0.85rem;
+		color: var(--text-secondary);
+		animation: pulse 1.5s ease-in-out infinite;
+	}
+
+	@keyframes pulse {
+		0%, 100% { opacity: 0.7; }
+		50% { opacity: 1; }
 	}
 
 	@keyframes spin {

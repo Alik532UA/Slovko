@@ -288,7 +288,10 @@
 		"buttonSkip": "Eski keşni qaldırmaq ve devam etmek",
 		"warning": "Yaxşı çalışması içün programmanı yañartmaq kerek. Bu yerli sazlamalarnı sıfırlar. Eğer avtorizatsiya keçken olsañız — ilerlemeñiz ve pley-listleriñiz bulutta emniyetli saqlanır. Red etseñiz, hatalar ola bile.",
 		"yourVersion": "Siziñ versiyañız",
-		"availableVersion": "Yañı versiya"
+		"availableVersion": "Yañı versiya",
+		"progressRemoving": "Service workerlar silineler…",
+		"progressCache": "Keş temizlene…",
+		"progressReload": "Yañıdan yüklene…"
 	},
 	"language": {
 		"uk": "Ukrain",
