@@ -25,7 +25,7 @@ const t=`\uFEFF{
 	"international": "διεθνής",
 	"invent": "εφευρίσκω",
 	"low": "χαμηλός",
-	"major": "μείζονα",
+	"major": "κύριος",
 	"major_main": "κύριος",
 	"major_music": "μείζονα",
 	"material": "υλικό",

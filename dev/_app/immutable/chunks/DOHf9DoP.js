@@ -516,7 +516,7 @@ const t=`\uFEFF{
 	"solution": "çare",
 	"solve": "çözmek",
 	"speech": "nutuq",
-	"square": "meydan",
+	"square": "kare",
 	"square_place": "meydan",
 	"square_shape": "kare",
 	"stair": "merdiven",

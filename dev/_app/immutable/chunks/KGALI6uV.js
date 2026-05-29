@@ -25,7 +25,7 @@ const n=`\uFEFF{
 	"international": "internationaal",
 	"invent": "uitvinden",
 	"low": "laag",
-	"major": "majeur",
+	"major": "belangrijk",
 	"major_main": "belangrijk",
 	"major_music": "majeur",
 	"material": "materiaal",

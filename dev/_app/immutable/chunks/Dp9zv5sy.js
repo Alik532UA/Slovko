@@ -25,7 +25,7 @@ const t=`\uFEFF{
 	"international": "міжнародний",
 	"invent": "винаходити",
 	"low": "низький",
-	"major": "мажор",
+	"major": "основний",
 	"major_main": "головний",
 	"major_music": "мажор",
 	"material": "матеріал",

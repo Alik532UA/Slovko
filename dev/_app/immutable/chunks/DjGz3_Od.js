@@ -25,7 +25,7 @@ const t=`\uFEFF{
 	"international": "international",
 	"invent": "erfinden",
 	"low": "niedrig",
-	"major": "Dur",
+	"major": "gro\\u00df",
 	"major_main": "groß",
 	"major_music": "Dur",
 	"material": "Material",

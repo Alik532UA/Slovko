@@ -25,7 +25,7 @@ const n=`\uFEFF{
 	"international": "międzynarodowy",
 	"invent": "wynaleźć",
 	"low": "niski",
-	"major": "dur",
+	"major": "główny",
 	"major_main": "główny",
 	"major_music": "dur",
 	"material": "materiał",

@@ -312,7 +312,7 @@ const t=`\uFEFF{
 	"lecture": "διάλεξη",
 	"lend": "δανείζω",
 	"less": "λιγότερο",
-	"letter_mail": "γράμμα",
+	"letter_mail": "επιστολή",
 	"lifestyle": "τρόπος ζωής",
 	"lift": "ασανσέρ",
 	"lift_action": "σηκώνω",

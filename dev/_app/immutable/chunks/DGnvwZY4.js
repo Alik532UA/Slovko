@@ -369,7 +369,7 @@ const t=`\uFEFF{
 	"normally": "зазвичай",
 	"novel": "роман",
 	"nut": "горіх",
-	"offer": "пропозиція",
+	"offer": "пропонувати",
 	"offer_noun": "пропозиція",
 	"offer_verb": "пропонувати",
 	"ordinary": "звичайний",

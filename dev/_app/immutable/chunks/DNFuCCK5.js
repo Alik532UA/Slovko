@@ -123,7 +123,7 @@ const t=`\uFEFF{
 	"judge": "κρίνω",
 	"laboratory_research": "εργαστήριο",
 	"lead_verb": "οδηγώ",
-	"limit": "περιορίζω",
+	"limit": "όριο",
 	"link_website": "σύνδεσμος",
 	"loose": "φαρδύς",
 	"loose_clothing": "φαρδύς",
