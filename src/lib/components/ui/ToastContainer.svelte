@@ -23,6 +23,8 @@
 			out:fade={{ duration: 200 }}
 			role="alert"
 			data-testid="toast-{note.type}"
+			onmouseenter={() => notificationStore.pauseTimer(note.id)}
+			onmouseleave={() => notificationStore.resumeTimer(note.id)}
 		>
 			<div class="toast-content">
 				<span data-testid="toast-message">{note.message}</span>
@@ -54,6 +56,13 @@
 			>
 				<X size={16} />
 			</button>
+			{#if note.timeout && note.timeout > 0}
+				<div
+					class="toast-progress"
+					style="animation-duration: {note.timeout}ms"
+					aria-hidden="true"
+				></div>
+			{/if}
 		</div>
 	{/each}
 </div>
@@ -85,6 +94,28 @@
 		border-left: 4px solid transparent;
 		font-size: 0.9rem;
 		backdrop-filter: blur(8px);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.toast:hover .toast-progress {
+		animation-play-state: paused;
+	}
+
+	@keyframes toast-shrink {
+		from { transform: scaleX(1); }
+		to   { transform: scaleX(0); }
+	}
+
+	.toast-progress {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 3px;
+		transform-origin: left center;
+		animation: toast-shrink linear forwards;
+		border-radius: 0 0 0 12px;
 	}
 
 	.toast-content {
@@ -92,6 +123,7 @@
 		flex-direction: column;
 		gap: 8px;
 		flex: 1;
+		z-index: 1;
 	}
 
 	.toast-actions {
@@ -120,18 +152,17 @@
 		background: var(--bg-active);
 	}
 
-	.toast.info {
-		border-left-color: var(--toast-info, #3b82f6);
-	}
-	.toast.success {
-		border-left-color: var(--toast-success, #22c55e);
-	}
-	.toast.warning {
-		border-left-color: var(--toast-warning, #f59e0b);
-	}
-	.toast.error {
-		border-left-color: var(--toast-error, #ef4444);
-	}
+	.toast.info { border-left-color: var(--toast-info, #3b82f6); }
+	.toast.info .toast-progress { background: var(--toast-info, #3b82f6); }
+	
+	.toast.success { border-left-color: var(--toast-success, #22c55e); }
+	.toast.success .toast-progress { background: var(--toast-success, #22c55e); }
+	
+	.toast.warning { border-left-color: var(--toast-warning, #f59e0b); }
+	.toast.warning .toast-progress { background: var(--toast-warning, #f59e0b); }
+	
+	.toast.error { border-left-color: var(--toast-error, #ef4444); }
+	.toast.error .toast-progress { background: var(--toast-error, #ef4444); }
 
 	.close-btn {
 		margin-left: auto;
@@ -143,6 +174,7 @@
 		cursor: pointer;
 		padding: 0;
 		color: inherit;
+		z-index: 1;
 	}
 	.close-btn:hover {
 		opacity: 1;
