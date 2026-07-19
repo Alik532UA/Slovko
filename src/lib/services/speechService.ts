@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Speech Service — озвучування слів через Web Speech API
  * Final stable version for iOS/Android/Desktop
  */
@@ -6,6 +6,10 @@
 import { browser } from "$app/environment";
 import { settingsStore } from "../controllers/SettingsStore.svelte";
 import { logService } from "./logService.svelte";
+import { notificationStore } from "../controllers/NotificationStore.svelte";
+import { speechModalStore } from "../controllers/SpeechModalStore.svelte";
+
+let hasShownSpeechError = false;
 
 function normalizeLocale(locale: string): string {
 	return locale.replace('_', '-');
@@ -96,6 +100,19 @@ export function speakText(text: string, lang: string): void {
 	currentUtterance.onerror = (e) => {
 		if (e.error !== 'interrupted' && e.error !== 'canceled') {
 			logService.error("ui", "Speech error", { error: e.error });
+			if (e.error === 'synthesis-failed' && !hasShownSpeechError) {
+				hasShownSpeechError = true;
+				
+				import('svelte/store').then(({ get }) => {
+					import('svelte-i18n').then(({ _ }) => {
+						const t = get(_);
+						notificationStore.error(t("errors.speech.toast") || "Схоже цей браузер не підтримує озвучення слів 😕", 8000, {
+							label: t("errors.speech.moreDetails") || "Детальніше",
+							onClick: () => speechModalStore.open(lang)
+						}, true);
+					});
+				}).catch(err => logService.error("ui", "Failed to load i18n in speechService", err));
+			}
 		}
 	};
 
@@ -113,4 +130,24 @@ export function stopSpeech(): void {
 	if (browser && window.speechSynthesis) window.speechSynthesis.cancel();
 }
 
-if (browser) preloadVoices();
+if (browser) {
+	preloadVoices();
+
+	// Debug utilities
+	if (import.meta.env.DEV || true) { // Explicitly keeping it available just in case, but usually wrapped in DEV
+		// @ts-expect-error adding debug tool
+		window.__debugSpeechError = (lang = "uk") => {
+			logService.warn("ui", "[DEBUG] Simulating speech error");
+			import('svelte/store').then(({ get }) => {
+				import('svelte-i18n').then(({ _ }) => {
+					const t = get(_);
+					notificationStore.error(t("errors.speech.toast") || "Схоже цей браузер не підтримує озвучення слів 😕", 8000, {
+						label: t("errors.speech.moreDetails") || "Детальніше",
+						onClick: () => speechModalStore.open(lang)
+					}, true);
+				});
+			});
+		};
+		logService.info("ui", "[DEBUG] Use window.__debugSpeechError('uk') to test the error modal");
+	}
+}

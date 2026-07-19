@@ -5,11 +5,18 @@
 
 export type NotificationType = "info" | "success" | "warning" | "error";
 
+export interface NotificationAction {
+	label: string;
+	onClick: () => void;
+}
+
 export interface Notification {
 	id: string;
 	type: NotificationType;
 	message: string;
 	timeout?: number;
+	action?: NotificationAction;
+	hideLogs?: boolean;
 }
 
 class NotificationStore {
@@ -19,9 +26,9 @@ class NotificationStore {
 		return this._notifications;
 	}
 
-	add(type: NotificationType, message: string, timeout = 5000) {
+	add(type: NotificationType, message: string, timeout = 5000, action?: NotificationAction, hideLogs?: boolean) {
 		const id = crypto.randomUUID();
-		const notification: Notification = { id, type, message, timeout };
+		const notification: Notification = { id, type, message, timeout, action, hideLogs };
 
 		this._notifications = [...this._notifications, notification];
 
@@ -40,10 +47,10 @@ class NotificationStore {
 		this._notifications = [];
 	}
 
-	info(msg: string, timeout?: number) { this.add("info", msg, timeout); }
-	success(msg: string, timeout?: number) { this.add("success", msg, timeout); }
-	warning(msg: string, timeout?: number) { this.add("warning", msg, timeout); }
-	error(msg: string, timeout?: number) { this.add("error", msg, timeout); }
+	info(msg: string, timeout?: number, action?: NotificationAction) { this.add("info", msg, timeout, action); }
+	success(msg: string, timeout?: number, action?: NotificationAction) { this.add("success", msg, timeout, action); }
+	warning(msg: string, timeout?: number, action?: NotificationAction) { this.add("warning", msg, timeout, action); }
+	error(msg: string, timeout?: number, action?: NotificationAction, hideLogs?: boolean) { this.add("error", msg, timeout, action, hideLogs); }
 }
 
 export const notificationStore = new NotificationStore();

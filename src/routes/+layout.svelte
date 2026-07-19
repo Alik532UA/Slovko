@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
 	/**
 	 * Root Layout — Ініціалізація i18n та глобальні стилі
 	 */
@@ -34,6 +34,7 @@
 	import ThemeModal from "$lib/components/settings/ThemeModal.svelte";
 	import ProfileModal from "$lib/components/settings/ProfileModal.svelte";
 	import StatsModal from "$lib/components/settings/StatsModal.svelte";
+	import SpeechErrorModal from "$lib/components/ui/SpeechErrorModal.svelte";
 
 	import "../app.css";
 
@@ -220,6 +221,13 @@
 						});
 					}
 				});
+			} else if (dev && "serviceWorker" in navigator) {
+				// В dev-режимі видаляємо старі SW, щоб вони не крашились при фоновому оновленні
+				const registrations = await navigator.serviceWorker.getRegistrations();
+				for (const registration of registrations) {
+					registration.unregister();
+					logService.log("version", "Unregistered stray service worker in dev mode.");
+				}
 			}
 
 			// Analytics
@@ -334,6 +342,7 @@
 	<InteractionSystem />
 	<NetworkIndicator />
 	<MigrationOverlay />
+	<SpeechErrorModal />
 {:else}
 	<div class="loading">
 		<div class="loading-spinner"></div>

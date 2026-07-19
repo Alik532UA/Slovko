@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
 	import { notificationStore } from "$lib/controllers/NotificationStore.svelte";
 	import { logService } from "$lib/services/logService.svelte";
 	import { X, ClipboardCopy } from "lucide-svelte";
@@ -26,16 +26,26 @@
 		>
 			<div class="toast-content">
 				<span data-testid="toast-message">{note.message}</span>
-				{#if note.type === 'error'}
-					<button 
-						class="copy-logs-btn" 
-						onclick={() => handleCopyLogs(note.id)}
-						title="Copy debug logs"
-					>
-						<ClipboardCopy size={14} />
-						{copiedId === note.id ? "COPIED" : "LOGS"}
-					</button>
-				{/if}
+				<div class="toast-actions">
+					{#if note.action}
+						<button 
+							class="action-btn"
+							onclick={() => { note.action?.onClick(); notificationStore.remove(note.id); }}
+						>
+							{note.action.label}
+						</button>
+					{/if}
+					{#if note.type === 'error' && !note.hideLogs}
+						<button 
+							class="copy-logs-btn" 
+							onclick={() => handleCopyLogs(note.id)}
+							title="Copy debug logs"
+						>
+							<ClipboardCopy size={14} />
+							{copiedId === note.id ? "COPIED" : "LOGS"}
+						</button>
+					{/if}
+				</div>
 			</div>
 			<button
 				class="close-btn"
@@ -84,7 +94,14 @@
 		flex: 1;
 	}
 
-	.copy-logs-btn {
+	.toast-actions {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		align-self: flex-start;
+	}
+
+	.copy-logs-btn, .action-btn {
 		background: var(--bg-hover);
 		border: 1px solid var(--glass-border);
 		color: var(--text-primary);
@@ -96,11 +113,10 @@
 		display: flex;
 		align-items: center;
 		gap: 4px;
-		align-self: flex-start;
 		transition: all 0.2s;
 	}
 
-	.copy-logs-btn:hover {
+	.copy-logs-btn:hover, .action-btn:hover {
 		background: var(--bg-active);
 	}
 

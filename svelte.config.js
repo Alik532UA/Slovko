@@ -15,6 +15,9 @@ const config = {
 		paths: {
 			base: basePath,
 		},
+		serviceWorker: {
+			register: false
+		},
 		prerender: {
 			handleHttpError: ({ path, referrer, message }) => {
 				if (path.endsWith("manifest.json")) {
