@@ -1,9 +1,17 @@
-const t=`\uFEFF{
+const t=`{
 	"app": {
 		"title": "Slovko"
 	},
 	"errors": {
-		"loadFailed": "Laden van gegevens mislukt"
+		"loadFailed": "Laden van gegevens mislukt",
+		"speech": {
+			"toast": "Deze browser lijkt spraaksynthese niet te ondersteunen 😕",
+			"moreDetails": "Meer details",
+			"modalTitle": "Spraakfout 😕",
+			"modalDesc1": "Slovko heeft geen ingebouwde stem, maar gebruikt de systeemfuncties van je apparaat.",
+			"modalDesc2": "Helaas ondersteunt je huidige browser of besturingssysteem geen spraaksynthese voor de taal: {lang}.",
+			"modalDesc3": "Probeer een andere browser (zoals Chrome of Safari) of controleer je systeeminstellingen."
+		}
 	},
 	"levels": {
 		"title": "Niveaus",
@@ -324,7 +332,6 @@ const t=`\uFEFF{
 		"ok": "Begrepen",
 		"mix": "mix",
 		"tooltips": {
-
 			"streak": "Reeks goede antwoorden",
 			"accuracy": "Antwoord nauwkeurigheid",
 			"selectLevel": "Selecteer niveau of onderwerp",

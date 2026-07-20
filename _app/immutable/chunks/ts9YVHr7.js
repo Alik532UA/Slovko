@@ -1,9 +1,17 @@
-const t=`\uFEFF{
+const t=`{
 	"app": {
 		"title": "Slovko"
 	},
 	"errors": {
-		"loadFailed": "Błąd ładowania danych"
+		"loadFailed": "Błąd ładowania danych",
+		"speech": {
+			"toast": "Wygląda na to, że ta przeglądarka nie obsługuje syntezy mowy 😕",
+			"moreDetails": "Więcej szczegółów",
+			"modalTitle": "Błąd wymowy 😕",
+			"modalDesc1": "Slovko nie ma wbudowanego lektora, wykorzystuje możliwości systemowe Twojego urządzenia.",
+			"modalDesc2": "Niestety Twoja obecna przeglądarka lub system operacyjny nie obsługuje syntezy mowy dla języka: {lang}.",
+			"modalDesc3": "Spróbuj użyć innej przeglądarki (np. Chrome lub Safari) lub sprawdź ustawienia systemowe."
+		}
 	},
 	"levels": {
 		"title": "Poziomy",

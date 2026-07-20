@@ -1,9 +1,17 @@
-const t=`\uFEFF{
+const t=`{
 	"app": {
 		"title": "Slovko"
 	},
 	"errors": {
-		"loadFailed": "Laden der Daten fehlgeschlagen"
+		"loadFailed": "Laden der Daten fehlgeschlagen",
+		"speech": {
+			"toast": "Dieser Browser scheint keine Sprachsynthese zu unterstützen 😕",
+			"moreDetails": "Mehr Details",
+			"modalTitle": "Sprachfehler 😕",
+			"modalDesc1": "Slovko hat keine eingebaute Sprachausgabe, sondern nutzt die Systemfunktionen Ihres Geräts.",
+			"modalDesc2": "Leider unterstützt Ihr aktueller Browser oder Ihr Betriebssystem keine Sprachsynthese für die Sprache: {lang}.",
+			"modalDesc3": "Versuchen Sie, einen anderen Browser (wie Chrome oder Safari) zu verwenden, oder überprüfen Sie Ihre Systemeinstellungen."
+		}
 	},
 	"levels": {
 		"title": "Niveaus",

@@ -1,9 +1,17 @@
-const t=`\uFEFF{
+const t=`{
 	"app": {
 		"title": "Slovko"
 	},
 	"errors": {
-		"loadFailed": "Failed to load data"
+		"loadFailed": "Failed to load data",
+		"speech": {
+			"toast": "Looks like this browser doesn't support speech synthesis 😕",
+			"moreDetails": "More details",
+			"modalTitle": "Speech Error 😕",
+			"modalDesc1": "Slovko doesn't have built-in voice acting, but uses the system capabilities of your device.",
+			"modalDesc2": "Unfortunately, your current browser or operating system does not support speech synthesis for the {lang} language.",
+			"modalDesc3": "Try using another browser (like Chrome or Safari) or check your system settings."
+		}
 	},
 	"levels": {
 		"title": "Levels",
@@ -448,4 +456,5 @@ const t=`\uFEFF{
 		"warningMessage": "This mode does not count towards overall statistics because it is impossible to verify which users tap \\"Know\\" honestly and which do not. Statistics only work in \\"columns\\" mode.",
 		"gotIt": "Got it"
 	}
-}`;export{t as default};
+}
+`;export{t as default};
