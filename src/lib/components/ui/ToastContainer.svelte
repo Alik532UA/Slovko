@@ -21,10 +21,12 @@
 			class="toast {note.type}"
 			in:fly={{ y: 20, duration: 300 }}
 			out:fade={{ duration: 200 }}
-			role="alert"
+			role={note.type === 'error' ? 'alert' : 'status'}
 			data-testid="toast-{note.type}"
 			onmouseenter={() => notificationStore.pauseTimer(note.id)}
 			onmouseleave={() => notificationStore.resumeTimer(note.id)}
+			onfocusin={() => notificationStore.pauseTimer(note.id)}
+			onfocusout={() => notificationStore.resumeTimer(note.id)}
 		>
 			<div class="toast-content">
 				<span data-testid="toast-message">{note.message}</span>
@@ -98,7 +100,8 @@
 		overflow: hidden;
 	}
 
-	.toast:hover .toast-progress {
+	.toast:hover .toast-progress,
+	.toast:focus-within .toast-progress {
 		animation-play-state: paused;
 	}
 
