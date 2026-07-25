@@ -293,6 +293,10 @@
 		"confirmDelete": "Confirm Deletion",
 		"cancel": "Cancel",
 		"passwordPlaceholderShort": "Password",
+		"capsLockOn": "CapsLock is on",
+		"checkLayout": "Check keyboard layout (non-Latin characters entered)",
+		"showPassword": "Show password",
+		"hidePassword": "Hide password",
 		"deleteGoogleReauth": "You will need to sign in with Google again to confirm",
 		"deleteViaGoogle": "Delete via Google",
 		"tabs": {

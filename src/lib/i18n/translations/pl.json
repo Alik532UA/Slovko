@@ -292,6 +292,10 @@
 		"confirmDelete": "Potwierdź usunięcie",
 		"cancel": "Anuluj",
 		"passwordPlaceholderShort": "Hasło",
+		"capsLockOn": "CapsLock jest włączony",
+		"checkLayout": "Sprawdź układ klawiatury (wprowadzono znaki niełacińskie)",
+		"showPassword": "Pokaż hasło",
+		"hidePassword": "Ukryj hasło",
 		"deleteGoogleReauth": "Aby potwierdzić, konieczne będzie ponowne zalogowanie przez Google",
 		"deleteViaGoogle": "Usuń przez Google",
 		"tabs": {

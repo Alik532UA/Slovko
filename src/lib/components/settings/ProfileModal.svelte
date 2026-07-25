@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { LayoutGrid, Users, TriangleAlert } from "lucide-svelte";
 	import { logService } from "../../services/logService.svelte";
@@ -15,7 +15,7 @@
 	import FriendsSettingsModal from "../friends/FriendsSettingsModal.svelte";
 	import ErrorBoundary from "../ui/ErrorBoundary.svelte";
 	import ProfileHeader from "../profile/ProfileHeader.svelte";
-	import EmailAuthForm from "../profile/EmailAuthForm.svelte";
+	import AuthForm from "../auth/AuthForm.svelte";
 	import { smoothHeight } from "../../utils/actions/smoothHeight";
 	import BaseModal from "../ui/BaseModal.svelte";
 	import SegmentedControl from "../ui/SegmentedControl.svelte";
@@ -209,22 +209,17 @@
 						{#if authStore.isGuest}
 							<div class="guest-full-view">
 								<div class="auth-section">
-									<EmailAuthForm
-										mode={loginMethod === "forgot-password" ? "forgot-password" : "auth"}
-										{isLoading}
-										{errorMessage}
-										{successMessage}
-										onsubmit={(email, pass) => {
-											if (loginMethod === "forgot-password") {
-												handleForgotPassword(email);
-											} else {
-												handleEmailAuth(email, pass);
-											}
-										}}
+									<AuthForm
+										mode={loginMethod === "forgot-password" ? "forgot" : "auth"}
+										loading={isLoading}
+										error={errorMessage}
+										info={successMessage}
+										withGoogle
+										onlogin={handleEmailAuth}
 										onregister={handleRegister}
+										onforgot={handleForgotPassword}
 										ongoogle={handleGoogleAuth}
-										onforgotPassword={() => (loginMethod = "forgot-password")}
-										onback={() => (loginMethod = null)}
+										onmode={(m) => (loginMethod = m === "forgot" ? "forgot-password" : "auth")}
 									/>
 								</div>
 							</div>
