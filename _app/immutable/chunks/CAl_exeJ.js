@@ -293,6 +293,10 @@ const t=`{
 		"confirmDelete": "Підтвердити видалення",
 		"cancel": "Скасувати",
 		"passwordPlaceholderShort": "Пароль",
+		"capsLockOn": "CapsLock увімкнено",
+		"checkLayout": "Перевірте розкладку клавіатури (введено нелатинські символи)",
+		"showPassword": "Показати пароль",
+		"hidePassword": "Приховати пароль",
 		"deleteGoogleReauth": "Для підтвердження потрібно буде ще раз увійти через Google",
 		"deleteViaGoogle": "Видалити через Google",
 		"tabs": {

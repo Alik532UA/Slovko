@@ -261,6 +261,10 @@ const t=`{
 		"confirmDelete": "Silüvni tasdıqlamaq",
 		"cancel": "Vazgeçmek",
 		"passwordPlaceholderShort": "Parol",
+		"capsLockOn": "CapsLock açıq",
+		"checkLayout": "Klaviatura tizilişini teşkeriñiz (latin olmağan remizler kiritildi)",
+		"showPassword": "Parolni köster",
+		"hidePassword": "Parolni gizle",
 		"deleteGoogleReauth": "Tasdıqlamaq içün kene Google-nen kirmege kerek olursıñız",
 		"deleteViaGoogle": "Google vastasınen silmek",
 		"tabs": {

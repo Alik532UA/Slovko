@@ -261,6 +261,10 @@ const t=`{
 		"confirmDelete": "Επιβεβαίωση διαγραφής",
 		"cancel": "Ακύρωση",
 		"passwordPlaceholderShort": "Κωδικός",
+		"capsLockOn": "То CapsLock είναι ενεργό",
+		"checkLayout": "Ελέγξτε τη διάταξη πληκτρολογίου (εισήχθησαν μη λατινικοί χαρακτήρες)",
+		"showPassword": "Εμφάνιση κωδικού",
+		"hidePassword": "Απόκρυψη κωδικού",
 		"deleteGoogleReauth": "Θα χρειαστεί να συνδεθείτε ξανά με την Google για επιβεβαίωση",
 		"deleteViaGoogle": "Διαγραφή μέσω Google",
 		"tabs": {

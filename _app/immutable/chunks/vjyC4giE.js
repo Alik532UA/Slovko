@@ -261,6 +261,10 @@ const t=`{
 		"confirmDelete": "Verwijdering bevestigen",
 		"cancel": "Annuleren",
 		"passwordPlaceholderShort": "Wachtwoord",
+		"capsLockOn": "CapsLock staat aan",
+		"checkLayout": "Controleer toetsenbordindeling (niet-Latijnse tekens ingevoerd)",
+		"showPassword": "Wachtwoord tonen",
+		"hidePassword": "Wachtwoord verbergen",
 		"deleteGoogleReauth": "U moet opnieuw inloggen met Google om te bevestigen",
 		"deleteViaGoogle": "Verwijderen via Google",
 		"tabs": {

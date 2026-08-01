@@ -261,6 +261,10 @@ const t=`{
 		"confirmDelete": "Löschen bestätigen",
 		"cancel": "Abbrechen",
 		"passwordPlaceholderShort": "Passwort",
+		"capsLockOn": "CapsLock ist aktiviert",
+		"checkLayout": "Tastaturlayout prüfen (nicht-lateinische Zeichen eingegeben)",
+		"showPassword": "Passwort anzeigen",
+		"hidePassword": "Passwort verbergen",
 		"deleteGoogleReauth": "Sie müssen sich zur Bestätigung erneut bei Google anmelden",
 		"deleteViaGoogle": "Über Google löschen",
 		"tabs": {
