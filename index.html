@@ -265,10 +265,41 @@
 				window.__markAppRendered = function() { appRendered = true; };
 			})();
 		</script>
-		<link href="./_app/immutable/entry/start.BqJzdaab.js" rel="modulepreload">
-		<link href="./_app/immutable/chunks/DngU6eDe.js" rel="modulepreload">
+		<!--
+			Static rather than emitted from svelte:head, because +page.ts sets
+			ssr = false for the game: with SSR off, nothing from svelte:head
+			reaches the prerendered HTML, so the page shipped with no title at
+			all and showed up in search as a bare URL. These are not localised
+			for the same reason — a crawler never runs the client-side i18n.
+		-->
+		<title>Slovko — вивчення слів та гра у стилі Wordle</title>
+		<meta
+			name="description"
+			content="Безкоштовний тренажер для вивчення слів і головоломка у стилі Wordle: власні списки слів, особиста статистика, таблиця лідерів та підтримка 7 мов."
+		/>
+		<link rel="canonical" href="https://alik532ua.github.io/Slovko/" />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://alik532ua.github.io/Slovko/" />
+		<meta property="og:title" content="Slovko — вивчення слів та гра у стилі Wordle" />
+		<meta
+			property="og:description"
+			content="Безкоштовний тренажер для вивчення слів і головоломка у стилі Wordle: власні списки слів, особиста статистика та таблиця лідерів."
+		/>
+		<meta property="og:image" content="https://alik532ua.github.io/Slovko/icon-512.png" />
+
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Slovko — вивчення слів та гра у стилі Wordle" />
+		<meta
+			name="twitter:description"
+			content="Безкоштовний тренажер для вивчення слів і головоломка у стилі Wordle: власні списки слів, особиста статистика та таблиця лідерів."
+		/>
+		<meta name="twitter:image" content="https://alik532ua.github.io/Slovko/icon-512.png" />
+
+		<link href="./_app/immutable/entry/start.BD3_iDNe.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/C8J3gGU4.js" rel="modulepreload">
 		<link href="./_app/immutable/chunks/jtkl-kGc.js" rel="modulepreload">
-		<link href="./_app/immutable/entry/app.BOk0luu2.js" rel="modulepreload">
+		<link href="./_app/immutable/entry/app.D6w0Fe-b.js" rel="modulepreload">
 		<link href="./_app/immutable/chunks/DVtnDcCV.js" rel="modulepreload">
 		<link href="./_app/immutable/chunks/Bw-Lw7sk.js" rel="modulepreload">
 		
@@ -278,7 +309,7 @@
 		<div style="display: contents">
 			<script>
 				{
-					__sveltekit_hu6uxh = {
+					__sveltekit_1u4pbrs = {
 						base: new URL(".", location).pathname.slice(0, -1),
 						assets: "/Slovko"
 					};
@@ -286,8 +317,8 @@
 					const element = document.currentScript.parentElement;
 
 					Promise.all([
-						import("./_app/immutable/entry/start.BqJzdaab.js"),
-						import("./_app/immutable/entry/app.BOk0luu2.js")
+						import("./_app/immutable/entry/start.BD3_iDNe.js"),
+						import("./_app/immutable/entry/app.D6w0Fe-b.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element);
 					});
