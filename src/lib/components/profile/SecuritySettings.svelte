@@ -100,7 +100,7 @@
 		</p>
 
 		{#if authStore.user.providerId === "google.com"}
-			<div class="info-box" data-testid="google-password-info">
+			<div class="info-box" data-testid="google-password-info-message">
 				<p class="form-subtitle">
 					{$_("profile.googlePasswordInfo", {
 						default:

@@ -11,7 +11,7 @@
 	let { isLinking, onlogin }: Props = $props();
 </script>
 
-<div class="warning-box" data-testid="guest-warning-box">
+<div class="warning-box" data-testid="guest-warning">
 	<ShieldAlert size={24} />
 	<p>
 		{authStore.isGuest

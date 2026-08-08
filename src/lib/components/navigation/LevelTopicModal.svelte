@@ -217,13 +217,13 @@
 					class="mb-6 max-w-[500px]"
 				/>
 				<!-- Content -->
-				<div class="content-wrapper" data-testid="level-topic-modal-content">
+				<div class="content-wrapper" data-testid="level-topic-modal-panel">
 					{#key activeTab}
 						<div
 							in:fade={{ duration: 250, delay: 50 }}
 							out:fade={{ duration: 150 }}
 							class="content"
-							data-testid="level-topic-scroll-area"
+							data-testid="level-topic-scroll-section"
 						>
 							{#if activeTab === "levels"}
 								<LevelGrid mode="levels" {selectedIds} onchange={updateId} />
@@ -247,7 +247,7 @@
 				</div>
 
 				<!-- Actions -->
-				<div class="actions safe-scale-container" data-testid="level-topic-actions">
+				<div class="actions safe-scale-container" data-testid="level-topic-toolbar">
 					<button
 						class="action-btn secondary"
 						onclick={resetSelection}

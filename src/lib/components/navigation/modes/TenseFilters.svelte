@@ -45,7 +45,7 @@
 			<span class="header-icon"><Layers size={16} /></span>
 			<span class="section-label">{$_("tenses.filterForms")}</span>
 		</div>
-		<div class="forms-grid" data-testid="tense-forms-grid">
+		<div class="forms-grid" data-testid="tense-forms-list">
 			{#each FORMS as form}
 				<button
 					class="modern-form-card"

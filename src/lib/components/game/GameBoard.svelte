@@ -161,13 +161,13 @@
 	{/if}
 
 	<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-	<section class="game-board" onclick={(e) => { if (e.target === e.currentTarget) gameState.setSelectedCard(null); }} onkeydown={(e) => { if (e.key === "Escape") gameState.setSelectedCard(null); }} role="main" tabindex="-1" aria-label="Game Board" data-testid="game-board">
+	<section class="game-board" onclick={(e) => { if (e.target === e.currentTarget) gameState.setSelectedCard(null); }} onkeydown={(e) => { if (e.key === "Escape") gameState.setSelectedCard(null); }} role="main" tabindex="-1" aria-label="Game Board" data-testid="game-board-container">
 		{#if gameState.sourceCards.length === 0}
 			<div class="empty-state-message" role="status" data-testid="game-empty-message">
 				<p>{settingsStore.value.mode === "playlists" ? settingsStore.value.currentPlaylists.includes("mistakes") ? $_("playlists.emptyMistakes") : $_("playlists.empty") : $_("levels.underConstruction")}</p>
 			</div>
 		{:else}
-			<div class="column source safe-scale-container" role="list" aria-label="Source words" data-testid="column-source">
+			<div class="column source safe-scale-container" role="list" aria-label="Source words" data-testid="column-source-list">
 				{#each gameState.sourceCards as card, i (i)}
 					<div class="card-slot" role="listitem">
 						{#key card.id + lastDataKey}
@@ -197,7 +197,7 @@
 				{/each}
 			</div>
 
-			<div class="column target safe-scale-container" role="list" aria-label="Target translations" data-testid="column-target">
+			<div class="column target safe-scale-container" role="list" aria-label="Target translations" data-testid="column-target-list">
 				{#each gameState.targetCards as card, i (i)}
 					<div class="card-slot" role="listitem">
 						{#key card.id + lastDataKey}

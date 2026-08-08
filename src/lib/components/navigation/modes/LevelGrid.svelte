@@ -13,7 +13,7 @@
 	let { mode, selectedIds, onchange }: Props = $props();
 </script>
 
-<div class="grid safe-scale-grid" data-testid="{mode}-grid">
+<div class="grid safe-scale-grid" data-testid="{mode}-list">
 	{#each ALL_LEVELS as level (level)}
 		{@const count = selectedIds.filter((id) => id === level).length}
 		<div class="level-wrapper">

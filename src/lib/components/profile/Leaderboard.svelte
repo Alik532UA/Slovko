@@ -317,7 +317,7 @@
 	</div>
 
 	{#if authStore.isGuest}
-		<div class="guest-cta" data-testid="leaderboard-guest-cta">
+		<div class="guest-cta" data-testid="leaderboard-guest-cta-btn">
 			<p>
 				{$_("leaderboard.authWarning")}
 			</p>

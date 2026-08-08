@@ -115,7 +115,7 @@
 								type="button"
 								class="category-large-btn"
 								onclick={() => selectCategory(cat.id as FeedbackCategory)}
-								data-testid="feedback-cat-{cat.id}"
+								data-testid="feedback-cat-btn-{cat.id}"
 							>
 								<div class="icon-box" style="color: {cat.color}">
 									<cat.icon size={24} />

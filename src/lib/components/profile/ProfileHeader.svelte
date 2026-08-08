@@ -81,7 +81,7 @@
 		onclick={() => !hideEditButton && oneditAvatar?.()}
 		type="button"
 		aria-label={$_("profile.avatar.edit") || "Edit avatar"}
-		data-testid="edit-avatar-trigger"
+		data-testid="edit-avatar-btn"
 		disabled={hideEditButton}
 	>
 		{#if authStore.photoURL?.startsWith("internal:")}
@@ -94,7 +94,7 @@
 				class="avatar email-user"
 				style:background-color={isFlag ? "transparent" : rawColor}
 				aria-hidden="true"
-				data-testid="profile-avatar-email"
+				data-testid="profile-avatar-email-img"
 			>
 				{#if isFlag}
 					{@const lang = rawColor.replace("flag-", "")}
@@ -115,7 +115,7 @@
 				data-testid="profile-avatar-img"
 			/>
 		{:else}
-			<div class="avatar email-user" aria-hidden="true" data-testid="profile-avatar-default">
+			<div class="avatar email-user" aria-hidden="true" data-testid="profile-avatar-default-img">
 				<User size={72} />
 			</div>
 		{/if}
@@ -180,7 +180,7 @@
 		<p>{authStore.email}</p>
 
 		<!-- Social Counts -->
-		<div class="social-counts" data-testid="profile-social-counts">
+		<div class="social-counts" data-testid="profile-social-counts-container">
 			<span class="count-item" data-testid="following-count">
 				<span class="count-val">{followingCount}</span>
 				<span class="count-lbl"

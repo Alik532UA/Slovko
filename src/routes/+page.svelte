@@ -86,7 +86,7 @@
 		<TopBar />
 	</ErrorBoundary>
 
-	<main data-testid="main-content">
+	<main data-testid="main-panel">
 		<ErrorBoundary>
 			<GameStats />
 		</ErrorBoundary>

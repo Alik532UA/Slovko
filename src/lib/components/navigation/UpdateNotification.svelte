@@ -81,7 +81,7 @@
 				<AlertTriangle size={48} class="warning-icon" data-testid="update-notification-icon" />
 				<div class="message">
 					<span class="text" data-testid="update-notification-title">{$_("updateNotification.message")}</span>
-					<div class="version-info" data-testid="update-notification-versions">
+					<div class="version-info" data-testid="update-notification-versions-text">
 						<span class="version-tag">
 							{$_("updateNotification.yourVersion")}:
 							<b>{versionStore.currentVersion || "???"}</b>

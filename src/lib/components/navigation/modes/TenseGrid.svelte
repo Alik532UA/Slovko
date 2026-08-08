@@ -12,7 +12,7 @@
 	let { selectedIds, onselect }: Props = $props();
 </script>
 
-<div class="grid tenses-grid safe-scale-grid" data-testid="tenses-grid">
+<div class="grid tenses-grid safe-scale-grid" data-testid="tenses-list">
 	{#each ALL_TENSES as tense (tense.id)}
 		{@const Icon = APP_ICONS[tense.icon as AppIconId]}
 		<button

@@ -92,7 +92,7 @@
 	}
 </script>
 
-<div class="grid topics-grid safe-scale-grid" data-testid="playlist-grid">
+<div class="grid topics-grid safe-scale-grid" data-testid="playlist-list">
 	<!-- System Playlists -->
 	{#each [playlistStore.systemPlaylists.favorites, playlistStore.systemPlaylists.mistakes, playlistStore.systemPlaylists.extra] as p (p.id)}
 		{@const Icon = PLAYLIST_ICONS_MAP[p.id === "mistakes" ? "RotateCcw" : p.id === "favorites" ? "Heart" : "Bookmark"]}
@@ -106,7 +106,7 @@
 				onkeydown={(e) => e.key === "Enter" && handleSelect(p.id)}
 				role="button"
 				tabindex="0"
-				data-testid="playlist-{p.id}"
+				data-testid="playlist-card-{p.id}"
 			>
 				<div class="check-indicator">
 					{#if count > 0}
@@ -130,7 +130,7 @@
 							openPlaylistModal(p.id);
 						}}
 						title={$_("common.edit")}
-						data-testid="playlist-edit-{p.id}"
+						data-testid="playlist-edit-btn-{p.id}"
 					>
 						<Settings2 size={18} />
 					</button>
@@ -164,7 +164,7 @@
 				onkeydown={(e) => e.key === "Enter" && handleSelect(p.id)}
 				role="button"
 				tabindex="0"
-				data-testid="playlist-custom-{p.id}"
+				data-testid="playlist-custom-badge-{p.id}"
 			>
 				<div class="check-indicator">
 					{#if count > 0}
@@ -187,14 +187,14 @@
 							e.stopPropagation();
 							openPlaylistModal(p.id);
 						}}
-						data-testid="playlist-edit-{p.id}"
+						data-testid="playlist-edit-btn-{p.id}"
 					>
 						<Settings2 size={18} />
 					</button>
 					<button
 						class="action-btn danger"
 						onclick={(e) => deletePlaylist(p.id, e)}
-						data-testid="playlist-delete-{p.id}"
+						data-testid="playlist-delete-btn-{p.id}"
 					>
 						<Trash2 size={18} />
 					</button>
@@ -223,7 +223,7 @@
 			onkeydown={(e) => e.key === "Enter" && openPlaylistModal()}
 			role="button"
 			tabindex="0"
-			data-testid="playlist-create-new"
+			data-testid="playlist-create-new-btn"
 		>
 			<Plus size={24} />
 			<span>{$_("playlists.createNew")}</span>
@@ -243,7 +243,7 @@
 			</div>
 		{:else}
 			<div class="import-choice-container" data-testid="playlist-io-section">
-				<label class="item topic-item import-choice-btn" data-testid="playlist-import-file">
+				<label class="item topic-item import-choice-btn" data-testid="playlist-import-file-btn">
 					<Upload size={20} />
 					<span>{$_("playlists.importFile") || "File"}</span>
 					<input
@@ -260,7 +260,7 @@
 					onclick={importFromClipboard}
 					role="button"
 					tabindex="0"
-					data-testid="playlist-import-clipboard"
+					data-testid="playlist-import-clipboard-btn"
 				>
 					<Copy size={20} />
 					<span>{$_("playlists.importClipboard") || "Clipboard"}</span>
@@ -271,7 +271,7 @@
 					onclick={() => showImportOptions = false}
 					role="button"
 					tabindex="0"
-					data-testid="playlist-import-cancel"
+					data-testid="playlist-import-cancel-btn"
 				>
 					<Plus size={18} style="transform: rotate(45deg)" />
 				</div>

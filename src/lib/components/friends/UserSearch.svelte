@@ -107,7 +107,7 @@
 	});
 </script>
 
-<div class="search-container" data-testid="user-search-root">
+<div class="search-container" data-testid="user-search-container">
 	<!-- Search Box -->
 	<div class="search-box">
 		<div class="search-icon-wrapper">
@@ -142,7 +142,7 @@
 
 	<!-- Results List -->
 	{#if searchResults.length > 0}
-		<div class="results-list" data-testid="user-search-results">
+		<div class="results-list" data-testid="user-search-results-list">
 			{#each searchResults as user (user.uid)}
 				<div class="user-card">
 					<UserAvatar uid={user.uid} photoURL={user.photoURL} displayName={user.displayName} size={36} />
@@ -165,7 +165,7 @@
 			{/each}
 		</div>
 	{:else if searchQuery.length >= 2 && !isSearching}
-		<div class="empty-state" data-testid="user-search-empty">
+		<div class="empty-state" data-testid="user-search-empty-message">
 			<p>
 				{$_("friends.noResults")}
 			</p>

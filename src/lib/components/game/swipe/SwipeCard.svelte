@@ -133,7 +133,7 @@
 
 <div
 	class="swipe-card-wrapper"
-	data-testid="swipe-card-wrapper"
+	data-testid="swipe-card-container"
 	use:preventScroll
 	style="transform: translateY({transformY}px) rotateX({rotationX}deg); opacity: {opacity}; --swipe-tint: {cardTint};"
 	onpointerdown={onPointerDown}

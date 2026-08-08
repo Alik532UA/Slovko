@@ -90,14 +90,14 @@
 	</div>
 
 	{#if isCapsLockOn}
-		<p class="warning-hint capslock-hint" data-testid="{testId}-capslock">
+		<p class="warning-hint capslock-hint" data-testid="{testId}-capslock-warning">
 			<AlertCircle size={14} />
 			<span>{$_('profile.capsLockOn') || 'CapsLock увімкнено'}</span>
 		</p>
 	{/if}
 
 	{#if isNonLatinLayout}
-		<p class="warning-hint layout-hint" data-testid="{testId}-layout">
+		<p class="warning-hint layout-hint" data-testid="{testId}-layout-warning">
 			<AlertCircle size={14} />
 			<span>{$_('profile.checkLayout') || 'Перевірте розкладку клавіатури (введено нелатинські символи)'}</span>
 		</p>

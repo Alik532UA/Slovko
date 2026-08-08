@@ -196,7 +196,7 @@
 				/>
 			{:else}
 				{#if authStore.isGuest}
-					<div class="guest-warning-box" data-testid="guest-warning-box" style="margin-bottom: 1rem;">
+					<div class="guest-warning-box" data-testid="guest-warning" style="margin-bottom: 1rem;">
 						<div class="warning-icon"><TriangleAlert size={48} /></div>
 						<p>{$_("profile.guestWarning") || "Ви граєте як гість. Авторизуйтесь, щоб зберігати прогрес та додавати друзів."}</p>
 					</div>
@@ -204,7 +204,7 @@
 
 				{@render tabsNav()}
 
-				<div class="profile-content" data-testid="profile-content">
+				<div class="profile-content" data-testid="profile-panel">
 					<ErrorBoundary>
 						{#if authStore.isGuest}
 							<div class="guest-full-view">

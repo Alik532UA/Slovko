@@ -162,7 +162,7 @@
 
 					<div
 						class="flags-grid"
-						data-testid="onboarding-flags-grid"
+						data-testid="onboarding-flags-list"
 					>
 						{#each LANGUAGES as lang (lang)}
 							<button
@@ -175,7 +175,7 @@
 									(step === 1 ? selectStep1(lang) : selectStep2(lang))}
 								disabled={isFinalizing ||
 									(step === 2 && lang === settingsStore.value.targetLanguage)}
-								data-testid="onboarding-flag-{lang}"
+								data-testid="onboarding-flag-btn-{lang}"
 							>
 								<img src="{base}/svg/flags/{lang}.svg" alt={LANGUAGE_NAMES[lang]} loading="lazy" width="80" height="54" />
 								<span>{LANGUAGE_NAMES[lang]}</span>
@@ -201,7 +201,7 @@
 									class:completed={hintStep > i + 1}
 									onclick={() => hintStep = i + 1}
 									aria-label="Step {i + 1}"
-									data-testid="onboarding-progress-step-{i + 1}"
+									data-testid="onboarding-progress-item-{i + 1}"
 								></button>
 							{/each}
 						</div>

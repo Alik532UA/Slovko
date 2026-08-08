@@ -102,11 +102,11 @@
 
 		<div class="stats-grid-wrapper">
 			{#key selectedLevel}
-				<div in:fade={{ duration: 250, delay: 50 }} out:fade={{ duration: 150 }} class="stats-grid safe-scale-container" data-testid="level-stats-grid">
+				<div in:fade={{ duration: 250, delay: 50 }} out:fade={{ duration: 150 }} class="stats-grid safe-scale-container" data-testid="level-stats-list">
 					<button 
 						type="button"
 						class="stat-card level-stat" 
-						data-testid="level-stat-correct" 
+						data-testid="level-stat-correct-value" 
 						onclick={() => playLabel("correct")}
 						aria-label={$_("profile.stats.correct")}
 					>
@@ -120,7 +120,7 @@
 					<button 
 						type="button"
 						class="stat-card level-stat" 
-						data-testid="level-stat-streak" 
+						data-testid="level-stat-streak-value" 
 						onclick={() => playLabel("bestCorrectStreak")}
 						aria-label={$_("profile.stats.bestCorrectStreak")}
 					>
@@ -133,7 +133,7 @@
 					<button 
 						type="button"
 						class="stat-card level-stat" 
-						data-testid="level-stat-accuracy" 
+						data-testid="level-stat-accuracy-value" 
 						onclick={() => playLabel("accuracy")}
 						aria-label={$_("profile.stats.accuracy")}
 					>
@@ -156,7 +156,7 @@
 			<div
 				class="stats-grid extra-stats safe-scale-container"
 				class:expanded={showMore}
-				data-testid="profile-stats-grid"
+				data-testid="profile-stats-list"
 			>
 				<button
 					type="button"

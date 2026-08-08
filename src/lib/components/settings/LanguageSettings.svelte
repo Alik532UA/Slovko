@@ -188,7 +188,7 @@
 							onclick={() => handleInterfaceLanguage(lang)}
 							aria-label={LANGUAGE_NAMES[lang]}
 							aria-pressed={settingsStore.value.interfaceLanguage === lang}
-							data-testid="interface-lang-{lang}"
+							data-testid="interface-lang-option-{lang}"
 						>
 							<img
 								src="{base}/svg/flags/{lang}.svg"
@@ -203,19 +203,19 @@
 				</div>
 			</section>
 
-			<div class="separator" data-testid="settings-separator"></div>
+			<div class="separator" data-testid="settings-separator-container"></div>
 
 			<!-- Мови карток -->
 			<section data-testid="card-language-section">
 				<div class="card-langs" data-testid="card-langs-container">
 					<!-- З мови (Ліва колонка) -->
-					<div class="lang-column" data-testid="source-lang-column">
+					<div class="lang-column" data-testid="source-lang-panel">
 						<div class="column-header">
 							<h4 class="column-title">
 								{$_("settings.columnLeft")}
 							</h4>
 						</div>
-						<div class="flags-column" role="group" aria-label={$_("settings.columnLeft")} data-testid="source-flags-column">
+						<div class="flags-column" role="group" aria-label={$_("settings.columnLeft")} data-testid="source-flags-panel">
 							{#each LANGUAGES as lang (lang)}
 								<button
 									type="button"
@@ -234,7 +234,7 @@
 									}}
 									aria-label={LANGUAGE_NAMES[lang]}
 									aria-pressed={settingsStore.value.sourceLanguage === lang}
-									data-testid="source-lang-{lang}"
+									data-testid="source-lang-option-{lang}"
 								>
 									<img
 										src="{base}/svg/flags/{lang}.svg"
@@ -248,7 +248,7 @@
 							{/each}
 						</div>
 
-						<div class="controls-wrapper" data-testid="source-controls-wrapper">
+						<div class="controls-wrapper" data-testid="source-controls-container">
 							<!-- Transcription Toggle -->
 							<button
 								type="button"
@@ -283,14 +283,14 @@
 					</div>
 
 					<!-- На мову (Права колонка) -->
-					<div class="lang-column" data-testid="target-lang-column">
+					<div class="lang-column" data-testid="target-lang-panel">
 						<div class="column-header">
 							<h4 class="column-title">
 								{$_("settings.columnRight")}
 							</h4>
 						</div>
 
-						<div class="flags-column" role="group" aria-label={$_("settings.columnRight")} data-testid="target-flags-column">
+						<div class="flags-column" role="group" aria-label={$_("settings.columnRight")} data-testid="target-flags-panel">
 							{#each LANGUAGES as lang (lang)}
 								<button
 									type="button"
@@ -309,7 +309,7 @@
 									}}
 									aria-label={LANGUAGE_NAMES[lang]}
 									aria-pressed={settingsStore.value.targetLanguage === lang}
-									data-testid="target-lang-{lang}"
+									data-testid="target-lang-option-{lang}"
 								>
 									<img
 										src="{base}/svg/flags/{lang}.svg"
@@ -323,7 +323,7 @@
 							{/each}
 						</div>
 
-						<div class="controls-wrapper" data-testid="target-controls-wrapper">
+						<div class="controls-wrapper" data-testid="target-controls-container">
 							<!-- Transcription Toggle -->
 							<button
 								type="button"

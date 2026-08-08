@@ -125,7 +125,7 @@
 	data-uid={uid}
 >
 	{#if isInternal}
-		<div class="avatar-circle" style:background-color={bgColor} aria-hidden="true" data-testid="user-avatar-internal">
+		<div class="avatar-circle" style:background-color={bgColor} aria-hidden="true" data-testid="user-avatar-internal-container">
 			{#if isFlagColor}
 				{@const lang = rawColor.replace("flag-", "")}
 				<div class="flag-bg-wrapper">
@@ -148,7 +148,7 @@
 			data-testid="user-avatar-img" 
 		/>
 	{:else}
-		<div class="avatar-circle fallback" aria-hidden="true" data-testid="user-avatar-fallback">
+		<div class="avatar-circle fallback" aria-hidden="true" data-testid="user-avatar-fallback-text">
 			<UserIcon size={size} />
 		</div>
 	{/if}

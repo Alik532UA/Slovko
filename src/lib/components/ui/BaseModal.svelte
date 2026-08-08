@@ -80,7 +80,7 @@
 			</button>
 		{/if}
 
-		<div class="modal-content" data-testid="{testid}-content">
+		<div class="modal-content" data-testid="{testid}-panel">
 			{@render children()}
 		</div>
 	</div>

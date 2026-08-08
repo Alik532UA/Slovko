@@ -87,7 +87,7 @@
 		<div
 			class="avatar email-user preview-avatar"
 			style:background-color={selectedColor.startsWith("flag-") || selectedColor === "google" ? "transparent" : selectedColor}
-			data-testid="profile-preview-avatar"
+			data-testid="profile-preview-avatar-img"
 		>
 			{#if selectedColor === "google" && authStore.originalPhotoURL}
 				<img
@@ -113,7 +113,7 @@
 			{/if}
 		</div>
 
-		<div class="color-picker-grid" data-testid="color-picker-grid">
+		<div class="color-picker-grid" data-testid="color-picker-list">
 			{#if authStore.originalPhotoURL}
 				<button
 					class="color-btn google-btn"
@@ -158,7 +158,7 @@
 			{/each}
 		</div>
 
-		<div class="icon-picker-grid" data-testid="icon-picker-grid">
+		<div class="icon-picker-grid" data-testid="icon-picker-list">
 			{#each AVATAR_ICONS as { id, component: IconComp } (id)}
 				<button
 					class="icon-btn"

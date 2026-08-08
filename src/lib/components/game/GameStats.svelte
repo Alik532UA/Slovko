@@ -109,7 +109,7 @@
 	);
 </script>
 
-<div class="stats-bar" data-testid="stats-bar">
+<div class="stats-bar" data-testid="stats-section">
 	{#if settingsStore.value.interactionMode !== "swipe"}
 		<BaseTooltip text={$_("common.tooltips.streak")}>
 			<div
@@ -118,7 +118,7 @@
 				style="color: {streakColor}; border-color: {displayedStreak > 0
 					? streakColor
 					: ''}; transform: scale({streakScale});"
-				data-testid="stat-streak"
+				data-testid="stat-streak-value"
 				title=""
 			>
 				<div
@@ -148,7 +148,7 @@
 				0.7
 					? '#2ecc71'
 					: ''}"
-				data-testid="stat-accuracy"
+				data-testid="stat-accuracy-value"
 				title=""
 			>
 				{#if accuracyDisplay !== ""}

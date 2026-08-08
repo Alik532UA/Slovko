@@ -79,7 +79,7 @@
 	<div class="modal-internal-wrapper" use:smoothHeight={{ duration: 300 }}>
 		<div class="modal-content-measure">
 			{#if authStore.isGuest && activeTab === "leaderboard"}
-				<div class="guest-warning-box" data-testid="guest-warning-box" style="margin-bottom: 1rem;">
+				<div class="guest-warning-box" data-testid="guest-warning" style="margin-bottom: 1rem;">
 					<div class="warning-icon"><Trophy size={48} /></div>
 					<p>{$_("profile.leaderboardGuestMessage") || "Авторизуйтесь, щоб побачити інших гравців та їх статистику"}</p>
 				</div>
@@ -87,7 +87,7 @@
 
 			{@render tabsNav()}
 
-			<div class="profile-content" data-testid="stats-content">
+			<div class="profile-content" data-testid="stats-panel">
 				<ErrorBoundary>
 					{#key activeTab}
 						{#if activeTab === "leaderboard"}

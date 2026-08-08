@@ -82,7 +82,7 @@
 	function handleSwipeDown() {
 		if (!currentCard) return;
 		logService.log("game", "Swipe DOWN for:", currentCard.wordKey);
-		// Додаємо слово до `data-testid="playlist-extra"`
+		// Додаємо слово до `data-testid="playlist-extra-badge"`
 		playlistStore.addWordToPlaylist("extra", currentCard.wordKey);
 		nextCard();
 	}
@@ -123,7 +123,7 @@
 		role="main"
 		tabindex="-1"
 		aria-label="Swipe Board"
-		data-testid="swipe-board"
+		data-testid="swipe-board-container"
 	>
 		{#if !currentCard}
 			<div

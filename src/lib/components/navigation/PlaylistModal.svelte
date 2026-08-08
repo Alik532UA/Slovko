@@ -191,7 +191,7 @@
 </script>
 
 <BaseModal {onclose} testid="playlist-modal" maxWidth="500px">
-	<div class="content" data-testid="playlist-modal-content">
+	<div class="content" data-testid="playlist-modal-panel">
 		<div class="header">
 			<h2 data-testid="playlist-modal-title">
 				{existingPlaylist
@@ -233,7 +233,7 @@
 				>
 					<div class="picker-group">
 						<h3>{$_("playlists.color")}</h3>
-						<div class="color-grid" data-testid="playlist-color-picker">
+						<div class="color-grid" data-testid="playlist-color-picker-fieldset">
 							{#each THEME_COLORS as c}
 								<button
 									class="color-btn"
@@ -288,25 +288,25 @@
 						>
 							<div class="word-info">
 								{#if typeof word === "string"}
-									<div class="word-pill" data-testid="word-left-{word}">
+									<div class="word-pill" data-testid="word-left-item-{word}">
 										{word}
 									</div>
 									<div
 										class="word-pill"
-										data-testid="word-right-{word}"
+										data-testid="word-right-item-{word}"
 									>
 										{translations[word] || "..."}
 									</div>
 								{:else}
 									<div
 										class="word-pill"
-										data-testid="word-left-custom-{word.id}"
+										data-testid="word-left-custom-item-{word.id}"
 									>
 										{word.left}
 									</div>
 									<div
 										class="word-pill"
-										data-testid="word-right-custom-{word.id}"
+										data-testid="word-right-custom-item-{word.id}"
 									>
 										{word.right}
 									</div>
@@ -316,7 +316,7 @@
 								<button
 									onclick={() => moveWord(i, -1)}
 									disabled={i === 0}
-									data-testid="move-up-{i}"
+									data-testid="move-up-btn-{i}"
 									aria-label="Move up"
 								>
 									<APP_ICONS.ArrowUp size={16} />
@@ -324,7 +324,7 @@
 								<button
 									onclick={() => moveWord(i, 1)}
 									disabled={i === words.length - 1}
-									data-testid="move-down-{i}"
+									data-testid="move-down-btn-{i}"
 									aria-label="Move down"
 								>
 									<APP_ICONS.ArrowDown size={16} />
@@ -332,7 +332,7 @@
 								<button
 									class="delete"
 									onclick={() => removeWord(i)}
-									data-testid="delete-word-{i}"
+									data-testid="delete-word-btn-{i}"
 									aria-label="Delete"
 								>
 									<APP_ICONS.Trash2 size={16} />
@@ -377,7 +377,7 @@
 			{#if existingPlaylist}
 				<section class="section io-section" data-testid="playlist-io-section">
 					<h3>{$_("playlists.exportTitle")}</h3>
-					<div class="io-actions" data-testid="playlist-io-actions">
+					<div class="io-actions" data-testid="playlist-io-toolbar">
 						<button
 							class="io-btn"
 							onclick={exportJSON}

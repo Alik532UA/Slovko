@@ -62,7 +62,7 @@
 	}
 </script>
 
-<div class="list-container" data-testid="friends-list-root">
+<div class="list-container" data-testid="friends-list-container">
 	{#if onopenSettings}
 		<button
 			class="settings-btn-top"
@@ -76,7 +76,7 @@
 
 	<ErrorBoundary compact>
 		{#if isLoading && list.length === 0}
-			<div class="loading-state" data-testid="friends-loading">
+			<div class="loading-state" data-testid="friends-spinner">
 				<div class="spinner">
 					<Loader2 size={32} />
 				</div>
@@ -93,7 +93,7 @@
 				</button>
 			</div>
 		{:else if list.length === 0}
-			<div class="empty-state" data-testid="friends-empty">
+			<div class="empty-state" data-testid="friends-empty-message">
 				<div class="empty-icon-wrapper">
 					<Users size={48} />
 				</div>

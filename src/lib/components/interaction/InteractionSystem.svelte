@@ -25,12 +25,12 @@
 	);
 </script>
 
-<div class="interaction-system" data-testid="interaction-system">
+<div class="interaction-system" data-testid="interaction-system-container">
 	{#each sortedInteractions as event (event.id)}
 		<div
 			class="capsule-slot"
 			animate:flip={{ duration: 300 }}
-			data-testid="interaction-slot-{event.type}"
+			data-testid="interaction-slot-container-{event.type}"
 		>
 			<InteractionCapsule
 				{event}

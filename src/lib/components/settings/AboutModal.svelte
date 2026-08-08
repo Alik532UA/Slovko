@@ -26,17 +26,17 @@
 </script>
 
 <BaseModal {onclose} testid="about-modal">
-	<div class="content" data-testid="about-modal-content">
-		<p class="description" data-testid="about-description">{$_("about.description")}</p>
+	<div class="content" data-testid="about-modal-panel">
+		<p class="description" data-testid="about-description-text">{$_("about.description")}</p>
 
-		<div class="social-links" data-testid="about-social-links">
+		<div class="social-links" data-testid="about-social-list">
 			<a
 				href="https://www.instagram.com/slovko.learn/"
 				target="_blank"
 				rel="noopener noreferrer"
 				class="social-icon"
 				title="Instagram"
-				data-testid="about-social-instagram"
+				data-testid="about-social-link-instagram"
 			>
 				<Instagram size={22} />
 			</a>
@@ -46,7 +46,7 @@
 				rel="noopener noreferrer"
 				class="social-icon"
 				title="Facebook"
-				data-testid="about-social-facebook"
+				data-testid="about-social-link-facebook"
 			>
 				<Facebook size={22} />
 			</a>
@@ -56,7 +56,7 @@
 				rel="noopener noreferrer"
 				class="social-icon"
 				title="LinkedIn"
-				data-testid="about-social-linkedin"
+				data-testid="about-social-link-linkedin"
 			>
 				<Linkedin size={22} />
 			</a>
@@ -66,7 +66,7 @@
 				rel="noopener noreferrer"
 				class="social-icon"
 				title="Threads"
-				data-testid="about-social-threads"
+				data-testid="about-social-link-threads"
 			>
 				<ThreadsIcon size={22} />
 			</a>
@@ -132,7 +132,7 @@
 			</button>
 		</div>
 
-		<div class="version-wrapper" data-testid="about-version-wrapper">
+		<div class="version-wrapper" data-testid="about-version-container">
 			<span class="version-text" data-testid="about-version-text">
 				{$_("about.version")}: {versionStore.currentVersion || "0.1"}
 			</span>

@@ -125,14 +125,14 @@
 	class:sent={event.state === "sent"}
 	class:success={isSystemEvent}
 	transition:scale={{ duration: 200, start: 0.8 }}
-	data-testid="interaction-capsule-{event.type}"
+	data-testid="interaction-capsule-card-{event.type}"
 >
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<div
 		class="interactive-area"
 		onclick={toggleExpand}
-		data-testid="interaction-trigger-{event.uid}"
+		data-testid="interaction-btn-{event.uid}"
 	>
 		{#if event.state !== "collapsed"}
 			<div
@@ -140,8 +140,8 @@
 				transition:slide={{ axis: "x", duration: 250 }}
 				data-testid="interaction-content-panel"
 			>
-				<div class="text-block" data-testid="interaction-text-block">
-					<span class="nickname" data-testid="interaction-nickname">
+				<div class="text-block" data-testid="interaction-text-section">
+					<span class="nickname" data-testid="interaction-nickname-text">
 						{#if event.type === "daily_goal_reached"}
 							+1 {$_("profile.stats.day")}
 						{:else if event.type === "leader_gap_reached"}
@@ -161,7 +161,7 @@
 					<div
 						class="sent-indicator"
 						transition:scale
-						data-testid="interaction-sent-indicator"
+						data-testid="interaction-sent-icon"
 					>
 						<Check size={18} data-testid="icon-check-sent" />
 					</div>
@@ -185,7 +185,7 @@
 				<div
 					class="success-icon-wrapper"
 					transition:scale
-					data-testid="interaction-status-icon-box"
+					data-testid="interaction-status-icon-container"
 				>
 					<TrendingUp
 						size={24}

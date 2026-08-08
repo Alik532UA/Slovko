@@ -72,10 +72,10 @@
 				<label for="reset-email" class="floating-label">Email</label>
 			</div>
 
-			{#if error}<p class="auth-error" data-testid="auth-error">{error}</p>{/if}
-			{#if info}<p class="auth-info" data-testid="auth-info">{info}</p>{/if}
+			{#if error}<p class="auth-error" data-testid="reset-error">{error}</p>{/if}
+			{#if info}<p class="auth-info" data-testid="reset-info-message">{info}</p>{/if}
 
-			<button class="btn-primary" type="submit" disabled={loading} data-testid="reset-submit">
+			<button class="btn-primary" type="submit" disabled={loading} data-testid="reset-submit-btn">
 				{loading ? '…' : $_('profile.sendResetEmail') || $_('auth.sendReset') || 'Надіслати лист'}
 			</button>
 
@@ -83,7 +83,7 @@
 				class="btn-link back-link"
 				type="button"
 				onclick={() => onmode('auth')}
-				data-testid="reset-back"
+				data-testid="reset-back-btn"
 			>
 				{$_('profile.backToSignin') || $_('auth.backToLogin') || 'Повернутись до входу'}
 			</button>
@@ -94,7 +94,7 @@
 		</h2>
 
 		{#if withGoogle}
-			<button class="btn-google" type="button" onclick={ongoogle} disabled={loading} data-testid="auth-google">
+			<button class="btn-google" type="button" onclick={ongoogle} disabled={loading} data-testid="auth-google-btn">
 				<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
 					<path
 						fill="#4285F4"
@@ -147,16 +147,16 @@
 				class="btn-link reset-link"
 				type="button"
 				onclick={() => onmode('forgot')}
-				data-testid="auth-forgot"
+				data-testid="auth-forgot-btn"
 			>
 				{$_('profile.forgotPasswordTitle') || $_('auth.resetPassword') || 'Відновити пароль'}
 			</button>
 
 			{#if error}<p class="auth-error" data-testid="auth-error">{error}</p>{/if}
-			{#if info}<p class="auth-info" data-testid="auth-info">{info}</p>{/if}
+			{#if info}<p class="auth-info" data-testid="auth-info-message">{info}</p>{/if}
 
 			<div class="auth-actions">
-				<button class="btn-primary" type="submit" disabled={loading} data-testid="auth-login">
+				<button class="btn-primary" type="submit" disabled={loading} data-testid="auth-login-btn">
 					{loading ? '…' : $_('profile.login') || $_('auth.login') || 'Увійти'}
 				</button>
 				<button
@@ -164,7 +164,7 @@
 					type="button"
 					onclick={() => onregister(email, password)}
 					disabled={loading}
-					data-testid="auth-register"
+					data-testid="auth-register-btn"
 				>
 					{$_('profile.register') || $_('auth.register') || 'Зареєструватись'}
 				</button>
