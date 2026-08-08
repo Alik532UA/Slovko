@@ -12,6 +12,13 @@ const ATTEMPTED_VERSION_KEY = "app_update_attempted_version";
 const FIVE_DAYS_MS = 5 * 24 * 60 * 60 * 1000;
 
 /**
+ * Мінімум між перевірками. Повернення до вкладки піднімає і `visibilitychange`,
+ * і `focus`, тож без цього одне переключення вікна дає два запити поспіль.
+ */
+const MIN_CHECK_INTERVAL_MS = 60 * 1000;
+let lastCheckAt = 0;
+
+/**
  * Порівнює дві версії (v1 < v2 ?)
  * Повертає true, якщо v1 менша за v2
  */
@@ -32,10 +39,24 @@ function isVersionOlder(v1: string, v2: string): boolean {
  * Сервіс для перевірки оновлень
  */
 export async function checkForUpdates() {
+	if (typeof navigator !== "undefined" && navigator.onLine === false) {
+		logService.log("version", "Offline — update check skipped.");
+		return;
+	}
+
+	const now = Date.now();
+	if (now - lastCheckAt < MIN_CHECK_INTERVAL_MS) {
+		logService.log("version", "Update check skipped: checked less than a minute ago.");
+		return;
+	}
+	lastCheckAt = now;
+
 	logService.log("version", "Checking for updates...");
+
+	let response: Response;
 	try {
 		// Примусово обходимо будь-яке кешування (SW, CDN, Browser)
-		const response = await fetch(`${VERSION_URL}?t=${Date.now()}`, {
+		response = await fetch(`${VERSION_URL}?t=${now}`, {
 			cache: "no-store",
 			headers: {
 				'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -43,6 +64,17 @@ export async function checkForUpdates() {
 				'Expires': '0'
 			}
 		});
+	} catch (error) {
+		// Мережевий збій — очікувана ситуація, а не поломка застосунку: зникла
+		// мережа, вкладка лишилась відкритою після зупинки dev-сервера, впав
+		// хостинг. logService.error() інкрементує errorCount, від якого
+		// засвічується бейдж помилок, тому такі випадки туди потрапляти не мають —
+		// інакше вони ховають справжні помилки.
+		logService.warn("version", "Update check skipped: version file unreachable.", error);
+		return;
+	}
+
+	try {
 		if (!response.ok) {
 			logService.error("version", `Failed to fetch version info: ${response.status}`);
 			return;
