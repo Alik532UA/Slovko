@@ -34,6 +34,12 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      # 27 юніт-тестів існували в репозиторії і не виконувалися в CI жодного
+      # разу (CODE-QUALITY-v8 § 6.5 — той самий CRITICAL, що й тест-заглушка:
+      # обіцянка перевірки без перевірки).
+      - name: Unit tests
+        run: npm run test:unit
+
       - name: Build
         env:
           BASE_PATH: "/Slovko"
