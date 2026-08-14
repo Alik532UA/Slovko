@@ -26,7 +26,7 @@
 </script>
 
 <BaseModal {onclose} testid="about-modal">
-	<div class="content" data-testid="about-modal-panel">
+	<div class="content">
 		<p class="description" data-testid="about-description-text">{$_("about.description")}</p>
 
 		<div class="social-links" data-testid="about-social-list">
@@ -141,7 +141,7 @@
 		<button
 			class="confirm-btn primary-action-btn"
 			onclick={onclose}
-			data-testid="about-modal-close-btn"
+			data-testid="about-back-btn"
 		>
 			{$_("common.backToLearning")}
 		</button>

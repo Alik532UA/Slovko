@@ -217,7 +217,7 @@
 					class="mb-6 max-w-[500px]"
 				/>
 				<!-- Content -->
-				<div class="content-wrapper" data-testid="level-topic-modal-panel">
+				<div class="content-wrapper">
 					{#key activeTab}
 						<div
 							in:fade={{ duration: 250, delay: 50 }}

@@ -40,6 +40,27 @@ jobs:
       - name: Unit tests
         run: npm run test:unit
 
+      # Рантайм-інваріант унікальності data-testid (TESTID-AND-NAMING-v8 § 1.9.2).
+      # Статична перевірка в юніт-тестах бачить усі testid, але не бачить, що
+      # один компонент відрендерився двічі. Саме так тут жили три дублікати:
+      # картки слів у циклі й панелі двох модалок.
+      #
+      # Лише цей файл: перевіряє дев'ять станів (сторінка + п'ять модалок із
+      # табами) і піднімає власний dev-сервер на порту 5273.
+      - name: Install Playwright chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Unique data-testid invariant
+        run: npx playwright test tests/e2e/invariants.spec.ts --project=chromium
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
       # Поріг high: після оновлення тут не лишилося взагалі нічого — ні high,
       # ні moderate, ні low. Але тримаю саме `high`, як у решті проєктів:
       # перший транзитивний moderate у firebase або svelte-i18n інакше

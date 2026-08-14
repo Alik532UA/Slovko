@@ -1,5 +1,17 @@
 import { defineConfig, devices } from '@playwright/test';
 
+/**
+ * Окремий порт саме для тестів, і свій у кожному проєкті.
+ *
+ * Було `5173` плюс `reuseExistingServer: !process.env.CI`. Локально це означало:
+ * якщо на 5173 уже висить dev-сервер ІНШОГО проєкту (а 5173 — типовий порт
+ * Vite, тобто в усіх сімох він той самий), Playwright спокійно бере його й
+ * перевіряє чужий застосунок. Тест зелений, перевірено не те — рівно клас
+ * AI-AGENT-PITFALLS-v8 § 1. Саме так і сталося: інваріант унікальності
+ * `data-testid` проходив, дивлячись на сусідній сайт.
+ */
+const TEST_PORT = 5273;
+
 export default defineConfig({
 	testDir: './tests/e2e',
 	fullyParallel: true,
@@ -9,7 +21,7 @@ export default defineConfig({
 	reporter: 'html',
 	use: {
 		trace: 'on-first-retry',
-		baseURL: 'http://localhost:5173',
+		baseURL: `http://localhost:${TEST_PORT}`,
 	},
 	projects: [
 		{
@@ -18,8 +30,12 @@ export default defineConfig({
 		}
 	],
 	webServer: {
-		command: 'npm run dev',
-		url: 'http://localhost:5173',
-		reuseExistingServer: !process.env.CI,
+		// `--strictPort`: якщо порт зайнятий, Vite мусить УПАСТИ, а не тихо
+		// перейти на наступний. Інакше Playwright перевіряв би сайт за адресою,
+		// яку зайняв хтось інший.
+		command: `npm run dev -- --port ${TEST_PORT} --strictPort`,
+		url: `http://localhost:${TEST_PORT}`,
+		// Ніколи не перевикористовуємо чужий сервер — див. коментар до TEST_PORT.
+		reuseExistingServer: false,
 	},
 });

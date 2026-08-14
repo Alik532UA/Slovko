@@ -179,7 +179,7 @@
 								data-card-id={card.id}
 							>
 								<WordCard
-									testid="word-card-src"
+									testid="word-card-src-{i}"
 									{card}
 									showTranscription={settingsStore.value.showTranscriptionSource}
 									enablePronunciation={settingsStore.value.enablePronunciationSource}
@@ -209,7 +209,7 @@
 								data-card-id={card.id}
 							>
 								<WordCard
-									testid="word-card-tgt"
+									testid="word-card-tgt-{i}"
 									{card}
 									showTranscription={settingsStore.value.showTranscriptionTarget}
 									enablePronunciation={settingsStore.value.enablePronunciationTarget}
