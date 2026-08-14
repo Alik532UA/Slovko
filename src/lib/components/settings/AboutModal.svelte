@@ -141,7 +141,7 @@
 		<button
 			class="confirm-btn primary-action-btn"
 			onclick={onclose}
-			data-testid="close-about-btn"
+			data-testid="about-modal-close-btn"
 		>
 			{$_("common.backToLearning")}
 		</button>

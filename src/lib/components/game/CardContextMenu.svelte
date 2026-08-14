@@ -65,7 +65,7 @@
 			class="close-btn"
 			onclick={onclose}
 			aria-label={$_("common.close") || "Close"}
-			data-testid="context-menu-close"
+			data-testid="card-context-menu-close-btn"
 		>			<X size={18} />
 		</button>
 	</div>

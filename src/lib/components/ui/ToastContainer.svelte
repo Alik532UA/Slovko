@@ -170,7 +170,6 @@
 	.close-btn {
 		margin-left: auto;
 		opacity: 0.6;
-		transition: opacity 0.2s;
 		display: flex;
 		background: none;
 		border: none;

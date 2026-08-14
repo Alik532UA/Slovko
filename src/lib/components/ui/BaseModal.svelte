@@ -120,7 +120,6 @@
 		color: var(--text-secondary);
 		padding: 0.5rem;
 		border-radius: 50%;
-		transition: all 0.2s;
 		z-index: 10;
 		display: flex;
 		align-items: center;

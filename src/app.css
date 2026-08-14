@@ -463,6 +463,52 @@ button {
 }
 
 /* Accessibility: Reduced Motion */
+
+/* --- Кнопка закриття (UI-ELEMENTS-v8 § 1.1, 1.3) --- */
+
+/**
+ * Чверть оберту й легке збільшення при наведенні, стиск при натисканні.
+ *
+ * Зачіпка — ЛОКАТОР, а не клас. Кнопок закриття в проєкті кілька, і клас у
+ * кожної свій; перелік класів забув би наступну. Локатор `{scope}-close-btn`
+ * уже обов'язковий за TESTID-AND-NAMING-v8 § 1.4, тож селектор читається як
+ * «кожна кнопка закриття за каноном» і сам підхоплює нову.
+ *
+ * 90°, а не 45°: хрестик має симетрію на чверть оберту, тож після повороту
+ * виглядає так само — видно лише сам рух. 45° лишили б його плюсом.
+ *
+ * ВАЖЛИВО: перехід оголошено тут і більше ніде. Власний `transition` у
+ * компоненті переважує це правило (scoping Svelte додає клас), і якщо в його
+ * переліку немає `transform`, оберт стається МИТТЄВО — тобто його не видно
+ * взагалі, і кнопка здається несправною.
+ */
+[data-testid$="-close-btn"] {
+	transition:
+		transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+		background-color 0.25s ease,
+		color 0.25s ease,
+		opacity 0.25s ease;
+}
+
+[data-testid$="-close-btn"]:hover {
+	transform: rotate(90deg) scale(1.08);
+}
+
+[data-testid$="-close-btn"]:active {
+	transform: rotate(90deg) scale(0.92);
+}
+
+/* Глобальне правило нижче зводить ТРИВАЛІСТЬ переходу до нуля, але сам
+   `transform` лишався б — і оберт стрибав би, тобто саме тим різким рухом,
+   якого просив уникнути читач. Тому тут його прибирають зовсім. */
+@media (prefers-reduced-motion: reduce) {
+	[data-testid$="-close-btn"],
+	[data-testid$="-close-btn"]:hover,
+	[data-testid$="-close-btn"]:active {
+		transform: none;
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
 	* {
 		animation-duration: 0.01ms !important;
