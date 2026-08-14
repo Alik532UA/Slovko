@@ -40,6 +40,14 @@ jobs:
       - name: Unit tests
         run: npm run test:unit
 
+      # Поріг high: після оновлення тут не лишилося взагалі нічого — ні high,
+      # ні moderate, ні low. Але тримаю саме `high`, як у решті проєктів:
+      # перший транзитивний moderate у firebase або svelte-i18n інакше
+      # зупинив би деплой, і гейт довелося б вимикати — а вимкнений гейт
+      # гірший за відсутній.
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
+
       - name: Build
         env:
           BASE_PATH: "/Slovko"
