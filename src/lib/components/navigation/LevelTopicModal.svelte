@@ -11,7 +11,7 @@
 	import BaseModal from "../ui/BaseModal.svelte";
 	import SegmentedControl from "../ui/SegmentedControl.svelte";
 	import { smoothHeight } from "$lib/utils/actions/smoothHeight";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import { navigationState } from "$lib/controllers/NavigationState.svelte";
 	import { Gamepad2, Layers } from "lucide-svelte";
 
@@ -38,7 +38,7 @@
 
 	// Derive active tab from URL 'tab' param, fallback to current settings mode
 	const activeTabParam = $derived(
-		$page.url.searchParams.get("tab") as GameMode | null,
+		page.url.searchParams.get("tab") as GameMode | null,
 	);
 	const activeTab = $derived(activeTabParam || settingsStore.value.mode);
 
@@ -155,7 +155,7 @@
 		if (selectedIds.length === 0) return;
 
 		const idsStr = selectedIds.join(",");
-		const url = new URL($page.url);
+		const url = new URL(page.url);
 		url.searchParams.delete("modal");
 		url.searchParams.delete("tab");
 		url.searchParams.delete("subtab");

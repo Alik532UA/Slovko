@@ -14,7 +14,7 @@
 	import ErrorBoundary from "$lib/components/ui/ErrorBoundary.svelte";
 
 	import { goto } from "$app/navigation";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 
 	import { untrack } from "svelte";
 	import { UrlSyncService } from "$lib/services/urlSyncService";
@@ -65,7 +65,7 @@
 		if (isSyncing) return;
 
 		// Отримуємо поточний URL
-		const url = $page.url;
+		const url = page.url;
 
 		untrack(() => {
 			const newUrl = UrlSyncService.getUpdatedUrl(url, s);

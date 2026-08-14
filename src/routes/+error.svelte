@@ -4,7 +4,7 @@
 	 * Shows when a fatal error occurs during rendering or loading.
 	 * Includes debug logs copy functionality.
 	 */
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import { logService } from "$lib/services/logService.svelte";
 	import { onMount } from "svelte";
 
@@ -22,9 +22,9 @@
 
 	async function copyLogs() {
 		const errorInfo = `
-ERROR: ${$page.status} 
-MESSAGE: ${$page.error?.message || "Unknown error"}
-URL: ${$page.url.href}
+ERROR: ${page.status} 
+MESSAGE: ${page.error?.message || "Unknown error"}
+URL: ${page.url.href}
 UA: ${navigator.userAgent}
 ----------------------------------------
 LOGS:
@@ -51,10 +51,10 @@ ${logs}
 	<div class="error-container">
 		<div class="icon">⚠️</div>
 		<h1>Something went wrong</h1>
-		<p class="status">Error {$page.status}</p>
+		<p class="status">Error {page.status}</p>
 		
 		<!-- Optional Chaining for error message -->
-		<p class="message">{$page.error?.message || "An unexpected error occurred."}</p>
+		<p class="message">{page.error?.message || "An unexpected error occurred."}</p>
 
 		<div class="actions">
 			<button class="primary-btn" onclick={reload}>
@@ -68,7 +68,7 @@ ${logs}
 		
 		<details>
 			<summary>Technical Details</summary>
-			<pre>{JSON.stringify($page.error, null, 2)}</pre>
+			<pre>{JSON.stringify(page.error, null, 2)}</pre>
 		</details>
 	</div>
 </div>

@@ -2,7 +2,7 @@
 	import { _ } from "svelte-i18n";
 	import { Target, Trophy } from "lucide-svelte";
 	import { navigationState } from "../../controllers/NavigationState.svelte";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import { authStore } from "../../controllers/AuthStore.svelte";
 	import { progressStore } from "../../controllers/ProgressStore.svelte";
 
@@ -32,7 +32,7 @@
 		return authStore.isGuest ? "stats" : "leaderboard";
 	});
 
-	const urlTab = $derived($page.url.searchParams.get("tab") as TabType | null);
+	const urlTab = $derived(page.url.searchParams.get("tab") as TabType | null);
 	const activeTab = $derived(urlTab || defaultTab);
 
 	function setActiveTab(tab: TabType) {

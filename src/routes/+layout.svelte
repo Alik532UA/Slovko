@@ -23,7 +23,7 @@
 		trackEvent,
 	} from "$lib/services/analyticsService";
 	import { pwaStore } from "$lib/controllers/PwaStore.svelte";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import { navigationState } from "$lib/controllers/NavigationState.svelte";
 	import { migrateStorageKeys } from "$lib/utils/storageMigration";
 
@@ -299,7 +299,7 @@
 
 	// Відстеження зміни сторінок
 	$effect(() => {
-		trackPageView($page.url.pathname);
+		trackPageView(page.url.pathname);
 	});
 </script>
 
@@ -316,7 +316,7 @@
 		<OnboardingModal />
 	{/if}
 
-	{@const activeModal = $page.url.searchParams.get("modal")}
+	{@const activeModal = page.url.searchParams.get("modal")}
 
 	{#if activeModal === "levels"}
 		<LevelTopicModal onclose={() => navigationState.closeModal()} />
@@ -328,12 +328,12 @@
 		<ThemeModal onclose={() => navigationState.closeModal()} />
 	{:else if activeModal === "stats"}
 		<StatsModal
-			initialTab={$page.url.searchParams.get("tab") as "leaderboard" | "stats"}
+			initialTab={page.url.searchParams.get("tab") as "leaderboard" | "stats"}
 			onclose={() => navigationState.closeModal()}
 		/>
 	{:else if activeModal === "profile"}
 		<ProfileModal
-			initialTab={$page.url.searchParams.get("tab") as "friends" | "account"}
+			initialTab={page.url.searchParams.get("tab") as "friends" | "account"}
 			onclose={() => navigationState.closeModal()}
 		/>
 	{/if}

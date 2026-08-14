@@ -1,15 +1,14 @@
 ﻿import { goto } from "$app/navigation";
-import { page } from "$app/stores";
-import { get } from "svelte/store";
+import { page } from "$app/state";
 
 /**
  * Керує станом UI (модалки, таби) через URL Search Params.
  * Це гарантує, що при оновленні сторінки (F5) стан збережеться.
  */
 class NavigationState {
-    /** Отримує поточний об'єкт URL зі SvelteKit стору */
+    /** Поточний URL. Читається в момент виклику з обробника події — тобто вже в браузері. */
     private getUrl(): URL {
-        return get(page).url;
+        return page.url;
     }
 
     /**

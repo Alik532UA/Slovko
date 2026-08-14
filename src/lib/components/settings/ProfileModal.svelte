@@ -4,7 +4,7 @@
 	import { logService } from "../../services/logService.svelte";
 	import { authStore } from "../../controllers/AuthStore.svelte";
 	import { AuthService } from "../../services/firebase/AuthService";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import { navigationState } from "../../controllers/NavigationState.svelte";
 
 	// Sub-components
@@ -42,7 +42,7 @@
 	let isLoading = $state(false);
 
 	const defaultTab: TabType = "friends";
-	const urlTab = $derived($page.url.searchParams.get("tab") as TabType | null);
+	const urlTab = $derived(page.url.searchParams.get("tab") as TabType | null);
 	const activeTab = $derived(urlTab || initialTab || defaultTab);
 
 	const availableTabs: TabType[] = ["friends", "account"];
@@ -55,7 +55,7 @@
 
 	// Friends state
 	let urlSubTab = $derived(
-		$page.url.searchParams.get("subtab") as
+		page.url.searchParams.get("subtab") as
 			| "following"
 			| "followers"
 			| "search"
