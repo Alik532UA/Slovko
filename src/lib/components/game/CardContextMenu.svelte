@@ -191,7 +191,6 @@
 		border: none;
 		cursor: pointer;
 		border-radius: 50%;
-		transition: all 0.2s;
 	}
 
 	.close-btn:hover {

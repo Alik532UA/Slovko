@@ -490,11 +490,17 @@ button {
 		opacity 0.25s ease;
 }
 
-[data-testid$="-close-btn"]:hover {
+/*
+ * `:has(svg)` — не прикраса. Локатор `{scope}-close-btn` носить і ТЕКСТОВА
+ * кнопка, що закриває вікно («Повернутись до навчання»): вона теж закриває,
+ * тож локатор у неї правильний. Але обертати напис на 90° безглуздо. Значок
+ * усередині — це і є ознака кнопки-значка.
+ */
+[data-testid$="-close-btn"]:has(svg):hover {
 	transform: rotate(90deg) scale(1.08);
 }
 
-[data-testid$="-close-btn"]:active {
+[data-testid$="-close-btn"]:has(svg):active {
 	transform: rotate(90deg) scale(0.92);
 }
 
@@ -503,8 +509,8 @@ button {
    якого просив уникнути читач. Тому тут його прибирають зовсім. */
 @media (prefers-reduced-motion: reduce) {
 	[data-testid$="-close-btn"],
-	[data-testid$="-close-btn"]:hover,
-	[data-testid$="-close-btn"]:active {
+	[data-testid$="-close-btn"]:has(svg):hover,
+	[data-testid$="-close-btn"]:has(svg):active {
 		transform: none;
 	}
 }
