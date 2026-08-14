@@ -233,7 +233,7 @@
 			<!-- svelte-ignore a11y_click_events_have_key_events -->
 			<div 
 				class="item topic-item import-playlist" 
-				data-testid="playlist-import-label"
+				data-testid="playlist-import-btn"
 				onclick={() => showImportOptions = true}
 				role="button"
 				tabindex="0"

@@ -101,7 +101,7 @@
 
 	{#if playlistStore.customPlaylists.length > 0}
 		<div class="divider"></div>
-		<div class="submenu-label" data-testid="context-menu-playlists-label">{$_("playlists.addToPlaylist")}</div>
+		<div class="submenu-label" data-testid="context-menu-playlists-title">{$_("playlists.addToPlaylist")}</div>
 		{#each playlistStore.customPlaylists as p (p.id)}
 			{@const Icon = PLAYLIST_ICONS_MAP[(p.icon as AppIconId) || "Bookmark"] || Bookmark}
 			<button 
