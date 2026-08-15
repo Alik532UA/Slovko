@@ -5,7 +5,7 @@ import{ab as le,g as U,R as ce,W as ee,S as ue,ac as z,ad as S,T as y,ae as q,G 
 DATE: ${new Date().toISOString()}
 URL: ${window.location.href}
 DEVICE: ${navigator.userAgent}
-VERSION: 0.7.544
-BUILD: 2026-08-15T09:03:28.693Z
+VERSION: 0.7.554
+BUILD: 2026-08-15T16:38:12.417Z
 ---
 ${e}`;try{return await navigator.clipboard.writeText(n),!0}catch{return this.error("system","Failed to copy logs"),!1}}sanitizeDetails(e){const t=["password","token","email","credential","secret","key"],s={...e};return Object.keys(s).forEach(n=>{const i=n.toLowerCase();t.some(o=>i.includes(o))?s[n]="[REDACTED]":typeof s[n]=="object"&&s[n]!==null&&(s[n]=this.sanitizeDetails(s[n]))}),s}async logToRemote(e,t){try{const s=this.sanitizeDetails(t),{db:n,auth:i}=await Q(async()=>{const{db:c,auth:_}=await import("./DJwBxxGT.js").then(h=>h.u);return{db:c,auth:_}},__vite__mapDeps([0,1]),import.meta.url),{collection:o,addDoc:a,serverTimestamp:u}=await Q(async()=>{const{collection:c,addDoc:_,serverTimestamp:h}=await import("./D7O36rpQ.js").then(l=>l.ae);return{collection:c,addDoc:_,serverTimestamp:h}},[],import.meta.url),v=i.currentUser?.uid||"anonymous";await a(o(n,"system_logs"),{timestamp:u(),uid:v,action:e,details:s,userAgent:navigator.userAgent})}catch{this.error("system","Failed to log to remote")}}}const kt=new ft,dt="5";typeof window<"u"&&((window.__svelte??={}).v??=new Set).add(dt);export{Q as _,yt as a,Lt as b,bt as c,wt as d,vt as e,Et as f,Tt as g,Nt as h,m as i,Ot as j,M as k,kt as l,it as m,j as n,Rt as o,mt as p,_t as q,tt as r,It as s,St as t,At as u,gt as v,pt as w,Ge as x};
