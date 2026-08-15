@@ -30,13 +30,60 @@ function walk(dir: string): string[] {
 
 const SVELTE = walk('src').filter((f) => f.endsWith('.svelte'));
 
+/**
+ * Розбір тега вручну, а не регуляркою `<button[^>]*>`.
+ *
+ * Клас дефекту з AI-AGENT-PITFALLS-v8 § 1.1: попередня версія цих перевірок
+ * шукала тег як «`<button`, далі що завгодно без `>`». У Svelte такий тег
+ * трапляється рідко — досить одного `onclick={() => close()}`, і `[^>]*`
+ * спиняється на стрілці. Кнопка з обробником-стрілкою ставала для перевірок
+ * НЕВИДИМОЮ. Саме так `toast-close-btn` роками жив без `aria-label` при
+ * зелених тестах: інваріант його не бачив.
+ *
+ * Тому кінець відкривального тега шукається сканером зі станом — усередині
+ * лапок і фігурних дужок символ `>` тегом не вважається.
+ */
+type Tag = { file: string; tag: string; end: number; start: number };
+
+function buttonTags(file: string, text: string): Tag[] {
+	const tags: Tag[] = [];
+	for (const m of text.matchAll(/<button(?=[\s/>])/g)) {
+		let i = m.index + m[0].length;
+		let quote: string | null = null;
+		let depth = 0;
+		for (; i < text.length; i++) {
+			const ch = text[i];
+			if (quote) {
+				if (ch === quote) quote = null;
+				continue;
+			}
+			if (ch === '"' || ch === "'" || ch === '`') quote = ch;
+			else if (ch === '{') depth++;
+			else if (ch === '}') depth--;
+			else if (ch === '>' && depth === 0) break;
+		}
+		tags.push({ file, tag: text.slice(m.index, i + 1), start: m.index, end: i + 1 });
+	}
+	return tags;
+}
+
+function isCloseButton(tag: string): boolean {
+	return /data-testid=["'{`][^"'`]*-close-btn/.test(tag);
+}
+
+/** Вміст кнопки до найближчого `</button>` — для перевірки видимого напису. */
+function bodyOf(text: string, tag: Tag): string {
+	const close = text.indexOf('</button>', tag.end);
+	return close === -1 ? '' : text.slice(tag.end, close);
+}
+
 /** Відкривальні теги кнопок, у яких локатор закінчується на `-close-btn`. */
 function closeButtonTags(): { file: string; tag: string }[] {
 	const found: { file: string; tag: string }[] = [];
 	for (const file of SVELTE) {
 		const text = readFileSync(file, 'utf8');
-		for (const m of text.matchAll(/<button[^>]*>/g)) {
-			if (/data-testid=["'{`][^>]*-close-btn/.test(m[0])) found.push({ file, tag: m[0] });
+		for (const tag of buttonTags(file, text)) {
+			if (isCloseButton(tag.tag)) found.push({ file, tag: tag.tag });
 		}
 	}
 	return found;
@@ -51,6 +98,25 @@ describe('кнопки закриття (UI-ELEMENTS-v8 § 3)', () => {
 	});
 
 	/**
+	 * Canary саме на цей клас сліпоти. Кількість знайдених сканером кнопок
+	 * звіряється з кількістю локаторів `-close-btn` у джерелах: вони мусять
+	 * збігатися. Поки тег шукали регуляркою, збігу не було — і про це ніхто не
+	 * дізнався, бо решта перевірок від цього лише зеленіла.
+	 */
+	it('сканер бачить УСІ кнопки закриття, а не лише зручні', () => {
+		const declared = SVELTE.reduce(
+			(sum, file) => sum + (readFileSync(file, 'utf8').match(/data-testid=[^\n]*-close-btn/g) ?? []).length,
+			0
+		);
+		expect(declared, 'локаторів -close-btn не знайдено — перевіряти нема що').toBeGreaterThan(0);
+		expect(
+			tags.length,
+			'сканер знаходить менше кнопок, ніж локаторів у джерелах: частина тегів ' +
+				'лишається невидимою для всіх перевірок нижче'
+		).toBe(declared);
+	});
+
+	/**
 	 * Підпис потрібен ЗНАЧКОВІЙ кнопці. Кнопка з видимим написом
 	 * («Повернутись до навчання») уже має доступну назву — це сам напис, і
 	 * `aria-label` там був би другою назвою поверх першої.
@@ -59,14 +125,12 @@ describe('кнопки закриття (UI-ELEMENTS-v8 § 3)', () => {
 		const bad: string[] = [];
 		for (const file of SVELTE) {
 			const text = readFileSync(file, 'utf8');
-			for (const m of text.matchAll(
-				/<button[^>]*data-testid=[^>]*-close-btn[^>]*>([\s\S]{0,200}?)<\/button>/g
-			)) {
-				const visible = m[1].replace(/<[^>]*>/g, '');
+			for (const tag of buttonTags(file, text)) {
+				if (!isCloseButton(tag.tag)) continue;
+				const visible = bodyOf(text, tag).replace(/<[^>]*>/g, '');
 				if (/[\p{L}\d]/u.test(visible)) continue; // напис усередині — цього досить
-				const tag = m[0].slice(0, m[0].indexOf('>') + 1);
-				if (!/aria-label=/.test(tag)) bad.push(`${file}: без aria-label`);
-				else if (/aria-label="[^"{]+"/.test(tag)) bad.push(`${file}: підпис захардкоджено`);
+				if (!/aria-label=/.test(tag.tag)) bad.push(`${file}: без aria-label`);
+				else if (/aria-label="[^"{]+"/.test(tag.tag)) bad.push(`${file}: підпис захардкоджено`);
 			}
 		}
 		expect(
@@ -82,9 +146,9 @@ describe('кнопки закриття (UI-ELEMENTS-v8 § 3)', () => {
 		for (const file of SVELTE) {
 			const text = readFileSync(file, 'utf8');
 			const classes = new Set<string>();
-			for (const m of text.matchAll(/<button[^>]*>/g)) {
-				if (!/data-testid=["'{`][^>]*-close-btn/.test(m[0])) continue;
-				(/class="([^"]+)"/.exec(m[0])?.[1] ?? '')
+			for (const tag of buttonTags(file, text)) {
+				if (!isCloseButton(tag.tag)) continue;
+				(/class="([^"]+)"/.exec(tag.tag)?.[1] ?? '')
 					.split(/\s+/)
 					.filter(Boolean)
 					.forEach((c) => classes.add(c));
@@ -108,10 +172,10 @@ describe('кнопки закриття (UI-ELEMENTS-v8 § 3)', () => {
 		const bad: string[] = [];
 		for (const file of SVELTE) {
 			const text = readFileSync(file, 'utf8');
-			for (const m of text.matchAll(
-				/<button[^>]*data-testid=[^>]*-close-btn[^>]*>([\s\S]{0,80}?)<\/button>/g
-			)) {
-				if (/&times;|×/.test(m[1])) bad.push(`${file}: ${m[1].trim().slice(0, 40)}`);
+			for (const tag of buttonTags(file, text)) {
+				if (!isCloseButton(tag.tag)) continue;
+				const body = bodyOf(text, tag);
+				if (/&times;|×/.test(body)) bad.push(`${file}: ${body.trim().slice(0, 40)}`);
 			}
 		}
 		expect(

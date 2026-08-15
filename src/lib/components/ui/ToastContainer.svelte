@@ -3,6 +3,7 @@
 	import { logService } from "$lib/services/logService.svelte";
 	import { X, ClipboardCopy } from "lucide-svelte";
 	import { fade, fly } from "svelte/transition";
+	import { _ } from "svelte-i18n";
 
 	let copiedId = $state<string | null>(null);
 
@@ -54,6 +55,7 @@
 			<button
 				class="close-btn"
 				onclick={() => notificationStore.remove(note.id)}
+				aria-label={$_("common.close") || "Close"}
 				data-testid="toast-close-btn"
 			>
 				<X size={16} />
