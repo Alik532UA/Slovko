@@ -234,7 +234,7 @@
 					<div class="picker-group">
 						<h3>{$_("playlists.color")}</h3>
 						<div class="color-grid" data-testid="playlist-color-picker-fieldset">
-							{#each THEME_COLORS as c}
+							{#each THEME_COLORS as c (c)}
 								<button
 									class="color-btn"
 									style="background-color: {c === 'transparent'
@@ -253,7 +253,7 @@
 					<div class="picker-group">
 						<h3>{$_("playlists.icon")}</h3>
 						<div class="icon-grid" data-testid="playlist-icon-picker">
-							{#each PLAYLIST_ICONS as { id, component: Icon }}
+							{#each PLAYLIST_ICONS as { id, component: Icon } (id)}
 								<button
 									class="icon-picker-btn"
 									class:selected={selectedIcon === id}

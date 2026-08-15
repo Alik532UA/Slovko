@@ -1,19 +1,8 @@
-import type {
-	WordKey,
-	ActiveCard,
-	CardStatus,
-	WordPair,
-	Language,
-} from "../types";
+import type { WordKey, ActiveCard, CardStatus, WordPair } from "../types";
 import { shuffle } from "../services/gameCardFactory";
 import { getTranslation } from "../data/wordService";
 import { logService } from "../services/logService.svelte";
-import {
-	AppSettingsSchema,
-	ProgressStateSchema,
-	PlaylistStateSchema,
-	type AppSettings,
-} from "../data/schemas";
+import { AppSettingsSchema, type AppSettings } from "../data/schemas";
 import type { GameData } from "../services/gameDataService";
 
 /**

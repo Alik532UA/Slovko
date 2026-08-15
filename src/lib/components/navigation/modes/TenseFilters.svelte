@@ -46,7 +46,7 @@
 			<span class="section-label">{$_("tenses.filterForms")}</span>
 		</div>
 		<div class="forms-grid" data-testid="tense-forms-list">
-			{#each FORMS as form}
+			{#each FORMS as form (form.id)}
 				<button
 					class="modern-form-card"
 					class:selected={selectedForms.includes(form.id)}

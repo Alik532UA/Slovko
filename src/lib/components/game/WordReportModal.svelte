@@ -83,7 +83,7 @@
 			<div class="form-group">
 				<span class="section-label">{$_("wordReport.selectType")}</span>
 				<div class="options-grid">
-					{#each ERROR_TYPES as type}
+					{#each ERROR_TYPES as type (type)}
 						<button
 							class="option-btn"
 							class:active={selectedType === type}

@@ -194,7 +194,7 @@
 						data-testid="onboarding-explanation-card"
 					>
 						<div class="progress-bar" data-testid="onboarding-progress-bar">
-							{#each activeSteps as _, i}
+							{#each activeSteps as step, i (step)}
 								<button
 									class="progress-segment"
 									class:active={hintStep === i + 1}

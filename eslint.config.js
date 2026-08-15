@@ -37,9 +37,12 @@ export default [
 		rules: {
 			...tsPlugin.configs.recommended.rules,
 			"@typescript-eslint/no-explicit-any": "warn",
+			// Було 3 місця в режимі warn (невживані імпорти в GameState) — усі
+			// прибрані 2026-08-16, тож error (CODE-QUALITY-v8 § 6.4.1). Свідомо
+			// невживане пишеться з префіксом `_`.
 			"@typescript-eslint/no-unused-vars": [
-				"warn",
-				{ 
+				"error",
+				{
 					argsIgnorePattern: "^_",
 					varsIgnorePattern: "^_",
 					caughtErrorsIgnorePattern: "^_"
@@ -67,9 +70,12 @@ export default [
 			...tsPlugin.configs.recommended.rules,
 			...sveltePlugin.configs.recommended.rules,
 			"@typescript-eslint/no-explicit-any": "warn",
+			// Було 3 місця в режимі warn (невживані імпорти в GameState) — усі
+			// прибрані 2026-08-16, тож error (CODE-QUALITY-v8 § 6.4.1). Свідомо
+			// невживане пишеться з префіксом `_`.
 			"@typescript-eslint/no-unused-vars": [
-				"warn",
-				{ 
+				"error",
+				{
 					argsIgnorePattern: "^_",
 					varsIgnorePattern: "^_",
 					caughtErrorsIgnorePattern: "^_"
@@ -162,10 +168,11 @@ export default [
 			// маршрутів, тож помилка в адресі стає помилкою компіляції.
 			"svelte/no-navigation-without-resolve": "warn",
 
-			// SVELTE-UI-v8 § 1.5, HIGH. 5 місць. Ціна ключа не нульова: дублікат
-			// кидає помилку в РАНТАЙМІ, тож ключ береться з поля, яке код і так
-			// вважає унікальним, а не з першого-ліпшого рядка.
-			"svelte/require-each-key": "warn",
+			// SVELTE-UI-v8 § 1.5, HIGH. Було 5 місць у режимі warn — усі
+			// мігровані 2026-08-16, тож правило підняте до error і назад воно вже
+			// не опуститься (CODE-QUALITY-v8 § 6.4.1). Ключ береться з поля, яке
+			// код і так вважає унікальним: дублікат кидає помилку в РАНТАЙМІ.
+			"svelte/require-each-key": "error",
 
 			// SVELTE-CORE-v8 § 1.5. 2 місця: голі Set/Map/Date там, де очікується
 			// реактивність.
