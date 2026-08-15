@@ -18,6 +18,15 @@ const pkg = JSON.parse(readFileSync('package.json', 'utf8')) as {
 };
 const scripts = pkg.scripts ?? {};
 
+/**
+ * Коментарі відрізаються перед пошуком. Інакше пояснення «було
+ * `cancel-in-progress: true`, і ось чим це скінчилося» саме́ й валить перевірку —
+ * тобто правило забороняло б розповідати, чому воно існує.
+ */
+function withoutYamlComments(source: string): string {
+	return source.replace(/^\s*#.*$/gm, '');
+}
+
 describe('перевірка жива', () => {
 	it('workflow знайдено', () => {
 		expect(files.length, 'у .github/workflows немає жодного yml — перевіряти нема що').toBeGreaterThan(0);
@@ -50,6 +59,42 @@ describe('CI', () => {
 			.filter(([name]) => /^test(:|$)/.test(name) && name !== 'test:watch')
 			.filter(([, cmd]) => /^vitest\s*$/.test(cmd));
 		expect(watchers, 'watch-режим підвисне поза CI, де немає CI=true').toEqual([]);
+	});
+
+	/**
+	 * CI-CD-AND-TOOLS-v8 § 1.3 плюс AI-AGENT-PITFALLS-v8 § 1.4 — і другий тут
+	 * важливіший за перший, бо описує випадок саме цього репозиторію.
+	 *
+	 * `cancel-in-progress: true` разом із пушем пачкою комітів дає прогін, якого
+	 * не було: група лишає останній, а той, який УПЕРШЕ виконав би новий гейт,
+	 * скасовується до цього кроку. Гейт при цьому не червоний і не зелений — у
+	 * переліку кроків він просто відсутній, і це читається як «усе гаразд».
+	 */
+	it('деплой-пайплайн не скасовує проміжні прогони (§ 1.3)', () => {
+		const offenders = files.filter((f) =>
+			/cancel-in-progress:\s*true/.test(withoutYamlComments(readFileSync(`${DIR}/${f}`, 'utf8')))
+		);
+		expect(
+			offenders,
+			'скасований прогін = гейт, про який невідомо, чи він виконувався: ' +
+				offenders.join(', ')
+		).toEqual([]);
+	});
+
+	/**
+	 * CI-CD-AND-TOOLS-v8 § 1.5 — єдина машинна перевірка правила «артефакт
+	 * збірки не комітиться». Крок перевіряється лише в тому workflow, який
+	 * справді збирає: у решті йому нема що ловити.
+	 */
+	it('після збірки стоїть git diff --exit-code (§ 1.5)', () => {
+		const missing = files.filter((f) => {
+			const source = readFileSync(`${DIR}/${f}`, 'utf8');
+			return /run:\s*npm run build/.test(source) && !/git diff --exit-code/.test(source);
+		});
+		expect(
+			missing,
+			`збірка може мовчки міняти відстежувані файли, і цього ніхто не побачить: ${missing.join(', ')}`
+		).toEqual([]);
 	});
 
 	/**

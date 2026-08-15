@@ -7,10 +7,19 @@ on:
 permissions:
   contents: write
 
-# Allow only one concurrent deployment
+# Один деплой за раз — але проміжні прогони НЕ скасовуються.
+#
+# Було `cancel-in-progress: true`, і 2026-08-15 це вже коштувало: вісім комітів
+# приїхали в `main` майже одночасно, група скасувала все, крім останнього, і
+# прогін, який УПЕРШЕ виконав би свіжий гейт `Unique data-testid invariant`, не
+# завершився ніколи. Гейт був червоний від народження, а виглядало це кілька
+# днів як «усе зелено» (AI-AGENT-PITFALLS-v8 § 1.4, CI-CD-AND-TOOLS-v8 § 1.3).
+#
+# Ціна `false` — черга з прогонів при пуші пачкою. Ціна `true` — гейт, про який
+# невідомо, чи він хоч раз виконувався.
 concurrency:
   group: "pages-main"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build-and-deploy:
@@ -97,6 +106,13 @@ jobs:
           VITE_FIREBASE_DATABASE_URL: ${{ vars.VITE_FIREBASE_DATABASE_URL }}
           VITE_GA_ID: ${{ vars.VITE_GA_ID }}
         run: npm run build
+
+      # CI-CD-AND-TOOLS-v8 § 1.5 — єдина машинна перевірка правила «артефакт
+      # збірки не комітиться». Тут вона не декоративна: `static/app-version.json`
+      # відстежується Git-ом і його переписує хук перед комітом, тож варто
+      # збірці почати робити те саме — і задеплоєне розійдеться з репозиторієм.
+      - name: Збірка не змінює відстежувані файли
+        run: git diff --exit-code
 
       - name: Preserve dev folder from gh-pages
         run: |

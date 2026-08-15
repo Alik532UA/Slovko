@@ -7,9 +7,12 @@ on:
 permissions:
   contents: write
 
+# `false` з тієї ж причини, що й у deploy.yml: скасований проміжний прогін —
+# це крок, про який неможливо сказати, чи він виконувався (AI-AGENT-PITFALLS-v8
+# § 1.4).
 concurrency:
   group: "pages-dev"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build-and-deploy:
@@ -39,6 +42,12 @@ jobs:
           VITE_FIREBASE_DATABASE_URL: ${{ vars.VITE_FIREBASE_DATABASE_URL }}
           VITE_GA_ID: ${{ vars.VITE_GA_ID }}
         run: npm run build
+
+      # CI-CD-AND-TOOLS-v8 § 1.5 — те саме, що й у deploy.yml. Гейтів якості тут
+      # свідомо немає (це прев'ю, а не реліз), але артефакт збірки не має права
+      # мовчки міняти відстежувані файли й у цій гілці теж.
+      - name: Збірка не змінює відстежувані файли
+        run: git diff --exit-code
 
       - name: Deploy to GitHub Pages (dev subfolder)
         uses: peaceiris/actions-gh-pages@v4
