@@ -59,7 +59,7 @@
 | Перевірка зібраного `build/` | скрипта немає | перенести `check-build.mjs` із as5 |
 | Контраст тем | статично не перевіряється | перенести `contrast.test.ts` із teatralo4ka |
 | Touch target кнопки збору логів | 32 px на desktop, 24 px на мобільному | канон просить 44 px на тач (MEDIUM). Кут зайнятий: збільшення накриє нижню панель. Свідоме відхилення |
-| 23 попередження eslint | `warn`, `--max-warnings` не стоїть.<br>`npm run lint 2>&1 \| grep -E "^✖"` | 12 `no-navigation-without-resolve`, 5 `require-each-key`, 3 невживані імпорти в `GameState.svelte.ts`, 2 `prefer-svelte-reactivity`, 1 `any` у `PwaStore`. Прибирати поштучно; число має лише спадати |
+| 12 попереджень eslint | `warn`, `--max-warnings` не стоїть.<br>`npm run lint 2>&1 \| grep -E "^✖"` | усі 12 — `svelte/no-navigation-without-resolve`, і це **не борг**: маршрут у застосунку один, усі виклики `goto()` передають або готовий `URL` із `page.url`, або рядок із самими параметрами. `resolve()` відображає ID маршруту в шлях — відображати нема чого. Правило лишається `warn`, бо стане потрібним із появою другого маршруту |
 
 Закрито 2026-08-16: CSS-змінні (сім неоголошених виправлено, гейт
 `css-variables.test.ts` стоїть); `$props.id()` — звернень нуль і не було, усі

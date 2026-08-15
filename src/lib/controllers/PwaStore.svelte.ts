@@ -35,8 +35,12 @@ class PwaStore {
 	get hasNativePrompt() { return !!this.deferredPrompt; }
 
 	public init() {
-		const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
-							 ("standalone" in window.navigator && (window.navigator as any).standalone === true);
+		// `navigator.standalone` — нестандартний прапорець Safari, якого немає в
+		// типах DOM. Точковий тип замість `any`: помилка в імені поля лишається
+		// помилкою компіляції, а `any` вимкнув би перевірку всього виразу.
+		const iosNavigator = window.navigator as Navigator & { standalone?: boolean };
+		const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+							 iosNavigator.standalone === true;
 		this._isInstalled = isStandalone;
 
 		window.addEventListener("beforeinstallprompt", (e) => {

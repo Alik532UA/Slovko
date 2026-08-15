@@ -679,6 +679,10 @@ class SyncServiceClass {
 	}
 
 	private mergeArrays<T>(local: T[], cloud: T[], getId: (item: T) => string = (i) => (i as unknown as { id: string }).id): T[] {
+		// Саме нереактивна: `Map` живе рівно всередині цього виклику й гине разом
+		// із ним, а назовні йде звичайний масив. `SvelteMap` тут — зайвий проксі
+		// на кожне злиття плейлистів.
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity
 		const map = new Map<string, T>();
 		cloud.forEach((item) => map.set(getId(item), item));
 		local.forEach((item) => map.set(getId(item), item));

@@ -118,7 +118,7 @@ export const counter = new CounterController();
 
 ```
 npm run check       # svelte-check, має бути 0 помилок
-npm run lint        # eslint: 0 помилок, 23 попередження (борг, число лише спадає)
+npm run lint        # eslint: 0 помилок, 12 попереджень (усі — no-navigation-without-resolve, див. PROJECT-CONTEXT)
 npm run test:unit   # Vitest: 10 файлів, 72 перевірки
 npm run test:e2e    # Playwright: 11 перевірок, підіймає власний сервер на 5273
 npm run i18n:check  # паритет ключів у семи мовах

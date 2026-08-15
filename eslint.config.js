@@ -36,7 +36,10 @@ export default [
 		},
 		rules: {
 			...tsPlugin.configs.recommended.rules,
-			"@typescript-eslint/no-explicit-any": "warn",
+			// Був 1 випадок (нестандартний `navigator.standalone` у PwaStore) —
+			// замінений точковим типом 2026-08-16, тож error
+			// (CODE-QUALITY-v8 § 6.4.1). `unknown` + звуження замість `any`.
+			"@typescript-eslint/no-explicit-any": "error",
 			// Було 3 місця в режимі warn (невживані імпорти в GameState) — усі
 			// прибрані 2026-08-16, тож error (CODE-QUALITY-v8 § 6.4.1). Свідомо
 			// невживане пишеться з префіксом `_`.
@@ -69,7 +72,10 @@ export default [
 		rules: {
 			...tsPlugin.configs.recommended.rules,
 			...sveltePlugin.configs.recommended.rules,
-			"@typescript-eslint/no-explicit-any": "warn",
+			// Був 1 випадок (нестандартний `navigator.standalone` у PwaStore) —
+			// замінений точковим типом 2026-08-16, тож error
+			// (CODE-QUALITY-v8 § 6.4.1). `unknown` + звуження замість `any`.
+			"@typescript-eslint/no-explicit-any": "error",
 			// Було 3 місця в режимі warn (невживані імпорти в GameState) — усі
 			// прибрані 2026-08-16, тож error (CODE-QUALITY-v8 § 6.4.1). Свідомо
 			// невживане пишеться з префіксом `_`.
@@ -164,8 +170,16 @@ export default [
 
 			// --- Борг, що мігрується окремими комітами ---
 
-			// SEO-v8 § 1.5. 12 місць. resolve() типізований проти списку реальних
-			// маршрутів, тож помилка в адресі стає помилкою компіляції.
+			// SEO-v8 § 1.5. 12 місць, і це число НЕ борг, який колись стане нулем.
+			// Маршрут у застосунку рівно один: усі дванадцять викликів або
+			// передають готовий `URL`, зібраний із `page.url` (базовий шлях у
+			// ньому вже є), або рядок з самими параметрами `?mode=…` (він
+			// відносний до поточної адреси). `resolve()` відображає ID маршруту в
+			// шлях — тут йому нема що відображати.
+			//
+			// Лишається `warn`, а не `off`: правило стане потрібним тієї миті, коли
+			// в проєкті з'явиться другий маршрут, і вимкнене воно цього не
+			// помітить. Причина відхилення записана в PROJECT-CONTEXT.md.
 			"svelte/no-navigation-without-resolve": "warn",
 
 			// SVELTE-UI-v8 § 1.5, HIGH. Було 5 місць у режимі warn — усі
@@ -174,9 +188,12 @@ export default [
 			// код і так вважає унікальним: дублікат кидає помилку в РАНТАЙМІ.
 			"svelte/require-each-key": "error",
 
-			// SVELTE-CORE-v8 § 1.5. 2 місця: голі Set/Map/Date там, де очікується
-			// реактивність.
-			"svelte/prefer-svelte-reactivity": "warn",
+			// SVELTE-CORE-v8 § 1.5. Було 2 місця; обидва виявилися саме
+			// нереактивними (локальна арифметика дат і Map усередині одного
+			// виклику) і отримали `eslint-disable` з причиною, тож правило підняте
+			// до error. Директива стоїть НАД самим рядком, а пояснення — над нею:
+			// інакше придушення промахується (AI-AGENT-PITFALLS-v8 § 5.7).
+			"svelte/prefer-svelte-reactivity": "error",
 		},
 	},
 	{

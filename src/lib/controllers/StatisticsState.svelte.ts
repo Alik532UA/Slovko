@@ -229,6 +229,10 @@ class StatisticsStateClass {
 	 */
 	async getActivityHeatmap(days: number = 365): Promise<{ date: string, count: number, level: number }[]> {
 		const end = new Date();
+		// Саме нереактивна: це локальна арифметика дат усередині async-методу, а
+		// не стан. `SvelteDate` тут дав би підписку, яку ніхто не читає, — і
+		// реактивність, якої від функції ніхто не чекає.
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity
 		const start = new Date();
 		start.setDate(end.getDate() - days);
 
