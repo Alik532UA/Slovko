@@ -4,10 +4,16 @@
  */
 export interface StorageProvider {
 	getItem(key: string): string | null;
-	setItem(key: string, value: string): void;
+	/**
+	 * `true` — значення записане. Фасад не кидає (STORAGE-NAMESPACE-v8, Крок 1),
+	 * але мовчазна відмова так само небезпечна: логер саме через неї не міг
+	 * виконати DEBUGGING-v8 § 1.5 і довбав переповнене сховище на кожен запис.
+	 * Викликач має право проігнорувати відповідь — тоді поведінка як була.
+	 */
+	setItem(key: string, value: string): boolean;
 	removeItem(key: string): void;
 	getJson<T>(key: string): T | null;
-	setJson(key: string, value: unknown): void;
+	setJson(key: string, value: unknown): boolean;
 	clear(): void;
 }
 
@@ -26,12 +32,14 @@ export class LocalStorageProvider implements StorageProvider {
 		return localStorage.getItem(this.prefix + key);
 	}
 
-	setItem(key: string, value: string): void {
-		if (typeof window === "undefined") return;
+	setItem(key: string, value: string): boolean {
+		if (typeof window === "undefined") return false;
 		try {
 			localStorage.setItem(this.prefix + key, value);
+			return true;
 		} catch (e) {
 			console.error(`LocalStorage Error: Failed to set item "${key}". Possibly quota exceeded.`, e);
+			return false;
 		}
 	}
 
@@ -50,8 +58,8 @@ export class LocalStorageProvider implements StorageProvider {
 		}
 	}
 
-	setJson(key: string, value: unknown): void {
-		this.setItem(key, JSON.stringify(value));
+	setJson(key: string, value: unknown): boolean {
+		return this.setItem(key, JSON.stringify(value));
 	}
 
 	clear(): void {
@@ -82,12 +90,14 @@ export class SessionStorageProvider implements StorageProvider {
 		return sessionStorage.getItem(this.prefix + key);
 	}
 
-	setItem(key: string, value: string): void {
-		if (typeof window === "undefined") return;
+	setItem(key: string, value: string): boolean {
+		if (typeof window === "undefined") return false;
 		try {
 			sessionStorage.setItem(this.prefix + key, value);
+			return true;
 		} catch (e) {
 			console.error(`SessionStorage Error: Failed to set item "${key}". Possibly quota exceeded.`, e);
+			return false;
 		}
 	}
 
@@ -106,8 +116,8 @@ export class SessionStorageProvider implements StorageProvider {
 		}
 	}
 
-	setJson(key: string, value: unknown): void {
-		this.setItem(key, JSON.stringify(value));
+	setJson(key: string, value: unknown): boolean {
+		return this.setItem(key, JSON.stringify(value));
 	}
 
 	clear(): void {
