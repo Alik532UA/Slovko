@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
 	import { onMount } from "svelte";
 	import { fade, fly } from "svelte/transition";
 	import { waitLocale, _ } from "svelte-i18n";
@@ -338,7 +338,10 @@
 		backdrop-filter: blur(var(--glass-blur));
 		display: grid;
 		place-items: center;
-		padding: 2rem 1rem;
+		/* Вертикальний відступ ведений висотою вікна: на низькому екрані
+		   фіксовані 2rem зверху й знизу з'їдали 64px, яких бракувало вмісту, а
+		   `overflow: hidden` нижче не прокручує його, а ОБРІЗАЄ. */
+		padding: clamp(0.75rem, 4dvh, 2rem) 1rem;
 		overflow: hidden;
 		transition:
 			background 0.8s ease,
@@ -565,11 +568,15 @@
 		color: var(--accent);
 	}
 
+	/* Висота фіксована навмисно — заголовок міняється між кроками, і без
+	   сталої висоти сітка прапорів смикалася б угору-вниз. Але саме число
+	   тепер ведене висотою вікна: 120px разом із відступом з'їдали 152px, і
+	   на екрані 500px це була половина всього, що бракувало вмісту. */
 	.header-area {
-		height: 120px;
+		height: clamp(64px, 17dvh, 120px);
 		position: relative;
 		width: 100%;
-		margin-bottom: 2rem;
+		margin-bottom: clamp(0.75rem, 3dvh, 2rem);
 		display: grid;
 		place-items: center;
 	}
@@ -580,7 +587,7 @@
 	}
 
 	h1 {
-		font-size: 2.2rem;
+		font-size: clamp(1.25rem, 5dvh, 2.2rem);
 		margin: 0;
 		color: var(--text-primary);
 		font-weight: 700;
@@ -596,24 +603,36 @@
 	}
 
 	.secondary {
-		font-size: 1.6rem;
+		font-size: clamp(0.95rem, 3.6dvh, 1.6rem);
 		opacity: 0.8;
 		font-weight: 500;
 	}
 
 	.primary {
-		font-size: 2.2rem;
+		font-size: clamp(1.25rem, 5dvh, 2.2rem);
 	}
 
+	/*
+	 * `minmax(0, 1fr)`, а не `1fr`.
+	 *
+	 * `1fr` — це скорочення для `minmax(auto, 1fr)`, тобто колонка НЕ може
+	 * стати вужчою за min-content своєї картки. З фіксованим прапором 80px і
+	 * відступами 1rem картка мала підлогу 128px, тож на вузькому екрані сітка
+	 * впиралася в неї і вилазила за оверлей — а той має `overflow: hidden`,
+	 * і назви мов обрізалися посеред слова.
+	 *
+	 * Нуль у мінімумі знімає цю підлогу: тепер стискається вміст, а не
+	 * обрізається край.
+	 */
 	.flags-grid {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 1.5rem;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: clamp(0.5rem, 2.5vw, 1.5rem);
 	}
 
 	@media (max-width: 480px) {
 		.flags-grid {
-			grid-template-columns: repeat(2, 1fr);
+			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
 	}
 
@@ -621,14 +640,19 @@
 		background: var(--glass-bg);
 		border: 2px solid var(--glass-border);
 		border-radius: 20px;
-		padding: 1.5rem 1rem;
+		/* Вертикаль ведена висотою вікна, горизонталь — шириною: картка
+		   впирається в різні межі на різних екранах. */
+		padding: clamp(0.3rem, 1.6dvh, 1.5rem) clamp(0.4rem, 2vw, 1rem);
 		cursor: pointer;
 		transition: all 0.3s ease;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 0.8rem;
+		gap: clamp(0.35rem, 1.2dvh, 0.8rem);
 		color: var(--text-primary);
+		/* Дозволяє картці стати вужчою за свій вміст — без цього
+		   `minmax(0, 1fr)` вище не має ефекту. */
+		min-width: 0;
 	}
 
 	.flag-btn:hover:not(:disabled) {
@@ -662,14 +686,28 @@
 		filter: grayscale(0.2);
 	}
 
+	/* Прапор більше не має фіксованих 80×54: він займає стільки, скільки дає
+	   картка, але не більше за початковий розмір. Пропорція тримається
+	   `aspect-ratio`, тож `height` рахується сам. */
+	/* Прапор більше не має фіксованих 80×54. Ведена ВИСОТА, бо саме вона
+	   множиться на кількість рядків: сім мов у дві колонки — це чотири ряди,
+	   тож кожен зайвий піксель прапора коштує чотирьох на екрані. Ширина
+	   рахується з пропорції й додатково обмежена шириною картки. */
 	.flag-btn img {
-		width: 80px;
-		height: 54px;
+		height: clamp(26px, 7dvh, 54px);
+		width: auto;
+		max-width: 100%;
+		aspect-ratio: 80 / 54;
 		object-fit: cover;
 		border-radius: 10px;
 	}
 
 	.flag-btn span {
-		font-size: 1rem;
+		font-size: clamp(0.72rem, 2.6vw, 1rem);
+		/* Назви мов — одне довге слово («Qırımtatarca», «Nederlands»), а одне
+		   слово не переноситься саме собою й тримає min-content ширину картки.
+		   Тут воно може розірватися, якщо інакше не вміщується. */
+		overflow-wrap: anywhere;
+		min-width: 0;
 	}
 </style>
