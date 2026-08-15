@@ -1,13 +1,32 @@
 ﻿<script lang="ts">
-	import { dev } from "$app/environment";
+	import { browser, dev } from "$app/environment";
+	import { page } from "$app/state";
 	import { logService } from "$lib/services/logService.svelte";
+	import { localStorageProvider } from "$lib/services/storage/storageProvider";
 	import { hardReset } from "$lib/services/resetService";
-	import { Check } from "lucide-svelte";
+	import { Check, ClipboardCopy } from "lucide-svelte";
 
 	let copied = $state(false);
-	
-	// Кнопка видима ТІЛЬКИ у dev-режимі І ТІЛЬКИ коли є зареєстровані помилки
-	const isVisible = $derived(dev && logService.errorCount > 0);
+
+	/**
+	 * Видимість кнопки (DEBUGGING-v8 § 2.1).
+	 *
+	 * Логер пише кільцевий буфер і в продакшні теж — саме заради звітів із
+	 * чужих пристроїв. Але кнопка була прив'язана до `dev`, тобто зняти звіт із
+	 * пристрою користувача було НЕМОЖЛИВО: буфер збирався й нікуди не дівався.
+	 * Функція існувала лише на папері.
+	 *
+	 * Тепер у продакшні вона вмикається debug-режимом — `?debug=1` в адресі або
+	 * ключ `slovko_debug_mode` = `'1'`. За замовчуванням кнопки, як і раніше,
+	 * немає. У dev усе як було: видима, коли є зареєстровані помилки.
+	 *
+	 * Значення зі сховища читається один раз: без перезавантаження воно не
+	 * змінюється, а `$derived` над ним створював би враження реактивності,
+	 * якої немає.
+	 */
+	const debugFlag = browser && localStorageProvider.getItem("debug_mode") === "1";
+	const debugMode = $derived(page.url.searchParams.get("debug") === "1" || debugFlag);
+	const isVisible = $derived(dev ? logService.errorCount > 0 : debugMode);
 
 	/**
 	 * Аварійний Hard Reset: серія натискань «R».
@@ -74,8 +93,12 @@
 	>
 		{#if copied}
 			<Check size={18} />
-		{:else}
+		{:else if logService.errorCount > 0}
 			<span class="error-count">{logService.errorCount > 99 ? '!' : logService.errorCount}</span>
+		{:else}
+			<!-- У debug-режимі помилок може не бути зовсім: червоний нуль читався б
+			     як «одна помилка», а не як «звіт доступний». -->
+			<ClipboardCopy size={16} />
 		{/if}
 	</button>
 {/if}
