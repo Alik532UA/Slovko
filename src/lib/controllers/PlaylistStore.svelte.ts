@@ -78,7 +78,19 @@ function createPlaylistStore() {
 				return PlaylistStateSchema.parse(validated);
 			}
 
-			// Fallback to legacy and migrate
+			// Fallback to legacy and migrate.
+			//
+			// Голий `localStorage`, а не фасад, і це не недогляд: `LEGACY_STORAGE_KEY`
+			// дорівнює `"playlists"` БЕЗ префікса — ключ третього покоління, старший
+			// за саму конвенцію `slovko_`. Фасад читає `slovko_playlists`, тобто інший
+			// ключ, і легасі-дані лишилися б недосяжними. STORAGE-NAMESPACE-v8 Крок 4
+			// дозволяє читати неперфіксовані ключі саме в міграції.
+			//
+			// БОРГ: правильний дім для цього — `utils/storageMigration.ts`, де вже
+			// живе мапа старих ключів. Не перенесено, бо там міграція одноразова
+			// (guard на `__migrated_v1`), і додавання запису змінило б поведінку для
+			// тих, хто вже мігрував.
+			// eslint-disable-next-line no-restricted-globals
 			const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
 			if (legacy) {
 				const oldData = JSON.parse(legacy);
@@ -495,6 +507,10 @@ function createPlaylistStore() {
 			};
 			if (browser) {
 				localStorageProvider.removeItem(STORAGE_KEY);
+				// Той самий неперфіксований легасі-ключ, що й у `loadState()` — фасад
+				// до нього не дістає за побудовою. Без цього рядка `reset()` лишав би
+				// старі дані, і наступне завантаження підняло б їх назад.
+				// eslint-disable-next-line no-restricted-globals
 				localStorage.removeItem(LEGACY_STORAGE_KEY);
 			}
 		},

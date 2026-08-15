@@ -18,6 +18,7 @@ import { progressStore } from "../../controllers/ProgressStore.svelte";
 import { playlistStore } from "../../controllers/PlaylistStore.svelte";
 import { friendsStore } from "../../controllers/FriendsStore.svelte";
 import { logService } from "../logService.svelte";
+import { localStorageProvider } from "../storage/storageProvider";
 import { statisticsState } from "../../controllers/StatisticsState.svelte";
 import { dev } from "$app/environment";
 import {
@@ -193,9 +194,10 @@ class SyncServiceClass {
 
 			logService.log("sync", "Migration to v2 completed successfully.");
 
-			if (typeof window !== "undefined") {
-				localStorage.removeItem("slovko_playlists");
-			}
+			// Через фасад, а не голим ключем: `"slovko_playlists"` дублював префікс
+			// рядком, тож перейменування STORAGE_PREFIX лишило б цей рядок позаду —
+			// і міграція тихо перестала б прибирати за собою.
+			localStorageProvider.removeItem("playlists");
 		} catch (err) {
 			logService.error("sync", "Migration to v2 failed:", err);
 			this.status = "error";
