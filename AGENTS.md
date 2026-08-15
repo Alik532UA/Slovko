@@ -3,6 +3,13 @@
 Опис: Архітектурні вказівки та конвенції для розробки проєкту
 ---
 
+> **Спершу прочитай [PROJECT-CONTEXT.md](PROJECT-CONTEXT.md).** Там персональний
+> шар пакета v8: базові параметри, реєстр префіксів на спільному origin,
+> прийняті рішення й перелік того, що тут **не** перевіряється автоматично.
+> Цей файл — коротка витримка для щоденної роботи.
+>
+> Загальні стандарти живуть у `sveltekit-canon/selection_criteria/v8`.
+
 # Архітектура та стек технологій
 
 - **Фреймворк:** SvelteKit 2 + Svelte 5 (виключно Runes).
@@ -85,3 +92,28 @@ export const counter = new CounterController();
   {title}: {counter.count}
 </button>
 ```
+
+# Локальні пастки
+
+| Пастка | Що саме |
+|---|---|
+| `base` тут **завжди** `/Slovko` | `svelte.config.js` не робить винятку для dev (на відміну від MindStep). Тобто `npm run dev` віддає застосунок за `/Slovko/`, а не за коренем; Vite перенаправляє `/` туди сам |
+| Порт dev-сервера — **5197** | конфігурація `slovko-dev` у `.claude/launch.json` кореневої теки `GitHub`. Playwright бере власний **5273** зі `--strictPort` |
+| e2e-крок у CI потребує змінних Firebase | `config.ts` викликає `getDatabase(app)` **на імпорті**, і без `databaseURL` це виняток. Коли блок `env:` стояв лише під `Build`, dev-сервер під Playwright віддавав `500` на всіх дев'яти станах, а падіння виглядало як зламаний `data-testid`. Не прибирай `env:` з кроку `Unique data-testid invariant` |
+| Фасаду сховища немає | попри вимогу префікса `slovko_`, `localStorage` викликається напряму в п'яти файлах. Провайдер — `src/lib/services/storage/storageProvider.ts`, але він нічого не гарантує; префікс доводиться тримати вручну |
+| У CI йде лише один e2e-файл | `tests/e2e/invariants.spec.ts`. Інших наборів Playwright у проєкті немає — не вважай e2e широким покриттям |
+
+# Команди перевірки
+
+```
+npm run check       # svelte-check, має бути 0 помилок
+npm run lint        # eslint
+npm run test:unit   # Vitest, шість наборів під src/
+npm run test:e2e    # Playwright
+npm run i18n:check  # паритет ключів у семи мовах
+npm run build       # збірка
+```
+
+**Результат треба побачити, а не припустити.** Твердження «правило виконано»
+робиться після прогону, а не замість нього (AI-AGENT-PITFALLS-v8 § 5.1).
+Крок CI зі статусом `-` (skipped) означає «невідомо», а не «гаразд» (§ 1.4).
