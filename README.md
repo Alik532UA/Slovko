@@ -66,7 +66,7 @@ npm run dev
 
 🌐 **https://alik532ua.github.io/Slovko/** — спільний домен, власного тут немає. Тому `paths.base` дорівнює `/Slovko` (навіть у dev), а всі ключі сховища мають префікс `slovko_`: origin ділиться з сусідніми проєктами.
 
-Про переїзд на власний домен — [CUSTOM-DOMAIN-v8.md](../sveltekit-canon/selection_criteria/v8/CUSTOM-DOMAIN-v8.md). Окремо варто знати, що деплой тут іде через `peaceiris/actions-gh-pages`, який **перезаписує гілку публікації**: за власного домену знадобився б `static/CNAME`, інакше прив'язка злетить після першого ж деплою.
+Про переїзд на власний домен — [CUSTOM-DOMAIN-v8.md](../sveltekit-canon/selection_criteria/v8/ops/CUSTOM-DOMAIN-v8.md). Окремо варто знати, що деплой тут іде через `peaceiris/actions-gh-pages`, який **перезаписує гілку публікації**: за власного домену знадобився б `static/CNAME`, інакше прив'язка злетить після першого ж деплою.
 
 GitHub Pages з гілки `main` через `.github/workflows/deploy.yml`.
 Скрипт `npm run deploy` існує як ручний запасний шлях, але штатний — CI.
