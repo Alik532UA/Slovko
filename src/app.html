@@ -20,6 +20,48 @@
 		<meta name="mobile-web-app-capable" content="yes" />
 		<meta name="application-name" content="Slovko" />
 		<meta name="color-scheme" content="light dark" />
+		<!--
+			Static rather than emitted from svelte:head, because +page.ts sets
+			ssr = false for the game: with SSR off, nothing from svelte:head
+			reaches the prerendered HTML, so the page shipped with no title at
+			all and showed up in search as a bare URL. These are not localised
+			for the same reason — a crawler never runs the client-side i18n.
+		-->
+		<title>Slovko — вивчення слів та гра у стилі Wordle</title>
+		<meta
+			name="description"
+			content="Безкоштовний тренажер для вивчення слів і головоломка у стилі Wordle: власні списки слів, особиста статистика, таблиця лідерів та підтримка 7 мов."
+		/>
+		<link rel="canonical" href="https://alik532ua.github.io/Slovko/" />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://alik532ua.github.io/Slovko/" />
+		<meta property="og:title" content="Slovko — вивчення слів та гра у стилі Wordle" />
+		<meta
+			property="og:description"
+			content="Безкоштовний тренажер для вивчення слів і головоломка у стилі Wordle: власні списки слів, особиста статистика та таблиця лідерів."
+		/>
+		<meta property="og:image" content="https://alik532ua.github.io/Slovko/icon-512.png" />
+
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Slovko — вивчення слів та гра у стилі Wordle" />
+		<meta
+			name="twitter:description"
+			content="Безкоштовний тренажер для вивчення слів і головоломка у стилі Wordle: власні списки слів, особиста статистика та таблиця лідерів."
+		/>
+		<meta name="twitter:image" content="https://alik532ua.github.io/Slovko/icon-512.png" />
+
+		%sveltekit.head%
+
+		<!--
+			Інлайн-скрипти стоять ПІСЛЯ %sveltekit.head% навмисно
+			(SECURITY-v8 § 6.3). У пререндері політика приїжджає
+			<meta http-equiv="Content-Security-Policy">, який SvelteKit вставляє
+			саме на місце %sveltekit.head%, а мета-політика діє ЛИШЕ на те, що йде
+			нижче за неї. Поки ці два скрипти стояли вище, їхні хеші зі
+			svelte.config.js не захищали нічого — політика їх просто не бачила.
+			Затримка нульова: вище лишились самі мета-теги й посилання.
+		-->
 		<script>
 			(function () {
 				try {
@@ -265,38 +307,6 @@
 				window.__markAppRendered = function() { appRendered = true; };
 			})();
 		</script>
-		<!--
-			Static rather than emitted from svelte:head, because +page.ts sets
-			ssr = false for the game: with SSR off, nothing from svelte:head
-			reaches the prerendered HTML, so the page shipped with no title at
-			all and showed up in search as a bare URL. These are not localised
-			for the same reason — a crawler never runs the client-side i18n.
-		-->
-		<title>Slovko — вивчення слів та гра у стилі Wordle</title>
-		<meta
-			name="description"
-			content="Безкоштовний тренажер для вивчення слів і головоломка у стилі Wordle: власні списки слів, особиста статистика, таблиця лідерів та підтримка 7 мов."
-		/>
-		<link rel="canonical" href="https://alik532ua.github.io/Slovko/" />
-
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://alik532ua.github.io/Slovko/" />
-		<meta property="og:title" content="Slovko — вивчення слів та гра у стилі Wordle" />
-		<meta
-			property="og:description"
-			content="Безкоштовний тренажер для вивчення слів і головоломка у стилі Wordle: власні списки слів, особиста статистика та таблиця лідерів."
-		/>
-		<meta property="og:image" content="https://alik532ua.github.io/Slovko/icon-512.png" />
-
-		<meta name="twitter:card" content="summary" />
-		<meta name="twitter:title" content="Slovko — вивчення слів та гра у стилі Wordle" />
-		<meta
-			name="twitter:description"
-			content="Безкоштовний тренажер для вивчення слів і головоломка у стилі Wordle: власні списки слів, особиста статистика та таблиця лідерів."
-		/>
-		<meta name="twitter:image" content="https://alik532ua.github.io/Slovko/icon-512.png" />
-
-		%sveltekit.head%
 	</head>
 
 	<body data-sveltekit-preload-data="hover">
