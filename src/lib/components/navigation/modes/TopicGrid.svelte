@@ -46,7 +46,9 @@
 	}
 
 	.topics-grid {
-		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+		/* min(): гола довжина в minmax тримає колонку 240px навіть у вужчому
+		   контейнері. Поріг переносу лишається той самий. */
+		grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
 	}
 
 	.item {

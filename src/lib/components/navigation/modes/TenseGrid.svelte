@@ -49,7 +49,9 @@
 	}
 
 	.tenses-grid {
-		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+		/* min(): гола довжина в minmax тримає колонку 260px навіть у вужчому
+		   контейнері. Поріг переносу лишається той самий. */
+		grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
 	}
 
 	.item {

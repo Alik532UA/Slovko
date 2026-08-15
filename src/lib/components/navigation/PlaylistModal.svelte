@@ -507,7 +507,7 @@
 	}
 	.icon-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(min(40px, 100%), 1fr));
 		gap: 0.5rem;
 		justify-items: center;
 	}

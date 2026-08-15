@@ -294,7 +294,10 @@
 	}
 
 	.topics-grid {
-		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+		/* min(), бо гола довжина в minmax — це підлога, а не поріг: колонка
+		   лишається 240px і тоді, коли контейнер вужчий, і картка розпирає
+		   сторінку. З min() 240px лишається порогом переносу. */
+		grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
 	}
 
 	.playlist-wrapper {
