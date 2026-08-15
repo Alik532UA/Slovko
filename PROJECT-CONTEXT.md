@@ -37,36 +37,58 @@
 | Середовище юніт-тестів | `node` | jsdom не стояв у залежностях, і файл без докблоку `// @vitest-environment node` не запускався зовсім | до 2026-08 |
 | Контекст ігрового контролера | `Symbol`-ключ + аксесори `setGameController`/`getGameController` із `throw` | `src/lib/config/gameContext.ts`. **Це зразок для решти проєктів** — саме цей патерн ліг у SVELTE-CORE-v8 § 3.3 | до 2026-08 |
 | Версіонування | `scripts/bump-version.js` | — | до 2026-08 |
+| Права `contents: write` у деплої | обґрунтований виняток | dual deploy за патерном peaceiris: `deploy.yml` пише в корінь `gh-pages`, `deploy-dev.yml` — у підтеку `dev/`. OIDC-пайплайн (`deploy-pages@v4`) другого призначення на той самий сайт не вміє (CI-CD-AND-TOOLS-v8 § 1.1) | 2026-08-16 |
+| Гейти в `deploy-dev.yml` | свідомо немає | це прев'ю, а не реліз: `npm ci → build → deploy`. Усі гейти стоять у `deploy.yml` перед `main`. Записано, бо мовчазна відсутність читається як покриття (CI-CD-AND-TOOLS-v8 § 1.6) | 2026-08-16 |
+| Середовище компонентних тестів | **B** — jsdom/happy-dom, і поки що жодного компонентного тесту | над зібраним сайтом уже ходить Playwright, тож браузерний режим Vitest дублював би те, що перевіряється в справжньому браузері (CODE-QUALITY-v8 § 4.1). Заводити A — лише під компонент із власною геометрією | 2026-08-16 |
 
 ## Обрані optional-файли пакету
 
 `I18N`, `AUTH-FORM`, `ANALYTICS`, `DEPENDENCIES`, `VERSIONING`,
-`DEPLOY-ENVIRONMENTS`, `DOCUMENTATION` (`.private/docs/`).
+`DEPLOY-ENVIRONMENTS`, `DOCUMENTATION` (`.private/docs/`), `DEBUGGING`
+(`logService` + `LogCopyButton`, debug-режим у проді з 2026-08-16).
 Не застосовуються: `SCROLLBAR` (нативної смуги вистачає), `AI-PROVIDERS`.
 
 ## Що не перевіряється автоматично
 
+Числа в цьому розділі отримані командою в сесії 2026-08-16, а не з пам'яті
+(AI-AGENT-PITFALLS-v8 § 5.5). Команда стоїть поруч — її можна повторити.
+
 | Правило | Чому перевірки немає | План |
 |---|---|---|
-| axe-аудит a11y | E2E є, але без `@axe-core/playwright` | додати як у teatralo4ka |
+| axe-аудит a11y | E2E є, але без `@axe-core/playwright` | додати як у teatralo4ka, з порогом-числом, а не `toEqual([])` |
 | Перевірка зібраного `build/` | скрипта немає | перенести `check-build.mjs` із as5 |
-| CSS-змінні | інваріанта немає; **розвідка 2026-08-16 знайшла 8 неоголошених** — `--bg-surface`, `--error`, `--text-muted`, `--wrong-color`, `--correct-color`, `--arrow-left`, `--bg-tertiary`, `--primary` | перенести `css-variables.test.ts` із CV, спершу класифікувавши кожну з восьми: частина може бути крос-компонентною |
 | Контраст тем | статично не перевіряється | перенести `contrast.test.ts` із teatralo4ka |
-| `$props.id()` замість `Math.random()` | звернень нуль | окремий прохід |
-| П'ять попереджень eslint | `warn`, `--max-warnings` не стоїть: 3 невживані імпорти в `GameState.svelte.ts`, 1 `any` у `PwaStore`, 1 `{@html}` у `SpeechErrorModal` | прибрати поштучно; для `{@html}` — або санітизація, або директива з поясненням |
+| Touch target кнопки збору логів | 32 px на desktop, 24 px на мобільному | канон просить 44 px на тач (MEDIUM). Кут зайнятий: збільшення накриє нижню панель. Свідоме відхилення |
+| 23 попередження eslint | `warn`, `--max-warnings` не стоїть.<br>`npm run lint 2>&1 \| grep -E "^✖"` | 12 `no-navigation-without-resolve`, 5 `require-each-key`, 3 невживані імпорти в `GameState.svelte.ts`, 2 `prefer-svelte-reactivity`, 1 `any` у `PwaStore`. Прибирати поштучно; число має лише спадати |
+
+Закрито 2026-08-16: CSS-змінні (сім неоголошених виправлено, гейт
+`css-variables.test.ts` стоїть); `$props.id()` — звернень нуль і не було, усі
+`Math.random()` у проєкті стосуються перемішування слів і генерації id даних,
+жоден не будує `id` для `aria-*`.
 
 ## Перевірки, які тут є
 
 | Гейт | Де | Що ловить |
 |---|---|---|
-| `npm run lint` | CI | eslint |
+| `npm run lint` | CI | eslint, 0 помилок |
 | `npm run check` | CI | `svelte-check`, 0 помилок |
-| `npm run test:unit` | CI | 4 файли: testid, кнопка закриття, паритет 7 словників, плюралізація |
-| `npx playwright test tests/e2e/invariants.spec.ts` | CI | інваріанти над зібраним сайтом |
+| `npm run test:unit` | CI | 10 файлів, 72 перевірки: testid, кнопки закриття, паритет 7 словників, плюралізація, раннери, базовий набір eslint, пайплайн CI, позиція інлайн-скриптів під CSP, CSS-змінні, редакція PII у логері |
+| `npx playwright test` (увесь каталог) | CI | 11 перевірок: дублікати `data-testid` у дев'яти станах + smoke (заголовок, опис, canonical, чиста консоль) |
 | `npm audit --audit-level=high` | CI | вразливості прод-залежностей |
+| `git diff --exit-code` після збірки | CI | збірка змінила відстежуваний файл |
 
 ## Легасі-зони
 
 | Зона | Де | Причина |
 |---|---|---|
 | `LEGACY_STORAGE_KEY` | `PlaylistStore.svelte.ts`, `SyncService.svelte.ts` | читання й прибирання старого ключа `slovko_playlists` без префікса — міграція, не борг |
+
+## Пастки середовища
+
+Записані, бо вдруге виглядають так само незрозуміло, як уперше
+(AI-AGENT-PITFALLS-v8 § 5.8).
+
+| Пастка | Як виглядає |
+|---|---|
+| Хук перед комітом піднімає версію | у кожен коміт додаються `package.json`, `package-lock.json`, `static/app-version.json`. Це не сміття збірки, а `scripts/bump-version.js` — не намагайся прибрати їх зі стейджа |
+| Живий dev-сервер на 5197 під час прогону E2E | конфлікту немає: Playwright бере власний 5273 зі `--strictPort` і `reuseExistingServer: false`. А от прев'ю з попередньої сесії на 5273 віддасть стару збірку — зупиняти перед прогоном |
