@@ -12,6 +12,18 @@ import { defineConfig, devices } from '@playwright/test';
  */
 const TEST_PORT = 5273;
 
+/**
+ * `baseURL` мусить враховувати `base` зі `svelte.config.js` (CODE-QUALITY-v8
+ * § 5.4). Тут `base` — `/Slovko`, тож без нього `page.goto('/')` веде на адресу,
+ * якої в застосунку немає. Досі це працювало лише тому, що Vite сам
+ * перенаправляє корінь на базовий шлях — тобто перевірки трималися на
+ * поведінці dev-сервера, а не на власній адресації.
+ *
+ * Наслідок для тестів: шляхи в них РЕЛЯТИВНІ (`''`, `'?modal=levels'`).
+ * Провідний слеш у `new URL(path, baseURL)` відкидає базовий шлях цілком.
+ */
+const BASE_PATH = process.env.BASE_PATH ?? '/Slovko';
+
 export default defineConfig({
 	testDir: './tests/e2e',
 	fullyParallel: true,
@@ -21,7 +33,7 @@ export default defineConfig({
 	reporter: 'html',
 	use: {
 		trace: 'on-first-retry',
-		baseURL: `http://localhost:${TEST_PORT}`,
+		baseURL: `http://localhost:${TEST_PORT}${BASE_PATH}/`,
 	},
 	projects: [
 		{

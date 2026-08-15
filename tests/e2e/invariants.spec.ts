@@ -19,16 +19,22 @@ import { test, expect } from '@playwright/test';
  * лише вдавала б, що дивиться в модалку: базова сторінка завжди має якісь
  * testid, тому канарка «їх більше нуля» пройшла б і на закритій модалці.
  */
+/**
+ * Шляхи релятивні, без провідного слеша: `base` проєкту — `/Slovko`, і він
+ * тепер входить у `baseURL` (CODE-QUALITY-v8 § 5.4). `new URL('/x', base)`
+ * відкинув би базовий шлях цілком, і перевірка знову трималася б на тому, що
+ * Vite сам перенаправляє корінь.
+ */
 const STATES: { path: string; marker: string }[] = [
-	{ path: '/', marker: 'app-root-container' },
-	{ path: '/?modal=levels', marker: 'level-topic-modal-panel' },
-	{ path: '/?modal=languages', marker: 'language-settings-modal' },
-	{ path: '/?modal=about', marker: 'about-modal-panel' },
-	{ path: '/?modal=themes', marker: 'confirm-theme-btn' },
-	{ path: '/?modal=stats&tab=stats', marker: 'stats-panel' },
-	{ path: '/?modal=stats&tab=leaderboard', marker: 'stats-panel' },
-	{ path: '/?modal=profile&tab=account', marker: 'profile-panel' },
-	{ path: '/?modal=profile&tab=friends', marker: 'profile-panel' }
+	{ path: '', marker: 'app-root-container' },
+	{ path: '?modal=levels', marker: 'level-topic-modal-panel' },
+	{ path: '?modal=languages', marker: 'language-settings-modal' },
+	{ path: '?modal=about', marker: 'about-modal-panel' },
+	{ path: '?modal=themes', marker: 'confirm-theme-btn' },
+	{ path: '?modal=stats&tab=stats', marker: 'stats-panel' },
+	{ path: '?modal=stats&tab=leaderboard', marker: 'stats-panel' },
+	{ path: '?modal=profile&tab=account', marker: 'profile-panel' },
+	{ path: '?modal=profile&tab=friends', marker: 'profile-panel' }
 ];
 
 /**
@@ -40,7 +46,7 @@ const STATES: { path: string; marker: string }[] = [
 const SEED_SETTINGS = { hasCompletedOnboarding: true };
 
 for (const { path, marker } of STATES) {
-	test(`unique data-testid on ${path}`, async ({ page }) => {
+	test(`unique data-testid on ${path || '(корінь)'}`, async ({ page }) => {
 		await page.addInitScript((settings) => {
 			localStorage.setItem('slovko_settings', JSON.stringify(settings));
 		}, SEED_SETTINGS);

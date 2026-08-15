@@ -49,13 +49,14 @@ jobs:
       - name: Unit tests
         run: npm run test:unit
 
-      # Рантайм-інваріант унікальності data-testid (TESTID-AND-NAMING-v8 § 1.9.2).
+      # Рантайм-інваріант унікальності data-testid (TESTID-AND-NAMING-v8 § 1.9.2)
+      # плюс smoke: заголовок сторінки, опис, canonical і чиста консоль.
       # Статична перевірка в юніт-тестах бачить усі testid, але не бачить, що
       # один компонент відрендерився двічі. Саме так тут жили три дублікати:
       # картки слів у циклі й панелі двох модалок.
       #
-      # Лише цей файл: перевіряє дев'ять станів (сторінка + п'ять модалок із
-      # табами) і піднімає власний dev-сервер на порту 5273.
+      # Запускається ВЕСЬ каталог, а не окремий файл за іменем: доти будь-який
+      # доданий спек мовчки не виконувався б (AI-AGENT-PITFALLS-v8 § 1.3).
       - name: Install Playwright chromium
         run: npx playwright install --with-deps chromium
 
@@ -67,7 +68,7 @@ jobs:
       # виглядало як зламаний testid, хоча застосунок просто не завантажувався.
       # Локально гейт проходив, бо там є .env — тому й приїхав у main зеленим.
       # Це не секрети: web-конфіг Firebase публічний і так їде в клієнтський бандл.
-      - name: Unique data-testid invariant
+      - name: E2E (testid invariant + smoke)
         env:
           VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}
           VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.VITE_FIREBASE_AUTH_DOMAIN }}
@@ -76,7 +77,7 @@ jobs:
           VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ vars.VITE_FIREBASE_MESSAGING_SENDER_ID }}
           VITE_FIREBASE_APP_ID: ${{ vars.VITE_FIREBASE_APP_ID }}
           VITE_FIREBASE_DATABASE_URL: ${{ vars.VITE_FIREBASE_DATABASE_URL }}
-        run: npx playwright test tests/e2e/invariants.spec.ts --project=chromium
+        run: npx playwright test --project=chromium
 
       - name: Upload Playwright report
         if: failure()
