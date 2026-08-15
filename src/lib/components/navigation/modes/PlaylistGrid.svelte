@@ -138,11 +138,11 @@
 			</div>
 			{#if count > 0 && onchange}
 				<div class="multiplier-controls" onclick={(e) => e.stopPropagation()} role="presentation">
-					<button class="ctrl-btn" onclick={() => onchange(p.id, "remove")}>
+					<button class="ctrl-btn" aria-label={$_("common.decrease")} onclick={() => onchange(p.id, "remove")}>
 						<Minus size={14} />
 					</button>
 					<span class="count-badge">x{count}</span>
-					<button class="ctrl-btn" onclick={() => onchange(p.id, "add")} disabled={count >= 5}>
+					<button class="ctrl-btn" aria-label={$_("common.increase")} onclick={() => onchange(p.id, "add")} disabled={count >= 5}>
 						<Plus size={14} />
 					</button>
 				</div>
@@ -202,11 +202,11 @@
 			</div>
 			{#if count > 0 && onchange}
 				<div class="multiplier-controls" onclick={(e) => e.stopPropagation()} role="presentation">
-					<button class="ctrl-btn" onclick={() => onchange(p.id, "remove")}>
+					<button class="ctrl-btn" aria-label={$_("common.decrease")} onclick={() => onchange(p.id, "remove")}>
 						<Minus size={14} />
 					</button>
 					<span class="count-badge">x{count}</span>
-					<button class="ctrl-btn" onclick={() => onchange(p.id, "add")} disabled={count >= 5}>
+					<button class="ctrl-btn" aria-label={$_("common.increase")} onclick={() => onchange(p.id, "add")} disabled={count >= 5}>
 						<Plus size={14} />
 					</button>
 				</div>

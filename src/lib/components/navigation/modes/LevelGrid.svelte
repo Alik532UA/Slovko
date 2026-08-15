@@ -48,11 +48,11 @@
 					onkeydown={(e) => e.stopPropagation()}
 					role="presentation"
 				>
-					<button class="ctrl-btn" onclick={() => onchange(level, "remove")}>
+					<button class="ctrl-btn" aria-label={$_("common.decrease")} onclick={() => onchange(level, "remove")}>
 						<Minus size={14} />
 					</button>
 					<span class="count-badge">x{count}</span>
-					<button class="ctrl-btn" onclick={() => onchange(level, "add")} disabled={count >= 5}>
+					<button class="ctrl-btn" aria-label={$_("common.increase")} onclick={() => onchange(level, "add")} disabled={count >= 5}>
 						<Plus size={14} />
 					</button>
 				</div>
