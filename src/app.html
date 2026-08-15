@@ -2,9 +2,17 @@
 <html lang="uk" translate="no">
 	<head>
 		<meta charset="utf-8" />
+		<!--
+			Без `maximum-scale=1, user-scalable=no`: вони забороняли масштабування
+			сторінки цілком, тобто відбирали збільшення в того, кому воно потрібне
+			(WCAG 1.4.4 «Resize text», рівень AA; axe бачить це як `meta-viewport`).
+			Подвійний тап як жест масштабування знято точково —
+			`touch-action: manipulation` на інтерактивних елементах у app.css, — а
+			щипок працює.
+		-->
 		<meta
 			name="viewport"
-			content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+			content="width=device-width, initial-scale=1, viewport-fit=cover"
 		/>
 		<meta name="google" content="notranslate" />
 		<meta name="theme-color" content="#e95420" />

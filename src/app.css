@@ -409,6 +409,26 @@ button {
 	cursor: pointer;
 }
 
+/**
+ * `manipulation` вимикає подвійний тап як жест масштабування — і лише його.
+ * Це заміна `user-scalable=no` у мета-тезі viewport: той прибирав ЩИПОК теж,
+ * тобто відбирав збільшення в того, кому воно потрібне (WCAG 1.4.4, axe це
+ * бачить як `meta-viewport`). Затримка 300 мс, заради якої колись і писали
+ * `user-scalable=no`, знімається саме цим правилом.
+ */
+button,
+a,
+label,
+summary,
+input,
+select,
+textarea,
+[role="button"],
+[role="tab"],
+[role="switch"] {
+	touch-action: manipulation;
+}
+
 /* Глобальні класи для кнопок */
 .primary-action-btn {
 	background: var(--accent);
