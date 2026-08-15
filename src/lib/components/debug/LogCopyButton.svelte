@@ -9,18 +9,39 @@
 	// Кнопка видима ТІЛЬКИ у dev-режимі І ТІЛЬКИ коли є зареєстровані помилки
 	const isVisible = $derived(dev && logService.errorCount > 0);
 
-	// Логіка Hard Reset (залишаємо для dev)
+	/**
+	 * Аварійний Hard Reset: серія натискань «R».
+	 *
+	 * Три обмеження, і кожне закриває реальний спосіб втратити ВСІ локальні дані
+	 * без жодного натискання на кнопку:
+	 *
+	 *   1. `e.repeat` — автоповтор клавіші дає ~30 подій за секунду, тобто
+	 *      затиснута «R» набирає навіть прод-поріг у 50 менш ніж за дві секунди.
+	 *   2. Поля вводу — обробник висить на `svelte:window`, тож він працює й тоді,
+	 *      коли користувач друкує в пошуку, у назві плейлиста чи у формі відгуку.
+	 *   3. Підтвердження в проді. `hardReset(false)` пропускає діалог, а стирає
+	 *      сховище, кеші й реєстрацію service worker — це не «скидання
+	 *      налаштувань», це втрата прогресу без запитання.
+	 *
+	 * У dev усе лишається як було: п'ять натискань і без діалогу.
+	 */
 	let kKeyPressCount = 0;
 	let kKeyPressTimer: ReturnType<typeof setTimeout>;
 
+	function isTypingTarget(target: EventTarget | null): boolean {
+		const el = target as HTMLElement | null;
+		if (!el || typeof el.closest !== "function") return false;
+		return !!el.closest("input, textarea, select, [contenteditable]:not([contenteditable='false'])");
+	}
+
 	function handleGlobalKeydown(e: KeyboardEvent) {
-		if (e.code === "KeyR") {
+		if (e.code === "KeyR" && !e.repeat && !isTypingTarget(e.target)) {
 			kKeyPressCount++;
 			clearTimeout(kKeyPressTimer);
 			const threshold = dev ? 5 : 50;
 
 			if (kKeyPressCount >= threshold) {
-				hardReset(false);
+				hardReset(!dev);
 				kKeyPressCount = 0;
 			} else {
 				kKeyPressTimer = setTimeout(() => {
