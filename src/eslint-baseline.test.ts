@@ -25,6 +25,11 @@ const BASELINE = [
 	'no-new-func',
 	'no-script-url',
 	'no-restricted-syntax',
+	// DEBUGGING-v8 § 4. Вимкнення поверне стан, у якому налагоджувальний вивід
+	// їде в продакшн повз буфер логів і повз звіт для розробника.
+	'no-console',
+	'no-restricted-globals',
+	'no-restricted-properties',
 	'@typescript-eslint/no-explicit-any',
 	'@typescript-eslint/no-unused-vars',
 	'@typescript-eslint/ban-ts-comment',

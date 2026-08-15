@@ -13,6 +13,7 @@
 	import { fade } from "svelte/transition";
 	import { cubicOut, quadInOut } from "svelte/easing";
 	import { _ } from "svelte-i18n";
+	import { logService } from "$lib/services/logService.svelte";
 	import type { ActiveCard, WordPair } from "$lib/types/index";
 	import type { GameData } from "$lib/services/gameDataService";
 
@@ -92,18 +93,15 @@
 			const targetCard = [...gameState.sourceCards, ...gameState.targetCards].find(c => c.id === foundCardId);
 			dragState.hoveredCardId = (targetCard && targetCard.language !== dragState.sourceCard?.language && targetCard.status !== "correct") ? foundCardId : null;
 		} else { dragState.hoveredCardId = null; }
-		
-		console.log("[DragMove] elements:", elements.length, "foundCardId:", foundCardId, "hovered:", dragState.hoveredCardId);
 	}
 
 	function handleDragEnd(_e?: PointerEvent) {
-		console.log("[DragEnd] active:", dragState.active, "hovered:", dragState.hoveredCardId, "source:", dragState.sourceCard?.id);
 		if (!dragState.active) return;
-		
+
 		if (dragState.hoveredCardId && dragState.sourceCard) {
 			const targetCard = [...gameState.sourceCards, ...gameState.targetCards].find(c => c.id === dragState.hoveredCardId);
 			if (targetCard) {
-				console.log("[DragEnd] Select cards:", dragState.sourceCard.id, targetCard.id);
+				logService.log("game", `Drag: ${dragState.sourceCard.id} → ${targetCard.id}`);
 				// Якщо початкова картка ще не вибрана, ми маємо її вибрати
 				if (gameState.selectedCard?.id !== dragState.sourceCard.id) {
 					gameController.selectCard(dragState.sourceCard);
