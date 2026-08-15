@@ -260,6 +260,12 @@
 		}
 	}
 
+	/* `min-width: 0` — те, без чого перенесення лічильників нижче не спрацює:
+	   за замовчуванням флекс-елемент не стискається менше за свій вміст. */
+	.user-info {
+		min-width: 0;
+	}
+
 	.user-info h2 {
 		margin: 0;
 		font-size: 1.5rem;
@@ -281,18 +287,31 @@
 		}
 	}
 
+	/*
+	 * Рядок «0 Підписки • 0 Підписники» розпирав шапку профілю на 45px за її
+	 * власну ширину, і вміст обрізався: у `.user-info` діяв типовий
+	 * `min-width: auto`, тобто блок не міг стати вужчим за min-content, а той
+	 * дорівнював усьому рядку одразу.
+	 *
+	 * Тепер лічильники переносяться, а сам блок може стискатися. Ціна —
+	 * другий рядок на вузькому екрані замість обрізаного першого.
+	 */
 	.social-counts {
 		display: flex;
 		align-items: center;
+		justify-content: center;
+		flex-wrap: wrap;
 		gap: 0.5rem;
 		margin-top: 0.5rem;
-		font-size: 0.85rem;
+		font-size: clamp(0.72rem, 2.6vw, 0.85rem);
 		color: var(--text-secondary);
+		min-width: 0;
 	}
 
 	.count-item {
 		display: flex;
 		gap: 0.3rem;
+		white-space: nowrap;
 	}
 
 	.count-val {

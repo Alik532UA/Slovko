@@ -131,10 +131,13 @@
 		color: var(--text-primary);
 	}
 
+	/* `minmax(0, 1fr)`, а не `1fr`: друге — це `minmax(auto, 1fr)`, тобто
+	   колонка не стає вужчою за min-content картки теми, і сітка вилазила за
+	   модалку на 9px. */
 	.themes-grid {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1rem;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: clamp(0.5rem, 3vw, 1rem);
 		margin-bottom: 1.5rem;
 	}
 
@@ -162,9 +165,15 @@
 		gap: 4px;
 	}
 
+	/* `min-width: 0` знімає типову підлогу флекс-елемента за його вмістом:
+	   без неї «Однотонний» і «Зображення» при успадкованих 16px розпирали
+	   контрол за межі модалки на 12px. Шрифт ведений шириною вікна, бо
+	   переносити ці підписи ніде. */
 	.segmented-control button {
 		flex: 1;
-		padding: 0.6rem;
+		min-width: 0;
+		padding: 0.6rem clamp(0.2rem, 1.5vw, 0.6rem);
+		font-size: clamp(0.75rem, 3.2vw, 1rem);
 		border-radius: 8px;
 		font-weight: 500;
 		color: var(--text-secondary);

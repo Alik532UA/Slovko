@@ -515,16 +515,30 @@
 		border-radius: 6px;
 	}
 
+	/*
+	 * Дві колонки мов на вузькому екрані вилазили за край модалки на 28px.
+	 *
+	 * Причина не в самому рядку, а в тому, що поступитися не міг ніхто:
+	 * `gap: 2rem` фіксований, у колонок не було `min-width: 0`, а підпис
+	 * колонки мав `white-space: nowrap` — тобто задавав min-content ширину
+	 * рівною повній фразі «мова карток що ліворуч». Флекс-елемент за
+	 * замовчуванням не стискається менше за вміст, тож рядок просто ріс.
+	 */
 	.card-langs {
 		display: flex;
 		justify-content: center;
-		gap: 2rem;
+		gap: clamp(0.5rem, 4vw, 2rem);
+		flex-wrap: wrap;
+		width: 100%;
 	}
 
 	.lang-column {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		/* Без цього `flex-wrap` вище нічого не дає: колонка все одно тримає
+		   ширину свого вмісту. */
+		min-width: 0;
 	}
 
 	.icon-btn {
@@ -566,11 +580,14 @@
 
 	.column-title {
 		margin: 0;
-		font-size: 0.8rem;
+		font-size: clamp(0.68rem, 2.6vw, 0.8rem);
 		font-weight: 500;
 		color: var(--text-secondary);
 		text-align: center;
-		white-space: nowrap;
+		/* Було `nowrap` — саме воно й задавало ширину колонки повною фразою.
+		   Підпис із двох слів спокійно переноситься; ціна — один зайвий рядок
+		   замість вилізлого за екран блока. */
+		white-space: normal;
 		line-height: 1.2;
 	}
 
