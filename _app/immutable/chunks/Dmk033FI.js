@@ -315,6 +315,8 @@ const t=`{
 	},
 	"common": {
 		"close": "Kapatmaq",
+		"increase": "Sayını arttır",
+		"decrease": "Sayını eksilt",
 		"menu": "Menü",
 		"profile": "Profil",
 		"all": "Episi",

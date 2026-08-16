@@ -346,6 +346,8 @@ const t=`{
 	},
 	"common": {
 		"close": "Zamknij",
+		"increase": "Zwiększ liczbę",
+		"decrease": "Zmniejsz liczbę",
 		"menu": "Menu",
 		"profile": "Profil",
 		"all": "Wszystkie",

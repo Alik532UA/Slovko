@@ -315,6 +315,8 @@ const t=`{
 	},
 	"common": {
 		"close": "Sluiten",
+		"increase": "Aantal verhogen",
+		"decrease": "Aantal verlagen",
 		"menu": "Menu",
 		"profile": "Profiel",
 		"all": "Alle",

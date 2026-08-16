@@ -346,6 +346,8 @@ const t=`{
 	},
 	"common": {
 		"close": "Close",
+		"increase": "Increase amount",
+		"decrease": "Decrease amount",
 		"menu": "Menu",
 		"profile": "Profile",
 		"all": "All",
