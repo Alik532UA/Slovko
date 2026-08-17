@@ -1,6 +1,15 @@
 ﻿import { FriendsService } from "../services/firebase/FriendsService";
 import { logService } from "./logService.svelte";
-import { db } from "../services/firebase/config";
+import { getDb } from "../services/firebase/config";
+/*
+ * Ліниві акцесори до Firebase.
+ *
+ * SDK піднімається при ПЕРШОМУ зверненні, а не на імпорті цього модуля: інакше
+ * будь-який тест, що транзитивно тягне файл, вимагав би бойових ключів, щоб
+ * узагалі зібратися (CLOUD-DATABASE-v8 § 10.1).
+ */
+const db = () => getDb();
+
 import { doc, getDoc } from "firebase/firestore";
 
 // Назви колекцій (використовуємо прямі значення, як і в інших сервісах)
@@ -57,7 +66,7 @@ class LeaderboardSyncService {
 	 */
 	async verifyLeaderScore(uid: string): Promise<number | null> {
 		try {
-			const userDoc = await getDoc(doc(db, COLLECTIONS.PROFILES, uid));
+			const userDoc = await getDoc(doc(db(), COLLECTIONS.PROFILES, uid));
 			if (userDoc.exists()) {
 				const data = userDoc.data();
 				return data.totalCorrect || 0;

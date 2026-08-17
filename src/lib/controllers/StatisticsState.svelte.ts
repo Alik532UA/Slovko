@@ -1,13 +1,18 @@
-﻿import {
-	collection,
-	getDocs,
-	query,
-	where,
-	orderBy,
-	doc,
-	getDoc,
-} from "firebase/firestore";
-import { db, auth } from "../services/firebase/config";
+﻿import { getAuthInstance } from "../services/firebase/config";
+import {
+	fetchHistoryDay,
+	fetchHistoryPage,
+	fetchHistoryRange,
+} from "../services/firebase/userDataService";
+/*
+ * Ліниві акцесори до Firebase.
+ *
+ * SDK піднімається при ПЕРШОМУ зверненні, а не на імпорті цього модуля: інакше
+ * будь-який тест, що транзитивно тягне файл, вимагав би бойових ключів, щоб
+ * узагалі зібратися (CLOUD-DATABASE-v8 § 10.1).
+ */
+const auth = () => getAuthInstance();
+
 import { logService } from "../services/logService.svelte";
 import { progressStore } from "../controllers/ProgressStore.svelte";
 import { 
@@ -30,30 +35,24 @@ class StatisticsStateClass {
 	 * Отримати історію активності за діапазон дат (YYYY-MM-DD).
 	 */
 	async getHistoryByRange(startDate: string, endDate: string): Promise<DailyActivity[]> {
-		if (!auth.currentUser) return [];
-		const uid = auth.currentUser.uid;
+		// Захоплюємо один раз: `currentUser` може змінитися між зверненнями.
+		const user = auth().currentUser;
+		if (!user) return [];
+		const uid = user.uid;
 		this.isLoading = true;
 
 		try {
-			const historyRef = collection(db, "users", uid, "history");
-			// Firestore дозволяє порівнювати ID документів (дату) як рядки
-			const q = query(
-				historyRef,
-				where("__name__", ">=", startDate),
-				where("__name__", "<=", endDate),
-				orderBy("__name__", "asc")
-			);
-
-			const snapshot = await getDocs(q);
+			// Мережа — в `userDataService`: SDK бази не живе в модулі з рунами.
+			const entries = await fetchHistoryRange(uid, startDate, endDate);
 			const results: DailyActivity[] = [];
 
-			snapshot.docs.forEach((doc) => {
+			entries.forEach((entry) => {
 				try {
-					const data = DailyActivitySchema.parse(doc.data());
+					const data = DailyActivitySchema.parse(entry.data);
 					results.push(data);
 					this.addToCache(data);
 				} catch (e) {
-					logService.error("stats", `Failed to parse history doc ${doc.id}:`, e);
+					logService.error("stats", `Failed to parse history doc ${entry.id}:`, e);
 				}
 			});
 
@@ -86,15 +85,15 @@ class StatisticsStateClass {
 	async getDailyStats(date: string): Promise<DailyActivity | null> {
 		if (this.historyCache[date]) return this.historyCache[date];
 		
-		if (!auth.currentUser) return null;
-		const uid = auth.currentUser.uid;
+		// Захоплюємо один раз: `currentUser` може змінитися між зверненнями.
+		const user = auth().currentUser;
+		if (!user) return null;
+		const uid = user.uid;
 
 		try {
-			const docRef = doc(db, "users", uid, "history", date);
-			const snap = await getDoc(docRef);
-			
-			if (snap.exists()) {
-				const data = DailyActivitySchema.parse(snap.data());
+			const raw = await fetchHistoryDay(uid, date);
+			if (raw) {
+				const data = DailyActivitySchema.parse(raw);
 				this.addToCache(data);
 				return data;
 			}
@@ -110,14 +109,16 @@ class StatisticsStateClass {
 	 * Просумовує дані з колекції history для відновлення агрегатів у профілі.
 	 */
 	async recoverProgressFromHistory() {
-		if (!auth.currentUser) return;
-		const uid = auth.currentUser.uid;
-		const historyRef = collection(db, "users", uid, "history");
-		
+		// Захоплюємо один раз: `currentUser` може змінитися між зверненнями.
+		const user = auth().currentUser;
+		if (!user) return;
+		const uid = user.uid;
 		logService.warn("stats", "Starting progress recovery from history...");
 
 		try {
-			const snapshot = await getDocs(historyRef);
+			const snapshot = { docs: await fetchHistoryPage(uid), empty: false, size: 0 };
+			snapshot.size = snapshot.docs.length;
+			snapshot.empty = snapshot.size === 0;
 			if (snapshot.empty) {
 				logService.log("stats", "No history found to recover from.");
 				return;
@@ -128,8 +129,8 @@ class StatisticsStateClass {
 			let totalAttempts = 0;
 			let maxDate = "";
 
-			snapshot.docs.forEach(doc => {
-				const data = doc.data() as DailyActivity;
+			snapshot.docs.forEach(entry => {
+				const data = entry.data as DailyActivity;
 				totalCorrect += data.totalCorrect || 0;
 				totalAttempts += data.totalAttempts || 0;
 				
@@ -173,15 +174,14 @@ class StatisticsStateClass {
 	 * Відновити кількість активних днів (activeDaysCount) з історії Firestore.
 	 */
 	async recoverActiveDaysCount(): Promise<number> {
-		if (!auth.currentUser) return 0;
-		const uid = auth.currentUser.uid;
-		const historyRef = collection(db, "users", uid, "history");
-		
+		// Захоплюємо один раз: `currentUser` може змінитися між зверненнями.
+		const user = auth().currentUser;
+		if (!user) return 0;
+		const uid = user.uid;
 		logService.warn("stats", "Recovering active days count from history...");
 
 		try {
-			const snapshot = await getDocs(historyRef);
-			const count = snapshot.size;
+			const count = (await fetchHistoryPage(uid)).length;
 			
 			if (count > 0) {
 				const currentProgress = progressStore.value;

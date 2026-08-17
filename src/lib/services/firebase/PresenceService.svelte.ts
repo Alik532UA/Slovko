@@ -1,5 +1,18 @@
 ﻿import { ref, onValue, set, onDisconnect, serverTimestamp, onChildAdded, remove, query, orderByChild, limitToLast, type Unsubscribe, push, startAt } from "firebase/database";
-import { rtdb, auth } from "./config";
+import { getRtdb, getAuthInstance } from "./config";
+
+/** Скільки сигналів тримати у вікні підписки. */
+const SIGNAL_WINDOW = 50;
+/*
+ * Ліниві акцесори до Firebase.
+ *
+ * SDK піднімається при ПЕРШОМУ зверненні, а не на імпорті цього модуля: інакше
+ * будь-який тест, що транзитивно тягне файл, вимагав би бойових ключів, щоб
+ * узагалі зібратися (CLOUD-DATABASE-v8 § 10.1).
+ */
+const rtdb = () => getRtdb();
+const auth = () => getAuthInstance();
+
 import { logService } from "../../services/logService.svelte";
 
 export type OnlineStatus = "online" | "offline";
@@ -141,7 +154,7 @@ class PresenceServiceClass {
 	 * Налаштовує онлайн-статус користувача в RTDB
 	 */
 	private setupOwnStatus(uid: string) {
-		const userStatusRef = ref(rtdb, `/status/${uid}`);
+		const userStatusRef = ref(rtdb(), `/status/${uid}`);
 		const isOfflineForDatabase = { state: "offline", lastChanged: serverTimestamp() };
 		const isOnlineForDatabase = { state: "online", lastChanged: serverTimestamp() };
 
@@ -166,10 +179,17 @@ class PresenceServiceClass {
 
 		// Фільтруємо на рівні сервера: тільки сигнали, створені після моменту підписки
 		// Додаємо невеликий буфер (10 сек) для компенсації десинхронізації годинників
+		/*
+		 * Межа обовʼязкова навіть тут, де фільтр за часом і так звужує вибірку:
+		 * скриньку наповнює будь-хто авторизований, тож без `limitToLast` один
+		 * настирливий відправник змусив би клієнт прочитати все, що він надіслав
+		 * (CLOUD-DATABASE-v8 § 7.1).
+		 */
 		const signalsQuery = query(
-			ref(rtdb, `/signals/${uid}`),
+			ref(rtdb(), `/signals/${uid}`),
 			orderByChild("timestamp"),
-			startAt(Date.now() - 10000)
+			startAt(Date.now() - 10000),
+			limitToLast(SIGNAL_WINDOW)
 		);
 
 		this.signalUnsubscribe = onChildAdded(signalsQuery, async (snapshot) => {
@@ -189,7 +209,7 @@ class PresenceServiceClass {
 
 			// Видаляємо сигнал з бази після отримання (Consume pattern)
 			try {
-				await remove(ref(rtdb, `/signals/${uid}/${signalKey}`));
+				await remove(ref(rtdb(), `/signals/${uid}/${signalKey}`));
 			} catch (e) {
 				logService.error("interaction", "Failed to remove consumed signal", e);
 			}
@@ -201,7 +221,7 @@ class PresenceServiceClass {
 	 * Використовує push() для унікальності та serverTimestamp для надійності.
 	 */
 	async sendWave(targetUid: string, senderProfile: { name: string; photoURL: string | null }, eventId?: string) {
-		const currentUser = auth.currentUser;
+		const currentUser = auth().currentUser;
 		if (!currentUser) {
 			logService.error("interaction", "Cannot send wave: No authenticated user found in Firebase Auth");
 			return;
@@ -218,7 +238,7 @@ class PresenceServiceClass {
 		this.lastSignalSentAt.set(targetUid, now);
 		logService.log("interaction", `Sending wave to: ${targetUid} from: ${currentUser.uid}`);
 
-		const signalsRef = ref(rtdb, `/signals/${targetUid}`);
+		const signalsRef = ref(rtdb(), `/signals/${targetUid}`);
 
 		// Використовуємо об'єкт для запису, де timestamp буде встановлено сервером
 		const signalData = {
@@ -353,7 +373,7 @@ class PresenceServiceClass {
 	async enterDiscoveryMode(profile: { displayName: string; photoURL: string | null }) {
 		if (!this.currentUid) return;
 
-		const discoveryRef = ref(rtdb, `/discovery/${this.currentUid}`);
+		const discoveryRef = ref(rtdb(), `/discovery/${this.currentUid}`);
 		await onDisconnect(discoveryRef).remove();
 		await set(discoveryRef, { ...profile, timestamp: serverTimestamp() });
 		logService.log("presence", "Entered discovery mode");
@@ -361,14 +381,14 @@ class PresenceServiceClass {
 
 	async leaveDiscoveryMode() {
 		if (!this.currentUid) return;
-		const discoveryRef = ref(rtdb, `/discovery/${this.currentUid}`);
+		const discoveryRef = ref(rtdb(), `/discovery/${this.currentUid}`);
 		await onDisconnect(discoveryRef).cancel();
 		await remove(discoveryRef);
 		logService.log("presence", "Left discovery mode");
 	}
 
 	subscribeToDiscovery(callback: (users: DiscoveryUser[]) => void): () => void {
-		const discoveryListRef = query(ref(rtdb, 'discovery'), orderByChild('timestamp'), limitToLast(30));
+		const discoveryListRef = query(ref(rtdb(), 'discovery'), orderByChild('timestamp'), limitToLast(30));
 		this.discoveryUnsubscribe = onValue(discoveryListRef, (snapshot) => {
 			const users: DiscoveryUser[] = [];
 			snapshot.forEach((child) => {
@@ -399,7 +419,7 @@ class PresenceServiceClass {
 			return () => this.untrackFriendStatus(uid);
 		}
 
-		const statusRef = ref(rtdb, `/status/${uid}`);
+		const statusRef = ref(rtdb(), `/status/${uid}`);
 		const unsub = onValue(statusRef, (snapshot) => {
 			const data = snapshot.val() as UserStatus | null;
 			if (!data) return;
@@ -478,7 +498,7 @@ class PresenceServiceClass {
 	 * Сповіщення про досягнення денної цілі (власне)
 	 */
 	addDailyGoalNotification(streak: number) {
-		const user = auth.currentUser;
+		const user = auth().currentUser;
 
 		this.addInteraction({
 			type: 'daily_goal_reached',

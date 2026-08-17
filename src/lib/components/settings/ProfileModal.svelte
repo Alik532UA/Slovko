@@ -127,8 +127,8 @@
 		successMessage = "";
 		try {
 			const { sendPasswordResetEmail } = await import("firebase/auth");
-			const { auth } = await import("$lib/services/firebase/config");
-			await sendPasswordResetEmail(auth, email);
+			const { getAuthInstance } = await import("$lib/services/firebase/config");
+			await sendPasswordResetEmail(getAuthInstance(), email);
 			successMessage = $_("profile.passwordResetSent");
 			setTimeout(() => {
 				loginMethod = "auth";

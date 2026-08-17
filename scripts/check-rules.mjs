@@ -114,6 +114,7 @@ const CASES = [
 	{ name: 'свій документ користувача', allowed: true, run: () => fsCreate('users', me.uid, { lastSync: 1 }, me.token) },
 	{ name: 'своя історія по днях', allowed: true, run: () => fsCreate(`users/${me.uid}/history`, '2026-08-18', { correct: 5 }, me.token) },
 	{ name: 'свій плейліст', allowed: true, run: () => fsCreate(`users/${me.uid}/playlists_v2`, 'p1', { name: 'Мій' }, me.token) },
+	{ name: 'свій шард прогресу по словах', allowed: true, run: () => fsCreate(`users/${me.uid}/words`, 'shard-00', { probe: 1 }, me.token) },
 	{ name: 'свій публічний профіль', allowed: true, run: () => fsCreate('profiles', me.uid, profile(me.uid), me.token) },
 	{ name: 'чужий профіль за ідентифікатором (get)', allowed: true, run: () => fsRead(`profiles/${me.uid}`, other.token) },
 	{ name: 'пошук по профілях авторизованим (list)', allowed: true, run: () => fsRead('profiles?pageSize=20', other.token) },
@@ -130,9 +131,14 @@ const CASES = [
 	{ name: 'ЧУЖИЙ документ користувача — запис', allowed: false, run: () => fsUpdate(`users/${me.uid}`, { lastSync: 2 }, other.token) },
 	{ name: 'чужа історія', allowed: false, run: () => fsRead(`users/${me.uid}/history/2026-08-18`, other.token) },
 	{ name: 'чужі плейлісти', allowed: false, run: () => fsRead(`users/${me.uid}/playlists_v2/p1`, other.token) },
+	{ name: 'чужий прогрес по словах', allowed: false, run: () => fsRead(`users/${me.uid}/words/shard-00`, other.token) },
 	{ name: 'неавторизований читає документ користувача', allowed: false, run: () => fsRead(`users/${me.uid}`, null) },
 	{ name: 'чужий публічний профіль — запис', allowed: false, run: () => fsUpdate(`profiles/${me.uid}`, { displayName: 'вкрадено' }, other.token) },
-	{ name: 'НЕАВТОРИЗОВАНИЙ перелічує профілі', allowed: false, run: () => fsRead('profiles', null) },
+	// Живий зонд 2026-08-18 показав, що `GET /documents/profiles` без токена
+	// повертав документи: REST перелічує колекцію поштучними читаннями, тож
+	// «нешкідливий» `allow get: if true` відкривав усю колекцію стороннім.
+	{ name: 'НЕАВТОРИЗОВАНИЙ перелічує профілі', allowed: false, run: () => fsRead('profiles?pageSize=5', null) },
+	{ name: 'НЕАВТОРИЗОВАНИЙ читає один профіль', allowed: false, run: () => fsRead(`profiles/${me.uid}`, null) },
 	{ name: 'підписати ІНШОГО на когось (чужий following)', allowed: false, run: () => fsCreate(`users/${me.uid}/following`, 'хтось', { uid: 'хтось' }, other.token) },
 	{ name: 'підробити ЧУЖИЙ рядок у followers', allowed: false, run: () => fsCreate(`users/${me.uid}/followers`, other.uid, { uid: 'підробка' }, me.token) },
 	{ name: 'читати журнал подій', allowed: false, run: () => fsRead('system_logs', me.token) },

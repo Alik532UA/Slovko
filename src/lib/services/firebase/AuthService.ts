@@ -5,7 +5,17 @@ import {
 	onAuthStateChanged,
 	type User,
 } from "firebase/auth";
-import { auth, googleProvider } from "./config";
+import { getAuthInstance, getGoogleProvider } from "./config";
+/*
+ * Ліниві акцесори до Firebase.
+ *
+ * SDK піднімається при ПЕРШОМУ зверненні, а не на імпорті цього модуля: інакше
+ * будь-який тест, що транзитивно тягне файл, вимагав би бойових ключів, щоб
+ * узагалі зібратися (CLOUD-DATABASE-v8 § 10.1).
+ */
+const auth = () => getAuthInstance();
+const googleProvider = () => getGoogleProvider();
+
 
 /**
  * Сервіс для керування автентифікацією Firebase
@@ -15,7 +25,7 @@ export const AuthService = {
 	 * Ініціалізація слухача стану користувача
 	 */
 	init(onUserChanged: (user: User | null) => void) {
-		return onAuthStateChanged(auth, (user) => {
+		return onAuthStateChanged(auth(), (user) => {
 			onUserChanged(user);
 		});
 	},
@@ -25,7 +35,7 @@ export const AuthService = {
 	 */
 	async loginAnonymously() {
 		try {
-			await signInAnonymously(auth);
+			await signInAnonymously(auth());
 		} catch (error) {
 			logService.error("debug", "Firebase Anonymous Auth Error:", error);
 			throw error; // Прокидаємо помилку далі
@@ -38,7 +48,7 @@ export const AuthService = {
 	async getProvidersForEmail(email: string): Promise<string[]> {
 		const { fetchSignInMethodsForEmail } = await import("firebase/auth");
 		try {
-			const providers = await fetchSignInMethodsForEmail(auth, email);
+			const providers = await fetchSignInMethodsForEmail(auth(), email);
 			return providers;
 		} catch (error) {
 			logService.error("debug", "[AuthService] Fetch methods error:", error);
@@ -53,13 +63,13 @@ export const AuthService = {
 		const { signInWithPopup, linkWithPopup } = await import("firebase/auth");
 
 		try {
-			const user = auth.currentUser;
+			const user = auth().currentUser;
 
 			// 1. Якщо користувач не залогінений
 			if (!user || user.isAnonymous) {
 				// Спробуємо просто залогінитись
 				try {
-					const result = await signInWithPopup(auth, googleProvider);
+					const result = await signInWithPopup(auth(), googleProvider());
 
 					// Якщо ми були анонімом, і у нас були дані — треба попередити,
 					// що дані аноніма можуть бути втрачені, якщо не зробити link.
@@ -68,7 +78,7 @@ export const AuthService = {
 					return result.user;
 				} catch (error) {
 					const e = error as { code?: string };
-					if (e.code === "auth/account-exists-with-different-credential") {
+					if (e.code === "auth()/account-exists-with-different-credential") {
 						// Це критичний момент: користувач намагається зайти через Google,
 						// але акаунт вже створений через Email.
 						throw new Error("ACCOUNT_EXISTS_EMAIL");
@@ -79,7 +89,7 @@ export const AuthService = {
 
 			// 2. Якщо користувач вже залогінений через Email — ПРИВ'ЯЗУЄМО
 			try {
-				await linkWithPopup(user, googleProvider);
+				await linkWithPopup(user, googleProvider());
 				await user.reload();
 				logService.log("debug", 
 					"[AuthService] Google successfully linked to existing Email account",
@@ -87,7 +97,7 @@ export const AuthService = {
 				return user;
 			} catch (error) {
 				const e = error as { code?: string };
-				if (e.code === "auth/credential-already-in-use") {
+				if (e.code === "auth()/credential-already-in-use") {
 					// Цей Google-акаунт вже прив'язаний до ІНШОГО користувача
 					throw new Error("GOOGLE_ALREADY_LINKED_ELSEWHERE");
 				}
@@ -109,20 +119,23 @@ export const AuthService = {
 		} = await import("firebase/auth");
 
 		try {
-			if (!auth.currentUser) {
+			if (!auth().currentUser) {
 				// Для гостя — створюємо новий акаунт
 				const result = await createUserWithEmailAndPassword(
-					auth,
+					auth(),
 					email,
 					password,
 				);
 				return result.user;
 			} else {
-				// Для аноніма — прив'язуємо
+				// Для аноніма — прив'язуємо. Користувача беремо один раз: між
+				// зверненнями `currentUser` може стати іншим.
+				const anonymous = auth().currentUser;
+				if (!anonymous) return null;
 				const credential = EmailAuthProvider.credential(email, password);
-				const result = await linkWithCredential(auth.currentUser, credential);
+				const result = await linkWithCredential(anonymous, credential);
 				await result.user.reload();
-				return auth.currentUser;
+				return result.user;
 			}
 		} catch (error) {
 			throw error;
@@ -136,7 +149,7 @@ export const AuthService = {
 		const { signInWithEmailAndPassword } = await import("firebase/auth");
 
 		try {
-			const result = await signInWithEmailAndPassword(auth, email, password);
+			const result = await signInWithEmailAndPassword(auth(), email, password);
 			return result.user;
 		} catch (error) {
 			throw error;
@@ -148,7 +161,7 @@ export const AuthService = {
 	 */
 	async logout() {
 		try {
-			await fbSignOut(auth);
+			await fbSignOut(auth());
 			// Після виходу onAuthStateChanged автоматично викличе loginAnonymously
 		} catch (error) {
 			logService.error("debug", "Firebase SignOut Error:", error);
@@ -162,8 +175,9 @@ export const AuthService = {
 		displayName?: string,
 		photoURL?: string,
 	): Promise<User | null> {
-		if (!auth.currentUser) return null;
-
+		// Захоплюємо один раз: `currentUser` може змінитися між зверненнями.
+		const user = auth().currentUser;
+		if (!user) return null;
 		const { updateProfile } = await import("firebase/auth");
 
 		try {
@@ -173,9 +187,9 @@ export const AuthService = {
 			if (photoURL !== undefined && photoURL !== null)
 				updates.photoURL = photoURL;
 
-			await updateProfile(auth.currentUser, updates);
-			await auth.currentUser.reload();
-			return auth.currentUser;
+			await updateProfile(user, updates);
+			await user.reload();
+			return user;
 		} catch (error) {
 			logService.error("debug", "Error updating profile:", error);
 			throw error;
@@ -186,21 +200,17 @@ export const AuthService = {
 	 * Зміна пароля (потребує повторної автентифікації)
 	 */
 	async changePassword(currentPassword: string, newPassword: string) {
-		if (!auth.currentUser || !auth.currentUser.email) return;
+		// Захоплюємо один раз: інакше між перевіркою й використанням
+		// `currentUser` може стати `null`, і повторна автентифікація впаде.
+		const user = auth().currentUser;
+		if (!user?.email) return;
 
 		const { EmailAuthProvider, reauthenticateWithCredential, updatePassword } =
 			await import("firebase/auth");
-		const credential = EmailAuthProvider.credential(
-			auth.currentUser.email,
-			currentPassword,
-		);
+		const credential = EmailAuthProvider.credential(user.email, currentPassword);
 
-		try {
-			await reauthenticateWithCredential(auth.currentUser, credential);
-			await updatePassword(auth.currentUser, newPassword);
-		} catch (error) {
-			throw error;
-		}
+		await reauthenticateWithCredential(user, credential);
+		await updatePassword(user, newPassword);
 	},
 
 	/**
@@ -210,7 +220,7 @@ export const AuthService = {
 		const { sendPasswordResetEmail } = await import("firebase/auth");
 
 		try {
-			await sendPasswordResetEmail(auth, email);
+			await sendPasswordResetEmail(auth(), email);
 		} catch (error) {
 			throw error;
 		}
@@ -220,8 +230,9 @@ export const AuthService = {
 	 * Видалення акаунту (потребує повторної автентифікації)
 	 */
 	async deleteAccount(password?: string) {
-		if (!auth.currentUser) return;
-
+		// Захоплюємо один раз: `currentUser` може змінитися між зверненнями.
+		const user = auth().currentUser;
+		if (!user) return;
 		const {
 			EmailAuthProvider,
 			GoogleAuthProvider,
@@ -230,9 +241,8 @@ export const AuthService = {
 			deleteUser,
 		} = await import("firebase/auth");
 		const { doc, deleteDoc } = await import("firebase/firestore");
-		const { db } = await import("./config");
+		const { getDb } = await import("./config");
 
-		const user = auth.currentUser;
 		const uid = user.uid;
 		const providerId = user.providerData[0]?.providerId;
 
@@ -249,8 +259,8 @@ export const AuthService = {
 			}
 
 			// 2. Видалення даних з Firestore
-			const userDocRef = doc(db, "users", uid);
-			const profileDocRef = doc(db, "profiles", uid);
+			const userDocRef = doc(getDb(), "users", uid);
+			const profileDocRef = doc(getDb(), "profiles", uid);
 
 			try {
 				await Promise.all([deleteDoc(userDocRef), deleteDoc(profileDocRef)]);

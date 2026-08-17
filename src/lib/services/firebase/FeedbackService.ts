@@ -5,7 +5,17 @@
 	setDoc,
 	type FirestoreError,
 } from "firebase/firestore";
-import { db, auth } from "./config";
+import { getDb, getAuthInstance } from "./config";
+/*
+ * Ліниві акцесори до Firebase.
+ *
+ * SDK піднімається при ПЕРШОМУ зверненні, а не на імпорті цього модуля: інакше
+ * будь-який тест, що транзитивно тягне файл, вимагав би бойових ключів, щоб
+ * узагалі зібратися (CLOUD-DATABASE-v8 § 10.1).
+ */
+const db = () => getDb();
+const auth = () => getAuthInstance();
+
 import { AuthService } from "./AuthService";
 import { versionStore } from "../../controllers/VersionStore.svelte";
 import { settingsStore } from "../../controllers/SettingsStore.svelte";
@@ -31,12 +41,12 @@ export interface WordReportData {
  * Забезпечує наявність авторизації та повертає дані користувача
  */
 async function ensureAuth() {
-	let user = auth.currentUser;
+	let user = auth().currentUser;
 	if (!user) {
 		try {
 			await AuthService.loginAnonymously();
 			await new Promise((resolve) => setTimeout(resolve, 600));
-			user = auth.currentUser;
+			user = auth().currentUser;
 		} catch {
 			logService.warn("debug", "[FeedbackService] Could not establish anonymous session");
 		}
@@ -54,7 +64,7 @@ export const FeedbackService = {
 
 			// Використовуємо надійний референс колекції
 			const messagesRef = collection(
-				db,
+				db(),
 				rootCollection,
 				data.category,
 				"messages",
@@ -118,7 +128,7 @@ export const FeedbackService = {
 			const rootCollection = `${prefix}${isAnonymous ? "feedback_anonymous" : "feedback"}`;
 
 			const messagesRef = collection(
-				db,
+				db(),
 				rootCollection,
 				"word_error",
 				"messages",

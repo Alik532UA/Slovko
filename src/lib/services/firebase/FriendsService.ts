@@ -24,7 +24,17 @@ import {
 	deleteField,
 	type Timestamp,
 } from "firebase/firestore";
-import { db, auth } from "./config";
+import { getDb, getAuthInstance } from "./config";
+/*
+ * Ліниві акцесори до Firebase.
+ *
+ * SDK піднімається при ПЕРШОМУ зверненні, а не на імпорті цього модуля: інакше
+ * будь-який тест, що транзитивно тягне файл, вимагав би бойових ключів, щоб
+ * узагалі зібратися (CLOUD-DATABASE-v8 § 10.1).
+ */
+const db = () => getDb();
+const auth = () => getAuthInstance();
+
 import { hashEmail } from "../../utils/emailHash";
 import { authStore } from "../../controllers/AuthStore.svelte";
 import { logService } from "../../services/logService.svelte";
@@ -102,8 +112,10 @@ export const FriendsService = {
 		targetUid: string,
 		knownProfile?: { displayName: string; photoURL: string | null },
 	): Promise<boolean> {
-		if (!auth.currentUser) return false;
-		const currentUid = auth.currentUser.uid;
+		// Захоплюємо один раз: `currentUser` може змінитися між зверненнями.
+		const user = auth().currentUser;
+		if (!user) return false;
+		const currentUid = user.uid;
 		if (currentUid === targetUid) return false;
 
 		try {
@@ -122,11 +134,11 @@ export const FriendsService = {
 				return false;
 			}
 
-			const batch = writeBatch(db);
+			const batch = writeBatch(db());
 
 			// Додаємо в "following" поточного користувача
 			const followingRef = doc(
-				db,
+				db(),
 				COLLECTIONS.USERS,
 				currentUid,
 				COLLECTIONS.FOLLOWING,
@@ -141,7 +153,7 @@ export const FriendsService = {
 
 			// Додаємо в "followers" цільового користувача
 			const followerRef = doc(
-				db,
+				db(),
 				COLLECTIONS.USERS,
 				targetUid,
 				COLLECTIONS.FOLLOWERS,
@@ -149,8 +161,8 @@ export const FriendsService = {
 			);
 			batch.set(followerRef, {
 				uid: currentUid,
-				displayName: auth.currentUser.displayName || "User",
-				photoURL: auth.currentUser.photoURL,
+				displayName: user.displayName || "User",
+				photoURL: user.photoURL,
 				followedAt: serverTimestamp(),
 			});
 
@@ -182,14 +194,16 @@ export const FriendsService = {
 	 * @param targetUid - UID користувача, від якого відписуємось
 	 */
 	async unfollow(targetUid: string): Promise<boolean> {
-		if (!auth.currentUser) return false;
-		const currentUid = auth.currentUser.uid;
+		// Захоплюємо один раз: `currentUser` може змінитися між зверненнями.
+		const user = auth().currentUser;
+		if (!user) return false;
+		const currentUid = user.uid;
 
 		try {
-			const batch = writeBatch(db);
+			const batch = writeBatch(db());
 
 			const followingRef = doc(
-				db,
+				db(),
 				COLLECTIONS.USERS,
 				currentUid,
 				COLLECTIONS.FOLLOWING,
@@ -198,7 +212,7 @@ export const FriendsService = {
 			batch.delete(followingRef);
 
 			const followerRef = doc(
-				db,
+				db(),
 				COLLECTIONS.USERS,
 				targetUid,
 				COLLECTIONS.FOLLOWERS,
@@ -231,12 +245,12 @@ export const FriendsService = {
 	 * @param uid - UID користувача (за замовчуванням - поточний)
 	 */
 	async getFollowing(uid?: string): Promise<FollowRecord[]> {
-		const targetUid = uid || auth.currentUser?.uid;
+		const targetUid = uid || auth().currentUser?.uid;
 		if (!targetUid) return [];
 
 		try {
 			const followingRef = collection(
-				db,
+				db(),
 				COLLECTIONS.USERS,
 				targetUid,
 				COLLECTIONS.FOLLOWING,
@@ -258,16 +272,18 @@ export const FriendsService = {
 	 * @param followerUid - UID підписника, якого треба видалити
 	 */
 	async removeFollower(followerUid: string): Promise<boolean> {
-		if (!auth.currentUser) return false;
-		const currentUid = auth.currentUser.uid;
+		// Захоплюємо один раз: `currentUser` може змінитися між зверненнями.
+		const user = auth().currentUser;
+		if (!user) return false;
+		const currentUid = user.uid;
 
 		try {
 			logService.log("sync", `Attempting to remove follower: ${followerUid} from user: ${currentUid}`);
-			const batch = writeBatch(db);
+			const batch = writeBatch(db());
 
 			// Видаляємо з моїх followers
 			const followerRef = doc(
-				db,
+				db(),
 				COLLECTIONS.USERS,
 				currentUid,
 				COLLECTIONS.FOLLOWERS,
@@ -277,7 +293,7 @@ export const FriendsService = {
 
 			// Видаляємо з його following
 			const followingRef = doc(
-				db,
+				db(),
 				COLLECTIONS.USERS,
 				followerUid,
 				COLLECTIONS.FOLLOWING,
@@ -301,18 +317,20 @@ export const FriendsService = {
 	 * Викликається для синхронізації денормалізованих даних.
 	 */
 	async refreshContactData(targetUid: string): Promise<void> {
-		if (!auth.currentUser) return;
-		const currentUid = auth.currentUser.uid;
+		// Захоплюємо один раз: `currentUser` може змінитися між зверненнями.
+		const user = auth().currentUser;
+		if (!user) return;
+		const currentUid = user.uid;
 
 		try {
 			const profile = await this.getUserProfile(targetUid);
 			if (!profile) return;
 
-			const batch = writeBatch(db);
+			const batch = writeBatch(db());
 			let hasChanges = false;
 
 			// 1. Перевіряємо в following
-			const followingRef = doc(db, COLLECTIONS.USERS, currentUid, COLLECTIONS.FOLLOWING, targetUid);
+			const followingRef = doc(db(), COLLECTIONS.USERS, currentUid, COLLECTIONS.FOLLOWING, targetUid);
 			const followingSnap = await getDoc(followingRef);
 			if (followingSnap.exists()) {
 				const data = followingSnap.data();
@@ -326,7 +344,7 @@ export const FriendsService = {
 			}
 
 			// 2. Перевіряємо в followers
-			const followerRef = doc(db, COLLECTIONS.USERS, currentUid, COLLECTIONS.FOLLOWERS, targetUid);
+			const followerRef = doc(db(), COLLECTIONS.USERS, currentUid, COLLECTIONS.FOLLOWERS, targetUid);
 			const followerSnap = await getDoc(followerRef);
 			if (followerSnap.exists()) {
 				const data = followerSnap.data();
@@ -356,12 +374,12 @@ export const FriendsService = {
 	},
 
 	async getFollowers(uid?: string): Promise<FollowRecord[]> {
-		const targetUid = uid || auth.currentUser?.uid;
+		const targetUid = uid || auth().currentUser?.uid;
 		if (!targetUid) return [];
 
 		try {
 			const followersRef = collection(
-				db,
+				db(),
 				COLLECTIONS.USERS,
 				targetUid,
 				COLLECTIONS.FOLLOWERS,
@@ -382,8 +400,9 @@ export const FriendsService = {
 	 * Отримати список взаємних друзів
 	 */
 	async getMutualFriends(): Promise<FollowRecord[]> {
-		if (!auth.currentUser) return [];
-
+		// Захоплюємо один раз: `currentUser` може змінитися між зверненнями.
+		const user = auth().currentUser;
+		if (!user) return [];
 		try {
 			const [following, followers] = await Promise.all([
 				this.getFollowing(),
@@ -403,13 +422,14 @@ export const FriendsService = {
 	 * @param targetUid - UID користувача для перевірки
 	 */
 	async isFollowing(targetUid: string): Promise<boolean> {
-		if (!auth.currentUser) return false;
-
+		// Захоплюємо один раз: `currentUser` може змінитися між зверненнями.
+		const user = auth().currentUser;
+		if (!user) return false;
 		try {
 			const followingRef = doc(
-				db,
+				db(),
 				COLLECTIONS.USERS,
-				auth.currentUser.uid,
+				user.uid,
 				COLLECTIONS.FOLLOWING,
 				targetUid,
 			);
@@ -431,7 +451,7 @@ export const FriendsService = {
 		if (!searchQuery || searchQuery.length < 2) return [];
 
 		try {
-			const profilesRef = collection(db, COLLECTIONS.PROFILES);
+			const profilesRef = collection(db(), COLLECTIONS.PROFILES);
 
 			/*
 			 * Шукаємо за ХЕШЕМ пошти, а не за самою адресою.
@@ -474,7 +494,7 @@ export const FriendsService = {
 			);
 
 			const nameSnapshot = await getDocs(nameQuery);
-			const currentUid = auth.currentUser?.uid;
+			const currentUid = auth().currentUser?.uid;
 
 			return nameSnapshot.docs
 				.map((doc) => ({ ...doc.data(), uid: doc.id }) as UserProfile)
@@ -494,12 +514,19 @@ export const FriendsService = {
 		if (!uids.length) return [];
 
 		try {
-			const profilesRef = collection(db, COLLECTIONS.PROFILES);
+			const profilesRef = collection(db(), COLLECTIONS.PROFILES);
 			// Firestore дозволяє до 30 елементів в операторі 'in'
 			const batches = [];
 			for (let i = 0; i < uids.length; i += 30) {
 				const chunk = uids.slice(i, i + 30);
-				const q = query(profilesRef, where(documentId(), "in", chunk));
+				const q = query(
+					profilesRef,
+					// unbounded-query: межа тут не `limit()`, а сам оператор `in` —
+					// він приймає щонайбільше 30 значень, тож запит не може повернути
+					// більше за розмір чанка. Позначка лишає це видимим і для
+					// інваріанта, і для наступного читача.
+					where(documentId(), "in", chunk),
+				);
 				batches.push(getDocs(q));
 			}
 
@@ -518,7 +545,7 @@ export const FriendsService = {
 	 */
 	async getUserProfile(uid: string): Promise<UserProfile | null> {
 		try {
-			const profileRef = doc(db, COLLECTIONS.PROFILES, uid);
+			const profileRef = doc(db(), COLLECTIONS.PROFILES, uid);
 			const snapshot = await getDoc(profileRef);
 
 			if (snapshot.exists()) {
@@ -536,10 +563,11 @@ export const FriendsService = {
 	 * Оновити свій публічний профіль для пошуку
 	 */
 	async updatePublicProfile(): Promise<void> {
-		if (!auth.currentUser) return;
-
+		// Захоплюємо один раз: `currentUser` може змінитися між зверненнями.
+		const user = auth().currentUser;
+		if (!user) return;
 		try {
-			const profileRef = doc(db, COLLECTIONS.PROFILES, auth.currentUser.uid);
+			const profileRef = doc(db(), COLLECTIONS.PROFILES, user.uid);
 
 			// Отримуємо поточний профіль, щоб зберегти налаштування приватності
 			const snapshot = await getDoc(profileRef);
@@ -547,9 +575,9 @@ export const FriendsService = {
 
 			// Визначаємо найкраще ім'я для відображення
 			const displayName =
-				auth.currentUser.displayName ||
-				auth.currentUser.email?.split("@")[0] ||
-				(auth.currentUser.isAnonymous ? "Гість" : "User");
+				user.displayName ||
+				user.email?.split("@")[0] ||
+				(user.isAnonymous ? "Гість" : "User");
 
 			// Дефолтні налаштування приватності, якщо вони відсутні
 			const privacy = currentData.privacy || {
@@ -572,15 +600,15 @@ export const FriendsService = {
 			 * вході, тож поле зникає в усіх, хто відкрив застосунок, без окремого
 			 * скрипту й без вікна, у якому дані лежать у двох виглядах.
 			 */
-			const searchableEmailHash = await hashEmail(auth.currentUser.email);
+			const searchableEmailHash = await hashEmail(user.email);
 
 			await setDoc(
 				profileRef,
 				{
 					displayName: displayName,
 					displayNameLower: displayName.toLowerCase(),
-					photoURL: auth.currentUser.photoURL,
-					isAnonymous: auth.currentUser.isAnonymous,
+					photoURL: user.photoURL,
+					isAnonymous: user.isAnonymous,
 					searchableEmailHash,
 					searchableEmail: deleteField(),
 					updatedAt: serverTimestamp(),
@@ -601,18 +629,18 @@ export const FriendsService = {
 	async getCounts(
 		uid?: string,
 	): Promise<{ following: number; followers: number }> {
-		const targetUid = uid || auth.currentUser?.uid;
+		const targetUid = uid || auth().currentUser?.uid;
 		if (!targetUid) return { following: 0, followers: 0 };
 
 		try {
 			const followingRef = collection(
-				db,
+				db(),
 				COLLECTIONS.USERS,
 				targetUid,
 				COLLECTIONS.FOLLOWING,
 			);
 			const followersRef = collection(
-				db,
+				db(),
 				COLLECTIONS.USERS,
 				targetUid,
 				COLLECTIONS.FOLLOWERS,
@@ -658,8 +686,8 @@ export const FriendsService = {
 		}
 
 		try {
-			const profilesRef = collection(db, COLLECTIONS.PROFILES);
-			const currentUid = authStore.user?.uid || auth.currentUser?.uid;
+			const profilesRef = collection(db(), COLLECTIONS.PROFILES);
+			const currentUid = authStore.user?.uid || auth().currentUser?.uid;
 
 			// Беремо 100, щоб після фільтрації за порогами залишилось достатньо для TOP-20
 			const fetchLimit = 100;
@@ -730,7 +758,7 @@ export const FriendsService = {
 
 			// Якщо поточного користувача немає в ТОП-100, завантажуємо його окремо
 			if (currentUid && !results.find(u => u.uid === currentUid)) {
-				const myDoc = await getDoc(doc(db, COLLECTIONS.PROFILES, currentUid));
+				const myDoc = await getDoc(doc(db(), COLLECTIONS.PROFILES, currentUid));
 				if (myDoc.exists()) {
 					const data = myDoc.data() as Record<string, unknown>;
 					const globalTotalCorrect = (data.totalCorrect as number) || 0;
@@ -819,10 +847,11 @@ export const FriendsService = {
 	 * Оновити налаштування приватності
 	 */
 	async updatePrivacySettings(settings: UserPrivacySettings): Promise<boolean> {
-		if (!auth.currentUser) return false;
-
+		// Захоплюємо один раз: `currentUser` може змінитися між зверненнями.
+		const user = auth().currentUser;
+		if (!user) return false;
 		try {
-			const profileRef = doc(db, COLLECTIONS.PROFILES, auth.currentUser.uid);
+			const profileRef = doc(db(), COLLECTIONS.PROFILES, user.uid);
 			await setDoc(
 				profileRef,
 				{

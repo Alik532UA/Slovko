@@ -83,7 +83,12 @@ export interface UserDocument {
 export interface PublicProfileDocument {
 	displayName: string;
 	photoURL: string | null;
-	searchableEmail: string | null;
+	/**
+	 * SHA-256 від нормалізованої пошти. Самої адреси тут немає й бути не може:
+	 * правил рівня поля у Firestore не існує, а цю колекцію читає пошук
+	 * (CLOUD-DATABASE-v8 § 4.5).
+	 */
+	searchableEmailHash: string | null;
 	updatedAt: Timestamp;
 }
 

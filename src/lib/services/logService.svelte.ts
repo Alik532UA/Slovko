@@ -232,12 +232,18 @@ class LogService {
 	async logToRemote(action: string, details: Record<string, unknown>) {
 		try {
 			const sanitizedDetails = this.sanitizeDetails(details);
-			const { db, auth } = await import("../services/firebase/config");
+			const { getDb, getAuthInstance } = await import("../services/firebase/config");
 			const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
 
-			const uid = auth.currentUser?.uid || "anonymous";
+			/*
+			 * Запис можливий лише від свого імені — так вимагає правило
+			 * `system_logs`. Неавторизований журнал не пише взагалі: інакше
+			 * колекція перетворилася б на відкриту скриньку для будь-кого.
+			 */
+			const uid = getAuthInstance().currentUser?.uid;
+			if (!uid) return;
 
-			await addDoc(collection(db, "system_logs"), {
+			await addDoc(collection(getDb(), "system_logs"), {
 				timestamp: serverTimestamp(),
 				uid,
 				action,

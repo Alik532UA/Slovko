@@ -1,7 +1,16 @@
-﻿import { auth, db } from "../services/firebase/config";
+﻿import { getAuthInstance } from "../services/firebase/config";
+import { watchFollows } from "../services/firebase/userDataService";
+/*
+ * Ліниві акцесори до Firebase.
+ *
+ * SDK піднімається при ПЕРШОМУ зверненні, а не на імпорті цього модуля: інакше
+ * будь-який тест, що транзитивно тягне файл, вимагав би бойових ключів, щоб
+ * узагалі зібратися (CLOUD-DATABASE-v8 § 10.1).
+ */
+const auth = () => getAuthInstance();
+
 import { FriendsService, type FollowRecord, type UserProfile } from "../services/firebase/FriendsService";
 import { logService } from "../services/logService.svelte";
-import { collection, onSnapshot } from "firebase/firestore";
 import { settingsStore } from "./SettingsStore.svelte";
 
 class FriendsStoreClass {
@@ -103,22 +112,22 @@ class FriendsStoreClass {
 		
 		logService.log("sync", "Initializing real-time FriendsStore for:", uid);
 		
-		const followingRef = collection(db, "users", uid, "following");
-		const followersRef = collection(db, "users", uid, "followers");
+		/*
+		 * Мережа — в `userDataService`, тут лише стан.
+		 *
+		 * SDK бази в модулі з рунами означав би, що мережевий шар не підмінити в
+		 * тесті й не винести; одна відписка на обидві підписки повертається звідти.
+		 */
+		const unsubscribe = watchFollows(uid, (kind, docs) => {
+			if (kind === "following") {
+				this.following = docs as FollowRecord[];
+				this.lastUpdated = Date.now();
+				this.refreshProfiles(this.following);
+				return;
+			}
 
-		// Слухаємо підписки (кого я фоловлю)
-		const unsubFollowing = onSnapshot(followingRef, (snapshot) => {
-			this.following = snapshot.docs.map(doc => doc.data() as FollowRecord);
-			this.lastUpdated = Date.now();
-			this.refreshProfiles(this.following);
-		}, (err) => {
-			logService.error("sync", "Error in following snapshot:", err);
-		});
-
-		// Слухаємо підписників (хто мене фоловить)
-		const unsubFollowers = onSnapshot(followersRef, (snapshot) => {
 			const oldFollowers = this.followers;
-			const newFollowers = snapshot.docs.map(doc => doc.data() as FollowRecord);
+			const newFollowers = docs as FollowRecord[];
 			
 			this.followers = newFollowers;
 			this.lastUpdated = Date.now();
@@ -150,11 +159,9 @@ class FriendsStoreClass {
 			}
 
 			this.refreshProfiles(this.followers);
-		}, (err) => {
-			logService.error("sync", "Error in followers snapshot:", err);
 		});
 
-		this.unsubs.push(unsubFollowing, unsubFollowers);
+		this.unsubs.push(unsubscribe);
 	}
 
 	/**
@@ -183,10 +190,12 @@ class FriendsStoreClass {
 	 * Завантажити всі дані про друзів (Legacy / Force refresh)
 	 */
 	async refreshAll() {
-		if (!auth.currentUser) return;
+		// Захоплюємо один раз: `currentUser` може змінитися між зверненнями.
+		const user = auth().currentUser;
+		if (!user) return;
 		// Метод init тепер робить це автоматично через snapshot
 		if (this.unsubs.length === 0) {
-			this.init(auth.currentUser.uid);
+			this.init(user.uid);
 		}
 	}
 

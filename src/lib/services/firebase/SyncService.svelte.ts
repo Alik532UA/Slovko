@@ -12,7 +12,25 @@
 	deleteField,
 	type Unsubscribe,
 } from "firebase/firestore";
-import { db, auth } from "./config";
+import { getDb, getAuthInstance } from "./config";
+import {
+	WORDS_SCHEMA_VERSION,
+	allShardIds,
+	changedShardIds,
+	mergeShards,
+	splitIntoShards,
+	type WordMap,
+} from "./wordShards";
+/*
+ * Ліниві акцесори до Firebase.
+ *
+ * SDK піднімається при ПЕРШОМУ зверненні, а не на імпорті цього модуля: інакше
+ * будь-який тест, що транзитивно тягне файл, вимагав би бойових ключів, щоб
+ * узагалі зібратися (CLOUD-DATABASE-v8 § 10.1).
+ */
+const db = () => getDb();
+const auth = () => getAuthInstance();
+
 import { settingsStore } from "../../controllers/SettingsStore.svelte";
 import { progressStore } from "../../controllers/ProgressStore.svelte";
 import { playlistStore } from "../../controllers/PlaylistStore.svelte";
@@ -74,6 +92,14 @@ class SyncServiceClass {
 
 	private latestCloudMainDoc: UserCloudData | null = null;
 	private latestCloudCustomPlaylists: Playlist[] | null = null;
+	/**
+	 * Прогрес по словах, як він лежить у хмарі зараз.
+	 *
+	 * Потрібен, щоб знати, ЯКІ шарди змінилися: без цього довелося б писати всі
+	 * шістнадцять на кожну синхронізацію — тобто повернутися до перезапису всього
+	 * прогресу заради одного лічильника.
+	 */
+	private latestCloudWords: WordMap | null = null;
 
 	// Реактивні стани (Runes)
 	status = $state<SyncStatus>("idle");
@@ -146,7 +172,7 @@ class SyncServiceClass {
 	 */
 	private async migrateToV2(uid: string, customPlaylists: Playlist[]) {
 		logService.log("sync", "Starting database migration to v2 (playlists subcollection)...");
-		const playlistsRef = collection(db, COLLECTIONS.USERS, uid, "playlists_v2");
+		const playlistsRef = collection(db(), COLLECTIONS.USERS, uid, "playlists_v2");
 
 		this.migrationInProgress = true;
 		this.migrationTotal = customPlaylists.length;
@@ -154,8 +180,8 @@ class SyncServiceClass {
 
 		try {
 			if (customPlaylists.length === 0) {
-				const userDocRef = doc(db, COLLECTIONS.USERS, uid);
-				const batch = writeBatch(db);
+				const userDocRef = doc(db(), COLLECTIONS.USERS, uid);
+				const batch = writeBatch(db());
 				batch.set(userDocRef, {
 					playlists: { dbVersion: 2 },
 					migrationV2At: Date.now()
@@ -169,7 +195,7 @@ class SyncServiceClass {
 			const CHUNK_SIZE = 400;
 			for (let i = 0; i < customPlaylists.length; i += CHUNK_SIZE) {
 				const chunk = customPlaylists.slice(i, i + CHUNK_SIZE);
-				const batch = writeBatch(db);
+				const batch = writeBatch(db());
 
 				for (const playlist of chunk) {
 					if (playlist && playlist.id) {
@@ -180,7 +206,7 @@ class SyncServiceClass {
 
 				// Оновлюємо версію БД лише в останньому чанку
 				if (i + CHUNK_SIZE >= customPlaylists.length) {
-					const userDocRef = doc(db, COLLECTIONS.USERS, uid);
+					const userDocRef = doc(db(), COLLECTIONS.USERS, uid);
 					batch.set(userDocRef, {
 						playlists: { dbVersion: 2 },
 						migrationV2At: Date.now()
@@ -223,8 +249,8 @@ class SyncServiceClass {
 		this.latestCloudMainDoc = null;
 		this.latestCloudCustomPlaylists = null;
 
-		const userDocRef = doc(db, COLLECTIONS.USERS, uid);
-		const playlistsV2Ref = collection(db, COLLECTIONS.USERS, uid, "playlists_v2");
+		const userDocRef = doc(db(), COLLECTIONS.USERS, uid);
+		const playlistsV2Ref = collection(db(), COLLECTIONS.USERS, uid, "playlists_v2");
 
 		this.unsubscribe = onSnapshot(
 			userDocRef,
@@ -364,7 +390,7 @@ class SyncServiceClass {
 
 	private async checkForOrphanedHistory(uid: string) {
 		try {
-			const historyRef = collection(db, COLLECTIONS.USERS, uid, COLLECTIONS.HISTORY);
+			const historyRef = collection(db(), COLLECTIONS.USERS, uid, COLLECTIONS.HISTORY);
 			const q = query(historyRef, limit(1));
 			const snapshot = await getDocs(q);
 
@@ -384,7 +410,7 @@ class SyncServiceClass {
 	}
 
 	async uploadAll(force = false) {
-		if (!auth.currentUser || !this.isOnline) return;
+		if (!auth().currentUser || !this.isOnline) return;
 
 		this.pendingUpload = true;
 		if (this.uploadTimeout) clearTimeout(this.uploadTimeout);
@@ -399,7 +425,10 @@ class SyncServiceClass {
 	}
 
 	private async performUpload() {
-		if (!auth.currentUser || this.isDownloading || !this.hasInitialData || !this.isOnline || this.isUploading) {
+		// Захоплюємо один раз: між перевіркою й записом лежить `await`, і за цей
+		// час `currentUser` може стати іншим — тоді дані поїхали б у чужий документ.
+		const user = auth().currentUser;
+		if (!user || this.isDownloading || !this.hasInitialData || !this.isOnline || this.isUploading) {
 			return;
 		}
 
@@ -407,22 +436,43 @@ class SyncServiceClass {
 		this.pendingUpload = false;
 		this.status = "syncing";
 
-		const uid = auth.currentUser.uid;
-		const userDocRef = doc(db, COLLECTIONS.USERS, uid);
-		const profileRef = doc(db, COLLECTIONS.PROFILES, uid);
-		const playlistsV2Ref = collection(db, COLLECTIONS.USERS, uid, "playlists_v2");
+		const uid = user.uid;
+		const userDocRef = doc(db(), COLLECTIONS.USERS, uid);
+		const profileRef = doc(db(), COLLECTIONS.PROFILES, uid);
+		const playlistsV2Ref = collection(db(), COLLECTIONS.USERS, uid, "playlists_v2");
 
 		try {
 			const today = new Date().toISOString().split("T")[0];
-			const historyRef = doc(db, COLLECTIONS.USERS, uid, COLLECTIONS.HISTORY, today);
+			const historyRef = doc(db(), COLLECTIONS.USERS, uid, COLLECTIONS.HISTORY, today);
 
-			const [snapshot, historySnap] = await Promise.all([
+			/*
+			 * Прогрес по словах приходить із підколекції `words`, а не з поля
+			 * головного документа. Шістнадцять читань замість одного — ціна за те,
+			 * що жоден із них не впирається в межу 1 МіБ і що запис торкається
+			 * одного шарда замість усього прогресу.
+			 */
+			const wordsCollection = collection(db(), COLLECTIONS.USERS, uid, "words");
+			const [snapshot, historySnap, shardSnaps] = await Promise.all([
 				getDoc(userDocRef),
-				getDoc(historyRef)
+				getDoc(historyRef),
+				Promise.all(allShardIds().map((id) => getDoc(doc(wordsCollection, id))))
 			]);
 
 			const cloudData = snapshot.exists() ? snapshot.data() as UserCloudData : {};
 			const cloudHistory = historySnap.exists() ? historySnap.data() as ProgressState : null;
+
+			/*
+			 * Поки користувач не мігрував, слова лежать у старому полі — беремо
+			 * звідти. Після міграції поле зникає, і джерелом стають шарди. Обидва
+			 * шляхи існують одночасно рівно один прогін, і саме тому запис нижче
+			 * робить перенесення й видалення ОДНИМ атомарним батчем.
+			 */
+			const shardedWords = mergeShards(shardSnaps.map((snap) => (snap.exists() ? (snap.data() as WordMap) : null)));
+			const legacyWords = (cloudData.progress as { words?: WordMap } | undefined)?.words ?? {};
+			this.latestCloudWords = Object.keys(shardedWords).length > 0 ? shardedWords : legacyWords;
+			if (cloudData.progress) {
+				(cloudData.progress as { words?: WordMap }).words = this.latestCloudWords;
+			}
 
 			const dbVersion = cloudData.playlists?.dbVersion || 1;
 			const isV2 = dbVersion >= 2;
@@ -457,16 +507,47 @@ class SyncServiceClass {
 				updatedAt: mergedPlaylists.updatedAt
 			};
 
+			/*
+			 * МАПА СЛІВ НЕ ЙДЕ В ГОЛОВНИЙ ДОКУМЕНТ.
+			 *
+			 * Вона росте з кожним вивченим словом і впиралася б у межу 1 МіБ на
+			 * документ, а кожна синхронізація перезаписувала б її цілком заради
+			 * одного лічильника. Тепер слова живуть у підколекції `words` шардами,
+			 * а сюди йде решта прогресу (підсумки, серії, дати) — вона обмежена за
+			 * побудовою (CLOUD-DATABASE-v8 § 6.2).
+			 */
+			const { words: mergedWords, ...progressWithoutWords } = mergedProgress;
 			const mergedData = {
 				settings: mergedSettings,
-				progress: mergedProgress,
+				progress: { ...progressWithoutWords, dbVersion: WORDS_SCHEMA_VERSION },
 				playlists: mainDocPlaylists,
 				lastSync: Date.now(),
 			};
 
 			const profileUpdate = this.prepareProfileUpdate(mergedProgress);
-			const batch = writeBatch(db);
+			const batch = writeBatch(db());
 			batch.set(userDocRef, mergedData, { merge: true });
+
+			/*
+			 * Пишемо лише ті шарди, які справді змінилися. Одне вивчене слово —
+			 * один документ замість усього прогресу.
+			 *
+			 * Стару мапу з головного документа прибираємо ТИМ САМИМ батчем: батч
+			 * атомарний, тож або шарди й видалення застосуються разом, або не
+			 * застосується нічого. Проміжного стану, у якому прогрес уже стерто, а
+			 * шардів ще немає, не існує.
+			 */
+			const wordsRef = collection(db(), COLLECTIONS.USERS, uid, "words");
+			const shards = splitIntoShards(mergedWords ?? {});
+			const dirty = changedShardIds(mergedWords ?? {}, this.latestCloudWords ?? {});
+			for (const id of dirty) {
+				batch.set(doc(wordsRef, id), shards[id]);
+			}
+			if ((cloudData.progress as { dbVersion?: number } | undefined)?.dbVersion !== WORDS_SCHEMA_VERSION) {
+				batch.set(userDocRef, { progress: { words: deleteField() } }, { merge: true });
+				logService.log("sync", `Міграція прогресу до v${WORDS_SCHEMA_VERSION}: ${dirty.length} шардів`);
+			}
+			this.latestCloudWords = mergedWords ?? {};
 			batch.set(profileRef, profileUpdate, { merge: true });
 			if (localActivity) {
 				batch.set(historyRef, localActivity, { merge: true });
@@ -489,8 +570,9 @@ class SyncServiceClass {
 				}
 			}
 
-			if (!auth.currentUser) return;
-
+			// Захоплюємо один раз: `currentUser` може змінитися між зверненнями.
+			const user = auth().currentUser;
+			if (!user) return;
 			try {
 				await batch.commit();
 			} catch (err) {
@@ -511,7 +593,7 @@ class SyncServiceClass {
 			}
 		} catch (e: unknown) {
 			const err = e as { code?: string };
-			if (err?.code !== 'permission-denied' || auth.currentUser) {
+			if (err?.code !== 'permission-denied' || auth().currentUser) {
 				logService.error("sync", "Sync Upload Error:", e);
 			}
 			this.status = "error";
@@ -524,7 +606,9 @@ class SyncServiceClass {
 	}
 
 	private handleCloudUpdate(cloudData: UserCloudData) {
-		if (!auth.currentUser) return;
+		// Захоплюємо один раз: `currentUser` може змінитися між зверненнями.
+		const user = auth().currentUser;
+		if (!user) return;
 		if (this.isUploading) {
 			this.pendingCloudUpdate = cloudData;
 			return;
@@ -636,7 +720,7 @@ class SyncServiceClass {
 	}
 
 	async restorePoints(amount: number, reason: string) {
-		if (!auth.currentUser || amount <= 0) return;
+		if (!auth().currentUser || amount <= 0) return;
 		const current = progressStore.value;
 		const record = { amount, reason, timestamp: Date.now(), adminId: "system" };
 		progressStore._internalSet({
@@ -690,7 +774,7 @@ class SyncServiceClass {
 	}
 
 	private prepareProfileUpdate(progress: ProgressState) {
-		const user = auth.currentUser;
+		const user = auth().currentUser;
 		const displayName = user?.displayName || user?.email?.split("@")[0] || "User";
 		const update: Record<string, string | number | boolean | null | ReturnType<typeof serverTimestamp>> = {
 			displayName,
@@ -720,7 +804,7 @@ class SyncServiceClass {
 		}
 		const delay = Math.min(RETRY_CONFIG.baseDelay * Math.pow(2, this.retryCount), RETRY_CONFIG.maxDelay);
 		this.retryCount++;
-		setTimeout(() => { if (this.isOnline && auth.currentUser) this.performUpload(); }, delay);
+		setTimeout(() => { if (this.isOnline && auth().currentUser) this.performUpload(); }, delay);
 	}
 
 	getStatus() {
