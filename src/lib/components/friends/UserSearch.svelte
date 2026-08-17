@@ -149,9 +149,16 @@
 
 					<div class="user-info">
 						<span class="display-name">{user.displayName || "User"}</span>
-						{#if user.searchableEmail}
-							<span class="email-hint">{user.searchableEmail}</span>
-						{/if}
+						<!--
+							Пошти тут більше немає — і показувати її нема з чого.
+
+							У профілі лежить лише SHA-256 адреси: правил рівня поля у
+							Firestore не існує, тож відкрита адреса в колекції, яку читає
+							пошук, означала б усю базу пошт за один запит. Підказка нічого й
+							не додавала: пошук працює за ТОЧНИМ збігом, тобто людина щойно
+							сама ввела цю адресу.
+						-->
+
 					</div>
 
 					<FollowButton
@@ -341,14 +348,6 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		color: var(--text-primary);
-	}
-
-	.email-hint {
-		font-size: 0.75rem;
-		color: var(--text-secondary);
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
 	}
 
 	.empty-state {

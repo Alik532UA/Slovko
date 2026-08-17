@@ -4,7 +4,7 @@
  * Структура Firestore:
  * /users/{uid}/following/{targetUid} - на кого підписаний користувач
  * /users/{uid}/followers/{followerUid} - хто підписаний на користувача
- * /users/{uid}/profile - публічний профіль (displayName, photoURL, searchableEmail)
+ * /profiles/{uid}          - публічний профіль (displayName, photoURL, searchableEmailHash)
  */
 
 import {
@@ -21,9 +21,11 @@ import {
 	getCountFromServer,
 	writeBatch,
 	documentId,
+	deleteField,
 	type Timestamp,
 } from "firebase/firestore";
 import { db, auth } from "./config";
+import { hashEmail } from "../../utils/emailHash";
 import { authStore } from "../../controllers/AuthStore.svelte";
 import { logService } from "../../services/logService.svelte";
 import type { UserPrivacySettings } from "../../types";
@@ -33,7 +35,12 @@ export interface UserProfile {
 	uid: string;
 	displayName: string;
 	photoURL: string | null;
-	searchableEmail?: string; // Для пошуку (опціонально)
+	/**
+	 * SHA-256 від нормалізованої пошти. Самої адреси тут НЕМАЄ й бути не може:
+	 * дозвіл читати документ означає дозвіл читати всі його поля, а ця колекція
+	 * читається для пошуку (див. `utils/emailHash.ts`).
+	 */
+	searchableEmailHash?: string | null;
 	privacy?: UserPrivacySettings;
 }
 
@@ -424,14 +431,22 @@ export const FriendsService = {
 		if (!searchQuery || searchQuery.length < 2) return [];
 
 		try {
-			const queryLower = searchQuery.toLowerCase().trim();
 			const profilesRef = collection(db, COLLECTIONS.PROFILES);
 
-			// 1. Спочатку спробуємо знайти точний збіг по email
-			// Фільтруємо за privacy.showInSearch
+			/*
+			 * Шукаємо за ХЕШЕМ пошти, а не за самою адресою.
+			 *
+			 * Точний збіг працює так само — а витягти адресу з колекції стає
+			 * неможливо. Умова `privacy.showInSearch` лишається, але тепер вона не
+			 * єдиний захист: те саме обмеження повторене у правилі `profiles`, бо
+			 * клієнтський фільтр контролем доступу не є.
+			 */
+			const queryHash = await hashEmail(searchQuery);
+			if (!queryHash) return [];
+
 			const emailQuery = query(
 				profilesRef,
-				where("searchableEmail", "==", queryLower),
+				where("searchableEmailHash", "==", queryHash),
 				where("privacy.showInSearch", "==", true),
 				limit(maxResults),
 			);
@@ -543,6 +558,22 @@ export const FriendsService = {
 				shareStats: true,
 			};
 
+			/*
+			 * Пошта лягає ХЕШЕМ, а не текстом, і стара відкрита адреса видаляється
+			 * тим самим записом.
+			 *
+			 * Правил рівня поля у Firestore немає: дозвіл читати документ означає
+			 * дозвіл читати всі його поля. Колекція `profiles` читається для пошуку,
+			 * тож відкрита адреса тут — це вся база пошт за один запит. Умова
+			 * `privacy.showInSearch` від цього не рятує: вона фільтр запиту, а не
+			 * контроль доступу (CLOUD-DATABASE-v8 § 4.4, § 4.5).
+			 *
+			 * `deleteField()` тут і є міграцією: профіль переписується при кожному
+			 * вході, тож поле зникає в усіх, хто відкрив застосунок, без окремого
+			 * скрипту й без вікна, у якому дані лежать у двох виглядах.
+			 */
+			const searchableEmailHash = await hashEmail(auth.currentUser.email);
+
 			await setDoc(
 				profileRef,
 				{
@@ -550,7 +581,8 @@ export const FriendsService = {
 					displayNameLower: displayName.toLowerCase(),
 					photoURL: auth.currentUser.photoURL,
 					isAnonymous: auth.currentUser.isAnonymous,
-					searchableEmail: auth.currentUser.email?.toLowerCase() || null,
+					searchableEmailHash,
+					searchableEmail: deleteField(),
 					updatedAt: serverTimestamp(),
 					privacy: privacy,
 				},
@@ -658,7 +690,7 @@ export const FriendsService = {
 			const results: LeaderboardEntry[] = snapshot.docs.map((doc) => {
 				const data = doc.data() as Record<string, unknown>;
 				const isAnonymous = data.isAnonymous === true ||
-					(data.isAnonymous === undefined && !data.searchableEmail);
+					(data.isAnonymous === undefined && !data.searchableEmailHash);
 
 				// Перевірка порогу на основі ГЛОБАЛЬНИХ даних (SSoT)
 				let meetsThreshold = true;
@@ -715,7 +747,7 @@ export const FriendsService = {
 
 					// Детекція анонімності для себе
 					const isAnonymous = data.isAnonymous === true ||
-						(data.isAnonymous === undefined && !data.searchableEmail);
+						(data.isAnonymous === undefined && !data.searchableEmailHash);
 
 					results.push({
 						uid: currentUid,

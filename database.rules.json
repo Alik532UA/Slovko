@@ -1,0 +1,82 @@
+// Правила Realtime Database.
+//
+// ЦЬОГО ФАЙЛУ РАНІШЕ НЕ ІСНУВАЛО — правила жили лише в консолі Firebase.
+//
+// RTDB тут тримає три речі, і всі вони про «зараз», а не про збережені дані:
+//
+//   /status/{uid}            присутність: онлайн / офлайн
+//   /discovery/{uid}         «я відкритий до знайомства» — список тих, хто зараз онлайн
+//   /signals/{uid}/{key}     сигнал ІНШОМУ користувачеві (помахати, запросити)
+//
+// ЧОМУ САМЕ RTDB. Через `onDisconnect`: обіцянку виконує СЕРВЕР, коли клієнт
+// зник. У Firestore такого механізму немає, а без нього «онлайн зараз» — це
+// таймер на клієнті, який бреше рівно тоді, коли потрібен
+// (CLOUD-DATABASE-v8 § 5.1).
+{
+  "rules": {
+    "status": {
+      // Читає будь-хто авторизований: на цьому стоїть позначка «онлайн» біля
+      // друга. Перелічити всіх при цьому теж можна — гілка дрібна й публічна за
+      // призначенням.
+      ".read": "auth != null",
+      "$uid": {
+        // Кожен пише лише про себе.
+        ".write": "auth != null && $uid === auth.uid",
+        ".validate": "newData.hasChildren(['state'])",
+        "state": {
+          ".validate": "newData.isString() && newData.val().length <= 16"
+        },
+        "last_changed": {
+          // Час ставить сервер: `serverTimestamp()` розкривається до валідації,
+          // тож вікно навколо `now` відкидає підроблене число.
+          ".validate": "newData.isNumber() && newData.val() <= now && newData.val() > now - 5000"
+        }
+      }
+    },
+
+    "discovery": {
+      /*
+       * Список тих, хто зараз відкритий до знайомства.
+       *
+       * Читання відкрите для авторизованих — інакше екран знайомств порожній. Це
+       * СВІДОМЕ рішення з ціною: тут видно ім'я й аватар кожного, хто зараз у
+       * цьому режимі. Тому гілка й обмежена: людина потрапляє в неї лише поки
+       * сама відкрила екран, а `onDisconnect` прибирає запис, щойно вкладка
+       * зникла.
+       */
+      ".read": "auth != null",
+      "$uid": {
+        ".write": "auth != null && $uid === auth.uid",
+        ".validate": "newData.hasChildren(['timestamp'])",
+        "displayName": { ".validate": "newData.isString() && newData.val().length <= 40" },
+        "timestamp": {
+          ".validate": "newData.isNumber() && newData.val() <= now && newData.val() > now - 5000"
+        }
+      }
+    },
+
+    "signals": {
+      "$uid": {
+        /*
+         * СИГНАЛИ ПРИХОДЯТЬ У ЧУЖУ ГІЛКУ, І ЦЕ НАВМИСНО.
+         *
+         * Читає й прибирає лише адресат: `/signals/{я}` — це моя скринька.
+         * Написати може будь-хто авторизований — інакше «помахати» неможливо. Що
+         * тримає це в межах: сигнал можна лише СТВОРИТИ (`!data.exists()`), він
+         * мусить бути підписаний своїм `from`, і його форма перевірена. Тобто
+         * чужу скриньку не переписати й не підробити відправника.
+         */
+        ".read": "auth != null && $uid === auth.uid",
+        "$signalKey": {
+          ".write": "auth != null && (!data.exists() ? newData.child('from').val() === auth.uid : $uid === auth.uid)",
+          ".validate": "newData.hasChildren(['from', 'type'])",
+          "from": { ".validate": "newData.isString() && newData.val().length <= 64" },
+          "type": { ".validate": "newData.isString() && newData.val().length <= 32" },
+          "timestamp": {
+            ".validate": "newData.isNumber() && newData.val() <= now && newData.val() > now - 5000"
+          }
+        }
+      }
+    }
+  }
+}

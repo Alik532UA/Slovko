@@ -37,3 +37,8 @@ test-results/
 playwright-report/
 test-results/
 
+# Артефакти емулятора Firebase (npm run check:rules, npm run emulators).
+# Пишуться в корінь при кожному прогоні — PROJECT-STRUCTURE-v8 § 1 називає це
+# артефактом, який не комітиться.
+*-debug.log
+firebase-debug.*.log
