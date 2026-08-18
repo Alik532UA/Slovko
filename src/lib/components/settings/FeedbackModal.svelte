@@ -15,6 +15,7 @@
 		type FeedbackCategory,
 	} from "../../services/firebase/FeedbackService";
 	import BaseModal from "../ui/BaseModal.svelte";
+	import { errorToMessageKey } from "$lib/errors";
 
 	interface Props {
 		onclose: () => void;
@@ -45,8 +46,10 @@
 			isSuccess = true;
 			setTimeout(onclose, 2500);
 		} catch (e: unknown) {
-			const err = e as { message?: string };
-			error = err.message || "Помилка при відправці";
+			// Доти сюди приходив рядок `AUTH_REQUIRED`, і саме це слово
+			// показувалося користувачеві; решта збоїв віддавала англійський
+			// текст Firebase. Запасний варіант теж був захардкоджений українською.
+			error = $_(errorToMessageKey(e));
 		} finally {
 			isSubmitting = false;
 		}

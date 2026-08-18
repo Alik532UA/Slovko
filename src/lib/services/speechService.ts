@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Speech Service — озвучування слів через Web Speech API
  * Final stable version for iOS/Android/Desktop
  */
@@ -81,7 +81,13 @@ export function speakText(text: string, lang: string): void {
 			selectedVoice = currentVoices.find(v => v.voiceURI === prefs[lang]);
 			if (selectedVoice) hasUserPref = true;
 		}
-	} catch (_e) { }
+	} catch (error) {
+		// Збій читання уподобань — очікуваний: сховище могло не піднятися, а
+		// запис лишитися від старої схеми. Голос усе одно підбереться нижче,
+		// тож рівень `warn`, а не `error` (ERROR-HANDLING-v8 § 1.4). Мовчазний
+		// `catch` тут стояв доти, і вибір голосу тихо відкочувався на типовий.
+		logService.warn("ui", "Не вдалося прочитати уподобання голосу", error);
+	}
 
 	if (!selectedVoice) {
 		selectedVoice = findBestVoice(currentVoices, lang === "crh" ? "tr" : lang);

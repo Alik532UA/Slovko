@@ -6,6 +6,7 @@ import {
 	type User,
 } from "firebase/auth";
 import { getAuthInstance, getGoogleProvider } from "./config";
+import { AuthError, errorToMessageKey } from "$lib/errors";
 /*
  * Ліниві акцесори до Firebase.
  *
@@ -15,6 +16,19 @@ import { getAuthInstance, getGoogleProvider } from "./config";
  */
 const auth = () => getAuthInstance();
 const googleProvider = () => getGoogleProvider();
+
+/**
+ * Межа адаптера (SVELTE-CORE-v8 § 3.6): усе, що йде з цього сервісу назовні, —
+ * доменна помилка з ключем i18n, а не помилка Firebase SDK.
+ *
+ * Доти назовні летіла помилка SDK, а форма показувала її `message` як є —
+ * англійський рядок виду `Firebase: Error (auth/wrong-password).` замість
+ * шістнадцяти перекладених повідомлень, які лежали у словниках без ужитку.
+ */
+const asAuthError = (error: unknown) =>
+	error instanceof AuthError
+		? error
+		: new AuthError(errorToMessageKey(error), error);
 
 
 /**
@@ -77,13 +91,11 @@ export const AuthService = {
 
 					return result.user;
 				} catch (error) {
-					const e = error as { code?: string };
-					if (e.code === "auth()/account-exists-with-different-credential") {
-						// Це критичний момент: користувач намагається зайти через Google,
-						// але акаунт вже створений через Email.
-						throw new Error("ACCOUNT_EXISTS_EMAIL");
-					}
-					throw error;
+					// Код записаний саме як `auth/…`. Доти тут стояло `auth()/…`
+					// — слід автозаміни `auth.` → `auth()`, який не збігався ні з
+					// чим, тож гілка не спрацьовувала жодного разу, а користувач
+					// бачив сире повідомлення SDK.
+					throw asAuthError(error);
 				}
 			}
 
@@ -96,15 +108,12 @@ export const AuthService = {
 				);
 				return user;
 			} catch (error) {
-				const e = error as { code?: string };
-				if (e.code === "auth()/credential-already-in-use") {
-					// Цей Google-акаунт вже прив'язаний до ІНШОГО користувача
-					throw new Error("GOOGLE_ALREADY_LINKED_ELSEWHERE");
-				}
-				throw error;
+				// `auth/credential-already-in-use` — цей Google-акаунт уже
+				// прив'язаний до ІНШОГО користувача Slovko.
+				throw asAuthError(error);
 			}
 		} catch (error) {
-			throw error;
+			throw asAuthError(error);
 		}
 	},
 
@@ -138,7 +147,7 @@ export const AuthService = {
 				return result.user;
 			}
 		} catch (error) {
-			throw error;
+			throw asAuthError(error);
 		}
 	},
 
@@ -152,7 +161,7 @@ export const AuthService = {
 			const result = await signInWithEmailAndPassword(auth(), email, password);
 			return result.user;
 		} catch (error) {
-			throw error;
+			throw asAuthError(error);
 		}
 	},
 
@@ -222,7 +231,7 @@ export const AuthService = {
 		try {
 			await sendPasswordResetEmail(auth(), email);
 		} catch (error) {
-			throw error;
+			throw asAuthError(error);
 		}
 	},
 
@@ -255,7 +264,7 @@ export const AuthService = {
 				const credential = EmailAuthProvider.credential(user.email, password);
 				await reauthenticateWithCredential(user, credential);
 			} else if (!user.isAnonymous) {
-				throw new Error("Password is required for email providers");
+				throw new AuthError("profile.errors.enterPassword");
 			}
 
 			// 2. Видалення даних з Firestore
@@ -271,7 +280,7 @@ export const AuthService = {
 			// 3. Видалення самого користувача
 			await deleteUser(user);
 		} catch (error) {
-			throw error;
+			throw asAuthError(error);
 		}
 	},
 };

@@ -11,7 +11,9 @@
 			"modalDesc1": "Slovko'nıñ öz sesi yoq, o cihazıñıznıñ sistem imkânlarını qullana.",
 			"modalDesc2": "Teessüf ki, şimdiki brauzeriñiz yaki operatsion sisteması bu til içün nutuq sintezini desteklemey: {lang}.",
 			"modalDesc3": "Başqa bir brauzer (meselâ Chrome yaki Safari) qullanmağa tırışıñız yaki sistem sazlamalarını teşkeriñiz."
-		}
+		},
+		"authRequired": "Fikir yollamaq içün lütfen kiriñiz.",
+		"submitFailed": "Yollav hatası. Lütfen soñra deñeñiz."
 	},
 	"levels": {
 		"title": "Seviyeler",
@@ -360,8 +362,6 @@
 		"commentLabel": "Siziñ tefsiriñiz (istek boyunça)",
 		"commentPlaceholder": "Neniñ yañlış olğanını tarif etiñiz...",
 		"success": "Sağ oluñız! Haber yollandı.",
-		"error": "Yollav hatası. Lütfen soñra deñeñiz.",
-		"authRequired": "Fikir yollamaq içün lütfen kiriñiz.",
 		"type": {
 			"wrongTranslation": "Yañlış tercime",
 			"wrongTranscription": "Transkriptsiya hatası",

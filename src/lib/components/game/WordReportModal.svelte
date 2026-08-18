@@ -3,6 +3,7 @@
 	import { Send, AlertTriangle, CheckCircle2 } from "lucide-svelte";
 	import { FeedbackService } from "$lib/services/firebase/FeedbackService";
 	import { notificationStore } from "$lib/controllers/NotificationStore.svelte";
+	import { errorToMessageKey } from "$lib/errors";
 	import { fade } from "svelte/transition";
 	import BaseModal from "../ui/BaseModal.svelte";
 
@@ -43,12 +44,11 @@
 			isSuccess = true;
 			setTimeout(onclose, 2500);
 		} catch (e: unknown) {
-			const err = e as { message?: string };
-			if (err.message === "AUTH_REQUIRED") {
-				notificationStore.error($_("wordReport.authRequired"));
-			} else {
-				notificationStore.error($_("wordReport.error"));
-			}
+			// Розрізнення через instanceof, а не звіряння рядка в `message`
+			// (ERROR-HANDLING-v8 § 1.3): доти сюди прилітало
+			// `new Error("AUTH_REQUIRED")`, і будь-яка інша форма запису того
+			// самого стану мовчки провалювалася б у загальну гілку.
+			notificationStore.error($_(errorToMessageKey(e)));
 		} finally {
 			isSubmitting = false;
 		}

@@ -11,7 +11,9 @@
 			"modalDesc1": "Slovko doesn't have built-in voice acting, but uses the system capabilities of your device.",
 			"modalDesc2": "Unfortunately, your current browser or operating system does not support speech synthesis for the {lang} language.",
 			"modalDesc3": "Try using another browser (like Chrome or Safari) or check your system settings."
-		}
+		},
+		"authRequired": "Please sign in to send feedback.",
+		"submitFailed": "Error sending report. Please try again later."
 	},
 	"levels": {
 		"title": "Levels",
@@ -391,8 +393,6 @@
 		"commentLabel": "Your comment (optional)",
 		"commentPlaceholder": "Describe what exactly is wrong...",
 		"success": "Thank you! Report sent.",
-		"error": "Error sending report. Please try again later.",
-		"authRequired": "Please sign in to send feedback.",
 		"type": {
 			"wrongTranslation": "Wrong translation",
 			"wrongTranscription": "Transcription error",

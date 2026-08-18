@@ -20,6 +20,7 @@ import { AuthService } from "./AuthService";
 import { versionStore } from "../../controllers/VersionStore.svelte";
 import { settingsStore } from "../../controllers/SettingsStore.svelte";
 import { logService } from "../../services/logService.svelte";
+import { NetworkError, PermissionError, SubmitError } from "$lib/errors";
 
 export type FeedbackCategory = "bug" | "improvement" | "contact";
 
@@ -115,8 +116,16 @@ export const FeedbackService = {
 		} catch (error: unknown) {
 			const err = error as FirestoreError;
 			logService.error("sync", "Error submitting feedback:", err);
-			if (err.code === "permission-denied") throw new Error("AUTH_REQUIRED");
-			throw error;
+			/*
+			 * `permission-denied` тут означає прогалину у ФАЙЛІ ПРАВИЛ так само
+			 * часто, як і відсутній сеанс: 2026-08-18 правил для `feedback` не
+			 * існувало взагалі, і відмова показувалася користувачеві як
+			 * проблема з його входом. Клас розрізняє ці два випадки для
+			 * журналу, лишаючи на екрані те саме прохання увійти.
+			 */
+			if (err.code === "permission-denied") throw new PermissionError(undefined, err);
+			if (err.code === "unavailable") throw new NetworkError(undefined, err);
+			throw new SubmitError(undefined, err);
 		}
 	},
 
@@ -177,8 +186,9 @@ export const FeedbackService = {
 		} catch (error: unknown) {
 			const err = error as FirestoreError;
 			logService.error("sync", "Error reporting word error:", err);
-			if (err.code === "permission-denied") throw new Error("AUTH_REQUIRED");
-			throw error;
+			if (err.code === "permission-denied") throw new PermissionError(undefined, err);
+			if (err.code === "unavailable") throw new NetworkError(undefined, err);
+			throw new SubmitError(undefined, err);
 		}
 	},
 };

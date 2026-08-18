@@ -11,7 +11,9 @@
 			"modalDesc1": "Slovko heeft geen ingebouwde stem, maar gebruikt de systeemfuncties van je apparaat.",
 			"modalDesc2": "Helaas ondersteunt je huidige browser of besturingssysteem geen spraaksynthese voor de taal: {lang}.",
 			"modalDesc3": "Probeer een andere browser (zoals Chrome of Safari) of controleer je systeeminstellingen."
-		}
+		},
+		"authRequired": "Log in om feedback te sturen.",
+		"submitFailed": "Fout bij verzenden. Probeer het later opnieuw."
 	},
 	"levels": {
 		"title": "Niveaus",
@@ -360,8 +362,6 @@
 		"commentLabel": "Jouw opmerking (optioneel)",
 		"commentPlaceholder": "Beschrijf wat er precies mis is...",
 		"success": "Bedankt! Het rapport is verzonden.",
-		"error": "Fout bij verzenden. Probeer het later opnieuw.",
-		"authRequired": "Log in om feedback te sturen.",
 		"type": {
 			"wrongTranslation": "Verkeerde vertaling",
 			"wrongTranscription": "Fout in transcriptie",

@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { LayoutGrid, Users, TriangleAlert } from "lucide-svelte";
 	import { logService } from "../../services/logService.svelte";
@@ -18,6 +18,7 @@
 	import AuthForm from "../auth/AuthForm.svelte";
 	import { smoothHeight } from "../../utils/actions/smoothHeight";
 	import BaseModal from "../ui/BaseModal.svelte";
+	import { errorToMessageKey } from "$lib/errors";
 	import SegmentedControl from "../ui/SegmentedControl.svelte";
 
 	interface Props {
@@ -86,8 +87,7 @@
 			await AuthService.signInWithEmail(email, pass);
 			loginMethod = null;
 		} catch (e: unknown) {
-			const err = e as { message?: string };
-			errorMessage = err.message || $_("profile.errors.unknownError");
+			errorMessage = $_(errorToMessageKey(e));
 		} finally {
 			isLoading = false;
 		}
@@ -100,8 +100,7 @@
 			await AuthService.linkWithEmail(email, pass);
 			loginMethod = null;
 		} catch (e: unknown) {
-			const err = e as { message?: string };
-			errorMessage = err.message || $_("profile.errors.unknownError");
+			errorMessage = $_(errorToMessageKey(e));
 		} finally {
 			isLoading = false;
 		}
@@ -114,8 +113,7 @@
 			await AuthService.linkWithGoogle();
 			loginMethod = null;
 		} catch (e: unknown) {
-			const err = e as { message?: string };
-			errorMessage = err.message || $_("profile.errors.unknownError");
+			errorMessage = $_(errorToMessageKey(e));
 		} finally {
 			isLoading = false;
 		}
@@ -134,8 +132,7 @@
 				loginMethod = "auth";
 			}, 3000);
 		} catch (e: unknown) {
-			const err = e as { message?: string };
-			errorMessage = err.message || $_("profile.errors.unknownError");
+			errorMessage = $_(errorToMessageKey(e));
 		} finally {
 			isLoading = false;
 		}
