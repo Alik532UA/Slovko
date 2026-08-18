@@ -10,6 +10,8 @@
 	// Sub-components
 	import AvatarEditor from "../profile/AvatarEditor.svelte";
 	import AccountActions from "../profile/AccountActions.svelte";
+	import ChangePasswordForm from "../profile/ChangePasswordForm.svelte";
+	import DeleteAccountForm from "../profile/DeleteAccountForm.svelte";
 	import FriendsList from "../friends/FriendsList.svelte";
 	import UserSearch from "../friends/UserSearch.svelte";
 	import FriendsSettingsModal from "../friends/FriendsSettingsModal.svelte";
@@ -246,11 +248,10 @@
 										<FriendsSettingsModal onclose={() => (showFriendsSettings = false)} />
 									{/if}
 								{:else if activeTab === "account"}
-									{#if loginMethod === "change-password" || loginMethod === "delete-account"}
-										<!-- Форми зміни пароля або видалення (можна додати за потреби) -->
-										<button class="back-link" onclick={() => loginMethod = null}>
-											{$_("profile.back")}
-										</button>
+									{#if loginMethod === "change-password"}
+										<ChangePasswordForm onback={() => (loginMethod = null)} />
+									{:else if loginMethod === "delete-account"}
+										<DeleteAccountForm onback={() => (loginMethod = null)} />
 									{:else}
 										<AccountActions
 											onchangePassword={() => {
@@ -316,13 +317,5 @@
 		padding: 1.5rem;
 		border-radius: 24px;
 		border: 1px solid rgba(255, 255, 255, 0.05);
-	}
-	.back-link {
-		background: none;
-		border: none;
-		color: var(--text-secondary);
-		cursor: pointer;
-		padding: 0.5rem;
-		font-size: 0.9rem;
 	}
 </style>

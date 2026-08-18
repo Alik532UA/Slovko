@@ -88,6 +88,14 @@ class AuthStore {
 	get displayName() { return this._state.displayName; }
 	get photoURL() { return this._state.photoURL; }
 	get originalPhotoURL() { return this._state.originalPhotoURL; }
+	/**
+	 * Вхід керується Google, тобто пароля в Slovko немає.
+	 *
+	 * Від цього залежать обидві форми безпеки: змінювати нема чого, а для
+	 * видалення потрібна повторна автентифікація вікном Google, а не полем
+	 * пароля (`AuthService.deleteAccount` розгалужується так само).
+	 */
+	get isGoogleAccount() { return this._state.providerId === "google.com"; }
 
 	private updateState(user: User | null) {
 		const oldUid = this._state.uid;
