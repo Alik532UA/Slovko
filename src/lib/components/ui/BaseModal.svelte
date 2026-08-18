@@ -97,7 +97,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: flex-start;
-		padding: 5vh 1.5rem;
+		padding: 5dvh 1.5rem;
 		overflow-y: auto;
 		transition: background-color 0.3s ease;
 	}

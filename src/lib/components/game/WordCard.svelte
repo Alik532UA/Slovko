@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	/**
 	 * WordCard.svelte — Картка слова
 	 * SoC: тільки відображення та передача подій
@@ -184,7 +184,7 @@
 		height: 100%;
 		min-height: 0;
 		padding: 0.5rem;
-		font-size: clamp(0.9rem, 2.2vh, 1.15rem);
+		font-size: clamp(0.9rem, 2.2dvh, 1.15rem);
 		font-weight: 500;
 		color: var(--text-on-card);
 		/* Робимо фон 90% (transparent 10%), щоб було видно блюр */
@@ -234,7 +234,7 @@
 	}
 
 	.transcription {
-		font-size: clamp(0.6rem, 1.5vh, 0.8rem);
+		font-size: clamp(0.6rem, 1.5dvh, 0.8rem);
 		color: var(--text-on-card);
 		opacity: 0.7;
 		font-weight: 400;
@@ -360,7 +360,7 @@
 		}
 		.word-text {
 			line-height: 1.1;
-			font-size: clamp(0.75rem, 3.5vh, 1rem);
+			font-size: clamp(0.75rem, 3.5dvh, 1rem);
 		}
 		.transcription {
 			font-size: 0.7em;

@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	/**
 	 * Root Layout — Ініціалізація i18n та глобальні стилі
 	 */
@@ -354,7 +354,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		height: 100vh;
+		height: 100dvh;
 		background: var(--bg-primary, #1a1a2e);
 	}
 

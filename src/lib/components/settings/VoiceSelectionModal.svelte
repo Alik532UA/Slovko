@@ -300,7 +300,7 @@
 		flex-direction: column;
 		gap: 0.25rem;
 		flex: 1;
-		max-height: 50vh;
+		max-height: 50dvh;
 		scrollbar-width: thin;
 		scrollbar-color: var(--border) transparent;
 		margin-bottom: 1rem;

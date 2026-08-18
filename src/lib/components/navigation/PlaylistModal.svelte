@@ -414,7 +414,7 @@
 	.content {
 		display: flex;
 		flex-direction: column;
-		max-height: 80vh;
+		max-height: 80dvh;
 	}
 	.header {
 		margin-bottom: 1.5rem;
