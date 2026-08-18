@@ -21,6 +21,7 @@ import {
 	splitIntoShards,
 	type WordMap,
 } from "./wordShards";
+import { isRetryable } from "./retryPolicy";
 /*
  * Ліниві акцесори до Firebase.
  *
@@ -65,6 +66,7 @@ const RETRY_CONFIG = {
 	baseDelay: 1000,
 	maxDelay: 10000,
 };
+
 
 interface UserCloudData {
 	settings?: AppSettings;
@@ -301,7 +303,7 @@ class SyncServiceClass {
 			(error) => {
 				logService.error("sync", "Main doc listener error:", error);
 				this.status = "error";
-				if (this.isOnline) this.scheduleRetry();
+				if (this.isOnline && isRetryable(error)) this.scheduleRetry();
 			},
 		);
 
@@ -598,7 +600,7 @@ class SyncServiceClass {
 			}
 			this.status = "error";
 			this.isUploading = false;
-			this.scheduleRetry();
+			if (isRetryable(e)) this.scheduleRetry();
 		} finally {
 			this.isUploading = false;
 			if (this.pendingUpload) this.performUpload();
