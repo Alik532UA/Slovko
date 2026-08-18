@@ -1,16 +1,29 @@
-﻿import { ref, onValue, set, onDisconnect, serverTimestamp, onChildAdded, remove, query, orderByChild, limitToLast, type Unsubscribe, startAt } from "firebase/database";
-import { getRtdb, getAuthInstance } from "./config";
+﻿import {
+	announceOnline,
+	dropSignal,
+	enterDiscovery,
+	leaveDiscovery,
+	sendSignal,
+	watchDiscovery,
+	watchInbox,
+	watchStatus
+} from "./presenceRtdb";
+// Імпорт ТИПУ, а не значення: він зникає при компіляції, тож мережі в модуль не
+// приносить — саме тому інваріант § 10.4 його й не рахує.
+import type { Unsubscribe } from "firebase/database";
+import { getAuthInstance } from "./config";
 
-/** Скільки сигналів тримати у вікні підписки. */
-const SIGNAL_WINDOW = 50;
 /*
- * Ліниві акцесори до Firebase.
+ * Лінивий акцесор до Auth.
  *
  * SDK піднімається при ПЕРШОМУ зверненні, а не на імпорті цього модуля: інакше
  * будь-який тест, що транзитивно тягне файл, вимагав би бойових ключів, щоб
  * узагалі зібратися (CLOUD-DATABASE-v8 § 10.1).
+ *
+ * Акцесора до RTDB тут більше немає: усі звернення до бази пішли в чистий
+ * `presenceRtdb.ts` — межа `.svelte.ts` більше не проходить крізь мережу
+ * (§ 10.4). Вікно підписки на сигнали живе там само.
  */
-const rtdb = () => getRtdb();
 const auth = () => getAuthInstance();
 
 import { logService } from "../../services/logService.svelte";
@@ -19,7 +32,11 @@ export type OnlineStatus = "online" | "offline";
 
 export interface UserStatus {
 	state: OnlineStatus;
-	lastChanged: number;
+	/**
+	 * Серверна позначка часу. Необовʼязкова, бо запис у базі може її не мати:
+	 * правило вимагає лише `state`, а `onDisconnect` ставить обидва поля.
+	 */
+	lastChanged?: number;
 }
 
 export interface DiscoveryUser {
@@ -155,15 +172,9 @@ class PresenceServiceClass {
 	 * Налаштовує онлайн-статус користувача в RTDB
 	 */
 	private setupOwnStatus(uid: string) {
-		const userStatusRef = ref(rtdb(), `/status/${uid}`);
-		const isOfflineForDatabase = { state: "offline", lastChanged: serverTimestamp() };
-		const isOnlineForDatabase = { state: "online", lastChanged: serverTimestamp() };
-
-		onDisconnect(userStatusRef).set(isOfflineForDatabase).then(() => {
-			set(userStatusRef, isOnlineForDatabase)
-				.then(() => logService.log("presence", "User status set to online"))
-				.catch(err => logService.error("presence", "Failed to set online status", err));
-		});
+		announceOnline(uid)
+			.then(() => logService.log("presence", "User status set to online"))
+			.catch((err) => logService.error("presence", "Failed to set online status", err));
 	}
 
 	/**
@@ -178,34 +189,16 @@ class PresenceServiceClass {
 
 		logService.log("interaction", "Setting up server-side signal listener for:", uid);
 
-		// Фільтруємо на рівні сервера: тільки сигнали, створені після моменту підписки
-		// Додаємо невеликий буфер (10 сек) для компенсації десинхронізації годинників
-		/*
-		 * Межа обовʼязкова навіть тут, де фільтр за часом і так звужує вибірку:
-		 * скриньку наповнює будь-хто авторизований, тож без `limitToLast` один
-		 * настирливий відправник змусив би клієнт прочитати все, що він надіслав
-		 * (CLOUD-DATABASE-v8 § 7.1).
-		 */
-		const signalsQuery = query(
-			ref(rtdb(), `/signals/${uid}`),
-			orderByChild("timestamp"),
-			startAt(Date.now() - 10000),
-			limitToLast(SIGNAL_WINDOW)
-		);
-
-		this.signalUnsubscribe = onChildAdded(signalsQuery, async (snapshot) => {
-			const signal = snapshot.val() as Signal;
-			const signalKey = snapshot.key;
-
+		this.signalUnsubscribe = watchInbox(uid, async (slot, signal) => {
 			/*
 			 * Ключ дедуплікації несе ЧАС, а не лише ключ вузла.
 			 *
-			 * Ключ вузла тепер дорівнює uid відправника й тому повторюється: без
-			 * часу другий сигнал від тієї самої людини за сесію вважався б уже
-			 * обробленим і не показався б.
+			 * Ключ вузла дорівнює uid відправника й тому повторюється: без часу другий
+			 * сигнал від тієї самої людини за сесію вважався б уже обробленим і не
+			 * показався б.
 			 */
-			const seenKey = `${signalKey}:${signal.timestamp ?? 0}`;
-			if (!signal || !signalKey || this.processedSignals.has(seenKey)) return;
+			const seenKey = `${slot}:${signal.timestamp ?? 0}`;
+			if (this.processedSignals.has(seenKey)) return;
 
 			this.processedSignals.add(seenKey);
 			logService.log("interaction", `New signal [${signal.type}] from ${signal.fromUid}`);
@@ -213,12 +206,12 @@ class PresenceServiceClass {
 			this.addInteraction({
 				type: 'incoming_wave',
 				uid: signal.fromUid,
-				profile: { name: signal.fromName, photoURL: signal.fromPhoto }
+				profile: { name: signal.fromName, photoURL: signal.fromPhoto ?? null }
 			});
 
-			// Видаляємо сигнал з бази після отримання (Consume pattern)
+			// Прибираємо оброблений сигнал зі своєї скриньки (consume pattern).
 			try {
-				await remove(ref(rtdb(), `/signals/${uid}/${signalKey}`));
+				await dropSignal(uid, slot);
 			} catch (e) {
 				logService.error("interaction", "Failed to remove consumed signal", e);
 			}
@@ -247,35 +240,13 @@ class PresenceServiceClass {
 		this.lastSignalSentAt.set(targetUid, now);
 		logService.log("interaction", `Sending wave to: ${targetUid} from: ${currentUser.uid}`);
 
-		/*
-		 * КЛЮЧ = UID ВІДПРАВНИКА, а не `push()`.
-		 *
-		 * Доти ключі давав `push()`, тобто один настирливий відправник міг покласти
-		 * в чужу скриньку скільки завгодно записів: обсяг гілки задавав СТОРОННІЙ.
-		 * Примітива «не більше N дітей» у RTDB немає, тож стеля тут будується формою
-		 * ключа — кожен займає рівно один слот (CLOUD-DATABASE-v8 § 12.1).
-		 *
-		 * Ціна: другий сигнал від тієї самої людини перезаписує перший. Для
-		 * «помахати» це правильна поведінка, а не втрата даних.
-		 */
-		const signalRef = ref(rtdb(), `/signals/${targetUid}/${currentUser.uid}`);
-
-		// Використовуємо об'єкт для запису, де timestamp буде встановлено сервером
-		const signalData = {
-			type: "wave",
-			fromUid: currentUser.uid,
-			fromName: senderProfile.name,
-			fromPhoto: senderProfile.photoURL,
-			timestamp: serverTimestamp()
-		};
-
-		logService.log("interaction", "Signal payload (with serverTimestamp):", signalData);
-
 		try {
 			if (eventId) this.updateInteractionState(eventId, 'sent');
-
-			await set(signalRef, signalData);
-
+			await sendSignal(targetUid, currentUser.uid, {
+				type: "wave",
+				fromName: senderProfile.name,
+				fromPhoto: senderProfile.photoURL
+			});
 			logService.log("interaction", "Wave successfully sent");
 		} catch (error) {
 			logService.error("interaction", "Failed to send wave", error);
@@ -392,32 +363,18 @@ class PresenceServiceClass {
 	async enterDiscoveryMode(profile: { displayName: string; photoURL: string | null }) {
 		if (!this.currentUid) return;
 
-		const discoveryRef = ref(rtdb(), `/discovery/${this.currentUid}`);
-		await onDisconnect(discoveryRef).remove();
-		await set(discoveryRef, { ...profile, timestamp: serverTimestamp() });
+		await enterDiscovery(this.currentUid, profile);
 		logService.log("presence", "Entered discovery mode");
 	}
 
 	async leaveDiscoveryMode() {
 		if (!this.currentUid) return;
-		const discoveryRef = ref(rtdb(), `/discovery/${this.currentUid}`);
-		await onDisconnect(discoveryRef).cancel();
-		await remove(discoveryRef);
+		await leaveDiscovery(this.currentUid);
 		logService.log("presence", "Left discovery mode");
 	}
 
 	subscribeToDiscovery(callback: (users: DiscoveryUser[]) => void): () => void {
-		const discoveryListRef = query(ref(rtdb(), 'discovery'), orderByChild('timestamp'), limitToLast(30));
-		this.discoveryUnsubscribe = onValue(discoveryListRef, (snapshot) => {
-			const users: DiscoveryUser[] = [];
-			snapshot.forEach((child) => {
-				if (child.key !== this.currentUid) {
-					const val = child.val();
-					users.push({ uid: child.key!, displayName: val.displayName, photoURL: val.photoURL, timestamp: val.timestamp });
-				}
-			});
-			callback(users.reverse());
-		});
+		this.discoveryUnsubscribe = watchDiscovery(this.currentUid, callback);
 		return () => {
 			if (this.discoveryUnsubscribe) {
 				this.discoveryUnsubscribe();
@@ -438,11 +395,7 @@ class PresenceServiceClass {
 			return () => this.untrackFriendStatus(uid);
 		}
 
-		const statusRef = ref(rtdb(), `/status/${uid}`);
-		const unsub = onValue(statusRef, (snapshot) => {
-			const data = snapshot.val() as UserStatus | null;
-			if (!data) return;
-
+		const unsub = watchStatus(uid, (data) => {
 			const prev = this.friendsStatus.get(uid);
 			if (prev?.state === data.state) return;
 

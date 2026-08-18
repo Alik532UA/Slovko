@@ -218,15 +218,21 @@ describe("хмарна база", () => {
 		/*
 		 * Мережа, зрощена з реактивністю, не підміняється в тесті й не виноситься.
 		 *
-		 * Два файли поки лишаються в переліку — це записаний борг, а не дозвіл:
-		 * `PresenceService` і `SyncService` тримають і стан, і мережу, і їх треба
-		 * розділити на чистий `.ts`-шар та тонке реактивне сховище. Перелік може
-		 * лише СКОРОЧУВАТИСЯ: новий файл у ньому не з'явиться непоміченим.
+		 * `PresenceService` розділено 2026-08-18: усі 28 викликів SDK пішли в чистий
+		 * `presenceRtdb.ts`, а в реактивному сховищі лишилися стан і рішення. Це
+		 * було видно з самого файлу: 534 рядки, 28 звернень до бази й РІВНО ДВІ
+		 * руни.
+		 *
+		 * `SyncService` лишається в переліку — це записаний борг, а не дозвіл: 814
+		 * рядків, у яких злиті мережа, злиття місцевого з хмарним, повтори й
+		 * міграція схеми, і жоден із цих шляхів не має тесту. Розділяти його без
+		 * тестів на видобутий шар означало б переставити код, задовольнити регекс і
+		 * додати риску, не додавши тієї перевірності, задля якої правило й існує.
+		 *
+		 * Перелік може лише СКОРОЧУВАТИСЯ: новий файл у ньому не з'явиться
+		 * непоміченим.
 		 */
-		const KNOWN_DEBT = [
-			"src/lib/services/firebase/PresenceService.svelte.ts",
-			"src/lib/services/firebase/SyncService.svelte.ts",
-		];
+		const KNOWN_DEBT = ["src/lib/services/firebase/SyncService.svelte.ts"];
 
 		const offenders = sources
 			.filter((file) => file.endsWith(".svelte.ts"))
@@ -302,15 +308,13 @@ describe("хмарна база", () => {
 		// Пряма перевірка на той самий клас дефекту: не «є $other», а «названі поля
 		// справді ті». Обидва імені колись розходилися, і гейт цього не бачив, бо
 		// писав ту саму форму, що й правила.
-		const presence = readFileSync(
-			"src/lib/services/firebase/PresenceService.svelte.ts",
-			"utf8",
-		);
+		const presence = readFileSync("src/lib/services/firebase/presenceRtdb.ts", "utf8");
 		expect(presence, "код пише lastChanged").toMatch(/lastChanged:\s*serverTimestamp\(\)/);
 		expect(databaseRules, "правила мусять валідувати саме lastChanged").toMatch(/"lastChanged"/);
 		expect(databaseRules, "старе імʼя last_changed не має лишитися").not.toMatch(/"last_changed"/);
 
-		expect(presence, "код пише fromUid").toMatch(/fromUid:\s*currentUser\.uid/);
+		// Скорочений запис властивості в тілі `set()`: поле називається `fromUid`.
+		expect(presence, "код пише fromUid").toMatch(/^		fromUid,$/m);
 		expect(databaseRules, "правила мусять валідувати саме fromUid").toMatch(/"fromUid"/);
 	});
 
@@ -321,16 +325,12 @@ describe("хмарна база", () => {
 		 * {from}` дає один слот на відправника, `signals/{to}/{autoId}` — скільки
 		 * завгодно.
 		 */
-		const presence = readFileSync(
-			"src/lib/services/firebase/PresenceService.svelte.ts",
-			"utf8",
+		const rtdbLayer = readFileSync("src/lib/services/firebase/presenceRtdb.ts", "utf8");
+		expect(rtdbLayer, "ключ сигналу мусить бути uid відправника").toMatch(
+			/signals\/\$\{targetUid\}\/\$\{fromUid\}/,
 		);
-		expect(presence, "ключ сигналу мусить бути uid відправника").toMatch(
-			/signals\/\$\{targetUid\}\/\$\{currentUser\.uid\}/,
-		);
-		expect(presence, "push() у скриньці сигналів знімає стелю").not.toMatch(
-			/push\(signalsRef\)/,
-		);
+		// `push()` дав би одному відправникові скільком завгодно записів.
+		expect(rtdbLayer, "push() у скриньці сигналів знімає стелю").not.toMatch(/push\(/);
 		expect(databaseRules, "правило мусить звіряти ключ із fromUid").toMatch(
 			/newData\.val\(\) === \$from/,
 		);
