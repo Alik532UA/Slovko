@@ -145,7 +145,7 @@
 					<button
 						class="icon-action-btn save"
 						onclick={saveName}
-						aria-label="Save name"
+						aria-label={$_("common.save")}
 						data-testid="save-name-btn"
 					>
 						<Check size={20} />
@@ -153,7 +153,7 @@
 					<button
 						class="icon-action-btn cancel"
 						onclick={() => (isEditingName = false)}
-						aria-label="Cancel editing"
+						aria-label={$_("common.cancel")}
 						data-testid="cancel-name-btn"
 					>
 						<X size={20} />
@@ -169,7 +169,7 @@
 					<button
 						class="edit-name-btn"
 						onclick={startEditingName}
-						aria-label="Edit display name"
+						aria-label={$_("common.edit")}
 						data-testid="start-edit-name-btn"
 					>
 						<Edit2 size={16} />

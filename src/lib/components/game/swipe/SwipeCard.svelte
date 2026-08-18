@@ -150,7 +150,7 @@
 				class="speech-btn"
 				onclick={(e) => playAudio(item.front, item.frontLanguage, e)}
 				onpointerdown={(e) => e.stopPropagation()}
-				aria-label="Play audio"
+				aria-label={$_("common.listen")}
 				title="Play audio"
 			>
 				<Speech size={24} />
@@ -178,7 +178,7 @@
 				class="speech-btn"
 				onclick={(e) => playAudio(item.back, item.backLanguage, e)}
 				onpointerdown={(e) => e.stopPropagation()}
-				aria-label="Play audio"
+				aria-label={$_("common.listen")}
 				title="Play audio"
 			>
 				<Speech size={24} />

@@ -365,7 +365,7 @@
 								class="add-btn"
 								onclick={addCustomWord}
 								data-testid="add-custom-word-btn"
-								aria-label="Add word"
+								aria-label={$_("playlists.addCustomWord")}
 							>
 								<APP_ICONS.Plus size={20} />
 							</button>

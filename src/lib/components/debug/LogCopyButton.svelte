@@ -5,6 +5,7 @@
 	import { localStorageProvider } from "$lib/services/storage/storageProvider";
 	import { hardReset } from "$lib/services/resetService";
 	import { Check, ClipboardCopy } from "lucide-svelte";
+	import { _ } from "svelte-i18n";
 
 	let copied = $state(false);
 
@@ -89,7 +90,7 @@
 		class:copied={copied}
 		onclick={handleCopy} 
 		title="Копіювати звіт про помилки"
-		aria-label="Copy debug logs"
+		aria-label={$_("common.copyReport")}
 	>
 		{#if copied}
 			<Check size={18} />
