@@ -108,12 +108,33 @@ describe("хмарна база", () => {
 		}
 	});
 
-	it("сигнал у чужу гілку можна лише СТВОРИТИ й лише від себе (§ 4.2)", () => {
-		// Скринька адресата: написати може будь-хто, але переписати чуже або
-		// підробити відправника — ні.
-		const signals = databaseRules.slice(databaseRules.indexOf('"$signalKey"'));
-		expect(signals).toMatch(/!data\.exists\(\)/);
-		expect(signals).toMatch(/newData\.child\('from'\)\.val\(\)\s*===\s*auth\.uid/);
+	it("у чужій скриньці можна писати лише СВІЙ слот (§ 4.2, § 12.1)", () => {
+		/*
+		 * Доти властивість була «лише створити» (`!data.exists()`) плюс звірка поля
+		 * `from` з `auth.uid`. Обидві половини не працювали: код пише `fromUid`, а не
+		 * `from`, тож умова не виконувалася НІКОЛИ — і `sendWave` відкидався цілком.
+		 *
+		 * Тепер властивість інша й сильніша: ключ у скриньці дорівнює uid
+		 * відправника, а правило звіряє `fromUid` і з `auth.uid`, і з ключем. Звідси
+		 * одразу три речі: відправника не підробити, чужий слот не зайняти, і обсяг
+		 * гілки обмежений — один слот на людину, бо примітива «не більше N дітей» у
+		 * RTDB не існує.
+		 *
+		 * «Лише створити» при цьому НЕ потрібне: повторний сигнал від тієї самої
+		 * людини має право перезаписати свій же слот, і для «помахати» це правильна
+		 * поведінка.
+		 */
+		const signals = databaseRules.slice(databaseRules.indexOf('"$from"'));
+		expect(signals, "правил для signals/$to/$from не знайдено").not.toBe("");
+		expect(signals, "відправник мусить писати лише свій слот").toMatch(
+			/\$from === auth\.uid/,
+		);
+		expect(signals, "поле відправника мусить звірятися з auth.uid").toMatch(
+			/newData\.val\(\) === auth\.uid/,
+		);
+		expect(signals, "поле відправника мусить звірятися з КЛЮЧЕМ").toMatch(
+			/newData\.val\(\) === \$from/,
+		);
 	});
 
 	/**
@@ -220,6 +241,129 @@ describe("хмарна база", () => {
 
 		const fixed = KNOWN_DEBT.filter((file) => !offenders.includes(file));
 		expect(fixed, `борг закрито — прибрати зі списку:\n${fixed.join("\n")}`).toEqual([]);
+	});
+
+	it("файл індексів прив’язаний і існує (§ 2.4)", () => {
+		/*
+		 * Індекси — той самий клас дефекту, що правила лише в консолі (§ 2.1), і
+		 * гірший: складений запит без індексу дає ГОТОВЕ посилання на створення,
+		 * тож дефект зникає за десять секунд і назавжди лишається поза
+		 * репозиторієм. Проєкт, розгорнутий у новому Firebase, ламається на запиті,
+		 * який «працює вже пів року».
+		 */
+		const config = JSON.parse(readFileSync("firebase.json", "utf8"));
+		const indexes = config.firestore?.indexes;
+		expect(indexes, "firebase.json не вказує firestore.indexes").toBeTruthy();
+		expect(existsSync(indexes), `${indexes} немає`).toBe(true);
+		expect(JSON.parse(readFileSync(indexes, "utf8")).indexes).toBeInstanceOf(Array);
+	});
+
+	it("кожен orderByChild має \".indexOn\" на своїй гілці (§ 7.4)", () => {
+		/*
+		 * RTDB не відмовляє без індексу — вона віддає ГІЛКУ ЦІЛКОМ і сортує на
+		 * клієнті, лишивши попередження в консолі браузера, якого в продакшні не
+		 * читає ніхто. Тобто це тихо зростаючий рахунок, а не помилка, і побачити
+		 * його можна лише отак.
+		 */
+		const bad: string[] = [];
+		for (const file of sources) {
+			for (const match of readFileSync(file, "utf8").matchAll(
+				/orderByChild\s*\(\s*['"]([\w.]+)['"]/g,
+			)) {
+				const pattern = new RegExp(
+					`"\\.indexOn"\\s*:\\s*(?:"${match[1]}"|\\[[^\\]]*"${match[1]}")`,
+				);
+				if (!pattern.test(databaseRules)) {
+					bad.push(`${file}: orderByChild('${match[1]}') без ".indexOn"`);
+				}
+			}
+		}
+		expect(bad, `RTDB віддасть гілку цілком:\n${bad.join("\n")}`).toEqual([]);
+	});
+
+	it("невідомі поля відкидаються, а не ігноруються (§ 4.6)", () => {
+		/*
+		 * `.validate` перевіряє лише НАЗВАНІ поля, тож без `$other` розсинхрон імені
+		 * поля між кодом і правилом лишається тихим. Тут таких було ДВА, і кожен
+		 * означав не «слабший захист», а зламану функцію: правило валідувало
+		 * `last_changed`, код писав `lastChanged`; правило вимагало `from`, код
+		 * писав `fromUid` — і `sendWave` відкидався ЗАВЖДИ.
+		 */
+		const validates = [...databaseRules.matchAll(/"\.validate"/g)].length;
+		expect(validates, "форма записів ніде не перевіряється").toBeGreaterThan(0);
+		const others = [
+			...databaseRules.matchAll(/"\$other"\s*:\s*\{\s*"\.validate"\s*:\s*false/g),
+		].length;
+		// По одному на кожен вузол із відомою формою: status, discovery, signals.
+		expect(others, "вузли з відомою формою не закриті \"$other\"").toBeGreaterThanOrEqual(3);
+	});
+
+	it("імена полів у правилах збігаються з кодом (§ 4.6)", () => {
+		// Пряма перевірка на той самий клас дефекту: не «є $other», а «названі поля
+		// справді ті». Обидва імені колись розходилися, і гейт цього не бачив, бо
+		// писав ту саму форму, що й правила.
+		const presence = readFileSync(
+			"src/lib/services/firebase/PresenceService.svelte.ts",
+			"utf8",
+		);
+		expect(presence, "код пише lastChanged").toMatch(/lastChanged:\s*serverTimestamp\(\)/);
+		expect(databaseRules, "правила мусять валідувати саме lastChanged").toMatch(/"lastChanged"/);
+		expect(databaseRules, "старе імʼя last_changed не має лишитися").not.toMatch(/"last_changed"/);
+
+		expect(presence, "код пише fromUid").toMatch(/fromUid:\s*currentUser\.uid/);
+		expect(databaseRules, "правила мусять валідувати саме fromUid").toMatch(/"fromUid"/);
+	});
+
+	it("обсяг чужого запису обмежений формою ключа (§ 12.1)", () => {
+		/*
+		 * Скринька сигналів — єдина гілка, у яку пише СТОРОННІЙ. Примітива «не
+		 * більше N дітей» у RTDB немає, тож стеля будується ключем: `signals/{to}/
+		 * {from}` дає один слот на відправника, `signals/{to}/{autoId}` — скільки
+		 * завгодно.
+		 */
+		const presence = readFileSync(
+			"src/lib/services/firebase/PresenceService.svelte.ts",
+			"utf8",
+		);
+		expect(presence, "ключ сигналу мусить бути uid відправника").toMatch(
+			/signals\/\$\{targetUid\}\/\$\{currentUser\.uid\}/,
+		);
+		expect(presence, "push() у скриньці сигналів знімає стелю").not.toMatch(
+			/push\(signalsRef\)/,
+		);
+		expect(databaseRules, "правило мусить звіряти ключ із fromUid").toMatch(
+			/newData\.val\(\) === \$from/,
+		);
+	});
+
+	it("кожен шлях із коду має випадок у гейті (§ 3.5)", () => {
+		/*
+		 * Напрямок зворотний до § 3.3, і саме він ловить шлях, у який пише код, а
+		 * правил для нього немає: такий шлях забирає catch-all, тобто функція тихо
+		 * не працює. Так тут пролежали `feedback` і `feedback_anonymous` — форма
+		 * відгуку й скарга на слово відмовляли, а UI показував «увійдіть».
+		 */
+		const gate = readFileSync("scripts/check-rules.mjs", "utf8");
+		const paths = new Set<string>();
+		for (const file of sources) {
+			const text = readFileSync(file, "utf8");
+			for (const match of text.matchAll(
+				/\b(?:collection|doc)\s*\(\s*[^,)]+,\s*['"]([a-z_][\w-]*)['"]/gi,
+			)) {
+				paths.add(match[1]);
+			}
+			for (const match of text.matchAll(/\bref\s*\(\s*[^,)]+,\s*[`'"]\/?([a-z_][\w-]*)/gi)) {
+				paths.add(match[1]);
+			}
+			// Колекція, зібрана з префікса (`dev_feedback` / `feedback_anonymous`),
+			// у виклик літералом не потрапляє — її треба ловити окремо.
+			for (const match of text.matchAll(/["'`](feedback(?:_anonymous)?)["'`]/g)) {
+				paths.add(match[1]);
+			}
+		}
+		expect(paths.size, "шляхів до бази не знайдено — перевірка мертва").toBeGreaterThan(0);
+		const uncovered = [...paths].filter((path) => !gate.includes(path));
+		expect(uncovered, `шлях без випадку в гейті:\n${uncovered.join("\n")}`).toEqual([]);
 	});
 
 	it("прогрес по словах не лежить полем головного документа (§ 6.2)", () => {

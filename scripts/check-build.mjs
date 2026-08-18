@@ -124,6 +124,48 @@ for (const asset of ['sitemap.xml', 'robots.txt', 'manifest.json', 'service-work
 	if (!existsSync(join(BUILD, asset))) fail(`build/${asset}: файлу немає`);
 }
 
+/*
+ * 8. SDK бази — не в критичному шляху (CLOUD-DATABASE-v8 § 10.2).
+ *
+ * ЧОМУ ПО `build/`, А НЕ ПО КОДУ. `services/firebase/config.ts` імпортує SDK
+ * статично, і формально це відхилення від § 10.2, який просить `await import()`.
+ * Але сам § 10.2 називає справжню перевірку: «чанк із SDK не має бути в
+ * `modulepreload` початкової сторінки». Vite ділить збірку по маршрутах, і
+ * пакет лягає в окремий чанк тих екранів, які до бази справді звертаються.
+ *
+ * Заміряно 2026-08-18: один чанк 380 КБ, у передзавантаженні початкової
+ * сторінки — нуль. Тобто мета правила виконана, а форма — ні; ця перевірка й
+ * робить різницю між «виконана» і «схоже, що виконана». Щойно якийсь сервіс із
+ * SDK доїде до кореневого шару, гейт впаде — і тоді ліниві імпорти стануть
+ * обовʼязковими, а не косметичними.
+ */
+{
+	const entryPath = join(BUILD, 'index.html');
+	const entryHtml = existsSync(entryPath) ? readFileSync(entryPath, 'utf8') : '';
+	const preloaded = new Set(
+		[...entryHtml.matchAll(/immutable\/(?:chunks|entry|nodes)\/[\w.-]+\.js/g)].map((m) => m[0])
+	);
+	// Канарка: якщо передзавантажених файлів немає взагалі, перевірка нічого не
+	// доводить — їй просто не було на що дивитися (AI-AGENT-PITFALLS-v8 § 1).
+	if (preloaded.size === 0) {
+		fail('index.html: немає жодного modulepreload — перевірку SDK нічим виконати');
+	} else {
+		let found = 0;
+		for (const rel of preloaded) {
+			const file = join(BUILD, '_app', rel);
+			if (existsSync(file) && readFileSync(file, 'utf8').includes('FirebaseError')) {
+				fail(`SDK бази в критичному шляху: ${rel}`);
+				found++;
+			}
+		}
+		if (found === 0) {
+			console.log(
+				`check-build: SDK бази поза критичним шляхом (${preloaded.size} передзавантажених файлів)`
+			);
+		}
+	}
+}
+
 if (failures.length > 0) {
 	console.error(`Перевірка зібраного виводу знайшла ${failures.length} проблем:`);
 	for (const message of failures) console.error(`  • ${message}`);

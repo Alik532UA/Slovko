@@ -1,4 +1,4 @@
-﻿import { ref, onValue, set, onDisconnect, serverTimestamp, onChildAdded, remove, query, orderByChild, limitToLast, type Unsubscribe, push, startAt } from "firebase/database";
+﻿import { ref, onValue, set, onDisconnect, serverTimestamp, onChildAdded, remove, query, orderByChild, limitToLast, type Unsubscribe, startAt } from "firebase/database";
 import { getRtdb, getAuthInstance } from "./config";
 
 /** Скільки сигналів тримати у вікні підписки. */
@@ -62,7 +62,8 @@ export interface InteractionEvent {
  * Архітектурні принципи:
  * 1. SSoT: Єдине джерело статусів та подій взаємодії.
  * 2. UDF: Події додаються через addInteraction, видаляються через removeInteraction.
- * 3. Надійність: Використання push() для сигналів та serverTimestamp для фільтрації.
+ * 3. Надійність: слот на відправника в скриньці сигналів та serverTimestamp
+ *    для фільтрації.
  */
 class PresenceServiceClass {
 	// Реактивні стани
@@ -196,9 +197,17 @@ class PresenceServiceClass {
 			const signal = snapshot.val() as Signal;
 			const signalKey = snapshot.key;
 
-			if (!signal || !signalKey || this.processedSignals.has(signalKey)) return;
+			/*
+			 * Ключ дедуплікації несе ЧАС, а не лише ключ вузла.
+			 *
+			 * Ключ вузла тепер дорівнює uid відправника й тому повторюється: без
+			 * часу другий сигнал від тієї самої людини за сесію вважався б уже
+			 * обробленим і не показався б.
+			 */
+			const seenKey = `${signalKey}:${signal.timestamp ?? 0}`;
+			if (!signal || !signalKey || this.processedSignals.has(seenKey)) return;
 
-			this.processedSignals.add(signalKey);
+			this.processedSignals.add(seenKey);
 			logService.log("interaction", `New signal [${signal.type}] from ${signal.fromUid}`);
 
 			this.addInteraction({
@@ -218,7 +227,7 @@ class PresenceServiceClass {
 
 	/**
 	 * Надсилає сигнал іншому користувачу.
-	 * Використовує push() для унікальності та serverTimestamp для надійності.
+	 * Ключ у скриньці — uid відправника: один слот на людину (§ 12.1).
 	 */
 	async sendWave(targetUid: string, senderProfile: { name: string; photoURL: string | null }, eventId?: string) {
 		const currentUser = auth().currentUser;
@@ -238,7 +247,18 @@ class PresenceServiceClass {
 		this.lastSignalSentAt.set(targetUid, now);
 		logService.log("interaction", `Sending wave to: ${targetUid} from: ${currentUser.uid}`);
 
-		const signalsRef = ref(rtdb(), `/signals/${targetUid}`);
+		/*
+		 * КЛЮЧ = UID ВІДПРАВНИКА, а не `push()`.
+		 *
+		 * Доти ключі давав `push()`, тобто один настирливий відправник міг покласти
+		 * в чужу скриньку скільки завгодно записів: обсяг гілки задавав СТОРОННІЙ.
+		 * Примітива «не більше N дітей» у RTDB немає, тож стеля тут будується формою
+		 * ключа — кожен займає рівно один слот (CLOUD-DATABASE-v8 § 12.1).
+		 *
+		 * Ціна: другий сигнал від тієї самої людини перезаписує перший. Для
+		 * «помахати» це правильна поведінка, а не втрата даних.
+		 */
+		const signalRef = ref(rtdb(), `/signals/${targetUid}/${currentUser.uid}`);
 
 		// Використовуємо об'єкт для запису, де timestamp буде встановлено сервером
 		const signalData = {
@@ -254,8 +274,7 @@ class PresenceServiceClass {
 		try {
 			if (eventId) this.updateInteractionState(eventId, 'sent');
 
-			const newSignalRef = push(signalsRef);
-			await set(newSignalRef, signalData);
+			await set(signalRef, signalData);
 
 			logService.log("interaction", "Wave successfully sent");
 		} catch (error) {

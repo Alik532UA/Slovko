@@ -34,23 +34,40 @@ const HISTORY_PAGE = 400;
 
 const usersCollection = () => collection(getDb(), "users");
 
+/**
+ * Скільком підпискам і підписникам приїжджати в застосунок.
+ *
+ * Межа тут обовʼязкова, і не тому, що список великий, а тому що його розмір
+ * задає НЕ власник: у `followers` пише кожен, хто на нього підписався. Без
+ * `limit()` це підписка на набір, що росте від чужих дій, і платить за нього
+ * кожен приїзд будь-якої зміни (CLOUD-DATABASE-v8 § 7.1, § 12.1).
+ *
+ * Число обране за екраном: список друзів показує десятки, а не тисячі. Коли
+ * доведеться більше — це пагінація, а не підняте число.
+ */
+const FOLLOWS_WINDOW = 200;
+
 /** Підписка на списки підписок і підписників. Повертає ОДНУ відписку на обидві. */
 export function watchFollows(
 	uid: string,
 	onChange: (kind: "following" | "followers", docs: DocumentData[]) => void,
 ): Unsubscribe {
 	const db = getDb();
-	const unsubFollowing = onSnapshot(collection(db, "users", uid, "following"), (snapshot) =>
-		onChange(
-			"following",
-			snapshot.docs.map((entry) => entry.data()),
-		),
+	const unsubFollowing = onSnapshot(
+		query(collection(db, "users", uid, "following"), limit(FOLLOWS_WINDOW)),
+		(snapshot) =>
+			onChange(
+				"following",
+				snapshot.docs.map((entry) => entry.data()),
+			),
 	);
-	const unsubFollowers = onSnapshot(collection(db, "users", uid, "followers"), (snapshot) =>
-		onChange(
-			"followers",
-			snapshot.docs.map((entry) => entry.data()),
-		),
+	const unsubFollowers = onSnapshot(
+		query(collection(db, "users", uid, "followers"), limit(FOLLOWS_WINDOW)),
+		(snapshot) =>
+			onChange(
+				"followers",
+				snapshot.docs.map((entry) => entry.data()),
+			),
 	);
 	return () => {
 		unsubFollowing();

@@ -146,6 +146,76 @@ service cloud.firestore {
      */
 
     /*
+     * ВІДГУКИ Й СКАРГИ НА СЛОВО. Форма відкрита кожному, хто натиснув кнопку.
+     *
+     * ЦИХ ПРАВИЛ РАНІШЕ НЕ БУЛО ВЗАГАЛІ, і це не «недостатньо звужено» — це
+     * зламана функція. `FeedbackService` пише в `feedback/{category}/messages` і
+     * `feedback_anonymous/{category}/messages`, правил для них не існувало, тож
+     * обидва шляхи забирав catch-all `if false`: і форма відгуку, і скарга на
+     * переклад слова відмовляли з `permission-denied`. Гірше того, код ловив цей
+     * код і кидав `AUTH_REQUIRED` — тобто прогалина в правилах показувалася
+     * користувачеві як проблема з його сеансом (CLOUD-DATABASE-v8 § 2.3).
+     *
+     * ЧОМУ ГЕЙТ ЦЬОГО НЕ БАЧИВ. § 3.3 вимагає випадок на кожну колекцію,
+     * ЗГАДАНУ У ПРАВИЛАХ. Колекції, якої в правилах немає, це не стосується
+     * взагалі — і саме цю прогалину закриває § 3.5: перелік випадків будується
+     * зі шляхів, у які пише КОД. Інваріант у `src/cloud-database.test.ts` тепер
+     * так і робить.
+     *
+     * ДВІ ГІЛКИ, А НЕ ОДНА. Гість пише у `feedback_anonymous`, людина з акаунтом
+     * — у `feedback`; префікс `dev_` додає збірка в режимі розробки. Правило те
+     * саме для всіх чотирьох, і воно перелічене явно: `{root}` як вільна змінна
+     * означала б «будь-яка колекція першого рівня», тобто дірку розміром з базу.
+     *
+     * МЕЖІ (§ 12.1). Створення відкрите й для неавторизованого — вимога входу
+     * відрізала б саме тих відгуків, які найцінніші. Тому обсяг тримають інші
+     * три речі: перелік ключів, перелік категорій і довжина кожного тексту. Без
+     * них це була б точка, у яку будь-хто в інтернеті дописує документи зі
+     * швидкістю мережі, і платив би за них не він.
+     *
+     * ЧИТАННЯ ЗАКРИТЕ. У записі є `user.uid`, `user.email` і `userAgent`, тож
+     * відкрите читання зробило б із відгуків перелік користувачів. Дивляться їх
+     * із консолі.
+     */
+    match /feedback/{category}/messages/{messageId} {
+      allow create: if validFeedback(category);
+      allow read, update, delete: if false;
+    }
+    match /feedback_anonymous/{category}/messages/{messageId} {
+      allow create: if validFeedback(category);
+      allow read, update, delete: if false;
+    }
+    match /dev_feedback/{category}/messages/{messageId} {
+      allow create: if validFeedback(category);
+      allow read, update, delete: if false;
+    }
+    match /dev_feedback_anonymous/{category}/messages/{messageId} {
+      allow create: if validFeedback(category);
+      allow read, update, delete: if false;
+    }
+
+    /**
+     * Форма відгуку: категорія з переліку, ключі з переліку, тексти з межею.
+     *
+     * `word_error` — окрема категорія скарги на переклад; решта три приходять із
+     * форми відгуку (`FeedbackCategory`).
+     */
+    function validFeedback(category) {
+      return category in ['bug', 'improvement', 'contact', 'word_error']
+             && request.resource.data.keys().hasOnly([
+                  'title', 'message', 'status', 'isGuestReport', 'context', 'user', 'timestamp',
+                  'wordKey', 'errorType', 'comment', 'sourceTranslation', 'targetTranslation'
+                ])
+             && (!('message' in request.resource.data)
+                 || request.resource.data.message.size() <= 4000)
+             && (!('comment' in request.resource.data)
+                 || request.resource.data.comment.size() <= 4000)
+             && (!('title' in request.resource.data)
+                 || request.resource.data.title == null
+                 || request.resource.data.title.size() <= 200);
+    }
+
+    /*
      * Журнал подій застосунку. Пише клієнт, читає лише консоль.
      *
      * `create` і тільки `create`: запис, який можна змінити або видалити, — це

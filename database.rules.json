@@ -6,12 +6,34 @@
 //
 //   /status/{uid}            присутність: онлайн / офлайн
 //   /discovery/{uid}         «я відкритий до знайомства» — список тих, хто зараз онлайн
-//   /signals/{uid}/{key}     сигнал ІНШОМУ користувачеві (помахати, запросити)
+//   /signals/{to}/{from}     сигнал ІНШОМУ користувачеві (помахати)
 //
 // ЧОМУ САМЕ RTDB. Через `onDisconnect`: обіцянку виконує СЕРВЕР, коли клієнт
 // зник. У Firestore такого механізму немає, а без нього «онлайн зараз» — це
 // таймер на клієнті, який бреше рівно тоді, коли потрібен
 // (CLOUD-DATABASE-v8 § 5.1).
+//
+// `$other: false` НА КОЖНОМУ ВУЗЛІ, і це не косметика (§ 4.6). `.validate`
+// перевіряє лише ті поля, які НАЗВАНІ, — тож розсинхрон імені поля між кодом і
+// правилом лишається тихим. Тут таких розсинхронів було ДВА, і обидва означали
+// не «слабший захист», а зламану функцію:
+//
+//   1. правило валідувало серверний час у `last_changed`, код писав
+//      `lastChanged`. Захист від підробленого часу не діяв НІ НА ЩО: справжнє
+//      поле проходило як невідоме, а гейт був зелений, бо писав ту саму
+//      snake_case-форму, що й правило;
+//   2. правило вимагало `from` і звіряло його з `auth.uid`, код писав `fromUid`
+//      (див. `interface Signal`). Тобто `sendWave` відкидався ЗАВЖДИ — помахати
+//      було неможливо, — і гейт цього не бачив із тієї самої причини.
+//
+// `$other: false` перетворює цей клас помилки з тихого на гучний: правило й код
+// мусять збігтися ТОЧНО, інакше запис не проходить і падає найближчий
+// позитивний випадок гейта.
+//
+// `.indexOn` — теж частина цього файлу, і його відсутність НЕ є помилкою для
+// бази: вона просто віддає гілку ЦІЛКОМ і сортує на клієнті, лишивши
+// попередження в консолі браузера, якого в продакшні не читає ніхто. Тобто це
+// тихо зростаючий рахунок (§ 7.4).
 {
   "rules": {
     "status": {
@@ -24,13 +46,16 @@
         ".write": "auth != null && $uid === auth.uid",
         ".validate": "newData.hasChildren(['state'])",
         "state": {
-          ".validate": "newData.isString() && newData.val().length <= 16"
+          ".validate": "newData.isString() && (newData.val() === 'online' || newData.val() === 'offline')"
         },
-        "last_changed": {
+        "lastChanged": {
           // Час ставить сервер: `serverTimestamp()` розкривається до валідації,
-          // тож вікно навколо `now` відкидає підроблене число.
+          // тож вікно навколо `now` відкидає підроблене число. Імʼя поля —
+          // `lastChanged`, як у коді (`PresenceService.setupOwnStatus`); доти тут
+          // стояло `last_changed`, і перевірка не діяла ні на що.
           ".validate": "newData.isNumber() && newData.val() <= now && newData.val() > now - 5000"
-        }
+        },
+        "$other": { ".validate": false }
       }
     },
 
@@ -45,36 +70,65 @@
        * зникла.
        */
       ".read": "auth != null",
+      // Клієнт читає цю гілку через `orderByChild('timestamp')` із
+      // `limitToLast(30)`. Без індексу межа не діє на БАЗУ: вона віддає гілку
+      // цілком і сортує на клієнті (§ 7.4).
+      ".indexOn": "timestamp",
       "$uid": {
         ".write": "auth != null && $uid === auth.uid",
         ".validate": "newData.hasChildren(['timestamp'])",
         "displayName": { ".validate": "newData.isString() && newData.val().length <= 40" },
+        "photoURL": { ".validate": "newData.isString() && newData.val().length <= 512" },
+        "level": { ".validate": "newData.isString() && newData.val().length <= 32" },
         "timestamp": {
           ".validate": "newData.isNumber() && newData.val() <= now && newData.val() > now - 5000"
-        }
+        },
+        "$other": { ".validate": false }
       }
     },
 
     "signals": {
-      "$uid": {
+      "$to": {
         /*
          * СИГНАЛИ ПРИХОДЯТЬ У ЧУЖУ ГІЛКУ, І ЦЕ НАВМИСНО.
          *
          * Читає й прибирає лише адресат: `/signals/{я}` — це моя скринька.
-         * Написати може будь-хто авторизований — інакше «помахати» неможливо. Що
-         * тримає це в межах: сигнал можна лише СТВОРИТИ (`!data.exists()`), він
-         * мусить бути підписаний своїм `from`, і його форма перевірена. Тобто
-         * чужу скриньку не переписати й не підробити відправника.
+         * Написати може будь-хто авторизований — інакше «помахати» неможливо.
+         *
+         * КЛЮЧ = UID ВІДПРАВНИКА, і це єдиний спосіб поставити тут стелю.
+         * Примітива «не більше N дітей» у RTDB не існує, тож обсяг гілки, у яку
+         * пише сторонній, обмежується ФОРМОЮ КЛЮЧА: кожен відправник займає рівно
+         * один слот. Доти ключі давав `push()`, тобто один настирливий відправник
+         * міг покласти в чужу скриньку скільки завгодно записів
+         * (CLOUD-DATABASE-v8 § 12.1).
+         *
+         * Ціна рішення: другий сигнал від тієї самої людини перезаписує перший.
+         * Для «помахати» це правильна поведінка, а не втрата даних.
          */
-        ".read": "auth != null && $uid === auth.uid",
-        "$signalKey": {
-          ".write": "auth != null && (!data.exists() ? newData.child('from').val() === auth.uid : $uid === auth.uid)",
-          ".validate": "newData.hasChildren(['from', 'type'])",
-          "from": { ".validate": "newData.isString() && newData.val().length <= 64" },
-          "type": { ".validate": "newData.isString() && newData.val().length <= 32" },
+        ".read": "auth != null && $to === auth.uid",
+        // Клієнт читає скриньку через `orderByChild('timestamp')` — потрібен
+        // індекс, інакше база віддає всю скриньку й сортує на клієнті.
+        ".indexOn": "timestamp",
+        "$from": {
+          // Відправник пише свій слот; адресат може його лише ЗНЕСТИ — писати він
+          // теж «може», але `.validate` вимагає `fromUid === auth.uid`, а при
+          // видаленні валідація не виконується. Тобто чужий слот не підробити.
+          ".write": "auth != null && ($from === auth.uid || $to === auth.uid)",
+          ".validate": "newData.hasChildren(['type', 'fromUid'])",
+          // Імʼя поля — `fromUid`, як в `interface Signal`. Доти правило вимагало
+          // `from`, і кожен сигнал відкидався.
+          "fromUid": {
+            ".validate": "newData.isString() && newData.val() === auth.uid && newData.val() === $from"
+          },
+          "type": {
+            ".validate": "newData.isString() && (newData.val() === 'wave' || newData.val() === 'wave_back')"
+          },
+          "fromName": { ".validate": "newData.isString() && newData.val().length <= 40" },
+          "fromPhoto": { ".validate": "newData.isString() && newData.val().length <= 512" },
           "timestamp": {
             ".validate": "newData.isNumber() && newData.val() <= now && newData.val() > now - 5000"
-          }
+          },
+          "$other": { ".validate": false }
         }
       }
     }

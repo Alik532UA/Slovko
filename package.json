@@ -1,7 +1,7 @@
 {
 	"name": "slovko",
 	"private": true,
-	"version": "0.7.572",
+	"version": "0.7.573",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",

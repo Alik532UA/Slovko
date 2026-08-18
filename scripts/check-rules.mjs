@@ -121,9 +121,22 @@ const CASES = [
 	{ name: 'підписка: свій following', allowed: true, run: () => fsCreate(`users/${me.uid}/following`, other.uid, { uid: other.uid }, me.token) },
 	{ name: 'підписка: свій рядок у ЧУЖИХ followers', allowed: true, run: () => fsCreate(`users/${other.uid}/followers`, me.uid, { uid: me.uid }, me.token) },
 	{ name: 'запис у журнал подій', allowed: true, run: () => fsCreate('system_logs', 'log-1', { uid: me.uid, action: 'test', details: {}, userAgent: 'ua', timestamp: 1 }, me.token) },
-	{ name: 'своя присутність (RTDB)', allowed: true, run: () => dbWrite(`status/${me.uid}`, { state: 'online', last_changed: SERVER_TIME }, me.token) },
+	// `lastChanged`, а не `last_changed`: доти гейт писав snake_case-форму, якої
+	// застосунок не створює, — тобто перевіряв правило, що ні на що не діяло.
+	{ name: 'своя присутність (RTDB)', allowed: true, run: () => dbWrite(`status/${me.uid}`, { state: 'online', lastChanged: SERVER_TIME }, me.token) },
 	{ name: 'свій запис у discovery', allowed: true, run: () => dbWrite(`discovery/${me.uid}`, { displayName: 'Я', timestamp: SERVER_TIME }, me.token) },
-	{ name: 'сигнал ІНШОМУ користувачеві', allowed: true, run: () => dbWrite(`signals/${other.uid}/sig1`, { from: me.uid, type: 'wave', timestamp: SERVER_TIME }, me.token) },
+	/*
+	 * СИГНАЛ у формі, яку СПРАВДІ пише застосунок: ключ = uid відправника, поле
+	 * `fromUid`. Доти гейт писав `signals/{to}/sig1` з полем `from` — форму, якої
+	 * `interface Signal` не має, — тож був зелений на правилі, під яким кожен
+	 * реальний `sendWave` відкидався (CLOUD-DATABASE-v8 § 3.5, § 4.6).
+	 */
+	{ name: 'сигнал ІНШОМУ користувачеві', allowed: true, run: () => dbWrite(`signals/${other.uid}/${me.uid}`, { type: 'wave', fromUid: me.uid, fromName: 'Я', timestamp: SERVER_TIME }, me.token) },
+	{ name: 'ПОВТОРНИЙ сигнал тому самому — той самий слот', allowed: true, run: () => dbWrite(`signals/${other.uid}/${me.uid}`, { type: 'wave', fromUid: me.uid, fromName: 'Я', timestamp: SERVER_TIME }, me.token) },
+	{ name: 'адресат ЗНОСИТЬ сигнал зі своєї скриньки', allowed: true, run: () => dbWrite(`signals/${me.uid}/${other.uid}`, null, me.token) },
+	{ name: 'відгук від гостя', allowed: true, run: () => fsCreate('feedback_anonymous/bug/messages', 'probe', { message: 'проба', status: 'new', isGuestReport: true }, null) },
+	{ name: 'відгук від авторизованого', allowed: true, run: () => fsCreate('feedback/improvement/messages', 'probe', { title: 'Ідея', message: 'текст', status: 'new' }, me.token) },
+	{ name: 'скарга на слово', allowed: true, run: () => fsCreate('feedback_anonymous/word_error/messages', 'probe', { wordKey: 'cat', errorType: 'translation', status: 'new' }, null) },
 	{ name: 'своя скринька сигналів — читання', allowed: true, run: () => dbRead(`signals/${me.uid}`, me.token) },
 
 	// --- сторонній не мусить цього могти ---
@@ -150,8 +163,19 @@ const CASES = [
 	{ name: 'присутність без авторизації', allowed: false, run: () => dbWrite(`status/${me.uid}`, { state: 'offline' }, null) },
 	{ name: 'чужий запис у discovery', allowed: false, run: () => dbWrite(`discovery/${me.uid}`, { displayName: 'х', timestamp: SERVER_TIME }, other.token) },
 	{ name: 'ЧУЖА скринька сигналів — читання', allowed: false, run: () => dbRead(`signals/${other.uid}`, me.token) },
-	{ name: 'сигнал із підробленим відправником', allowed: false, run: () => dbWrite(`signals/${other.uid}/sig2`, { from: other.uid, type: 'wave' }, me.token) },
-	{ name: 'ПЕРЕЗАПИС чужого сигналу', allowed: false, run: () => dbWrite(`signals/${other.uid}/sig1`, { from: me.uid, type: 'підміна' }, me.token) },
+	{ name: 'сигнал із підробленим відправником', allowed: false, run: () => dbWrite(`signals/${other.uid}/${me.uid}`, { type: 'wave', fromUid: other.uid, timestamp: SERVER_TIME }, me.token) },
+	{ name: 'сигнал у ЧУЖИЙ слот скриньки', allowed: false, run: () => dbWrite(`signals/${other.uid}/${'stranger'}`, { type: 'wave', fromUid: me.uid, timestamp: SERVER_TIME }, me.token) },
+	{ name: 'сигнал із невідомим полем', allowed: false, run: () => dbWrite(`signals/${other.uid}/${me.uid}`, { type: 'wave', fromUid: me.uid, payload: 'х', timestamp: SERVER_TIME }, me.token) },
+	{ name: 'сигнал із типом поза переліком', allowed: false, run: () => dbWrite(`signals/${other.uid}/${me.uid}`, { type: 'pwn', fromUid: me.uid, timestamp: SERVER_TIME }, me.token) },
+	{ name: 'присутність із НЕВІДОМИМ полем', allowed: false, run: () => dbWrite(`status/${me.uid}`, { state: 'online', last_changed: SERVER_TIME }, me.token) },
+	{ name: 'присутність із ПІДРОБЛЕНИМ часом', allowed: false, run: () => dbWrite(`status/${me.uid}`, { state: 'online', lastChanged: 1 }, me.token) },
+	{ name: 'присутність зі станом поза переліком', allowed: false, run: () => dbWrite(`status/${me.uid}`, { state: 'invisible', lastChanged: SERVER_TIME }, me.token) },
+	{ name: 'запис у discovery із невідомим полем', allowed: false, run: () => dbWrite(`discovery/${me.uid}`, { displayName: 'Я', secret: 'х', timestamp: SERVER_TIME }, me.token) },
+	{ name: 'ЧИТАННЯ відгуків', allowed: false, run: () => fsRead('feedback/bug/messages', me.token) },
+	{ name: 'ПРАВКА надісланого відгуку', allowed: false, run: () => fsUpdate('feedback/improvement/messages/probe', { message: 'підміна' }, me.token) },
+	{ name: 'відгук у категорію поза переліком', allowed: false, run: () => fsCreate('feedback/pwned/messages', 'probe', { message: 'х', status: 'new' }, null) },
+	{ name: 'відгук із довільним полем', allowed: false, run: () => fsCreate('feedback/bug/messages', 'extra', { message: 'х', pwned: 'так' }, null) },
+	{ name: 'відгук із текстом на межі мегабайта', allowed: false, run: () => fsCreate('feedback/bug/messages', 'long', { message: 'я'.repeat(4001) }, null) },
 	{ name: 'читання кореня RTDB', allowed: false, run: () => dbRead('', me.token) },
 	{ name: 'довільна нова гілка RTDB', allowed: false, run: () => dbWrite('hackers/pwn', { any: 1 }, me.token) },
 
