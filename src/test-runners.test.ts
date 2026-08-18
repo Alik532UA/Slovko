@@ -103,6 +103,30 @@ describe('файли перевірок', () => {
 		expect(orphans, `перевірки, яких не запускає ніхто:\n${orphans.join('\n')}`).toEqual([]);
 	});
 
+	it('суфікс файлів перевірок один на весь проєкт (PROJECT-STRUCTURE-v8 § 6)', () => {
+		/*
+		 * Обидва суфікси законні, але має бути обраний ОДИН. Розбіжність
+		 * коштує не стилю: `test.include` у конфігу може ловити лише один із
+		 * них, і тоді файл із «неправильним» суфіксом не запускається зовсім —
+		 * а виглядає це як «тестів там немає».
+		 *
+		 * У цьому проєкті обрано `.test.ts`: так названі всі файли, крім
+		 * одного — `wordShards.spec.ts` лежав самотнім винятком. Йому
+		 * пощастило: `vitest.config.ts` ловить обидва. Наступному могло б і не.
+		 *
+		 * Розділення за призначенням (`.spec` — e2e, `.test` — юніт) тут не
+		 * діє: під Playwright лежать `tests/e2e/*.spec.ts`, і саме тому
+		 * порівнюються ЛИШЕ файли всередині `src/`.
+		 */
+		const inSrc = specFiles.filter((f) => f.startsWith('src/'));
+		expect(inSrc.length).toBeGreaterThan(2);
+		const wrongSuffix = inSrc.filter((f) => !/\.test\.(ts|js)$/.test(f));
+		expect(
+			wrongSuffix,
+			`у src/ конвенція — .test.ts; ці файли з іншим суфіксом: ${wrongSuffix.join(', ')}`
+		).toEqual([]);
+	});
+
 	it('жоден файл перевірки не вимикає типи через @ts-nocheck', () => {
 		const silenced = specFiles.filter((file) =>
 			/^\s*\/\/\s*@ts-nocheck/m.test(readFileSync(join(ROOT, file), 'utf8'))
