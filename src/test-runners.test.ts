@@ -61,6 +61,17 @@ function walk(dir: string, out: string[] = []): string[] {
 	return out;
 }
 
+/** Усі джерела, а не лише файли перевірок: керуючий символ шкідливий будь-де. */
+function walkSources(dir: string, out: string[] = []): string[] {
+	if (!existsSync(dir)) return out;
+	for (const entry of readdirSync(dir)) {
+		const full = join(dir, entry);
+		if (statSync(full).isDirectory()) walkSources(full, out);
+		else if (/\.(ts|js|svelte|css|json|html)$/.test(entry)) out.push(full.replace(/\\/g, '/'));
+	}
+	return out;
+}
+
 const specFiles = SEARCH_DIRS.flatMap((dir) => walk(join(ROOT, dir))).map((f) => f.slice(ROOT.length + 1));
 
 describe('файли перевірок', () => {
@@ -135,5 +146,44 @@ describe('файли перевірок', () => {
 			silenced,
 			`@ts-nocheck вимикає останній гейт, який міг би помітити мертвий імпорт:\n${silenced.join('\n')}`
 		).toEqual([]);
+	});
+
+	/**
+	 * Керуючий символ у джерелах — і регекс перестає збігатися будь-коли
+	 * (AI-AGENT-PITFALLS-v8 § 1.1).
+	 *
+	 * Знайдено в цьому проєкті: у `cloud-database.test.ts` замість `\b` лежав
+	 * БАЙТ U+0008 — так виглядає `\b`, який один раз пройшов через оболонку, що
+	 * розгортає escape-послідовності. Регекс `/<0x08>push\(/` не може збігтися
+	 * ніколи: символу 0x08 у джерелах не буває. Перевірка «push() у скриньці
+	 * сигналів знімає стелю» була зелена ЗА ПОБУДОВОЮ — і зеленою лишилася б,
+	 * якби `push()` там з'явився.
+	 *
+	 * Клас ширший за один файл, тож і перевірка ширша: жоден джерельний файл не
+	 * містить керуючих символів C0, крім табуляції й переводу рядка. У тексті
+	 * вони не потрібні нікому, а в регексі кожен із них — мовчазно мертва
+	 * перевірка. `svelte-check` і ESLint цього не бачать: з погляду типів це
+	 * коректний рядок, з погляду лінтера — коректний регекс.
+	 *
+	 * Зворотний експеримент виконано: 0x08 повернутий у той самий регекс разом
+	 * зі впровадженим `push()` дав 21 passed; із правильним `\b` — падіння.
+	 */
+	it('у джерелах немає керуючих символів, від яких регекс тихо не збігається', () => {
+		const CONTROL = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/;
+		const sources = SEARCH_DIRS.flatMap((dir) => walkSources(join(ROOT, dir)));
+
+		expect(sources.length, 'джерел не знайдено — сканер шукає не там').toBeGreaterThan(20);
+
+		const bad: string[] = [];
+		for (const file of sources) {
+			const text = readFileSync(file, 'utf8');
+			text.split('\n').forEach((line, index) => {
+				const at = line.search(CONTROL);
+				if (at < 0) return;
+				const code = line.charCodeAt(at).toString(16).padStart(4, '0');
+				bad.push(`${file.slice(ROOT.length + 1)}:${index + 1} — U+${code.toUpperCase()}`);
+			});
+		}
+		expect(bad, `керуючий символ у джерелі:\n${bad.join('\n')}`).toEqual([]);
 	});
 });
