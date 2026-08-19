@@ -23,6 +23,16 @@ const BUILD = 'build';
 const ORIGIN = 'https://alik532ua.github.io';
 const BASE = process.env.BASE_PATH ?? '/Slovko';
 
+/**
+ * Маршрути, яких не мусить бути в пошуку (BETA-CHECKLIST-v8 § 4).
+ *
+ * Перелік дублюється з `src/lib/config/hiddenRoutes.ts` навмисно: цей скрипт —
+ * звичайний Node без збірки, і `$lib` йому не резолвиться. Розбіжність двох
+ * копій ловить `src/beta-checklist.test.ts`, який читає обидва файли.
+ */
+const HIDDEN_ROUTES = ['beta-test-checklists'];
+const isHidden = (where) => HIDDEN_ROUTES.some((r) => where.includes(`/${r}/`));
+
 const failures = [];
 const fail = (message) => failures.push(message);
 
@@ -75,8 +85,25 @@ for (const page of pages) {
 	// 4. Canonical — абсолютний і з базовим шляхом. Відносний або без бази веде
 	//    пошуковик на адресу, якої на хостингу немає.
 	const canonical = /<link\s+rel="canonical"\s+href="([^"]*)"/.exec(html)?.[1];
-	if (!canonical) fail(`${where}: немає <link rel="canonical">`);
-	else if (!canonical.startsWith(`${ORIGIN}${BASE}`)) {
+	if (isHidden(where)) {
+		/*
+		 * Прихована сторінка перевіряється ПРОТИЛЕЖНО (BETA-CHECKLIST-v8 § 5.5):
+		 * `noindex` мусить БУТИ, `canonical` — НЕ мусить. Разом вони дають
+		 * протилежні сигнали: «не індексуй» і «оце канонічна адреса для
+		 * індексу». Прирівняти таку сторінку до 404-фолбека (аби просто не
+		 * вимагати canonical) — дешевше на два рядки й неправильно: разом із
+		 * canonical вона перестала б перевірятися на порожнє тіло й на <title>,
+		 * і найслабше покритою стала б саме та сторінка, якою користуються
+		 * тестувальники.
+		 */
+		if (canonical) fail(`${where}: у прихованої сторінки не мусить бути canonical`);
+		if (!/<meta\s+name="robots"\s+content="[^"]*noindex/i.test(html)) {
+			fail(`${where}: прихована сторінка без noindex — вона потрапить у пошук`);
+		}
+	} else if (!canonical) fail(`${where}: немає <link rel="canonical">`);
+	else if (/<meta\s+name="robots"\s+content="[^"]*noindex/i.test(html)) {
+		fail(`${where}: звичайна сторінка з noindex — вона зникне з пошуку`);
+	} else if (!canonical.startsWith(`${ORIGIN}${BASE}`)) {
 		fail(`${where}: canonical «${canonical}» не починається з ${ORIGIN}${BASE}`);
 	} else if (/\.\/|\/\/$|\.\//.test(canonical.slice(ORIGIN.length))) {
 		fail(`${where}: canonical «${canonical}» містить відносний фрагмент`);
@@ -163,6 +190,28 @@ for (const asset of ['sitemap.xml', 'robots.txt', 'manifest.json', 'service-work
 				`check-build: SDK бази поза критичним шляхом (${preloaded.size} передзавантажених файлів)`
 			);
 		}
+	}
+}
+
+/*
+ * Прихована сторінка мусить ІСНУВАТИ. Зниклий маршрут виглядає точно так само,
+ * як правильно прихований: у пошуку його немає ні там, ні там, — і тестувальник
+ * дізнається про це, відкривши надіслане посилання й побачивши 404.
+ */
+for (const route of HIDDEN_ROUTES) {
+	if (!existsSync(join(BUILD, route, 'index.html'))) {
+		fail(`build/${route}/index.html: прихованої сторінки немає в збірці`);
+	}
+	const sitemap = existsSync(join(BUILD, 'sitemap.xml'))
+		? readFileSync(join(BUILD, 'sitemap.xml'), 'utf8')
+		: '';
+	if (sitemap.includes(route)) fail(`sitemap.xml: службова сторінка ${route} потрапила в мапу`);
+
+	const robots = existsSync(join(BUILD, 'robots.txt'))
+		? readFileSync(join(BUILD, 'robots.txt'), 'utf8')
+		: '';
+	if (!robots.includes(`Disallow: ${BASE}/${route}/`)) {
+		fail(`robots.txt: немає Disallow для ${route}`);
 	}
 }
 

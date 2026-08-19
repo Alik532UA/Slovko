@@ -24,6 +24,7 @@
 	} from "$lib/services/analyticsService";
 	import { pwaStore } from "$lib/controllers/PwaStore.svelte";
 	import { page } from "$app/state";
+	import { isHiddenRoute } from "$lib/config/hiddenRoutes";
 	import { navigationState } from "$lib/controllers/NavigationState.svelte";
 	import { migrateStorageKeys } from "$lib/utils/storageMigration";
 
@@ -301,7 +302,28 @@
 	$effect(() => {
 		trackPageView(page.url.pathname);
 	});
+
+	/**
+	 * Службовий маршрут (BETA-CHECKLIST-v8 § 4). `pathname`, а не
+	 * `searchParams`: другий під час пререндеру кидає виняток, бо рядок запиту
+	 * на етапі збірки невідомий.
+	 */
+	const isHidden = $derived(isHiddenRoute(page.url.pathname));
 </script>
+
+<svelte:head>
+	{#if isHidden}
+		<!--
+			Політика прихованих маршрутів живе в одному модулі
+			(BETA-CHECKLIST-v8 § 4.1): звідси `noindex`, звідти ж
+			`hooks.server.ts` бере перелік, щоб не лишати canonical. Тег стоїть у
+			layout, а не на сторінці, бо сторінка рендериться нижче за гейт
+			готовності — а той під час пререндеру завжди закритий, тож зі
+			`svelte:head` самої сторінки в зібраний HTML не потрапляло НІЧОГО.
+		-->
+		<meta name="robots" content="noindex, nofollow" />
+	{/if}
+</svelte:head>
 
 <LogCopyButton />
 
@@ -309,7 +331,16 @@
 	<UpdateNotification version={versionStore.serverVersion} />
 {/if}
 
-{#if ready && !$isLoading && authStore.isDataReady}
+{#if isHidden}
+	<!--
+		Службові сторінки не чекають на гру: їм не потрібні ні словники, ні
+		сеанс, ні синхронізація. Через гейт нижче вони віддавали б у зібраному
+		HTML лише кружечок завантаження — тобто порожню сторінку для всіх, хто
+		відкриє посилання з вимкненим JavaScript, і для будь-якої перевірки над
+		`build/`.
+	-->
+	{@render children()}
+{:else if ready && !$isLoading && authStore.isDataReady}
 	{@render children()}
 
 	{#if !settingsStore.value.hasCompletedOnboarding}

@@ -15,27 +15,18 @@ import { test, expect } from '@playwright/test';
  * таби й спільні списки (§ 1.9.2 — межа перевірки після goto).
  */
 /**
- * Для кожного стану — локатор, який мусить бути на екрані. Без нього перевірка
- * лише вдавала б, що дивиться в модалку: базова сторінка завжди має якісь
- * testid, тому канарка «їх більше нуля» пройшла б і на закритій модалці.
- */
-/**
+ * Перелік станів живе в `src/lib/config/appStates.ts` — одним файлом на весь
+ * проєкт. Другий список, який тримають узгодженим руками, розійшовся б із
+ * першим на першому ж доданому екрані; тут його читає і ця перевірка, і
+ * інваріант чеклиста бета-тестування (BETA-CHECKLIST-v8 § 5.1).
+ *
  * Шляхи релятивні, без провідного слеша: `base` проєкту — `/Slovko`, і він
  * тепер входить у `baseURL` (CODE-QUALITY-v8 § 5.4). `new URL('/x', base)`
- * відкинув би базовий шлях цілком, і перевірка знову трималася б на тому, що
- * Vite сам перенаправляє корінь.
+ * відкинув би базовий шлях цілком.
  */
-const STATES: { path: string; marker: string }[] = [
-	{ path: '', marker: 'app-root-container' },
-	{ path: '?modal=levels', marker: 'level-topic-modal-panel' },
-	{ path: '?modal=languages', marker: 'language-settings-modal' },
-	{ path: '?modal=about', marker: 'about-modal-panel' },
-	{ path: '?modal=themes', marker: 'confirm-theme-btn' },
-	{ path: '?modal=stats&tab=stats', marker: 'stats-panel' },
-	{ path: '?modal=stats&tab=leaderboard', marker: 'stats-panel' },
-	{ path: '?modal=profile&tab=account', marker: 'profile-panel' },
-	{ path: '?modal=profile&tab=friends', marker: 'profile-panel' }
-];
+import { APP_STATES } from '../../src/lib/config/appStates';
+
+const STATES = APP_STATES;
 
 /**
  * Онбординг-модалка накриває застосунок на чистому профілі, і тоді жодна

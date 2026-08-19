@@ -1,4 +1,4 @@
-import { logService } from "../services/logService.svelte";
+﻿import { logService } from "../services/logService.svelte";
 import { AuthService } from "../services/firebase/AuthService";
 import { SyncService } from "../services/firebase/SyncService.svelte";
 import { PresenceService } from "../services/firebase/PresenceService.svelte";
@@ -8,6 +8,7 @@ import { statisticsState } from "./StatisticsState.svelte";
 import { notificationStore } from "./NotificationStore.svelte";
 import { settingsStore } from "./SettingsStore.svelte";
 import type { User } from "firebase/auth";
+import { browser } from "$app/environment";
 
 /**
  * Інтерфейс для серіалізованого стану користувача
@@ -66,6 +67,21 @@ class AuthStore {
 	private firebaseUser: User | null = null;
 
 	constructor() {
+		/*
+		 * Тільки в браузері. Підписка на стан автентифікації — це мережа, і на
+		 * сервері вона не має сенсу: сеанс живе в браузері відвідувача
+		 * (CLOUD-DATABASE-v8 § 10.1 — SDK не піднімається сам собою).
+		 *
+		 * Ціна відсутності цієї умови була не теоретична. Доки в проєкті була
+		 * одна сторінка з `ssr = false`, конструктор на сервері не виконувався
+		 * ніколи. Щойно з'явилася сторінка з увімкненим SSR, підписка
+		 * спрацювала в Node, `updateState` покликав `FriendsService.clearCache()`
+		 * — а той у серверному графі модулів на той момент ще `undefined`, бо
+		 * імпорти замкнені в коло. Процес падав із `TypeError`, і виглядало це
+		 * як обрив з'єднання: сторінка не віддавалася зовсім.
+		 */
+		if (!browser) return;
+
 		AuthService.init((user) => {
 			logService.log("debug", "[AuthStore] onAuthStateChanged:", {
 				uid: user?.uid,

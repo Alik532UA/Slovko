@@ -1,5 +1,5 @@
 ﻿<script lang="ts">
-	import { browser, dev } from "$app/environment";
+	import { browser, building, dev } from "$app/environment";
 	import { page } from "$app/state";
 	import { logService } from "$lib/services/logService.svelte";
 	import { localStorageProvider } from "$lib/services/storage/storageProvider";
@@ -26,7 +26,18 @@
 	 * якої немає.
 	 */
 	const debugFlag = browser && localStorageProvider.getItem("debug_mode") === "1";
-	const debugMode = $derived(page.url.searchParams.get("debug") === "1" || debugFlag);
+	/*
+	 * `building` обов'язковий: під час пререндеру рядок запиту невідомий, і
+	 * SvelteKit кидає на `url.searchParams`, а не віддає порожнє значення.
+	 * Кнопка малюється вище за гейт готовності, тобто на КОЖНІЙ сторінці — тож
+	 * без цієї умови жодна сторінка з увімкненим SSR не збирається взагалі.
+	 * Знайшлося це рівно так: сторінка чеклиста бета-тестування — перша, якій
+	 * SSR потрібен (їй треба доставити `noindex` у зібраний HTML), — валила
+	 * збірку з «500» і стеком у чужому файлі.
+	 */
+	const debugMode = $derived(
+		!building && page.url.searchParams.get("debug") === "1" ? true : debugFlag,
+	);
 	const isVisible = $derived(dev ? logService.errorCount > 0 : debugMode);
 
 	/**
