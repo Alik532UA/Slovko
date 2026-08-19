@@ -11,6 +11,7 @@
 	import { playlistStore } from "$lib/controllers/PlaylistStore.svelte";
 	import BaseTooltip from "../ui/BaseTooltip.svelte";
 	import { navigationState } from "$lib/controllers/NavigationState.svelte";
+	import { acceptsShortcut } from "$lib/services/keyboard";
 
 	// Отримати поточний лейбл
 	const currentLabel = $derived.by(() => {
@@ -138,11 +139,20 @@
 	}
 
 	function handleKeydown(event: KeyboardEvent) {
-		// Prevent navigation if user is typing in an input
-		const target = event.target as HTMLElement;
-		if (target?.tagName === "INPUT" || target?.tagName === "TEXTAREA") {
-			return;
-		}
+		/*
+		 * Спільний захист, а не порівняння `tagName`.
+		 *
+		 * Доти тут стояло `tagName === "INPUT" || tagName === "TEXTAREA"`, і воно
+		 * мало дві дірки. У `contenteditable` фокус стоїть на ВКЛАДЕНОМУ вузлі, і
+		 * його `tagName` — це `SPAN`, тож стрілка гортала картку замість того, щоб
+		 * рухати курсор у тексті. Те саме з відкритим `select`: стрілки в ньому
+		 * вибирають пункт, а тут вони ще й міняли рівень під ним.
+		 *
+		 * `acceptsShortcut` додає й перевірку модифікаторів: `Alt+←` — це «назад»
+		 * у браузері, і гортати картку заодно з поверненням на попередню сторінку
+		 * не мусить ніхто (HOTKEYS-v8 § 2.1).
+		 */
+		if (!acceptsShortcut(event)) return;
 
 		if (event.key === "ArrowLeft" && canGoPrev) {
 			goPrev();

@@ -1,31 +1,56 @@
-﻿<script lang="ts">
+<script lang="ts">
 	import { browser, building, dev } from "$app/environment";
 	import { page } from "$app/state";
+	import { onDestroy } from "svelte";
+	import { debugMode } from "$lib/services/debugMode.svelte";
+	import { createKeySequence } from "$lib/services/keySequence";
 	import { logService } from "$lib/services/logService.svelte";
-	import { localStorageProvider } from "$lib/services/storage/storageProvider";
 	import { hardReset } from "$lib/services/resetService";
 	import { Check, ClipboardCopy } from "lucide-svelte";
-	import { _ } from "svelte-i18n";
-
-	let copied = $state(false);
 
 	/**
-	 * Видимість кнопки (DEBUGGING-v8 § 2.1).
+	 * Службове табло: номер версії, лічильник помилок і збір звіту — ОДИН елемент.
 	 *
-	 * Логер пише кільцевий буфер і в продакшні теж — саме заради звітів із
-	 * чужих пристроїв. Але кнопка була прив'язана до `dev`, тобто зняти звіт із
-	 * пристрою користувача було НЕМОЖЛИВО: буфер збирався й нікуди не дівався.
-	 * Функція існувала лише на папері.
+	 * **Форма змінюється, місце — ні.** У спокої це капсула з номером версії; коли
+	 * є помилки — червоний кружок із їхньою кількістю; після копіювання — галочка.
+	 * Доти номера версії тут не було: його показувало лише вікно «Про застосунок»,
+	 * тобто на скріншоті збою версії не було видно ніколи.
 	 *
-	 * Тепер у продакшні вона вмикається debug-режимом — `?debug=1` в адресі або
-	 * ключ `slovko_debug_mode` = `'1'`. За замовчуванням кнопки, як і раніше,
-	 * немає. У dev усе як було: видима, коли є зареєстровані помилки.
+	 * **Видимість (DEBUGGING-v8 § 2.1, із відхиленням).** У dev табло видиме
+	 * ЗАВЖДИ, а не лише за наявності помилок, як приписує канон: воно тепер несе
+	 * номер версії, а його ховати нема сенсу. Доти в dev воно зʼявлялося лише при
+	 * помилці — тобто найчастіше потрібна річ, «яка версія на екрані?», місця на
+	 * екрані не мала.
 	 *
-	 * Значення зі сховища читається один раз: без перезавантаження воно не
-	 * змінюється, а `$derived` над ним створював би враження реактивності,
-	 * якої немає.
+	 * **Три входи, і вони навмисно різні за природою.** `?debug=1` в адресі
+	 * працює на телефоні й пересилається посиланням; серія натискань `V` — для
+	 * того, хто вже сидить за клавіатурою; збережений прапорець переживає
+	 * перезавантаження. На дотику серія недосяжна, і саме тому адресний параметр
+	 * лишається: інакше версію на телефоні не побачив би ніхто.
 	 */
-	const debugFlag = browser && localStorageProvider.getItem("debug_mode") === "1";
+	let copied = $state(false);
+	let copyTimer: ReturnType<typeof setTimeout> | undefined;
+
+	const appVersion =
+		typeof __APP_VERSION__ !== "undefined" ? __APP_VERSION__ : "unknown";
+
+	/**
+	 * Підпис НЕ через i18n, і це те саме рішення, що й у тексті підтвердження
+	 * `hardReset`.
+	 *
+	 * Причина не в лінощах перекладу, а в порядку запуску. Табло малюється вище за
+	 * гейт готовності, тобто на кожній сторінці й ДО того, як `svelte-i18n`
+	 * отримає початкову локаль. `$_(…)` у цій точці кидає «Cannot format a message
+	 * without first setting the initial locale» — і кидає з кореневого layout,
+	 * тобто валить застосунок цілком. Доти цього не було видно рівно тому, що в dev
+	 * кнопка зʼявлялася лише ПІСЛЯ першої помилки, а на той час локаль уже стояла.
+	 *
+	 * Друга причина важливіша за першу: службовий елемент існує, щоб зняти звіт
+	 * тоді, коли застосунок зламався. Підпис, який залежить від того, чи
+	 * завантажилися переклади, не дозволив би повідомити саме про зламані переклади.
+	 */
+	const LABEL = "Копіювати звіт про роботу / Copy report";
+
 	/*
 	 * `building` обов'язковий: під час пререндеру рядок запиту невідомий, і
 	 * SvelteKit кидає на `url.searchParams`, а не віддає порожнє значення.
@@ -35,60 +60,69 @@
 	 * SSR потрібен (їй треба доставити `noindex` у зібраний HTML), — валила
 	 * збірку з «500» і стеком у чужому файлі.
 	 */
-	const debugMode = $derived(
-		!building && page.url.searchParams.get("debug") === "1" ? true : debugFlag,
+	const urlDebug = $derived(
+		!building && browser && page.url.searchParams.get("debug") === "1",
 	);
-	const isVisible = $derived(dev ? logService.errorCount > 0 : debugMode);
+	/*
+	 * `?debug=1` діє ПОВЕРХ збереженого стану: посилання з ним мусить показати
+	 * табло навіть тому, хто раніше сховав його серією натискань. Інакше
+	 * найнадійніший шлях (єдиний досяжний на телефоні) можна було б заблокувати
+	 * назавжди.
+	 */
+	const isVisible = $derived(urlDebug || debugMode.enabled);
 
 	/**
-	 * Аварійний Hard Reset: серія натискань «R».
+	 * Серія `V` ПЕРЕМИКАЄ табло, а поріг залежить від напрямку.
 	 *
-	 * Три обмеження, і кожне закриває реальний спосіб втратити ВСІ локальні дані
-	 * без жодного натискання на кнопку:
-	 *
-	 *   1. `e.repeat` — автоповтор клавіші дає ~30 подій за секунду, тобто
-	 *      затиснута «R» набирає навіть прод-поріг у 50 менш ніж за дві секунди.
-	 *   2. Поля вводу — обробник висить на `svelte:window`, тож він працює й тоді,
-	 *      коли користувач друкує в пошуку, у назві плейлиста чи у формі відгуку.
-	 *   3. Підтвердження в проді. `hardReset(false)` пропускає діалог, а стирає
-	 *      сховище, кеші й реєстрацію service worker — це не «скидання
-	 *      налаштувань», це втрата прогресу без запитання.
-	 *
-	 * У dev усе лишається як було: п'ять натискань і без діалогу.
+	 * Функція, а не число: після спрацювання потрібний поріг інший (щойно табло
+	 * стало видимим, сховати його коштує 5, а не 55). Перестворювати
+	 * послідовність на кожну зміну стану означало б губити половину набраної серії.
 	 */
-	let kKeyPressCount = 0;
-	let kKeyPressTimer: ReturnType<typeof setTimeout>;
+	const versionSequence = createKeySequence({
+		code: "KeyV",
+		threshold: () => debugMode.pressesToToggle,
+		onComplete: () =>
+			logService.log(
+				"system",
+				`Табло ${debugMode.toggle() ? "показано" : "сховано"}`,
+			),
+	});
 
-	function isTypingTarget(target: EventTarget | null): boolean {
-		const el = target as HTMLElement | null;
-		if (!el || typeof el.closest !== "function") return false;
-		return !!el.closest("input, textarea, select, [contenteditable]:not([contenteditable='false'])");
+	/**
+	 * Серія `R` — аварійне скидання.
+	 *
+	 * Поріг у проді 55, а не 50: те саме число, що й у решти проєктів на цьому
+	 * origin. Різні числа для того самого жесту — це не налаштування, а те, що
+	 * доводиться згадувати на кожному сайті окремо.
+	 *
+	 * `hardReset(true)` у проді питає підтвердження: разом із порогом це два
+	 * незалежні барʼєри перед знищенням місцевого прогресу, і жоден не
+	 * покладається на уважність.
+	 */
+	const resetSequence = createKeySequence({
+		code: "KeyR",
+		threshold: dev ? 5 : 55,
+		onComplete: () => void hardReset(!dev),
+	});
+
+	function handleGlobalKeydown(event: KeyboardEvent) {
+		// Обидві серії отримують КОЖНУ подію, включно з тією, що завершила сусідню:
+		// інакше `V` не скидала б набране в `R`, і серія перестала б бути серією.
+		versionSequence.handle(event);
+		resetSequence.handle(event);
 	}
 
-	function handleGlobalKeydown(e: KeyboardEvent) {
-		if (e.code === "KeyR" && !e.repeat && !isTypingTarget(e.target)) {
-			kKeyPressCount++;
-			clearTimeout(kKeyPressTimer);
-			const threshold = dev ? 5 : 50;
-
-			if (kKeyPressCount >= threshold) {
-				hardReset(!dev);
-				kKeyPressCount = 0;
-			} else {
-				kKeyPressTimer = setTimeout(() => {
-					kKeyPressCount = 0;
-				}, 2000);
-			}
-		} else {
-			kKeyPressCount = 0;
-		}
-	}
+	onDestroy(() => {
+		if (copyTimer) clearTimeout(copyTimer);
+		versionSequence.reset();
+		resetSequence.reset();
+	});
 
 	async function handleCopy() {
 		const success = await logService.copyLogsToClipboard();
 		if (success) {
 			copied = true;
-			setTimeout(() => (copied = false), 1500);
+			copyTimer = setTimeout(() => (copied = false), 1500);
 		}
 	}
 </script>
@@ -96,21 +130,26 @@
 <svelte:window onkeydown={handleGlobalKeydown} />
 
 {#if isVisible}
-	<button 
-		class="log-fab" 
-		class:copied={copied}
-		onclick={handleCopy} 
-		title="Копіювати звіт про помилки"
-		aria-label={$_("common.copyReport")}
+	<button
+		type="button"
+		class="log-fab"
+		class:has-errors={logService.errorCount > 0}
+		class:copied
+		onclick={handleCopy}
+		aria-label={`${LABEL} — ${appVersion}`}
+		data-testid="app-version-value"
 	>
 		{#if copied}
 			<Check size={18} />
 		{:else if logService.errorCount > 0}
-			<span class="error-count">{logService.errorCount > 99 ? '!' : logService.errorCount}</span>
+			<span class="error-count"
+				>{logService.errorCount > 99 ? "!" : logService.errorCount}</span
+			>
 		{:else}
 			<!-- У debug-режимі помилок може не бути зовсім: червоний нуль читався б
 			     як «одна помилка», а не як «звіт доступний». -->
-			<ClipboardCopy size={16} />
+			<ClipboardCopy size={12} class="hint-icon" />
+			<span class="version">{appVersion}</span>
 		{/if}
 	</button>
 {/if}
@@ -121,54 +160,114 @@
 		bottom: 16px;
 		left: 16px;
 		z-index: 9999;
-		
+
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		
-		/* Стандарт V5: 32px desktop, 24px mobile (реалізовано через clamp/media) */
-		width: 32px;
-		height: 32px;
-		
-		background: #f44336;
-		color: white;
-		border: none;
-		border-radius: 50%;
-		cursor: pointer;
-		
-		box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
-		transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-		padding: 0;
-	}
+		gap: 4px;
 
-	@media (max-width: 640px) {
-		.log-fab {
-			width: 24px;
-			height: 24px;
-			bottom: 12px;
-			left: 12px;
-		}
+		/* Капсула: номер версії в коло 32px не влазить. */
+		min-height: 32px;
+		padding: 0 8px;
+		border-radius: 16px;
+
+		background: var(--card-bg);
+		color: var(--text-primary);
+		border: 2px solid var(--card-border);
+		cursor: pointer;
+
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+		transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 	}
 
 	.log-fab:hover {
-		transform: scale(1.1);
-		background: #d32f2f;
+		transform: scale(1.05);
+	}
+
+	.version {
+		font-size: 10px;
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		line-height: 1;
+		/* Номер читає той, хто дивиться на скріншот, тож він не має «розсипатися». */
+		white-space: nowrap;
+	}
+
+	/*
+	 * Іконка копіювання — підказка, що капсула клікабельна, а не окрема дія. Тому
+	 * вона дрібніша за номер і тане: головне тут число версії.
+	 */
+	.log-fab :global(.hint-icon) {
+		opacity: 0.6;
+		flex: none;
+	}
+
+	/*
+	 * Помилки — кружок, а не капсула: у цьому стані важлива не версія, а те, що
+	 * щось сталося. Номер версії лишається у звіті, який копіює цей самий клік.
+	 */
+	.log-fab.has-errors,
+	.log-fab.copied {
+		width: 32px;
+		min-height: 32px;
+		padding: 0;
+		border-radius: 50%;
+	}
+
+	/*
+	 * Червоний темніший за #f44336 — за WCAG AA, не за смаком: білий текст на
+	 * попередньому давав 3.7:1 при потрібних 4.5. Тепер 5.46:1. Лічильник помилок
+	 * — це та плашка, яку читають саме тоді, коли щось пішло не так, тобто
+	 * найгірший кандидат на «майже читно». Літерали, а не токени теми: сигнал «є
+	 * помилки» мусить виглядати однаково в усіх чотирьох темах.
+	 */
+	.log-fab.has-errors {
+		background: #c92a2a;
+		color: white;
+		border-color: #7f1d1d;
+		box-shadow: 0 4px 12px rgba(201, 42, 42, 0.4);
 	}
 
 	.log-fab.copied {
-		background: #4caf50;
-		box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+		background: #2f9e44;
+		color: white;
+		border-color: #1b5e20;
+		box-shadow: 0 4px 12px rgba(47, 158, 68, 0.4);
 	}
 
 	.error-count {
 		font-size: 0.75rem;
 		font-weight: 800;
-		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
 	}
 
-	@media (max-width: 640px) {
+	/*
+	 * Розмір залежить від СПОСОБУ ВВЕДЕННЯ, а не від ширини вікна: на десктопі
+	 * 600px кнопка лишалася б маленькою для миші, а на планшеті 1024px —
+	 * маленькою для дотику (ACCESSIBILITY-v8 § 8, DEBUGGING-v8 § 2.2). Доти тут
+	 * стояв `max-width: 640px`, який ЗМЕНШУВАВ кнопку до 24px саме там, де
+	 * потрібні 44.
+	 */
+	@media (hover: none) {
+		.log-fab {
+			min-height: 44px;
+			padding: 0 12px;
+			border-radius: 22px;
+		}
+
+		.log-fab.has-errors,
+		.log-fab.copied {
+			width: 44px;
+			padding: 0;
+		}
+
+		.version {
+			font-size: 12px;
+		}
+
 		.error-count {
-			font-size: 0.65rem;
+			font-size: 0.9rem;
 		}
 	}
 </style>

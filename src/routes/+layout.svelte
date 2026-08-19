@@ -26,6 +26,8 @@
 	import { page } from "$app/state";
 	import { isHiddenRoute } from "$lib/config/hiddenRoutes";
 	import { navigationState } from "$lib/controllers/NavigationState.svelte";
+	import { acceptsShortcut } from "$lib/services/keyboard";
+	import type { AppTheme } from "$lib/types/index";
 	import { migrateStorageKeys } from "$lib/utils/storageMigration";
 
 	// Modals
@@ -309,7 +311,59 @@
 	 * на етапі збірки невідомий.
 	 */
 	const isHidden = $derived(isHiddenRoute(page.url.pathname));
+
+	/**
+	 * Гарячі клавіші: `T` — тема, `L` — панель мов (HOTKEYS-v8 § 1.1).
+	 *
+	 * **Тут, а не в компоненті налаштувань.** Обидві дії мусять працювати з будь-якої
+	 * сторінки, а вікна тем і мов на екрані здебільшого немає — то були б клавіші,
+	 * які працюють лише там, де вони й так не потрібні. Layout рендериться завжди.
+	 *
+	 * **`T` перемикає по колу, `L` відкриває ПАНЕЛЬ.** Різниця не в смаку: тему
+	 * задає `settingsStore.setTheme`, тобто дія суто клієнтська й миттєва, а тем
+	 * усього чотири. Мов в інтерфейсі значно більше, і «наступна мова» по колу
+	 * означала б блукання через незнайомі підписи; тому клавіша робить те саме, що
+	 * кнопка: відкриває список із прапорцями.
+	 *
+	 * **Захист полів вводу — не деталь, а причина існування `acceptsShortcut`.**
+	 * Обробник висить на вікні, тож без нього літера `t` у назві плейлиста міняла б
+	 * тему, а `l` — відкривала б панель мов посеред набору. `Escape` єдиний
+	 * проходить із поля: панель, яку відкрили клавішею, більше нічим не закрити.
+	 */
+	const THEME_ORDER: AppTheme[] = [
+		"dark-gray",
+		"light-gray",
+		"orange",
+		"green",
+	];
+
+	function handleShortcut(event: KeyboardEvent) {
+		if (!acceptsShortcut(event)) return;
+
+		if (event.code === "KeyT") {
+			const current = settingsStore.value.theme;
+			const next =
+				THEME_ORDER[(THEME_ORDER.indexOf(current) + 1) % THEME_ORDER.length];
+			settingsStore.setTheme(next);
+			// `preventDefault` лише після того, як дія відбулася (HOTKEYS-v8 § 2.4).
+			event.preventDefault();
+			return;
+		}
+
+		if (event.code === "KeyL") {
+			// Перемикач, а не «відкрити»: клавіша, яка лише відкриває, лишає людину
+			// шукати мишкою, чим закрити те, що вона щойно відкрила з клавіатури.
+			if (page.url.searchParams.get("modal") === "languages") {
+				navigationState.closeModal();
+			} else {
+				navigationState.openModal("languages");
+			}
+			event.preventDefault();
+		}
+	}
 </script>
+
+<svelte:window onkeydown={handleShortcut} />
 
 <svelte:head>
 	{#if isHidden}
