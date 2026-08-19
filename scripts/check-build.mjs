@@ -56,6 +56,70 @@ const pages = files.filter((f) => f.endsWith('.html'));
 // Канарка: без неї порожня чи перейменована тека дала б зелений результат.
 if (pages.length === 0) fail('у build/ немає жодної сторінки — перевіряти нема що');
 
+/**
+ * Маршрути, які вимикають SSR, — виведені з ДЖЕРЕЛ, а не перелічені руками.
+ *
+ * Навіщо. `ssr = false` означає, що в пререндер не потрапляє нічого з тіла
+ * сторінки: у `build/…/index.html` лежить порожній `<body>` і бутстрап-скрипт.
+ * Пошуковик індексує саме це — SEO-v8 називає порожнє тіло в пререндері
+ * CRITICAL. Перевірки на нього тут не було ЗОВСІМ, тобто найдорожчий дефект
+ * файлу був єдиним, якого гейт не бачив.
+ *
+ * Чому не просто «заборонити порожнє тіло». Ігровий маршрут вимикає SSR
+ * свідомо: гра будується зі сховища браузера. Виправлення — це рішення про
+ * архітектуру сторінки, а не правка гейта, і його не можна прийняти мовчки.
+ * Тому гейт робить інше й корисніше: тримає ВІДПОВІДНІСТЬ між тим, які
+ * сторінки їдуть порожніми, і тим, які маршрути це оголосили.
+ *
+ * Обидва напрямки важливі:
+ *   • порожня сторінка БЕЗ `ssr = false` — новий дефект, і його видно одразу;
+ *   • сторінка з `ssr = false`, яка приїхала з повним тілом, — знак, що прапорець
+ *     уже не потрібен, і перелік винятків може СКОРОТИТИСЯ.
+ *
+ * Друге не менш цінне за перше: доти виняток був невидимий, тож і скорочуватися
+ * йому було нікуди.
+ */
+const ROUTES = 'src/routes';
+const BODY_TEXT_MIN = 200;
+
+function routesWithoutSsr(dir = ROUTES, prefix = '') {
+	const found = [];
+	for (const entry of readdirSync(dir)) {
+		const full = join(dir, entry);
+		if (statSync(full).isDirectory()) {
+			found.push(...routesWithoutSsr(full, `${prefix}${entry}/`));
+		} else if (/^\+page\.(ts|js)$/.test(entry)) {
+			const source = readFileSync(full, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+			if (/export\s+const\s+ssr\s*=\s*false/.test(source)) found.push(prefix);
+		}
+	}
+	return found;
+}
+
+const noSsrRoutes = routesWithoutSsr();
+if (noSsrRoutes.length === 0 && !existsSync(join(ROUTES, '+page.svelte'))) {
+	fail('маршрутів не знайдено — перевірка порожнього тіла шукає не там');
+}
+
+/** `404.html` — SPA-фолбек адаптера, а не сторінка: тіла в нього не буває за призначенням. */
+const isFallback = (where) => where.endsWith('/404.html');
+
+/** Сторінка належить маршруту з вимкненим SSR. */
+const declaredEmpty = (where) => {
+	const rel = where.slice(`${BUILD}/`.length).replace(/index\.html$/, '');
+	return noSsrRoutes.includes(rel);
+};
+
+/** Видимий текст тіла — те, що бачить пошуковик, а не байти розмітки. */
+const bodyTextLength = (html) => {
+	const body = /<body[^>]*>([\s\S]*)<\/body>/.exec(html)?.[1] ?? '';
+	return body
+		.replace(/<script[\s\S]*?<\/script>/g, '')
+		.replace(/<style[\s\S]*?<\/style>/g, '')
+		.replace(/<[^>]+>/g, '')
+		.trim().length;
+};
+
 for (const page of pages) {
 	const html = readFileSync(page, 'utf8');
 	const where = page.replace(/\\/g, '/');
@@ -70,6 +134,24 @@ for (const page of pages) {
 	//    голосом мови за замовчуванням системи.
 	const lang = /<html[^>]*\blang="([^"]*)"/.exec(html)?.[1];
 	if (!lang) fail(`${where}: у <html> немає атрибута lang`);
+
+	// 2а. Порожнє тіло проти оголошеного `ssr = false` — див. довгий комментар
+	//     вище про те, чому саме відповідність, а не просто заборона.
+	if (!isFallback(where)) {
+		const textLength = bodyTextLength(html);
+		if (textLength < BODY_TEXT_MIN && !declaredEmpty(where)) {
+			fail(
+				`${where}: тіло майже порожнє (${textLength} символів тексту), а маршрут не оголошував ssr = false — ` +
+					'сторінка потрапить в індекс без вмісту'
+			);
+		}
+		if (textLength >= BODY_TEXT_MIN && declaredEmpty(where)) {
+			fail(
+				`${where}: маршрут оголосив ssr = false, але сторінка приїхала з тілом (${textLength} символів) — ` +
+					'прапорець більше не потрібен, прибери його разом із цим винятком'
+			);
+		}
+	}
 
 	// 3. Заголовок і опис. Тут SSR вимкнено (`+page.ts`), тож зі `svelte:head`
 	//    у розмітку не потрапляє НІЧОГО — обидва теги живуть статично в
