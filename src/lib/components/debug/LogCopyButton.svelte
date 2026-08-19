@@ -139,18 +139,20 @@
 		aria-label={`${LABEL} — ${appVersion}`}
 		data-testid="app-version-value"
 	>
+		<!-- Номер версії — поза гілками: лічильник ДОДАЄТЬСЯ до нього, а не заміняє
+		     його. Інакше на dev, де помилка буває майже завжди, версії не видно. -->
 		{#if copied}
-			<Check size={18} />
+			<Check size={14} class="hint-icon" />
 		{:else if logService.errorCount > 0}
 			<span class="error-count"
-				>{logService.errorCount > 99 ? "!" : logService.errorCount}</span
+				>{logService.errorCount > 99 ? "99+" : logService.errorCount}</span
 			>
 		{:else}
 			<!-- У debug-режимі помилок може не бути зовсім: червоний нуль читався б
 			     як «одна помилка», а не як «звіт доступний». -->
 			<ClipboardCopy size={12} class="hint-icon" />
-			<span class="version">{appVersion}</span>
 		{/if}
+		<span class="version">{appVersion}</span>
 	</button>
 {/if}
 
@@ -203,16 +205,10 @@
 	}
 
 	/*
-	 * Помилки — кружок, а не капсула: у цьому стані важлива не версія, а те, що
-	 * щось сталося. Номер версії лишається у звіті, який копіює цей самий клік.
+	 * Форма НЕ змінюється між станами: капсула лишається капсулою, бо номер версії
+	 * лишається на місці. Доти помилки перетворювали табло на кружок 32px — зникала не
+	 * лише версія, а й упізнаваність елемента.
 	 */
-	.log-fab.has-errors,
-	.log-fab.copied {
-		width: 32px;
-		min-height: 32px;
-		padding: 0;
-		border-radius: 50%;
-	}
 
 	/*
 	 * Червоний темніший за #f44336 — за WCAG AA, не за смаком: білий текст на
@@ -236,9 +232,18 @@
 		box-shadow: 0 4px 12px rgba(47, 158, 68, 0.4);
 	}
 
+	/*
+	 * Лічильник — плашка ПЕРЕД номером, а не текст замість нього. Темніший червоний за
+	 * тло капсули (#7f1d1d на #c92a2a): білий текст дає на ньому 10:1.
+	 */
 	.error-count {
 		font-size: 0.75rem;
 		font-weight: 800;
+		line-height: 1;
+		padding: 2px 5px;
+		border-radius: 8px;
+		background: #7f1d1d;
+		color: white;
 		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
 			monospace;
 	}
@@ -255,12 +260,6 @@
 			min-height: 44px;
 			padding: 0 12px;
 			border-radius: 22px;
-		}
-
-		.log-fab.has-errors,
-		.log-fab.copied {
-			width: 44px;
-			padding: 0;
 		}
 
 		.version {
