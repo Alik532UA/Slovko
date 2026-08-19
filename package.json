@@ -1,7 +1,7 @@
 {
 	"name": "slovko",
 	"private": true,
-	"version": "0.7.597",
+	"version": "0.7.598",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
@@ -44,6 +44,7 @@
 		"eslint": "^9.39.2",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.14.0",
+		"glob": "^13.0.0",
 		"husky": "^9.1.7",
 		"prettier": "^3.8.1",
 		"prettier-plugin-svelte": "^3.4.1",
@@ -58,14 +59,13 @@
 	},
 	"dependencies": {
 		"firebase": "^12.8.0",
-		"glob": "^13.0.0",
 		"lucide-svelte": "^0.563.0",
 		"svelte-i18n": "^4.0.1",
 		"zod": "^4.3.6"
 	},
 	"overrides": {
 		"cookie": "^0.7.2",
-		"esbuild": "^0.25.0",
+		"esbuild": ">=0.25.0",
 		"serialize-javascript": "^7.0.3"
 	}
 }
