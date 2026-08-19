@@ -12,11 +12,28 @@ export async function hardReset(askConfirmation = true) {
 		return;
 	}
 
-	// 1. Clear Service Worker
+	/*
+	 * 1. Service Worker — ЛИШЕ СВІЙ, за `scope`.
+	 *
+	 * Доти тут стояв цикл по всіх реєстраціях без жодного фільтра, і це не
+	 * недбалість в оформленні, а знищення чужих даних: `getRegistrations()` віддає
+	 * реєстрації ВСЬОГО origin, тож одне натискання `r` у Slovko знімало service
+	 * worker `MindStep`, `VetCrewGames` і будь-якого іншого проєкту на
+	 * `alik532ua.github.io`. Кеші нижче фільтрувалися за префіксом від початку —
+	 * реєстрації ні.
+	 *
+	 * Порівняння як АДРЕСИ, а не рядка: `scope` завжди абсолютний
+	 * (`https://host/Slovko/`), а `base` — шлях (`/Slovko`), тож пряме
+	 * `startsWith(base)` не збіглося б ніколи й фільтр тихо відкинув би все,
+	 * включно зі своїм.
+	 */
 	if ("serviceWorker" in navigator) {
 		const registrations = await navigator.serviceWorker.getRegistrations();
+		const scopePrefix = new URL(`${base || ""}/`, window.location.origin).href;
 		for (const registration of registrations) {
-			await registration.unregister();
+			if (registration.scope.startsWith(scopePrefix)) {
+				await registration.unregister();
+			}
 		}
 	}
 
