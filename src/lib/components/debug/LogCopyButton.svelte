@@ -228,8 +228,9 @@
 		box-shadow: 0 4px 12px rgba(201, 42, 42, 0.4);
 	}
 
+	/* Зелений — за тим самим правилом: #2f9e44 давав під білим 3.45:1, #237a35 дає 5.38:1. */
 	.log-fab.copied {
-		background: #2f9e44;
+		background: #237a35;
 		color: white;
 		border-color: #1b5e20;
 		box-shadow: 0 4px 12px rgba(47, 158, 68, 0.4);
