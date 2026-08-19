@@ -103,16 +103,21 @@ jobs:
       - name: Install Playwright chromium
         run: npx playwright install --with-deps chromium
 
-      # Змінні Firebase потрібні саме тут, а не лише на `Build`.
-      # `src/lib/services/firebase/config.ts` виконує `getDatabase(app)` на
-      # імпорті, а той кидає виняток без `databaseURL`. Playwright піднімає
-      # власний dev-сервер, і без цих змінних SSR віддавав 500 на КОЖНОМУ з
-      # дев'яти станів: тест чекав маркер до таймауту й звітував падіння, яке
-      # виглядало як зламаний testid, хоча застосунок просто не завантажувався.
-      # Локально гейт проходив, бо там є .env — тому й приїхав у main зеленим.
-      # Це не секрети: web-конфіг Firebase публічний і так їде в клієнтський бандл.
-      - name: E2E (testid invariant + smoke)
+      # Змінні Firebase потрібні саме тут, а не лише на `Build`, і причина
+      # змінилася: тепер `playwright.config.ts` сам виконує `npm run build`
+      # перед прев'ю (CODE-QUALITY-v8 § 5.7), тож без цих змінних у бандл
+      # поїхав би порожній конфіг — і всі перевірки ходили б по застосунку,
+      # який до бази не під'єднується взагалі.
+      #
+      # Доти тут стояла інша причина: `config.ts` викликав `getDatabase(app)` у
+      # тілі модуля й кидав без `databaseURL`. Так було до 2026-08-18; тепер
+      # під'єднання ліниве, і той коментар описував код, якого вже немає.
+      #
+      # Це не секрети: web-конфіг Firebase публічний і так їде в клієнтський
+      # бандл. Захист дають правила доступу — джоб `rules` вище.
+      - name: E2E (прев'ю зібраного сайту: testid invariant + smoke + axe)
         env:
+          BASE_PATH: "/Slovko"
           VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}
           VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.VITE_FIREBASE_AUTH_DOMAIN }}
           VITE_FIREBASE_PROJECT_ID: ${{ vars.VITE_FIREBASE_PROJECT_ID }}

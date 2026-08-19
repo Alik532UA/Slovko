@@ -113,4 +113,52 @@ describe('CI', () => {
 			`workflow кличе скрипт, якого немає — крок упаде на push: ${missing.join(', ')}`
 		).toEqual([]);
 	});
+
+	/**
+	 * CODE-QUALITY-v8 § 5.7 — E2E ходить по ЗІБРАНОМУ сайту.
+	 *
+	 * Правило коштує рівно стільки, скільки коштує його порушення: доти
+	 * `webServer` піднімав `vite dev`, і три класи дефектів були поза
+	 * досяжністю всього E2E — політика безпеки (заголовок із nonce замість
+	 * мета-тега з хешами), порядок CSS (інжекція скриптом замість `<link>`) і
+	 * сама пререндер-розмітка. Асерт `smoke.spec.ts` про «CSP нічого не
+	 * заблокувала» при цьому був зелений — він просто перевіряв іншу політику.
+	 *
+	 * Перевіряти командою, а не поведінкою: різницю між dev і прев'ю не видно
+	 * ніяк, окрім прочитаного конфігу. Реверс-експеримент виконано —
+	 * `script-src` без хешів валить `smoke.spec.ts` на прев'ю і не валив на dev.
+	 */
+	it("E2E піднімає превʼю зібраного сайту, а не dev-сервер (§ 5.7)", () => {
+		const config = readFileSync('playwright.config.ts', 'utf8');
+		const command = /command:\s*`([^`]+)`/.exec(config)?.[1];
+
+		expect(command, 'у playwright.config.ts немає webServer.command').toBeDefined();
+		expect(
+			/\bvite preview\b|\bnpm run preview\b/.test(command!),
+			`webServer підіймає «${command}» — превʼю зібраного сайту тут немає`
+		).toBe(true);
+		expect(
+			/\bnpm run dev\b|\bvite dev\b/.test(command!),
+			`webServer підіймає dev-сервер («${command}») — це інший застосунок, ніж той, що їде на хостинг`
+		).toBe(false);
+		expect(
+			/\bnpm run build\b/.test(command!),
+			"превʼю без збірки віддає СТАРУ збірку — падіння виглядатиме як регресія у свіжому коді"
+		).toBe(true);
+	});
+
+	/**
+	 * Та сама § 5.7: локаль браузера задається явно.
+	 *
+	 * Playwright типово ставить `en-US`, а початкова мова застосунку береться з
+	 * `getLocaleFromNavigator()`. Без цього рядка весь E2E ходить по
+	 * англійській версії — не по тій, що в `<html lang="uk">` збірки.
+	 */
+	it('локаль браузера в E2E задана явно (§ 5.7)', () => {
+		const config = readFileSync('playwright.config.ts', 'utf8');
+		expect(
+			/locale:\s*['"`][a-z]{2}(-[A-Z]{2})?['"`]/.test(config),
+			'локаль не задана — тести ходять по en-US незалежно від мови сайту'
+		).toBe(true);
+	});
 });
