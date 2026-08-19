@@ -112,6 +112,9 @@
 				alt=""
 				class="avatar"
 				aria-hidden="true"
+				loading="lazy"
+				width="80"
+				height="80"
 				data-testid="profile-avatar-img"
 			/>
 		{:else}

@@ -101,7 +101,14 @@
 			{:else if selectedColor.startsWith("flag-")}
 				{@const lang = selectedColor.replace("flag-", "")}
 				<div class="flag-bg-wrapper">
-					<img src="{base}/svg/flags/{lang}.svg" alt={lang} class="flag-bg-img" />
+					<img
+						src="{base}/svg/flags/{lang}.svg"
+						alt={lang}
+						class="flag-bg-img"
+						loading="lazy"
+						width="100%"
+						height="100%"
+					/>
 				</div>
 				{#if Icon}
 					<Icon size={86} color="white" />
@@ -137,7 +144,14 @@
 					aria-label="Flag {lang}"
 					data-testid="color-btn-flag-{lang}"
 				>
-					<img src="{base}/svg/flags/{lang}.svg" alt={lang} class="flag-choice-img" />
+					<img
+						src="{base}/svg/flags/{lang}.svg"
+						alt={lang}
+						class="flag-choice-img"
+						loading="lazy"
+						width="100%"
+						height="100%"
+					/>
 				</button>
 			{/each}
 
@@ -170,7 +184,14 @@
 														{#if selectedColor.startsWith("flag-")}
 															{@const lang = selectedColor.replace("flag-", "")}
 															<div class="flag-bg-wrapper">
-																<img src="{base}/svg/flags/{lang}.svg" alt={lang} class="flag-bg-img" />
+																<img
+																	src="{base}/svg/flags/{lang}.svg"
+																	alt={lang}
+																	class="flag-bg-img"
+																	loading="lazy"
+																	width="100%"
+																	height="100%"
+																/>
 															</div>
 														{/if}
 					

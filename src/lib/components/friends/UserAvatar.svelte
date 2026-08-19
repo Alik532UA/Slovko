@@ -140,12 +140,14 @@
 		<img 
 			src={photoURL} 
 			alt="" 
-			class="avatar-img" 
+			class="avatar-img"
 			loading="lazy"
 			decoding="async"
 			referrerpolicy="no-referrer"
 			aria-hidden="true"
-			data-testid="user-avatar-img" 
+			width="100%"
+			height="100%"
+			data-testid="user-avatar-img"
 		/>
 	{:else}
 		<div class="avatar-circle fallback" aria-hidden="true" data-testid="user-avatar-fallback-text">

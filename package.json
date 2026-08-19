@@ -1,7 +1,7 @@
 {
 	"name": "slovko",
 	"private": true,
-	"version": "0.7.598",
+	"version": "0.7.599",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
@@ -10,6 +10,7 @@
 		"prepare": "husky",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:build": "node scripts/check-build.mjs",
+		"check:bundle": "node scripts/check-bundle.mjs",
 		"check:rules": "node scripts/firebase-cli.mjs emulators:exec --project demo-slovko --only firestore,database,auth \"node scripts/check-rules.mjs\"",
 		"emulators": "node scripts/firebase-cli.mjs emulators:start --project demo-slovko --only firestore,database,auth",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
