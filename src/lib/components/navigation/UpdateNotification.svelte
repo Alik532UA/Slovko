@@ -55,7 +55,6 @@
 	}
 </script>
 
-<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <div
 	class="modal-backdrop"
 	transition:fade={{ duration: 200 }}
@@ -66,6 +65,13 @@
 	aria-label={$_("common.close") || "Close"}
 	data-testid="update-notification-backdrop"
 >
+	<!--
+		Обґрунтування: єдине призначення цього `onclick` — `stopPropagation`, щоб
+		клік ВНУТРІШНЬОЮ частиною вікна не дійшов до тла й не закрив його. Це не
+		дія, а щит; клавіатурного еквівалента в нього немає й бути не може, бо
+		клавіатура не має чого «промахнутися». Усе, що вікно вміє, лежить у двох
+		справжніх `<button>` унизу, а закривається воно з клавіатури Escape.
+	-->
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<div
 		class="modal"

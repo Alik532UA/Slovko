@@ -214,6 +214,13 @@
 
 		<div class="menu-container" class:menu-active={showMenu}>
 			{#if showMenu}
+				<!--
+					Обґрунтування: тло меню — зона промаху для мишки, а не контрол.
+					Клавіатурі воно не потрібне й не мусить бути досяжним: меню
+					закривається Escape у самому меню, а Tab із нього виводить.
+					Дати тлу `tabindex` було б ГІРШЕ — з'явилася б зупинка фокуса,
+					яка нічого не означає й нічого не підписує.
+				-->
 				<!-- svelte-ignore a11y_click_events_have_key_events -->
 				<!-- svelte-ignore a11y_no_static_element_interactions -->
 				<div

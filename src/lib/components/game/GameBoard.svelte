@@ -158,6 +158,15 @@
 		</svg>
 	{/if}
 
+	<!--
+		Обґрунтування: обробники тут — вихід із виділення, а не спосіб щось
+		зробити. Клік по ПОРОЖНЬОМУ місцю дошки й Escape знімають виділення
+		картки; будь-яка дія з картками доступна на самих картках, які є
+		кнопками. Тобто клавіатурного еквівалента не бракує — Escape ним і є, і
+		він тут стоїть.
+		Переробити `<section role="main">` на кнопку не можна: це орієнтир
+		сторінки для читалки, а не контрол.
+	-->
 	<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 	<section class="game-board" onclick={(e) => { if (e.target === e.currentTarget) gameState.setSelectedCard(null); }} onkeydown={(e) => { if (e.key === "Escape") gameState.setSelectedCard(null); }} role="main" tabindex="-1" aria-label="Game Board" data-testid="game-board-container">
 		{#if gameState.sourceCards.length === 0}

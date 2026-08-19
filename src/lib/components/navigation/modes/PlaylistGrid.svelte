@@ -12,6 +12,7 @@
 	import { playlistStore } from "$lib/controllers/PlaylistStore.svelte";
 	import { notificationStore } from "$lib/controllers/NotificationStore.svelte";
 	import PlaylistModal from "../PlaylistModal.svelte";
+	import { activateOnKey } from "$lib/services/keyboard";
 	import { PLAYLIST_ICONS_MAP, type AppIconId } from "$lib/config/icons";
 	import type { PlaylistId } from "$lib/types/index";
 	import { Check, Minus } from "lucide-svelte";
@@ -98,12 +99,11 @@
 		{@const Icon = PLAYLIST_ICONS_MAP[p.id === "mistakes" ? "RotateCcw" : p.id === "favorites" ? "Heart" : "Bookmark"]}
 		{@const count = selectedIds.filter((sid) => sid === p.id).length}
 		<div class="playlist-wrapper">
-			<!-- svelte-ignore a11y_click_events_have_key_events -->
 			<div
 				class="item topic-item {p.id}"
 				class:selected={count > 0}
 				onclick={() => handleSelect(p.id)}
-				onkeydown={(e) => e.key === "Enter" && handleSelect(p.id)}
+				onkeydown={activateOnKey(() => handleSelect(p.id))}
 				role="button"
 				tabindex="0"
 				data-testid="playlist-card-{p.id}"
@@ -155,13 +155,12 @@
 		{@const Icon = PLAYLIST_ICONS_MAP[(p.icon as AppIconId) || "Bookmark"] || Bookmark}
 		{@const count = selectedIds.filter((sid) => sid === p.id).length}
 		<div class="playlist-wrapper">
-			<!-- svelte-ignore a11y_click_events_have_key_events -->
 			<div
 				class="item topic-item custom-playlist"
 				style="border-color: {p.color}"
 				class:selected={count > 0}
 				onclick={() => handleSelect(p.id)}
-				onkeydown={(e) => e.key === "Enter" && handleSelect(p.id)}
+				onkeydown={activateOnKey(() => handleSelect(p.id))}
 				role="button"
 				tabindex="0"
 				data-testid="playlist-custom-badge-{p.id}"
@@ -216,11 +215,10 @@
 
 	<!-- Create New & Import -->
 	<div class="playlist-controls">
-		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<div
 			class="item topic-item add-playlist"
 			onclick={() => openPlaylistModal()}
-			onkeydown={(e) => e.key === "Enter" && openPlaylistModal()}
+			onkeydown={activateOnKey(() => openPlaylistModal())}
 			role="button"
 			tabindex="0"
 			data-testid="playlist-create-new-btn"
@@ -230,11 +228,11 @@
 		</div>
 
 		{#if !showImportOptions}
-			<!-- svelte-ignore a11y_click_events_have_key_events -->
-			<div 
-				class="item topic-item import-playlist" 
+			<div
+				class="item topic-item import-playlist"
 				data-testid="playlist-import-btn"
-				onclick={() => showImportOptions = true}
+				onclick={() => (showImportOptions = true)}
+				onkeydown={activateOnKey(() => (showImportOptions = true))}
 				role="button"
 				tabindex="0"
 			>
@@ -254,10 +252,10 @@
 						data-testid="playlist-import-input"
 					/>
 				</label>
-				<!-- svelte-ignore a11y_click_events_have_key_events -->
-				<div 
-					class="item topic-item import-choice-btn" 
+				<div
+					class="item topic-item import-choice-btn"
 					onclick={importFromClipboard}
+					onkeydown={activateOnKey(importFromClipboard)}
 					role="button"
 					tabindex="0"
 					data-testid="playlist-import-clipboard-btn"
@@ -265,10 +263,10 @@
 					<Copy size={20} />
 					<span>{$_("playlists.importClipboard") || "Clipboard"}</span>
 				</div>
-				<!-- svelte-ignore a11y_click_events_have_key_events -->
-				<div 
-					class="cancel-import" 
-					onclick={() => showImportOptions = false}
+				<div
+					class="cancel-import"
+					onclick={() => (showImportOptions = false)}
+					onkeydown={activateOnKey(() => (showImportOptions = false))}
 					role="button"
 					tabindex="0"
 					data-testid="playlist-import-cancel-btn"
