@@ -94,6 +94,8 @@ const config = {
 					"https://www.google.com",
 					// Клієнт Google API шле телеметрію на /js/gen_204.
 					"https://apis.google.com",
+					"https://*.sentry.io",
+					"https://*.ingest.sentry.io"
 				],
 				"img-src": ["self", "data:", "blob:", "https:"],
 				"style-src": ["self", "unsafe-inline"],

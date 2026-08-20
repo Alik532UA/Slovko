@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
 	/**
 	 * Root Layout — Ініціалізація i18n та глобальні стилі
 	 */
@@ -22,6 +22,7 @@
 		trackPageView,
 		trackEvent,
 	} from "$lib/services/analyticsService";
+	import { webVitals } from "$lib/controllers/webVitals.svelte";
 	import { pwaStore } from "$lib/controllers/PwaStore.svelte";
 	import { page } from "$app/state";
 	import { isHiddenRoute } from "$lib/config/hiddenRoutes";
@@ -305,6 +306,24 @@
 		trackPageView(page.url.pathname);
 	});
 
+	// Start RUM Core Web Vitals collection (OBSERVABILITY-v8 § 2.1)
+	$effect(() => webVitals.start());
+
+	let jsonLdData = $derived({
+		'@context': 'https://schema.org',
+		'@type': 'WebApplication',
+		name: 'Slovko',
+		url: 'https://alik532ua.github.io/Slovko/',
+		description: 'Українська версія популярної гри в слова (Wordle). Вгадуйте щоденні слова, грайте без обмежень та тренуйте словниковий запас.',
+		applicationCategory: 'GameApplication',
+		operatingSystem: 'Any',
+		inLanguage: settingsStore.value.interfaceLanguage || 'uk',
+		author: {
+			'@type': 'Person',
+			name: 'Alik532UA'
+		}
+	});
+
 	/**
 	 * Службовий маршрут (BETA-CHECKLIST-v8 § 4). `pathname`, а не
 	 * `searchParams`: другий під час пререндеру кидає виняток, бо рядок запиту
@@ -388,6 +407,10 @@
 			`svelte:head` самої сторінки в зібраний HTML не потрапляло НІЧОГО.
 		-->
 		<meta name="robots" content="noindex, nofollow" />
+	{:else}
+		<!-- Structured Data (SEO-v8 § 3.2) -->
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html `<script type="application/ld+json">${JSON.stringify(jsonLdData)}<\/script>`}
 	{/if}
 </svelte:head>
 

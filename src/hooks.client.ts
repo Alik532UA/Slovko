@@ -1,30 +1,59 @@
+import { dev } from '$app/environment';
 import type { HandleClientError } from '@sveltejs/kit';
 import { errorHandler } from '$lib/services/errorHandler';
 
 /**
- * Неперехоплені помилки клієнта (ERROR-HANDLING-v8 § 2.4).
- *
- * `errorHandler` у проєкті є, і він робить саме те, що треба: пише в журнал і
- * за потреби показує сповіщення. Але кликали його лише з тих місць, де про
- * помилку здогадалися заздалегідь. Помилка, яку не спіймали, зникала безслідно.
- *
- * `showToast: false` навмисно: SvelteKit і так показує сторінку помилки, і
- * сповіщення поверх неї було б другим повідомленням про ту саму подію.
- *
- * Повертається УЗАГАЛЬНЕНЕ повідомлення, а не `error.message`: текст рантайму
- * («Cannot read properties of undefined») відвідувачу нічого не пояснює, зате
- * показує нутрощі застосунку.
- *
- * Гачок спрацьовує лише на НЕОЧІКУВАНІ помилки: `error()` і `redirect()` через
- * нього не проходять, тож 404 сюди не потрапляє.
+ * Telemetry endpoint for CSP validation (OBSERVABILITY-v8 § 1.5):
+ * - https://*.sentry.io
+ * - https://*.ingest.sentry.io
  */
-export const handleError: HandleClientError = ({ error, event, status }) => {
+const DSN = (import.meta.env?.PUBLIC_SENTRY_DSN as string | undefined) || '';
+const sentryPkg = '@sentry/sveltekit';
+
+interface SentryClient {
+	init: (options: Record<string, unknown>) => void;
+	captureException: (error: unknown, context?: Record<string, unknown>) => void;
+}
+
+const tracker: Promise<SentryClient | null> | null =
+	DSN && !dev
+		? import(/* @vite-ignore */ sentryPkg)
+				.then((module: unknown) => {
+					const Sentry = module as SentryClient;
+					Sentry.init({
+						dsn: DSN,
+						enabled: !dev,
+						tracesSampleRate: 0.1,
+						replaysSessionSampleRate: 0.0,
+						replaysOnErrorSampleRate: 1.0,
+						environment: import.meta.env.MODE,
+						ignoreErrors: ['AbortError', 'Failed to fetch', 'ResizeObserver loop limit exceeded'],
+						beforeSend(event: Record<string, unknown>) {
+							const req = event.request as Record<string, Record<string, unknown>> | undefined;
+							if (req?.headers) {
+								delete req.headers['authorization'];
+								delete req.headers['cookie'];
+							}
+							return event;
+						}
+					});
+					return Sentry;
+				})
+				.catch(() => null)
+		: null;
+
+export const handleError: HandleClientError = async ({ error, event, status, message }) => {
 	if (status === 404) return;
 
 	errorHandler.handle(error, `client-unhandled:${event?.url?.pathname ?? 'unknown'}`, {
 		showToast: false,
 		category: 'app'
 	});
+
+	if (tracker) {
+		const Sentry = await tracker;
+		Sentry?.captureException(error, { extra: { route: event?.url?.pathname, status, message } });
+	}
 
 	return { message: 'Сталася помилка. Спробуйте оновити сторінку.' };
 };
