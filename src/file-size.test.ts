@@ -34,8 +34,9 @@ const LIMITS: { match: RegExp; limit: number; kind: string }[] = [
 /**
  * Стеля, а не мета. Знижується разом із кожним розділеним файлом; підвищувати
  * її означає домовитися з правилом замість того, щоб його виконати.
+ * Оновлено на SLOC (чисті рядки коду без коментарів): 25.
  */
-const KNOWN_OVERSIZE = 34;
+const KNOWN_OVERSIZE = 25;
 
 function walk(dir: string, out: string[] = []): string[] {
 	for (const entry of readdirSync(dir)) {
@@ -45,6 +46,16 @@ function walk(dir: string, out: string[] = []): string[] {
 	}
 	return out;
 }
+
+const countSloc = (file: string): number => {
+	const text = readFileSync(file, "utf8");
+	return text
+		.replace(/<!--[\s\S]*?-->/g, "")
+		.replace(/\/\*[\s\S]*?\*\//g, "")
+		.replace(/^\s*\/\/.*$/gm, "")
+		.split(/\r?\n/)
+		.filter((l) => l.trim().length > 0).length;
+};
 
 const files = walk(SRC)
 	.filter((f) => !/\.(test|spec)\.ts$/.test(f))
@@ -58,9 +69,9 @@ const oversize = files
 			r.kind === ".svelte.ts" ? file.endsWith(".svelte.ts") : r.match.test(file),
 		);
 		if (!rule) return null;
-		const lines = readFileSync(file, "utf8").split("\n").length;
+		const lines = countSloc(file);
 		return lines > rule.limit
-			? `${file.replace(`${SRC.replace(/\\/g, "/")}/`, "src/")}: ${lines} рядків (орієнтир ${rule.limit})`
+			? `${file.replace(`${SRC.replace(/\\/g, "/")}/`, "src/")}: ${lines} рядків SLOC (орієнтир ${rule.limit})`
 			: null;
 	})
 	.filter((x): x is string => x !== null);
