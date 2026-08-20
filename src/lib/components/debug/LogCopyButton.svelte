@@ -6,7 +6,7 @@
 	import { createKeySequence } from "$lib/services/keySequence";
 	import { logService } from "$lib/services/logService.svelte";
 	import { hardReset } from "$lib/services/resetService";
-	import { Check, ClipboardCopy } from "lucide-svelte";
+	import { Check, Copy } from "lucide-svelte";
 
 	/**
 	 * Службове табло: номер версії, лічильник помилок і збір звіту — ОДИН елемент.
@@ -150,7 +150,7 @@
 		{:else}
 			<!-- У debug-режимі помилок може не бути зовсім: червоний нуль читався б
 			     як «одна помилка», а не як «звіт доступний». -->
-			<ClipboardCopy size={12} class="hint-icon" />
+			<Copy size={12} class="hint-icon" />
 		{/if}
 		<span class="version">{appVersion}</span>
 	</button>

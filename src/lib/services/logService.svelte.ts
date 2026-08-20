@@ -1,4 +1,4 @@
-﻿import { browser, dev } from "$app/environment";
+import { browser, dev } from "$app/environment";
 import { sessionStorageProvider } from "./storage/storageProvider";
 
 const MAX_RECENT_LOGS = 1000;
@@ -215,7 +215,7 @@ class LogService {
 			await navigator.clipboard.writeText(info);
 			return true;
 		} catch (_err) {
-			this.error("system", "Failed to copy logs");
+			this.warn("system", "Failed to copy logs to clipboard");
 			return false;
 		}
 	}
