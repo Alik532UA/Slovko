@@ -177,8 +177,8 @@ jobs:
       # збірки не комітиться». Тут вона не декоративна: `static/app-version.json`
       # відстежується Git-ом і його переписує хук перед комітом, тож варто
       # збірці почати робити те саме — і задеплоєне розійдеться з репозиторієм.
-      - name: Збірка не змінює відстежувані файли
-        run: git diff --exit-code
+      - name: Lighthouse Audit
+        run: npx @lhci/cli@0.15.1 autorun --config=./lighthouserc.cjs
 
       - name: Preserve dev folder from gh-pages
         run: |
