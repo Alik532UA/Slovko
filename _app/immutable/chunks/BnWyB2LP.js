@@ -5,13 +5,15 @@ const t=`{
 	"errors": {
 		"loadFailed": "Laden van gegevens mislukt",
 		"speech": {
-			"toast": "Deze browser lijkt spraaksynthese niet te ondersteunen 😕",
+			"toast": "Deze browser lijkt spraaksynthese niet te ondersteunen",
 			"moreDetails": "Meer details",
-			"modalTitle": "Spraakfout 😕",
+			"modalTitle": "Spraakfout",
 			"modalDesc1": "Slovko heeft geen ingebouwde stem, maar gebruikt de systeemfuncties van je apparaat.",
 			"modalDesc2": "Helaas ondersteunt je huidige browser of besturingssysteem geen spraaksynthese voor de taal: {lang}.",
 			"modalDesc3": "Probeer een andere browser (zoals Chrome of Safari) of controleer je systeeminstellingen."
-		}
+		},
+		"authRequired": "Log in om feedback te sturen.",
+		"submitFailed": "Fout bij verzenden. Probeer het later opnieuw."
 	},
 	"levels": {
 		"title": "Niveaus",
@@ -145,6 +147,14 @@ const t=`{
 		"hint": "Hint",
 		"dangerZone": {
 			"hardReset": "Alle gegevens wissen"
+		},
+		"hotkeys": {
+			"title": "Sneltoetsen",
+			"hint": "Eén letter, zonder modificatietoetsen. Zet uit als je tekst dicteert.",
+			"enabled": "Sneltoetsen aan",
+			"disabled": "Sneltoetsen uit",
+			"theme": "het thema wijzigen",
+			"language": "de taalkeuze openen"
 		}
 	},
 	"theme": {
@@ -360,8 +370,6 @@ const t=`{
 		"commentLabel": "Jouw opmerking (optioneel)",
 		"commentPlaceholder": "Beschrijf wat er precies mis is...",
 		"success": "Bedankt! Het rapport is verzonden.",
-		"error": "Fout bij verzenden. Probeer het later opnieuw.",
-		"authRequired": "Log in om feedback te sturen.",
 		"type": {
 			"wrongTranslation": "Verkeerde vertaling",
 			"wrongTranscription": "Fout in transcriptie",

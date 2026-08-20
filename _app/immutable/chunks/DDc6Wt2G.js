@@ -5,13 +5,15 @@ const t=`{
 	"errors": {
 		"loadFailed": "Failed to load data",
 		"speech": {
-			"toast": "Looks like this browser doesn't support speech synthesis 😕",
+			"toast": "Looks like this browser doesn't support speech synthesis",
 			"moreDetails": "More details",
-			"modalTitle": "Speech Error 😕",
+			"modalTitle": "Speech Error",
 			"modalDesc1": "Slovko doesn't have built-in voice acting, but uses the system capabilities of your device.",
 			"modalDesc2": "Unfortunately, your current browser or operating system does not support speech synthesis for the {lang} language.",
 			"modalDesc3": "Try using another browser (like Chrome or Safari) or check your system settings."
-		}
+		},
+		"authRequired": "Please sign in to send feedback.",
+		"submitFailed": "Error sending report. Please try again later."
 	},
 	"levels": {
 		"title": "Levels",
@@ -176,6 +178,14 @@ const t=`{
 		"hint": "Hint",
 		"dangerZone": {
 			"hardReset": "Reset All Data"
+		},
+		"hotkeys": {
+			"title": "Keyboard shortcuts",
+			"hint": "A single letter, no modifiers. Turn off if you dictate text by voice.",
+			"enabled": "Keyboard shortcuts on",
+			"disabled": "Keyboard shortcuts off",
+			"theme": "change the appearance",
+			"language": "open the language picker"
 		}
 	},
 	"theme": {
@@ -391,8 +401,6 @@ const t=`{
 		"commentLabel": "Your comment (optional)",
 		"commentPlaceholder": "Describe what exactly is wrong...",
 		"success": "Thank you! Report sent.",
-		"error": "Error sending report. Please try again later.",
-		"authRequired": "Please sign in to send feedback.",
 		"type": {
 			"wrongTranslation": "Wrong translation",
 			"wrongTranscription": "Transcription error",

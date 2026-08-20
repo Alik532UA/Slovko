@@ -5,13 +5,15 @@ const t=`{
 	"errors": {
 		"loadFailed": "Laden der Daten fehlgeschlagen",
 		"speech": {
-			"toast": "Dieser Browser scheint keine Sprachsynthese zu unterstützen 😕",
+			"toast": "Dieser Browser scheint keine Sprachsynthese zu unterstützen",
 			"moreDetails": "Mehr Details",
-			"modalTitle": "Sprachfehler 😕",
+			"modalTitle": "Sprachfehler",
 			"modalDesc1": "Slovko hat keine eingebaute Sprachausgabe, sondern nutzt die Systemfunktionen Ihres Geräts.",
 			"modalDesc2": "Leider unterstützt Ihr aktueller Browser oder Ihr Betriebssystem keine Sprachsynthese für die Sprache: {lang}.",
 			"modalDesc3": "Versuchen Sie, einen anderen Browser (wie Chrome oder Safari) zu verwenden, oder überprüfen Sie Ihre Systemeinstellungen."
-		}
+		},
+		"authRequired": "Bitte melden Sie sich an, um Feedback zu senden.",
+		"submitFailed": "Fehler beim Senden. Bitte versuche es später erneut."
 	},
 	"levels": {
 		"title": "Niveaus",
@@ -145,6 +147,14 @@ const t=`{
 		"hint": "Hinweis",
 		"dangerZone": {
 			"hardReset": "Alle Daten zurücksetzen"
+		},
+		"hotkeys": {
+			"title": "Tastenkürzel",
+			"hint": "Ein einzelner Buchstabe, ohne Modifikatoren. Schalte sie aus, wenn du Text diktierst.",
+			"enabled": "Tastenkürzel ein",
+			"disabled": "Tastenkürzel aus",
+			"theme": "Erscheinungsbild wechseln",
+			"language": "Sprachauswahl öffnen"
 		}
 	},
 	"theme": {
@@ -360,8 +370,6 @@ const t=`{
 		"commentLabel": "Dein Kommentar (optional)",
 		"commentPlaceholder": "Beschreibe, was genau falsch ist...",
 		"success": "Danke! Der Bericht wurde gesendet.",
-		"error": "Fehler beim Senden. Bitte versuche es später erneut.",
-		"authRequired": "Bitte melden Sie sich an, um Feedback zu senden.",
 		"type": {
 			"wrongTranslation": "Falsche Übersetzung",
 			"wrongTranscription": "Fehler in der Transkription",

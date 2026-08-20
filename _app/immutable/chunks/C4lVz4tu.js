@@ -5,13 +5,15 @@ const t=`{
 	"errors": {
 		"loadFailed": "Błąd ładowania danych",
 		"speech": {
-			"toast": "Wygląda na to, że ta przeglądarka nie obsługuje syntezy mowy 😕",
+			"toast": "Wygląda na to, że ta przeglądarka nie obsługuje syntezy mowy",
 			"moreDetails": "Więcej szczegółów",
-			"modalTitle": "Błąd wymowy 😕",
+			"modalTitle": "Błąd wymowy",
 			"modalDesc1": "Slovko nie ma wbudowanego lektora, wykorzystuje możliwości systemowe Twojego urządzenia.",
 			"modalDesc2": "Niestety Twoja obecna przeglądarka lub system operacyjny nie obsługuje syntezy mowy dla języka: {lang}.",
 			"modalDesc3": "Spróbuj użyć innej przeglądarki (np. Chrome lub Safari) lub sprawdź ustawienia systemowe."
-		}
+		},
+		"authRequired": "Aby wysłać opinię, zaloguj się na swoje konto.",
+		"submitFailed": "Błąd podczas wysyłania. Spróbuj później."
 	},
 	"levels": {
 		"title": "Poziomy",
@@ -176,6 +178,14 @@ const t=`{
 		"hint": "Wskazówka",
 		"dangerZone": {
 			"hardReset": "Zresetuj wszystkie dane"
+		},
+		"hotkeys": {
+			"title": "Skróty klawiszowe",
+			"hint": "Jedna litera, bez modyfikatorów. Wyłącz, jeśli dyktujesz tekst głosem.",
+			"enabled": "Skróty klawiszowe włączone",
+			"disabled": "Skróty klawiszowe wyłączone",
+			"theme": "zmienić wygląd",
+			"language": "otworzyć wybór języka"
 		}
 	},
 	"theme": {
@@ -391,8 +401,6 @@ const t=`{
 		"commentLabel": "Twój komentarz (opcjonalnie)",
 		"commentPlaceholder": "Opisz, co dokładnie jest nie tak...",
 		"success": "Dziękujemy! Wiadomość została wysłana.",
-		"error": "Błąd podczas wysyłania. Spróbuj później.",
-		"authRequired": "Aby wysłać opinię, zaloguj się na swoje konto.",
 		"type": {
 			"wrongTranslation": "Błędne tłumaczenie",
 			"wrongTranscription": "Błąd w transkrypcji",

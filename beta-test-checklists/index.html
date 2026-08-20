@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="uk" translate="no">
+	<head>
+		<meta charset="utf-8" />
+		<!--
+			Без `maximum-scale=1, user-scalable=no`: вони забороняли масштабування
+			сторінки цілком, тобто відбирали збільшення в того, кому воно потрібне
+			(WCAG 1.4.4 «Resize text», рівень AA; axe бачить це як `meta-viewport`).
+			Подвійний тап як жест масштабування знято точково —
+			`touch-action: manipulation` на інтерактивних елементах у app.css, — а
+			щипок працює.
+		-->
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, viewport-fit=cover"
+		/>
+		<meta name="google" content="notranslate" />
+		<meta name="theme-color" content="#e95420" />
+		<link rel="manifest" href="../manifest.json" />
+		<link rel="icon" href="../favicon/favicon.png" />
+		<link rel="apple-touch-icon" href="../icon-192.png" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta
+			name="apple-mobile-web-app-status-bar-style"
+			content="black-translucent"
+		/>
+		<meta name="apple-mobile-web-app-title" content="Slovko" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="application-name" content="Slovko" />
+		<meta name="color-scheme" content="light dark" />
+		<!--
+			Static rather than emitted from svelte:head, because +page.ts sets
+			ssr = false for the game: with SSR off, nothing from svelte:head
+			reaches the prerendered HTML, so the page shipped with no title at
+			all and showed up in search as a bare URL. These are not localised
+			for the same reason — a crawler never runs the client-side i18n.
+		-->
+		<title>Slovko — вивчення слів та гра у стилі Wordle</title>
+		<meta
+			name="description"
+			content="Безкоштовний тренажер для вивчення слів і головоломка у стилі Wordle: власні списки слів, особиста статистика, таблиця лідерів та підтримка 7 мов."
+		/>
+
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://alik532ua.github.io/Slovko/" />
+		<meta property="og:title" content="Slovko — вивчення слів та гра у стилі Wordle" />
+		<meta
+			property="og:description"
+			content="Безкоштовний тренажер для вивчення слів і головоломка у стилі Wordle: власні списки слів, особиста статистика та таблиця лідерів."
+		/>
+		<meta property="og:image" content="https://alik532ua.github.io/Slovko/icon-512.png" />
+
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Slovko — вивчення слів та гра у стилі Wordle" />
+		<meta
+			name="twitter:description"
+			content="Безкоштовний тренажер для вивчення слів і головоломка у стилі Wordle: власні списки слів, особиста статистика та таблиця лідерів."
+		/>
+		<meta name="twitter:image" content="https://alik532ua.github.io/Slovko/icon-512.png" />
+
+		<meta http-equiv="content-security-policy" content="default-src 'self'; frame-src 'self' https://*.firebaseapp.com https://accounts.google.com https://www.google.com; worker-src 'self' blob:; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.firebasedatabase.app wss://*.firebasedatabase.app https://securetoken.google.com https://*.google-analytics.com https://*.analytics.google.com https://www.google.com https://apis.google.com; font-src 'self' data:; img-src 'self' data: blob: https:; object-src 'none'; script-src 'self' 'sha256-5PNVUc6YCmXqsQFtS27VOxalU6uElV0hQ5tUk44/HP8=' 'sha256-GFnGzuONOazNahhhu7EuuqkBqziZjAorHUJDVxLiBFs=' https://www.googletagmanager.com https://apis.google.com https://www.google.com https://www.gstatic.com 'sha256-gMjd6p3llnyMXDRahKPGaSpfK2SNS17fRsLNRT247qI='; style-src 'self' 'unsafe-inline'; base-uri 'self'; form-action 'self'">
+		<link href="../_app/immutable/entry/start.DUBDGCPO.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/ByFPMCGF.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CDTwUiG9.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/Ch4DAmou.js" rel="modulepreload">
+		<link href="../_app/immutable/entry/app.Dc9A5Uzu.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BhqULmMk.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/Ul5Xks15.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/B-qZZ41-.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/i7RDv8vO.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/0.Dx7MdV0G.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/D3HuFVqV.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/xeSnqUit.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BNDY0TCc.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/Bi4vR532.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/3.CpVNWL5Q.js" rel="modulepreload">
+		<!--12qhfyh--><!--[0--><meta name="robots" content="noindex, nofollow"/><!--]--><!----><!--iiksae--><!----><title>Чеклист бета-тестування — Slovko</title>
+		<link href="../_app/immutable/assets/gameContext.B2-JJcAm.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/0.DvGUV-Ss.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/3.CaxfJ9rB.css" rel="stylesheet">
+
+		<!--
+			Інлайн-скрипти стоять ПІСЛЯ %sveltekit.head% навмисно
+			(SECURITY-v8 § 6.3). У пререндері політика приїжджає
+			<meta http-equiv="Content-Security-Policy">, який SvelteKit вставляє
+			саме на місце %sveltekit.head%, а мета-політика діє ЛИШЕ на те, що йде
+			нижче за неї. Поки ці два скрипти стояли вище, їхні хеші зі
+			svelte.config.js не захищали нічого — політика їх просто не бачила.
+			Затримка нульова: вище лишились самі мета-теги й посилання.
+		-->
+		<script>
+			(function () {
+				try {
+					var PREFIX = "slovko_";
+					var stored = localStorage.getItem(PREFIX + "settings");
+					var theme = null;
+					if (stored) {
+						var parsed = JSON.parse(stored);
+						if (parsed.theme) {
+							theme = parsed.theme === "purple" ? "orange" : parsed.theme;
+						}
+					}
+					var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+					if (!theme) {
+						theme = prefersDark ? "dark-gray" : "light-gray";
+					}
+					document.documentElement.setAttribute("data-theme", theme);
+					
+					var isDark = theme === "dark-gray" || theme === "orange";
+					var meta = document.querySelector('meta[name="color-scheme"]');
+					if (meta) {
+						meta.setAttribute('content', isDark ? 'dark' : 'light dark');
+					}
+				} catch (e) {}
+			})();
+		</script>
+		<script>
+			// ============================================
+			// GLOBAL ERROR DIAGNOSTICS (before Svelte loads)
+			// Catches crashes that prevent the app from rendering
+			// ============================================
+			(function() {
+				var errors = [];
+				var overlayShown = false;
+				var appRendered = false;
+
+				function showOverlay() {
+					if (overlayShown) return;
+					overlayShown = true;
+
+					var overlay = document.createElement('div');
+					overlay.id = 'error-diagnostics';
+					overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:999999;' +
+						'background:rgba(20,20,40,0.97);color:#e0e0e0;font-family:system-ui,-apple-system,sans-serif;' +
+						'padding:1rem;overflow-y:auto;display:flex;flex-direction:column;align-items:center;';
+
+					var content = '<div style="max-width:500px;width:100%;text-align:center;padding-top:2rem;">' +
+						'<div style="font-size:3rem;margin-bottom:1rem;">⚠️</div>' +
+						'<h2 style="color:#fff;margin:0 0 0.5rem;">Помилка завантаження</h2>' +
+						'<p style="color:#a0a0a0;margin:0 0 1.5rem;font-size:0.9rem;">Додаток не зміг завантажитися. Скопіюйте інформацію нижче та надішліть розробнику.</p>' +
+						'<div style="display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.5rem;">' +
+						'<button id="err-copy-btn" style="padding:0.8rem 1.5rem;border-radius:8px;border:none;' +
+						'background:#3a8fd6;color:white;font-weight:600;font-size:1rem;cursor:pointer;">📋 Копіювати діагностику</button>' +
+						'<button id="err-clear-btn" style="padding:0.8rem 1.5rem;border-radius:8px;border:1px solid rgba(255,255,255,0.2);' +
+						'background:rgba(255,255,255,0.1);color:#ccc;font-weight:600;font-size:1rem;cursor:pointer;">🧹 Очистити кеш і перезавантажити</button>' +
+						'<button id="err-reload-btn" style="padding:0.8rem 1.5rem;border-radius:8px;border:1px solid rgba(255,255,255,0.2);' +
+						'background:rgba(255,255,255,0.1);color:#ccc;font-weight:600;font-size:1rem;cursor:pointer;">🔄 Просто перезавантажити</button>' +
+						'</div>' +
+						'<details open style="text-align:left;width:100%;">' +
+						'<summary style="cursor:pointer;color:#a0a0a0;margin-bottom:0.5rem;">Технічні деталі</summary>' +
+						'<pre id="err-details" style="background:rgba(0,0,0,0.3);padding:0.75rem;border-radius:8px;' +
+						'font-size:0.75rem;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word;max-height:300px;overflow-y:auto;color:#ccc;">' +
+						'</pre></details></div>';
+
+					overlay.innerHTML = content;
+					document.body.appendChild(overlay);
+
+					var diagText = getDiagnosticText();
+					document.getElementById('err-details').textContent = diagText;
+
+					document.getElementById('err-copy-btn').addEventListener('click', function() {
+						var btn = this;
+						try {
+							navigator.clipboard.writeText(diagText).then(function() {
+								btn.textContent = '✅ Скопійовано!';
+								setTimeout(function() { btn.textContent = '📋 Копіювати діагностику'; }, 2000);
+							});
+						} catch(e) {
+							// Fallback: select text
+							var pre = document.getElementById('err-details');
+							var range = document.createRange();
+							range.selectNodeContents(pre);
+							var sel = window.getSelection();
+							sel.removeAllRanges();
+							sel.addRange(range);
+							btn.textContent = '⚠️ Виділено — скопіюйте вручну';
+						}
+					});
+
+					document.getElementById('err-clear-btn').addEventListener('click', function() {
+						this.textContent = '⏳ Очищення...';
+						// Clear SW + Cache API (Slovko only)
+						Promise.resolve()
+							.then(function() {
+								if ('serviceWorker' in navigator) {
+									return navigator.serviceWorker.getRegistrations()
+										.then(function(regs) { return Promise.all(regs.map(function(r) { return r.unregister(); })); });
+								}
+							})
+							.then(function() {
+								if ('caches' in window) {
+									return caches.keys().then(function(keys) { 
+										return Promise.all(keys.filter(function(k) { return k.startsWith('slovko-'); }).map(function(k) { return caches.delete(k); })); 
+									});
+								}
+							})
+							.then(function() {
+								window.location.reload();
+							})
+							.catch(function() {
+								window.location.reload();
+							});
+					});
+
+					document.getElementById('err-reload-btn').addEventListener('click', function() {
+						window.location.reload();
+					});
+				}
+
+				function getDiagnosticText() {
+					var lines = [
+						'=== SLOVKO CRASH DIAGNOSTICS ===',
+						'Time: ' + new Date().toISOString(),
+						'URL: ' + window.location.href,
+						'UA: ' + navigator.userAgent,
+						'Screen: ' + screen.width + 'x' + screen.height,
+						'Viewport: ' + window.innerWidth + 'x' + window.innerHeight,
+						'Online: ' + navigator.onLine,
+						'SW: ' + ('serviceWorker' in navigator ? 'supported' : 'no'),
+						'',
+						'=== ERRORS (' + errors.length + ') ==='
+					];
+					errors.forEach(function(err, i) {
+						lines.push('[' + i + '] ' + err.type + ': ' + err.message);
+						if (err.message === 'Script error.') {
+							lines.push('    (Hint: This usually means a cross-origin error. Check CORS headers or script origin.)');
+						}
+						if (err.source) lines.push('    File: ' + err.source + ':' + err.line + ':' + err.col);
+						if (err.stack) lines.push('    Stack: ' + err.stack.substring(0, 500));
+					});
+
+					// Include recent application logs if available
+					if (window.__recentLogs && window.__recentLogs.length > 0) {
+						lines.push('');
+						lines.push('=== RECENT LOGS (last 20) ===');
+						var logs = window.__recentLogs.slice(-20);
+						logs.forEach(function(log) {
+							lines.push(log);
+						});
+					}
+
+					// Try to get localStorage info
+					try {
+						var PREFIX = "slovko_";
+						var cacheVer = localStorage.getItem(PREFIX + 'app_cache_version') || 'none';
+						lines.push('');
+						lines.push('=== CACHE ===');
+						lines.push('app_cache_version: ' + cacheVer);
+
+						var settingsRaw = localStorage.getItem(PREFIX + 'settings');
+						if (settingsRaw) {
+							var s = JSON.parse(settingsRaw);
+							lines.push('settings.mode: ' + (s.mode || 'undefined'));
+							lines.push('settings.theme: ' + (s.theme || 'undefined'));
+							lines.push('settings.hasCompletedOnboarding: ' + s.hasCompletedOnboarding);
+						} else {
+							lines.push('settings: NOT FOUND');
+						}
+					} catch(e) {
+						lines.push('localStorage read error: ' + e.message);
+					}
+
+					return lines.join('\n');
+				}
+
+				// Catch synchronous errors
+				window.onerror = function(message, source, line, col, error) {
+					var msg = String(message);
+					
+					// Ignore cross-origin / generic script errors (often from extensions/webviews)
+					if (msg === 'Script error.' && (!source || source === '') && line === 0) {
+						return;
+					}
+					// Ignore ResizeObserver harmless errors
+					if (msg.indexOf('ResizeObserver loop') !== -1) {
+						return;
+					}
+
+					errors.push({
+						type: 'onerror',
+						message: msg,
+						source: source,
+						line: line,
+						col: col,
+						stack: error ? error.stack : ''
+					});
+					showOverlay();
+				};
+
+				// Catch unhandled promise rejections
+				window.addEventListener('unhandledrejection', function(event) {
+					var reason = event.reason;
+					var msg = reason ? (reason.message || String(reason)) : 'Unknown rejection';
+					
+					// SMART RECOVERY: If a chunk failed to load (version mismatch), auto-reload ONCE
+					if (msg.indexOf('Failed to fetch dynamically imported module') !== -1) {
+						var PREFIX = "slovko_";
+						var lastReload = sessionStorage.getItem(PREFIX + 'last_chunk_reload');
+						var now = Date.now();
+						// Only auto-reload if we haven't done so in the last 10 seconds (loop protection)
+						if (!lastReload || (now - parseInt(lastReload)) > 10000) {
+							sessionStorage.setItem(PREFIX + 'last_chunk_reload', now.toString());
+							console.warn('Chunk load failed. Auto-reloading for version sync...');
+							window.location.reload();
+							return;
+						}
+					}
+
+					errors.push({
+						type: 'unhandledrejection',
+						message: msg,
+						stack: reason ? reason.stack : ''
+					});
+					showOverlay();
+				});
+
+				// Blank screen detector: if nothing renders within 15s, show diagnostics
+				setTimeout(function() {
+					if (appRendered) return;
+					// Check if the app actually rendered something
+					var appContainer = document.querySelector('.app-container');
+					var loadingSpinner = document.querySelector('.loading-spinner');
+					if (!appContainer && !loadingSpinner) {
+						errors.push({
+							type: 'timeout',
+							message: 'App did not render within 15 seconds. Possible silent crash or infinite loading.'
+						});
+						showOverlay();
+					}
+				}, 15000);
+
+				// Mark app as rendered when Svelte mounts
+				window.__markAppRendered = function() { appRendered = true; };
+			})();
+		</script>
+	</head>
+
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents"><!--[--><!--[0--><!--[--><!--[-1--><!--]--><!----> <!--[-1--><!--]--> <!--[0--><!--[--><div class="beta svelte-iiksae" data-testid="beta-page-container"><header class="beta__head svelte-iiksae"><h1 data-testid="beta-title" class="svelte-iiksae">Чеклист бета-тестування</h1> <p class="beta__meta svelte-iiksae" data-testid="beta-version-text">Збірка
+			0.7.606</p> <p class="beta__meta svelte-iiksae" data-testid="beta-progress-value">0 / 41
+			позначено на цій збірці</p> <button class="beta__lang svelte-iiksae" data-testid="beta-lang-btn">English</button></header> <nav class="beta__tabs svelte-iiksae" data-testid="beta-tabs"><!--[--><button class="beta__tab svelte-iiksae is-active" aria-current="true" data-testid="beta-tab-game-btn">Гра</button><button class="beta__tab svelte-iiksae" data-testid="beta-tab-levels-btn">Рівні й теми</button><button class="beta__tab svelte-iiksae" data-testid="beta-tab-languages-btn">Мови</button><button class="beta__tab svelte-iiksae" data-testid="beta-tab-themes-btn">Оформлення</button><button class="beta__tab svelte-iiksae" data-testid="beta-tab-about-btn">Про проєкт і відгуки</button><button class="beta__tab svelte-iiksae" data-testid="beta-tab-stats-btn">Статистика й лідери</button><button class="beta__tab svelte-iiksae" data-testid="beta-tab-account-btn">Акаунт</button><button class="beta__tab svelte-iiksae" data-testid="beta-tab-friends-btn">Люди</button><!--]--></nav> <p class="beta__screens svelte-iiksae"><span>Екрани вкладки:</span> <!--[--><a class="beta__screen-link svelte-iiksae" href="../" data-testid="beta-screen-game-link">Гра</a><!--]--></p> <!--[--><section class="beta__level svelte-iiksae" data-testid="beta-level-manual-section"><h2 class="svelte-iiksae">Тільки людина</h2> <p class="beta__level-hint svelte-iiksae">Машина цього не побачить. Починайте звідси.</p> <ol class="beta__list svelte-iiksae"><!--[--><li class="item svelte-11hpch4" data-testid="beta-check-game_1-item"><span class="item__num svelte-11hpch4">1</span> <div class="item__body svelte-11hpch4"><p class="item__category svelte-11hpch4" data-testid="beta-check-game_1-category-text">Розміри <!--[-1--><!--]--></p> <p class="item__text svelte-11hpch4" data-testid="beta-check-game_1-text">Відкрийте сайт на телефоні. Обидва стовпці карток мусять поміститися на екрані повністю: нижній ряд не ховається під панеллю браузера.</p> <!--[-1--><!--]--> <!--[-1--><!--]--> <div class="item__votes svelte-11hpch4"><!--[--><button class="vote vote--fail svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_1-fail-btn"><!--[0--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-x"><!--[--><!----><path d="M18 6 6 18"><!----></path><!----><!----><path d="m6 6 12 12"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Не працює</button><button class="vote vote--weird svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_1-weird-btn"><!--[1--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-triangle-alert"><!--[--><!----><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"><!----></path><!----><!----><path d="M12 9v4"><!----></path><!----><!----><path d="M12 17h.01"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Працює, але дивно</button><button class="vote vote--ok svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_1-ok-btn"><!--[-1--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-check"><!--[--><!----><path d="M20 6 9 17l-5-5"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Працює</button><!--]--></div></div></li><li class="item svelte-11hpch4" data-testid="beta-check-game_2-item"><span class="item__num svelte-11hpch4">2</span> <div class="item__body svelte-11hpch4"><p class="item__category svelte-11hpch4" data-testid="beta-check-game_2-category-text">Вибір картки <!--[-1--><!--]--></p> <p class="item__text svelte-11hpch4" data-testid="beta-check-game_2-text">Натисніть слово в лівому стовпці, потім його переклад у правому. Обидві картки мусять зникнути, а рахунок правильних відповідей — збільшитися на одиницю.</p> <!--[-1--><!--]--> <!--[-1--><!--]--> <div class="item__votes svelte-11hpch4"><!--[--><button class="vote vote--fail svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_2-fail-btn"><!--[0--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-x"><!--[--><!----><path d="M18 6 6 18"><!----></path><!----><!----><path d="m6 6 12 12"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Не працює</button><button class="vote vote--weird svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_2-weird-btn"><!--[1--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-triangle-alert"><!--[--><!----><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"><!----></path><!----><!----><path d="M12 9v4"><!----></path><!----><!----><path d="M12 17h.01"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Працює, але дивно</button><button class="vote vote--ok svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_2-ok-btn"><!--[-1--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-check"><!--[--><!----><path d="M20 6 9 17l-5-5"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Працює</button><!--]--></div></div></li><li class="item svelte-11hpch4" data-testid="beta-check-game_3-item"><span class="item__num svelte-11hpch4">3</span> <div class="item__body svelte-11hpch4"><p class="item__category svelte-11hpch4" data-testid="beta-check-game_3-category-text">Вибір картки <!--[0--><span class="item__flag svelte-11hpch4">перевірка межі</span><!--]--></p> <p class="item__text svelte-11hpch4" data-testid="beta-check-game_3-text">Натисніть уже вибрану картку ще раз. Виділення мусить зникнути, і слово НЕ мусить озвучитися вдруге.</p> <!--[-1--><!--]--> <!--[-1--><!--]--> <div class="item__votes svelte-11hpch4"><!--[--><button class="vote vote--fail svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_3-fail-btn"><!--[0--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-x"><!--[--><!----><path d="M18 6 6 18"><!----></path><!----><!----><path d="m6 6 12 12"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Не працює</button><button class="vote vote--weird svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_3-weird-btn"><!--[1--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-triangle-alert"><!--[--><!----><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"><!----></path><!----><!----><path d="M12 9v4"><!----></path><!----><!----><path d="M12 17h.01"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Працює, але дивно</button><button class="vote vote--ok svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_3-ok-btn"><!--[-1--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-check"><!--[--><!----><path d="M20 6 9 17l-5-5"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Працює</button><!--]--></div></div></li><li class="item svelte-11hpch4" data-testid="beta-check-game_6-item"><span class="item__num svelte-11hpch4">4</span> <div class="item__body svelte-11hpch4"><p class="item__category svelte-11hpch4" data-testid="beta-check-game_6-category-text">Режим карток <!--[-1--><!--]--></p> <p class="item__text svelte-11hpch4" data-testid="beta-check-game_6-text">Натисніть кнопку режиму навчання й проведіть карткою вгору. Картка мусить полетіти вгору, а на її місці з'явитися наступна.</p> <!--[-1--><!--]--> <!--[-1--><!--]--> <div class="item__votes svelte-11hpch4"><!--[--><button class="vote vote--fail svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_6-fail-btn"><!--[0--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-x"><!--[--><!----><path d="M18 6 6 18"><!----></path><!----><!----><path d="m6 6 12 12"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Не працює</button><button class="vote vote--weird svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_6-weird-btn"><!--[1--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-triangle-alert"><!--[--><!----><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"><!----></path><!----><!----><path d="M12 9v4"><!----></path><!----><!----><path d="M12 17h.01"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Працює, але дивно</button><button class="vote vote--ok svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_6-ok-btn"><!--[-1--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-check"><!--[--><!----><path d="M20 6 9 17l-5-5"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Працює</button><!--]--></div></div></li><li class="item svelte-11hpch4" data-testid="beta-check-game_7-item"><span class="item__num svelte-11hpch4">5</span> <div class="item__body svelte-11hpch4"><p class="item__category svelte-11hpch4" data-testid="beta-check-game_7-category-text">Озвучення <!--[-1--><!--]--></p> <p class="item__text svelte-11hpch4" data-testid="beta-check-game_7-text">Натисніть картку зі словом і послухайте вимову. Якщо пристрій не вміє озвучувати цю мову, мусить з'явитися пояснення, а не тиша.</p> <!--[-1--><!--]--> <!--[-1--><!--]--> <div class="item__votes svelte-11hpch4"><!--[--><button class="vote vote--fail svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_7-fail-btn"><!--[0--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-x"><!--[--><!----><path d="M18 6 6 18"><!----></path><!----><!----><path d="m6 6 12 12"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Не працює</button><button class="vote vote--weird svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_7-weird-btn"><!--[1--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-triangle-alert"><!--[--><!----><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"><!----></path><!----><!----><path d="M12 9v4"><!----></path><!----><!----><path d="M12 17h.01"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Працює, але дивно</button><button class="vote vote--ok svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_7-ok-btn"><!--[-1--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-check"><!--[--><!----><path d="M20 6 9 17l-5-5"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Працює</button><!--]--></div></div></li><!--]--></ol></section><section class="beta__level svelte-iiksae" data-testid="beta-level-covered-section"><h2 class="svelte-iiksae">Покрито тестом</h2> <p class="beta__level-hint svelte-iiksae">Тест це вже перевіряє. Помилка тут — дефект ТЕСТА, і це важливіше за звичайний баг.</p> <ol class="beta__list svelte-iiksae"><!--[--><li class="item svelte-11hpch4" data-testid="beta-check-game_4-item"><span class="item__num svelte-11hpch4">1</span> <div class="item__body svelte-11hpch4"><p class="item__category svelte-11hpch4" data-testid="beta-check-game_4-category-text">Перше враження <!--[-1--><!--]--></p> <p class="item__text svelte-11hpch4" data-testid="beta-check-game_4-text">Відкрийте сайт у новій вкладці. У заголовку вкладки мусить бути назва зі словом Slovko, а не сама адреса.</p> <!--[0--><p class="item__aside svelte-11hpch4">tests/e2e/smoke.spec.ts</p><!--]--> <!--[-1--><!--]--> <div class="item__votes svelte-11hpch4"><!--[--><button class="vote vote--fail svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_4-fail-btn"><!--[0--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-x"><!--[--><!----><path d="M18 6 6 18"><!----></path><!----><!----><path d="m6 6 12 12"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Не працює</button><button class="vote vote--weird svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_4-weird-btn"><!--[1--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-triangle-alert"><!--[--><!----><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"><!----></path><!----><!----><path d="M12 9v4"><!----></path><!----><!----><path d="M12 17h.01"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Працює, але дивно</button><button class="vote vote--ok svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_4-ok-btn"><!--[-1--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-check"><!--[--><!----><path d="M20 6 9 17l-5-5"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Працює</button><!--]--></div></div></li><li class="item svelte-11hpch4" data-testid="beta-check-game_5-item"><span class="item__num svelte-11hpch4">2</span> <div class="item__body svelte-11hpch4"><p class="item__category svelte-11hpch4" data-testid="beta-check-game_5-category-text">Перше враження <!--[0--><span class="item__flag svelte-11hpch4">перевірка межі</span><!--]--></p> <p class="item__text svelte-11hpch4" data-testid="beta-check-game_5-text">Дочекайтеся появи поля з картками. Жодне повідомлення про збій не мусить перекрити екран.</p> <!--[0--><p class="item__aside svelte-11hpch4">tests/e2e/smoke.spec.ts</p><!--]--> <!--[-1--><!--]--> <div class="item__votes svelte-11hpch4"><!--[--><button class="vote vote--fail svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_5-fail-btn"><!--[0--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-x"><!--[--><!----><path d="M18 6 6 18"><!----></path><!----><!----><path d="m6 6 12 12"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Не працює</button><button class="vote vote--weird svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_5-weird-btn"><!--[1--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-triangle-alert"><!--[--><!----><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"><!----></path><!----><!----><path d="M12 9v4"><!----></path><!----><!----><path d="M12 17h.01"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Працює, але дивно</button><button class="vote vote--ok svelte-11hpch4" aria-pressed="false" data-testid="beta-vote-game_5-ok-btn"><!--[-1--><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-check"><!--[--><!----><path d="M20 6 9 17l-5-5"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--> Працює</button><!--]--></div></div></li><!--]--></ol></section><!--]--> <footer class="report svelte-ltsz3j"><button class="report__action svelte-ltsz3j" data-testid="beta-report-btn"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-clipboard-copy"><!--[--><!----><rect width="8" height="4" x="8" y="2" rx="1" ry="1"><!----></rect><!----><!----><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"><!----></path><!----><!----><path d="M16 4h2a2 2 0 0 1 2 2v4"><!----></path><!----><!----><path d="M21 14H11"><!----></path><!----><!----><path d="m15 10-4 4 4 4"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!----> Скопіювати звіт</button> <button class="report__action report__action--quiet svelte-ltsz3j" data-testid="beta-clear-btn"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide-icon lucide lucide-rotate-ccw"><!--[--><!----><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"><!----></path><!----><!----><path d="M3 3v5h5"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!----> Стерти позначки</button> <!--[-1--><!--]--> <!--[-1--><!--]--></footer><!----></div><!--]--><!----><!--]--><!--]--><!--]--> <!--[-1--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_17yq15r = {
+						base: new URL("..", location).pathname.slice(0, -1),
+						assets: "/Slovko"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("../_app/immutable/entry/start.DUBDGCPO.js"),
+						import("../_app/immutable/entry/app.Dc9A5Uzu.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 3],
+							data: [null,null],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>

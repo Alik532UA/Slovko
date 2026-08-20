@@ -5,13 +5,15 @@ const t=`{
 	"errors": {
 		"loadFailed": "Malümat yücklenip olamadı",
 		"speech": {
-			"toast": "Alay körüne, bu brauzer nutuq sintezini desteklemey 😕",
+			"toast": "Alay körüne, bu brauzer nutuq sintezini desteklemey",
 			"moreDetails": "Tafsilât",
-			"modalTitle": "Nutuq hatası 😕",
+			"modalTitle": "Nutuq hatası",
 			"modalDesc1": "Slovko'nıñ öz sesi yoq, o cihazıñıznıñ sistem imkânlarını qullana.",
 			"modalDesc2": "Teessüf ki, şimdiki brauzeriñiz yaki operatsion sisteması bu til içün nutuq sintezini desteklemey: {lang}.",
 			"modalDesc3": "Başqa bir brauzer (meselâ Chrome yaki Safari) qullanmağa tırışıñız yaki sistem sazlamalarını teşkeriñiz."
-		}
+		},
+		"authRequired": "Fikir yollamaq içün lütfen kiriñiz.",
+		"submitFailed": "Yollav hatası. Lütfen soñra deñeñiz."
 	},
 	"levels": {
 		"title": "Seviyeler",
@@ -145,6 +147,14 @@ const t=`{
 		"hint": "İpucu",
 		"dangerZone": {
 			"hardReset": "Episi malümatlarnı sıfırla"
+		},
+		"hotkeys": {
+			"title": "Klavye qısqartmaları",
+			"hint": "Tek bir arif, deñiştirici tuşsuz. Metinni sesle yazsañız, qapatıñız.",
+			"enabled": "Qısqartmalar açıq",
+			"disabled": "Qısqartmalar qapalı",
+			"theme": "körünişni deñiştirmek",
+			"language": "til saylavını açmaq"
 		}
 	},
 	"theme": {
@@ -360,8 +370,6 @@ const t=`{
 		"commentLabel": "Siziñ tefsiriñiz (istek boyunça)",
 		"commentPlaceholder": "Neniñ yañlış olğanını tarif etiñiz...",
 		"success": "Sağ oluñız! Haber yollandı.",
-		"error": "Yollav hatası. Lütfen soñra deñeñiz.",
-		"authRequired": "Fikir yollamaq içün lütfen kiriñiz.",
 		"type": {
 			"wrongTranslation": "Yañlış tercime",
 			"wrongTranscription": "Transkriptsiya hatası",
