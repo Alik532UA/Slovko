@@ -1,4 +1,5 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { load } from 'js-yaml';
 import { describe, expect, it } from 'vitest';
 
 /**
@@ -30,6 +31,86 @@ function withoutYamlComments(source: string): string {
 describe('перевірка жива', () => {
 	it('workflow знайдено', () => {
 		expect(files.length, 'у .github/workflows немає жодного yml — перевіряти нема що').toBeGreaterThan(0);
+	});
+});
+
+/**
+ * Синтаксис самого файлу — перевірка, якої тут бракувало найдорожче.
+ *
+ * Решта перевірок цього файлу читає workflow РЕГЕКСАМИ ПО ТЕКСТУ. Це працює для
+ * «чи є крок із тестами», але означає, що файл, який узагалі не є YAML, проходить
+ * їх усі: регекс знайде свій рядок і в зламаному документі.
+ *
+ * Так і сталося 2026-08-20. У назву кроку потрапила двокрапка:
+ *
+ *     - name: E2E (прев'ю зібраного сайту: testid invariant + smoke + axe)
+ *
+ * Незакутий скаляр із `: ` YAML читає як вкладене відображення, тож ВЕСЬ файл
+ * став невалідним. Локально зелено було все: `lint`, `check`, 250 юніт-перевірок,
+ * 17 e2e. GitHub натомість відмовився запускати пайплайн цілком — «Invalid
+ * workflow file, line 118» — і заразом упали три відкриті PR від Dependabot,
+ * бо вони беруть той самий файл із `main`.
+ *
+ * Ціна саме така: не «один крок не виконався», а «не виконався жоден гейт, і
+ * деплою не було». Тому перевірка ставиться перша й найдешевша — документ мусить
+ * розібратися парсером, а не регексом.
+ *
+ * `js-yaml` заведено в `devDependencies` навмисно, хоч він і лежав у дереві
+ * транзитивно: перевірка на транзитивному пакеті помирає від чужого оновлення,
+ * і помирає тихо — з ним зникне і сам гейт.
+ */
+describe('синтаксис workflow', () => {
+	it.each(files)('«%s» розбирається як YAML', (file) => {
+		const source = readFileSync(`${DIR}/${file}`, 'utf8');
+		expect(
+			() => load(source),
+			'GitHub відмовиться запускати пайплайн ЦІЛКОМ — жоден гейт не виконається, ' +
+				'а локально всі перевірки лишаться зеленими'
+		).not.toThrow();
+	});
+
+	/**
+	 * Ту саму пастку видно й дешевше — без парсера, зате з точним пальцем: назва
+	 * кроку з `: ` усередині. Дублювання тут навмисне: повідомлення парсера
+	 * («bad indentation of a mapping entry») не називає ні причини, ні лікування.
+	 */
+	it.each(files)('«%s»: жодна назва кроку не містить незакутої двокрапки', (file) => {
+		const bad: string[] = [];
+		readFileSync(`${DIR}/${file}`, 'utf8')
+			.split('\n')
+			.forEach((line, index) => {
+				const value = /^\s*-?\s*name:\s*(.*)$/.exec(line)?.[1];
+				if (!value) return;
+				const quoted = /^["'].*["']$/.test(value.trim());
+				if (!quoted && /:\s/.test(value)) bad.push(`${file}:${index + 1} — ${value.trim()}`);
+			});
+		expect(
+			bad,
+			`двокрапка з пробілом у незакутій назві робить із неї відображення:\n${bad.join('\n')}`
+		).toEqual([]);
+	});
+
+	/**
+	 * І структура, яку регекс не бачить у принципі: кожен крок мусить щось
+	 * РОБИТИ. Крок з однією назвою — це не помилка синтаксису, а порожнє місце,
+	 * що читається як покриття.
+	 */
+	it.each(files)('«%s»: кожен крок має run або uses', (file) => {
+		const doc = load(readFileSync(`${DIR}/${file}`, 'utf8')) as {
+			jobs?: Record<string, { steps?: Array<Record<string, unknown>> }>;
+		};
+		const jobs = Object.entries(doc.jobs ?? {});
+		expect(jobs.length, 'у workflow немає жодного джоба — перевіряти нема що').toBeGreaterThan(0);
+
+		const empty: string[] = [];
+		for (const [jobName, job] of jobs) {
+			for (const step of job.steps ?? []) {
+				if (!('run' in step) && !('uses' in step)) {
+					empty.push(`${file} → ${jobName} → ${String(step.name ?? '(без назви)')}`);
+				}
+			}
+		}
+		expect(empty, `крок, який нічого не робить:\n${empty.join('\n')}`).toEqual([]);
 	});
 });
 

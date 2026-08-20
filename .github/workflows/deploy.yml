@@ -115,7 +115,10 @@ jobs:
       #
       # Це не секрети: web-конфіг Firebase публічний і так їде в клієнтський
       # бандл. Захист дають правила доступу — джоб `rules` вище.
-      - name: E2E (прев'ю зібраного сайту: testid invariant + smoke + axe)
+      # Двокрапки в назві бути НЕ МОЖЕ: незакутий скаляр із `: ` YAML читає як
+      # вкладене відображення, і весь файл стає невалідним. Саме так цей крок і
+      # зламав пайплайн — див. інваріант «кожен workflow парситься» в ci.test.ts.
+      - name: E2E (прев'ю зібраного сайту — testid invariant + smoke + axe)
         env:
           BASE_PATH: "/Slovko"
           VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}
