@@ -178,6 +178,14 @@
 		"hint": "Wskazówka",
 		"dangerZone": {
 			"hardReset": "Zresetuj wszystkie dane"
+		},
+		"hotkeys": {
+			"title": "Skróty klawiszowe",
+			"hint": "Jedna litera, bez modyfikatorów. Wyłącz, jeśli dyktujesz tekst głosem.",
+			"enabled": "Skróty klawiszowe włączone",
+			"disabled": "Skróty klawiszowe wyłączone",
+			"theme": "zmienić wygląd",
+			"language": "otworzyć wybór języka"
 		}
 	},
 	"theme": {

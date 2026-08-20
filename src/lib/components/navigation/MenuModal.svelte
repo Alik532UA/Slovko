@@ -88,9 +88,17 @@
 			<span class="label">{$_("settings.levels") || "Modes"}</span>
 		</button>
 
-		<!-- 1. Мови -->
+		<!--
+			1. Мови.
+
+			`aria-keyshortcuts` — виявність для читалки (HOTKEYS-v8 § 5). Атрибут
+			НЕ створює скорочення, лише повідомляє про нього: обробник лишається
+			на вікні в `+layout.svelte`. Значення в форматі ARIA, тобто просто
+			"L" для одиночної клавіші.
+		-->
 		<button
 			class="menu-item"
+			aria-keyshortcuts="L"
 			onclick={() => {
 				onopenLanguages();
 				onclose();
@@ -114,9 +122,10 @@
 			<span class="label">{$_("profile.tabs.stats") || "Statistics"}</span>
 		</button>
 
-		<!-- 3. Теми -->
+		<!-- 3. Теми. Про `aria-keyshortcuts` — коментар до пункту «Мови» вище. -->
 		<button
 			class="menu-item"
+			aria-keyshortcuts="T"
 			onclick={() => {
 				onopenThemes();
 				onclose();

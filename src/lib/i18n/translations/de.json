@@ -147,6 +147,14 @@
 		"hint": "Hinweis",
 		"dangerZone": {
 			"hardReset": "Alle Daten zurücksetzen"
+		},
+		"hotkeys": {
+			"title": "Tastenkürzel",
+			"hint": "Ein einzelner Buchstabe, ohne Modifikatoren. Schalte sie aus, wenn du Text diktierst.",
+			"enabled": "Tastenkürzel ein",
+			"disabled": "Tastenkürzel aus",
+			"theme": "Erscheinungsbild wechseln",
+			"language": "Sprachauswahl öffnen"
 		}
 	},
 	"theme": {

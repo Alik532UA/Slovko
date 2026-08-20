@@ -147,6 +147,14 @@
 		"hint": "İpucu",
 		"dangerZone": {
 			"hardReset": "Episi malümatlarnı sıfırla"
+		},
+		"hotkeys": {
+			"title": "Klavye qısqartmaları",
+			"hint": "Tek bir arif, deñiştirici tuşsuz. Metinni sesle yazsañız, qapatıñız.",
+			"enabled": "Qısqartmalar açıq",
+			"disabled": "Qısqartmalar qapalı",
+			"theme": "körünişni deñiştirmek",
+			"language": "til saylavını açmaq"
 		}
 	},
 	"theme": {

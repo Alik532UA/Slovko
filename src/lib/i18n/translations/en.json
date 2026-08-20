@@ -178,6 +178,14 @@
 		"hint": "Hint",
 		"dangerZone": {
 			"hardReset": "Reset All Data"
+		},
+		"hotkeys": {
+			"title": "Keyboard shortcuts",
+			"hint": "A single letter, no modifiers. Turn off if you dictate text by voice.",
+			"enabled": "Keyboard shortcuts on",
+			"disabled": "Keyboard shortcuts off",
+			"theme": "change the appearance",
+			"language": "open the language picker"
 		}
 	},
 	"theme": {

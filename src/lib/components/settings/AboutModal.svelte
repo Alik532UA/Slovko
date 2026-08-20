@@ -6,7 +6,8 @@
 	import { versionStore } from "$lib/controllers/VersionStore.svelte";
 	import { hardReset } from "$lib/services/resetService";
 	import { pwaStore } from "$lib/controllers/PwaStore.svelte";
-	import { Download, Instagram, Facebook, Linkedin } from "lucide-svelte";
+	import { settingsStore } from "$lib/controllers/SettingsStore.svelte";
+	import { Download, Instagram, Facebook, Linkedin, Keyboard } from "lucide-svelte";
 	import ThreadsIcon from "../ui/icons/ThreadsIcon.svelte";
 	import FeedbackModal from "./FeedbackModal.svelte";
 	import InstallGuide from "../pwa/InstallGuide.svelte";
@@ -70,6 +71,51 @@
 			>
 				<ThreadsIcon size={22} />
 			</a>
+		</div>
+
+		<hr class="separator" />
+
+		<!--
+			Гарячі клавіші: перелік і перемикач в одному місці.
+
+			Блок закриває дві різні вимоги канону одним екраном:
+			• WCAG SC 2.1.4 (рівень A, HOTKEYS-v8 § 3) — одиночна літера мусить
+			  мати спосіб вимкнути. Кому це потрібно: тим, хто вводить текст
+			  голосом, — диктування розсипається на літери, і кожна виконує дію.
+			• Виявність (§ 5) — скорочення, про яке ніде не написано, існує лише
+			  для автора. Тут воно написане поруч із перемикачем.
+
+			Службові жести (`V`, `R`) тут навмисно не згадані: вони не для
+			відвідувача (§ 4, LOW), і критерій на них не поширюється — це серії
+			натискань, а не одиночні клавіші.
+		-->
+		<div class="hotkeys" data-testid="about-hotkeys-container">
+			<div class="hotkeys-head">
+				<Keyboard size={18} />
+				<span data-testid="about-hotkeys-title-text">{$_("settings.hotkeys.title")}</span>
+			</div>
+
+			<ul class="hotkeys-list" data-testid="about-hotkeys-list">
+				<li><kbd>T</kbd> <span>{$_("settings.hotkeys.theme")}</span></li>
+				<li><kbd>L</kbd> <span>{$_("settings.hotkeys.language")}</span></li>
+			</ul>
+
+			<p class="hotkeys-hint" data-testid="about-hotkeys-hint-text">
+				{$_("settings.hotkeys.hint")}
+			</p>
+
+			<button
+				class="link-btn hotkeys-toggle"
+				class:off={!settingsStore.value.enableHotkeys}
+				aria-pressed={settingsStore.value.enableHotkeys}
+				onclick={() =>
+					settingsStore.update({ enableHotkeys: !settingsStore.value.enableHotkeys })}
+				data-testid="about-hotkeys-toggle-btn"
+			>
+				{settingsStore.value.enableHotkeys
+					? $_("settings.hotkeys.enabled")
+					: $_("settings.hotkeys.disabled")}
+			</button>
 		</div>
 
 		<hr class="separator" />
@@ -208,6 +254,81 @@
 		border-color: var(--accent);
 		box-shadow: var(--shadow-md);
 		z-index: 2;
+	}
+
+	/*
+		Розміри в `rem` і `clamp` без жодного `vh`: блок живе всередині модалки,
+		яка вже масштабується (FLUID-SIZING-v8 § 2). Своєї висоти від екрана він
+		не має, тож і рахувати її нема з чого.
+	*/
+	.hotkeys {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+		width: 100%;
+	}
+
+	.hotkeys-head {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-weight: 600;
+		color: var(--text-primary);
+	}
+
+	.hotkeys-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		width: 100%;
+		max-width: 280px;
+	}
+
+	.hotkeys-list li {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		color: var(--text-secondary);
+		font-size: 0.9rem;
+	}
+
+	.hotkeys-list kbd {
+		flex: 0 0 auto;
+		min-width: 1.75rem;
+		padding: 0.15rem 0.4rem;
+		border: 1px solid var(--border);
+		border-radius: 6px;
+		background: var(--bg-primary);
+		color: var(--text-primary);
+		font-family: inherit;
+		font-size: 0.8rem;
+		font-weight: 700;
+		text-align: center;
+	}
+
+	.hotkeys-hint {
+		margin: 0;
+		max-width: 280px;
+		color: var(--text-secondary);
+		font-size: 0.8rem;
+		text-align: center;
+		opacity: 0.85;
+	}
+
+	.hotkeys-toggle {
+		background: var(--bg-primary);
+		color: var(--text-primary);
+		border-color: var(--border);
+	}
+
+	/* Вимкнений стан читається не лише кольором: напис змінюється теж
+	   (ACCESSIBILITY-v8 § 6 — колір не буває єдиним носієм змісту). */
+	.hotkeys-toggle.off {
+		opacity: 0.7;
 	}
 
 	.separator {

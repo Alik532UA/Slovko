@@ -338,6 +338,18 @@
 	];
 
 	function handleShortcut(event: KeyboardEvent) {
+		/*
+		 * WCAG SC 2.1.4 «Character Key Shortcuts», рівень A (HOTKEYS-v8 § 3).
+		 *
+		 * `T` і `L` — одиночні літери, тож критерій вимагає одного з трьох:
+		 * вимкнути, перепризначити або обмежити фокусом. Обрано перше —
+		 * перемикач у «Про проєкт»; він же й робить скорочення виявними, бо
+		 * поруч перелічені самі клавіші (§ 5).
+		 *
+		 * Перевірка стоїть ПЕРЕД усім іншим, включно з `acceptsShortcut`:
+		 * вимкнене означає вимкнене, а не «вимкнене, крім одного випадку».
+		 */
+		if (!settingsStore.value.enableHotkeys) return;
 		if (!acceptsShortcut(event)) return;
 
 		if (event.code === "KeyT") {

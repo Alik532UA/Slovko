@@ -147,6 +147,14 @@
 		"hint": "Hint",
 		"dangerZone": {
 			"hardReset": "Alle gegevens wissen"
+		},
+		"hotkeys": {
+			"title": "Sneltoetsen",
+			"hint": "Eén letter, zonder modificatietoetsen. Zet uit als je tekst dicteert.",
+			"enabled": "Sneltoetsen aan",
+			"disabled": "Sneltoetsen uit",
+			"theme": "het thema wijzigen",
+			"language": "de taalkeuze openen"
 		}
 	},
 	"theme": {
