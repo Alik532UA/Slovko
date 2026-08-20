@@ -32,7 +32,7 @@
 		maxWidth="500px"
 	>
 		<div class="content">
-			<h2>{$_("errors.speech.modalTitle") || "Помилка озвучення 😕"}</h2>
+			<h2>{$_("errors.speech.modalTitle") || "Помилка озвучення"}</h2>
 			
 			<div class="description">
 				<p>

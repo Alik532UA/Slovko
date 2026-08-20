@@ -5,9 +5,9 @@
 	"errors": {
 		"loadFailed": "Laden van gegevens mislukt",
 		"speech": {
-			"toast": "Deze browser lijkt spraaksynthese niet te ondersteunen 😕",
+			"toast": "Deze browser lijkt spraaksynthese niet te ondersteunen",
 			"moreDetails": "Meer details",
-			"modalTitle": "Spraakfout 😕",
+			"modalTitle": "Spraakfout",
 			"modalDesc1": "Slovko heeft geen ingebouwde stem, maar gebruikt de systeemfuncties van je apparaat.",
 			"modalDesc2": "Helaas ondersteunt je huidige browser of besturingssysteem geen spraaksynthese voor de taal: {lang}.",
 			"modalDesc3": "Probeer een andere browser (zoals Chrome of Safari) of controleer je systeeminstellingen."

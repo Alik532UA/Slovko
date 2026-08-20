@@ -112,7 +112,7 @@ export function speakText(text: string, lang: string): void {
 				import('svelte/store').then(({ get }) => {
 					import('svelte-i18n').then(({ _ }) => {
 						const t = get(_);
-						notificationStore.error(t("errors.speech.toast") || "Схоже цей браузер не підтримує озвучення слів 😕", 8000, {
+						notificationStore.error(t("errors.speech.toast") || "Схоже цей браузер не підтримує озвучення слів", 8000, {
 							label: t("errors.speech.moreDetails") || "Детальніше",
 							onClick: () => speechModalStore.open(lang)
 						}, true);
@@ -147,7 +147,7 @@ if (browser) {
 			import('svelte/store').then(({ get }) => {
 				import('svelte-i18n').then(({ _ }) => {
 					const t = get(_);
-					notificationStore.error(t("errors.speech.toast") || "Схоже цей браузер не підтримує озвучення слів 😕", 8000, {
+					notificationStore.error(t("errors.speech.toast") || "Схоже цей браузер не підтримує озвучення слів", 8000, {
 						label: t("errors.speech.moreDetails") || "Детальніше",
 						onClick: () => speechModalStore.open(lang)
 					}, true);
