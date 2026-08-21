@@ -1,11 +1,18 @@
 # allow crawling everything by default
 User-agent: *
-Disallow:
+Disallow: /Slovko/beta-test-checklists/
 
-# Службова сторінка для тих, хто згодився потикати сайт (BETA-CHECKLIST-v8 § 4).
-# Не таємниця — статичний сайт із відкритого репозиторію таємниць не тримає, —
-# а лише спосіб не пускати її в пошук: там вона конкурувала б із самим
-# застосунком і приводила б тих, хто прийшов вивчати слова.
+# AI Search Crawlers
+User-agent: GPTBot
+Allow: /
+Disallow: /Slovko/beta-test-checklists/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /Slovko/beta-test-checklists/
+
+User-agent: ClaudeBot
+Allow: /
 Disallow: /Slovko/beta-test-checklists/
 
 Sitemap: https://alik532ua.github.io/Slovko/sitemap.xml

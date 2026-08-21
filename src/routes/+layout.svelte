@@ -408,6 +408,7 @@
 		-->
 		<meta name="robots" content="noindex, nofollow" />
 	{:else}
+		<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 		<!-- Structured Data (SEO-v8 § 3.2) -->
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html `<script type="application/ld+json">${JSON.stringify(jsonLdData)}<\/script>`}

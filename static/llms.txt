@@ -1,0 +1,28 @@
+# Slovko — Ukrainian Wordle Game (Словко)
+
+> Free daily Ukrainian word-guessing puzzle game based on the Wordle mechanic. Guess secret 5-letter Ukrainian words in 6 tries with color-coded tile hints, dictionary lookups, and statistics.
+
+## Main Pages
+
+- [Play Slovko (Daily Puzzle)](https://alik532ua.github.io/Slovko/): Today's daily word challenge.
+- [Practice / Unlimited Mode](https://alik532ua.github.io/Slovko/): Train vocabulary and play without daily restrictions.
+- [Dictionary & Word Meaning](https://alik532ua.github.io/Slovko/): In-game vocabulary definitions from official Ukrainian explanatory dictionaries.
+
+## Key Features
+
+- Daily Challenge: One synchronized secret word every 24 hours for all players across the world.
+- Rich Ukrainian Vocabulary: Curated lexicon of validated 5-letter nouns in nominative form.
+- Text-to-Speech (TTS): Audio pronunciation of guessed words and definitions.
+- Statistics & Streaks: Detailed victory counts, guess distribution, and winning streaks saved locally.
+- Accessibility & PWA: High-contrast color palette, hotkeys, screen reader support, and full offline capability.
+
+## Technical Details
+
+- SvelteKit 2 + Svelte 5 runes architecture.
+- LocalStorage privacy-first storage with zero telemetry of personal data.
+- Generative Engine Optimization (GEO/LLMO) & Schema.org JSON-LD WebApplication schema.
+
+## Resources
+
+- GitHub Repository: https://github.com/Alik532UA/Slovko
+- [Sitemap](https://alik532ua.github.io/Slovko/sitemap.xml): XML index of public game routes.
