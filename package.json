@@ -1,11 +1,11 @@
 {
 	"name": "slovko",
 	"private": true,
-	"version": "0.7.610",
+	"version": "0.7.611",
 	"type": "module",
 	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
+		"test": "vitest run",
+		"build": "vite build && node scripts/generate-sitemap.mjs",
 		"preview": "vite preview",
 		"prepare": "husky",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
