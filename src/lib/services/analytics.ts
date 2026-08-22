@@ -43,7 +43,12 @@ export function initAnalytics() {
 
 	const dataLayer = (window.dataLayer = window.dataLayer ?? []);
 	window.gtag = function gtag() {
-		// eslint-disable-next-line prefer-rest-params
+		// `arguments`, а не rest-параметр: GA очікує в `dataLayer` рівно той
+		// arguments-об'єкт, який отримав шим, і `[...args]` дає масив, який
+		// gtag.js не розбирає. Директиви `eslint-disable prefer-rest-params`
+		// тут раніше стояло — і воно нічого не вимикало, бо правила немає в
+		// конфігу; `--report-unused-disable-directives` рахував його окремим
+		// попередженням. Вимкнення, яке виглядає зробленим і не зроблене.
 		dataLayer.push(arguments);
 	};
 
