@@ -82,6 +82,7 @@ jobs:
         run: npm run check
 
       - name: Lint
+        if: ${{ !cancelled() }}
         run: npm run lint
 
       # Юніт-тести існували в репозиторії і не виконувалися в CI жодного разу
@@ -90,6 +91,7 @@ jobs:
       # число, яке треба правити щоразу при додаванні перевірки, розходиться
       # з дійсністю швидше, ніж його встигають прочитати.
       - name: Unit tests
+        if: ${{ !cancelled() }}
         run: npm run test:unit
 
       # Рантайм-інваріант унікальності data-testid (TESTID-AND-NAMING-v8 § 1.9.2)
@@ -144,6 +146,7 @@ jobs:
       # зупинив би деплой, і гейт довелося б вимикати — а вимкнений гейт
       # гірший за відсутній.
       - name: Audit dependencies
+        if: ${{ !cancelled() }}
         run: npm audit --audit-level=high
 
       - name: Build

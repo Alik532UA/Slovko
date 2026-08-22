@@ -1,7 +1,7 @@
 {
 	"name": "slovko",
 	"private": true,
-	"version": "0.7.620",
+	"version": "0.7.621",
 	"type": "module",
 	"scripts": {
 		"test": "vitest run",
