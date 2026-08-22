@@ -39,7 +39,7 @@ function inlineScriptHashes() {
 	if (hashes.length !== 2) {
 		throw new Error(
 			`app.html: очікувалось 2 інлайн-скрипти (тема + діагностика), знайдено ${hashes.length}. ` +
-				"CSP заблокувала б їх мовчки — онови цей перелік разом із app.html."
+				"CSP заблокувала б їх мовчки — онови цей перелік разом із app.html.",
 		);
 	}
 	return hashes;
@@ -94,8 +94,6 @@ const config = {
 					"https://www.google.com",
 					// Клієнт Google API шле телеметрію на /js/gen_204.
 					"https://apis.google.com",
-					"https://*.sentry.io",
-					"https://*.ingest.sentry.io"
 				],
 				"img-src": ["self", "data:", "blob:", "https:"],
 				"style-src": ["self", "unsafe-inline"],
@@ -121,7 +119,7 @@ const config = {
 			base: basePath,
 		},
 		serviceWorker: {
-			register: false
+			register: false,
 		},
 		prerender: {
 			handleHttpError: ({ path, referrer, message }) => {

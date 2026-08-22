@@ -1,59 +1,36 @@
-import { dev } from '$app/environment';
-import type { HandleClientError } from '@sveltejs/kit';
-import { errorHandler } from '$lib/services/errorHandler';
+import type { HandleClientError } from "@sveltejs/kit";
+import { errorHandler } from "$lib/services/errorHandler";
 
 /**
- * Telemetry endpoint for CSP validation (OBSERVABILITY-v8 § 1.5):
- * - https://*.sentry.io
- * - https://*.ingest.sentry.io
+ * Неперехоплені помилки клієнта (ERROR-HANDLING-v8 § 2.4).
+ *
+ * Гачок спрацьовує лише на НЕОЧІКУВАНІ помилки: `error()` і `redirect()` через
+ * нього не проходять, тож 404 сюди не потрапляє. Перевірка статусу нижче —
+ * дешева перестраховка, щоб у журналі не з'явився шум.
+ *
+ * **Тут НЕМАЄ Sentry, і це рішення, а не пропуск.** Блок ініціалізації
+ * `@sentry/sveltekit` тут стояв і не працював жодного разу: пакета немає в
+ * залежностях, тож імпорт писався через змінну з `@vite-ignore`, аби збірка не
+ * впала на нерозв'язному модулі. У браузері голий специфікатор не резолвиться
+ * в принципі, а `.catch(() => null)` ковтав це мовчки. DSN при цьому не
+ * заданий ніде. OBSERVABILITY-v8 має «Пріоритет: optional» і «Скіп-якщо:
+ * хобі-проєкт без активних користувачів», тож правильна відповідь — не
+ * імітувати трекінг, а не мати його. Збір звітів робить `logService` і кнопка
+ * копіювання на службовому таблі.
  */
-const DSN = (import.meta.env?.PUBLIC_SENTRY_DSN as string | undefined) || '';
-const sentryPkg = '@sentry/sveltekit';
-
-interface SentryClient {
-	init: (options: Record<string, unknown>) => void;
-	captureException: (error: unknown, context?: Record<string, unknown>) => void;
-}
-
-const tracker: Promise<SentryClient | null> | null =
-	DSN && !dev
-		? import(/* @vite-ignore */ sentryPkg)
-				.then((module: unknown) => {
-					const Sentry = module as SentryClient;
-					Sentry.init({
-						dsn: DSN,
-						enabled: !dev,
-						tracesSampleRate: 0.1,
-						replaysSessionSampleRate: 0.0,
-						replaysOnErrorSampleRate: 1.0,
-						environment: import.meta.env.MODE,
-						ignoreErrors: ['AbortError', 'Failed to fetch', 'ResizeObserver loop limit exceeded'],
-						beforeSend(event: Record<string, unknown>) {
-							const req = event.request as Record<string, Record<string, unknown>> | undefined;
-							if (req?.headers) {
-								delete req.headers['authorization'];
-								delete req.headers['cookie'];
-							}
-							return event;
-						}
-					});
-					return Sentry;
-				})
-				.catch(() => null)
-		: null;
-
-export const handleError: HandleClientError = async ({ error, event, status, message }) => {
+export const handleError: HandleClientError = ({ error, event, status }) => {
 	if (status === 404) return;
 
-	errorHandler.handle(error, `client-unhandled:${event?.url?.pathname ?? 'unknown'}`, {
-		showToast: false,
-		category: 'app'
-	});
+	errorHandler.handle(
+		error,
+		`client-unhandled:${event?.url?.pathname ?? "unknown"}`,
+		{
+			showToast: false,
+			category: "app",
+		},
+	);
 
-	if (tracker) {
-		const Sentry = await tracker;
-		Sentry?.captureException(error, { extra: { route: event?.url?.pathname, status, message } });
-	}
-
-	return { message: 'Сталася помилка. Спробуйте оновити сторінку.' };
+	// Узагальнене повідомлення, а не `error.message`: текст рантайму нічого не
+	// пояснює відвідувачу, зате показує нутрощі застосунку.
+	return { message: "Сталася помилка. Спробуйте оновити сторінку." };
 };
