@@ -42,3 +42,6 @@ test-results/
 # артефактом, який не комітиться.
 *-debug.log
 firebase-debug.*.log
+
+# Звіти Lighthouse CI — артефакт прогону, а не джерело.
+.lighthouseci/
