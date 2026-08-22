@@ -6,7 +6,16 @@
 	import { setInterfaceLanguage, LANGUAGES } from "$lib/i18n/init";
 	import { LANGUAGE_NAMES, type Language } from "$lib/types/index";
 	import { base } from "$app/paths";
-	import { Languages, Speech, Captions, Download, UserCheck, Heart, GraduationCap, Lightbulb } from "lucide-svelte";
+	import {
+		Languages,
+		Speech,
+		Captions,
+		Download,
+		UserCheck,
+		Heart,
+		GraduationCap,
+		Lightbulb,
+	} from "lucide-svelte";
 	import BaseModal from "$lib/components/ui/BaseModal.svelte";
 	import { pwaStore } from "$lib/controllers/PwaStore.svelte";
 	import InstallGuide from "../pwa/InstallGuide.svelte";
@@ -24,7 +33,7 @@
 	const activeSteps = $derived.by(() => {
 		const steps = [1, 2, 3, 4, 5];
 		if (pwaStore.isInstalled) {
-			return steps.filter(s => s !== 4);
+			return steps.filter((s) => s !== 4);
 		}
 		return steps;
 	});
@@ -160,10 +169,7 @@
 						{/if}
 					</div>
 
-					<div
-						class="flags-grid"
-						data-testid="onboarding-flags-list"
-					>
+					<div class="flags-grid" data-testid="onboarding-flags-list">
 						{#each LANGUAGES as lang (lang)}
 							<button
 								class="flag-btn"
@@ -177,7 +183,21 @@
 									(step === 2 && lang === settingsStore.value.targetLanguage)}
 								data-testid="onboarding-flag-btn-{lang}"
 							>
-								<img src="{base}/svg/flags/{lang}.svg" alt={LANGUAGE_NAMES[lang]} loading="lazy" width="80" height="54" />
+								<!--
+									`alt=""` — прапорець ДЕКОРАТИВНИЙ: назва мови стоїть
+									поруч у `<span>`, і з підписом в `alt` скрінрідер читав
+									її двічі поспіль («Українська Українська»). Порожній
+									`alt` прибирає картинку з дерева доступності, лишаючи
+									кнопці рівно одну назву. Lighthouse ловив це як
+									`image-redundant-alt`.
+								-->
+								<img
+									src="{base}/svg/flags/{lang}.svg"
+									alt=""
+									loading="lazy"
+									width="80"
+									height="54"
+								/>
 								<span>{LANGUAGE_NAMES[lang]}</span>
 							</button>
 						{/each}
@@ -199,7 +219,7 @@
 									class="progress-segment"
 									class:active={hintStep === i + 1}
 									class:completed={hintStep > i + 1}
-									onclick={() => hintStep = i + 1}
+									onclick={() => (hintStep = i + 1)}
 									aria-label="Step {i + 1}"
 									data-testid="onboarding-progress-item-{i + 1}"
 								></button>
@@ -229,19 +249,37 @@
 							{#if currentTipId === 1}
 								<p>
 									{$_("onboarding.step1_part1")}
-									<span class="inline-icon" data-testid="onboarding-icon-languages"><Languages size={18} /></span>.
+									<span
+										class="inline-icon"
+										data-testid="onboarding-icon-languages"
+										><Languages size={18} /></span
+									>.
 									{$_("onboarding.step1_part2")}
-									<span class="inline-icon" data-testid="onboarding-icon-speech"><Speech size={18} /></span>
+									<span class="inline-icon" data-testid="onboarding-icon-speech"
+										><Speech size={18} /></span
+									>
 									{$_("onboarding.step1_part3")}
-									<span class="inline-icon" data-testid="onboarding-icon-captions"><Captions size={18} /></span>
+									<span
+										class="inline-icon"
+										data-testid="onboarding-icon-captions"
+										><Captions size={18} /></span
+									>
 									{$_("onboarding.step1_part4")}
 								</p>
 							{:else if currentTipId === 2}
 								<p>
 									{$_("onboarding.step2_part1")}
-									<span class="inline-icon" data-testid="onboarding-icon-gradcap"><GraduationCap size={18} /></span>
+									<span
+										class="inline-icon"
+										data-testid="onboarding-icon-gradcap"
+										><GraduationCap size={18} /></span
+									>
 									{$_("onboarding.step2_part2")}
-									<span class="inline-icon" data-testid="onboarding-icon-lightbulb"><Lightbulb size={18} /></span>
+									<span
+										class="inline-icon"
+										data-testid="onboarding-icon-lightbulb"
+										><Lightbulb size={18} /></span
+									>
 									{$_("onboarding.step2_part3")}
 								</p>
 							{:else if currentTipId === 3}
@@ -249,8 +287,8 @@
 							{:else if currentTipId === 4}
 								<div class="step-content-wrapper">
 									<p>{$_("onboarding.step4")}</p>
-									<button 
-										class="action-btn-secondary" 
+									<button
+										class="action-btn-secondary"
 										data-testid="onboarding-install-btn"
 										onclick={async () => {
 											const result = await pwaStore.install();
@@ -272,11 +310,11 @@
 							{:else}
 								<div class="step-content-wrapper">
 									<p>{$_("onboarding.step5")}</p>
-									<a 
+									<a
 										href="https://send.monobank.ua/jar/7sCsydhJnR"
 										target="_blank"
 										rel="noopener noreferrer"
-										class="action-btn-accent" 
+										class="action-btn-accent"
 										data-testid="onboarding-donate-link"
 										onclick={finishOnboarding}
 									>
@@ -298,7 +336,7 @@
 										<span>{$_("onboarding.prevHint")}</span>
 									</button>
 								{/if}
-								
+
 								{#if hintStep < activeSteps.length}
 									<button
 										class="nav-btn next"
@@ -313,7 +351,9 @@
 							<button
 								class="skip-all-btn"
 								onclick={finishOnboarding}
-								data-testid={hintStep === activeSteps.length ? "onboarding-next-btn" : "onboarding-skip-btn"}
+								data-testid={hintStep === activeSteps.length
+									? "onboarding-next-btn"
+									: "onboarding-skip-btn"}
 							>
 								{$_("onboarding.startBtn")}
 							</button>
@@ -438,7 +478,8 @@
 		align-items: center;
 	}
 
-	.action-btn-secondary, .action-btn-accent {
+	.action-btn-secondary,
+	.action-btn-accent {
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -463,7 +504,8 @@
 		border-color: var(--glass-border);
 	}
 
-	.action-btn-secondary:hover, .action-btn-accent:hover {
+	.action-btn-secondary:hover,
+	.action-btn-accent:hover {
 		transform: scale(1.02);
 		filter: brightness(1.1);
 	}
@@ -547,8 +589,12 @@
 		transform: scale(0.98);
 	}
 
-	.nav-btn:hover { transform: scale(1.02); }
-	.nav-btn:active { transform: scale(0.98); }
+	.nav-btn:hover {
+		transform: scale(1.02);
+	}
+	.nav-btn:active {
+		transform: scale(0.98);
+	}
 
 	@media (max-width: 360px) {
 		.nav-btn {
