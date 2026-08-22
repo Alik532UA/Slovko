@@ -4,13 +4,13 @@
 
 ## Main Pages
 
-- [Play Slovko (Daily Puzzle)](https://alik532ua.github.io/Slovko/): Today's daily word challenge.
-- [Practice / Unlimited Mode](https://alik532ua.github.io/Slovko/): Train vocabulary and play without daily restrictions.
-- [Dictionary & Word Meaning](https://alik532ua.github.io/Slovko/): In-game vocabulary definitions from official Ukrainian explanatory dictionaries.
+- [Play Slovko](https://alik532ua.github.io/Slovko/): The whole game. Single address — Slovko is a single-page application, and every mode, the dictionary and the statistics are states inside it, not separate documents.
 
 ## Key Features
 
 - Daily Challenge: One synchronized secret word every 24 hours for all players across the world.
+- Practice / Unlimited Mode: Train vocabulary and play without daily restrictions.
+- Dictionary & Word Meaning: In-game vocabulary definitions from official Ukrainian explanatory dictionaries.
 - Rich Ukrainian Vocabulary: Curated lexicon of validated 5-letter nouns in nominative form.
 - Text-to-Speech (TTS): Audio pronunciation of guessed words and definitions.
 - Statistics & Streaks: Detailed victory counts, guess distribution, and winning streaks saved locally.

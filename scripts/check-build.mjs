@@ -15,13 +15,14 @@
  * rel="canonical">` з `app.html` і перезібрати — перевірка мусить упасти саме
  * на ньому й назвати файл.
  */
-import { createHash } from 'node:crypto';
-import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
-import { join } from 'node:path';
+import { createHash } from "node:crypto";
+import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
+import { join } from "node:path";
+import { checkGeo } from "./check-geo.mjs";
 
-const BUILD = 'build';
-const ORIGIN = 'https://alik532ua.github.io';
-const BASE = process.env.BASE_PATH ?? '/Slovko';
+const BUILD = "build";
+const ORIGIN = "https://alik532ua.github.io";
+const BASE = process.env.BASE_PATH ?? "/Slovko";
 
 /**
  * Маршрути, яких не мусить бути в пошуку (BETA-CHECKLIST-v8 § 4).
@@ -30,7 +31,7 @@ const BASE = process.env.BASE_PATH ?? '/Slovko';
  * звичайний Node без збірки, і `$lib` йому не резолвиться. Розбіжність двох
  * копій ловить `src/beta-checklist.test.ts`, який читає обидва файли.
  */
-const HIDDEN_ROUTES = ['beta-test-checklists'];
+const HIDDEN_ROUTES = ["beta-test-checklists"];
 const isHidden = (where) => HIDDEN_ROUTES.some((r) => where.includes(`/${r}/`));
 
 const failures = [];
@@ -51,10 +52,11 @@ if (!existsSync(BUILD)) {
 }
 
 const files = walk(BUILD);
-const pages = files.filter((f) => f.endsWith('.html'));
+const pages = files.filter((f) => f.endsWith(".html"));
 
 // Канарка: без неї порожня чи перейменована тека дала б зелений результат.
-if (pages.length === 0) fail('у build/ немає жодної сторінки — перевіряти нема що');
+if (pages.length === 0)
+	fail("у build/ немає жодної сторінки — перевіряти нема що");
 
 /**
  * Маршрути, які вимикають SSR, — виведені з ДЖЕРЕЛ, а не перелічені руками.
@@ -79,17 +81,20 @@ if (pages.length === 0) fail('у build/ немає жодної сторінки
  * Друге не менш цінне за перше: доти виняток був невидимий, тож і скорочуватися
  * йому було нікуди.
  */
-const ROUTES = 'src/routes';
+const ROUTES = "src/routes";
 const BODY_TEXT_MIN = 200;
 
-function routesWithoutSsr(dir = ROUTES, prefix = '') {
+function routesWithoutSsr(dir = ROUTES, prefix = "") {
 	const found = [];
 	for (const entry of readdirSync(dir)) {
 		const full = join(dir, entry);
 		if (statSync(full).isDirectory()) {
 			found.push(...routesWithoutSsr(full, `${prefix}${entry}/`));
 		} else if (/^\+page\.(ts|js)$/.test(entry)) {
-			const source = readFileSync(full, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+			const source = readFileSync(full, "utf8").replace(
+				/\/\*[\s\S]*?\*\//g,
+				"",
+			);
 			if (/export\s+const\s+ssr\s*=\s*false/.test(source)) found.push(prefix);
 		}
 	}
@@ -97,36 +102,36 @@ function routesWithoutSsr(dir = ROUTES, prefix = '') {
 }
 
 const noSsrRoutes = routesWithoutSsr();
-if (noSsrRoutes.length === 0 && !existsSync(join(ROUTES, '+page.svelte'))) {
-	fail('маршрутів не знайдено — перевірка порожнього тіла шукає не там');
+if (noSsrRoutes.length === 0 && !existsSync(join(ROUTES, "+page.svelte"))) {
+	fail("маршрутів не знайдено — перевірка порожнього тіла шукає не там");
 }
 
 /** `404.html` — SPA-фолбек адаптера, а не сторінка: тіла в нього не буває за призначенням. */
-const isFallback = (where) => where.endsWith('/404.html');
+const isFallback = (where) => where.endsWith("/404.html");
 
 /** Сторінка належить маршруту з вимкненим SSR. */
 const declaredEmpty = (where) => {
-	const rel = where.slice(`${BUILD}/`.length).replace(/index\.html$/, '');
+	const rel = where.slice(`${BUILD}/`.length).replace(/index\.html$/, "");
 	return noSsrRoutes.includes(rel);
 };
 
 /** Видимий текст тіла — те, що бачить пошуковик, а не байти розмітки. */
 const bodyTextLength = (html) => {
-	const body = /<body[^>]*>([\s\S]*)<\/body>/.exec(html)?.[1] ?? '';
+	const body = /<body[^>]*>([\s\S]*)<\/body>/.exec(html)?.[1] ?? "";
 	return body
-		.replace(/<script[\s\S]*?<\/script>/g, '')
-		.replace(/<style[\s\S]*?<\/style>/g, '')
-		.replace(/<[^>]+>/g, '')
+		.replace(/<script[\s\S]*?<\/script>/g, "")
+		.replace(/<style[\s\S]*?<\/style>/g, "")
+		.replace(/<[^>]+>/g, "")
 		.trim().length;
 };
 
 for (const page of pages) {
-	const html = readFileSync(page, 'utf8');
-	const where = page.replace(/\\/g, '/');
+	const html = readFileSync(page, "utf8");
+	const where = page.replace(/\\/g, "/");
 
 	// 1. Адреси пререндера. Знак того, що під час збірки взяли `page.url.origin`,
 	//    а він у пререндері фальшивий.
-	if (html.includes('sveltekit-prerender')) {
+	if (html.includes("sveltekit-prerender")) {
 		fail(`${where}: в адресах лишився sveltekit-prerender`);
 	}
 
@@ -142,13 +147,13 @@ for (const page of pages) {
 		if (textLength < BODY_TEXT_MIN && !declaredEmpty(where)) {
 			fail(
 				`${where}: тіло майже порожнє (${textLength} символів тексту), а маршрут не оголошував ssr = false — ` +
-					'сторінка потрапить в індекс без вмісту'
+					"сторінка потрапить в індекс без вмісту",
 			);
 		}
 		if (textLength >= BODY_TEXT_MIN && declaredEmpty(where)) {
 			fail(
 				`${where}: маршрут оголосив ssr = false, але сторінка приїхала з тілом (${textLength} символів) — ` +
-					'прапорець більше не потрібен, прибери його разом із цим винятком'
+					"прапорець більше не потрібен, прибери його разом із цим винятком",
 			);
 		}
 	}
@@ -157,9 +162,12 @@ for (const page of pages) {
 	//    у розмітку не потрапляє НІЧОГО — обидва теги живуть статично в
 	//    app.html, і зникнути можуть непомітно. Одного разу вже зникали.
 	const title = /<title>([^<]*)<\/title>/.exec(html)?.[1]?.trim();
-	if (!title || title.length < 5) fail(`${where}: порожній або надто короткий <title>`);
+	if (!title || title.length < 5)
+		fail(`${where}: порожній або надто короткий <title>`);
 
-	const description = /<meta\s+name="description"\s+content="([^"]*)"/.exec(html)?.[1];
+	const description = /<meta\s+name="description"\s+content="([^"]*)"/.exec(
+		html,
+	)?.[1];
 	if (!description || description.length < 50) {
 		fail(`${where}: опис відсутній або коротший за 50 символів`);
 	}
@@ -178,7 +186,8 @@ for (const page of pages) {
 		 * і найслабше покритою стала б саме та сторінка, якою користуються
 		 * тестувальники.
 		 */
-		if (canonical) fail(`${where}: у прихованої сторінки не мусить бути canonical`);
+		if (canonical)
+			fail(`${where}: у прихованої сторінки не мусить бути canonical`);
 		if (!/<meta\s+name="robots"\s+content="[^"]*noindex/i.test(html)) {
 			fail(`${where}: прихована сторінка без noindex — вона потрапить у пошук`);
 		}
@@ -186,7 +195,9 @@ for (const page of pages) {
 	else if (/<meta\s+name="robots"\s+content="[^"]*noindex/i.test(html)) {
 		fail(`${where}: звичайна сторінка з noindex — вона зникне з пошуку`);
 	} else if (!canonical.startsWith(`${ORIGIN}${BASE}`)) {
-		fail(`${where}: canonical «${canonical}» не починається з ${ORIGIN}${BASE}`);
+		fail(
+			`${where}: canonical «${canonical}» не починається з ${ORIGIN}${BASE}`,
+		);
 	} else if (/\.\/|\/\/$|\.\//.test(canonical.slice(ORIGIN.length))) {
 		fail(`${where}: canonical «${canonical}» містить відносний фрагмент`);
 	}
@@ -195,7 +206,10 @@ for (const page of pages) {
 	//    діє лише на те, що НИЖЧЕ за неї; скрипт без свого хеша блокується
 	//    МОВЧКИ — сторінка малюється, просто щось перестає працювати
 	//    (SECURITY-v8 § 6.2, § 6.3).
-	const cspTag = /<meta\s+http-equiv="content-security-policy"\s+content="([^"]*)"/i.exec(html);
+	const cspTag =
+		/<meta\s+http-equiv="content-security-policy"\s+content="([^"]*)"/i.exec(
+			html,
+		);
 	if (!cspTag) {
 		fail(`${where}: у зібраному HTML немає політики безпеки`);
 	} else {
@@ -205,31 +219,41 @@ for (const page of pages) {
 
 		for (const m of html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>/g)) {
 			const bodyStart = m.index + m[0].length;
-			const bodyEnd = html.indexOf('</script>', bodyStart);
+			const bodyEnd = html.indexOf("</script>", bodyStart);
 			const body = html.slice(bodyStart, bodyEnd);
-			const digest = `'sha256-${createHash('sha256').update(body).digest('base64')}'`;
-			const head = body.trim().split('\n')[0].slice(0, 40);
+			const digest = `'sha256-${createHash("sha256").update(body).digest("base64")}'`;
+			const head = body.trim().split("\n")[0].slice(0, 40);
 
 			if (m.index < policyAt) {
-				fail(`${where}: інлайн-скрипт вище політики («${head}…») — вона його не покриває`);
+				fail(
+					`${where}: інлайн-скрипт вище політики («${head}…») — вона його не покриває`,
+				);
 			}
 			if (!hashes.has(digest)) {
-				fail(`${where}: інлайн-скрипт («${head}…») не має хеша в script-src — буде заблокований`);
+				fail(
+					`${where}: інлайн-скрипт («${head}…») не має хеша в script-src — буде заблокований`,
+				);
 			}
 		}
 	}
 }
 
 // 6. Секрети в бандлі (SECURITY-v8 § 16). Клієнтський код публічний цілком.
-const SECRET = /(API_SECRET|PRIVATE_KEY|SERVICE_ACCOUNT|BEGIN [A-Z ]*PRIVATE KEY)/;
+const SECRET =
+	/(API_SECRET|PRIVATE_KEY|SERVICE_ACCOUNT|BEGIN [A-Z ]*PRIVATE KEY)/;
 for (const file of files.filter((f) => /\.(html|js|json|css)$/.test(f))) {
-	if (SECRET.test(readFileSync(file, 'utf8'))) {
-		fail(`${file.replace(/\\/g, '/')}: схоже на секрет у зібраному виводі`);
+	if (SECRET.test(readFileSync(file, "utf8"))) {
+		fail(`${file.replace(/\\/g, "/")}: схоже на секрет у зібраному виводі`);
 	}
 }
 
 // 7. Файли, на які посилаються robots і маніфест, справді лежать поруч.
-for (const asset of ['sitemap.xml', 'robots.txt', 'manifest.json', 'service-worker.js']) {
+for (const asset of [
+	"sitemap.xml",
+	"robots.txt",
+	"manifest.json",
+	"service-worker.js",
+]) {
 	if (!existsSync(join(BUILD, asset))) fail(`build/${asset}: файлу немає`);
 }
 
@@ -249,27 +273,36 @@ for (const asset of ['sitemap.xml', 'robots.txt', 'manifest.json', 'service-work
  * обовʼязковими, а не косметичними.
  */
 {
-	const entryPath = join(BUILD, 'index.html');
-	const entryHtml = existsSync(entryPath) ? readFileSync(entryPath, 'utf8') : '';
+	const entryPath = join(BUILD, "index.html");
+	const entryHtml = existsSync(entryPath)
+		? readFileSync(entryPath, "utf8")
+		: "";
 	const preloaded = new Set(
-		[...entryHtml.matchAll(/immutable\/(?:chunks|entry|nodes)\/[\w.-]+\.js/g)].map((m) => m[0])
+		[
+			...entryHtml.matchAll(/immutable\/(?:chunks|entry|nodes)\/[\w.-]+\.js/g),
+		].map((m) => m[0]),
 	);
 	// Канарка: якщо передзавантажених файлів немає взагалі, перевірка нічого не
 	// доводить — їй просто не було на що дивитися (AI-AGENT-PITFALLS-v8 § 1).
 	if (preloaded.size === 0) {
-		fail('index.html: немає жодного modulepreload — перевірку SDK нічим виконати');
+		fail(
+			"index.html: немає жодного modulepreload — перевірку SDK нічим виконати",
+		);
 	} else {
 		let found = 0;
 		for (const rel of preloaded) {
-			const file = join(BUILD, '_app', rel);
-			if (existsSync(file) && readFileSync(file, 'utf8').includes('FirebaseError')) {
+			const file = join(BUILD, "_app", rel);
+			if (
+				existsSync(file) &&
+				readFileSync(file, "utf8").includes("FirebaseError")
+			) {
 				fail(`SDK бази в критичному шляху: ${rel}`);
 				found++;
 			}
 		}
 		if (found === 0) {
 			console.log(
-				`check-build: SDK бази поза критичним шляхом (${preloaded.size} передзавантажених файлів)`
+				`check-build: SDK бази поза критичним шляхом (${preloaded.size} передзавантажених файлів)`,
 			);
 		}
 	}
@@ -281,26 +314,40 @@ for (const asset of ['sitemap.xml', 'robots.txt', 'manifest.json', 'service-work
  * дізнається про це, відкривши надіслане посилання й побачивши 404.
  */
 for (const route of HIDDEN_ROUTES) {
-	if (!existsSync(join(BUILD, route, 'index.html'))) {
+	if (!existsSync(join(BUILD, route, "index.html"))) {
 		fail(`build/${route}/index.html: прихованої сторінки немає в збірці`);
 	}
-	const sitemap = existsSync(join(BUILD, 'sitemap.xml'))
-		? readFileSync(join(BUILD, 'sitemap.xml'), 'utf8')
-		: '';
-	if (sitemap.includes(route)) fail(`sitemap.xml: службова сторінка ${route} потрапила в мапу`);
+	const sitemap = existsSync(join(BUILD, "sitemap.xml"))
+		? readFileSync(join(BUILD, "sitemap.xml"), "utf8")
+		: "";
+	if (sitemap.includes(route))
+		fail(`sitemap.xml: службова сторінка ${route} потрапила в мапу`);
 
-	const robots = existsSync(join(BUILD, 'robots.txt'))
-		? readFileSync(join(BUILD, 'robots.txt'), 'utf8')
-		: '';
+	const robots = existsSync(join(BUILD, "robots.txt"))
+		? readFileSync(join(BUILD, "robots.txt"), "utf8")
+		: "";
 	if (!robots.includes(`Disallow: ${BASE}/${route}/`)) {
 		fail(`robots.txt: немає Disallow для ${route}`);
 	}
 }
 
+// ---------------------------------------------------------------------------
+// SEO-v8 § 7.5 — артефакти AI-пошуку (llms.txt і групи robots.txt).
+//
+// Розбір живе в `check-geo`, бо він робить власний парсер `robots.txt`:
+// краулер, що збігся з іменованою групою, ігнорує `User-agent: *` цілком, тож
+// пропущений там `Disallow` не «наслідується», а ВІДКРИВАЄ шлях саме цьому
+// боту. У кількох майже однакових блоках очима така дірка не видно.
+for (const msg of checkGeo(BUILD)) fail(msg);
+
 if (failures.length > 0) {
-	console.error(`Перевірка зібраного виводу знайшла ${failures.length} проблем:`);
+	console.error(
+		`Перевірка зібраного виводу знайшла ${failures.length} проблем:`,
+	);
 	for (const message of failures) console.error(`  • ${message}`);
 	process.exit(1);
 }
 
-console.log(`Зібраний вивід у нормі: ${pages.length} сторінок, ${files.length} файлів.`);
+console.log(
+	`Зібраний вивід у нормі: ${pages.length} сторінок, ${files.length} файлів.`,
+);
