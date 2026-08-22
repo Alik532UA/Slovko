@@ -17,6 +17,7 @@
 	import { authStore } from "$lib/controllers/AuthStore.svelte";
 	import { logService } from "$lib/services/logService.svelte";
 	import LogCopyButton from "$lib/components/debug/LogCopyButton.svelte";
+	import JsonLd from "$lib/components/seo/JsonLd.svelte";
 	import {
 		initGA,
 		trackPageView,
@@ -216,8 +217,14 @@
 									"New Service Worker found and installed. Triggering banner.",
 								);
 								// Запобігаємо показу однакових версій
-								if (versionStore.serverVersion && versionStore.currentVersion === versionStore.serverVersion) {
-									logService.log("version", "Current version matches server, ignoring SW update event.");
+								if (
+									versionStore.serverVersion &&
+									versionStore.currentVersion === versionStore.serverVersion
+								) {
+									logService.log(
+										"version",
+										"Current version matches server, ignoring SW update event.",
+									);
 								} else {
 									versionStore.setUpdate(true);
 								}
@@ -230,7 +237,10 @@
 				const registrations = await navigator.serviceWorker.getRegistrations();
 				for (const registration of registrations) {
 					registration.unregister();
-					logService.log("version", "Unregistered stray service worker in dev mode.");
+					logService.log(
+						"version",
+						"Unregistered stray service worker in dev mode.",
+					);
 				}
 			}
 
@@ -261,15 +271,15 @@
 		window.addEventListener("focus", handleVisibilityChange);
 
 		// OS theme sync
-		const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+		const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 		const handleThemeChange = (e: MediaQueryListEvent) => {
 			// Синхронізація лише якщо користувач на базових темах
 			const current = settingsStore.value.theme;
-			if (current === 'dark-gray' || current === 'light-gray') {
-				settingsStore.setTheme(e.matches ? 'dark-gray' : 'light-gray');
+			if (current === "dark-gray" || current === "light-gray") {
+				settingsStore.setTheme(e.matches ? "dark-gray" : "light-gray");
 			}
 		};
-		mediaQuery.addEventListener('change', handleThemeChange);
+		mediaQuery.addEventListener("change", handleThemeChange);
 
 		return () => {
 			window.removeEventListener("resize", updateVh);
@@ -277,7 +287,7 @@
 			window.removeEventListener("click", handleGlobalClick);
 			window.removeEventListener("visibilitychange", handleVisibilityChange);
 			window.removeEventListener("focus", handleVisibilityChange);
-			mediaQuery.removeEventListener('change', handleThemeChange);
+			mediaQuery.removeEventListener("change", handleThemeChange);
 			if (handleFirstTouch)
 				window.removeEventListener("touchstart", handleFirstTouch);
 			if (handleFirstClick)
@@ -293,7 +303,7 @@
 		document.documentElement.setAttribute("data-bg-type", bgType);
 		document.documentElement.setAttribute("data-bg-blur", bgBlur);
 		document.documentElement.lang = interfaceLanguage;
-		
+
 		const isDark = theme === "dark-gray" || theme === "orange";
 		const meta = document.querySelector('meta[name="color-scheme"]');
 		if (meta) {
@@ -310,18 +320,19 @@
 	$effect(() => webVitals.start());
 
 	let jsonLdData = $derived({
-		'@context': 'https://schema.org',
-		'@type': 'WebApplication',
-		name: 'Slovko',
-		url: 'https://alik532ua.github.io/Slovko/',
-		description: 'Українська версія популярної гри в слова (Wordle). Вгадуйте щоденні слова, грайте без обмежень та тренуйте словниковий запас.',
-		applicationCategory: 'GameApplication',
-		operatingSystem: 'Any',
-		inLanguage: settingsStore.value.interfaceLanguage || 'uk',
+		"@context": "https://schema.org",
+		"@type": "WebApplication",
+		name: "Slovko",
+		url: "https://alik532ua.github.io/Slovko/",
+		description:
+			"Українська версія популярної гри в слова (Wordle). Вгадуйте щоденні слова, грайте без обмежень та тренуйте словниковий запас.",
+		applicationCategory: "GameApplication",
+		operatingSystem: "Any",
+		inLanguage: settingsStore.value.interfaceLanguage || "uk",
 		author: {
-			'@type': 'Person',
-			name: 'Alik532UA'
-		}
+			"@type": "Person",
+			name: "Alik532UA",
+		},
 	});
 
 	/**
@@ -408,12 +419,22 @@
 		-->
 		<meta name="robots" content="noindex, nofollow" />
 	{:else}
-		<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-		<!-- Structured Data (SEO-v8 § 3.2) -->
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html `<script type="application/ld+json">${JSON.stringify(jsonLdData)}<\/script>`}
+		<meta
+			name="robots"
+			content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+		/>
 	{/if}
 </svelte:head>
+
+<!--
+	Structured Data (SEO-v8 § 3.2) — у власному компоненті, бо `{@html}`
+	придушується файловим винятком, а не коментарем (див. `JsonLd.svelte`).
+	На прихованих маршрутах не рендериться зовсім: `noindex` разом із
+	розміткою сутності — суперечливий сигнал.
+-->
+{#if !isHidden}
+	<JsonLd data={jsonLdData} />
+{/if}
 
 <LogCopyButton />
 

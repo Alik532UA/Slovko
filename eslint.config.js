@@ -48,7 +48,7 @@ export default [
 				{
 					argsIgnorePattern: "^_",
 					varsIgnorePattern: "^_",
-					caughtErrorsIgnorePattern: "^_"
+					caughtErrorsIgnorePattern: "^_",
 				},
 			],
 			"@typescript-eslint/ban-ts-comment": "off",
@@ -84,7 +84,7 @@ export default [
 				{
 					argsIgnorePattern: "^_",
 					varsIgnorePattern: "^_",
-					caughtErrorsIgnorePattern: "^_"
+					caughtErrorsIgnorePattern: "^_",
 				},
 			],
 			"svelte/no-at-html-tags": "warn",
@@ -225,13 +225,13 @@ export default [
 		 * сказати.
 		 */
 		files: [
-			'src/lib/services/logService.svelte.ts',
-			'src/lib/services/storage/storageProvider.ts',
-			'src/service-worker.js'
+			"src/lib/services/logService.svelte.ts",
+			"src/lib/services/storage/storageProvider.ts",
+			"src/service-worker.js",
 		],
 		rules: {
-			'no-console': 'off'
-		}
+			"no-console": "off",
+		},
 	},
 	{
 		/**
@@ -243,8 +243,18 @@ export default [
 		 * переліку підтримуваних мов. Розмітка (`<strong>`) теж наша.
 		 *
 		 * Виняток файловий: у решті компонентів новий {@html} тепер валить збірку.
+		 *
+		 * `JsonLd.svelte` — другий і поки останній випадок: SEO-v8 § 3.2 вимагає
+		 * саме `{@html}`, бо вирази всередині `<script>` у розмітці Svelte не
+		 * обчислюються. Джерело — об'єкт із констант, пропущений через
+		 * `JSON.stringify`. Інлайновий `eslint-disable` там НЕ підходить:
+		 * `eslint-plugin-svelte` 3.15 директив у HTML-коментарях розмітки не
+		 * читає, тож придушення виглядало б робочим і мовчки не діяло.
 		 */
-		files: ["src/lib/components/ui/SpeechErrorModal.svelte"],
+		files: [
+			"src/lib/components/ui/SpeechErrorModal.svelte",
+			"src/lib/components/seo/JsonLd.svelte",
+		],
 		rules: {
 			"svelte/no-at-html-tags": "off",
 		},
@@ -264,17 +274,31 @@ export default [
 	 */
 	{
 		rules: {
-			'no-restricted-globals': [
-				'error',
-				{ name: 'localStorage', message: 'STORAGE-NAMESPACE-v8: лише через фасад storage.' },
-				{ name: 'sessionStorage', message: 'STORAGE-NAMESPACE-v8: лише через фасад storage.' }
+			"no-restricted-globals": [
+				"error",
+				{
+					name: "localStorage",
+					message: "STORAGE-NAMESPACE-v8: лише через фасад storage.",
+				},
+				{
+					name: "sessionStorage",
+					message: "STORAGE-NAMESPACE-v8: лише через фасад storage.",
+				},
 			],
-			'no-restricted-properties': [
-				'error',
-				{ object: 'window', property: 'localStorage', message: 'STORAGE-NAMESPACE-v8: лише через фасад storage.' },
-				{ object: 'window', property: 'sessionStorage', message: 'STORAGE-NAMESPACE-v8: лише через фасад storage.' }
-			]
-		}
+			"no-restricted-properties": [
+				"error",
+				{
+					object: "window",
+					property: "localStorage",
+					message: "STORAGE-NAMESPACE-v8: лише через фасад storage.",
+				},
+				{
+					object: "window",
+					property: "sessionStorage",
+					message: "STORAGE-NAMESPACE-v8: лише через фасад storage.",
+				},
+			],
+		},
 	},
 	{
 		// Три категорії, і кожна законна за самим каноном:
@@ -285,18 +309,18 @@ export default [
 		//   3. Тести фасаду й e2e — вони мусять читати й засівати сирі ключі,
 		//      інакше нічим довести, що префікс справді додається.
 		files: [
-			'src/lib/services/storage.ts',
-			'src/lib/services/storage/**',
-			'src/lib/config/storage.ts',
-			'**/storageMigration.ts',
-			'**/storage.test.ts',
-			'**/storage.spec.ts',
-			'tests/**',
-			'e2e/**'
+			"src/lib/services/storage.ts",
+			"src/lib/services/storage/**",
+			"src/lib/config/storage.ts",
+			"**/storageMigration.ts",
+			"**/storage.test.ts",
+			"**/storage.spec.ts",
+			"tests/**",
+			"e2e/**",
 		],
 		rules: {
-			'no-restricted-globals': 'off',
-			'no-restricted-properties': 'off'
-		}
-	}
+			"no-restricted-globals": "off",
+			"no-restricted-properties": "off",
+		},
+	},
 ];
