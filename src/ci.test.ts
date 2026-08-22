@@ -396,3 +396,66 @@ describe('install у CI не глушить перевірку peer-залежн
 		expect(files.length, 'у .github/workflows немає жодного yml').toBeGreaterThan(0);
 	});
 });
+
+/**
+ * Версія Node в трьох місцях одразу (DEPENDENCIES-v8 § 2.3, CI-CD-AND-TOOLS-v8 § 1.2).
+ *
+ * `engines.node`, `.nvmrc` і `node-version` у workflow мусять називати ту саму
+ * мажорну версію. Розбіжність дає найнеприємніший клас падіння: локально не
+ * відтворюється взагалі, бо локально стоїть третя версія.
+ *
+ * Аудит v8 (прохід 4) заміряв стан: із семи проєктів трійку мали ДВА
+ * (`VetCrewGames`, `teatralo4ka`), а `as5.odesa.ua` тримав у CI Node 20 — версію,
+ * що вийшла з підтримки 2026-04-30 — і не мав ні `engines`, ні `.nvmrc`, тобто
+ * розходження не бачив жоден гейт.
+ *
+ * Форма `engines.node` — `">=X.Y.Z"`: перевірка порівнює мажори, а не рядки,
+ * інакше `">= 22"` і `">=22.12.0"` читалися б як розбіжність.
+ */
+describe('версія Node узгоджена в трьох місцях (§ 2.3)', () => {
+	/** Найбільший мажор із діапазону виду `>=22.12.0`; null, якщо форма інша. */
+	const majorOfRange = (range: string): number | null => {
+		const m = /^>=\s*(\d+)/.exec(range.trim());
+		return m ? Number(m[1]) : null;
+	};
+
+	it('engines.node, .nvmrc і node-version у CI називають той самий мажор', () => {
+		const pkgJson = JSON.parse(readFileSync('package.json', 'utf8')) as {
+			engines?: Record<string, string>;
+		};
+		const engines = pkgJson.engines?.node;
+		expect(engines, 'у package.json немає engines.node').toBeDefined();
+
+		const enginesMajor = majorOfRange(engines as string);
+		expect(enginesMajor, `engines.node="${engines}" не у формі ">=X"`).not.toBeNull();
+
+		expect(
+			existsSync('.nvmrc'),
+			'немає .nvmrc — локальна версія ні з чим не звіряється'
+		).toBe(true);
+		const nvmrcMajor = Number(
+			readFileSync('.nvmrc', 'utf8').trim().replace(/^v/, '').split('.')[0]
+		);
+		expect(nvmrcMajor, '.nvmrc не містить номера версії').not.toBeNaN();
+
+		const ciMajors = files
+			.flatMap((file) => [
+				...readFileSync(`${DIR}/${file}`, 'utf8').matchAll(/node-version:\s*["']?v?(\d+)/g)
+			])
+			.map((m) => Number(m[1]));
+		expect(
+			ciMajors.length,
+			'у workflow не знайдено node-version — перевірка мертва'
+		).toBeGreaterThan(0);
+
+		const mismatch = [...new Set(ciMajors.filter((v) => v !== nvmrcMajor))];
+		expect(
+			mismatch,
+			`node-version у CI (${mismatch.join(', ')}) розходиться з .nvmrc (${nvmrcMajor})`
+		).toEqual([]);
+		expect(
+			nvmrcMajor,
+			`.nvmrc ${nvmrcMajor} не збігається з мажором engines.node "${engines}"`
+		).toBe(enginesMajor);
+	});
+});
