@@ -3,66 +3,86 @@
  * Дизайн-система з підтримкою тем
  */
 
+/*
+ * ПАЛІТРА ПАРИ `light-gray`/`dark-gray` — В ОДНОМУ БЛОЦІ (UI-UX-v8 § 1.5.1).
+ *
+ * `light-dark(світле, темне)`: перший аргумент — те, що стояло в
+ * `[data-theme="light-gray"]`, другий — те, що стояло тут. Саме ця пара
+ * відповідає системній перевазі — скрипт першого кадру в `app.html` робить
+ * `theme = prefersDark ? "dark-gray" : "light-gray"`. Тобто доти системна
+ * перевага доїжджала до сторінки ВИКЛЮЧНО через JS, а цей скрипт інлайновий:
+ * у зібраній версії його пускає хеш у CSP, і рівно цей клас дефекту
+ * 2026-08-23 ламав заставку в сусідньому `teatralo4ka`.
+ *
+ * Переведено ВСІ 37 токенів, що відрізняються, а не один фон. Частковий
+ * переклад тут дав би при заблокованому скрипті й світлій системі світле тло
+ * зі світлим текстом `#eaeaea`, тобто нечитабельну пару — заміряно в трьох
+ * сусідніх проєктах, звідки й правило § 1.5.1.1.
+ *
+ * `color-scheme: light dark` тут ОБОВʼЯЗКОВИЙ: без нього `light-dark()` мовчки
+ * віддає перший аргумент. Звуження під кожну тему — нижче за блоками тем.
+ */
 /* Default (Dark Gray) */
 :root,
 [data-theme="dark-gray"] {
-	--bg-primary: #23272f;
-	--bg-image: url("/images/background/bg-dark-v01.webp");
-	--bg-secondary: #43464e;
-	--text-primary: #eaeaea;
-	--text-secondary: #a0a0a0;
+	color-scheme: light dark;
+	--bg-primary: light-dark(#f5f6fa, #23272f);
+	--bg-image: light-dark(url("/images/background/bg-winter-v01.webp"), url("/images/background/bg-dark-v01.webp"));
+	--bg-secondary: light-dark(#e0e1e6, #43464e);
+	--text-primary: light-dark(#1f2937, #eaeaea);
+	--text-secondary: light-dark(#4b5563, #a0a0a0);
 	--accent: #e95420;
 	--accent-rgb: 233, 84, 32;
 	--accent-hover: #c74316;
-	--border: #565a63;
-	--card-bg: #43464e;
-	--card-border: #565a63;
-	--card-hover-border: #6b6f7a;
+	--border: light-dark(#d1d5db, #565a63);
+	--card-bg: light-dark(#ffffff, #43464e);
+	--card-border: light-dark(#e5e7eb, #565a63);
+	--card-hover-border: light-dark(#9ca3af, #6b6f7a);
 	--text-on-accent: #ffffff;
 	--text-on-card: var(--text-primary);
 	--font-family:
 		"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
 	/* States */
-	--selected-bg: rgba(var(--accent-rgb), 0.15);
+	--selected-bg: light-dark(rgba(var(--accent-rgb), 0.1), rgba(var(--accent-rgb), 0.15));
 	--selected-border: var(--accent);
-	--correct-bg: #1a5a3e;
-	--correct-border: #2ecc71;
-	--wrong-bg: #5a2a2a;
-	--wrong-border: #e74c3c;
+	--correct-bg: light-dark(#dcfce7, #1a5a3e);
+	--correct-border: light-dark(#22c55e, #2ecc71);
+	--wrong-bg: light-dark(#fee2e2, #5a2a2a);
+	--wrong-border: light-dark(#ef4444, #e74c3c);
 
 	/* Status colors (semantic) */
-	--status-success: #22c55e;
-	--status-success-bg: rgba(34, 197, 94, 0.1);
-	--status-danger: #ef4444;
-	--status-danger-bg: rgba(239, 68, 68, 0.1);
-	--status-info: #3b82f6;
-	--status-info-bg: rgba(59, 130, 246, 0.1);
-	--status-warning: #f59e0b;
-	--status-warning-bg: rgba(245, 158, 11, 0.1);
+	--status-success: light-dark(#16a34a, #22c55e);
+	--status-success-bg: light-dark(#dcfce7, rgba(34, 197, 94, 0.1));
+	--status-danger: light-dark(#dc2626, #ef4444);
+	--status-danger-bg: light-dark(#fee2e2, rgba(239, 68, 68, 0.1));
+	--status-info: light-dark(#2563eb, #3b82f6);
+	--status-info-bg: light-dark(#dbeafe, rgba(59, 130, 246, 0.1));
+	--status-warning: light-dark(#d97706, #f59e0b);
+	--status-warning-bg: light-dark(#fef3c7, rgba(245, 158, 11, 0.1));
 
 	/* Tooltips */
-	--tooltip-bg: rgba(15, 15, 25, 0.98);
-	--tooltip-text: #ffffff;
+	--tooltip-bg: light-dark(rgba(255, 255, 255, 0.95), rgba(15, 15, 25, 0.98));
+	--tooltip-text: light-dark(#1f2937, #ffffff);
 
 	/* Effects & Shadows */
-	--backdrop-bg: rgba(0, 0, 0, 0.8);
-	--glass-bg: rgba(255, 255, 255, 0.05);
-	--glass-border: rgba(255, 255, 255, 0.1);
-	--glass-blur: 12px;
+	--backdrop-bg: light-dark(rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0.8));
+	--glass-bg: light-dark(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.05));
+	--glass-border: light-dark(rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.1));
+	--glass-blur: light-dark(8px, 12px);
 	
-	--shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-	--shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
-	--shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
-	--accent-shadow: rgba(var(--accent-rgb), 0.3);
+	--shadow-sm: light-dark(0 2px 8px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.2));
+	--shadow-md: light-dark(0 8px 24px rgba(0, 0, 0, 0.12), 0 8px 24px rgba(0, 0, 0, 0.3));
+	--shadow-lg: light-dark(0 12px 32px rgba(0, 0, 0, 0.15), 0 12px 32px rgba(0, 0, 0, 0.5));
+	--accent-shadow: light-dark(rgba(var(--accent-rgb), 0.2), rgba(var(--accent-rgb), 0.3));
 
-	--bg-hover: rgba(255, 255, 255, 0.08);
-	--bg-active: rgba(255, 255, 255, 0.12);
+	--bg-hover: light-dark(rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.08));
+	--bg-active: light-dark(rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.12));
 
 	/* Icon buttons */
-	--icon-btn-bg: rgba(255, 255, 255, 0.1);
-	--icon-btn-border: rgba(255, 255, 255, 0.15);
-	--icon-btn-text: var(--text-secondary);
+	--icon-btn-bg: light-dark(#e5e7eb, rgba(255, 255, 255, 0.1));
+	--icon-btn-border: light-dark(#d1d5db, rgba(255, 255, 255, 0.15));
+	--icon-btn-text: light-dark(#4b5563, var(--text-secondary));
 	--icon-btn-active-bg: var(--accent);
 	--icon-btn-active-text: #ffffff;
 
@@ -107,65 +127,22 @@
 }
 
 /* Light Gray */
-[data-theme="light-gray"] {
-	--bg-primary: #f5f6fa;
-	--bg-image: url("/images/background/bg-winter-v01.webp");
-	--bg-secondary: #e0e1e6;
-	--text-primary: #1f2937;
-	--text-secondary: #4b5563;
-	--accent: #e95420;
-	--accent-rgb: 233, 84, 32;
-	--accent-hover: #c74316;
-	--border: #d1d5db;
-	--card-bg: #ffffff;
-	--card-border: #e5e7eb;
-	--card-hover-border: #9ca3af;
-	--text-on-accent: #ffffff;
-	--text-on-card: var(--text-primary);
-
-	/* States */
-	--selected-bg: rgba(var(--accent-rgb), 0.1);
-	--selected-border: var(--accent);
-	--correct-bg: #dcfce7;
-	--correct-border: #22c55e;
-	--wrong-bg: #fee2e2;
-	--wrong-border: #ef4444;
-
-	/* Status colors (semantic) */
-	--status-success: #16a34a;
-	--status-success-bg: #dcfce7;
-	--status-danger: #dc2626;
-	--status-danger-bg: #fee2e2;
-	--status-info: #2563eb;
-	--status-info-bg: #dbeafe;
-	--status-warning: #d97706;
-	--status-warning-bg: #fef3c7;
-
-	/* Tooltips */
-	--tooltip-bg: rgba(255, 255, 255, 0.95);
-	--tooltip-text: #1f2937;
-
-	/* Effects & Shadows */
-	--backdrop-bg: rgba(255, 255, 255, 0.9);
-	--glass-bg: rgba(255, 255, 255, 0.7);
-	--glass-border: rgba(0, 0, 0, 0.05);
-	--glass-blur: 8px;
-
-	--shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
-	--shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12);
-	--shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.15);
-	--accent-shadow: rgba(var(--accent-rgb), 0.2);
-
-	--bg-hover: rgba(0, 0, 0, 0.05);
-	--bg-active: rgba(0, 0, 0, 0.08);
-
-	/* Icon buttons */
-	--icon-btn-bg: #e5e7eb;
-	--icon-btn-border: #d1d5db;
-	--icon-btn-text: #4b5563;
-	--icon-btn-active-bg: var(--accent);
-	--icon-btn-active-text: #ffffff;
-}
+/*
+ * СВІТЛА ТЕМА БІЛЬШЕ НЕ Є ОКРЕМИМ НАБОРОМ ЗНАЧЕНЬ.
+ *
+ * Тут стояв блок `[data-theme="light-gray"]` із 45 оголошеннями: 37 із них
+ * тепер перший аргумент `light-dark()` вище, а решта 8 (`--accent`,
+ * `--accent-rgb`, `--accent-hover`, `--text-on-accent`, `--text-on-card`,
+ * `--selected-border`, `--icon-btn-active-bg`, `--icon-btn-active-text`) були
+ * ДОСЛІВНИМИ копіями значень із базового блока — тобто другим джерелом того
+ * самого кольору, яке розходиться при першій же правці.
+ *
+ * `--accent-rgb: 233, 84, 32` варто відзначити окремо: у `light-dark()` така
+ * трійка не влазить (функція приймає рівно два аргументи, розділені комою), і
+ * саме тому добре, що значення в темах однакове.
+ *
+ * Звуження схеми — нижче.
+ */
 
 /* Orange (Ubuntu-like) */
 [data-theme="orange"] {
@@ -226,6 +203,33 @@
 }
 
 /* Green */
+/*
+ * ЗВУЖЕННЯ СХЕМИ ПІД КОЖНУ ТЕМУ.
+ *
+ * Розподіл узятий не з назв, а з `app.html`: там скрипт першого кадру рахує
+ * `isDark = theme === "dark-gray" || theme === "orange"`. Тобто `orange` — темна
+ * тема, `green` — світла.
+ *
+ * `html` у селекторі ОБОВʼЯЗКОВИЙ: без нього специфічність (0,1,0) така сама, як
+ * у `:root`, тобто нічия, і переможця обирає порядок правил
+ * (SVELTE-UI-v8 `SUI-SCOPE-SPECIFICITY`). У сусідньому `as5` це заміряно —
+ * звуження мовчки не діяло.
+ *
+ * Для `green` це заодно ВИПРАВЛЕННЯ. Вона світла, але власних `--bg-hover` і
+ * `--bg-active` не має і успадковувала їх із базового (темного) блока, тобто
+ * БІЛУ напівпрозору накладку: наведення на світлій темі ОСВІТЛЮВАЛО вже світлу
+ * поверхню. Зі схемою `light` та сама змінна віддає чорні 5% — тобто затемнення,
+ * як і мають робити стани наведення.
+ */
+html[data-theme="dark-gray"],
+html[data-theme="orange"] {
+	color-scheme: dark;
+}
+
+html[data-theme="light-gray"],
+html[data-theme="green"] {
+	color-scheme: light;
+}
 [data-theme="green"] {
 	--bg-primary: #b2f7b8;
 	--bg-image: url("/images/background/bg-light-green-v01.webp");
