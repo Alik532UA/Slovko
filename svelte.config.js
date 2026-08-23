@@ -2,7 +2,17 @@ import adapter from "@sveltejs/adapter-static";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 
-const basePath = process.env.BASE_PATH || "/Slovko";
+/**
+ * SvelteKit чекає літеральний тип (`"" | `/${string}``), а не широкий `string`.
+ * Приведення тут не косметика: до 2026-08-23 цей файл НЕ перевірявся типами
+ * узагалі (`svelte-check` дивиться на `src/`, а конфіг імпортували лише
+ * `scripts/` та `e2e/`). Щойно його зажадав інваріант із `src/`
+ * (`csp-hash.test.ts`), виявилося шість латентних невідповідностей — усі
+ * саме такого роду.
+ *
+ * @type {`/${string}`}
+ */
+const basePath = /** @type {`/${string}`} */ (process.env.BASE_PATH || "/Slovko");
 
 /**
  * Хеші інлайн-скриптів `app.html` обчислюються зі збірки, а не вписуються
@@ -18,12 +28,18 @@ const basePath = process.env.BASE_PATH || "/Slovko";
  * `mode: 'auto'` дає nonce у dev і хеші у пререндері. `unsafe-inline` тут НЕ
  * вживається навмисно: за наявності хешів браузер його ігнорує (CSP Level 2),
  * тож він створював би оманливе відчуття запасного варіанта.
+ *
+ * @returns {`sha256-${string}`[]} Саме літеральний тип, а не `string[]`:
+ * `script-src` у SvelteKit типізований проти нього, і один широкий елемент
+ * розширює ЦІЛИЙ масив директиви — через що падали й сусідні рядки з адресами,
+ * яких ніхто не чіпав.
  */
 function inlineScriptHashes() {
 	const html = readFileSync("src/app.html", "utf8");
 	const open = "<script>";
 	const close = "</" + "script>";
 
+	/** @type {`sha256-${string}`[]} */
 	const hashes = [];
 	let from = 0;
 	for (;;) {
@@ -31,8 +47,19 @@ function inlineScriptHashes() {
 		if (start < 0) break;
 		const end = html.indexOf(close, start);
 		if (end < 0) break;
-		const body = html.slice(start + open.length, end);
-		hashes.push(`sha256-${createHash("sha256").update(body).digest("base64")}`);
+		// CRLF → LF перед хешуванням: браузер хешує текстовий вузол ПІСЛЯ розбору
+		// HTML, а розбір нормалізує переноси («preprocessing the input stream»).
+		// Тут `app.html` наразі з LF, тож рядок нічого не змінює — але без нього
+		// правильність трималася б на випадковості: один свіжий клон на Windows, і
+		// в політику поїде хеш, якого браузер не приймає, а заблокований скрипт
+		// першого кадру нічого видимого не ламає. Заміряно 2026-08-23 у
+		// `teatralo4ka` (зникла заставка) і `DigitalWorkshop` (мигала тема).
+		const body = html.slice(start + open.length, end).replace(/\r\n/g, "\n");
+		hashes.push(
+			/** @type {`sha256-${string}`} */ (
+				`sha256-${createHash("sha256").update(body).digest("base64")}`
+			),
+		);
 		from = end + close.length;
 	}
 
