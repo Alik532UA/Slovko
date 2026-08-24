@@ -40,6 +40,21 @@
 	 * це вибір на цю мить, а не факт про акаунт.
 	 */
 	let hints = $state(false);
+	let infoRoot = $state<HTMLElement | null>(null);
+	let infoBtn = $state<HTMLButtonElement | null>(null);
+
+	/**
+	 * Закривається трьома способами, і кожен потрібен: повторний натиск (те саме
+	 * місце, звідки відкрили), Escape (клавіатура) і клік поза панеллю (мишка).
+	 *
+	 * Фокус вертається на кнопку лише в перших двох випадках: коли панель закрила
+	 * мишка, фокус щойно забрала вона, і смикати його назад означало б
+	 * сперечатися з тим, що зробила людина.
+	 */
+	function closeHints() {
+		hints = false;
+		infoBtn?.focus();
+	}
 	let password = $state('');
 
 	function handleLoginSubmit(e: Event) {
@@ -52,6 +67,20 @@
 		onforgot(email);
 	}
 </script>
+
+<!--
+	Клік ПОЗА довідкою закриває її. `pointerdown` на вікні, а не підкладка на весь
+	екран: підкладка ловила б `pointerdown` сама, а `click` після неї доходив би до
+	кнопки й відкривав панель знову.
+-->
+<svelte:window
+	onpointerdown={(event) => {
+		if (hints && infoRoot && !infoRoot.contains(event.target as Node)) hints = false;
+	}}
+	onkeydown={(event) => {
+		if (hints && event.key === 'Escape') closeHints();
+	}}
+/>
 
 <div class="auth-card" data-testid="auth-card">
 	{#if mode === 'forgot'}
@@ -102,33 +131,40 @@
 			<h2 class="auth-title">
 				{$_('profile.signinTitle') || $_('auth.title') || 'Вхід або реєстрація'}
 			</h2>
-			<button
-				type="button"
-				class="info-btn"
-				aria-expanded={hints}
-				aria-controls="auth-hints"
-				aria-label={$_('profile.accountInfoOpen')}
-				title={$_('profile.accountInfoOpen')}
-				onclick={() => (hints = !hints)}
-				data-testid="auth-info-btn"
-			>
-				<Info size={18} aria-hidden="true" />
-			</button>
+
+			<!--
+				ДОВІДКА ВІДКРИВАЄТЬСЯ ПОВЕРХ, а не розсуває форму.
+				Панель `position: absolute`, тож поля, на які людина щойно дивилася,
+				не з'їжджають униз. Порядок абзаців — порядок питань: навіщо акаунт,
+				що буде після реєстрації, що буде після входу в наявний і чому для
+				друзів акаунт потрібен обом.
+			-->
+			<div class="info" bind:this={infoRoot}>
+				<button
+					type="button"
+					class="info-btn"
+					bind:this={infoBtn}
+					aria-expanded={hints}
+					aria-controls="auth-hints"
+					aria-label={$_('profile.accountInfoOpen')}
+					title={$_('profile.accountInfoOpen')}
+					onclick={() => (hints ? closeHints() : (hints = true))}
+					data-testid="auth-info-btn"
+				>
+					<Info size={18} aria-hidden="true" />
+				</button>
+
+				{#if hints}
+					<div class="auth-hints" id="auth-hints" data-testid="auth-info-panel">
+						<p>{$_('profile.accountInfoWhy')}</p>
+						<p>{$_('profile.accountInfoRegister')}</p>
+						<p>{$_('profile.accountInfoSignIn')}</p>
+						<p>{$_('profile.accountInfoFriends')}</p>
+					</div>
+				{/if}
+			</div>
 		</div>
 
-		{#if hints}
-			<!--
-				Порядок абзаців — порядок питань: навіщо це взагалі, що буде після
-				реєстрації, що буде після входу в наявний акаунт і чому для друзів
-				акаунт потрібен обом.
-			-->
-			<div class="auth-hints" id="auth-hints" data-testid="auth-info-panel">
-				<p>{$_('profile.accountInfoWhy')}</p>
-				<p>{$_('profile.accountInfoRegister')}</p>
-				<p>{$_('profile.accountInfoSignIn')}</p>
-				<p>{$_('profile.accountInfoFriends')}</p>
-			</div>
-		{/if}
 
 		{#if withGoogle}
 			<button class="btn-google" type="button" onclick={ongoogle} disabled={loading} data-testid="auth-google-btn">
@@ -290,13 +326,48 @@
 	 * Довідка — окремим блоком зі своїм проміжком: чотири абзаци поспіль у потоці
 	 * форми читалися б як підписи до сусідніх кнопок, а не як один текст.
 	 */
+	/* Коробка для панелі: без цього вона віднеслася б до предка вище. */
+	.info {
+		position: relative;
+		flex-shrink: 0;
+	}
+
+	/*
+	 * ПАНЕЛЬ ТЯГНЕТЬСЯ ВЛІВО ВІД КНОПКИ (`right: 0`): кнопка стоїть у правому
+	 * куті картки, тож панель, вирівняна лівим краєм, вилізла б за екран на
+	 * телефоні. Висота обмежена й прокручується — чотири абзаци в ландшафті не
+	 * вміщаються, а панель, що виїхала за екран, гірша за панель зі смугою.
+	 *
+	 * `z-index` вище за вміст модалки, у якій ця форма живе, інакше довідку
+	 * накрило б наступним блоком тієї ж картки.
+	 */
 	.auth-hints {
+		position: absolute;
+		top: calc(100% + 6px);
+		right: 0;
+		z-index: 20;
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
-		margin: 0 0 0.25rem;
+		width: min(22rem, 78vw);
+		/* `dvh`, а не `vh`: інакше нижній край панелі лишається під панеллю
+		   браузера на телефоні (FLUID-SIZING-v8 § 2). */
+		max-height: min(60dvh, 26rem);
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		padding: 0.75rem;
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		border-radius: 12px;
+		/*
+		 * Тло НЕ прозоре: панель лежить поверх тексту картки, і напівпрозоре дало б
+		 * два накладені абзаци. Токен той самий, що тримає тло сторінки
+		 * (`+layout.svelte`), із таким самим запасним значенням.
+		 */
+		background: var(--bg-primary, #1a1a2e);
+		box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
 		font-size: 0.85em;
-		color: var(--text-secondary);
+		color: var(--text-primary);
+		text-align: start;
 	}
 
 	.auth-hints p {

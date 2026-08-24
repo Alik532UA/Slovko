@@ -1,12 +1,13 @@
 {
 	"name": "slovko",
 	"private": true,
-	"version": "0.7.634",
+	"version": "0.7.635",
 	"type": "module",
 	"engines": {
 		"node": ">=22.12.0"
 	},
 	"scripts": {
+		"dev": "vite dev",
 		"test": "vitest run",
 		"build": "vite build && node scripts/generate-sitemap.mjs",
 		"preview": "vite preview",
