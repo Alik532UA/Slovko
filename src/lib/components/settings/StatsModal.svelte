@@ -11,6 +11,7 @@
 	import Leaderboard from "../profile/Leaderboard.svelte";
 	import ProfileHeader from "../profile/ProfileHeader.svelte";
 	import ErrorBoundary from "../ui/ErrorBoundary.svelte";
+	import GuestWarning from "../ui/GuestWarning.svelte";
 	import BaseModal from "../ui/BaseModal.svelte";
 	import SegmentedControl from "../ui/SegmentedControl.svelte";
 	import { smoothHeight } from "../../utils/actions/smoothHeight";
@@ -79,10 +80,14 @@
 	<div class="modal-internal-wrapper" use:smoothHeight={{ duration: 300 }}>
 		<div class="modal-content-measure">
 			{#if authStore.isGuest && activeTab === "leaderboard"}
-				<div class="guest-warning-box" data-testid="guest-warning" style="margin-bottom: 1rem;">
-					<div class="warning-icon"><Trophy size={48} /></div>
-					<p>{$_("profile.leaderboardGuestMessage") || "Авторизуйтесь, щоб побачити інших гравців та їх статистику"}</p>
-				</div>
+				<GuestWarning
+					text={$_("profile.leaderboardGuestMessage") ||
+						"Авторизуйтесь, щоб побачити інших гравців та їх статистику"}
+				>
+					{#snippet icon()}
+						<Trophy size={28} />
+					{/snippet}
+				</GuestWarning>
 			{/if}
 
 			{@render tabsNav()}
@@ -126,22 +131,5 @@
 	.profile-content {
 		margin-top: 1.5rem;
 		min-height: 200px;
-	}
-	.guest-warning-box {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-		padding: 2rem;
-		background: rgba(255, 255, 255, 0.03);
-		border-radius: 20px;
-		border: 1px dashed rgba(255, 255, 255, 0.1);
-		gap: 1rem;
-		color: var(--text-secondary);
-	}
-	.warning-icon {
-		color: var(--accent);
-		opacity: 0.5;
 	}
 </style>

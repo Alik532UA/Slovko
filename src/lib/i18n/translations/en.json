@@ -276,6 +276,8 @@
 		"passwordResetSent": "If that email is registered, the reset message has already been sent",
 		"linkAccount": "Link Account",
 		"editAvatarTitle": "Edit Avatar",
+		"avatarEdit": "Change avatar",
+		"editLocked": "Requires sign-in",
 		"leaderboardGuestMessage": "Sign in to see other players and their stats",
 		"errors": {
 			"enterEmail": "Enter email",

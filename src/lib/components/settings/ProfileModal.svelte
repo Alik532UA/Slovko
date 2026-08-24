@@ -22,6 +22,7 @@
 	import BaseModal from "../ui/BaseModal.svelte";
 	import { errorToMessageKey } from "$lib/errors";
 	import SegmentedControl from "../ui/SegmentedControl.svelte";
+	import GuestWarning from "../ui/GuestWarning.svelte";
 
 	interface Props {
 		onclose: () => void;
@@ -165,11 +166,15 @@
 		}
 	}
 
-	// Avatar handlers
+	/*
+	 * Другий шар до замка в шапці (`locked`), а не єдина заборона: стан, який
+	 * тримається лише стилями, падає від першого ж виклику обробника іншим
+	 * шляхом. `isGuest` тут покриває і анонімний вхід, і повну відсутність
+	 * сеансу — це те саме поле в `AuthStore`.
+	 */
 	function startEditingAvatar() {
-		if (!authStore.isAnonymous && !authStore.isGuest) {
-			isEditingAvatar = true;
-		}
+		if (authStore.isGuest) return;
+		isEditingAvatar = true;
 	}
 
 	async function saveAvatar(icon: string, color: string) {
@@ -193,7 +198,7 @@
 </script>
 
 {#snippet tabsNav()}
-	<ProfileHeader oneditAvatar={startEditingAvatar} />
+	<ProfileHeader oneditAvatar={startEditingAvatar} locked={authStore.isGuest} />
 
 	<SegmentedControl
 		options={availableTabs.map((id) => ({
@@ -220,10 +225,14 @@
 				/>
 			{:else}
 				{#if authStore.isGuest}
-					<div class="guest-warning-box" data-testid="guest-warning" style="margin-bottom: 1rem;">
-						<div class="warning-icon"><TriangleAlert size={48} /></div>
-						<p>{$_("profile.guestWarning") || "Ви граєте як гість. Авторизуйтесь, щоб зберігати прогрес та додавати друзів."}</p>
-					</div>
+					<GuestWarning
+						text={$_("profile.guestWarning") ||
+							"Ви граєте як гість. Авторизуйтесь, щоб зберігати прогрес та додавати друзів."}
+					>
+						{#snippet icon()}
+							<TriangleAlert size={28} />
+						{/snippet}
+					</GuestWarning>
 				{/if}
 
 				{@render tabsNav()}
@@ -319,23 +328,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: 2rem;
-	}
-	.guest-warning-box {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-		padding: 1.5rem;
-		background: rgba(241, 196, 15, 0.05);
-		border-radius: 20px;
-		border: 1px dashed rgba(241, 196, 15, 0.2);
-		gap: 0.75rem;
-		color: var(--text-secondary);
-	}
-	.warning-icon {
-		color: #f1c40f;
-		opacity: 0.8;
 	}
 	.auth-section {
 		background: rgba(255, 255, 255, 0.02);

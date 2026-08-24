@@ -1,62 +1,49 @@
-﻿<script lang="ts">
+<script lang="ts">
 	import { _ } from "svelte-i18n";
-	import { base } from "$app/paths";
-	import {
-		User,
-		Edit2,
-		Check,
-		X,
-		Cat,
-		Dog,
-		Rabbit,
-		Bird,
-		Fish,
-		Snail,
-		Turtle,
-		Bug,
-		Smile,
-		Star,
-		Heart,
-		Zap,
-		Target,
-	} from "lucide-svelte";
+	import { Edit2, Lock, Check, X } from "lucide-svelte";
 	import { authStore } from "../../controllers/AuthStore.svelte";
 	import { friendsStore } from "../../controllers/FriendsStore.svelte";
 	import { logService } from "../../services/logService.svelte";
+	import ProfileAvatar from "./ProfileAvatar.svelte";
+	import BaseTooltip from "../ui/BaseTooltip.svelte";
 
+	/**
+	 * ШАПКА ПРОФІЛЮ: те, що не можна змінити, виглядає незмінним.
+	 *
+	 * Гість бачив обидва олівці — на аватарі й на імені, — і жоден із них не
+	 * працював. Аватар мовчки виходив із обробника, а ім'я було ще гірше: поле
+	 * вводу відкривалося, назву можна було надрукувати й натиснути «зберегти»,
+	 * після чого `authStore.updateProfile()` виходив на першому ж рядку
+	 * (`if (!this.firebaseUser) return`). Тобто інтерфейс приймав роботу й
+	 * викидав її без жодного слова.
+	 *
+	 * Тому `locked` замикає ОБА, а не лише той, про який запитали: два олівці
+	 * поруч із однаковою поведінкою, з яких замкнений лише один, читаються як
+	 * поломка другого.
+	 */
 	interface Props {
 		oneditAvatar?: () => void;
+		/** Шапка лише показує (статистика): жодних олівців. */
 		hideEditButton?: boolean;
+		/** Гість: олівці на місці, але замкнені й підписані причиною. */
+		locked?: boolean;
 	}
 
-	let { oneditAvatar, hideEditButton = false }: Props = $props();
+	let {
+		oneditAvatar,
+		hideEditButton = false,
+		locked = false,
+	}: Props = $props();
+
+	const avatarMode = $derived(
+		hideEditButton ? "plain" : locked ? "locked" : "edit",
+	);
 
 	let isEditingName = $state(false);
 	let editedName = $state("");
 
 	const followingCount = $derived(friendsStore.followingCount);
 	const followersCount = $derived(friendsStore.followersCount);
-
-	const AVATAR_ICONS: Record<string, typeof User> = {
-		user: User,
-		cat: Cat,
-		dog: Dog,
-		rabbit: Rabbit,
-		bird: Bird,
-		fish: Fish,
-		snail: Snail,
-		turtle: Turtle,
-		bug: Bug,
-		smile: Smile,
-		star: Star,
-		heart: Heart,
-		zap: Zap,
-		target: Target,
-	};
-
-	function getIconComponent(iconId: string) {
-		return AVATAR_ICONS[iconId] || User;
-	}
 
 	function startEditingName() {
 		editedName =
@@ -76,58 +63,7 @@
 </script>
 
 <div class="header" data-testid="profile-header">
-	<button
-		class="avatar-wrapper-btn"
-		onclick={() => !hideEditButton && oneditAvatar?.()}
-		type="button"
-		aria-label={$_("profile.avatar.edit") || "Edit avatar"}
-		data-testid="edit-avatar-btn"
-		disabled={hideEditButton}
-	>
-		{#if authStore.photoURL?.startsWith("internal:")}
-			{@const parts = authStore.photoURL.split(":")}
-			{@const iconId = parts[1]}
-			{@const rawColor = parts[2]}
-			{@const Icon = iconId === "none" ? null : getIconComponent(iconId)}
-			{@const isFlag = rawColor?.startsWith("flag-")}
-			<div
-				class="avatar email-user"
-				style:background-color={isFlag ? "transparent" : rawColor}
-				aria-hidden="true"
-				data-testid="profile-avatar-email-img"
-			>
-				{#if isFlag}
-					{@const lang = rawColor.replace("flag-", "")}
-					<div class="flag-bg-wrapper">
-						<img src="{base}/svg/flags/{lang}.svg" alt="" class="flag-bg-img" loading="lazy" width="100%" height="100%" />
-					</div>
-				{/if}
-				{#if Icon}
-					<Icon size={72} color="white" />
-				{/if}
-			</div>
-		{:else if authStore.photoURL}
-			<img
-				src={authStore.photoURL}
-				alt=""
-				class="avatar"
-				aria-hidden="true"
-				loading="lazy"
-				width="80"
-				height="80"
-				data-testid="profile-avatar-img"
-			/>
-		{:else}
-			<div class="avatar email-user" aria-hidden="true" data-testid="profile-avatar-default-img">
-				<User size={72} />
-			</div>
-		{/if}
-		{#if !hideEditButton}
-			<div class="edit-overlay" aria-hidden="true">
-				<Edit2 size={16} />
-			</div>
-		{/if}
-	</button>
+	<ProfileAvatar mode={avatarMode} onedit={oneditAvatar} />
 
 	<div class="user-info">
 		{#if isEditingName}
@@ -168,15 +104,28 @@
 				<h2>
 					{authStore.displayName || authStore.email?.split("@")[0] || "User"}
 				</h2>
+				<!-- Шапка статистики нічого не редагує: там олівця немає взагалі. -->
 				{#if !hideEditButton}
-					<button
-						class="edit-name-btn"
-						onclick={startEditingName}
-						aria-label={$_("common.edit")}
-						data-testid="start-edit-name-btn"
-					>
-						<Edit2 size={16} />
-					</button>
+					{#if locked}
+						<BaseTooltip text={$_("profile.editLocked")}>
+							<span
+								class="edit-name-btn is-locked"
+								data-testid="edit-name-locked-status"
+								aria-hidden="true"
+							>
+								<Lock size={16} />
+							</span>
+						</BaseTooltip>
+					{:else}
+						<button
+							class="edit-name-btn"
+							onclick={startEditingName}
+							aria-label={$_("common.edit")}
+							data-testid="start-edit-name-btn"
+						>
+							<Edit2 size={16} />
+						</button>
+					{/if}
 				{/if}
 			</div>
 		{/if}
@@ -219,47 +168,6 @@
 		.header {
 			gap: 1rem;
 			margin-bottom: 1.5rem;
-		}
-	}
-
-	.avatar {
-		width: 80px;
-		height: 80px;
-		border-radius: 24px;
-		object-fit: cover;
-		background: var(--bg-primary);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border: 2px solid var(--border);
-		flex-shrink: 0;
-		position: relative;
-		overflow: hidden;
-	}
-
-	.flag-bg-wrapper {
-		position: absolute;
-		inset: 0;
-		z-index: 0;
-	}
-
-	.flag-bg-img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-
-	.avatar :global(svg) {
-		position: relative;
-		z-index: 1;
-		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
-	}
-
-	@media (max-width: 480px) {
-		.avatar {
-			width: 64px;
-			height: 64px;
-			border-radius: 18px;
 		}
 	}
 
@@ -326,42 +234,6 @@
 		opacity: 0.5;
 	}
 
-	.avatar-wrapper-btn {
-		position: relative;
-		background: none;
-		border: none;
-		padding: 0;
-		cursor: pointer;
-		border-radius: 20px;
-		transition: var(--hover-transition);
-		overflow: visible; /* Changed from hidden to allow scaling children if needed */
-	}
-
-	.avatar-wrapper-btn:hover {
-		transform: scale(var(--hover-scale));
-		z-index: 2;
-	}
-	.avatar-wrapper-btn:hover .edit-overlay {
-		opacity: 1;
-	}
-
-	.edit-overlay {
-		position: absolute;
-		bottom: 0;
-		right: 0;
-		background: var(--accent);
-		color: white;
-		width: 28px;
-		height: 28px;
-		border-radius: 50%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		opacity: 0;
-		transition: opacity 0.2s;
-		border: 2px solid var(--bg-primary);
-	}
-
 	.name-row {
 		display: flex;
 		align-items: center;
@@ -381,6 +253,20 @@
 	.edit-name-btn:hover {
 		color: var(--accent);
 		opacity: 1;
+	}
+
+	/*
+	 * Замкнений олівець не міняє колір під курсором і не прикидається кнопкою:
+	 * підсвітка акцентом означала б, що натиск щось зробить.
+	 */
+	.edit-name-btn.is-locked {
+		cursor: not-allowed;
+		opacity: 0.4;
+	}
+
+	.edit-name-btn.is-locked:hover {
+		color: var(--text-secondary);
+		opacity: 0.4;
 	}
 
 	.edit-name-wrapper {

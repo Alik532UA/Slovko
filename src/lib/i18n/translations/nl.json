@@ -245,6 +245,8 @@
 		"passwordResetSent": "Als dat e-mailadres geregistreerd is, is het herstelbericht al verzonden",
 		"linkAccount": "Account koppelen",
 		"editAvatarTitle": "Avatar bewerken",
+		"avatarEdit": "Avatar wijzigen",
+		"editLocked": "Inloggen vereist",
 		"errors": {
 			"enterEmail": "Voer e-mail in",
 			"invalidEmail": "Ongeldig e-mailadres",

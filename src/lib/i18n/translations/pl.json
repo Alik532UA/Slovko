@@ -276,6 +276,8 @@
 		"passwordResetSent": "Jeśli ten e-mail jest zarejestrowany, wiadomość do odzyskiwania hasła została już wysłana",
 		"linkAccount": "Powiąż konto",
 		"editAvatarTitle": "Edycja awatara",
+		"avatarEdit": "Zmień awatar",
+		"editLocked": "Wymaga zalogowania",
 		"errors": {
 			"enterEmail": "Wprowadź e-mail",
 			"invalidEmail": "Nieprawidłowy format e-mail",

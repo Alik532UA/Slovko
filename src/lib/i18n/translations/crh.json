@@ -245,6 +245,8 @@
 		"passwordResetSent": "Eger bu email qayd etilgen ise, parolni sıfırlav mektübi yiberildi",
 		"linkAccount": "Esapnı bağlamaq",
 		"editAvatarTitle": "Avatarnı deñiştirmek",
+		"avatarEdit": "Avatarnı deñiştirmek",
+		"editLocked": "Kiriş kerek",
 		"errors": {
 			"enterEmail": "Emailni kirsetiñiz",
 			"invalidEmail": "Email formatı yañlış",
