@@ -276,6 +276,8 @@
 		"passwordResetSent": "Jeśli ten e-mail jest zarejestrowany, wiadomość do odzyskiwania hasła została już wysłana",
 		"linkAccount": "Powiąż konto",
 		"editAvatarTitle": "Edycja awatara",
+		"editNameTitle": "Edycja nazwy",
+		"nameLabel": "Nowa nazwa",
 		"avatarEdit": "Zmień awatar",
 		"editLocked": "Wymaga zalogowania",
 		"errors": {

@@ -100,7 +100,12 @@
 		isLoading = true;
 		errorMessage = "";
 		try {
-			await AuthService.linkWithEmail(email, pass);
+			/*
+			 * Ім'я, яке гість дав собі до реєстрації, переїжджає в новий акаунт —
+			 * але лише якщо в того імені немає (`claimGuestName` перевіряє це сам).
+			 */
+			const user = await AuthService.linkWithEmail(email, pass);
+			await authStore.claimGuestName(user);
 			loginMethod = null;
 		} catch (e: unknown) {
 			errorMessage = $_(errorToMessageKey(e));
@@ -113,7 +118,8 @@
 		isLoading = true;
 		errorMessage = "";
 		try {
-			await AuthService.linkWithGoogle();
+			const user = await AuthService.linkWithGoogle();
+			await authStore.claimGuestName(user);
 			loginMethod = null;
 		} catch (e: unknown) {
 			errorMessage = $_(errorToMessageKey(e));

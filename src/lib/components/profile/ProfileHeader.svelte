@@ -1,31 +1,30 @@
 <script lang="ts">
 	import { _ } from "svelte-i18n";
-	import { Edit2, Lock, Check, X } from "lucide-svelte";
+	import { Edit2, Check, X } from "lucide-svelte";
 	import { authStore } from "../../controllers/AuthStore.svelte";
 	import { friendsStore } from "../../controllers/FriendsStore.svelte";
 	import { logService } from "../../services/logService.svelte";
 	import ProfileAvatar from "./ProfileAvatar.svelte";
-	import BaseTooltip from "../ui/BaseTooltip.svelte";
 
 	/**
-	 * ШАПКА ПРОФІЛЮ: те, що не можна змінити, виглядає незмінним.
+	 * ШАПКА ПРОФІЛЮ: ім'я змінює будь-хто, аватар — лише з акаунтом.
 	 *
-	 * Гість бачив обидва олівці — на аватарі й на імені, — і жоден із них не
-	 * працював. Аватар мовчки виходив із обробника, а ім'я було ще гірше: поле
-	 * вводу відкривалося, назву можна було надрукувати й натиснути «зберегти»,
-	 * після чого `authStore.updateProfile()` виходив на першому ж рядку
-	 * (`if (!this.firebaseUser) return`). Тобто інтерфейс приймав роботу й
-	 * викидав її без жодного слова.
+	 * Асиметрія тут навмисна, і причина не технічна: обидва поля лежать в тому
+	 * самому профілі Firebase Auth. Ім'я гостя має де жити без акаунта —
+	 * локальний ключ у `AuthStore.setDisplayName()`, який при реєстрації
+	 * переїжджає в новий акаунт. Аватар такого притулку не має: це рішення
+	 * власника продукту, і воно записане в `ProfileAvatar`.
 	 *
-	 * Тому `locked` замикає ОБА, а не лише той, про який запитали: два олівці
-	 * поруч із однаковою поведінкою, з яких замкнений лише один, читаються як
-	 * поломка другого.
+	 * Доти замкнені були ОБА — і це прибрало те, що для аноніма справді
+	 * працювало: `updateProfile()` пише в Auth, а `SyncService` дублює ім'я в
+	 * `profiles/{uid}` навіть анонімам. Не працювало воно лише там, де сеансу
+	 * немає зовсім, — і тепер працює й там.
 	 */
 	interface Props {
 		oneditAvatar?: () => void;
 		/** Шапка лише показує (статистика): жодних олівців. */
 		hideEditButton?: boolean;
-		/** Гість: олівці на місці, але замкнені й підписані причиною. */
+		/** Гість: аватар замкнений і підписаний причиною. Ім'я — ні. */
 		locked?: boolean;
 	}
 
@@ -46,15 +45,16 @@
 	const followersCount = $derived(friendsStore.followersCount);
 
 	function startEditingName() {
-		editedName =
-			authStore.displayName || authStore.email?.split("@")[0] || "User";
+		// Порожнє поле, а не підставлене «Гість»: інакше перше, що робить людина,
+		// — витирає слово, яке вона не писала.
+		editedName = authStore.displayName || authStore.email?.split("@")[0] || "";
 		isEditingName = true;
 	}
 
 	async function saveName() {
 		if (!editedName.trim()) return;
 		try {
-			await authStore.updateProfile(editedName);
+			await authStore.setDisplayName(editedName);
 			isEditingName = false;
 		} catch (e) {
 			logService.error("profile", "Failed to update name", e);
@@ -68,12 +68,19 @@
 	<div class="user-info">
 		{#if isEditingName}
 			<div class="edit-name-wrapper" role="group" aria-labelledby="edit-name-title">
-				<h3 id="edit-name-title" class="sr-only">Edit name</h3>
+				<h3 id="edit-name-title" class="sr-only">{$_("profile.editNameTitle")}</h3>
+				<!--
+					`maxlength` замість повідомлення про помилку: межу видно з
+					самого поля, а сказати про неї після натиску «зберегти»
+					означало б відмовити вже введеному. 30 символів — стеля, за
+					якою ім'я перестає вміщатися в шапку на телефоні.
+				-->
 				<input
 					type="text"
 					bind:value={editedName}
+					maxlength="30"
 					class="name-input"
-					aria-label="New display name"
+					aria-label={$_("profile.nameLabel")}
 					data-testid="profile-name-input"
 					onkeydown={(e) => {
 						if (e.key === "Enter") saveName();
@@ -102,30 +109,20 @@
 		{:else}
 			<div class="name-row">
 				<h2>
-					{authStore.displayName || authStore.email?.split("@")[0] || "User"}
+					{authStore.displayName ||
+						authStore.email?.split("@")[0] ||
+						$_("profile.anonymousTitle")}
 				</h2>
 				<!-- Шапка статистики нічого не редагує: там олівця немає взагалі. -->
 				{#if !hideEditButton}
-					{#if locked}
-						<BaseTooltip text={$_("profile.editLocked")}>
-							<span
-								class="edit-name-btn is-locked"
-								data-testid="edit-name-locked-status"
-								aria-hidden="true"
-							>
-								<Lock size={16} />
-							</span>
-						</BaseTooltip>
-					{:else}
-						<button
-							class="edit-name-btn"
-							onclick={startEditingName}
-							aria-label={$_("common.edit")}
-							data-testid="start-edit-name-btn"
-						>
-							<Edit2 size={16} />
-						</button>
-					{/if}
+					<button
+						class="edit-name-btn"
+						onclick={startEditingName}
+						aria-label={$_("common.edit")}
+						data-testid="start-edit-name-btn"
+					>
+						<Edit2 size={16} />
+					</button>
 				{/if}
 			</div>
 		{/if}
@@ -253,20 +250,6 @@
 	.edit-name-btn:hover {
 		color: var(--accent);
 		opacity: 1;
-	}
-
-	/*
-	 * Замкнений олівець не міняє колір під курсором і не прикидається кнопкою:
-	 * підсвітка акцентом означала б, що натиск щось зробить.
-	 */
-	.edit-name-btn.is-locked {
-		cursor: not-allowed;
-		opacity: 0.4;
-	}
-
-	.edit-name-btn.is-locked:hover {
-		color: var(--text-secondary);
-		opacity: 0.4;
 	}
 
 	.edit-name-wrapper {

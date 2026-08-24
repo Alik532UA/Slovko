@@ -245,6 +245,8 @@
 		"passwordResetSent": "Falls diese E-Mail registriert ist, wurde die Nachricht zum Zurücksetzen bereits gesendet",
 		"linkAccount": "Konto verknüpfen",
 		"editAvatarTitle": "Avatar bearbeiten",
+		"editNameTitle": "Namen bearbeiten",
+		"nameLabel": "Neuer Anzeigename",
 		"avatarEdit": "Avatar ändern",
 		"editLocked": "Anmeldung erforderlich",
 		"errors": {

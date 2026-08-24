@@ -7,6 +7,7 @@ import { friendsStore } from "./FriendsStore.svelte";
 import { statisticsState } from "./StatisticsState.svelte";
 import { notificationStore } from "./NotificationStore.svelte";
 import { settingsStore } from "./SettingsStore.svelte";
+import { localStorageProvider } from "../services/storage/storageProvider";
 import type { User } from "firebase/auth";
 import { browser } from "$app/environment";
 
@@ -59,12 +60,31 @@ function serializeUser(user: User | null): AuthState {
 }
 
 /**
+ * ІМ'Я ГОСТЯ ЖИВЕ ЛОКАЛЬНО, окремим ключем.
+ *
+ * Гість без акаунта міняв собі ім'я «успішно»: поле вводу відкривалося, ім'я
+ * друкувалося, «зберегти» закривало поле — і в заголовку лишалося старе
+ * значення. Причина рівно в `updateProfile()` нижче: `if (!this.firebaseUser)
+ * return`. А анонімного сеансу застосунок сам не створює — `signInAnonymously`
+ * кличе рівно один `FeedbackService`, тобто анонім є лише в того, хто хоч раз
+ * надіслав відгук. У решти `firebaseUser` — `null`, і введене зникало.
+ *
+ * Чому ОКРЕМИЙ ключ, а не поле в налаштуваннях: `AppSettings` синхронізуються в
+ * хмару (`SyncService.mergeSettings`), тож гостьове ім'я поїхало б в акаунт саме
+ * собою — і сперечалося б там із іменем акаунта. Тут воно нікуди не їде, поки
+ * його не віддасть `claimGuestName()` при реєстрації.
+ */
+const GUEST_NAME_KEY = "guestName";
+
+/**
  * AuthStore - керування станом автентифікації.
  */
 class AuthStore {
 	private _state = $state<AuthState>(serializeUser(null));
 	private _isInitialized = $state(false);
 	private firebaseUser: User | null = null;
+	/** Ім'я, яке гість дав собі до будь-якого акаунта. */
+	private _guestName = $state<string | null>(null);
 
 	constructor() {
 		/*
@@ -81,6 +101,9 @@ class AuthStore {
 		 * як обрив з'єднання: сторінка не віддавалася зовсім.
 		 */
 		if (!browser) return;
+
+		// Гідрація — у конструкторі, запис — у мутаторі (SVELTE-CORE-v8 § 1.9).
+		this._guestName = localStorageProvider.getItem(GUEST_NAME_KEY);
 
 		AuthService.init((user) => {
 			logService.log("debug", "[AuthStore] onAuthStateChanged:", {
@@ -101,7 +124,19 @@ class AuthStore {
 	get isGuest() { return this._state.isGuest; }
 	get uid() { return this._state.uid; }
 	get email() { return this._state.email; }
-	get displayName() { return this._state.displayName; }
+	/**
+	 * Ім'я акаунта, а для гостя — те, яке він дав собі сам.
+	 *
+	 * Локальне ім'я підставляється ЛИШЕ гостю (`isGuest` покриває і анонімний
+	 * вхід, і повну відсутність сеансу). Для акаунта без імені запасним
+	 * лишається початок пошти, як і було: чуже локальне ім'я на акаунті
+	 * виглядало б так, ніби акаунт назвали за спиною власника.
+	 */
+	get displayName() {
+		return (
+			this._state.displayName || (this._state.isGuest ? this._guestName : null)
+		);
+	}
 	get photoURL() { return this._state.photoURL; }
 	get originalPhotoURL() { return this._state.originalPhotoURL; }
 	/**
@@ -182,6 +217,54 @@ class AuthStore {
 		} catch (error) {
 			logService.error("debug", "[AuthStore] Failed to update profile", error);
 			throw error;
+		}
+	}
+
+	/**
+	 * Задати ім'я — акаунту або, якщо акаунта немає, собі як гостю.
+	 *
+	 * Одна точка входу для обох станів: інтерфейсу не треба знати, чи є сеанс,
+	 * і саме через це знання його раніше й не було — форма кликала
+	 * `updateProfile()`, який для гостя тихо виходив.
+	 */
+	async setDisplayName(name: string) {
+		const trimmed = name.trim();
+		if (!trimmed) return;
+
+		if (this.firebaseUser) {
+			await this.updateProfile(trimmed);
+			return;
+		}
+
+		this._guestName = trimmed;
+		localStorageProvider.setItem(GUEST_NAME_KEY, trimmed);
+	}
+
+	/**
+	 * Віддати гостьове ім'я щойно створеному акаунту — і лише йому.
+	 *
+	 * Умова `!user.displayName` тримає межу: акаунт, який уже має ім'я (вхід
+	 * через Google, повторний вхід поштою), не перезаписується. Після передачі
+	 * локальний ключ прибирається — інакше те саме ім'я лежало б у двох місцях і
+	 * розійшлося б із першою ж правкою.
+	 *
+	 * Кличе це ФОРМА, одразу після успішної реєстрації, і `user` тут — той, що
+	 * вона отримала. Не `this.firebaseUser`: його ставить `onAuthStateChanged`,
+	 * тобто на цей момент він може бути ще не встановлений, і перевірка
+	 * всередині `updateProfile()` відкинула б передачу саме на реєстрації —
+	 * єдиному моменті, для якого вона й існує.
+	 */
+	async claimGuestName(user: User | null) {
+		if (!user || user.displayName || !this._guestName) return;
+		const claimed = this._guestName;
+		this._guestName = null;
+		localStorageProvider.removeItem(GUEST_NAME_KEY);
+		try {
+			const updated = await AuthService.updateProfile(claimed);
+			if (updated) this.updateState(updated);
+			await FriendsService.updatePublicProfile();
+		} catch (error) {
+			logService.error("debug", "[AuthStore] Failed to claim guest name", error);
 		}
 	}
 

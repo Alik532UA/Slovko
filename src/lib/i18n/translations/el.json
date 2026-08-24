@@ -245,6 +245,8 @@
 		"passwordResetSent": "Αν αυτό το email είναι εγγεγραμμένο, το μήνυμα επαναφοράς έχει ήδη σταλεί",
 		"linkAccount": "Σύνδεση λογαριασμού",
 		"editAvatarTitle": "Επεξεργασία αβατάρ",
+		"editNameTitle": "Επεξεργασία ονόματος",
+		"nameLabel": "Νέο όνομα",
 		"avatarEdit": "Αλλαγή άβαταρ",
 		"editLocked": "Απαιτείται σύνδεση",
 		"errors": {

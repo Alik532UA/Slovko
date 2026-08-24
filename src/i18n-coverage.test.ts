@@ -37,11 +37,14 @@ const DICT = join(SRC, "lib/i18n/translations/uk.json");
  * `settings.columnLeft/columnRight` замість `settings.from/to`,
  * `about.title`/`about.support` замість `menu.about`/`menu.donate`).
  *
+ * 21 → 20: `profile.anonymousTitle` («Гість») ожив — саме він тепер стоїть у
+ * шапці профілю замість англійського рядка `"User"`, зашитого в розмітку.
+ *
  * Не видалено одним рухом навмисно: кожен рядок — це сім перекладів, і рішення
  * «цей екран більше не повернеться» приймає власник продукту, а не аудит.
  * Число тут — стеля, яку можна лише знижувати.
  */
-const KNOWN_UNUSED_KEYS = 21;
+const KNOWN_UNUSED_KEYS = 20;
 
 /**
  * Підписи для читалки, написані рядком. Сім із них закрито 2026-08-19 за
@@ -50,8 +53,12 @@ const KNOWN_UNUSED_KEYS = 21;
  * `playlists.addCustomWord`). Решта потребує НОВИХ ключів у семи мовах —
  * зокрема грецькою й кримськотатарською, і вигадувати їх наосліп означало б
  * тихо погіршити те, що зараз хоча б чесно англійське.
+ *
+ * 15 → 14: поле імені в шапці профілю («New display name») отримало ключ
+ * `profile.nameLabel` у всіх семи мовах — разом із заголовком групи, який доти
+ * теж був англійським рядком.
  */
-const KNOWN_HARDCODED_LABELS = 15;
+const KNOWN_HARDCODED_LABELS = 14;
 
 function walk(dir: string, out: string[] = []): string[] {
 	for (const entry of readdirSync(dir)) {
