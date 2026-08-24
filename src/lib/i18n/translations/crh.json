@@ -237,12 +237,11 @@
 		"spamWarning": "Mektüp \"Spam\" qutusına tüşebilir, çünkü uyğulama yañıdır.",
 		"sendResetEmail": "Yollamaq",
 		"backToSignin": "Kirişke qaytmaq",
-		"passwordResetSent": "Yañartuv mektübi yollandı",
+		"passwordResetSent": "Eger bu email qayd etilgen ise, parolni sıfırlav mektübi yiberildi",
 		"linkAccount": "Esapnı bağlamaq",
 		"editAvatarTitle": "Avatarnı deñiştirmek",
 		"errors": {
 			"enterEmail": "Emailni kirsetiñiz",
-			"userNotFound": "Bu emailge sahip qullanıcı tapılmadı",
 			"invalidEmail": "Email formatı yañlış",
 			"fillFields": "Tüm meydanlarnı doldırıñız",
 			"passwordMismatch": "Parollar eşleşmey",

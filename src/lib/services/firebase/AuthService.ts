@@ -56,19 +56,19 @@ export const AuthService = {
 		}
 	},
 
-	/**
-	 * Отримати методи входу для email (потрібно вимкнути Email Enumeration Protection у Firebase Console)
+	/*
+	 * ТУТ БУВ `getProvidersForEmail` — і прибраний він не за невживаність.
+	 *
+	 * `fetchSignInMethodsForEmail` відповідає на питання «чи зареєстрована ця
+	 * адреса й чим саме», тобто це перелік акаунтів на один запит. Працює він
+	 * лише з ВИМКНЕНИМ Email Enumeration Protection — так і було написано в його
+	 * власному підписі, тобто ціна стояла в коді як умова роботи.
+	 *
+	 * Жоден рядок його не кликав, і саме тому це небезпечніше за живий виклик:
+	 * готова обгортка з коментарем «вимкни захист» — це запрошення вимкнути
+	 * захист тому, кому вона колись знадобиться. Знадобиться — писати заново, з
+	 * рішенням, а не з готовим шматком.
 	 */
-	async getProvidersForEmail(email: string): Promise<string[]> {
-		const { fetchSignInMethodsForEmail } = await import("firebase/auth");
-		try {
-			const providers = await fetchSignInMethodsForEmail(auth(), email);
-			return providers;
-		} catch (error) {
-			logService.error("debug", "[AuthService] Fetch methods error:", error);
-			return [];
-		}
-	},
 
 	/**
 	 * Вхід або прив'язка Google-акаунта

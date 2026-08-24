@@ -30,7 +30,23 @@ const AUTH_CODE_TO_KEY: Record<string, string> = {
 	"auth/missing-email": "profile.errors.enterEmail",
 	"auth/missing-password": "profile.errors.enterPassword",
 	"auth/internal-error": "profile.errors.fillFields",
-	"auth/user-not-found": "profile.errors.userNotFound",
+	/*
+	 * «ТАКОГО АКАУНТА НЕМА» І «ПАРОЛЬ НЕ ТОЙ» — ОДНЕ Й ТЕ САМЕ ПОВІДОМЛЕННЯ.
+	 *
+	 * Доти `auth/user-not-found` мав власний ключ `profile.errors.userNotFound`
+	 * («Користувача з таким email не знайдено»), і саме різниця текстів робила
+	 * форму входу переліком акаунтів: підставляючи адреси по одній, будь-хто
+	 * дізнавався, які з них зареєстровані, — пароля для цього не потрібно.
+	 *
+	 * Ключ прибрано з усіх семи словників, а не лишений без ужитку: текст, що
+	 * лежить перекладеним, рано чи пізно хтось повертає в код — та сама пастка
+	 * «файл існує, отже, робота зроблена» (PROJECT-STRUCTURE-v8 § 4.3).
+	 *
+	 * Другу половину тримає Firebase: Email Enumeration Protection у консолі
+	 * віддає `auth/invalid-credential` замість `auth/user-not-found`. Обидві
+	 * половини потрібні — консоль не в репозиторії, а код не в консолі.
+	 */
+	"auth/user-not-found": "profile.errors.invalidCredentials",
 	"auth/wrong-password": "profile.errors.invalidCredentials",
 	"auth/invalid-credential": "profile.errors.invalidCredentials",
 	"auth/invalid-login-credentials": "profile.errors.invalidCredentials",

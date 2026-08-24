@@ -121,6 +121,27 @@
 		}
 	}
 
+	/*
+	 * Коди, які у ВІДНОВЛЕННІ ПАРОЛЯ читаються як успіх.
+	 *
+	 * Firebase кидає `auth/user-not-found` на незареєстровану адресу (а з
+	 * увімкненим Email Enumeration Protection — `auth/invalid-credential`), і
+	 * показане повідомлення означало б те саме, що й різні тексти у формі входу:
+	 * підставляючи адреси по одній, будь-хто дізнається, які з них існують.
+	 *
+	 * Тому відповідь однакова для обох випадків, а сам текст став умовним
+	 * («якщо така пошта зареєстрована…») — інакше він обіцяв би лист, якого
+	 * ніхто не надсилав.
+	 */
+	const RESET_SILENT_CODES = ["auth/user-not-found", "auth/invalid-credential"];
+
+	function reportResetSent() {
+		successMessage = $_("profile.passwordResetSent");
+		setTimeout(() => {
+			loginMethod = "auth";
+		}, 3000);
+	}
+
 	async function handleForgotPassword(email: string) {
 		isLoading = true;
 		errorMessage = "";
@@ -129,12 +150,16 @@
 			const { sendPasswordResetEmail } = await import("firebase/auth");
 			const { getAuthInstance } = await import("$lib/services/firebase/config");
 			await sendPasswordResetEmail(getAuthInstance(), email);
-			successMessage = $_("profile.passwordResetSent");
-			setTimeout(() => {
-				loginMethod = "auth";
-			}, 3000);
+			reportResetSent();
 		} catch (e: unknown) {
-			errorMessage = $_(errorToMessageKey(e));
+			/*
+			 * Решта помилок ЛИШАЄТЬСЯ на екрані: неправильно записана адреса й
+			 * обрив мережі — це те, що людина може виправити, і ховати їх за
+			 * «лист надіслано» означало б збрехати про надісланий лист.
+			 */
+			const code = (e as { code?: string })?.code ?? "";
+			if (RESET_SILENT_CODES.includes(code)) reportResetSent();
+			else errorMessage = $_(errorToMessageKey(e));
 		} finally {
 			isLoading = false;
 		}

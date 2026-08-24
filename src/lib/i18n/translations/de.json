@@ -237,12 +237,11 @@
 		"spamWarning": "Die E-Mail könnte im Spam-Ordner landen, da die App neu ist.",
 		"sendResetEmail": "Wiederherstellungsmail senden",
 		"backToSignin": "Zurück zur Anmeldung",
-		"passwordResetSent": "Wiederherstellungsmail gesendet",
+		"passwordResetSent": "Falls diese E-Mail registriert ist, wurde die Nachricht zum Zurücksetzen bereits gesendet",
 		"linkAccount": "Konto verknüpfen",
 		"editAvatarTitle": "Avatar bearbeiten",
 		"errors": {
 			"enterEmail": "Gib E-Mail ein",
-			"userNotFound": "Benutzer mit dieser E-Mail nicht gefunden",
 			"invalidEmail": "Ungültiges E-Mail-Format",
 			"fillFields": "Fülle alle Felder aus",
 			"passwordMismatch": "Passwörter stimmen nicht überein",

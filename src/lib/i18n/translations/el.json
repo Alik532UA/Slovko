@@ -237,12 +237,11 @@
 		"spamWarning": "Το email μπορεί να καταλήξει στα Ανεπιθύμητα.",
 		"sendResetEmail": "Αποστολή email επαναφοράς",
 		"backToSignin": "Πίσω στη σύνδεση",
-		"passwordResetSent": "Το email επαναφοράς στάλθηκε",
+		"passwordResetSent": "Αν αυτό το email είναι εγγεγραμμένο, το μήνυμα επαναφοράς έχει ήδη σταλεί",
 		"linkAccount": "Σύνδεση λογαριασμού",
 		"editAvatarTitle": "Επεξεργασία αβατάρ",
 		"errors": {
 			"enterEmail": "Εισαγάγετε email",
-			"userNotFound": "Δεν βρέθηκε χρήστης με αυτό το email",
 			"invalidEmail": "Μη έγκυρη μορφή email",
 			"fillFields": "Συμπληρώστε όλα τα πεδία",
 			"passwordMismatch": "Οι κωδικοί δεν ταιριάζουν",

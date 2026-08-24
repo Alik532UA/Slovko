@@ -237,12 +237,11 @@
 		"spamWarning": "De e-mail kan in de map Ongewenst terechtkomen omdat de app nieuw is.",
 		"sendResetEmail": "Herstelmail verzenden",
 		"backToSignin": "Terug naar inloggen",
-		"passwordResetSent": "Herstelmail verzenden",
+		"passwordResetSent": "Als dat e-mailadres geregistreerd is, is het herstelbericht al verzonden",
 		"linkAccount": "Account koppelen",
 		"editAvatarTitle": "Avatar bewerken",
 		"errors": {
 			"enterEmail": "Voer e-mail in",
-			"userNotFound": "Gebruiker met dit e-mailadres niet gevonden",
 			"invalidEmail": "Ongeldig e-mailadres",
 			"fillFields": "Vul alle velden in",
 			"passwordMismatch": "Wachtwoorden komen niet overeen",

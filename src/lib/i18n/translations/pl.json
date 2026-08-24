@@ -268,12 +268,11 @@
 		"spamWarning": "Wiadomość może trafić do folderu «Spam», ponieważ aplikacja jest nowa.",
 		"sendResetEmail": "Wyślij wiadomość",
 		"backToSignin": "Powrót do logowania",
-		"passwordResetSent": "Wiadomość do odzyskiwania hasła została wysłana na Twój e-mail",
+		"passwordResetSent": "Jeśli ten e-mail jest zarejestrowany, wiadomość do odzyskiwania hasła została już wysłana",
 		"linkAccount": "Powiąż konto",
 		"editAvatarTitle": "Edycja awatara",
 		"errors": {
 			"enterEmail": "Wprowadź e-mail",
-			"userNotFound": "Nie znaleziono użytkownika o takim e-mailu",
 			"invalidEmail": "Nieprawidłowy format e-mail",
 			"fillFields": "Wypełnij wszystkie pola",
 			"passwordMismatch": "Hasła nie są identyczne",
