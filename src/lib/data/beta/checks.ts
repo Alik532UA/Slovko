@@ -426,6 +426,27 @@ export const BETA_TABS: readonly BetaTab[] = [
 				coverage: "manual",
 				testid: "avatar-editor-save-btn",
 			},
+			{
+				id: "account_7",
+				category: { uk: "Видалення акаунта", en: "Deleting the account" },
+				text: {
+					uk: "Видаліть акаунт, у якого є прогрес, плейлісти й взаємна підписка. У другого гравця ваш рядок мусить зникнути зі списку підписок — прибирання зносить і дзеркала підписок у чужих документах.",
+					en: "Delete an account that has progress, playlists and a mutual follow. On the second player your row must disappear from their follows — the cleanup removes the mirrored follows in other people's documents too.",
+				},
+				coverage: "manual",
+				testid: "profile-delete-account-btn",
+			},
+			{
+				id: "account_8",
+				category: { uk: "Видалення акаунта", en: "Deleting the account" },
+				text: {
+					uk: "Після видалення зареєструйтеся тією самою поштою заново. Прогрес, історія й плейлісти НЕ мусять повернутися: підколекції прибрані, а не лишені під старим uid.",
+					en: "After deleting, register with the same email again. Progress, history and playlists must NOT come back: the subcollections are erased, not left under the old uid.",
+				},
+				negative: true,
+				coverage: "manual",
+				testid: "profile-delete-account-btn",
+			},
 		],
 	},
 

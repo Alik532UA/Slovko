@@ -249,9 +249,6 @@ export const AuthService = {
 			reauthenticateWithPopup,
 			deleteUser,
 		} = await import("firebase/auth");
-		const { doc, deleteDoc } = await import("firebase/firestore");
-		const { getDb } = await import("./config");
-
 		const uid = user.uid;
 		const providerId = user.providerData[0]?.providerId;
 
@@ -267,15 +264,25 @@ export const AuthService = {
 				throw new AuthError("profile.errors.enterPassword");
 			}
 
-			// 2. Видалення даних з Firestore
-			const userDocRef = doc(getDb(), "users", uid);
-			const profileDocRef = doc(getDb(), "profiles", uid);
-
-			try {
-				await Promise.all([deleteDoc(userDocRef), deleteDoc(profileDocRef)]);
-			} catch (e) {
-				logService.warn("debug", "[AuthService] Failed to delete Firestore data:", e);
-			}
+			/*
+			 * 2. ПРИБИРАННЯ ДАНИХ — і ПОВНЕ, а не двома документами.
+			 *
+			 * Доти тут стояло `deleteDoc(users/{uid})` і `deleteDoc(profiles/{uid})`.
+			 * Firestore НЕ видаляє підколекції разом із документом, тож після
+			 * «видалення акаунта» лишалися прогрес по словах (шістнадцять шардів),
+			 * історія по днях, плейлісти, підписки — і дзеркала цих підписок у
+			 * документах ІНШИХ людей. Прибрати їх після `deleteUser()` уже неможливо:
+			 * правила вимагають власника, а власника немає.
+			 *
+			 * Перелік і порядок — у `EraseService`, разом із названими межами (що
+			 * саме прибрати з клієнта не можна й чому).
+			 *
+			 * Невдача тут ЗУПИНЯЄ видалення, а не ковтається: акаунт без даних —
+			 * поганий стан, але акаунт, чиї дані лишилися назавжди, гірший, і людина
+			 * мусить дізнатися про це зараз, а не ніколи.
+			 */
+			const { eraseUserData } = await import("./EraseService");
+			await eraseUserData(uid);
 
 			// 3. Видалення самого користувача
 			await deleteUser(user);

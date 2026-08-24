@@ -139,6 +139,26 @@ const CASES = [
 	{ name: 'скарга на слово', allowed: true, run: () => fsCreate('feedback_anonymous/word_error/messages', 'probe', { wordKey: 'cat', errorType: 'translation', status: 'new' }, null) },
 	{ name: 'своя скринька сигналів — читання', allowed: true, run: () => dbRead(`signals/${me.uid}`, me.token) },
 
+	/*
+	 * ВИДАЛЕННЯ АКАУНТА — прибирання ЗА СОБОЮ.
+	 *
+	 * Доти видалення прибирало два документи, а Firestore не видаляє підколекції
+	 * разом із документом: прогрес по словах, історія, плейлісти й підписки
+	 * лишалися назавжди — після `deleteUser()` їх не може прибрати вже ніхто, бо
+	 * правила вимагають власника. Ці випадки й стережуть, що права на прибирання
+	 * в людини є ДО того (`EraseService`).
+	 */
+	{ name: 'прибрати свою історію по днях', allowed: true, run: () => fsDelete(`users/${me.uid}/history/2026-08-18`, me.token) },
+	{ name: 'прибрати свій плейліст', allowed: true, run: () => fsDelete(`users/${me.uid}/playlists_v2/p1`, me.token) },
+	{ name: 'прибрати свій шард прогресу', allowed: true, run: () => fsDelete(`users/${me.uid}/words/shard-00`, me.token) },
+	{ name: 'прибрати свою підписку', allowed: true, run: () => fsDelete(`users/${me.uid}/following/${other.uid}`, me.token) },
+	// ДЗЕРКАЛО В ЧУЖОМУ ДОКУМЕНТІ: без цього права в списках інших людей лишався
+	// б рядок, що вказує в нікуди.
+	{ name: 'прибрати СВІЙ рядок у чужих followers', allowed: true, run: () => fsDelete(`users/${other.uid}/followers/${me.uid}`, me.token) },
+	{ name: 'прибрати свій публічний профіль', allowed: true, run: () => fsDelete(`profiles/${me.uid}`, me.token) },
+	{ name: 'прибрати свій слот у скриньці сигналів', allowed: true, run: () => dbWrite(`signals/${me.uid}/${other.uid}`, null, me.token) },
+	{ name: 'прибрати свою присутність', allowed: true, run: () => dbWrite(`status/${me.uid}`, null, me.token) },
+
 	// --- сторонній не мусить цього могти ---
 	{ name: 'ЧУЖИЙ документ користувача — читання', allowed: false, run: () => fsRead(`users/${me.uid}`, other.token) },
 	{ name: 'ЧУЖИЙ документ користувача — запис', allowed: false, run: () => fsUpdate(`users/${me.uid}`, { lastSync: 2 }, other.token) },
@@ -171,6 +191,10 @@ const CASES = [
 	{ name: 'присутність із ПІДРОБЛЕНИМ часом', allowed: false, run: () => dbWrite(`status/${me.uid}`, { state: 'online', lastChanged: 1 }, me.token) },
 	{ name: 'присутність зі станом поза переліком', allowed: false, run: () => dbWrite(`status/${me.uid}`, { state: 'invisible', lastChanged: SERVER_TIME }, me.token) },
 	{ name: 'запис у discovery із невідомим полем', allowed: false, run: () => dbWrite(`discovery/${me.uid}`, { displayName: 'Я', secret: 'х', timestamp: SERVER_TIME }, me.token) },
+	{ name: 'прибрати ЧУЖУ історію', allowed: false, run: () => fsDelete(`users/${other.uid}/history/2026-08-18`, me.token) },
+	{ name: 'прибрати ЧУЖИЙ шард прогресу', allowed: false, run: () => fsDelete(`users/${other.uid}/words/shard-00`, me.token) },
+	{ name: 'прибрати ЧУЖИЙ публічний профіль', allowed: false, run: () => fsDelete(`profiles/${other.uid}`, me.token) },
+	{ name: 'прибрати ЧУЖУ скриньку сигналів', allowed: false, run: () => dbWrite(`signals/${other.uid}`, null, me.token) },
 	{ name: 'ЧИТАННЯ відгуків', allowed: false, run: () => fsRead('feedback/bug/messages', me.token) },
 	{ name: 'ПРАВКА надісланого відгуку', allowed: false, run: () => fsUpdate('feedback/improvement/messages/probe', { message: 'підміна' }, me.token) },
 	{ name: 'відгук у категорію поза переліком', allowed: false, run: () => fsCreate('feedback/pwned/messages', 'probe', { message: 'х', status: 'new' }, null) },
