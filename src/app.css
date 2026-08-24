@@ -27,7 +27,11 @@
 [data-theme="dark-gray"] {
 	color-scheme: light dark;
 	--bg-primary: light-dark(#f5f6fa, #23272f);
-	--bg-image: light-dark(url("/images/background/bg-winter-v01.webp"), url("/images/background/bg-dark-v01.webp"));
+	/*
+	 * Картинка тла — НЕ через `light-dark()`: `url()` не колір.
+	 * Світле значення — нижче, у блоці неколірних токенів.
+	 */
+	--bg-image: url("/images/background/bg-dark-v01.webp");
 	--bg-secondary: light-dark(#e0e1e6, #43464e);
 	--text-primary: light-dark(#1f2937, #eaeaea);
 	--text-secondary: light-dark(#4b5563, #a0a0a0);
@@ -69,11 +73,26 @@
 	--backdrop-bg: light-dark(rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0.8));
 	--glass-bg: light-dark(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.05));
 	--glass-border: light-dark(rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.1));
-	--glass-blur: light-dark(8px, 12px);
-	
-	--shadow-sm: light-dark(0 2px 8px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.2));
-	--shadow-md: light-dark(0 8px 24px rgba(0, 0, 0, 0.12), 0 8px 24px rgba(0, 0, 0, 0.3));
-	--shadow-lg: light-dark(0 12px 32px rgba(0, 0, 0, 0.15), 0 12px 32px rgba(0, 0, 0, 0.5));
+	/*
+	 * Розмиття скла — НЕ через `light-dark()`: це довжина, а не колір.
+	 * Світле значення — нижче, у блоці неколірних токенів.
+	 */
+	--glass-blur: 12px;
+
+	/*
+	 * `light-dark()` стоїть у КОЛІРНІЙ позиції, а не поглинає все значення.
+	 *
+	 * Доти було `light-dark(0 2px 8px rgba(…), 0 2px 8px rgba(…))` — тобто
+	 * функція кольору тримала цілу тінь разом зі зсувами. Такий аргумент
+	 * недійсний, і властивість зникала повністю: заміряно на проді 0.7.625 —
+	 * тінь мали 0 елементів із 198.
+	 *
+	 * Геометрія в парі однакова, відрізняється лише прозорість, тож розділити
+	 * тут не компроміс: джерело лишається одне, а дублювати нічого.
+	 */
+	--shadow-sm: 0 2px 8px light-dark(rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.2));
+	--shadow-md: 0 8px 24px light-dark(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.3));
+	--shadow-lg: 0 12px 32px light-dark(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.5));
 	--accent-shadow: light-dark(rgba(var(--accent-rgb), 0.2), rgba(var(--accent-rgb), 0.3));
 
 	--bg-hover: light-dark(rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.08));
@@ -101,6 +120,53 @@
 	--hover-scale: 1.015; /* Subtle scale for ~2px effect */
 	--active-scale: 0.98;
 	--hover-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/*
+ * ПАРА ДЛЯ НЕКОЛІРНИХ ТОКЕНІВ — той самий сигнал, інший механізм.
+ *
+ * `light-dark()` приймає лише `<color>`. Довжина й `url()` в ній недійсні, і
+ * наслідок не «взяти перший аргумент», а ЗНИКЛА властивість цілком:
+ * `background: var(--bg-image) center/cover no-repeat` відпадає разом із
+ * позиціюванням, `backdrop-filter: blur(var(--glass-blur))` стає `none`.
+ *
+ * Заміряно на проді 0.7.625, де це й лежало: `background-image` на `html` і на
+ * `body` — `none`, `backdrop-filter` накладки онбордингу — `none`, тінь мали
+ * 0 елементів із 198. Тобто скло перестало бути склом, і крізь накладку було
+ * видно гру.
+ *
+ * Сигнал узятий РІВНО той, що керує `light-dark()` у блоці вище:
+ *
+ *   * `data-theme="light-gray"` — світлу тему вибрано явно;
+ *   * жодного `data-theme` + світла система — скрипт першого кадру не
+ *     виконався. У розмітці `app.html` цього атрибута немає, його ставить
+ *     лише той скрипт, а він інлайновий: у зібраній версії його пускає хеш у
+ *     CSP. Саме цей клас дефекту й був причиною переходу на `light-dark()`,
+ *     тож неколірні токени мусять витримувати те саме.
+ *
+ * Літерали лежать ПО РАЗУ, а правила нижче на них посилаються. Інакше та сама
+ * адреса картинки стояла б у двох місцях — тобто друге джерело того самого
+ * значення, яке розходиться при першій же правці, а прибирання таких копій і
+ * було змістом переходу на `light-dark()`.
+ *
+ * `html` у селекторах обовʼязковий: (0,1,1) проти (0,1,0) у `:root`. Без нього
+ * нічия, і переможця обирає порядок правил (SVELTE-UI-v8 `SUI-SCOPE-SPECIFICITY`).
+ */
+:root {
+	--bg-image-light: url("/images/background/bg-winter-v01.webp");
+	--glass-blur-light: 8px;
+}
+
+html[data-theme="light-gray"] {
+	--bg-image: var(--bg-image-light);
+	--glass-blur: var(--glass-blur-light);
+}
+
+@media (prefers-color-scheme: light) {
+	html:not([data-theme]) {
+		--bg-image: var(--bg-image-light);
+		--glass-blur: var(--glass-blur-light);
+	}
 }
 
 /* Utility for containers with scaling children to prevent clipping */

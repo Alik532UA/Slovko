@@ -85,3 +85,171 @@ describe('CSS-змінні (UI-UX-v8 § 1.6)', () => {
 		}
 	});
 });
+
+/**
+ * `light-dark()` з НЕколірним аргументом (UI-UX-v8 § 1.5.1).
+ *
+ * Це той самий наслідок, що й у перевірки вище — властивість зникає цілком, —
+ * але інша причина: змінна ОГОЛОШЕНА, просто її значення недійсне там, де її
+ * вживають. Тому попередній гейт її не бачив і бачити не міг.
+ *
+ * `light-dark()` — функція кольору, і приймає вона лише `<color>`. Довжина,
+ * `url()` чи ціла тінь зі зсувами в ній недійсні. Мовчання при цьому повне:
+ * оголошення користувацької змінної приймає будь-які лексеми, тож ні збірка,
+ * ні `svelte-check`, ні консоль браузера не кажуть нічого — властивість просто
+ * не застосовується.
+ *
+ * ЦІНА ЦЬОГО ВЖЕ ЗАПЛАЧЕНА. Коміт `62814080` перевів 37 токенів на
+ * `light-dark()`, і пʼять із них були неколірні. Заміряно на проді 0.7.625:
+ * `background-image` на `html` і на `body` — `none` (тло-картинки не було
+ * зовсім), `backdrop-filter` накладки онбордингу — `none`, тінь мали 0
+ * елементів із 198. Виглядало це як «крізь накладку видно гру», тобто симптом
+ * вказував на онбординг, а причина лежала в палітрі.
+ *
+ * Зворотний експеримент (AI-AGENT-PITFALLS-v8 § 1.1): повернути в `app.css`
+ * `--glass-blur: light-dark(8px, 12px)` — перевірка мусить назвати саме цей
+ * виклик і саме той файл.
+ */
+
+/** Функції, що дають КОЛІР. `url()` тут немає, і це весь зміст переліку. */
+const COLOR_FUNCTIONS = new Set([
+	'rgb',
+	'rgba',
+	'hsl',
+	'hsla',
+	'hwb',
+	'lab',
+	'lch',
+	'oklab',
+	'oklch',
+	'color',
+	'color-mix',
+	'light-dark',
+	// `var()` пропускається наскрізь: що в ній — знає перевірка вище, ця про форму.
+	'var'
+]);
+
+/**
+ * Текст без коментарів.
+ *
+ * Обовʼязково: у `app.css` `light-dark()` згадується СЛОВАМИ — і в описі самої
+ * механіки, і в записі про те, чому пʼять токенів її не використовують. Без
+ * цього кроку гейт ловив би власну документацію.
+ */
+function stripComments(text: string): string {
+	return text.replace(/\/\*[\s\S]*?\*\//g, ' ');
+}
+
+/** Аргументи кожного `light-dark(...)` — з урахуванням вкладених дужок. */
+function lightDarkCalls(text: string): { args: string[]; raw: string }[] {
+	const calls: { args: string[]; raw: string }[] = [];
+	const needle = 'light-dark(';
+
+	for (let start = text.indexOf(needle); start !== -1; start = text.indexOf(needle, start + 1)) {
+		let depth = 0;
+		let end = -1;
+		for (let i = start + needle.length - 1; i < text.length; i++) {
+			if (text[i] === '(') depth++;
+			else if (text[i] === ')' && --depth === 0) {
+				end = i;
+				break;
+			}
+		}
+		// Незбалансовані дужки — це не наша перевірка, про них скаже збірка.
+		if (end === -1) continue;
+
+		const args: string[] = [];
+		let level = 0;
+		let current = '';
+		for (const ch of text.slice(start + needle.length, end)) {
+			if (ch === '(') level++;
+			else if (ch === ')') level--;
+			if (ch === ',' && level === 0) {
+				args.push(current.trim());
+				current = '';
+				continue;
+			}
+			current += ch;
+		}
+		args.push(current.trim());
+		calls.push({ args, raw: text.slice(start, end + 1) });
+	}
+	return calls;
+}
+
+function isColor(arg: string): boolean {
+	if (arg === '') return false;
+	if (/^#[0-9a-fA-F]{3,8}$/.test(arg)) return true;
+	// Іменований колір, `transparent`, `currentColor` — самі літери, без одиниць.
+	if (/^[a-zA-Z]+$/.test(arg)) return true;
+
+	const open = arg.indexOf('(');
+	if (open === -1) return false;
+	const name = arg.slice(0, open).trim();
+	if (!/^[a-zA-Z-]+$/.test(name) || !COLOR_FUNCTIONS.has(name.toLowerCase())) return false;
+
+	/*
+	 * Дужка функції мусить закриватися САМИМ КІНЦЕМ аргумента.
+	 *
+	 * Без цієї умови `0 2px 8px rgba(0, 0, 0, 0.2)` не пройшло б, а от
+	 * `rgba(0, 0, 0, 0.2) 0 2px 8px` — пройшло: жадібний розбір узяв би перше
+	 * імʼя функції й вирішив, що це колір. Тобто перевірка мовчала б рівно на
+	 * тому дефекті, проти якого стоїть, залежно від порядку слів у значенні.
+	 */
+	let depth = 0;
+	for (let i = open; i < arg.length; i++) {
+		if (arg[i] === '(') depth++;
+		else if (arg[i] === ')' && --depth === 0) return i === arg.length - 1;
+	}
+	return false;
+}
+
+describe('light-dark() приймає лише колір (UI-UX-v8 § 1.5.1)', () => {
+	const calls = FILES.flatMap((file) =>
+		lightDarkCalls(stripComments(readFileSync(file, 'utf8'))).map((call) => ({ file, ...call }))
+	);
+
+	it('перевірка жива: виклики light-dark() знайдено', () => {
+		expect(
+			calls.length,
+			'жодного light-dark() у стилях — або сканер шукає не там, або палітру ' +
+				'переписали, і тоді цей гейт треба не лагодити, а прибирати'
+		).toBeGreaterThan(25);
+	});
+
+	it('розбір аргументів живий: колір відрізняється від довжини й url()', () => {
+		// Без цього перевірка нижче була б зелена й на завжди-true `isColor`.
+		expect(isColor('#f5f6fa')).toBe(true);
+		expect(isColor('rgba(var(--accent-rgb), 0.15)')).toBe(true);
+		expect(isColor('light-dark(#4b5563, #a0a0a0)')).toBe(true);
+		expect(isColor('transparent')).toBe(true);
+		expect(isColor('8px'), 'довжина — не колір').toBe(false);
+		expect(isColor('url("/images/a.webp")'), 'url() — не колір').toBe(false);
+		expect(isColor('0 2px 8px rgba(0, 0, 0, 0.2)'), 'ціла тінь — не колір').toBe(false);
+		expect(isColor('rgba(0, 0, 0, 0.2) 0 2px 8px'), 'колір плюс зсуви — не колір').toBe(false);
+	});
+
+	it('обидва аргументи кожного виклику — кольори', () => {
+		const broken = calls
+			.filter((call) => call.args.length !== 2 || !call.args.every(isColor))
+			.map((call) => `${call.file}: ${call.raw}`)
+			.sort();
+
+		expect(
+			broken,
+			'неколірний аргумент робить значення недійсним, і властивість зникає ' +
+				`ЦІЛКОМ — мовчки, без жодного попередження:\n  ${broken.join('\n  ')}`
+		).toEqual([]);
+	});
+});
+
+describe('CSS-змінні: рантайм-перелік', () => {
+	it('перелік рантайм-змінних не розростається мовчки', () => {
+		// Кожен запис має причину — це не список винятків, а список того, що
+		// оголошується з JS. Порожній рядок замість причини робить його смітником.
+		for (const [name, reason] of Object.entries(RUNTIME_DECLARED)) {
+			expect(reason.length, `${name} без причини`).toBeGreaterThan(20);
+			expect(used.has(name), `${name} більше ніде не вживається — прибери запис`).toBe(true);
+		}
+	});
+});
