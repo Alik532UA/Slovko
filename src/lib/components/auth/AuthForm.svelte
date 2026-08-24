@@ -1,7 +1,7 @@
 <!-- src/lib/components/auth/AuthForm.svelte -->
 <script lang="ts">
 	import PasswordInput from '$lib/components/ui/PasswordInput.svelte';
-	import { Mail } from 'lucide-svelte';
+	import { Info, Mail } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 
 	interface Props {
@@ -31,6 +31,15 @@
 	}: Props = $props();
 
 	let email = $state('');
+	/**
+	 * Чи розкрито довідку «як працює акаунт».
+	 *
+	 * Пояснення тут потрібне не всім і не завжди: людина, яка прийшла ввести
+	 * пошту, читає два поля, а не чотири абзаци. Тому текст лежить за кнопкою `i`
+	 * біля заголовка — там, куди дивляться, коли не розуміють. Стан локальний:
+	 * це вибір на цю мить, а не факт про акаунт.
+	 */
+	let hints = $state(false);
 	let password = $state('');
 
 	function handleLoginSubmit(e: Event) {
@@ -89,9 +98,37 @@
 			</button>
 		</form>
 	{:else}
-		<h2 class="auth-title">
-			{$_('profile.signinTitle') || $_('auth.title') || 'Вхід або реєстрація'}
-		</h2>
+		<div class="auth-head">
+			<h2 class="auth-title">
+				{$_('profile.signinTitle') || $_('auth.title') || 'Вхід або реєстрація'}
+			</h2>
+			<button
+				type="button"
+				class="info-btn"
+				aria-expanded={hints}
+				aria-controls="auth-hints"
+				aria-label={$_('profile.accountInfoOpen')}
+				title={$_('profile.accountInfoOpen')}
+				onclick={() => (hints = !hints)}
+				data-testid="auth-info-btn"
+			>
+				<Info size={18} aria-hidden="true" />
+			</button>
+		</div>
+
+		{#if hints}
+			<!--
+				Порядок абзаців — порядок питань: навіщо це взагалі, що буде після
+				реєстрації, що буде після входу в наявний акаунт і чому для друзів
+				акаунт потрібен обом.
+			-->
+			<div class="auth-hints" id="auth-hints" data-testid="auth-info-panel">
+				<p>{$_('profile.accountInfoWhy')}</p>
+				<p>{$_('profile.accountInfoRegister')}</p>
+				<p>{$_('profile.accountInfoSignIn')}</p>
+				<p>{$_('profile.accountInfoFriends')}</p>
+			</div>
+		{/if}
 
 		{#if withGoogle}
 			<button class="btn-google" type="button" onclick={ongoogle} disabled={loading} data-testid="auth-google-btn">
@@ -201,6 +238,69 @@
 		font-size: 1.35rem;
 		font-weight: 700;
 		color: var(--text-primary);
+	}
+
+	/*
+	 * ЗАГОЛОВОК І КНОПКА `i` — один рядок, кнопка праворуч.
+	 *
+	 * Заголовок лишається по центру: він центрований у всіх трьох панелях цієї
+	 * форми, і зсунути його лише тут означало б, що назва екрана стрибає при
+	 * переході на «Відновлення пароля». Тому центрує його `flex: 1`, а кнопка
+	 * стоїть поверх правого краю — і не забирає в заголовка ширини.
+	 */
+	.auth-head {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.auth-head .auth-title {
+		flex: 1;
+		/* Компенсація ширини кнопки: без неї центр заголовка з'їхав би влівo. */
+		margin-inline-start: 44px;
+	}
+
+	/*
+	 * 44px, хоч іконка 18px: це сенсорна ціль, і кнопка стоїть у куті — найгіршому
+	 * місці для маленької цілі на телефоні. Рамки немає навмисно: обведена, вона
+	 * читалася б як третя дія поруч із входом і реєстрацією, а це довідка.
+	 */
+	.info-btn {
+		display: flex;
+		flex-shrink: 0;
+		align-items: center;
+		justify-content: center;
+		width: 44px;
+		height: 44px;
+		border: none;
+		border-radius: 10px;
+		background: none;
+		color: var(--text-primary);
+		cursor: pointer;
+		opacity: 0.75;
+	}
+
+	.info-btn:hover,
+	.info-btn[aria-expanded='true'] {
+		opacity: 1;
+		background: rgba(255, 255, 255, 0.08);
+	}
+
+	/*
+	 * Довідка — окремим блоком зі своїм проміжком: чотири абзаци поспіль у потоці
+	 * форми читалися б як підписи до сусідніх кнопок, а не як один текст.
+	 */
+	.auth-hints {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		margin: 0 0 0.25rem;
+		font-size: 0.85em;
+		color: var(--text-secondary);
+	}
+
+	.auth-hints p {
+		margin: 0;
 	}
 
 	.auth-subtitle {
