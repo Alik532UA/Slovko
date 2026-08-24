@@ -108,8 +108,16 @@
 </script>
 
 <div class="search-container" data-testid="user-search-container">
-	<!-- Search Box -->
-	<div class="search-box">
+	<!--
+		Search Box.
+
+		`has-input-tools` — ознака поля з кнопками ВСЕРЕДИНІ (INPUT-TOOLS-v8 § 4.1):
+		від цього предка залежить рівень «курсор десь у полі». Драбина чотирьох
+		рівнів прозорості спільна з полем пароля й живе в `app.css` — FORM-INPUTS-v8
+		§ 1.1 вимагає однакової поведінки кнопок в усіх полях, а дві копії драбини
+		розійшлися б на першій же правці.
+	-->
+	<div class="search-box has-input-tools">
 		<div class="search-icon-wrapper">
 			<Search size={20} />
 		</div>
@@ -122,15 +130,20 @@
 			data-testid="search-users-input"
 		/>
 		
-		<div class="input-actions">
+		<!--
+			`input-tools` — область наведення: смуга на всю висоту поля праворуч.
+			Вона більша за саму кнопку, тож сходинка «курсор над кнопками» (90%) тут
+			справді досяжна, а не збігається з наведенням на кнопку.
+		-->
+		<div class="input-actions input-tools">
 			{#if isSearching}
 				<div class="spinner-wrapper">
 					<Loader size={16} class="spin-fast" />
 				</div>
 			{:else}
-				<button 
-					class="icon-btn" 
-					onclick={pasteFromClipboard} 
+				<button
+					class="icon-btn input-tools__btn"
+					onclick={pasteFromClipboard}
 					title={$_("discovery.paste")}
 					aria-label={$_("discovery.paste")}
 				>
@@ -263,6 +276,15 @@
 		height: 100%;
 	}
 
+	/*
+	 * БЕЗ власного `transition`, і це не недогляд.
+	 *
+	 * Тут стояло `transition: all 0.2s`. Через scoping Svelte воно переважує
+	 * глобальний перехід драбини прозорості (`app.css`, INPUT-TOOLS-v8 § 7), а
+	 * `all` до того ж анімує й `border-radius` із `padding` — тобто все, що колись
+	 * тут зміниться. Перехід оголошено в одному місці, разом зі сходинками, які
+	 * він і має згладжувати.
+	 */
 	.icon-btn {
 		background: transparent;
 		border: none;
@@ -273,7 +295,6 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		transition: all 0.2s;
 	}
 
 	.icon-btn:hover {

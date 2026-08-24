@@ -53,7 +53,12 @@
 </script>
 
 <div class="password-field-container">
-	<div class="input-with-icon">
+	<!--
+		`has-input-tools` — ознака поля з кнопками ВСЕРЕДИНІ (INPUT-TOOLS-v8 § 4.1).
+		Від цього предка залежить рівень «курсор десь у полі»; сама драбина
+		прозорості живе в `app.css` — там і пояснення, чому вона там, а не тут.
+	-->
+	<div class="input-with-icon has-input-tools">
 		<Lock size={18} class="input-icon lead" aria-hidden="true" />
 		<input
 			{id}
@@ -71,9 +76,14 @@
 		/>
 		<label for={id} class="floating-label">{label}</label>
 
+		<!--
+			Кнопка-око — ПЕРША й поки єдина в трейлінгу (§ 3.1): її шукають наосліп
+			і частіше за очищення. `input-tools__btn` — спільний клас усіх кнопок у
+			полі; свій `visibility-toggle` лишається за розташування й колір.
+		-->
 		<button
 			type="button"
-			class="visibility-toggle"
+			class="visibility-toggle input-tools__btn"
 			onclick={toggleVisibility}
 			tabindex="-1"
 			aria-label={showPassword
@@ -167,6 +177,20 @@
 		color: var(--accent, #3b82f6);
 	}
 
+	/*
+	 * БЕЗ `opacity` І БЕЗ `transition`, і це не недогляд.
+	 *
+	 * Обидві властивості переїхали в `app.css`, до драбини чотирьох рівнів
+	 * (INPUT-TOOLS-v8 § 4). Тут стояли `opacity: 0.7` у спокої та `1` на
+	 * наведенні — тобто дві сходинки з чотирьох, без рівня «курсор десь у полі»,
+	 * без `:focus-visible` і без `@media (hover: none)`.
+	 *
+	 * Повернути їх сюди означало б тихо зламати драбину: scoping Svelte додає до
+	 * селектора клас, тож `.visibility-toggle` (0,2,0) переважив би глобальне
+	 * базове правило, а `.visibility-toggle:hover` (0,3,0) — усі три сходинки
+	 * наведення. Так само й `transition`: без `opacity` у переліку сходинки
+	 * міняли б значення миттєво (§ 7).
+	 */
 	.visibility-toggle {
 		position: absolute;
 		right: 0.85rem;
@@ -181,12 +205,9 @@
 		align-items: center;
 		justify-content: center;
 		border-radius: 6px;
-		opacity: 0.7;
-		transition: opacity 0.2s, color 0.2s;
 	}
 
 	.visibility-toggle:hover {
-		opacity: 1;
 		color: var(--text-primary, #000);
 	}
 
