@@ -1,4 +1,4 @@
-const t=`{
+const e=`{
 	"app": {
 		"title": "Slovko"
 	},
@@ -228,6 +228,11 @@ const t=`{
 		"register": "Registrieren",
 		"signin": "Anmelden mit E-Mail",
 		"signinTitle": "Anmelden oder Registrieren",
+		"accountInfoOpen": "Wie das Konto funktioniert",
+		"accountInfoWhy": "Ohne Konto funktioniert alles: Wörter, Playlists, Wiederholungen. Das Gelernte lebt dann aber nur in diesem Browser — und verschwindet mit seinen Daten.",
+		"accountInfoRegister": "Die Registrierung fängt das Lernen nicht neu an. Du bleibst dieselbe Person, das Gelernte bleibt bei dir — und wird von da an im Konto bewahrt, also auch auf deinen anderen Geräten.",
+		"accountInfoSignIn": "Die Anmeldung in einem vorhandenen Konto öffnet genau dieses Konto — mit seinem Namen, seinen Freunden. Das in diesem Browser Gelernte kommt hinzu: es bleibt jeweils der weitere Stand.",
+		"accountInfoFriends": "Freunde heißt: einander folgen, also braucht es auf beiden Seiten ein Konto. Finden kann man jemanden nur über die E-Mail, die er selbst genannt hat.",
 		"googleAuth": "Anmelden mit Google",
 		"emailRegister": "Registrieren mit E-Mail",
 		"forgotPassword": "Vergessen?",
@@ -237,12 +242,15 @@ const t=`{
 		"spamWarning": "Die E-Mail könnte im Spam-Ordner landen, da die App neu ist.",
 		"sendResetEmail": "Wiederherstellungsmail senden",
 		"backToSignin": "Zurück zur Anmeldung",
-		"passwordResetSent": "Wiederherstellungsmail gesendet",
+		"passwordResetSent": "Falls diese E-Mail registriert ist, wurde die Nachricht zum Zurücksetzen bereits gesendet",
 		"linkAccount": "Konto verknüpfen",
 		"editAvatarTitle": "Avatar bearbeiten",
+		"editNameTitle": "Namen bearbeiten",
+		"nameLabel": "Neuer Anzeigename",
+		"avatarEdit": "Avatar ändern",
+		"editLocked": "Anmeldung erforderlich",
 		"errors": {
 			"enterEmail": "Gib E-Mail ein",
-			"userNotFound": "Benutzer mit dieser E-Mail nicht gefunden",
 			"invalidEmail": "Ungültiges E-Mail-Format",
 			"fillFields": "Fülle alle Felder aus",
 			"passwordMismatch": "Passwörter stimmen nicht überein",
@@ -471,4 +479,4 @@ const t=`{
 		"gotIt": "Verstanden"
 	}
 }
-`;export{t as default};
+`;export{e as default};
