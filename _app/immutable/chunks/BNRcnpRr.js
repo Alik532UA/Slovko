@@ -169,7 +169,7 @@ const t=`{
 		"privacyTitle": "Ustawienia prywatności",
 		"privacySubtitle": "Zarządzaj widocznością profilu i interakcjami",
 		"showInSearch": "Pokazuj w wyszukiwarce",
-		"showInSearchDesc": "Pozwól innym znaleźć Cię po e-mailu lub nazwie",
+		"showInSearchDesc": "Pozwól innym znaleźć Cię po dokładnym adresie e-mail",
 		"allowFriendRequests": "Zezwalaj na zaproszenia do znajomych",
 		"allowFriendRequestsDesc": "Pozwól innym wysyłać Ci zaproszenia do znajomych",
 		"shareStats": "Udostępniaj statystyki",
