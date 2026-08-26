@@ -7,7 +7,16 @@ import prettierConfig from "eslint-config-prettier";
 export default [
 	{
 		// Global ignores
-		ignores: ["build/", ".svelte-kit/", "dist/", "node_modules/", "static/"],
+		/*
+		 * `.claude/` — не вихідний код, а робочі копії інструментів. Паралельна
+		 * сесія кладе туди git-worktree з ПОВНОЮ копією проєкту, разом із
+		 * `tsconfig.json`; без цього рядка eslint бачить два корені конфігурації й
+		 * розбирає чужу копію як свою. Заміряно 26.08 у `Slovko`: один
+		 * `.claude/worktrees/…/src/lib/utils/storageMigration.ts` дав `Parsing
+		 * error` — тобто `eslint .` став червоний на коді, якого в проєкті немає.
+		 * Урок узятий з `VetCrewGames`, де цей рядок уже стоїть.
+		 */
+		ignores: ["build/", ".svelte-kit/", "dist/", "node_modules/", "static/", ".claude/"],
 	},
 	{
 		// Config files and scripts (non-project files)
