@@ -16,7 +16,14 @@ export default [
 		 * error` — тобто `eslint .` став червоний на коді, якого в проєкті немає.
 		 * Урок узятий з `VetCrewGames`, де цей рядок уже стоїть.
 		 */
-		ignores: ["build/", ".svelte-kit/", "dist/", "node_modules/", "static/", ".claude/"],
+		ignores: [
+			"build/",
+			".svelte-kit/",
+			"dist/",
+			"node_modules/",
+			"static/",
+			".claude/",
+		],
 	},
 	{
 		// Config files and scripts (non-project files)
@@ -266,6 +273,29 @@ export default [
 		],
 		rules: {
 			"svelte/no-at-html-tags": "off",
+		},
+	},
+	{
+		/**
+		 * Посилання на СУСІДНІЙ сайт, а не на маршрут цього.
+		 *
+		 * `siblingUrl()` (`src/lib/siblings.ts`) віддає абсолютну адресу іншого
+		 * сайту разом із мовою, якою читають тут. `resolve()` до неї застосовувати
+		 * не можна й нема чого: він зрізав би перший символ і склеїв `//`,
+		 * обернувши `https://…` на `/Slovko/ttps:/…`.
+		 *
+		 * Правило мовчить на решті зовнішніх посилань цього ж файлу лише тому, що
+		 * ті — рядкові літерали, і воно бачить схему. Тут адреса приходить
+		 * виразом, і статично її не видно.
+		 *
+		 * Виняток файловий із тієї самої причини, що й у блоці вище:
+		 * `eslint-plugin-svelte` 3.15 не читає директив у HTML-коментарях розмітки
+		 * (у CV з 3.20 читає). Інлайновий `eslint-disable-next-line` тут ВИГЛЯДАВ
+		 * робочим і не діяв — перевірено на цьому ж рядку, перш ніж дійшло сюди.
+		 */
+		files: ["src/lib/components/settings/AboutModal.svelte"],
+		rules: {
+			"svelte/no-navigation-without-resolve": "off",
 		},
 	},
 	prettierConfig,

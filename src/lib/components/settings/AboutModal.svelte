@@ -2,12 +2,19 @@
 	/**
 	 * AboutModal — Про проєкт
 	 */
-	import { _ } from "svelte-i18n";
+	import { _, locale } from "svelte-i18n";
+	import { siblingUrl } from "$lib/siblings";
 	import { versionStore } from "$lib/controllers/VersionStore.svelte";
 	import { hardReset } from "$lib/services/resetService";
 	import { pwaStore } from "$lib/controllers/PwaStore.svelte";
 	import { settingsStore } from "$lib/controllers/SettingsStore.svelte";
-	import { Download, Instagram, Facebook, Linkedin, Keyboard } from "lucide-svelte";
+	import {
+		Download,
+		Instagram,
+		Facebook,
+		Linkedin,
+		Keyboard,
+	} from "lucide-svelte";
 	import ThreadsIcon from "../ui/icons/ThreadsIcon.svelte";
 	import FeedbackModal from "./FeedbackModal.svelte";
 	import InstallGuide from "../pwa/InstallGuide.svelte";
@@ -28,7 +35,9 @@
 
 <BaseModal {onclose} testid="about-modal">
 	<div class="content">
-		<p class="description" data-testid="about-description-text">{$_("about.description")}</p>
+		<p class="description" data-testid="about-description-text">
+			{$_("about.description")}
+		</p>
 
 		<div class="social-links" data-testid="about-social-list">
 			<a
@@ -92,7 +101,9 @@
 		<div class="hotkeys" data-testid="about-hotkeys-container">
 			<div class="hotkeys-head">
 				<Keyboard size={18} />
-				<span data-testid="about-hotkeys-title-text">{$_("settings.hotkeys.title")}</span>
+				<span data-testid="about-hotkeys-title-text"
+					>{$_("settings.hotkeys.title")}</span
+				>
 			</div>
 
 			<ul class="hotkeys-list" data-testid="about-hotkeys-list">
@@ -109,7 +120,9 @@
 				class:off={!settingsStore.value.enableHotkeys}
 				aria-pressed={settingsStore.value.enableHotkeys}
 				onclick={() =>
-					settingsStore.update({ enableHotkeys: !settingsStore.value.enableHotkeys })}
+					settingsStore.update({
+						enableHotkeys: !settingsStore.value.enableHotkeys,
+					})}
 				data-testid="about-hotkeys-toggle-btn"
 			>
 				{settingsStore.value.enableHotkeys
@@ -159,8 +172,22 @@
 				{$_("about.feedback.title")}
 			</button>
 
+			<!-- Мова, якою читають тут, іде разом із переходом: у CV сорок одна мова,
+				 і англійська там на голій адресі, тож голе посилання відкривало його
+				 англійською незалежно від того, що на екрані.
+
+				 Адреса тепер приходить ВИРАЗОМ, а не літералом, і саме через це
+				 `svelte/no-navigation-without-resolve` починає на неї сваритися —
+				 сусідні зовнішні посилання в цьому ж списку літеральні, і схему в них
+				 воно бачить. `resolve()` тут застосовувати не можна: він зрізав би
+				 перший символ і склеїв `//`, обернувши `https://…` на `/Slovko/ttps:/…`.
+
+				 Правило вимкнене для цього файлу в `eslint.config.js`, а не коментарем:
+				 `eslint-plugin-svelte` 3.15 директив у HTML-коментарях розмітки не читає
+				 (у CV з 3.20 читає). Інлайновий `eslint-disable-next-line` тут виглядав
+				 робочим і мовчки не діяв — перевірено на цьому ж рядку. -->
 			<a
-				href="https://alik532ua.github.io/CV/"
+				href={siblingUrl("cv", $locale ?? "uk")}
 				target="_blank"
 				rel="noopener noreferrer"
 				class="link-btn cv"
@@ -334,12 +361,7 @@
 	.separator {
 		border: none;
 		height: 1px;
-		background: linear-gradient(
-			90deg,
-			transparent,
-			var(--border),
-			transparent
-		);
+		background: linear-gradient(90deg, transparent, var(--border), transparent);
 		margin: 0.5rem 0;
 		opacity: 0.5;
 	}
