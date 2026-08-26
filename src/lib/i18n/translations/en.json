@@ -169,7 +169,7 @@
 		"privacyTitle": "Privacy Settings",
 		"privacySubtitle": "Manage who can see you and interact with you",
 		"showInSearch": "Show me in search",
-		"showInSearchDesc": "Allow other users to find you by email or name",
+		"showInSearchDesc": "Allow other users to find you by your exact email address",
 		"allowFriendRequests": "Allow friend requests",
 		"allowFriendRequestsDesc": "Allow others to send you friend requests",
 		"shareStats": "Share statistics",
