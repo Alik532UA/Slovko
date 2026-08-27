@@ -23,6 +23,25 @@
 {/if}
 
 <style>
+	/*
+	 * Кольори — з токенів теми, а не власні (UI-UX-v8 § 1.5).
+	 *
+	 * Доти цей індикатор був ЄДИНИМ місцем поза `app.css`, яке питало
+	 * `@media (prefers-color-scheme: dark)`. Медіазапит міряє систему, а тему
+	 * тут обирає користувач і зберігає `data-theme` — тобто це були різні
+	 * джерела, і розходилися вони в обидва боки:
+	 *
+	 *   * світла ОС + тема `dark-gray` → біле коло на темній сторінці;
+	 *   * темна ОС + тема `light-gray`/`green` → темно-сіре коло на світлій.
+	 *
+	 * Помітно це рівно тоді, коли зникає мережа, тобто в момент, коли на екран
+	 * і дивляться. Теми `orange` і `green` не мали правильного варіанта взагалі:
+	 * медіазапит про них не знає нічого.
+	 *
+	 * `--card-bg` замість власного напівпрозорого білого: індикатор лежить над
+	 * тлом, яке в кожній темі своє, і напівпрозорість дала б у `orange` рожевий
+	 * відтінок замість підкладки.
+	 */
 	.network-indicator {
 		position: fixed;
 		top: 1rem;
@@ -33,24 +52,18 @@
 		justify-content: center;
 		padding: 0.5rem;
 		border-radius: 50%;
-		background: rgba(255, 255, 255, 0.9);
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		box-shadow: var(--shadow-sm);
 		pointer-events: none;
 		transition: color 0.3s ease;
 	}
 
 	.online {
-		color: #22c55e; /* green-500 */
+		color: var(--status-success);
 	}
 
 	.offline {
-		color: #ef4444; /* red-500 */
-	}
-
-	/* Темна тема, якщо підтримується */
-	@media (prefers-color-scheme: dark) {
-		.network-indicator {
-			background: rgba(31, 41, 55, 0.9); /* gray-800 */
-		}
+		color: var(--status-danger);
 	}
 </style>
