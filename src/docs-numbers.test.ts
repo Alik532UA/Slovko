@@ -95,47 +95,95 @@ describe("числа в документації (AI-AGENT-PITFALLS-v8 § 5.5)",
 });
 
 /**
- * Стеля бюджету бандла — число СТАБІЛЬНЕ, і тому його звіряють.
+ * Стелі гейтів, названі в документації, — числа СТАБІЛЬНІ, і тому їх звіряють.
  *
- * Різниця з попереднім розділом не в темі, а у виді числа. Склад гейта правил
- * і стеля бюджету змінюються рідко й навмисно — такі числа документація
- * називати може, а гейт мусить тримати. ЗАМІРЯНЕ значення критичного шляху —
- * навпаки: воно рухається від кожного оновлення залежності, і саме тому в
- * документації його більше немає.
+ * Різниця з попереднім розділом не в темі, а у виді числа. Стеля змінюється
+ * рідко й навмисно — коли борг скоротили й опустили запис. ЗАМІРЯНЕ значення
+ * рухається від кожного коміту, і саме тому виміряного в документації бути не
+ * має (шапка цього файлу каже це про кількість тестів; бюджет бандла під те
+ * саме правило доти не потрапив).
  *
- * Це не гіпотеза. У `deploy.yml` стояло «Стеля 240 КБ при заміряних 214», у
- * `PROJECT-CONTEXT.md` — «214 КБ gzip у 15 файлах»; на день цієї перевірки
- * прогін друкував інше число. Ніхто нічого не ламав — просто виміряне
- * застаріло, як застаріває будь-яке виміряне. Стеля при цьому не рухалася
- * жодного разу.
+ * Це не гіпотеза, а перелік знайденого одним прогоном:
  *
- * Зворотний експеримент: змінити `LIMIT_KB` у `check-bundle.mjs`, не чіпаючи
- * документів, — перевірка мусить назвати кожен документ зі старим числом.
+ *   | документ казав          | у гейті стояло |
+ *   |-------------------------|---------------:|
+ *   | «стеля 21» (мертві ключі) |             20 |
+ *   | «стеля 15» (aria-label)   |              1 |
+ *   | «не більше 34» (розмір)   |             25 |
+ *   | «стеля 240 при заміряних 214» | 240 — вірно, 214 давно ні |
+ *
+ * Тобто розходилися саме ті числа, які ніхто не мав причини перечитувати:
+ * борг скорочували, стелю в тесті опускали, а рядок у таблиці лишався.
+ *
+ * Зворотний експеримент: змінити будь-яку константу нижче, не чіпаючи
+ * документів, — перевірка мусить назвати саме її.
  */
-const bundleGate = readFileSync(join(ROOT, "scripts/check-bundle.mjs"), "utf-8");
-const limitKb = Number(/const LIMIT_KB = (\d+)/.exec(bundleGate)?.[1]);
+const CEILINGS: { what: string; from: string; pattern: RegExp; inDoc: RegExp }[] = [
+	{
+		what: "бюджет критичного шляху",
+		from: "scripts/check-bundle.mjs",
+		pattern: /const LIMIT_KB = (\d+)/,
+		inDoc: /[Сс]теля\D{0,4}(\d+)\s*КБ/g,
+	},
+	{
+		what: "ключі словника без ужитку",
+		from: "src/i18n-coverage.test.ts",
+		pattern: /const KNOWN_UNUSED_KEYS = (\d+)/,
+		inDoc: /без ужитку\*\* \(стеля (\d+)\)/g,
+	},
+	{
+		what: "aria-label без i18n",
+		from: "src/i18n-coverage.test.ts",
+		pattern: /const KNOWN_HARDCODED_LABELS = (\d+)/,
+		inDoc: /без i18n\*\* \(стеля (\d+)\)/g,
+	},
+	{
+		what: "перевищення орієнтира розміру файлу",
+		from: "src/file-size.test.ts",
+		pattern: /const KNOWN_OVERSIZE = (\d+)/,
+		inDoc: /перевищень орієнтира розміру не більше (\d+)/g,
+	},
+];
 
-/** Документи, що взагалі згадують стелю бюджету. */
-const BUDGET_DOCS = ["PROJECT-CONTEXT.md", ".github/workflows/deploy.yml"];
+/** Документ, що взагалі згадує стелі. Гейт про НЕПРАВДУ, а не про обов'язок згадувати. */
+const CEILING_DOCS = ["PROJECT-CONTEXT.md", ".github/workflows/deploy.yml"];
 
-describe("стеля бюджету бандла в документації", () => {
-	it("перевірка жива: LIMIT_KB прочитано з гейта", () => {
-		expect(Number.isFinite(limitKb), "форма запису LIMIT_KB змінилася").toBe(true);
-		expect(limitKb).toBeGreaterThan(0);
+describe("стелі гейтів у документації", () => {
+	const real = new Map<string, number>();
+	for (const c of CEILINGS) {
+		real.set(c.what, Number(c.pattern.exec(readFileSync(join(ROOT, c.from), "utf-8"))?.[1]));
+	}
+
+	it("перевірка жива: кожну стелю прочитано з її гейта", () => {
+		const unread = CEILINGS.filter((c) => !Number.isFinite(real.get(c.what))).map(
+			(c) => `${c.what} — форма запису в ${c.from} змінилася`,
+		);
+		expect(unread, unread.join("\n")).toEqual([]);
 	});
 
-	for (const doc of BUDGET_DOCS) {
-		it(`«${doc}» називає стелю правильно`, () => {
-			const text = readFileSync(join(ROOT, doc), "utf-8");
-			const wrong = [...text.matchAll(/[Сс]теля\D{0,4}(\d+)\s*КБ|(\d+)\s*КБ\D{0,20}стеля/g)]
-				.map((m) => Number(m[1] ?? m[2]))
-				.filter((said) => said !== limitKb)
-				.map((said) => `названо ${said} КБ`);
+	it("перевірка жива: кожну стелю справді згадано хоч в одному документі", () => {
+		// Без цього переписаний рядок таблиці зробив би гейт мовчазно зеленим:
+		// нема збігу — нема й розбіжності.
+		const text = CEILING_DOCS.map((d) => readFileSync(join(ROOT, d), "utf-8")).join("\n");
+		const missing = CEILINGS.filter((c) => ![...text.matchAll(c.inDoc)].length).map(
+			(c) => `${c.what} — жоден документ не називає це число, і перевіряти нічого`,
+		);
+		expect(missing, missing.join("\n")).toEqual([]);
+	});
 
-			expect(
-				wrong,
-				`стеля в документі розійшлася з check-bundle.mjs (${limitKb} КБ):\n${wrong.join("\n")}`,
-			).toEqual([]);
+	for (const doc of CEILING_DOCS) {
+		it(`«${doc}» називає стелі правильно`, () => {
+			const text = readFileSync(join(ROOT, doc), "utf-8");
+			const wrong: string[] = [];
+			for (const c of CEILINGS) {
+				for (const m of text.matchAll(c.inDoc)) {
+					const said = Number(m[1]);
+					if (said !== real.get(c.what)) {
+						wrong.push(`«${m[0].trim()}» — ${c.what}: у ${c.from} стоїть ${real.get(c.what)}`);
+					}
+				}
+			}
+			expect(wrong, `стеля в документі розійшлася з гейтом:\n${wrong.join("\n")}`).toEqual([]);
 		});
 	}
 });
