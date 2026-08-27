@@ -9,6 +9,21 @@
 		"copyDiagnostics": "Скопіювати діагностику",
 		"copyFailed": "Буфер обміну недоступний — текст нижче можна виділити й скопіювати вручну"
 	},
+	"a11y": {
+		"friendsSettings": "Налаштування друзів",
+		"online": "У мережі",
+		"warning": "Увага",
+		"gameBoard": "Ігрове поле",
+		"sourceWords": "Слова мовою оригіналу",
+		"targetTranslations": "Переклади",
+		"swipeBoard": "Колода карток",
+		"moveUp": "Перемістити вгору",
+		"moveDown": "Перемістити вниз",
+		"delete": "Видалити",
+		"step": "Крок {n}",
+		"googleAvatar": "Світлина профілю Google",
+		"flag": "Прапор: {language}"
+	},
 	"errors": {
 		"loadFailed": "Помилка завантаження даних",
 		"speech": {

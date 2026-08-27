@@ -9,6 +9,21 @@
 		"copyDiagnostics": "Diagnose kopieren",
 		"copyFailed": "Zwischenablage nicht verfügbar — markieren Sie den Text unten und kopieren Sie ihn manuell"
 	},
+	"a11y": {
+		"friendsSettings": "Freunde-Einstellungen",
+		"online": "Online",
+		"warning": "Warnung",
+		"gameBoard": "Spielfeld",
+		"sourceWords": "Wörter in der Ausgangssprache",
+		"targetTranslations": "Übersetzungen",
+		"swipeBoard": "Kartenstapel",
+		"moveUp": "Nach oben verschieben",
+		"moveDown": "Nach unten verschieben",
+		"delete": "Löschen",
+		"step": "Schritt {n}",
+		"googleAvatar": "Google-Profilbild",
+		"flag": "Flagge: {language}"
+	},
 	"errors": {
 		"loadFailed": "Laden der Daten fehlgeschlagen",
 		"speech": {

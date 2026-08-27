@@ -15,6 +15,7 @@
 		Zap,
 		Target,
 	} from "lucide-svelte";
+	import { _ } from "svelte-i18n";
 	import { PresenceService } from "$lib/services/firebase/PresenceService.svelte";
 	import { authStore } from "$lib/controllers/AuthStore.svelte";
 	import { logService } from "$lib/services/logService.svelte";
@@ -160,7 +161,7 @@
 			class="online-indicator"
 			style:width="{size / 2.5}px"
 			style:height="{size / 2.5}px"
-			aria-label="Online"
+			aria-label={$_("a11y.online")}
 			data-testid="user-avatar-online-status"
 		></div>
 	{/if}

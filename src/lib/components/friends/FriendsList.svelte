@@ -67,7 +67,7 @@
 		<button
 			class="settings-btn-top"
 			onclick={onopenSettings}
-			aria-label="Friends settings"
+			aria-label={$_("a11y.friendsSettings")}
 			data-testid="friends-settings-btn"
 		>
 			<Settings size={20} />

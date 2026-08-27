@@ -9,6 +9,21 @@
 		"copyDiagnostics": "Skopiuj diagnostykę",
 		"copyFailed": "Schowek niedostępny — zaznacz tekst poniżej i skopiuj go ręcznie"
 	},
+	"a11y": {
+		"friendsSettings": "Ustawienia znajomych",
+		"online": "Online",
+		"warning": "Ostrzeżenie",
+		"gameBoard": "Plansza gry",
+		"sourceWords": "Słowa w języku źródłowym",
+		"targetTranslations": "Tłumaczenia",
+		"swipeBoard": "Talia kart",
+		"moveUp": "Przenieś w górę",
+		"moveDown": "Przenieś w dół",
+		"delete": "Usuń",
+		"step": "Krok {n}",
+		"googleAvatar": "Zdjęcie profilowe Google",
+		"flag": "Flaga: {language}"
+	},
 	"errors": {
 		"loadFailed": "Błąd ładowania danych",
 		"speech": {

@@ -9,6 +9,21 @@
 		"copyDiagnostics": "Diagnostikanı kopiyalamaq",
 		"copyFailed": "Almaşuv tahtası mevcut degil — aşağıdaki metinni saylap qolnen kopiyalañız"
 	},
+	"a11y": {
+		"friendsSettings": "Dostlar ayarları",
+		"online": "Şebekede",
+		"warning": "Diqqat",
+		"gameBoard": "Oyun tahtası",
+		"sourceWords": "Asıl tildeki sözler",
+		"targetTranslations": "Tercimeler",
+		"swipeBoard": "Kart destesi",
+		"moveUp": "Yuqarı avuştırmaq",
+		"moveDown": "Aşağı avuştırmaq",
+		"delete": "Silmek",
+		"step": "{n}-nci adım",
+		"googleAvatar": "Google profil resmi",
+		"flag": "Bayraq: {language}"
+	},
 	"errors": {
 		"loadFailed": "Malümat yücklenip olamadı",
 		"speech": {

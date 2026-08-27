@@ -9,6 +9,21 @@
 		"copyDiagnostics": "Copy diagnostics",
 		"copyFailed": "Clipboard unavailable — select the text below and copy it manually"
 	},
+	"a11y": {
+		"friendsSettings": "Friends settings",
+		"online": "Online",
+		"warning": "Warning",
+		"gameBoard": "Game board",
+		"sourceWords": "Source words",
+		"targetTranslations": "Translations",
+		"swipeBoard": "Card deck",
+		"moveUp": "Move up",
+		"moveDown": "Move down",
+		"delete": "Delete",
+		"step": "Step {n}",
+		"googleAvatar": "Google profile picture",
+		"flag": "Flag: {language}"
+	},
 	"errors": {
 		"loadFailed": "Failed to load data",
 		"speech": {

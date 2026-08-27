@@ -220,7 +220,7 @@
 									class:active={hintStep === i + 1}
 									class:completed={hintStep > i + 1}
 									onclick={() => (hintStep = i + 1)}
-									aria-label="Step {i + 1}"
+									aria-label={$_("a11y.step", { values: { n: i + 1 } })}
 									data-testid="onboarding-progress-item-{i + 1}"
 								></button>
 							{/each}

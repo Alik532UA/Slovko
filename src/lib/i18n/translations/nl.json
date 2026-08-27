@@ -9,6 +9,21 @@
 		"copyDiagnostics": "Diagnostiek kopiëren",
 		"copyFailed": "Klembord niet beschikbaar — selecteer de tekst hieronder en kopieer deze handmatig"
 	},
+	"a11y": {
+		"friendsSettings": "Vrienden-instellingen",
+		"online": "Online",
+		"warning": "Waarschuwing",
+		"gameBoard": "Speelveld",
+		"sourceWords": "Woorden in de brontaal",
+		"targetTranslations": "Vertalingen",
+		"swipeBoard": "Kaartenstapel",
+		"moveUp": "Omhoog verplaatsen",
+		"moveDown": "Omlaag verplaatsen",
+		"delete": "Verwijderen",
+		"step": "Stap {n}",
+		"googleAvatar": "Google-profielfoto",
+		"flag": "Vlag: {language}"
+	},
 	"errors": {
 		"loadFailed": "Laden van gegevens mislukt",
 		"speech": {

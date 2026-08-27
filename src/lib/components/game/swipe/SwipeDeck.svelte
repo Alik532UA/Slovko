@@ -122,7 +122,7 @@
 		class="swipe-board"
 		role="main"
 		tabindex="-1"
-		aria-label="Swipe Board"
+		aria-label={$_("a11y.swipeBoard")}
 		data-testid="swipe-board-container"
 	>
 		{#if !currentCard}

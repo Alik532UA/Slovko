@@ -317,7 +317,7 @@
 									onclick={() => moveWord(i, -1)}
 									disabled={i === 0}
 									data-testid="move-up-btn-{i}"
-									aria-label="Move up"
+									aria-label={$_("a11y.moveUp")}
 								>
 									<APP_ICONS.ArrowUp size={16} />
 								</button>
@@ -325,7 +325,7 @@
 									onclick={() => moveWord(i, 1)}
 									disabled={i === words.length - 1}
 									data-testid="move-down-btn-{i}"
-									aria-label="Move down"
+									aria-label={$_("a11y.moveDown")}
 								>
 									<APP_ICONS.ArrowDown size={16} />
 								</button>
@@ -333,7 +333,7 @@
 									class="delete"
 									onclick={() => removeWord(i)}
 									data-testid="delete-word-btn-{i}"
-									aria-label="Delete"
+									aria-label={$_("a11y.delete")}
 								>
 									<APP_ICONS.Trash2 size={16} />
 								</button>

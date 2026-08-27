@@ -21,6 +21,8 @@
 	import { untrack } from "svelte";
 	import { authStore } from "../../controllers/AuthStore.svelte";
 	import { LANGUAGES } from "../../i18n/init";
+	// Назва мови, а не її код: читалка вимовляє «Прапор: Nederlands», а не «Прапор nl».
+	import { LANGUAGE_NAMES } from "$lib/types/index";
 	import { base } from "$app/paths";
 
 	interface Props {
@@ -129,7 +131,7 @@
 						selectedColor = "google";
 						selectedIcon = "user";
 					}}
-					aria-label="Google Profile Picture"
+					aria-label={$_("a11y.googleAvatar")}
 					data-testid="color-btn-google"
 				>
 					<img src={authStore.originalPhotoURL} alt="" class="google-btn-img" loading="lazy" width="100%" height="100%" />
@@ -141,7 +143,7 @@
 					class="color-btn flag-btn-choice"
 					class:selected={selectedColor === `flag-${lang}`}
 					onclick={() => (selectedColor = `flag-${lang}`)}
-					aria-label="Flag {lang}"
+					aria-label={$_("a11y.flag", { values: { language: LANGUAGE_NAMES[lang] } })}
 					data-testid="color-btn-flag-{lang}"
 				>
 					<img

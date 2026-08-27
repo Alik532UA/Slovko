@@ -168,7 +168,7 @@
 					class="stat-item hint-btn"
 					style="border-color: rgba(241, 196, 15, 0.4); background: rgba(241, 196, 15, 0.1);"
 					onclick={() => (showSwipeWarningModal = true)}
-					aria-label="Warning"
+					aria-label={$_("a11y.warning")}
 					data-testid="swipe-warning-btn"
 					title=""
 				>
