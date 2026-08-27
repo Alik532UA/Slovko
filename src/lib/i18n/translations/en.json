@@ -20,7 +20,12 @@
 			"modalDesc3": "Try using another browser (like Chrome or Safari) or check your system settings."
 		},
 		"authRequired": "Please sign in to send feedback.",
-		"submitFailed": "Error sending report. Please try again later."
+		"submitFailed": "Error sending report. Please try again later.",
+		"page": {
+			"code": "Error {status}",
+			"unexpected": "An unexpected error occurred.",
+			"technical": "Technical details"
+		}
 	},
 	"levels": {
 		"title": "Levels",
@@ -399,7 +404,8 @@
 			"selectLevel": "Select level or topic",
 			"prev": "Previous level",
 			"next": "Next level"
-		}
+		},
+		"copied": "Copied"
 	},
 	"sync": {
 		"status": {

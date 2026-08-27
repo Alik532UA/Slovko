@@ -20,7 +20,12 @@
 			"modalDesc3": "Probeer een andere browser (zoals Chrome of Safari) of controleer je systeeminstellingen."
 		},
 		"authRequired": "Log in om feedback te sturen.",
-		"submitFailed": "Fout bij verzenden. Probeer het later opnieuw."
+		"submitFailed": "Fout bij verzenden. Probeer het later opnieuw.",
+		"page": {
+			"code": "Fout {status}",
+			"unexpected": "Er is een onverwachte fout opgetreden.",
+			"technical": "Technische details"
+		}
 	},
 	"levels": {
 		"title": "Niveaus",
@@ -368,7 +373,8 @@
 			"selectLevel": "Selecteer niveau of onderwerp",
 			"prev": "Vorig niveau",
 			"next": "Volgend niveau"
-		}
+		},
+		"copied": "Gekopieerd"
 	},
 	"sync": {
 		"status": {

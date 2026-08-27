@@ -20,7 +20,12 @@
 			"modalDesc3": "Versuchen Sie, einen anderen Browser (wie Chrome oder Safari) zu verwenden, oder überprüfen Sie Ihre Systemeinstellungen."
 		},
 		"authRequired": "Bitte melden Sie sich an, um Feedback zu senden.",
-		"submitFailed": "Fehler beim Senden. Bitte versuche es später erneut."
+		"submitFailed": "Fehler beim Senden. Bitte versuche es später erneut.",
+		"page": {
+			"code": "Fehler {status}",
+			"unexpected": "Ein unerwarteter Fehler ist aufgetreten.",
+			"technical": "Technische Details"
+		}
 	},
 	"levels": {
 		"title": "Niveaus",
@@ -368,7 +373,8 @@
 			"selectLevel": "Niveau oder Thema auswählen",
 			"prev": "Vorheriges Niveau",
 			"next": "Nächstes Niveau"
-		}
+		},
+		"copied": "Kopiert"
 	},
 	"sync": {
 		"status": {

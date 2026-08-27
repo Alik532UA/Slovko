@@ -1,6 +1,6 @@
 ﻿<script lang="ts">
 	import { _ } from "svelte-i18n";
-	import { AlertTriangle, Copy, RotateCcw } from "lucide-svelte";
+	import { AlertTriangle, Check, Copy, RotateCcw } from "lucide-svelte";
 	import { settingsStore } from "$lib/controllers/SettingsStore.svelte";
 	import { versionStore } from "$lib/controllers/VersionStore.svelte";
 	import { logService } from "../../services/logService.svelte";
@@ -12,7 +12,11 @@
 	}
 	let { children, compact = false }: Props = $props();
 
-	function copyReport(error: unknown) {
+	let reportCopied = $state(false);
+	/** Текст звіту показується полем, коли буфер обміну відмовив. */
+	let reportFallback = $state<string | null>(null);
+
+	async function copyReport(error: unknown) {
 		const err = error as { message?: string; stack?: string };
 		const report = {
 			error: err?.message || "Unknown error",
@@ -29,9 +33,31 @@
 			userAgent: navigator.userAgent,
 		};
 
-		navigator.clipboard
-			.writeText(JSON.stringify(report, null, 2))
-			.then(() => alert("Report copied to clipboard!"));
+		const text = JSON.stringify(report, null, 2);
+
+		/*
+		 * Доти тут стояв `.then(() => alert(...))` БЕЗ `.catch()`, і це два різні
+		 * дефекти в одному рядку:
+		 *
+		 *   * відмова буфера (небезпечний контекст, відкликаний дозвіл, Safari
+		 *     поза жестом користувача) давала відхилений проміс, який нікуди не
+		 *     спливав: людина натискала кнопку, і не відбувалося НІЧОГО —
+		 *     ні звіту, ні пояснення;
+		 *   * `alert()` — блокувальне вікно з англійським рядком повз усі сім
+		 *     словників і повз тости застосунку.
+		 *
+		 * Тепер успіх позначається станом кнопки, а відмова показує сам текст
+		 * полем: звіт — єдине, заради чого ця кнопка існує.
+		 */
+		try {
+			await navigator.clipboard.writeText(text);
+			reportCopied = true;
+			reportFallback = null;
+			setTimeout(() => (reportCopied = false), 2000);
+		} catch (clipboardError) {
+			logService.warn("game", "Clipboard unavailable for error report:", clipboardError);
+			reportFallback = text;
+		}
 	}
 
 	function handleError(error: unknown) {
@@ -55,7 +81,7 @@
 				{/if}
 
 				<p class="error-msg" class:compact-msg={compact}>
-					{(error as { message?: string })?.message || "An unexpected error occurred"}
+					{(error as { message?: string })?.message || $_("errors.page.unexpected")}
 				</p>
 
 				<div class="actions" class:compact-actions={compact}>
@@ -66,11 +92,23 @@
 
 					{#if !compact}
 						<button class="action-btn report" onclick={() => copyReport(error)}>
-							<Copy size={20} />
-							<span>{$_("common.copyReport")}</span>
+							{#if reportCopied}
+								<Check size={20} />
+								<span>{$_("common.copied")}</span>
+							{:else}
+								<Copy size={20} />
+								<span>{$_("common.copyReport")}</span>
+							{/if}
 						</button>
 					{/if}
 				</div>
+
+				{#if reportFallback}
+					<p class="copy-failed">{$_("startup.copyFailed")}</p>
+					<textarea class="copy-fallback" data-testid="error-boundary-report-text" readonly rows="6"
+						>{reportFallback}</textarea
+					>
+				{/if}
 			</div>
 		</div>
 	{/snippet}
@@ -190,5 +228,25 @@
 	.report:hover {
 		background: var(--bg-active);
 		transform: scale(var(--hover-scale));
+	}
+
+	.copy-failed {
+		margin: 1rem 0 0;
+		color: var(--text-secondary);
+		font-size: 0.8rem;
+		text-align: left;
+	}
+
+	.copy-fallback {
+		width: 100%;
+		margin-top: 0.5rem;
+		padding: 0.5rem;
+		border-radius: 10px;
+		border: 1px solid var(--border);
+		background: var(--bg-active);
+		color: var(--text-secondary);
+		font-family: monospace;
+		font-size: 0.7rem;
+		resize: vertical;
 	}
 </style>

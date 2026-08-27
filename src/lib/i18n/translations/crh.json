@@ -20,7 +20,12 @@
 			"modalDesc3": "Başqa bir brauzer (meselâ Chrome yaki Safari) qullanmağa tırışıñız yaki sistem sazlamalarını teşkeriñiz."
 		},
 		"authRequired": "Fikir yollamaq içün lütfen kiriñiz.",
-		"submitFailed": "Yollav hatası. Lütfen soñra deñeñiz."
+		"submitFailed": "Yollav hatası. Lütfen soñra deñeñiz.",
+		"page": {
+			"code": "Hata {status}",
+			"unexpected": "Beklenmegen bir hata olıp keçti.",
+			"technical": "Tehnik tafsilât"
+		}
 	},
 	"levels": {
 		"title": "Seviyeler",
@@ -368,7 +373,8 @@
 			"selectLevel": "Seviye ya da tema saylav",
 			"prev": "Evelki seviye",
 			"next": "Nevbetteki seviye"
-		}
+		},
+		"copied": "Kopiyalandı"
 	},
 	"sync": {
 		"status": {

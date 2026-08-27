@@ -20,7 +20,12 @@
 			"modalDesc3": "Spróbuj użyć innej przeglądarki (np. Chrome lub Safari) lub sprawdź ustawienia systemowe."
 		},
 		"authRequired": "Aby wysłać opinię, zaloguj się na swoje konto.",
-		"submitFailed": "Błąd podczas wysyłania. Spróbuj później."
+		"submitFailed": "Błąd podczas wysyłania. Spróbuj później.",
+		"page": {
+			"code": "Błąd {status}",
+			"unexpected": "Wystąpił nieoczekiwany błąd.",
+			"technical": "Szczegóły techniczne"
+		}
 	},
 	"levels": {
 		"title": "Poziomy",
@@ -399,7 +404,8 @@
 			"selectLevel": "Wybór poziomu lub tematu",
 			"prev": "Poprzedni poziom",
 			"next": "Następny poziom"
-		}
+		},
+		"copied": "Skopiowano"
 	},
 	"sync": {
 		"status": {

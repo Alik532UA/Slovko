@@ -4,6 +4,7 @@
 	 */
 	import { onMount } from "svelte";
 	import { initializeI18n } from "$lib/i18n/init";
+	import { dictionaryReady } from "$lib/i18n/dictionaryReady";
 	import { _, isLoading, locale } from "svelte-i18n";
 	import { Check } from "lucide-svelte";
 	import { checkForUpdates } from "$lib/services/versionService";
@@ -473,18 +474,9 @@
 	const appVisible = $derived(ready && !$isLoading && authStore.isDataReady);
 
 	/**
-	 * Тексти панелі застряглого старту — з перевіркою, що словник узагалі є.
+	 * Тексти панелі застряглого старту — лише коли словник справді є.
 	 *
-	 * Умова саме `$locale`, а НЕ `!$isLoading`. Перевірено в
-	 * `node_modules/svelte-i18n/dist/runtime.cjs`: `isLoading` створюється як
-	 * `writable(false)` і стає `true` лише на час завантаження словника. Тобто
-	 * ДО `init()` він `false` — «не завантажується» й «завантажено» виглядають
-	 * однаково. А `formatMessage` при `locale == null` КИДАЄ
-	 * («Cannot format a message without first setting the initial locale»), і
-	 * кинуло б це просто в макеті — тобто панель, що існує заради поламаного
-	 * старту, ламала б сторінку остаточно. `$locale` натомість стає непорожнім
-	 * лише після того, як словник доїхав.
-	 *
+	 * Чому охорона саме така, а не `!$isLoading`, — у `dictionaryReady()`.
 	 * `try` понад те — навмисне дублювання: єдиний екран, який мусить пережити
 	 * геть усе, не спирається на одну умову.
 	 */
@@ -496,7 +488,7 @@
 			copyDiagnostics: "Copy diagnostics",
 			copyFailed: "Clipboard unavailable — select the text below and copy it manually",
 		};
-		if (!$locale || $isLoading) return fallback;
+		if (!dictionaryReady($locale, $isLoading)) return fallback;
 		try {
 			return {
 				slowTitle: $_("startup.slowTitle"),
