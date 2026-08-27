@@ -24,7 +24,7 @@
 		initGA,
 		trackPageView,
 		trackEvent,
-	} from "$lib/services/analyticsService";
+	} from "$lib/services/analytics";
 	import { webVitals } from "$lib/controllers/webVitals.svelte";
 	import { pwaStore } from "$lib/controllers/PwaStore.svelte";
 	import { page } from "$app/state";
