@@ -13,6 +13,7 @@
 	import { fade } from "svelte/transition";
 	import { cubicOut, quadInOut } from "svelte/easing";
 	import { _ } from "svelte-i18n";
+	import { AlertTriangle } from "lucide-svelte";
 	import { logService } from "$lib/services/logService.svelte";
 	import type { ActiveCard, WordPair } from "$lib/types/index";
 	import type { GameData } from "$lib/services/gameDataService";
@@ -145,7 +146,7 @@
 {:else if gameState.error}
 	<div class="error-overlay" in:fade aria-live="assertive">
 		<div class="error-content">
-			<span class="error-icon" aria-hidden="true">⚠️</span>
+			<span class="error-icon" aria-hidden="true"><AlertTriangle size={48} /></span>
 			<h3>{$_("errors.loadFailed")}</h3>
 			<p>{gameState.error}</p>
 			<button type="button" class="retry-button" onclick={() => gameController.initGame()}>{$_("common.retry")}</button>
@@ -265,7 +266,7 @@
 	.empty-state-message { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; text-align: center; padding: 2rem; color: var(--text-secondary); font-size: 1rem; line-height: 1.5; }
 	.error-overlay { position: absolute; inset: 0; background: var(--bg-primary); display: flex; justify-content: center; align-items: center; z-index: 10; padding: 2rem; }
 	.error-content { text-align: center; max-width: 300px; }
-	.error-icon { font-size: 3rem; display: block; margin-bottom: 1rem; }
+	.error-icon { display: block; margin-bottom: 1rem; color: var(--status-warning); }
 	.error-content h3 { margin-bottom: 0.5rem; color: var(--text-primary); }
 	.error-content p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem; }
 	.retry-button { background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; }

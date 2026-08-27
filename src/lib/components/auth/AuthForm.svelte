@@ -1,7 +1,7 @@
 <!-- src/lib/components/auth/AuthForm.svelte -->
 <script lang="ts">
 	import PasswordInput from '$lib/components/ui/PasswordInput.svelte';
-	import { Info, Mail } from 'lucide-svelte';
+	import { AlertTriangle, Info, Mail } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 
 	interface Props {
@@ -91,7 +91,8 @@
 			{$_('profile.forgotPasswordSubtitle') || 'Введіть email, на який зареєстровано акаунт'}
 		</p>
 		<p class="spam-warning">
-			⚠️ {$_('profile.spamWarning') || 'Лист може потрапити в папку «Спам», оскільки додаток новий.'}
+			<AlertTriangle size={16} aria-hidden="true" />
+			<span>{$_('profile.spamWarning') || 'Лист може потрапити в папку «Спам», оскільки додаток новий.'}</span>
 		</p>
 
 		<form onsubmit={handleForgotSubmit}>
@@ -382,6 +383,10 @@
 	}
 
 	.spam-warning {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.4rem;
 		font-size: 0.85rem;
 		text-align: center;
 		color: var(--toast-warning, #f59e0b);
@@ -389,6 +394,11 @@
 		padding: 0.5rem;
 		background: rgba(245, 158, 11, 0.1);
 		border-radius: 8px;
+	}
+
+	/* Іконка не стискається, коли текст переноситься на два рядки. */
+	.spam-warning :global(svg) {
+		flex-shrink: 0;
 	}
 
 	form {

@@ -8,7 +8,7 @@
 	import { playlistStore } from "$lib/controllers/PlaylistStore.svelte";
 	import type { GameData } from "$lib/services/gameDataService";
 	import { settingsStore } from "$lib/controllers/SettingsStore.svelte";
-	import { ArrowDown, ArrowUp } from "lucide-svelte";
+	import { AlertTriangle, ArrowDown, ArrowUp } from "lucide-svelte";
 	import SwipeCard from "./SwipeCard.svelte";
 
 	let { gameData }: { gameData?: GameData } = $props();
@@ -105,7 +105,7 @@
 {:else if gameState.error}
 	<div class="error-overlay" in:fade aria-live="assertive">
 		<div class="error-content">
-			<span class="error-icon" aria-hidden="true">⚠️</span>
+			<span class="error-icon" aria-hidden="true"><AlertTriangle size={48} /></span>
 			<h3>{$_("errors.loadFailed")}</h3>
 			<p>{gameState.error}</p>
 			<button
@@ -266,6 +266,12 @@
 
 	.error-content {
 		text-align: center;
+	}
+
+	.error-icon {
+		display: block;
+		margin-bottom: 1rem;
+		color: var(--status-warning);
 	}
 
 	.retry-button {
