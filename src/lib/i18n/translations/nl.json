@@ -2,6 +2,13 @@
 	"app": {
 		"title": "Slovko"
 	},
+	"startup": {
+		"slowTitle": "Dit duurt langer dan gewoonlijk",
+		"slowHint": "Het netwerk is mogelijk traag. U kunt nog even wachten of de pagina opnieuw laden.",
+		"reload": "Opnieuw laden",
+		"copyDiagnostics": "Diagnostiek kopiëren",
+		"copyFailed": "Klembord niet beschikbaar — selecteer de tekst hieronder en kopieer deze handmatig"
+	},
 	"errors": {
 		"loadFailed": "Laden van gegevens mislukt",
 		"speech": {

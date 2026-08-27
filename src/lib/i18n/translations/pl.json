@@ -2,6 +2,13 @@
 	"app": {
 		"title": "Slovko"
 	},
+	"startup": {
+		"slowTitle": "To trwa dłużej niż zwykle",
+		"slowHint": "Sieć może być wolna. Możesz jeszcze chwilę poczekać albo przeładować stronę.",
+		"reload": "Przeładuj",
+		"copyDiagnostics": "Skopiuj diagnostykę",
+		"copyFailed": "Schowek niedostępny — zaznacz tekst poniżej i skopiuj go ręcznie"
+	},
 	"errors": {
 		"loadFailed": "Błąd ładowania danych",
 		"speech": {

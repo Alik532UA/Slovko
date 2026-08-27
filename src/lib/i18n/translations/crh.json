@@ -2,6 +2,13 @@
 	"app": {
 		"title": "Slovko"
 	},
+	"startup": {
+		"slowTitle": "Bu adetten uzunca sürmekte",
+		"slowHint": "Şebeke yavaş olmaq mümkün. Biraz daha bekleñiz ya da saifeni yañıdan yükleñiz.",
+		"reload": "Yañıdan yüklemek",
+		"copyDiagnostics": "Diagnostikanı kopiyalamaq",
+		"copyFailed": "Almaşuv tahtası mevcut degil — aşağıdaki metinni saylap qolnen kopiyalañız"
+	},
 	"errors": {
 		"loadFailed": "Malümat yücklenip olamadı",
 		"speech": {

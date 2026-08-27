@@ -1,10 +1,11 @@
-<script lang="ts">
+﻿<script lang="ts">
 	/**
 	 * Root Layout — Ініціалізація i18n та глобальні стилі
 	 */
 	import { onMount } from "svelte";
 	import { initializeI18n } from "$lib/i18n/init";
-	import { isLoading } from "svelte-i18n";
+	import { _, isLoading, locale } from "svelte-i18n";
+	import { Check } from "lucide-svelte";
 	import { checkForUpdates } from "$lib/services/versionService";
 	import { versionStore } from "$lib/controllers/VersionStore.svelte";
 	import { settingsStore } from "$lib/controllers/SettingsStore.svelte";
@@ -50,6 +51,92 @@
 
 	let { children } = $props();
 	let ready = $state(false);
+
+	/**
+	 * ЗАСТАВКА, З ЯКОЇ Є ВИХІД.
+	 *
+	 * Гейт нижче (`ready && !$isLoading && authStore.isDataReady`) вирішує, чи
+	 * малювати застосунок узагалі — а разом із ним і `{@render children()}`,
+	 * тобто `+error.svelte`. Тобто глобальна сторінка помилки НЕ ДОСЯГАЛАСЯ саме
+	 * в тому випадку, заради якого існує: доки гейт закритий, її нікуди
+	 * вставити, і користувач бачить кружечок, який крутиться вічно.
+	 *
+	 * Закритися назавжди гейт міг трьома способами, і жоден нічого не писав:
+	 *
+	 *   1. `init()` — async, і викликався без `.catch()`. Відмова
+	 *      `initializeI18n()` (побитий словник, чанк, який не доїхав крізь
+	 *      застарілий service worker) лишала `ready = false` і мовчазний
+	 *      відхилений проміс;
+	 *   2. `authStore.isDataReady` чекає на зворотний виклик Firebase Auth. Якщо
+	 *      SDK не завантажився, виклику не буде ніколи;
+	 *   3. `$isLoading` зі svelte-i18n лишається `true`, поки словник не
+	 *      приїхав.
+	 *
+	 * Тому тут ДВА різні механізми, і вони не замінюють один одного:
+	 *
+	 *   * `.catch()` ловить те, що впало, — і має що показати;
+	 *   * сторож за часом ловить те, що просто не сталося, — падіння немає.
+	 *
+	 * Панель НЕ каже «помилка» й не прибирає кружечок: повільна мережа виглядає
+	 * так само в перші секунди, і оголосити їй поломку означало б злякати того,
+	 * у кого все ще завантажується. Вона додає ВИХІД — перезавантаження і текст
+	 * діагностики, — лишаючи завантаження тривати.
+	 */
+	const SLOW_START_MS = 20_000;
+	let slowStart = $state(false);
+	/**
+	 * Причина падіння живе тут ЦІЛИМ ОБ'ЄКТОМ і йде лише в текст діагностики.
+	 *
+	 * На екран вона не потрапляє навмисно: сире `.message` — це рядок від
+	 * Firebase або від завантажувача чанків, англійський і адресований
+	 * розробнику (ERROR-HANDLING-v8, анти-патерн CRITICAL). Користувачеві він
+	 * не пояснює нічого, а в баг-репорті він і є найціннішим.
+	 */
+	let startupError = $state<unknown>(null);
+	let diagnosticsCopied = $state(false);
+	/** Текст показується полем, коли буфер обміну недоступний (ERROR-HANDLING-v8). */
+	let diagnosticsFallback = $state<string | null>(null);
+	let startupWatchdog: ReturnType<typeof setTimeout> | undefined;
+
+	function startupErrorText(): string {
+		if (startupError == null) return "-";
+		if (startupError instanceof Error) return startupError.message;
+		return String(startupError);
+	}
+
+	/** Усе, що знадобиться в баг-репорті про застряглий старт. */
+	function startupDiagnostics(): string {
+		return [
+			`version: ${versionStore.currentVersion ?? "unknown"}`,
+			`url: ${typeof location === "undefined" ? "-" : location.href}`,
+			`ua: ${typeof navigator === "undefined" ? "-" : navigator.userAgent}`,
+			`online: ${typeof navigator === "undefined" ? "-" : navigator.onLine}`,
+			`i18nLoading: ${$isLoading}`,
+			`ready: ${ready}`,
+			`authInitialized: ${authStore.isInitialized}`,
+			`dataReady: ${authStore.isDataReady}`,
+			`startupError: ${startupErrorText()}`,
+			"----------------------------------------",
+			logService.getRecentLogs(),
+		].join("\n");
+	}
+
+	async function copyDiagnostics() {
+		const text = startupDiagnostics();
+		try {
+			await navigator.clipboard.writeText(text);
+			diagnosticsCopied = true;
+			diagnosticsFallback = null;
+			setTimeout(() => (diagnosticsCopied = false), 2000);
+		} catch {
+			/*
+			 * Відмова буфера не має з'їдати звіт: на застряглому старті це єдиний
+			 * спосіб дізнатися, ЧОМУ він застряг. Показуємо текст полем поруч —
+			 * виділити й скопіювати вручну можна завжди.
+			 */
+			diagnosticsFallback = text;
+		}
+	}
 
 	import { dev } from "$app/environment";
 	import { base } from "$app/paths";
@@ -248,7 +335,30 @@
 			initGA();
 		};
 
-		init();
+		/*
+		 * `.catch()`, а не голий виклик: `init()` асинхронний, і відхилений
+		 * проміс тут не має куди спливти — сторінка лишається на заставці, а в
+		 * журналі немає нічого. Повідомлення зберігається, щоб поїхати в
+		 * діагностику: без нього залишається сам факт «не завантажилось».
+		 */
+		init().catch((error: unknown) => {
+			startupError = error;
+			logService.error("version", "Startup failed:", error);
+			slowStart = true;
+		});
+
+		/*
+		 * Сторож на випадок, коли нічого не падає, а просто не настає: зворотний
+		 * виклик Firebase Auth, якого не буде, або словник, що не доїхав.
+		 * `$effect` нижче знімає його, щойно гейт відкрився.
+		 */
+		startupWatchdog = setTimeout(() => {
+			slowStart = true;
+			logService.warn(
+				"version",
+				`Startup still not ready after ${SLOW_START_MS} ms — offering reload.`,
+			);
+		}, SLOW_START_MS);
 
 		// Фікс для коректної висоти в PWA/мобільних браузерах
 		const updateVh = () => {
@@ -282,6 +392,7 @@
 		mediaQuery.addEventListener("change", handleThemeChange);
 
 		return () => {
+			clearTimeout(startupWatchdog);
 			window.removeEventListener("resize", updateVh);
 			window.removeEventListener("orientationchange", updateVh);
 			window.removeEventListener("click", handleGlobalClick);
@@ -295,6 +406,18 @@
 					capture: true,
 				} as EventListenerOptions);
 		};
+	});
+
+	/*
+	 * Сторож знімається, щойно застосунок з'явився: інакше він розбудив би
+	 * панель уже поверх робочої сторінки, і на 20-й секунді роботи вона
+	 * повідомляла б про застряглий старт, якого не було.
+	 */
+	$effect(() => {
+		if (appVisible) {
+			clearTimeout(startupWatchdog);
+			slowStart = false;
+		}
 	});
 
 	$effect(() => {
@@ -341,6 +464,51 @@
 	 * на етапі збірки невідомий.
 	 */
 	const isHidden = $derived(isHiddenRoute(page.url.pathname));
+
+	/**
+	 * Умова показу застосунку — в ОДНОМУ місці: її читає і розмітка, і сторож
+	 * старту. Доти вона стояла лише в `{:else if}`, тож будь-яка перевірка
+	 * «а чи ми ще на заставці» неминуче була б її копією.
+	 */
+	const appVisible = $derived(ready && !$isLoading && authStore.isDataReady);
+
+	/**
+	 * Тексти панелі застряглого старту — з перевіркою, що словник узагалі є.
+	 *
+	 * Умова саме `$locale`, а НЕ `!$isLoading`. Перевірено в
+	 * `node_modules/svelte-i18n/dist/runtime.cjs`: `isLoading` створюється як
+	 * `writable(false)` і стає `true` лише на час завантаження словника. Тобто
+	 * ДО `init()` він `false` — «не завантажується» й «завантажено» виглядають
+	 * однаково. А `formatMessage` при `locale == null` КИДАЄ
+	 * («Cannot format a message without first setting the initial locale»), і
+	 * кинуло б це просто в макеті — тобто панель, що існує заради поламаного
+	 * старту, ламала б сторінку остаточно. `$locale` натомість стає непорожнім
+	 * лише після того, як словник доїхав.
+	 *
+	 * `try` понад те — навмисне дублювання: єдиний екран, який мусить пережити
+	 * геть усе, не спирається на одну умову.
+	 */
+	const startupText = $derived.by(() => {
+		const fallback = {
+			slowTitle: "This is taking longer than usual",
+			slowHint: "The network may be slow. You can wait a little longer or reload the page.",
+			reload: "Reload",
+			copyDiagnostics: "Copy diagnostics",
+			copyFailed: "Clipboard unavailable — select the text below and copy it manually",
+		};
+		if (!$locale || $isLoading) return fallback;
+		try {
+			return {
+				slowTitle: $_("startup.slowTitle"),
+				slowHint: $_("startup.slowHint"),
+				reload: $_("startup.reload"),
+				copyDiagnostics: $_("startup.copyDiagnostics"),
+				copyFailed: $_("startup.copyFailed"),
+			};
+		} catch {
+			return fallback;
+		}
+	});
 
 	/**
 	 * Гарячі клавіші: `T` — тема, `L` — панель мов (HOTKEYS-v8 § 1.1).
@@ -451,7 +619,7 @@
 		`build/`.
 	-->
 	{@render children()}
-{:else if ready && !$isLoading && authStore.isDataReady}
+{:else if appVisible}
 	{@render children()}
 
 	{#if !settingsStore.value.hasCompletedOnboarding}
@@ -488,16 +656,137 @@
 {:else}
 	<div class="loading">
 		<div class="loading-spinner"></div>
+
+		<!--
+			Кружечок лишається крутитися: завантаження справді триває, і оголосити
+			йому поломку означало б збрехати тому, у кого просто повільна мережа.
+			Панель лише додає вихід.
+
+			Тексти — через `startupText`: словник тут може бути ще не завантажений,
+			і саме він міг застрягти. Запасний англійський екран гірший за
+			перекладений, але незрівнянно кращий за порожній.
+		-->
+		{#if slowStart}
+			<div class="startup-notice" role="alert" data-testid="startup-message">
+				<p class="startup-title">{startupText.slowTitle}</p>
+				<p class="startup-hint">{startupText.slowHint}</p>
+
+				<div class="startup-actions">
+					<button
+						type="button"
+						class="startup-btn primary"
+						data-testid="startup-reload-btn"
+						onclick={() => location.reload()}
+					>
+						{startupText.reload}
+					</button>
+					<button
+						type="button"
+						class="startup-btn"
+						data-testid="startup-diagnostics-btn"
+						onclick={copyDiagnostics}
+					>
+						{#if diagnosticsCopied}
+							<Check size={16} aria-hidden="true" />
+						{/if}
+						{startupText.copyDiagnostics}
+					</button>
+				</div>
+
+				{#if diagnosticsFallback}
+					<p class="startup-hint">{startupText.copyFailed}</p>
+					<textarea
+						class="startup-diagnostics"
+						data-testid="startup-diagnostics-text"
+						readonly
+						rows="6"
+						value={diagnosticsFallback}
+					></textarea>
+				{/if}
+			</div>
+		{/if}
 	</div>
 {/if}
 
 <style>
 	.loading {
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		gap: 2rem;
 		height: 100dvh;
+		padding: 1rem;
 		background: var(--bg-primary, #1a1a2e);
+	}
+
+	/*
+	 * Запасні значення в `var()` тут навмисні, і причина та сама, що й у
+	 * `.loading` вище: панель показується в момент, коли невідомо, чи доїхало
+	 * взагалі щось. Якщо `app.css` не завантажився, токенів немає — а панель
+	 * мусить лишитися читабельною, бо іншого способу повідомити вже не буде.
+	 */
+	.startup-notice {
+		max-width: 32rem;
+		width: 100%;
+		text-align: center;
+		color: var(--text-primary, #eaeaea);
+		font-size: 0.95rem;
+		line-height: 1.5;
+	}
+
+	.startup-title {
+		margin: 0 0 0.5rem;
+		font-weight: 700;
+	}
+
+	.startup-hint {
+		margin: 0 0 1rem;
+		color: var(--text-secondary, #a0a0a0);
+		font-size: 0.85rem;
+	}
+
+	.startup-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		justify-content: center;
+	}
+
+	.startup-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		/* WCAG 2.2 SC 2.5.8: ціль не менша за 24×24 навіть без токенів теми. */
+		min-height: 2.75rem;
+		padding: 0.65rem 1.25rem;
+		border-radius: 12px;
+		border: 1px solid var(--border, #565a63);
+		background: var(--bg-hover, rgba(255, 255, 255, 0.08));
+		color: var(--text-primary, #eaeaea);
+		font: inherit;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	.startup-btn.primary {
+		background: var(--accent, #e95420);
+		border-color: transparent;
+		color: var(--text-on-accent, #ffffff);
+	}
+
+	.startup-diagnostics {
+		width: 100%;
+		margin-top: 0.75rem;
+		padding: 0.75rem;
+		border-radius: 12px;
+		border: 1px solid var(--border, #565a63);
+		background: var(--bg-active, rgba(0, 0, 0, 0.25));
+		color: var(--text-secondary, #a0a0a0);
+		font-family: monospace;
+		font-size: 0.75rem;
+		resize: vertical;
 	}
 
 	.loading-spinner {

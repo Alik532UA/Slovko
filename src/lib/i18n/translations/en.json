@@ -2,6 +2,13 @@
 	"app": {
 		"title": "Slovko"
 	},
+	"startup": {
+		"slowTitle": "This is taking longer than usual",
+		"slowHint": "The network may be slow. You can wait a little longer or reload the page.",
+		"reload": "Reload",
+		"copyDiagnostics": "Copy diagnostics",
+		"copyFailed": "Clipboard unavailable — select the text below and copy it manually"
+	},
 	"errors": {
 		"loadFailed": "Failed to load data",
 		"speech": {

@@ -2,6 +2,13 @@
 	"app": {
 		"title": "Slovko"
 	},
+	"startup": {
+		"slowTitle": "Das dauert länger als gewöhnlich",
+		"slowHint": "Das Netzwerk ist möglicherweise langsam. Sie können noch etwas warten oder die Seite neu laden.",
+		"reload": "Neu laden",
+		"copyDiagnostics": "Diagnose kopieren",
+		"copyFailed": "Zwischenablage nicht verfügbar — markieren Sie den Text unten und kopieren Sie ihn manuell"
+	},
 	"errors": {
 		"loadFailed": "Laden der Daten fehlgeschlagen",
 		"speech": {
