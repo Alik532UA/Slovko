@@ -158,7 +158,8 @@
 		"learningMode": "Leermodus",
 		"hint": "Hint",
 		"dangerZone": {
-			"hardReset": "Alle gegevens wissen"
+			"hardReset": "Alle gegevens wissen",
+			"confirmHardReset": "Dit verwijdert ALLE lokale gegevens, cookies en cache van deze app. Doorgaan?"
 		},
 		"hotkeys": {
 			"title": "Sneltoetsen",

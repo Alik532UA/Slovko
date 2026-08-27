@@ -189,7 +189,8 @@
 		"learningMode": "Tryb nauki",
 		"hint": "Wskazówka",
 		"dangerZone": {
-			"hardReset": "Zresetuj wszystkie dane"
+			"hardReset": "Zresetuj wszystkie dane",
+			"confirmHardReset": "To usunie WSZYSTKIE lokalne dane, pliki cookie i pamięć podręczną tej aplikacji. Kontynuować?"
 		},
 		"hotkeys": {
 			"title": "Skróty klawiszowe",

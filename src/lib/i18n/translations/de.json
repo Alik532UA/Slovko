@@ -158,7 +158,8 @@
 		"learningMode": "Lernmodus",
 		"hint": "Hinweis",
 		"dangerZone": {
-			"hardReset": "Alle Daten zurücksetzen"
+			"hardReset": "Alle Daten zurücksetzen",
+			"confirmHardReset": "Dies löscht ALLE lokalen Daten, Cookies und den Cache dieser App. Fortfahren?"
 		},
 		"hotkeys": {
 			"title": "Tastenkürzel",

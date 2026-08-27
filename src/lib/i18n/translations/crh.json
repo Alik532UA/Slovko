@@ -158,7 +158,8 @@
 		"learningMode": "Ögrenüv rejimi",
 		"hint": "İpucu",
 		"dangerZone": {
-			"hardReset": "Episi malümatlarnı sıfırla"
+			"hardReset": "Episi malümatlarnı sıfırla",
+			"confirmHardReset": "Bu, işbu programnıñ BÜTÜN yerli malümatını, kukilerini ve keşini siler. Devam etilsinmi?"
 		},
 		"hotkeys": {
 			"title": "Klavye qısqartmaları",

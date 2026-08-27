@@ -2,13 +2,25 @@
 import { localStorageProvider, sessionStorageProvider } from "./storage/storageProvider";
 
 /**
- * Reset Service — Повне очищення даних додатка
+ * Reset Service — Повне очищення даних додатка.
+ *
+ * Текст підтвердження приходить ЗВІДКИ ВИКЛИКАЮТЬ, а не лежить тут рядком.
+ *
+ * Доти тут стояло українське речення, зашите в код, — і його бачив кожен, у
+ * кого інтерфейс грецькою, польською чи кримськотатарською, рівно перед тим,
+ * як безповоротно стерти власний прогрес. Це та сама вимога, що вже виконана
+ * для решти підтверджень у проєкті (`playlists.confirmDelete`,
+ * `friends.confirmUnfollow`): вони йдуть через `$_`, бо живуть у компонентах.
+ *
+ * Сервіс `$_` викликати не може — це чистий `.ts` без реактивності, — тому
+ * рядок передається параметром. Обидва виклики живуть у `.svelte`, де словник
+ * під рукою.
+ *
+ * @param confirmMessage Питання перед знищенням. `null`/`undefined` — не
+ * питати (режим розробки, де скидання роблять навмисно й часто).
  */
-export async function hardReset(askConfirmation = true) {
-	if (
-		askConfirmation &&
-		!confirm("Це видалить ВСІ локальні дані, кукі та кеш. Продовжити?")
-	) {
+export async function hardReset(confirmMessage?: string | null) {
+	if (confirmMessage && !confirm(confirmMessage)) {
 		return;
 	}
 

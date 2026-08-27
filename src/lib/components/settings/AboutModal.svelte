@@ -29,7 +29,7 @@
 	let showInstallGuide = $state(false);
 
 	async function handleHardReset() {
-		await hardReset(true);
+		await hardReset($_("settings.dangerZone.confirmHardReset"));
 	}
 </script>
 

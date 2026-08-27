@@ -189,7 +189,8 @@
 		"learningMode": "Learning Mode",
 		"hint": "Hint",
 		"dangerZone": {
-			"hardReset": "Reset All Data"
+			"hardReset": "Reset All Data",
+			"confirmHardReset": "This will delete ALL local data, cookies and cache of this app. Continue?"
 		},
 		"hotkeys": {
 			"title": "Keyboard shortcuts",
