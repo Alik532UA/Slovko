@@ -2,6 +2,28 @@ const t=`{
 	"app": {
 		"title": "Slovko"
 	},
+	"startup": {
+		"slowTitle": "To trwa dłużej niż zwykle",
+		"slowHint": "Sieć może być wolna. Możesz jeszcze chwilę poczekać albo przeładować stronę.",
+		"reload": "Przeładuj",
+		"copyDiagnostics": "Skopiuj diagnostykę",
+		"copyFailed": "Schowek niedostępny — zaznacz tekst poniżej i skopiuj go ręcznie"
+	},
+	"a11y": {
+		"friendsSettings": "Ustawienia znajomych",
+		"online": "Online",
+		"warning": "Ostrzeżenie",
+		"gameBoard": "Plansza gry",
+		"sourceWords": "Słowa w języku źródłowym",
+		"targetTranslations": "Tłumaczenia",
+		"swipeBoard": "Talia kart",
+		"moveUp": "Przenieś w górę",
+		"moveDown": "Przenieś w dół",
+		"delete": "Usuń",
+		"step": "Krok {n}",
+		"googleAvatar": "Zdjęcie profilowe Google",
+		"flag": "Flaga: {language}"
+	},
 	"errors": {
 		"loadFailed": "Błąd ładowania danych",
 		"speech": {
@@ -13,7 +35,12 @@ const t=`{
 			"modalDesc3": "Spróbuj użyć innej przeglądarki (np. Chrome lub Safari) lub sprawdź ustawienia systemowe."
 		},
 		"authRequired": "Aby wysłać opinię, zaloguj się na swoje konto.",
-		"submitFailed": "Błąd podczas wysyłania. Spróbuj później."
+		"submitFailed": "Błąd podczas wysyłania. Spróbuj później.",
+		"page": {
+			"code": "Błąd {status}",
+			"unexpected": "Wystąpił nieoczekiwany błąd.",
+			"technical": "Szczegóły techniczne"
+		}
 	},
 	"levels": {
 		"title": "Poziomy",
@@ -177,7 +204,8 @@ const t=`{
 		"learningMode": "Tryb nauki",
 		"hint": "Wskazówka",
 		"dangerZone": {
-			"hardReset": "Zresetuj wszystkie dane"
+			"hardReset": "Zresetuj wszystkie dane",
+			"confirmHardReset": "To usunie WSZYSTKIE lokalne dane, pliki cookie i pamięć podręczną tej aplikacji. Kontynuować?"
 		},
 		"hotkeys": {
 			"title": "Skróty klawiszowe",
@@ -392,7 +420,8 @@ const t=`{
 			"selectLevel": "Wybór poziomu lub tematu",
 			"prev": "Poprzedni poziom",
 			"next": "Następny poziom"
-		}
+		},
+		"copied": "Skopiowano"
 	},
 	"sync": {
 		"status": {

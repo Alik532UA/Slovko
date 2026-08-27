@@ -2,6 +2,28 @@ const e=`{
 	"app": {
 		"title": "Slovko"
 	},
+	"startup": {
+		"slowTitle": "Das dauert länger als gewöhnlich",
+		"slowHint": "Das Netzwerk ist möglicherweise langsam. Sie können noch etwas warten oder die Seite neu laden.",
+		"reload": "Neu laden",
+		"copyDiagnostics": "Diagnose kopieren",
+		"copyFailed": "Zwischenablage nicht verfügbar — markieren Sie den Text unten und kopieren Sie ihn manuell"
+	},
+	"a11y": {
+		"friendsSettings": "Freunde-Einstellungen",
+		"online": "Online",
+		"warning": "Warnung",
+		"gameBoard": "Spielfeld",
+		"sourceWords": "Wörter in der Ausgangssprache",
+		"targetTranslations": "Übersetzungen",
+		"swipeBoard": "Kartenstapel",
+		"moveUp": "Nach oben verschieben",
+		"moveDown": "Nach unten verschieben",
+		"delete": "Löschen",
+		"step": "Schritt {n}",
+		"googleAvatar": "Google-Profilbild",
+		"flag": "Flagge: {language}"
+	},
 	"errors": {
 		"loadFailed": "Laden der Daten fehlgeschlagen",
 		"speech": {
@@ -13,7 +35,12 @@ const e=`{
 			"modalDesc3": "Versuchen Sie, einen anderen Browser (wie Chrome oder Safari) zu verwenden, oder überprüfen Sie Ihre Systemeinstellungen."
 		},
 		"authRequired": "Bitte melden Sie sich an, um Feedback zu senden.",
-		"submitFailed": "Fehler beim Senden. Bitte versuche es später erneut."
+		"submitFailed": "Fehler beim Senden. Bitte versuche es später erneut.",
+		"page": {
+			"code": "Fehler {status}",
+			"unexpected": "Ein unerwarteter Fehler ist aufgetreten.",
+			"technical": "Technische Details"
+		}
 	},
 	"levels": {
 		"title": "Niveaus",
@@ -146,7 +173,8 @@ const e=`{
 		"learningMode": "Lernmodus",
 		"hint": "Hinweis",
 		"dangerZone": {
-			"hardReset": "Alle Daten zurücksetzen"
+			"hardReset": "Alle Daten zurücksetzen",
+			"confirmHardReset": "Dies löscht ALLE lokalen Daten, Cookies und den Cache dieser App. Fortfahren?"
 		},
 		"hotkeys": {
 			"title": "Tastenkürzel",
@@ -361,7 +389,8 @@ const e=`{
 			"selectLevel": "Niveau oder Thema auswählen",
 			"prev": "Vorheriges Niveau",
 			"next": "Nächstes Niveau"
-		}
+		},
+		"copied": "Kopiert"
 	},
 	"sync": {
 		"status": {

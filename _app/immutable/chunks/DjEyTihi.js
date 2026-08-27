@@ -2,6 +2,28 @@ const t=`{
 	"app": {
 		"title": "Slovko"
 	},
+	"startup": {
+		"slowTitle": "Dit duurt langer dan gewoonlijk",
+		"slowHint": "Het netwerk is mogelijk traag. U kunt nog even wachten of de pagina opnieuw laden.",
+		"reload": "Opnieuw laden",
+		"copyDiagnostics": "Diagnostiek kopiëren",
+		"copyFailed": "Klembord niet beschikbaar — selecteer de tekst hieronder en kopieer deze handmatig"
+	},
+	"a11y": {
+		"friendsSettings": "Vrienden-instellingen",
+		"online": "Online",
+		"warning": "Waarschuwing",
+		"gameBoard": "Speelveld",
+		"sourceWords": "Woorden in de brontaal",
+		"targetTranslations": "Vertalingen",
+		"swipeBoard": "Kaartenstapel",
+		"moveUp": "Omhoog verplaatsen",
+		"moveDown": "Omlaag verplaatsen",
+		"delete": "Verwijderen",
+		"step": "Stap {n}",
+		"googleAvatar": "Google-profielfoto",
+		"flag": "Vlag: {language}"
+	},
 	"errors": {
 		"loadFailed": "Laden van gegevens mislukt",
 		"speech": {
@@ -13,7 +35,12 @@ const t=`{
 			"modalDesc3": "Probeer een andere browser (zoals Chrome of Safari) of controleer je systeeminstellingen."
 		},
 		"authRequired": "Log in om feedback te sturen.",
-		"submitFailed": "Fout bij verzenden. Probeer het later opnieuw."
+		"submitFailed": "Fout bij verzenden. Probeer het later opnieuw.",
+		"page": {
+			"code": "Fout {status}",
+			"unexpected": "Er is een onverwachte fout opgetreden.",
+			"technical": "Technische details"
+		}
 	},
 	"levels": {
 		"title": "Niveaus",
@@ -146,7 +173,8 @@ const t=`{
 		"learningMode": "Leermodus",
 		"hint": "Hint",
 		"dangerZone": {
-			"hardReset": "Alle gegevens wissen"
+			"hardReset": "Alle gegevens wissen",
+			"confirmHardReset": "Dit verwijdert ALLE lokale gegevens, cookies en cache van deze app. Doorgaan?"
 		},
 		"hotkeys": {
 			"title": "Sneltoetsen",
@@ -361,7 +389,8 @@ const t=`{
 			"selectLevel": "Selecteer niveau of onderwerp",
 			"prev": "Vorig niveau",
 			"next": "Volgend niveau"
-		}
+		},
+		"copied": "Gekopieerd"
 	},
 	"sync": {
 		"status": {

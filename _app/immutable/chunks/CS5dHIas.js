@@ -2,6 +2,28 @@ const t=`{
 	"app": {
 		"title": "Slovko"
 	},
+	"startup": {
+		"slowTitle": "This is taking longer than usual",
+		"slowHint": "The network may be slow. You can wait a little longer or reload the page.",
+		"reload": "Reload",
+		"copyDiagnostics": "Copy diagnostics",
+		"copyFailed": "Clipboard unavailable — select the text below and copy it manually"
+	},
+	"a11y": {
+		"friendsSettings": "Friends settings",
+		"online": "Online",
+		"warning": "Warning",
+		"gameBoard": "Game board",
+		"sourceWords": "Source words",
+		"targetTranslations": "Translations",
+		"swipeBoard": "Card deck",
+		"moveUp": "Move up",
+		"moveDown": "Move down",
+		"delete": "Delete",
+		"step": "Step {n}",
+		"googleAvatar": "Google profile picture",
+		"flag": "Flag: {language}"
+	},
 	"errors": {
 		"loadFailed": "Failed to load data",
 		"speech": {
@@ -13,7 +35,12 @@ const t=`{
 			"modalDesc3": "Try using another browser (like Chrome or Safari) or check your system settings."
 		},
 		"authRequired": "Please sign in to send feedback.",
-		"submitFailed": "Error sending report. Please try again later."
+		"submitFailed": "Error sending report. Please try again later.",
+		"page": {
+			"code": "Error {status}",
+			"unexpected": "An unexpected error occurred.",
+			"technical": "Technical details"
+		}
 	},
 	"levels": {
 		"title": "Levels",
@@ -177,7 +204,8 @@ const t=`{
 		"learningMode": "Learning Mode",
 		"hint": "Hint",
 		"dangerZone": {
-			"hardReset": "Reset All Data"
+			"hardReset": "Reset All Data",
+			"confirmHardReset": "This will delete ALL local data, cookies and cache of this app. Continue?"
 		},
 		"hotkeys": {
 			"title": "Keyboard shortcuts",
@@ -392,7 +420,8 @@ const t=`{
 			"selectLevel": "Select level or topic",
 			"prev": "Previous level",
 			"next": "Next level"
-		}
+		},
+		"copied": "Copied"
 	},
 	"sync": {
 		"status": {

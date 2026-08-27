@@ -2,6 +2,28 @@ const t=`{
 	"app": {
 		"title": "Slovko"
 	},
+	"startup": {
+		"slowTitle": "Bu adetten uzunca sürmekte",
+		"slowHint": "Şebeke yavaş olmaq mümkün. Biraz daha bekleñiz ya da saifeni yañıdan yükleñiz.",
+		"reload": "Yañıdan yüklemek",
+		"copyDiagnostics": "Diagnostikanı kopiyalamaq",
+		"copyFailed": "Almaşuv tahtası mevcut degil — aşağıdaki metinni saylap qolnen kopiyalañız"
+	},
+	"a11y": {
+		"friendsSettings": "Dostlar ayarları",
+		"online": "Şebekede",
+		"warning": "Diqqat",
+		"gameBoard": "Oyun tahtası",
+		"sourceWords": "Asıl tildeki sözler",
+		"targetTranslations": "Tercimeler",
+		"swipeBoard": "Kart destesi",
+		"moveUp": "Yuqarı avuştırmaq",
+		"moveDown": "Aşağı avuştırmaq",
+		"delete": "Silmek",
+		"step": "{n}-nci adım",
+		"googleAvatar": "Google profil resmi",
+		"flag": "Bayraq: {language}"
+	},
 	"errors": {
 		"loadFailed": "Malümat yücklenip olamadı",
 		"speech": {
@@ -13,7 +35,12 @@ const t=`{
 			"modalDesc3": "Başqa bir brauzer (meselâ Chrome yaki Safari) qullanmağa tırışıñız yaki sistem sazlamalarını teşkeriñiz."
 		},
 		"authRequired": "Fikir yollamaq içün lütfen kiriñiz.",
-		"submitFailed": "Yollav hatası. Lütfen soñra deñeñiz."
+		"submitFailed": "Yollav hatası. Lütfen soñra deñeñiz.",
+		"page": {
+			"code": "Hata {status}",
+			"unexpected": "Beklenmegen bir hata olıp keçti.",
+			"technical": "Tehnik tafsilât"
+		}
 	},
 	"levels": {
 		"title": "Seviyeler",
@@ -146,7 +173,8 @@ const t=`{
 		"learningMode": "Ögrenüv rejimi",
 		"hint": "İpucu",
 		"dangerZone": {
-			"hardReset": "Episi malümatlarnı sıfırla"
+			"hardReset": "Episi malümatlarnı sıfırla",
+			"confirmHardReset": "Bu, işbu programnıñ BÜTÜN yerli malümatını, kukilerini ve keşini siler. Devam etilsinmi?"
 		},
 		"hotkeys": {
 			"title": "Klavye qısqartmaları",
@@ -361,7 +389,8 @@ const t=`{
 			"selectLevel": "Seviye ya da tema saylav",
 			"prev": "Evelki seviye",
 			"next": "Nevbetteki seviye"
-		}
+		},
+		"copied": "Kopiyalandı"
 	},
 	"sync": {
 		"status": {
