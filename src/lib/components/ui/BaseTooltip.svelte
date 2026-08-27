@@ -10,10 +10,53 @@
 	}
 
 	let { text, children }: Props = $props();
-	
+
 	let isVisible = $state(false);
 	let triggerEl = $state<HTMLElement | null>(null);
 	let tooltipEl = $state<HTMLElement | null>(null);
+
+	const tooltipId = $props.id();
+
+	/**
+	 * ЧИ ПОТРІБНА ОБГОРТЦІ ВЛАСНА ЗУПИНКА ФОКУСУ — і чому це питання взагалі є.
+	 *
+	 * Доти обгортка ЗАВЖДИ несла `role="button"`, `tabindex="0"` і
+	 * `aria-label={text}`. Кнопкою вона при цьому не була ніколи: обробника
+	 * натискання в неї немає, тож Enter і Пробіл на ній не роблять нічого.
+	 *
+	 * Коли всередині справжня кнопка (а це більшість ужитків — «Меню»,
+	 * «Підказка», «Наступний рівень»), виходило три різні дефекти з одного
+	 * рядка:
+	 *
+	 *   1. `nested-interactive` — WCAG 4.1.2: фокусований елемент усередині
+	 *      фокусованого. Axe називав п'ять вузлів на кожному з трьох станів;
+	 *   2. МЕРТВА ЗУПИНКА ФОКУСУ. Клавіатурний користувач потрапляв на
+	 *      обгортку, чув «Меню, кнопка», тиснув Enter — нічого. Далі Tab, і
+	 *      лише тоді справжня кнопка, яка теж називається «Меню». Тобто кожна
+	 *      підказка коштувала зайвого Tab і одного натискання в порожнечу;
+	 *   3. `aria-label` обгортки дублював `aria-label` кнопки СЛОВО В СЛОВО —
+	 *      підказка й підпис кнопки в цьому проєкті беруть той самий ключ.
+	 *
+	 * Але прибрати `tabindex` беззастережно не можна: дві підказки обгортають
+	 * `<div>` зі статистикою (серія, точність), і для них обгортка — ЄДИНИЙ
+	 * спосіб дістатися підказки з клавіатури (WCAG 1.4.13).
+	 *
+	 * Тому питання вирішується не на око, а вимірюванням: якщо всередині вже є
+	 * що фокусувати — обгортка суто оформлювальна, підказка лишається візуальною
+	 * (її текст читалка й так почує з підпису кнопки). Якщо ні — обгортка стає
+	 * зупинкою фокусу з `aria-describedby` на сам тултіп, тобто описом до
+	 * значення, а не підробленою кнопкою.
+	 */
+	const FOCUSABLE =
+		'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
+	let needsOwnFocus = $state(false);
+
+	$effect(() => {
+		// Читаємо `children` навмисно: інакше ефект не перерахується, коли вміст
+		// підказки змінюється з кнопки на заглушку (`BottomBar`, крайній рівень).
+		void children;
+		needsOwnFocus = triggerEl ? !triggerEl.querySelector(FOCUSABLE) : false;
+	});
 	
 	let coords = $state({ top: 0, left: 0, arrowLeft: 50, maxWidth: 300, placement: 'top' });
 
@@ -97,25 +140,44 @@
 	});
 </script>
 
-<div 
+<!--
+	`focusin`/`focusout`, а не `focus`/`blur`: перші СПЛИВАЮТЬ, тож підказка
+	з'являється й тоді, коли фокус отримала кнопка всередині, а обгортка вже
+	нічого не ловить сама.
+
+	`role="group"` — те, чим обгортка є насправді: вона об'єднує контрол із його
+	описом. Доти тут стояло `role="button"` при повній відсутності обробника
+	натискання, тобто роль описувала не поведінку, а зовнішній вигляд.
+
+	Придушення нижче: правило вважає фокус на нечитабельному елементі помилкою,
+	і майже завжди так і є. Виняток тут точковий і вирішується в рантаймі —
+	`tabindex` з'являється ЛИШЕ тоді, коли всередині немає нічого фокусованого
+	(дві плитки статистики). Для них це єдиний спосіб дістатися підказки з
+	клавіатури: WCAG 1.4.13 вимагає саме цього, а `aria-describedby` робить її
+	описом до значення, а не підробленою кнопкою. Коли всередині кнопка,
+	атрибута немає взагалі — і зайвої зупинки фокусу теж.
+-->
+<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+<div
 	bind:this={triggerEl}
-	class="tooltip-trigger" 
-	onmouseenter={show} 
+	class="tooltip-trigger"
+	role="group"
+	onmouseenter={show}
 	onmouseleave={hide}
 	onfocusin={show}
 	onfocusout={hide}
-	role="button"
-	tabindex="0"
-	aria-label={text}
+	tabindex={needsOwnFocus ? 0 : undefined}
+	aria-describedby={needsOwnFocus ? tooltipId : undefined}
 >
 	{@render children()}
 </div>
 
 {#if isVisible && text}
-	<div 
+	<div
 		use:portal
 		bind:this={tooltipEl}
-		class="tooltip-content {coords.placement}" 
+		id={tooltipId}
+		class="tooltip-content {coords.placement}"
 		style:top="{coords.top}px"
 		style:left="{coords.left}px"
 		style:max-width="{coords.maxWidth}px"
