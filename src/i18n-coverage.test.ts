@@ -110,12 +110,29 @@ const unusedKeys = keys
 	.filter((k) => !sources.includes(k))
 	.filter((k) => !dynamicPrefixes.some((p) => k.startsWith(p)));
 
+/**
+ * Розмітка компонента без HTML-коментарів.
+ *
+ * Прибирати їх обов'язково, і причина знайшлася прогоном: коментар, який
+ * ПОЯСНЮЄ, чому з елемента прибрано `aria-label`, сам містить цей рядок — і
+ * гейт рахував пояснення за порушення. Той самий клас, що вже описаний вище
+ * для мертвих ключів («гейт починає рахувати власний текст за код»), тільки з
+ * протилежним знаком: там коментар ховав дефект, тут — вигадував його.
+ *
+ * Довжина рядків зберігається (символи замінюються пробілами), щоб номери
+ * рядків у звіті лишалися справжніми.
+ */
+const withoutComments = (text: string): string =>
+	text.replace(/<!--[\s\S]*?-->/g, (m) => m.replace(/[^\n]/g, " "));
+
 const hardcodedLabels = files
 	.filter((f) => f.endsWith(".svelte"))
 	.flatMap((f) =>
-		[...readFileSync(f, "utf8").matchAll(/aria-label="([^"{][^"]*)"/g)].map(
-			(m) => `${f.replace(`${ROOT.replace(/\\/g, "/")}/`, "")}: ${m[1]}`,
-		),
+		[
+			...withoutComments(readFileSync(f, "utf8")).matchAll(
+				/aria-label="([^"{][^"]*)"/g,
+			),
+		].map((m) => `${f.replace(`${ROOT.replace(/\\/g, "/")}/`, "")}: ${m[1]}`),
 	);
 
 describe("покриття локалізації", () => {
@@ -125,6 +142,18 @@ describe("покриття локалізації", () => {
 		// Порожній перелік префіксів означав би, що розбір шаблонних рядків
 		// зламався, і перевірка почала б рахувати робочі ключі за мертві.
 		expect(dynamicPrefixes.length).toBeGreaterThan(0);
+	});
+
+	it("розбір лишає розмітку й прибирає коментарі", () => {
+		// Канарка на `withoutComments`: помилка в ньому робить перевірку нижче
+		// сліпою МОВЧКИ — вирізаний зайвий шматок означає нуль знахідок, а
+		// такий нуль читається як «усі підписи перекладені».
+		const sample = withoutComments(
+			['<!-- тут було aria-label="Закрити" -->', '<i aria-label="Live"></i>'].join("\n"),
+		);
+		expect(sample.includes('aria-label="Live"'), "розмітка мусить лишитися").toBe(true);
+		expect(sample.includes('aria-label="Закрити"'), "коментар мусить зникнути").toBe(false);
+		expect(sample.split("\n").length, "номери рядків мусять лишитися").toBe(2);
 	});
 
 	it(`ключів без ужитку не більше за ${KNOWN_UNUSED_KEYS}`, () => {
