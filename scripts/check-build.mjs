@@ -34,6 +34,42 @@ const BASE = process.env.BASE_PATH ?? "/Slovko";
 const HIDDEN_ROUTES = ["beta-test-checklists"];
 const isHidden = (where) => HIDDEN_ROUTES.some((r) => where.includes(`/${r}/`));
 
+/**
+ * Інлайнові обробники подій у зібраному HTML (SECURITY-v8 § 6.3.2,
+ * `SEC-CSP-SPREAD-HANDLER`).
+ *
+ * Політика цього проєкту не має ні `'unsafe-inline'`, ні `'unsafe-hashes'` —
+ * тобто браузер відмовляється виконувати БУДЬ-ЯКИЙ атрибут-обробник у
+ * розмітці, і хеші тут не рятують у принципі: «hashes do not apply to event
+ * handlers».
+ *
+ * Ловиться саме тут, а не в `src/`, бо в джерелах цих атрибутів немає за
+ * визначенням. Їх додає компілятор Svelte 5 на елемент, чиї атрибути задані
+ * РОЗГОРТАННЯМ (`<img {...size} />`): що лежить в об'єкті, він не знає, тож
+ * вставляє гачок відтворення події `onload="this.__e=event"` про всяк випадок.
+ * У сусідньому проєкті тринадцять таких `<img>` дали 15 порушень CSP на
+ * головній — при чистому `svelte-check` і зелених юніт-перевірках.
+ *
+ * Перелік імен, а не `/\bon[a-z]+=/`: друге збігається з `only=` і з кожним
+ * майбутнім атрибутом, у якому є «on».
+ */
+const INLINE_HANDLERS = [
+	"onload",
+	"onerror",
+	"onclick",
+	"onchange",
+	"oninput",
+	"onsubmit",
+	"onfocus",
+	"onblur",
+	"ontoggle",
+	"onanimationend",
+];
+const INLINE_HANDLER_ATTR = new RegExp(
+	`\\s(?:${INLINE_HANDLERS.join("|")})\\s*=\\s*["'][^"']*["']`,
+	"gi",
+);
+
 const failures = [];
 const fail = (message) => failures.push(message);
 
@@ -235,6 +271,46 @@ for (const page of pages) {
 				);
 			}
 		}
+
+		// 5а. Атрибути-обробники (SECURITY-v8 § 6.3.2). Родич попередньої
+		//     перевірки, але лікується інакше: скрипт без хеша можна покрити
+		//     хешем, а обробник — ні, хеші на них не поширюються. Єдиний вихід —
+		//     прибрати розгортання атрибутів на тому елементі, тож повідомлення
+		//     називає саме це.
+		//
+		//     Виняток на `'unsafe-hashes'` навмисно не передбачено: політика
+		//     проєкту його не має, і поява його в політиці — це окреме рішення,
+		//     яке має обговорюватися, а не тихо знімати цю перевірку.
+		for (const m of html.matchAll(INLINE_HANDLER_ATTR)) {
+			fail(
+				`${where}: інлайновий обробник «${m[0].trim()}» — CSP його заблокує, ` +
+					"а хеші на обробники не поширюються. У джерелах його немає: його " +
+					"додає компілятор на елемент із розгортанням атрибутів",
+			);
+		}
+	}
+}
+
+/*
+ * Канарка для перевірки 5а. Нуль знахідок — очікуваний результат, і саме тому
+ * він нічого не доводить: рівно так само виглядає зламана регулярка. Тому
+ * перелік перевіряється на зразку, а не лише на сторінках
+ * (AI-AGENT-PITFALLS-v8 § 1).
+ */
+{
+	const positive = '<img src="x" onload="this.__e=event" onerror="this.__e=event">';
+	const negative = '<div data-only="1" data-once="on" class="online"></div>';
+	const hits = [...positive.matchAll(INLINE_HANDLER_ATTR)].length;
+	if (hits !== 2) {
+		fail(
+			`перевірка інлайнових обробників зламана: на зразку з двома гачками знайдено ${hits}`,
+		);
+	}
+	if (negative.match(INLINE_HANDLER_ATTR)) {
+		fail(
+			"перевірка інлайнових обробників збігається з `data-only`/`data-once` — " +
+				"перелік імен підмінено на `on[a-z]+`",
+		);
 	}
 }
 
