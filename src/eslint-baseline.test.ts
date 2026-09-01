@@ -51,6 +51,40 @@ function levelOf(entry: unknown): string | number | undefined {
 	return Array.isArray(entry) ? (entry[0] as string | number) : (entry as string | number);
 }
 
+/**
+ * Один екземпляр на весь файл, а не по одному на `describe`.
+ *
+ * Дорога тут не сама перевірка, а ПЕРШЕ розвʼязання конфігу: воно вантажить
+ * пресети `typescript-eslint` і `eslint-plugin-svelte` цілком. Заміряно в
+ * цьому проєкті окремим процесом: `new ESLint()` — 1 мс, перший
+ * `calculateConfigForFile` — 13,9 с, другий на тому ж екземплярі — 0 мс, а на
+ * СВІЖОМУ екземплярі в тому ж процесі — 9 мс. Тобто платить перший виклик у
+ * процесі, і другий `describe` нижче їде вже по теплому кешу модулів.
+ *
+ * Спільний екземпляр цього не пришвидшує (кеш модулів усе одно процесний), але
+ * прибирає друге джерело того самого конфігу: два екземпляри могли б
+ * розійтися, якби колись зʼявився конструктор із параметрами.
+ */
+const eslint = new ESLint();
+
+/**
+ * Бюджет часу для обох хуків цього файлу — однаковий і з реальним запасом.
+ *
+ * Доти в першому хуку стояло 30 с, у другому — 120 с, і це було рівно навпаки
+ * до вартості: перший платить за завантаження пресетів, другий їде по теплому
+ * кешу. `npm run test:unit` (35 файлів, 8 воркерів) валив саме перший хук
+ * `Hook timed out in 30000ms` — і разом із ним у звіт ішли **17 пропущених**
+ * перевірок замість зеленого CRITICAL-гейта. Окремо той самий файл проходить
+ * за 7 с, тобто гейт червонів від завантаження машини, а не від порушення.
+ *
+ * Це той самий клас, що й вимкнене правило: плаваючий гейт гірший за
+ * відсутній, бо на нього перестають дивитися (AI-AGENT-PITFALLS-v8 § 1).
+ *
+ * Зворотний експеримент: поставити сюди 100 (мс) — обидва `describe` мусять
+ * упасти на хуку, а не «пройти» пропущеними перевірками.
+ */
+const HOOK_BUDGET_MS = 120_000;
+
 describe('базовий набір ESLint (CODE-QUALITY-v8 § 6.4.1)', () => {
 	// Node API замість `npx eslint --print-config`: з Node 22+ спроба запустити
 	// `.cmd` без `shell: true` падає з EINVAL, а `shell: true` дає DEP0190.
@@ -58,15 +92,11 @@ describe('базовий набір ESLint (CODE-QUALITY-v8 § 6.4.1)', () => {
 	let rules: Record<string, unknown>;
 
 	beforeAll(async () => {
-		const config = (await new ESLint().calculateConfigForFile(SAMPLE)) as {
+		const config = (await eslint.calculateConfigForFile(SAMPLE)) as {
 			rules: Record<string, unknown>;
 		};
 		rules = config.rules;
-		// 30 c, а не типові 5: розвʼязання конфігу тягне пресети svelte та
-		// typescript-eslint і в найбільшому з проєктів займає 3,5 c. Під
-		// паралельним прогоном у CI типового ліміту не вистачає — файл падав
-		// з 14 пропущеними перевірками, тобто гейт червонів без порушення.
-	}, 30_000);
+	}, HOOK_BUDGET_MS);
 
 	it.each(BASELINE)('%s не вимкнене', (rule) => {
 		const level = levelOf(rules[rule]);
@@ -130,7 +160,7 @@ describe('борг ESLint — число, що лише спадає (CODE-QUALI
 		// `.cmd` без `shell: true` з Node 22+ падає з EINVAL, а `shell: true`
 		// дає DEP0190. Запас за таймаутом навмисний — плаваючий гейт гірший за
 		// відсутній, бо на нього перестають дивитися.
-		const results = await new ESLint().lintFiles(['.']);
+		const results = await eslint.lintFiles(['.']);
 		counts = {};
 		linted = results.length;
 		for (const result of results) {
@@ -140,7 +170,7 @@ describe('борг ESLint — число, що лише спадає (CODE-QUALI
 				if (message.severity === 2) errors++;
 			}
 		}
-	}, 120_000);
+	}, HOOK_BUDGET_MS);
 
 	it('перевірка жива: lint пройшов по джерелах проєкту', () => {
 		/*
