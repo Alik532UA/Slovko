@@ -175,16 +175,10 @@ const KNOWN_PAIRS: {
 		why: "`.icon-btn.active` у темі `orange`: та сама пара, що й перша, тільки навпаки",
 	},
 	{
-		pair: "#a0a0a0 on #43464e",
-		ratio: 3.61,
-		places: 4,
-		why: "`--text-secondary` на картці в темній темі — саме її бачить і axe у трьох станах",
-	},
-	{
-		pair: "#a0a0a0 on #565a63",
-		ratio: 2.64,
+		pair: "#b8b8b8 on #565a63",
+		ratio: 3.48,
 		places: 1,
-		why: "`--text-secondary` на `--border`: `.icon-action-btn.cancel:hover`",
+		why: "`--text-secondary` на `--border` у `.icon-action-btn.cancel:hover` — тло тут узяте з кольору рамки, а не з поверхні; лікується компонентом, а не токеном",
 	},
 	{
 		pair: "#dc2626 on #fee2e2",
@@ -203,8 +197,13 @@ const KNOWN_PAIRS: {
 /**
  * Сума `places`. Може лише СПАДАТИ — і опускається тим самим комітом, яким
  * пару виправили.
+ *
+ * 193 → 189: `--text-secondary` у темній половині переведено з `#a0a0a0` на
+ * `#b8b8b8`, і пара «другорядний текст на картці» (3,61 : 1, чотири місця)
+ * зникла з переліку цілком. Той самий рядок закрив і три з семи вузлів
+ * `color-contrast`, які бачив axe.
  */
-const KNOWN_TOTAL = 193;
+const KNOWN_TOTAL = 189;
 
 type Decl = {
 	color?: string;
