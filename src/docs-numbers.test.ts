@@ -143,6 +143,12 @@ const CEILINGS: { what: string; from: string; pattern: RegExp; inDoc: RegExp }[]
 		pattern: /const KNOWN_OVERSIZE = (\d+)/,
 		inDoc: /перевищень орієнтира розміру не більше (\d+)/g,
 	},
+	{
+		what: "місця нижче WCAG AA за контрастом",
+		from: "src/contrast.test.ts",
+		pattern: /const KNOWN_TOTAL = (\d+)/,
+		inDoc: /стеля (\d+) місць нижче AA/g,
+	},
 ];
 
 /** Документ, що взагалі згадує стелі. Гейт про НЕПРАВДУ, а не про обов'язок згадувати. */

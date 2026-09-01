@@ -194,7 +194,7 @@ npm run test:unit   # Vitest: інваріанти по джерелах
 npm run test:e2e    # Playwright: testid, smoke, axe; сервер на 5273
 npm run i18n:check  # паритет ключів у семи мовах
 npm run build       # збірка
-npm run check:build # інваріанти над build/ — те, чого не видно в src/
+npm run check:build # інваріанти над build/ — те, чого не видно в src/ (зокрема інлайнові обробники)
 npm run check:rules # правила доступу Firebase над емулятором — і в CI теж
 ```
 
