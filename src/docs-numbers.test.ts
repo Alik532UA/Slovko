@@ -120,10 +120,16 @@ describe("числа в документації (AI-AGENT-PITFALLS-v8 § 5.5)",
  */
 const CEILINGS: { what: string; from: string; pattern: RegExp; inDoc: RegExp }[] = [
 	{
-		what: "бюджет критичного шляху",
+		what: "бюджет КОДУ в критичному шляху",
 		from: "scripts/check-bundle.mjs",
-		pattern: /const LIMIT_KB = (\d+)/,
-		inDoc: /[Сс]теля\D{0,4}(\d+)\s*КБ/g,
+		pattern: /const LIMIT_CODE_KB = (\d+)/,
+		inDoc: /стеля коду (\d+) КБ/g,
+	},
+	{
+		what: "бюджет РЕЄСТРУ адрес у критичному шляху",
+		from: "scripts/check-bundle.mjs",
+		pattern: /const LIMIT_DATA_KB = (\d+)/,
+		inDoc: /стеля реєстру адрес (\d+) КБ/g,
 	},
 	{
 		what: "ключі словника без ужитку",
