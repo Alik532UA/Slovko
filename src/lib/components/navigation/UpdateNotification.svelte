@@ -55,14 +55,20 @@
 	}
 </script>
 
+<!--
+	Тло — НЕ кнопка: див. розгорнуте обґрунтування в `ui/BaseModal.svelte`.
+	Коротко: роль віджета на елементі з фокусованими нащадками дає порушення
+	axe `nested-interactive`, оголошення цілого вікна як «Закрити, кнопка» й
+	зайву мертву зупинку табуляції. Escape лишається на цьому ж елементі —
+	він ловить подію, що спливає від справжніх кнопок усередині.
+-->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
 	class="modal-backdrop"
 	transition:fade={{ duration: 200 }}
 	onclick={handleDismiss}
 	onkeydown={handleKeydown}
-	role="button"
-	tabindex="0"
-	aria-label={$_("common.close") || "Close"}
 	data-testid="update-notification-backdrop"
 >
 	<!--

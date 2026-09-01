@@ -32,12 +32,9 @@
 		document.body.style.overflow = "";
 	});
 
-	function handleBackdropClick(e: MouseEvent | KeyboardEvent) {
-		if (e instanceof MouseEvent) {
-			if (e.target === e.currentTarget) onclose();
-		} else {
-			onclose();
-		}
+	/** Клік МИМО вікна. Клік по самому вікну сюди не доходить — його спиняє `.modal`. */
+	function handleBackdropClick(e: MouseEvent) {
+		if (e.target === e.currentTarget) onclose();
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
@@ -45,16 +42,29 @@
 	}
 </script>
 
+<!--
+	Тло — НЕ кнопка (ACCESSIBILITY-v8 § 10.1, axe `nested-interactive`).
+
+	Тут стояли `role="button"`, `tabindex="0"` і `aria-label="Закрити"` — на
+	елементі, ВСЕРЕДИНІ якого лежить усе вікно з власними кнопками. Наслідків
+	було два, і обидва невидимі в коді: axe рахував порушення «фокусовані
+	нащадки в елементі з роллю віджета» на КОЖНОМУ з чотирнадцяти вікон, а
+	читалка оголошувала ціле вікно як «Закрити, кнопка» й давала перед ним
+	мертву зупинку табуляції. Той самий дефект, що 2026-08-28 знайшовся в
+	`BaseTooltip`, тільки на два порядки помітніший.
+
+	Клік мимо лишається — це вказівникова зручність, а не єдиний спосіб вийти:
+	з клавіатури працюють Escape (обробник на самому вікні, яке отримує фокус
+	при монтуванні) і справжня кнопка «×» усередині. Саме тому клавіатурного
+	еквівалента цьому `onclick` не потрібно — він нічого не додає до того, що
+	вже є, і зразок стоїть поруч, у `GameStats.svelte`.
+-->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
 	class="modal-backdrop"
 	transition:fade={{ duration: 200 }}
 	onclick={handleBackdropClick}
-	onkeydown={(e) => {
-		if (e.key === "Enter" || e.key === " ") handleBackdropClick(e);
-	}}
-	role="button"
-	tabindex="0"
-	aria-label={$_("common.close") || "Close"}
+	onkeydown={handleKeydown}
 	data-testid="{testid}-backdrop"
 >
 	<div
