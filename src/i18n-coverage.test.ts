@@ -156,17 +156,29 @@ describe("покриття локалізації", () => {
 		expect(sample.split("\n").length, "номери рядків мусять лишитися").toBe(2);
 	});
 
-	it(`ключів без ужитку не більше за ${KNOWN_UNUSED_KEYS}`, () => {
+	/*
+	 * РІВНІСТЬ, а не «не більше», в обох перевірках нижче.
+	 *
+	 * «Не більше» ловить зростання й пропускає застарівання: ключ ожив, число
+	 * лишилося старим — і наступний читач бачить борг, якого немає. Обидва
+	 * числа тут звіряються ще й `docs-numbers.test.ts` із таблицею в
+	 * `PROJECT-CONTEXT.md`, тобто застаріле число тихо робить неправдивими
+	 * ДВА документи. Той самий аргумент, що для боргу `warn` в
+	 * `eslint-baseline.test.ts`, де рівність стоїть від початку.
+	 */
+	it(`ключів без ужитку рівно ${KNOWN_UNUSED_KEYS}`, () => {
 		expect(
 			unusedKeys.length,
-			`перелік може лише скорочуватися; зараз:\n${unusedKeys.join("\n")}`,
-		).toBeLessThanOrEqual(KNOWN_UNUSED_KEYS);
+			"перелік може лише скорочуватися — і число опускається ТИМ САМИМ " +
+				`комітом;\nзараз:\n${unusedKeys.join("\n")}`,
+		).toBe(KNOWN_UNUSED_KEYS);
 	});
 
-	it(`підписів для читалки без i18n не більше за ${KNOWN_HARDCODED_LABELS}`, () => {
+	it(`підписів для читалки без i18n рівно ${KNOWN_HARDCODED_LABELS}`, () => {
 		expect(
 			hardcodedLabels.length,
-			`перелік може лише скорочуватися; зараз:\n${hardcodedLabels.join("\n")}`,
-		).toBeLessThanOrEqual(KNOWN_HARDCODED_LABELS);
+			"перелік може лише скорочуватися — і число опускається ТИМ САМИМ " +
+				`комітом;\nзараз:\n${hardcodedLabels.join("\n")}`,
+		).toBe(KNOWN_HARDCODED_LABELS);
 	});
 });
