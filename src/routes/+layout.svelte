@@ -431,7 +431,9 @@
 		const isDark = theme === "dark-gray" || theme === "orange";
 		const meta = document.querySelector('meta[name="color-scheme"]');
 		if (meta) {
-			meta.setAttribute("content", isDark ? "dark" : "light dark");
+			// Те саме, що в скрипті першого кадру: `only light` — відмова від
+			// Auto Dark Theme на Android (UI-UX-v9 `UIUX-ONLY-LIGHT`).
+			meta.setAttribute("content", isDark ? "dark" : "only light");
 		}
 	});
 

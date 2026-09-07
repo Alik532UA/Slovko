@@ -91,7 +91,11 @@
 					var isDark = theme === "dark-gray" || theme === "orange";
 					var meta = document.querySelector('meta[name="color-scheme"]');
 					if (meta) {
-						meta.setAttribute('content', isDark ? 'dark' : 'light dark');
+						// `only light`, а не `light dark`: мета-тег мусить збігатися зі
+						// звуженням у `app.css`, інакше сторінка оголошує себе
+						// світлою-без-темної й Android Chrome перемальовує її своєю
+						// Auto Dark Theme (UI-UX-v9 `UIUX-ONLY-LIGHT`).
+						meta.setAttribute('content', isDark ? 'dark' : 'only light');
 					}
 				} catch (e) {}
 			})();
