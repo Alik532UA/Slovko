@@ -80,7 +80,8 @@ function resolveImport(fromFile: string, spec: string): string | null {
 	return null;
 }
 
-const IMPORT_RE = /(?:from\s*|import\s*\(\s*|export\s+\*\s+from\s*)["']([^"']+)["']/g;
+const IMPORT_RE =
+	/(?:from\s*|import\s*\(\s*|export\s+\*\s+from\s*)["']([^"']+)["']/g;
 
 function importsOf(file: string): string[] {
 	const text = readFileSync(file, "utf8");
@@ -118,10 +119,136 @@ describe("досяжність модулів (PROJECT-STRUCTURE-v8 § 4.3)", ()
 	});
 
 	it("кожен модуль досяжний із маршруту або точки входу", () => {
-		const orphans = allModules.filter((f) => !reached.has(f)).map(rel).sort();
+		const orphans = allModules
+			.filter((f) => !reached.has(f))
+			.map(rel)
+			.sort();
 		expect(
 			orphans,
 			`недосяжні модулі — підключити або видалити, третього немає:\n${orphans.join("\n")}`,
 		).toEqual([]);
+	});
+});
+
+/**
+ * Те саме правило для `static/` (PROJECT-STRUCTURE § 2.1, `PS-STATIC-ORPHANS`).
+ *
+ * `adapter-static` копіює вміст теки на хостинг ЦІЛКОМ і мовчки: файл, якого не
+ * просить ніхто, не ламає нічого й не з'являється в жодному звіті — його просто
+ * роздають назавжди. Перевірка модулів вище цього не бачить у принципі: у
+ * `static/` немає імпортів, там є адреси.
+ *
+ * Перший прогін знайшов `svg/favicon.svg` — логотип Svelte із шаблону
+ * `create-svelte`, який лежав тут із міграції структури й на який не
+ * посилається ні `app.html`, ні маніфест, ні код. Файл видалено разом із
+ * появою цієї перевірки.
+ */
+const STATIC_DIR = "static";
+
+/**
+ * Свій обхід, бо `walk()` вище лишає тільки `.ts`/`.js`/`.svelte`. У `static/`
+ * таких файлів немає взагалі — з тим фільтром перелік вийшов би порожнім, а
+ * перевірка зеленою на будь-якому вмісті теки.
+ */
+function walkAll(dir: string, out: string[] = []): string[] {
+	for (const entry of readdirSync(dir)) {
+		const full = join(dir, entry);
+		if (statSync(full).isDirectory()) walkAll(full, out);
+		else out.push(posix(full));
+	}
+	return out;
+}
+
+/** Де взагалі можуть згадуватися адреси ресурсів. Двійкові файли не читаються. */
+const REFERENCE_SOURCES = [
+	// Саме `walkAll`, а не `walk`: половина адрес ресурсів живе в `app.html`,
+	// який має розширення поза переліком модулів. З `walk` перевірка оголосила
+	// б сиротами піктограми, значок і маніфест — усе, на що посилається шаблон.
+	...walkAll(join(ROOT, "src")),
+	...walkAll(join(ROOT, "scripts")),
+	...walkAll(join(ROOT, "tests")),
+	join(ROOT, "svelte.config.js"),
+	join(ROOT, STATIC_DIR, "llms.txt"),
+	join(ROOT, STATIC_DIR, "robots.txt"),
+	join(ROOT, STATIC_DIR, "manifest.json"),
+	join(ROOT, STATIC_DIR, "sitemap.xml"),
+]
+	.filter(
+		(f) => existsSync(f) && !/\.(png|webp|jpg|jpeg|svg|ico|woff2?)$/i.test(f),
+	)
+	// Статичні гейти в `src/` називають файли В ПРОЗІ — цей серед них. Без
+	// цього рядка згадка в коментарі рахувалася б посиланням, і перевірка
+	// оголосила б `.nojekyll` живим саме тому, що пояснює, чому він мертвий.
+	// `tests/` лишаються: e2e ходить по справжніх адресах.
+	.filter((f) => !(rel(f).startsWith("src/") && isCheck(f)));
+
+/**
+ * `.nojekyll` — єдиний файл, який мусить лежати тут БЕЗ жодного посилання.
+ *
+ * Він і працює тим, що існує: GitHub Pages бачить його й вимикає обробку
+ * Jekyll, інакше все, що починається з підкреслення (`_app/`), на хостингу не
+ * віддається. Тобто це не борг, а вимога платформи — і саме тому вона названа
+ * тут, а не мовчки виключена маскою.
+ */
+const KNOWN_UNREFERENCED = [".nojekyll"];
+
+describe("сироти в static/ (PS-STATIC-ORPHANS, MEDIUM)", () => {
+	const assets = walkAll(join(ROOT, STATIC_DIR)).map((f) =>
+		rel(f).replace(`${STATIC_DIR}/`, ""),
+	);
+	const haystack = REFERENCE_SOURCES.map((f) => readFileSync(f, "utf8")).join(
+		"\n",
+	);
+
+	/**
+	 * Посилання буває трьох видів, і другий із них — причина, чому наївна
+	 * перевірка тут дає хибну тривогу на восьми прапорцях: адреса складається
+	 * під час рендеру (`{base}/svg/flags/{lang}.svg`), тож повного шляху в
+	 * джерелах немає взагалі. Тека з інтерполяцією одразу після неї — це
+	 * посилання на ВЕСЬ її вміст.
+	 */
+	const referenced = (asset: string) => {
+		const base = asset.slice(asset.lastIndexOf("/") + 1);
+		const dir = asset.includes("/")
+			? asset.slice(0, asset.lastIndexOf("/") + 1)
+			: "";
+		return (
+			haystack.includes(asset) ||
+			haystack.includes(base) ||
+			(dir !== "" && haystack.includes(`${dir}{`))
+		);
+	};
+
+	it("перевірка жива: ресурси й джерела посилань прочитано", () => {
+		expect(
+			assets.length,
+			"тека static/ порожня — перевіряти нема що",
+		).toBeGreaterThan(5);
+		expect(
+			REFERENCE_SOURCES.length,
+			"джерел посилань не знайдено",
+		).toBeGreaterThan(50);
+		// Канарка на сам спосіб пошуку: файл, який ТОЧНО згадують, мусить
+		// знайтися. Інакше «жодної сироти» означало б лише зламаний пошук.
+		expect(
+			REFERENCE_SOURCES.some((f) => f.endsWith("src/app.html")),
+			"app.html не потрапив у джерела посилань — а саме він називає піктограми",
+		).toBe(true);
+		expect(referenced("manifest.json"), "розбір посилань зламався").toBe(true);
+		expect(
+			referenced("svg/flags/uk.svg"),
+			"інтерпольована адреса не розпізнається",
+		).toBe(true);
+	});
+
+	it("перелік ресурсів без жодного посилання збігається із записаним", () => {
+		const orphans = assets.filter((a) => !referenced(a)).sort();
+		expect(
+			orphans,
+			"файл у static/, якого не просить ніхто: adapter-static однаково " +
+				"скопіює його на хостинг, і про нього не дізнається жоден звіт. " +
+				"Або підключити, або видалити — або назвати причину в " +
+				"KNOWN_UNREFERENCED, як це зроблено для .nojekyll",
+		).toEqual([...KNOWN_UNREFERENCED].sort());
 	});
 });
