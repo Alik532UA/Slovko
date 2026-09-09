@@ -96,6 +96,7 @@
 						class="back-btn"
 						onclick={goBack}
 						transition:fade
+						aria-label={$_("profile.back")}
 						data-testid="feedback-back-btn"
 					>
 						<ArrowLeft size={20} />

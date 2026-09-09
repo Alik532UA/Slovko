@@ -186,6 +186,7 @@
 							e.stopPropagation();
 							openPlaylistModal(p.id);
 						}}
+						aria-label={$_("common.edit")}
 						data-testid="playlist-edit-btn-{p.id}"
 					>
 						<Settings2 size={18} />
@@ -193,6 +194,7 @@
 					<button
 						class="action-btn danger"
 						onclick={(e) => deletePlaylist(p.id, e)}
+						aria-label={$_("a11y.delete")}
 						data-testid="playlist-delete-btn-{p.id}"
 					>
 						<Trash2 size={18} />

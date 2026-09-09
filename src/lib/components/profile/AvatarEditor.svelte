@@ -207,6 +207,7 @@
 			<button
 				class="icon-action-btn save"
 				onclick={handleSave}
+				aria-label={$_("common.save")}
 				data-testid="avatar-editor-save-btn"
 			>
 				<Check size={20} />
@@ -214,6 +215,7 @@
 			<button
 				class="icon-action-btn cancel"
 				onclick={oncancel}
+				aria-label={$_("common.cancel")}
 				data-testid="avatar-editor-cancel-btn"
 			>
 				<X size={20} />
