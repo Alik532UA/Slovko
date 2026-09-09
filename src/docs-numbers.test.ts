@@ -143,12 +143,14 @@ const CEILINGS: { what: string; from: string; pattern: RegExp; inDoc: RegExp }[]
 		pattern: /const KNOWN_HARDCODED_LABELS = (\d+)/,
 		inDoc: /без i18n\*\* \(стеля (\d+)\)/g,
 	},
-	{
-		what: "перевищення орієнтира розміру файлу",
-		from: "src/file-size.test.ts",
-		pattern: /const KNOWN_OVERSIZE = (\d+)/,
-		inDoc: /перевищень орієнтира розміру не більше (\d+)/g,
-	},
+	/*
+	 * Тут стояла стеля «перевищень орієнтира розміру не більше N».
+	 *
+	 * Її більше немає, і це не пропуск: `file-size.test.ts` перейшов на перелік
+	 * зі стелею на КОЖЕН файл (`PS-SIZE-RATCHET`), тобто числа, яке можна було б
+	 * звіряти з документом, не існує. Правило про числа в прозі виконується
+	 * сильнішим способом — числа в прозі просто немає, а перелік друкує прогін.
+	 */
 	{
 		what: "місця нижче WCAG AA за контрастом",
 		from: "src/contrast.test.ts",
