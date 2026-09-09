@@ -17,7 +17,7 @@
  */
 import { createHash } from "node:crypto";
 import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { checkGeo } from "./check-geo.mjs";
 
 const BUILD = "build";
@@ -72,6 +72,54 @@ const INLINE_HANDLER_ATTR = new RegExp(
 
 const failures = [];
 const fail = (message) => failures.push(message);
+
+/**
+ * Критичні ресурси сторінки: стилі й модулі, які браузер тягне ще до першого
+ * кадру. Порядок атрибутів у тезі не фіксований (`rel` буває і до, і після
+ * `href`), тому спершу береться тег цілком, і вже з нього — атрибути.
+ */
+const attrOf = (tag, name) =>
+	new RegExp(`${name}="([^"]*)"`, "i").exec(tag)?.[1] ?? "";
+
+function criticalAssets(html) {
+	const urls = [];
+	let styles = 0;
+	let scripts = 0;
+	for (const m of html.matchAll(/<link\b([^>]*)>/gi)) {
+		const rel = attrOf(m[1], "rel");
+		const href = attrOf(m[1], "href");
+		if (!href) continue;
+		if (rel === "stylesheet") styles++;
+		else if (rel === "modulepreload") scripts++;
+		else continue;
+		urls.push(href);
+	}
+	for (const m of html.matchAll(/<script\b[^>]*\bsrc="([^"]+)"/gi)) {
+		scripts++;
+		urls.push(m[1]);
+	}
+	return { urls, styles, scripts };
+}
+
+/** Адреса ресурсу → файл на диску, або null, якщо ресурс зовнішній. */
+function resolveAsset(pageFile, url) {
+	if (
+		/^https?:/i.test(url) ||
+		url.startsWith("data:") ||
+		url.startsWith("//")
+	) {
+		return null;
+	}
+	if (url.startsWith("/")) {
+		// Абсолютна адреса несе базовий шлях (`/Slovko/...`), а на диску його
+		// немає: `build/` І Є коренем сайту.
+		const withoutBase = url.startsWith(`${BASE}/`)
+			? url.slice(BASE.length)
+			: url;
+		return join(BUILD, withoutBase.replace(/^\//, ""));
+	}
+	return join(dirname(pageFile), url);
+}
 
 function walk(dir, out = []) {
 	for (const entry of readdirSync(dir)) {
@@ -327,6 +375,82 @@ for (const page of pages) {
 					"а хеші на обробники не поширюються. У джерелах його немає: його " +
 					"додає компілятор на елемент із розгортанням атрибутів",
 			);
+		}
+	}
+
+	// 8. Критичні ресурси сторінки лежать там, куди сторінка показує.
+	//
+	//    Клас, який ловиться лише тут: адреса ресурсу складається зі `base`, а
+	//    `base` під час пререндеру й на хостингу — різні рядки. Сторінка з
+	//    непрацездатним посиланням на CSS не падає й не порожніє: вона просто
+	//    малюється без стилів, а весь JS не виконується. Оком це видно, а
+	//    жодною з перевірок вище — ні.
+	const critical = criticalAssets(html);
+	for (const url of critical.urls) {
+		const target = resolveAsset(page, url);
+		if (target && !existsSync(target)) {
+			fail(`${where}: ресурс «${url}» не існує у build/ (шукали ${target})`);
+		}
+	}
+	if (critical.styles === 0)
+		fail(`${where}: жодного <link rel="stylesheet"> — сторінка без стилів`);
+	if (critical.scripts === 0)
+		fail(`${where}: жодного modulepreload — сторінка без коду`);
+}
+
+/*
+ * 8а. Сторінка, яку міряє Lighthouse, мусить вантажитися З КОРЕНЯ
+ * (OBSERVABILITY § 2.2.1, `OBS-LHCI-REAL-PAGES`).
+ *
+ * LHCI піднімає власний сервер над `build/` і кладе його в КОРІНЬ, без
+ * префікса `/Slovko`. Поки адреси ресурсів відносні (`./_app/...`), усе
+ * сходиться. Щойно вони стануть абсолютними — а це рівно те, що робить `base`
+ * на хостингу, — сервер LHCI поверне 404 на кожен файл, сторінка намалюється
+ * без CSS і без JS, і Lighthouse дасть їй ВИСОКІ бали: порожній документ
+ * швидкий, доступний і без помилок best practices.
+ *
+ * Тобто наслідок цієї поломки — не червоний гейт, а зелений. Саме тому
+ * перевірка стоїть тут, у скрипті над `build/`, а не покладається на пороги
+ * самого Lighthouse.
+ *
+ * Перелік адрес береться з `lighthouserc.cjs`, а не дублюється: розходження
+ * двох копій було б наступним мовчазним дефектом.
+ */
+{
+	const lhciFile = "lighthouserc.cjs";
+	if (!existsSync(lhciFile)) {
+		fail(`${lhciFile} не знайдено — перелік адрес Lighthouse перевіряти нічим`);
+	} else {
+		const config = readFileSync(lhciFile, "utf8");
+		const urlBlock = /url:\s*\[([^\]]*)\]/.exec(config)?.[1] ?? "";
+		const measured = [...urlBlock.matchAll(/['"]([^'"]+)['"]/g)].map(
+			(m) => m[1],
+		);
+
+		if (measured.length === 0) {
+			fail(`${lhciFile}: перелік адрес порожній або записаний інакше`);
+		}
+
+		for (const url of measured) {
+			const path = url.replace(/^https?:\/\/[^/]+/, "").replace(/^\//, "");
+			const file = join(BUILD, path);
+			if (!existsSync(file)) {
+				fail(
+					`${lhciFile}: Lighthouse міряє «${url}», а ${file} у build/ немає — ` +
+						"гейт або впаде, або зміряє не те",
+				);
+				continue;
+			}
+			const absolute = criticalAssets(readFileSync(file, "utf8")).urls.filter(
+				(u) => u.startsWith("/"),
+			);
+			if (absolute.length > 0) {
+				fail(
+					`${file}: ресурси задані абсолютним шляхом (${absolute[0]}), а LHCI ` +
+						"роздає build/ з КОРЕНЯ. Сторінка приїде без CSS і JS, і бали " +
+						"будуть ВИСОКІ — порожній документ швидкий і доступний",
+				);
+			}
 		}
 	}
 }
