@@ -238,6 +238,46 @@ for (const page of pages) {
 		fail(`${where}: canonical «${canonical}» містить відносний фрагмент`);
 	}
 
+	// 4а. У кожного мета-тега рівно один власник (SEO § 4.4,
+	//     `SEO-HEAD-SINGLE-OWNER`, HIGH). `<svelte:head>` ДОПИСУЄ вміст, а не
+	//     заміщує його, тож макет і сторінка, кожен по-своєму правий, разом
+	//     дають два `og:image`, два `description` чи два `<title>` — і який із
+	//     них візьме краулер, залежить від краулера. Браузер бере ПЕРШИЙ, а
+	//     перший тут завжди статичний, із `app.html`: тобто власний тег
+	//     сторінки виявляється мертвою розміткою, і в джерелах обидва місця
+	//     виглядають правильно.
+	//
+	//     Саме так тут жив другий `<title>` на сторінці чеклиста: вкладка
+	//     показувала загальну назву застосунку, а «Чеклист бета-тестування» не
+	//     бачив ніхто. Знімає його `hooks.server.ts` — там, де вже знімається
+	//     canonical.
+	//
+	//     Пробіли схлопуються перед підрахунком: prettier переносить довгий
+	//     `<meta>` на кілька рядків, і однорядковий шаблон його не бачить —
+	//     тобто мовчазний нуль замість знахідки.
+	const flat = html.replace(/\s+/g, " ");
+	const SINGLE_OWNER = [
+		["<title>", /<title[\s>]/gi],
+		['<meta name="description">', /<meta[^>]*\sname="description"/gi],
+		['<meta name="robots">', /<meta[^>]*\sname="robots"/gi],
+		['<link rel="canonical">', /<link[^>]*\srel="canonical"/gi],
+		['<meta property="og:title">', /<meta[^>]*\sproperty="og:title"/gi],
+		[
+			'<meta property="og:description">',
+			/<meta[^>]*\sproperty="og:description"/gi,
+		],
+		['<meta property="og:image">', /<meta[^>]*\sproperty="og:image"/gi],
+	];
+	for (const [name, pattern] of SINGLE_OWNER) {
+		const times = (flat.match(pattern) ?? []).length;
+		if (times > 1) {
+			fail(
+				`${where}: ${name} трапляється ${times} рази — у тега два власники ` +
+					"(app.html і <svelte:head>), і діє лише перший",
+			);
+		}
+	}
+
 	// 5. CSP і хеші інлайн-скриптів. На статиці політика приїжджає мета-тегом і
 	//    діє лише на те, що НИЖЧЕ за неї; скрипт без свого хеша блокується
 	//    МОВЧКИ — сторінка малюється, просто щось перестає працювати
@@ -298,7 +338,8 @@ for (const page of pages) {
  * (AI-AGENT-PITFALLS-v8 § 1).
  */
 {
-	const positive = '<img src="x" onload="this.__e=event" onerror="this.__e=event">';
+	const positive =
+		'<img src="x" onload="this.__e=event" onerror="this.__e=event">';
 	const negative = '<div data-only="1" data-once="on" class="online"></div>';
 	const hits = [...positive.matchAll(INLINE_HANDLER_ATTR)].length;
 	if (hits !== 2) {

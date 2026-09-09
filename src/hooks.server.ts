@@ -20,12 +20,30 @@ import { isHiddenRoute } from "$lib/config/hiddenRoutes";
  * Чому взагалі без `canonical`: разом із `noindex` він дає протилежні сигнали —
  * «не індексуй» і «оце канонічна адреса для індексу». Перевіряє обидві
  * обіцянки `scripts/check-build.mjs`, і для решти сторінок — ПРОТИЛЕЖНЕ.
+ *
+ * Тут же знімається ДРУГИЙ `<title>` (SEO § 4.4, `SEO-HEAD-SINGLE-OWNER`).
+ * `<svelte:head>` дописує вміст, а не заміщує його: на сторінках, де SSR
+ * увімкнено, у зібраному HTML опинялися два заголовки — статичний із `app.html`
+ * і власний зі сторінки. Браузер і краулер беруть ПЕРШИЙ у порядку документа, а
+ * перший тут завжди статичний (він стоїть вище за `%sveltekit.head%`), тож
+ * власний заголовок сторінки був мертвою розміткою: у джерелах обидва місця
+ * виглядали правильно, а вкладка показувала загальну назву застосунку.
+ *
+ * Знімається саме перший і лише тоді, коли їх більше одного: сторінка без
+ * власного заголовка мусить лишитися зі статичним, а не без жодного.
  */
 export const handle: Handle = async ({ event, resolve }) => {
 	if (!isHiddenRoute(event.url.pathname)) return resolve(event);
 
 	return resolve(event, {
-		transformPageChunk: ({ html }) =>
-			html.replace(/\s*<link rel="canonical"[^>]*>/g, ""),
+		transformPageChunk: ({ html }) => {
+			const withoutCanonical = html.replace(
+				/\s*<link rel="canonical"[^>]*>/g,
+				"",
+			);
+			const titles = withoutCanonical.match(/<title[^>]*>[\s\S]*?<\/title>/g);
+			if (!titles || titles.length < 2) return withoutCanonical;
+			return withoutCanonical.replace(/\s*<title[^>]*>[\s\S]*?<\/title>/, "");
+		},
 	});
 };
