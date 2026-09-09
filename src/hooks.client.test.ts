@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 /**
  * ERROR-HANDLING-v8 § 2.4 — гачок неперехоплених помилок клієнта.
@@ -10,6 +10,11 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
  * помилився посиланням», і помітити це можна лише за скаргою.
  *
  * Зворотний експеримент: прибрати той рядок із гачка — падає перша перевірка.
+ *
+ * Другий розділ — запасний шар над застарілою вкладкою (VERSIONING § 4.5,
+ * `VER-OPEN-TAB-SURVIVES`, HIGH). Перевіряється саме поведінка, бо помилка
+ * тут була б не в наявності коду, а в його кількості: перезавантаження, яке
+ * повторюється, — це вже не лікування, а цикл.
  */
 
 const handle = vi.fn();
@@ -18,6 +23,27 @@ vi.mock("$lib/services/errorHandler", () => ({
 }));
 
 const event = { url: new URL("https://example.com/Slovko/") } as never;
+
+/**
+ * Середовище тут `node` (див. `vitest.config.ts`), тож ні `window`, ні
+ * `sessionStorage` немає. Обидва підставляються навмисно мінімальними: гачок
+ * має право розраховувати рівно на `location.reload()` і на фасад сховища.
+ */
+function stubBrowser() {
+	const reload = vi.fn();
+	const store = new Map<string, string>();
+	vi.stubGlobal("window", { location: { reload } });
+	vi.stubGlobal("sessionStorage", {
+		getItem: (k: string) => store.get(k) ?? null,
+		setItem: (k: string, v: string) => void store.set(k, v),
+		removeItem: (k: string) => void store.delete(k),
+		key: (i: number) => [...store.keys()][i] ?? null,
+		get length() {
+			return store.size;
+		},
+	});
+	return { reload, store };
+}
 
 describe("handleError клієнта", () => {
 	beforeEach(() => {
@@ -71,5 +97,89 @@ describe("handleError клієнта", () => {
 			result?.message,
 			"текст рантайму нічого не пояснює відвідувачу, зате показує нутрощі застосунку",
 		).not.toContain("Cannot read properties");
+	});
+});
+
+describe("вкладка, відкрита до деплою (VER-OPEN-TAB-SURVIVES, HIGH)", () => {
+	beforeEach(() => {
+		handle.mockClear();
+	});
+
+	afterEach(() => {
+		vi.unstubAllGlobals();
+	});
+
+	const call = async (error: unknown) => {
+		const { handleError } = await import("./hooks.client");
+		return handleError({ error, event, status: 500, message: "500" });
+	};
+
+	/**
+	 * Кожна збірка перейменовує чанки за хешем вмісту, тож вкладка, відкрита до
+	 * деплою, тримає перелік адрес, яких на сервері вже немає. Перший же лінивий
+	 * імпорт отримує 404, і людина бачить зламаний застосунок — хоча зламана
+	 * лише вкладка.
+	 */
+	it("помилка завантаження чанка перезавантажує сторінку", async () => {
+		const { reload } = stubBrowser();
+
+		const result = await call(
+			new Error(
+				"Failed to fetch dynamically imported module: /Slovko/_app/immutable/nodes/2.W34Pfrl5.js",
+			),
+		);
+
+		expect(
+			reload,
+			"застаріла вкладка лікується перезавантаженням",
+		).toHaveBeenCalledTimes(1);
+		expect(
+			handle,
+			"подія «вкладка пережила деплой» мусить бути в журналі",
+		).toHaveBeenCalledTimes(1);
+		expect(result?.message).toBeTruthy();
+	});
+
+	/**
+	 * Найдорожча помилка в цьому місці — не відсутність перезавантаження, а
+	 * друге поспіль: сторінка крутиться, і причини не видно ніде.
+	 */
+	it("друга така сама помилка НЕ перезавантажує — це був би цикл", async () => {
+		const { reload } = stubBrowser();
+		const boom = new Error("Failed to fetch dynamically imported module");
+
+		await call(boom);
+		await call(boom);
+
+		expect(
+			reload,
+			"маркер у сховищі мусить зупинити другу спробу",
+		).toHaveBeenCalledTimes(1);
+	});
+
+	it("текст рушія не має значення: Firefox і Safari кажуть інше", async () => {
+		for (const message of [
+			"error loading dynamically imported module",
+			"Importing a module script failed.",
+		]) {
+			const { reload } = stubBrowser();
+			await call(new Error(message));
+			expect(
+				reload,
+				`«${message}» не розпізнано як застарілий чанк`,
+			).toHaveBeenCalledTimes(1);
+			vi.unstubAllGlobals();
+		}
+	});
+
+	it("звичайна помилка сторінку не перезавантажує", async () => {
+		const { reload } = stubBrowser();
+
+		await call(new Error("Cannot read properties of undefined"));
+
+		expect(
+			reload,
+			"перезавантаження на будь-якій помилці ховало б справжні збої за миготінням сторінки",
+		).not.toHaveBeenCalled();
 	});
 });
