@@ -560,9 +560,20 @@
 		border: 1px solid var(--glass-border);
 	}
 
+	/*
+	 * Тло — `--status-success-solid`, а не `--status-success`: другий підібраний
+	 * як ТЕКСТ, і під білим написом давав 2,10 : 1 у темі `orange` — найгіршу
+	 * пару проєкту. Причина й замір — у самому токені (`app.css`).
+	 *
+	 * `filter: brightness(1.1)` на наведенні прибрано разом із дублем `background`.
+	 * Прояснення суцільної кнопки виводить пару з-під токенів: заміряно
+	 * 4,26 : 1 на `#15803d` × 1,1, тобто станом нижче AA, якого не бачить ні
+	 * `contrast.test.ts` (він розв'язує токени, не фільтри), ні axe (він не
+	 * наводить). Ознака наведення лишається — масштаб і тінь, обидві вже були.
+	 */
 	.skip-all-btn {
-		background: var(--status-success);
-		color: white;
+		background: var(--status-success-solid);
+		color: #ffffff;
 		border: 1px solid var(--glass-border);
 		padding: 1.1rem;
 		border-radius: 18px;
@@ -578,8 +589,6 @@
 	}
 
 	.skip-all-btn:hover {
-		background: var(--status-success);
-		filter: brightness(1.1);
 		transform: scale(1.02);
 		box-shadow: 0 6px 20px var(--status-success-bg);
 		border-color: var(--glass-border);
