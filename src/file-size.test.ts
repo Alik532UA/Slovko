@@ -67,7 +67,9 @@ const OVERSIZE_CEILINGS: Record<string, number> = {
 	"src/lib/components/navigation/modes/PlaylistGrid.svelte": 482,
 	"src/lib/controllers/PlaylistStore.svelte.ts": 457,
 	"src/lib/components/profile/Leaderboard.svelte": 452,
-	"src/lib/components/auth/AuthForm.svelte": 450,
+	// 450 → 451: сталому підкресленню посилання потрібен один рядок CSS,
+	// і запас тут нульовий за побудовою. Плата за наступний — розділити файл.
+	"src/lib/components/auth/AuthForm.svelte": 451,
 	"src/lib/components/profile/ProfileStats.svelte": 409,
 	"src/lib/components/game/GameStats.svelte": 399,
 	"src/lib/components/profile/AvatarEditor.svelte": 374,
