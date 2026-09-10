@@ -198,3 +198,80 @@ describe("значкова кнопка має доступне ім'я (A11Y-ST
 		).toEqual([]);
 	});
 });
+
+/**
+ * Клас `disabled` без машинночитного стану (ACCESSIBILITY § 4, `A11Y-STATIC-*`).
+ *
+ * Клас дефекту: кнопка ВИГЛЯДАЄ недоступною — приглушена, `cursor:
+ * not-allowed`, — а для всього, що не дивиться на екран, вона звичайна й
+ * робоча. Диктор оголошує «кнопка», клавіатура спиняється на ній, натискання
+ * мовчки не робить нічого. Тобто стан є для ока й немає для решти.
+ *
+ * Цього не ловив ніхто. `svelte-check` бачить коректний `class:` директив;
+ * ESLint — коректну розмітку; axe судить про намальоване, і в гілки `{#if}`
+ * не заходить (той самий сліпий кут, що в перевірці вище); `contrast.test.ts`
+ * розв'язує ТОКЕНИ, а не `opacity`, тож приглушення повз нього проходить.
+ *
+ * Прогін на момент появи знайшов одне порушення з двох кандидатів:
+ * `SegmentedControl` мав лише клас, `Toggle` — клас І справжній `disabled`.
+ * Тобто дві копії одного рішення в одній теці розійшлися, і побачити це можна
+ * було лише зіставивши їх уручну.
+ *
+ * Годиться будь-який із двох способів, і різниця між ними змістова:
+ * `disabled` знімає кнопку з табуляції й ГАСИТЬ події вказівника (разом із
+ * підказкою `title`), `aria-disabled` лишає її досяжною й лише оголошує стан.
+ * Другий обов'язковий там, де підказка й є поясненням.
+ *
+ * Зворотний експеримент виконано: прибраний `aria-disabled` у
+ * `SegmentedControl` — червоне з іменем файлу й рядка; прибраний `{disabled}`
+ * у `Toggle` — червоне на ньому.
+ */
+
+/** `class:disabled` або слово `disabled` у списку класів. */
+const LOOKS_DISABLED =
+	/\sclass:disabled(?=[\s={/>])|\sclass=(?:"[^"]*\bdisabled\b[^"]*"|'[^']*\bdisabled\b[^']*')/;
+
+/**
+ * Стан, який видно не лише оком. `{disabled}` — скорочення Svelte для
+ * `disabled={disabled}`, і без нього перевірка оголосила б `Toggle` порушником.
+ */
+const STATE_IS_MACHINE_READABLE = /\sdisabled(?=[\s=/>])|\{disabled\}|\saria-disabled=/;
+
+describe("клас «disabled» не буває єдиним носієм стану", () => {
+	const looksDisabled = buttons.filter((b) => LOOKS_DISABLED.test(b.tag));
+
+	it("перевірка жива: кнопки з класом disabled знайдено", () => {
+		expect(
+			looksDisabled.length,
+			"жодної кнопки з класом disabled — сканер шукає не там, і тоді " +
+				"«порушень немає» правдиве за побудовою",
+		).toBeGreaterThan(0);
+	});
+
+	it("розбір відрізняє клас від атрибута", () => {
+		// Обидва боки пари під гейтом: зійдуться — і перевірка тихо помре.
+		expect(LOOKS_DISABLED.test('<button class:disabled={x}>')).toBe(true);
+		expect(LOOKS_DISABLED.test('<button class="btn disabled">')).toBe(true);
+		expect(LOOKS_DISABLED.test('<button disabled={x}>')).toBe(false);
+		expect(STATE_IS_MACHINE_READABLE.test('<button disabled={x}>')).toBe(true);
+		expect(STATE_IS_MACHINE_READABLE.test('<button {disabled}>')).toBe(true);
+		expect(STATE_IS_MACHINE_READABLE.test('<button aria-disabled="true">')).toBe(true);
+		expect(STATE_IS_MACHINE_READABLE.test('<button class:disabled={x}>')).toBe(false);
+	});
+
+	it("кожна така кнопка несе disabled або aria-disabled", () => {
+		const bad = looksDisabled
+			.filter((b) => !STATE_IS_MACHINE_READABLE.test(b.tag))
+			.map(
+				(b) =>
+					`${b.file}:${b.line} — ${b.tag.replace(/\s+/g, " ").slice(0, 90)}`,
+			);
+
+		expect(
+			bad,
+			"кнопка приглушена стилями, але для читалки й клавіатури — звичайна " +
+				"й робоча: диктор оголосить «кнопка», табуляція спиниться, " +
+				"натискання не зробить нічого:\n  " + bad.join("\n  "),
+		).toEqual([]);
+	});
+});

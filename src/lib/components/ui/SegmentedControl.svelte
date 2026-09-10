@@ -61,11 +61,30 @@
 	</div>
 
 	{#each options as option (option.id)}
+		<!--
+			`aria-disabled`, а не `disabled`: стан мусить бути машинночитним, але
+			кнопка — лишитися досяжною.
+
+			Доти «недоступно» жило ЛИШЕ класом CSS. Диктор оголошував звичайну
+			кнопку, натискання мовчки нічого не робило, а зупинка табуляції
+			лишалася мертвою — рівно те, що тут уже виправляли в `BaseTooltip` і
+			в `.modal-backdrop`.
+
+			Справжній `disabled` не годиться: браузер не надсилає події вказівника
+			вимкненим контролам, тож зникла б підказка `title` — а вона тут і є
+			ЄДИНИМ поясненням («Ця опція буде доступна згодом» на `tense-qty-many`).
+			Ховати причину, щоб оголосити стан, — обмін не на користь.
+
+			Натискання зупиняє обробник нижче, а не атрибут: `aria-disabled` сам
+			нічого не блокує, і саме тому перевірка на `option.disabled` в
+			`onclick` — не дублювання.
+		-->
 		<button
 			type="button"
 			class="segment-btn"
 			class:active={value === option.id}
 			class:disabled={option.disabled}
+			aria-disabled={option.disabled ? "true" : undefined}
 			onclick={() => !option.disabled && onchange(option.id)}
 			data-testid={option.testId || `segment-${option.id}`}
 			title={option.title ? $_(option.title) : (option.label ? formatLabel(option.label) : undefined)}
