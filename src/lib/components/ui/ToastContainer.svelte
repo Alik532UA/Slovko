@@ -55,7 +55,7 @@
 			<button
 				class="close-btn"
 				onclick={() => notificationStore.remove(note.id)}
-				aria-label={$_("common.close") || "Close"}
+				aria-label={$_("common.close")}
 				data-testid="toast-close-btn"
 			>
 				<X size={16} />

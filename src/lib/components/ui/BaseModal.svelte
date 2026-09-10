@@ -166,7 +166,7 @@
 				class="close-btn"
 				data-testid="{testid}-close-btn"
 				onclick={onclose}
-				aria-label={$_("common.close") || "Close"}
+				aria-label={$_("common.close")}
 			>
 				<X size={24} />
 			</button>

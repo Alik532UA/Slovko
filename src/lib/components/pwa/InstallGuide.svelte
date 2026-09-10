@@ -28,20 +28,20 @@
 	<div class="content" data-testid="install-guide-panel">
 		<div class="header">
 			<h3 data-testid="install-guide-title">
-				{#if mode === 'ios'}{$_("pwa.ios.title") || "Встановити на iPhone"}
-				{:else if mode === 'android'}{$_("pwa.android.title") || "Встановити на Android"}
-				{:else}{$_("pwa.desktop.title") || "Встановити на комп'ютер"}
+				{#if mode === 'ios'}{$_("pwa.ios.title")}
+				{:else if mode === 'android'}{$_("pwa.android.title")}
+				{:else}{$_("pwa.desktop.title")}
 				{/if}
 			</h3>
 			<p class="subtitle" data-testid="install-guide-subtitle-text">
 				{#if mode === 'ios'}
 					{#if isIosChrome}
-						{$_("pwa.ios.subtitle_chrome") || "Браузер Chrome на iPhone має особливості встановлення:"}
+						{$_("pwa.ios.subtitle_chrome")}
 					{:else}
-						{$_("pwa.ios.subtitle") || "iPhone блокує автоматичне встановлення. Будь ласка, виконайте ці кроки:"}
+						{$_("pwa.ios.subtitle")}
 					{/if}
 				{:else}
-					{$_("pwa.manual.subtitle") || "Ваш браузер не підтримує встановлення в один клік. Ви можете додати додаток вручну:"}
+					{$_("pwa.manual.subtitle")}
 				{/if}
 			</p>
 		</div>
@@ -54,7 +54,7 @@
 						<span class="step-num" data-testid="install-guide-num-badge-1">1</span>
 						<div class="step-icon" data-testid="install-guide-step-icon-1"><Share size={24} /></div>
 						<div class="step-text" data-testid="install-guide-step-text-1">
-							<p>{$_("pwa.ios_chrome.step1") || "Натисніть на іконку «Поділитися» в адресному рядку, праворуч від адреси url"}</p>
+							<p>{$_("pwa.ios_chrome.step1")}</p>
 						</div>
 					</div>
 					<div class="line"></div>
@@ -62,7 +62,7 @@
 						<span class="step-num" data-testid="install-guide-num-badge-2">2</span>
 						<div class="step-icon" data-testid="install-guide-step-icon-2"><PlusSquare size={24} /></div>
 						<div class="step-text" data-testid="install-guide-step-text-2">
-							<p>{$_("pwa.ios_chrome.step2") || "Виберіть «Додати на початковий екран»"}</p>
+							<p>{$_("pwa.ios_chrome.step2")}</p>
 						</div>
 					</div>
 
@@ -78,7 +78,7 @@
 						<span class="step-num" data-testid="install-guide-num-badge-1">1</span>
 						<div class="step-icon" data-testid="install-guide-step-icon-1"><Share size={24} /></div>
 						<div class="step-text" data-testid="install-guide-step-text-1">
-							<p>{$_("pwa.ios.step1") || "Натисніть кнопку «Поділитися» внизу екрана"}</p>
+							<p>{$_("pwa.ios.step1")}</p>
 						</div>
 					</div>
 					<div class="line"></div>
@@ -86,7 +86,7 @@
 						<span class="step-num" data-testid="install-guide-num-badge-2">2</span>
 						<div class="step-icon" data-testid="install-guide-step-icon-2"><PlusSquare size={24} /></div>
 						<div class="step-text" data-testid="install-guide-step-text-2">
-							<p>{$_("pwa.ios.step2") || "Виберіть «На початковий екран» у меню"}</p>
+							<p>{$_("pwa.ios.step2")}</p>
 						</div>
 					</div>
 				{/if}
@@ -95,7 +95,7 @@
 					<span class="step-num" data-testid="install-guide-num-badge-1">1</span>
 					<div class="step-icon" data-testid="install-guide-step-icon-1"><MoreVertical size={24} /></div>
 					<div class="step-text" data-testid="install-guide-step-text-1">
-						<p>{$_("pwa.android.step1") || "Натисніть на три крапки в кутку браузера"}</p>
+						<p>{$_("pwa.android.step1")}</p>
 					</div>
 				</div>
 				<div class="line"></div>
@@ -103,7 +103,7 @@
 					<span class="step-num" data-testid="install-guide-num-badge-2">2</span>
 					<div class="step-icon" data-testid="install-guide-step-icon-2"><MonitorDown size={24} /></div>
 					<div class="step-text" data-testid="install-guide-step-text-2">
-						<p>{$_("pwa.android.step2") || "Виберіть «Додати на головний екран»"}</p>
+						<p>{$_("pwa.android.step2")}</p>
 					</div>
 				</div>
 			{:else}
@@ -116,14 +116,14 @@
 						{/if}
 					</div>
 					<div class="step-text" data-testid="install-guide-step-text-1">
-						<p>{$_("pwa.desktop.step1") || "Натисніть на іконку встановлення в адресному рядку, праворуч від адреси url"}</p>
+						<p>{$_("pwa.desktop.step1")}</p>
 					</div>
 				</div>
 			{/if}
 		</div>
 
 		<button class="confirm-btn primary-action-btn" onclick={onclose} data-testid="install-guide-ok-btn">
-			{$_("common.ok") || "Зрозуміло"}
+			{$_("common.ok")}
 		</button>
 	</div>
 </BaseModal>

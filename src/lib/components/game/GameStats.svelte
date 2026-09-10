@@ -163,7 +163,7 @@
 
 	<div class="buttons-group">
 		{#if settingsStore.value.interactionMode === "swipe"}
-			<BaseTooltip text={$_("swipe.warningTitle") || "Увага"}>
+			<BaseTooltip text={$_("swipe.warningTitle")}>
 				<button
 					class="stat-item hint-btn"
 					style="border-color: rgba(241, 196, 15, 0.4); background: rgba(241, 196, 15, 0.1);"
@@ -230,11 +230,11 @@
 				></div>
 			{/if}
 
-			<BaseTooltip text={$_("common.menu") || "Menu"}>
+			<BaseTooltip text={$_("common.menu")}>
 				<button
 					class="stat-item menu-btn"
 					onclick={() => (showMenu = !showMenu)}
-					aria-label={$_("common.menu") || "Menu"}
+					aria-label={$_("common.menu")}
 					data-testid="main-menu-btn"
 					title=""
 				>

@@ -81,8 +81,7 @@
 		<div class="modal-content-measure">
 			{#if authStore.isGuest && activeTab === "leaderboard"}
 				<GuestWarning
-					text={$_("profile.leaderboardGuestMessage") ||
-						"Авторизуйтесь, щоб побачити інших гравців та їх статистику"}
+					text={$_("profile.leaderboardGuestMessage")}
 				>
 					{#snippet icon()}
 						<Trophy size={28} />

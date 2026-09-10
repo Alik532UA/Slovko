@@ -254,8 +254,7 @@
 			{:else}
 				{#if authStore.isGuest}
 					<GuestWarning
-						text={$_("profile.guestWarning") ||
-							"Ви граєте як гість. Авторизуйтесь, щоб зберігати прогрес та додавати друзів."}
+						text={$_("profile.guestWarning")}
 					>
 						{#snippet icon()}
 							<TriangleAlert size={28} />

@@ -23,14 +23,14 @@
 		logService.log("version", "User clicked 'Update' button.");
 		if (isUpdating) return;
 		isUpdating = true;
-		updateStatus = $_("updateNotification.progressRemoving") || "Видаляємо сервіс-воркери…";
+		updateStatus = $_("updateNotification.progressRemoving");
 		progress = 20;
 		await applyUpdate(version, (step) => {
 			if (step === "sw") {
-				updateStatus = $_("updateNotification.progressCache") || "Очищуємо кеш…";
+				updateStatus = $_("updateNotification.progressCache");
 				progress = 50;
 			} else if (step === "cache") {
-				updateStatus = $_("updateNotification.progressReload") || "Перезавантажуємо…";
+				updateStatus = $_("updateNotification.progressReload");
 				progress = 90;
 			}
 		});

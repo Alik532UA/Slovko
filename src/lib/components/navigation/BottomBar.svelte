@@ -174,7 +174,7 @@
 			<button
 				class="nav-btn"
 				onclick={() => goPrev()}
-				aria-label={$_("common.tooltips.prev") || "Previous level"}
+				aria-label={$_("common.tooltips.prev")}
 				data-testid="prev-level-btn"
 				title=""
 			>
@@ -189,7 +189,7 @@
 		<button
 			class="level-btn"
 			onclick={() => navigationState.openModal("levels")}
-			aria-label={$_("common.tooltips.selectLevel") || "Select level or topic"}
+			aria-label={$_("common.tooltips.selectLevel")}
 			aria-haspopup="dialog"
 			data-testid="level-topic-selector-btn"
 			title=""
@@ -203,7 +203,7 @@
 			<button
 				class="nav-btn"
 				onclick={() => goNext()}
-				aria-label={$_("common.tooltips.next") || "Next level"}
+				aria-label={$_("common.tooltips.next")}
 				data-testid="next-level-btn"
 				title=""
 			>

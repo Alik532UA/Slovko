@@ -88,11 +88,11 @@
 			{$_('profile.forgotPasswordTitle')}
 		</h2>
 		<p class="auth-subtitle">
-			{$_('profile.forgotPasswordSubtitle') || 'Введіть email, на який зареєстровано акаунт'}
+			{$_('profile.forgotPasswordSubtitle')}
 		</p>
 		<p class="spam-warning">
 			<AlertTriangle size={16} aria-hidden="true" />
-			<span>{$_('profile.spamWarning') || 'Лист може потрапити в папку «Спам», оскільки додаток новий.'}</span>
+			<span>{$_('profile.spamWarning')}</span>
 		</p>
 
 		<form onsubmit={handleForgotSubmit}>
@@ -189,7 +189,7 @@
 				</svg>
 				<span>{$_('profile.googleAuth')}</span>
 			</button>
-			<div class="divider"><span>{$_('common.or') || 'або'}</span></div>
+			<div class="divider"><span>{$_('common.or')}</span></div>
 		{/if}
 
 		<form onsubmit={handleLoginSubmit}>
@@ -211,7 +211,7 @@
 			<PasswordInput
 				id="auth-password"
 				testId="auth-password"
-				label={$_('profile.passwordPlaceholderShort') || 'Пароль'}
+				label={$_('profile.passwordPlaceholderShort')}
 				autocomplete="current-password"
 				bind:value={password}
 			/>

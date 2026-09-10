@@ -85,7 +85,7 @@
 			data-testid="menu-levels-btn"
 		>
 			<div class="item-icon"><Layers size={18} /></div>
-			<span class="label">{$_("settings.levels") || "Modes"}</span>
+			<span class="label">{$_("settings.levels")}</span>
 		</button>
 
 		<!--
@@ -106,7 +106,7 @@
 			data-testid="menu-languages-btn"
 		>
 			<div class="item-icon"><Languages size={18} /></div>
-			<span class="label">{$_("settings.languages") || "Languages"}</span>
+			<span class="label">{$_("settings.languages")}</span>
 		</button>
 
 		<!-- 2. Статистика -->
@@ -119,7 +119,7 @@
 			data-testid="menu-stats-btn"
 		>
 			<div class="item-icon"><BarChart3 size={18} /></div>
-			<span class="label">{$_("profile.tabs.stats") || "Statistics"}</span>
+			<span class="label">{$_("profile.tabs.stats")}</span>
 		</button>
 
 		<!-- 3. Теми. Про `aria-keyshortcuts` — коментар до пункту «Мови» вище. -->
@@ -133,7 +133,7 @@
 			data-testid="menu-theme-btn"
 		>
 			<div class="item-icon"><Palette size={18} /></div>
-			<span class="label">{$_("settings.theme") || "Theme"}</span>
+			<span class="label">{$_("settings.theme")}</span>
 		</button>
 
 		<hr class="divider" />
@@ -148,7 +148,7 @@
 			onclick={onclose}
 		>
 			<div class="item-icon"><Coins size={18} /></div>
-			<span class="label">{$_("about.support") || "Support Project"}</span>
+			<span class="label">{$_("about.support")}</span>
 		</a>
 
 		<!-- 5. Про Slovko -->
@@ -161,7 +161,7 @@
 			data-testid="menu-about-btn"
 		>
 			<div class="item-icon"><Info size={18} /></div>
-			<span class="label">{$_("about.title") || "About"}</span>
+			<span class="label">{$_("about.title")}</span>
 		</button>
 
 		<hr class="divider" />
@@ -186,16 +186,16 @@
 				{/if}
 			</div>
 			<div class="item-text">
-				<span class="label">{$_("common.profile") || "Profile"}</span>
+				<span class="label">{$_("common.profile")}</span>
 				<span class="sub-label">
 					{#if authStore.isGuest}
 						<span class="warning-icon-wrapper"><TriangleAlert size={12} /></span
 						>
-						{$_("sync.status.notLoggedIn") || "not signed in"}
+						{$_("sync.status.notLoggedIn")}
 					{:else if syncStatus === "syncing"}
-						{$_("sync.status.syncing") || "Syncing..."}
+						{$_("sync.status.syncing")}
 					{:else if syncStatus === "error"}
-						{$_("sync.status.error") || "Sync Error"}
+						{$_("sync.status.error")}
 					{:else}
 						{authStore.displayName ||
 							authStore.email ||

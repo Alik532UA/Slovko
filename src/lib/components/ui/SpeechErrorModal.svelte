@@ -20,9 +20,7 @@
 	 */
 	const asPlainName = (value: string) => value.replace(/[^\p{L}\p{M}\s'’-]/gu, "");
 
-	let langName = $derived(
-		$_(`language.${speechModalStore.lang}`) || speechModalStore.lang.toUpperCase()
-	);
+	let langName = $derived($_(`language.${speechModalStore.lang}`));
 </script>
 
 {#if speechModalStore.isOpen}
@@ -32,11 +30,11 @@
 		maxWidth="500px"
 	>
 		<div class="content">
-			<h2>{$_("errors.speech.modalTitle") || "Помилка озвучення"}</h2>
+			<h2>{$_("errors.speech.modalTitle")}</h2>
 			
 			<div class="description">
 				<p>
-					{$_("errors.speech.modalDesc1") || "Slovko не має вбудованої озвучки, а використовує системні можливості вашого пристрою."}
+					{$_("errors.speech.modalDesc1")}
 				</p>
 				<p>
 					<!--
@@ -51,13 +49,13 @@
 					})}
 				</p>
 				<p>
-					{$_("errors.speech.modalDesc3") || "Спробуйте скористатися іншим браузером (наприклад, Chrome чи Safari) або перевірте системні налаштування."}
+					{$_("errors.speech.modalDesc3")}
 				</p>
 			</div>
 
 			<div class="actions">
 				<button class="btn-primary" onclick={() => speechModalStore.close()}>
-					{$_("common.ok") || "Зрозуміло"}
+					{$_("common.ok")}
 				</button>
 			</div>
 		</div>

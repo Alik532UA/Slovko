@@ -60,7 +60,7 @@
 			const p = playlistStore.importFromData(text);
 			if (p) {
 				showImportOptions = false;
-				notificationStore.success($_("playlists.importSuccess") || "Playlist imported!");
+				notificationStore.success($_("playlists.importSuccess"));
 			} else {
 				notificationStore.error($_("playlists.importInvalidFormat"));
 			}
@@ -82,7 +82,7 @@
 			const p = playlistStore.importFromData(text);
 			if (p) {
 				showImportOptions = false;
-				notificationStore.success($_("playlists.importSuccess") || "Playlist imported!");
+				notificationStore.success($_("playlists.importSuccess"));
 			} else {
 				notificationStore.error($_("playlists.importInvalidFormat"));
 			}
@@ -245,7 +245,7 @@
 			<div class="import-choice-container" data-testid="playlist-io-section">
 				<label class="item topic-item import-choice-btn" data-testid="playlist-import-file-btn">
 					<Upload size={20} />
-					<span>{$_("playlists.importFile") || "File"}</span>
+					<span>{$_("playlists.importFile")}</span>
 					<input
 						type="file"
 						accept=".json,.txt"
@@ -263,7 +263,7 @@
 					data-testid="playlist-import-clipboard-btn"
 				>
 					<Copy size={20} />
-					<span>{$_("playlists.importClipboard") || "Clipboard"}</span>
+					<span>{$_("playlists.importClipboard")}</span>
 				</div>
 				<div
 					class="cancel-import"

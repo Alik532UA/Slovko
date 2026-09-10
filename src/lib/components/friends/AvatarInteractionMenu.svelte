@@ -183,7 +183,7 @@
 					<UserPlus size={18} />
 				{/if}
 			</div>
-			<span>{isFollowing ? $_("friends.unfollow") : (friendsStore.isFollower(uid) ? $_("friends.followBack") : $_("friends.follow") || "Підписатися")}</span>
+			<span>{isFollowing ? $_("friends.unfollow") : (friendsStore.isFollower(uid) ? $_("friends.followBack") : $_("friends.follow"))}</span>
 		</button>
 	</div>
 </div>

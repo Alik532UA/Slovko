@@ -209,7 +209,7 @@
 				<!-- Primary Voices -->
 				{#if primaryVoices.length > 0}
 					<div class="group-label">
-						{$_(`language.${language}`) || language}
+						{$_(`language.${language}`)}
 						{$_("language.voices")}
 					</div>
 					{#each primaryVoices as voice (voice.voiceURI)}
@@ -268,7 +268,7 @@
 				onclick={handleConfirm}
 				data-testid="confirm-voice-btn"
 			>
-				{$_("common.confirm") || "Confirm"}
+				{$_("common.confirm")}
 			</button>
 		</div>
 	</div>

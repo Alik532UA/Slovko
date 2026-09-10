@@ -87,8 +87,8 @@
 			onclick={toggleVisibility}
 			tabindex="-1"
 			aria-label={showPassword
-				? $_('profile.hidePassword') || 'Приховати пароль'
-				: $_('profile.showPassword') || 'Показати пароль'}
+				? $_('profile.hidePassword')
+				: $_('profile.showPassword')}
 			data-testid="{testId}-toggle"
 		>
 			{#if showPassword}
@@ -102,14 +102,14 @@
 	{#if isCapsLockOn}
 		<p class="warning-hint capslock-hint" data-testid="{testId}-capslock-warning">
 			<AlertCircle size={14} />
-			<span>{$_('profile.capsLockOn') || 'CapsLock увімкнено'}</span>
+			<span>{$_('profile.capsLockOn')}</span>
 		</p>
 	{/if}
 
 	{#if isNonLatinLayout}
 		<p class="warning-hint layout-hint" data-testid="{testId}-layout-warning">
 			<AlertCircle size={14} />
-			<span>{$_('profile.checkLayout') || 'Перевірте розкладку клавіатури (введено нелатинські символи)'}</span>
+			<span>{$_('profile.checkLayout')}</span>
 		</p>
 	{/if}
 </div>

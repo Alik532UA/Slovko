@@ -30,10 +30,10 @@
 <BaseModal {onclose} testid="theme-modal" maxWidth="480px">
 	<div class="modal-inner">
 		<div class="modal-header">
-			<h2>{$_("settings.theme") || "Theme"}</h2>
+			<h2>{$_("settings.theme")}</h2>
 		</div>
 
-		<div class="themes-grid" role="group" aria-label={$_("settings.theme") || "Select theme"}>
+		<div class="themes-grid" role="group" aria-label={$_("settings.theme")}>
 			{#each themes as theme (theme.id)}
 				<button
 					class="theme-card"
@@ -61,38 +61,38 @@
 		</div>
 
 		<div class="settings-section">
-			<h3>{$_("settings.background") || "Background"}</h3>
+			<h3>{$_("settings.background")}</h3>
 			<div class="segmented-control horizontal">
 				<button
 					class:active={settingsStore.value.bgType === "solid"}
 					onclick={() => setBgType("solid")}
 				>
-					{$_("settings.bg_solid") || "Solid"}
+					{$_("settings.bg_solid")}
 				</button>
 				<button
 					class:active={settingsStore.value.bgType === "image"}
 					onclick={() => setBgType("image")}
 				>
-					{$_("settings.bg_image") || "Image"}
+					{$_("settings.bg_image")}
 				</button>
 			</div>
 		</div>
 
 		{#if settingsStore.value.bgType === "image"}
 			<div class="settings-section">
-				<h3>{$_("settings.image_style") || "Image Style"}</h3>
+				<h3>{$_("settings.image_style")}</h3>
 				<div class="segmented-control horizontal">
 					<button
 						class:active={settingsStore.value.bgBlur === "blurred"}
 						onclick={() => setBgBlur("blurred")}
 					>
-						{$_("settings.bg_blurred") || "Blurred"}
+						{$_("settings.bg_blurred")}
 					</button>
 					<button
 						class:active={settingsStore.value.bgBlur === "sharp"}
 						onclick={() => setBgBlur("sharp")}
 					>
-						{$_("settings.bg_sharp") || "Sharp"}
+						{$_("settings.bg_sharp")}
 					</button>
 				</div>
 			</div>

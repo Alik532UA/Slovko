@@ -147,9 +147,9 @@
 				>
 					<Download size={20} />
 					{#if pwaStore.isIOS || pwaStore.isAndroid}
-						{$_("pwa.install") || "Застосунок для телефону"}
+						{$_("pwa.install")}
 					{:else}
-						{$_("pwa.install_desktop") || "Застосунок для комп'ютера"}
+						{$_("pwa.install_desktop")}
 					{/if}
 				</button>
 			{/if}
@@ -201,7 +201,7 @@
 				onclick={handleHardReset}
 				data-testid="about-hard-reset-link"
 			>
-				{$_("settings.dangerZone.hardReset") || "Reset All Data"}
+				{$_("settings.dangerZone.hardReset")}
 			</button>
 		</div>
 
