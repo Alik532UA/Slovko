@@ -206,17 +206,39 @@
 {#snippet tabsNav()}
 	<ProfileHeader oneditAvatar={startEditingAvatar} locked={authStore.isGuest} />
 
-	<SegmentedControl
-		options={availableTabs.map((id) => ({
-			id,
-			label: `profile.tabs.${id}`,
-			icon: id === "friends" ? Users : LayoutGrid,
-			testId: `tab-${id}`,
-			disabled: authStore.isGuest // Вкладки неклікабельні для гостя
-		}))}
-		value={activeTab}
-		onchange={(id) => setActiveTab(id as TabType)}
-	/>
+	<!--
+		Гостю перемикача вкладок НЕМАЄ, а не «є, але неклікабельний».
+
+		Доти обидві вкладки приходили з `disabled: authStore.isGuest`, і виходив
+		контрол, який: не працює; підсвічує «Друзі» як обрану, тоді як нижче
+		стоїть форма входу (вміст гостя не дивиться на `activeTab` узагалі);
+		дає дві мертві зупинки табуляції перед цією формою; і приглушений до
+		`opacity: 0.3`, тобто 2,06 : 1 і 2,62 : 1 — два з трьох вузлів
+		`color-contrast`, які лишалися видимими для axe на стані `profile`.
+
+		Чому саме прибрати, а не пофарбувати: приглушений напис тут — не помилка
+		токена. `--text-secondary` дає 4,75 : 1 на цьому тлі, і будь-яке
+		приглушення виводить його з AA; порахувано — 3,62 : 1 навіть при
+		`opacity: 0.55`. Тобто «читабельний неактивний контрол» на цій парі
+		недосяжний, і питання не в непрозорості, а в тому, що інертний контрол,
+		який ще й називає не той вміст, не мусить існувати.
+
+		Чому це нічого не забирає: причину гість уже читає в `GuestWarning`
+		вище, а вміст у нього один — форма входу. Заголовок профілю лишається:
+		аватар, ім'я й лічильники підписок гість бачить і далі.
+	-->
+	{#if !authStore.isGuest}
+		<SegmentedControl
+			options={availableTabs.map((id) => ({
+				id,
+				label: `profile.tabs.${id}`,
+				icon: id === "friends" ? Users : LayoutGrid,
+				testId: `tab-${id}`
+			}))}
+			value={activeTab}
+			onchange={(id) => setActiveTab(id as TabType)}
+		/>
+	{/if}
 {/snippet}
 
 <BaseModal {onclose} testid="profile-modal">
