@@ -109,9 +109,7 @@
 			{#if !selectedCategory}
 				<div class="category-selection" in:slide>
 					<p class="instruction">
-						{$_("about.feedback.instruction", {
-							default: "Оберіть тип повідомлення:",
-						})}
+						{$_("about.feedback.instruction")}
 					</p>
 					<div class="category-stack">
 						{#each categories as cat (cat.id)}

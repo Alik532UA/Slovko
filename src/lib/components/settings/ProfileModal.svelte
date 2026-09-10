@@ -197,7 +197,7 @@
 	}
 
 	async function handleLogout() {
-		if (confirm($_("profile.confirmLogout") || "Ви впевнені?")) {
+		if (confirm($_("profile.confirmLogout"))) {
 			await authStore.logout();
 		}
 	}

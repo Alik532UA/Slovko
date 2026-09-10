@@ -85,7 +85,7 @@
 <div class="auth-card" data-testid="auth-card">
 	{#if mode === 'forgot'}
 		<h2 class="auth-title">
-			{$_('profile.forgotPasswordTitle') || $_('auth.resetTitle') || 'Відновлення пароля'}
+			{$_('profile.forgotPasswordTitle')}
 		</h2>
 		<p class="auth-subtitle">
 			{$_('profile.forgotPasswordSubtitle') || 'Введіть email, на який зареєстровано акаунт'}
@@ -115,7 +115,7 @@
 			{#if info}<p class="auth-info" data-testid="reset-info-message">{info}</p>{/if}
 
 			<button class="btn-primary" type="submit" disabled={loading} data-testid="reset-submit-btn">
-				{loading ? '…' : $_('profile.sendResetEmail') || $_('auth.sendReset') || 'Надіслати лист'}
+				{loading ? '…' : $_('profile.sendResetEmail')}
 			</button>
 
 			<button
@@ -124,13 +124,13 @@
 				onclick={() => onmode('auth')}
 				data-testid="reset-back-btn"
 			>
-				{$_('profile.backToSignin') || $_('auth.backToLogin') || 'Повернутись до входу'}
+				{$_('profile.backToSignin')}
 			</button>
 		</form>
 	{:else}
 		<div class="auth-head">
 			<h2 class="auth-title">
-				{$_('profile.signinTitle') || $_('auth.title') || 'Вхід або реєстрація'}
+				{$_('profile.signinTitle')}
 			</h2>
 
 			<!--
@@ -187,7 +187,7 @@
 						d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
 					/>
 				</svg>
-				<span>{$_('profile.googleAuth') || $_('auth.google') || 'Авторизація через Google'}</span>
+				<span>{$_('profile.googleAuth')}</span>
 			</button>
 			<div class="divider"><span>{$_('common.or') || 'або'}</span></div>
 		{/if}
@@ -223,7 +223,7 @@
 				onclick={() => onmode('forgot')}
 				data-testid="auth-forgot-btn"
 			>
-				{$_('profile.forgotPasswordTitle') || $_('auth.resetPassword') || 'Відновити пароль'}
+				{$_('profile.forgotPasswordTitle')}
 			</button>
 
 			{#if error}<p class="auth-error" data-testid="auth-error">{error}</p>{/if}
@@ -231,7 +231,7 @@
 
 			<div class="auth-actions">
 				<button class="btn-primary" type="submit" disabled={loading} data-testid="auth-login-btn">
-					{loading ? '…' : $_('profile.login') || $_('auth.login') || 'Увійти'}
+					{loading ? '…' : $_('profile.login')}
 				</button>
 				<button
 					class="btn-secondary"
@@ -240,7 +240,7 @@
 					disabled={loading}
 					data-testid="auth-register-btn"
 				>
-					{$_('profile.register') || $_('auth.register') || 'Зареєструватись'}
+					{$_('profile.register')}
 				</button>
 			</div>
 		</form>

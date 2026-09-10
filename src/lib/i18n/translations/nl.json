@@ -11,6 +11,8 @@
 	},
 	"a11y": {
 		"friendsSettings": "Vrienden-instellingen",
+		"levelNavigation": "Niveaunavigatie",
+		"userActions": "Gebruikersacties",
 		"online": "Online",
 		"warning": "Waarschuwing",
 		"gameBoard": "Speelveld",
@@ -94,7 +96,8 @@
 		"importSuccess": "Afspeellijst succesvol geïmporteerd!",
 		"importFile": "Bestand",
 		"importClipboard": "Klembord",
-		"clipboardError": "Fout bij het lezen van het klembord"
+		"clipboardError": "Fout bij het lezen van het klembord",
+		"clipboardEmpty": "Het klembord is leeg"
 	},
 	"topics": {
 		"title": "Onderwerpen",
@@ -234,6 +237,7 @@
 			"improvement": "Verbetering voorstellen",
 			"contact": "Contact met ontwikkelaar",
 			"subjectLabel": "Onderwerp / Titel",
+			"instruction": "Kies het type bericht:",
 			"messageLabel": "Beschrijving / Bericht",
 			"subjectPlaceholder": "Beschrijf kort het onderwerp...",
 			"messagePlaceholder": "Geef meer details...",
@@ -252,6 +256,7 @@
 		"tempAccountWarning": "Je gebruikt een tijdelijk account. Koppel een e-mailadres zodat je je voortgang niet verliest.",
 		"login": "Inloggen",
 		"logout": "Uitloggen",
+		"confirmLogout": "Weet je zeker dat je wilt uitloggen?",
 		"back": "Terug",
 		"register": "Registreren",
 		"signin": "Inloggen met e-mail",

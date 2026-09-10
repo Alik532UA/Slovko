@@ -175,7 +175,7 @@
 		data-testid="language-settings-modal"
 		role="dialog"
 		aria-modal="true"
-		aria-label={$_("settings.languageSettings") || "Language Settings"}
+		aria-label={$_("settings.languages")}
 		tabindex="-1"
 		onclick={(e) => e.stopPropagation()}
 		onkeydown={(e) => e.stopPropagation()}

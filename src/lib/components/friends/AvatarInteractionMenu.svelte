@@ -143,7 +143,7 @@
 		bind:this={menuEl}
 		class="interaction-menu" 
 		role="dialog"
-		aria-label={$_("interaction.title") || "User actions"}
+		aria-label={$_("a11y.userActions")}
 		style:top="{position.top}px" 
 		style:left="{position.left}px"
 		style:visibility={position.top === -999 ? 'hidden' : 'visible'}

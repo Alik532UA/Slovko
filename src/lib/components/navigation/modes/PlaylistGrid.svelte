@@ -75,7 +75,7 @@
 		try {
 			const text = await navigator.clipboard.readText();
 			if (!text) {
-				notificationStore.warning($_("playlists.clipboardEmpty") || "Clipboard is empty");
+				notificationStore.warning($_("playlists.clipboardEmpty"));
 				return;
 			}
 			

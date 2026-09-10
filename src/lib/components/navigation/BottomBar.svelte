@@ -167,7 +167,7 @@
 <div
 	class="bottom-bar"
 	role="navigation"
-	aria-label={$_("common.navigation") || "Level navigation"}
+	aria-label={$_("a11y.levelNavigation")}
 >
 	<BaseTooltip text={$_("common.tooltips.prev")}>
 		{#if canGoPrev}

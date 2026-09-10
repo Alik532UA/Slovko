@@ -11,6 +11,8 @@
 	},
 	"a11y": {
 		"friendsSettings": "Friends settings",
+		"levelNavigation": "Level navigation",
+		"userActions": "User actions",
 		"online": "Online",
 		"warning": "Warning",
 		"gameBoard": "Game board",
@@ -125,7 +127,8 @@
 		"importSuccess": "Playlist imported successfully!",
 		"importFile": "File",
 		"importClipboard": "Clipboard",
-		"clipboardError": "Failed to read from clipboard"
+		"clipboardError": "Failed to read from clipboard",
+		"clipboardEmpty": "Clipboard is empty"
 	},
 	"topics": {
 		"title": "Topics",
@@ -265,6 +268,7 @@
 			"improvement": "Suggest Improvement",
 			"contact": "Contact Developer",
 			"subjectLabel": "Subject / Title",
+			"instruction": "Choose the type of message:",
 			"messageLabel": "Description / Message",
 			"subjectPlaceholder": "Briefly describe the topic...",
 			"messagePlaceholder": "Provide more details...",
@@ -283,6 +287,7 @@
 		"tempAccountWarning": "You are using a temporary account. Link an email so you don't lose your progress.",
 		"login": "Sign In",
 		"logout": "Sign Out",
+		"confirmLogout": "Are you sure you want to sign out?",
 		"back": "Back",
 		"register": "Register",
 		"signin": "Sign in with email",

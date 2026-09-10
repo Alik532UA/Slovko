@@ -11,6 +11,8 @@
 	},
 	"a11y": {
 		"friendsSettings": "Ustawienia znajomych",
+		"levelNavigation": "Nawigacja po poziomach",
+		"userActions": "Działania na użytkowniku",
 		"online": "Online",
 		"warning": "Ostrzeżenie",
 		"gameBoard": "Plansza gry",
@@ -125,7 +127,8 @@
 		"importSuccess": "Playlista została pomyślnie zaimportowana!",
 		"importFile": "Plik",
 		"importClipboard": "Schowek",
-		"clipboardError": "Błąd odczytu ze schowka"
+		"clipboardError": "Błąd odczytu ze schowka",
+		"clipboardEmpty": "Schowek jest pusty"
 	},
 	"topics": {
 		"title": "Tematy",
@@ -265,6 +268,7 @@
 			"improvement": "Zaproponuj ulepszenie",
 			"contact": "Napisz do twórcy",
 			"subjectLabel": "Temat / Tytuł",
+			"instruction": "Wybierz typ wiadomości:",
 			"messageLabel": "Opis / Wiadomość",
 			"subjectPlaceholder": "Krótko o najważniejszym...",
 			"messagePlaceholder": "Szczegóły Twojej wiadomości...",
@@ -283,6 +287,7 @@
 		"tempAccountWarning": "Używasz konta tymczasowego. Powiąż e-mail, aby nie stracić postępów.",
 		"login": "Zaloguj się",
 		"logout": "Wyloguj się",
+		"confirmLogout": "Czy na pewno chcesz się wylogować?",
 		"back": "Wstecz",
 		"register": "Zarejestruj się",
 		"signin": "Logowanie przez e-mail",
