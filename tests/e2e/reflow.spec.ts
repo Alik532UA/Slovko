@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { waitForAnimationsToSettle } from "./settled";
 
 /**
  * WCAG 1.4.10 Reflow: на ширині 320 CSS px сторінка не має горизонтального
@@ -51,6 +52,11 @@ for (const { key, path, marker } of STATES) {
 		// Маркер стану, а не networkidle: Firestore тримає постійне з'єднання
 		// (та сама причина, що в `a11y.spec.ts`).
 		await expect(page.getByTestId(marker)).toBeVisible({ timeout: 30_000 });
+		// `BaseModal` входить через `transition:scale={{ start: 0.9 }}`, а
+		// трансформований блок дає МЕНШУ прокручувану область. Без цього
+		// очікування вміст, який на 320 px вилазить убік, міряється стиснутим
+		// і вкладається в межу — див. `settled.ts`.
+		await waitForAnimationsToSettle(page);
 
 		const overflow = await page.evaluate(() => {
 			const doc = document.documentElement;

@@ -1,6 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import { A11Y_BASELINE, A11Y_KNOWN } from './a11y-baseline';
+import { waitForAnimationsToSettle } from './settled';
 
 /**
  * Машинний аудит доступності (ACCESSIBILITY-v8 § 10.1).
@@ -37,6 +38,10 @@ for (const { key, path, marker } of STATES) {
 		// типовими 5 с гейт червонів би від повільної машини, а не від порушення,
 		// і на нього швидко перестали б дивитися.
 		await expect(page.getByTestId(marker)).toBeVisible({ timeout: 30_000 });
+		// Видимий маркер — це ПЕРШИЙ кадр анімації входу, а не стан. Без
+		// очікування нижче axe читав контраст при `opacity` 0,65–0,73 і давав
+		// три різні числа на трьох прогонах — див. `settled.ts`.
+		await waitForAnimationsToSettle(page);
 
 		const { violations } = await new AxeBuilder({ page })
 			.withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
