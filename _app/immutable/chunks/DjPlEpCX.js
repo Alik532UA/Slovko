@@ -11,6 +11,8 @@ const t=`{
 	},
 	"a11y": {
 		"friendsSettings": "Налаштування друзів",
+		"levelNavigation": "Навігація по рівнях",
+		"userActions": "Дії з користувачем",
 		"online": "У мережі",
 		"warning": "Увага",
 		"gameBoard": "Ігрове поле",
@@ -125,7 +127,8 @@ const t=`{
 		"importSuccess": "Плейліст успішно імпортовано!",
 		"importFile": "Файл",
 		"importClipboard": "Буфер обміну",
-		"clipboardError": "Помилка читання з буферу обміну"
+		"clipboardError": "Помилка читання з буферу обміну",
+		"clipboardEmpty": "Буфер обміну порожній"
 	},
 	"topics": {
 		"title": "Теми",
@@ -265,6 +268,7 @@ const t=`{
 			"improvement": "Запропонувати покращення",
 			"contact": "Написати розробнику",
 			"subjectLabel": "Тема / Заголовок",
+			"instruction": "Оберіть тип повідомлення:",
 			"messageLabel": "Опис / Повідомлення",
 			"subjectPlaceholder": "Коротко про головне...",
 			"messagePlaceholder": "Деталі вашого повідомлення...",
@@ -283,6 +287,7 @@ const t=`{
 		"tempAccountWarning": "Ви використовуєте тимчасовий акаунт. Прив'яжіть пошту, щоб не втратити прогрес.",
 		"login": "Увійти",
 		"logout": "Вийти",
+		"confirmLogout": "Ви впевнені, що хочете вийти?",
 		"back": "Назад",
 		"register": "Зареєструватись",
 		"signin": "Вхід за допомогою email",

@@ -11,6 +11,8 @@ const t=`{
 	},
 	"a11y": {
 		"friendsSettings": "Ρυθμίσεις φίλων",
+		"levelNavigation": "Πλοήγηση επιπέδων",
+		"userActions": "Ενέργειες χρήστη",
 		"online": "Σε σύνδεση",
 		"warning": "Προειδοποίηση",
 		"gameBoard": "Ταμπλό παιχνιδιού",
@@ -94,7 +96,8 @@ const t=`{
 		"importSuccess": "Η λίστα εισήχθη με επιτυχία!",
 		"importFile": "Αρχείο",
 		"importClipboard": "Πρόχειρο",
-		"clipboardError": "Αποτυχία ανάγνωσης από το πρόχειρο"
+		"clipboardError": "Αποτυχία ανάγνωσης από το πρόχειρο",
+		"clipboardEmpty": "Το πρόχειρο είναι κενό"
 	},
 	"topics": {
 		"title": "Θέματα",
@@ -234,6 +237,7 @@ const t=`{
 			"improvement": "Πρόταση βελτίωσης",
 			"contact": "Επικοινωνία με τον προγραμματιστή",
 			"subjectLabel": "Θέμα / Τίτλος",
+			"instruction": "Επιλέξτε τον τύπο μηνύματος:",
 			"messageLabel": "Περιγραφή / Μήνυμα",
 			"subjectPlaceholder": "Περιγράψτε σύντομα το θέμα...",
 			"messagePlaceholder": "Δώστε περισσότερες λεπτομέρειες...",
@@ -252,6 +256,7 @@ const t=`{
 		"tempAccountWarning": "Χρησιμοποιείτε έναν προσωρινό λογαριασμό. Συνδέστε ένα email για να μην χάσετε την πρόοδό σας.",
 		"login": "Σύνδεση",
 		"logout": "Αποσύνδεση",
+		"confirmLogout": "Είστε σίγουροι ότι θέλετε να αποσυνδεθείτε;",
 		"back": "Πίσω",
 		"register": "Εγγραφή",
 		"signin": "Σύνδεση με email",

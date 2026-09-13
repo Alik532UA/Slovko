@@ -11,6 +11,8 @@ const t=`{
 	},
 	"a11y": {
 		"friendsSettings": "Dostlar ayarları",
+		"levelNavigation": "Seviye navigatsiyası",
+		"userActions": "Qullanıcı amelleri",
 		"online": "Şebekede",
 		"warning": "Diqqat",
 		"gameBoard": "Oyun tahtası",
@@ -94,7 +96,8 @@ const t=`{
 		"importSuccess": "Playlist muvaffaqiyetli import etildi!",
 		"importFile": "Fayl",
 		"importClipboard": "Kopiyalanğan",
-		"clipboardError": "Kopiyalanğanından oquv hatası"
+		"clipboardError": "Kopiyalanğanından oquv hatası",
+		"clipboardEmpty": "Kopiyalanğan boş"
 	},
 	"topics": {
 		"title": "Temalar",
@@ -234,6 +237,7 @@ const t=`{
 			"improvement": "Yañartuv teklif etmek",
 			"contact": "Yaratıcığa yazmaq",
 			"subjectLabel": "Mevzu / Başlıq",
+			"instruction": "Haber çeşitini saylañız:",
 			"messageLabel": "Tarif / Haber",
 			"subjectPlaceholder": "Mevzu aqqında qısqaca...",
 			"messagePlaceholder": "Haber detalleri...",
@@ -252,6 +256,7 @@ const t=`{
 		"tempAccountWarning": "Siz vaqtınca esap qullanaysıñız. İlerlemeñizni coymamaq için email bağlañız.",
 		"login": "Kirmege",
 		"logout": "Çıqmaq",
+		"confirmLogout": "Çıqmağa isteysiñizmi?",
 		"back": "Artqa",
 		"register": "Qeydiyat",
 		"signin": "E-mail ilen kiriş",

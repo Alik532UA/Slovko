@@ -11,6 +11,8 @@ const e=`{
 	},
 	"a11y": {
 		"friendsSettings": "Freunde-Einstellungen",
+		"levelNavigation": "Niveau-Navigation",
+		"userActions": "Nutzeraktionen",
 		"online": "Online",
 		"warning": "Warnung",
 		"gameBoard": "Spielfeld",
@@ -94,7 +96,8 @@ const e=`{
 		"importSuccess": "Playlist erfolgreich importiert!",
 		"importFile": "Datei",
 		"importClipboard": "Zwischenablage",
-		"clipboardError": "Fehler beim Lesen aus der Zwischenablage"
+		"clipboardError": "Fehler beim Lesen aus der Zwischenablage",
+		"clipboardEmpty": "Die Zwischenablage ist leer"
 	},
 	"topics": {
 		"title": "Themen",
@@ -234,6 +237,7 @@ const e=`{
 			"improvement": "Verbesserung vorschlagen",
 			"contact": "Kontakt zum Entwickler",
 			"subjectLabel": "Betreff / Titel",
+			"instruction": "Wählen Sie die Art der Nachricht:",
 			"messageLabel": "Beschreibung / Nachricht",
 			"subjectPlaceholder": "Kurze Beschreibung des Themas...",
 			"messagePlaceholder": "Geben Sie weitere Details an...",
@@ -252,6 +256,7 @@ const e=`{
 		"tempAccountWarning": "Sie verwenden ein temporäres Konto. Verknüpfen Sie eine E-Mail, damit Sie Ihren Fortschritt nicht verlieren.",
 		"login": "Anmelden",
 		"logout": "Abmelden",
+		"confirmLogout": "Sind Sie sicher, dass Sie sich abmelden möchten?",
 		"back": "Zurück",
 		"register": "Registrieren",
 		"signin": "Anmelden mit E-Mail",
