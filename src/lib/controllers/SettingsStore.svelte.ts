@@ -108,9 +108,56 @@ function createSettingsStore() {
 		});
 	}
 
+	/**
+	 * Тема, яку показуємо «на пробу» під курсором, або `null`
+	 * (THEME-SWITCHER § 2.1).
+	 *
+	 * ОКРЕМО від `settings.theme`, і тут це критичніше, ніж деінде: `setTheme`
+	 * кличе `saveSettings()`, тобто пише в сховище й синхронізує з хмарою.
+	 * Прев'ю через нього означало б, що курсор, який просто перетнув сітку тем,
+	 * зберігає чужу тему назавжди — і на всіх пристроях.
+	 */
+	let previewedTheme = $state<AppTheme | null>(null);
+
+	/** Знімає клас плавного переходу, коли той доїхав (§ 5). */
+	let shiftTimer: ReturnType<typeof setTimeout> | null = null;
+
+	function startThemeShift() {
+		if (!browser) return;
+		document.documentElement.classList.add("theme-shifting");
+		if (shiftTimer) clearTimeout(shiftTimer);
+		shiftTimer = setTimeout(() => {
+			document.documentElement.classList.remove("theme-shifting");
+			shiftTimer = null;
+		}, 900);
+	}
+
 	return {
 		get value() {
 			return settings;
+		},
+
+		get previewedTheme() {
+			return previewedTheme;
+		},
+
+		/**
+		 * Показує тему «на пробу», поки курсор на її картці; `null` — вертає обрану.
+		 *
+		 * Малює документ НАПРЯМУ, повз `$effect` у кореневому layout: той
+		 * прив'язаний до `settings`, і єдиний спосіб його зачепити — записати
+		 * вибір, чого прев'ю робити не має. Мета-тег іде разом з атрибутом,
+		 * інакше показана темна тема лишалася б оголошеною як світла.
+		 */
+		previewTheme(theme: AppTheme | null) {
+			if (!browser) return;
+			previewedTheme = theme;
+			startThemeShift();
+			const shown = theme ?? settings.theme;
+			document.documentElement.setAttribute("data-theme", shown);
+			const meta = document.querySelector('meta[name="color-scheme"]');
+			const темна = shown === "dark-gray" || shown === "orange";
+			if (meta) meta.setAttribute("content", темна ? "dark" : "only light");
 		},
 
 		/** Internal update for SyncService to avoid infinite loops */
@@ -259,6 +306,8 @@ function createSettingsStore() {
 		},
 
 		setTheme(theme: AppTheme) {
+			previewedTheme = null;
+			startThemeShift();
 			settings = { ...settings, theme };
 			saveSettings();
 		},

@@ -449,6 +449,42 @@ body {
 	overflow: hidden; /* Prevent elastic scrolling on mobile if desired */
 }
 
+/*
+ * ПЛАВНА ЗМІНА ТЕМИ — і під курсором, і по-справжньому (THEME-SWITCHER § 5).
+ *
+ * Клас вішає контролер (`controllers/SettingsStore.svelte.ts`): `previewTheme`
+ * — поки курсор на картці теми, `setTheme` — на час самої зміни. Без нього
+ * чотири теми перемикалися стрибком, і на прев'ю це видно найгірше: курсор веде
+ * по сітці, а сторінка клацає кольорами.
+ *
+ * ## Чому `*`, а не перелік поверхонь
+ *
+ * Тему тримають ТОКЕНИ, і їх читають сотні правил. Перелічити «головні
+ * поверхні» означало б плавно міняти тло сторінки й стрибком — усе, що на ній
+ * лежить. Ціна обмежена: правило живе лише поки курсор на картці або доки
+ * триває зміна (контролер знімає клас таймером), і виключає `canvas`.
+ */
+html.theme-shifting,
+html.theme-shifting body,
+html.theme-shifting *:not(canvas) {
+	transition:
+		background-color 0.56s ease,
+		color 0.56s ease,
+		border-color 0.56s ease,
+		fill 0.56s ease,
+		stroke 0.56s ease;
+}
+
+/* Вимикає перехід, але НЕ саму зміну теми: побачити тему — це інформація, а не
+   рух (ACCESSIBILITY-v9 § 7). */
+@media (prefers-reduced-motion: reduce) {
+	html.theme-shifting,
+	html.theme-shifting body,
+	html.theme-shifting *:not(canvas) {
+		transition: none;
+	}
+}
+
 /* Background layer with blur */
 body::before {
 	content: "";

@@ -18,6 +18,29 @@
 		settingsStore.setTheme(theme);
 	}
 
+	/**
+	 * Наведення на картку теми ПОКАЗУЄ цю тему на всій сторінці, поки курсор там
+	 * (THEME-SWITCHER § 3). Взірець на картці каже про тему одним кольором,
+	 * сторінка — усіма; вибір стає видимим до кліку.
+	 *
+	 * ТІЛЬКИ МИША. `pointerenter` приходить і від тапу, а `pointerleave` на
+	 * дотику — ні: тема застрягла б показаною, доки людина не торкнеться чогось
+	 * іншого. А це модалка на телефоні — тобто головний спосіб сюди потрапити.
+	 */
+	function previewOn(theme: AppTheme, e: PointerEvent) {
+		if (e.pointerType === "mouse") settingsStore.previewTheme(theme);
+	}
+
+	function previewOff(e: PointerEvent) {
+		if (e.pointerType === "mouse") settingsStore.previewTheme(null);
+	}
+
+	/*
+	 * Модалку закривають клавішею, кліком по тлу й кнопкою — `pointerleave` на
+	 * картці тоді не приходить, і сторінка лишилася б у показаній темі назавжди.
+	 */
+	$effect(() => () => settingsStore.previewTheme(null));
+
 	function setBgType(type: "solid" | "image") {
 		settingsStore.setBgType(type);
 	}
@@ -39,6 +62,8 @@
 					class="theme-card"
 					class:selected={settingsStore.value.theme === theme.id}
 					onclick={() => selectTheme(theme.id)}
+					onpointerenter={(e) => previewOn(theme.id, e)}
+					onpointerleave={previewOff}
 					aria-pressed={settingsStore.value.theme === theme.id}
 					style="--theme-preview-bg: {theme.color}"
 					data-testid="theme-card-{theme.id}"
