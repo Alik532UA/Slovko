@@ -215,6 +215,16 @@ export const BETA_TABS: readonly BetaTab[] = [
 				testid: "theme-card-*",
 			},
 			{
+				id: "themes_4",
+				category: { uk: "Вибір теми", en: "Choosing a theme" },
+				text: {
+					uk: "На комп'ютері наведіть курсор на картку теми, якою ЗАРАЗ не користуєтесь, і НЕ натискайте. Сторінка мусить показати цю тему цілком, а щойно курсор піде — повернутися до попередньої. Самі картки мусять бути пофарбовані кожна під СВОЮ тему, а не всі під поточну.",
+					en: "On a desktop, hover the card of a theme you are NOT using and do NOT click. The page must show that theme in full and return to the previous one as soon as the pointer leaves. The cards themselves must each be coloured in THEIR OWN theme, not all in the current one.",
+				},
+				coverage: "manual",
+				testid: "theme-card-*",
+			},
+			{
 				id: "themes_2",
 				category: { uk: "Читабельність", en: "Readability" },
 				text: {
