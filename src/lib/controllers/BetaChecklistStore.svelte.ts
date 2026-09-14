@@ -19,6 +19,37 @@ const STORAGE_KEY = "beta_marks";
 
 type MarkMap = Record<string, Mark>;
 
+const VOTES: readonly Vote[] = ["fail", "weird", "ok"];
+
+function isMark(value: unknown): value is Mark {
+	if (typeof value !== "object" || value === null) return false;
+	const m = value as Record<string, unknown>;
+	return VOTES.includes(m.vote as Vote) && typeof m.version === "string";
+}
+
+/**
+ * Прочитане зі сховища — НЕДОВІРЕНИЙ ВВІД (BETA-CHECKLIST-v9 § 8.6,
+ * `BETA-MARKS-UNTRUSTED`).
+ *
+ * Ключ переживає і зміну чеклиста, і зміну формату позначки, і сусідні
+ * застосунки на тому самому origin. Найчастіший випадок безневинний і
+ * найгірший: пункт ПРИБРАЛИ зі списку, а позначка лишилася. Форму вона має
+ * правильну, тож проходила — і рахувалася в поступі, даючи «47 / 45», число,
+ * яке не означає нічого й не має де виправитися: у списку такого пункта вже
+ * немає, отже й зняти позначку нема на чому.
+ */
+function readMarks(): MarkMap {
+	const raw = localStorageProvider.getJson<unknown>(STORAGE_KEY);
+	if (typeof raw !== "object" || raw === null) return {};
+
+	const known = new Set(ALL_CHECKS.map((check) => check.id));
+	const out: MarkMap = {};
+	for (const [id, value] of Object.entries(raw as Record<string, unknown>)) {
+		if (known.has(id) && isMark(value)) out[id] = value;
+	}
+	return out;
+}
+
 class BetaChecklistStore {
 	private marks = $state<MarkMap>({});
 	private loaded = false;
@@ -27,8 +58,7 @@ class BetaChecklistStore {
 	private ensureLoaded() {
 		if (this.loaded) return;
 		this.loaded = true;
-		const stored = localStorageProvider.getJson<MarkMap>(STORAGE_KEY);
-		if (stored && typeof stored === "object") this.marks = stored;
+		this.marks = readMarks();
 	}
 
 	load() {
@@ -62,9 +92,59 @@ class BetaChecklistStore {
 		localStorageProvider.setJson(STORAGE_KEY, this.marks);
 	}
 
+	/**
+	 * Чи зведена кнопка стирання (§ 6.3, `BETA-CLEAR-TWO-STEP`).
+	 *
+	 * «Стерти» — ЄДИНА незворотна дія на сторінці, і стоїть вона поруч зі
+	 * «Скопіювати звіт», до якого тягнуться щоразу. Ціна помилки несиметрична:
+	 * година роботи проти одного зайвого кліка.
+	 *
+	 * Не `confirm()`: нативний діалог блокує потік, не перекладається, виглядає
+	 * чужим у будь-якій темі й у headless вимагає окремого обробника.
+	 */
+	clearArmed = $state(false);
+
+	/**
+	 * Стирання у два кроки: перший виклик лише зводить кнопку, другий стирає.
+	 * Повертає `true`, коли позначки справді зникли.
+	 */
+	requestClear(): boolean {
+		if (!this.clearArmed) {
+			this.clearArmed = true;
+			return false;
+		}
+		this.clear();
+		return true;
+	}
+
+	/** Знімає зведення, нічого не стираючи: кнопка не лишається зарядженою. */
+	disarmClear() {
+		this.clearArmed = false;
+	}
+
 	clear() {
 		this.marks = {};
+		this.clearArmed = false;
 		localStorageProvider.removeItem(STORAGE_KEY);
+	}
+
+	/**
+	 * Поступ ОКРЕМОЇ вкладки (§ 8.1, `BETA-TAB-PROGRESS`).
+	 *
+	 * Загальне «14 / 45» не відповідає на єдине питання, яке тестувальник собі
+	 * ставить: чи закінчена ЦЯ вкладка. Вкладок вісім, проходять їх по одній.
+	 */
+	progressOf(checks: readonly { id: string }[]): { done: number; total: number } {
+		// `ensureLoaded()` тут НЕ кличеться, і це не оптимізація. Метод читає
+		// розмітка, тобто виклик стається під час рендера, а `ensureLoaded()` пише
+		// в `$state` — Svelte 5 на це кидає `state_unsafe_mutation` і сторінка
+		// падає цілком (заміряно: замість чеклиста показувалася панель
+		// діагностики збою). Читання робить `load()` з `onMount` сторінки, і на
+		// момент першого малювання воно вже зроблене або ще не потрібне.
+		const done = checks.filter(
+			(check) => this.marks[check.id]?.version === versionStore.currentVersion
+		).length;
+		return { done, total: checks.length };
 	}
 
 	/** Скільки пунктів позначено САМЕ на цій збірці. */

@@ -40,13 +40,23 @@
 		{lang === "uk" ? "Скопіювати звіт" : "Copy the report"}
 	</button>
 
+	<!--
+		Стирання у ДВА кроки (§ 6.3): це єдина незворотна дія на сторінці, і стоїть
+		вона в тому самому рядку, що й «Скопіювати звіт», до якого тягнуться
+		щоразу. Ціна помилки несиметрична — година роботи проти зайвого кліка.
+	-->
 	<button
 		class="report__action report__action--quiet"
+		class:report__action--armed={betaChecklistStore.clearArmed}
 		data-testid="beta-clear-btn"
-		onclick={() => betaChecklistStore.clear()}
+		onclick={() => betaChecklistStore.requestClear()}
 	>
 		<RotateCcw size={17} />
-		{lang === "uk" ? "Стерти позначки" : "Clear marks"}
+		{#if betaChecklistStore.clearArmed}
+			{lang === "uk" ? "Точно стерти? Ще раз" : "Really clear? Press again"}
+		{:else}
+			{lang === "uk" ? "Стерти позначки" : "Clear marks"}
+		{/if}
 	</button>
 
 	{#if clipboardRefused}
@@ -70,6 +80,16 @@
 </footer>
 
 <style>
+	/*
+	 * Зведена кнопка стирання (§ 6.3). Стан НЕ лише кольором: рамка товща, напис
+	 * напівжирний, і сам текст кнопки міняється на питання — три незалежні
+	 * ознаки (ACCESSIBILITY-v9).
+	 */
+	.report__action--armed {
+		border-width: 2px;
+		font-weight: 700;
+	}
+
 	.report {
 		display: flex;
 		flex-wrap: wrap;

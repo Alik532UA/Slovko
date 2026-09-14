@@ -79,8 +79,13 @@
 		</button>
 	</header>
 
+	<!--
+		Лічильник на КОЖНІЙ вкладці (§ 8.1). Вкладок вісім, проходять їх по одній, а
+		загальне «14 / 45» не каже, чи закінчена ця.
+	-->
 	<nav class="beta__tabs" data-testid="beta-tabs">
 		{#each BETA_TABS as tab (tab.id)}
+			{@const tabDone = betaChecklistStore.progressOf(tab.checks)}
 			<button
 				class="beta__tab"
 				class:is-active={tab.id === activeTabId}
@@ -89,6 +94,9 @@
 				onclick={() => (activeTabId = tab.id)}
 			>
 				{tab.title[lang]}
+				<span class="beta__tab-count" data-testid="beta-tab-{tab.id}-progress-text">
+					{tabDone.done}/{tabDone.total}
+				</span>
 			</button>
 		{/each}
 	</nav>
@@ -112,14 +120,26 @@
 		{/each}
 	</p>
 
-	{#each groups as group (group.coverage)}
+	{#each groups as group, levelIndex (group.coverage)}
+		<!--
+			Нумерація НАСКРІЗНА по вкладці (§ 2.2), а не з одиниці в кожному рівні.
+			Рівнів на екрані до трьох, і три пункти «1.» роблять номер марним саме
+			тоді, коли він потрібен: людина каже «зламалося на третьому», а не
+			«зламалося на `account_5`». `{@const}` мусить бути безпосередньою дитиною
+			`{#each}` — усередині `<section>` Svelte його не приймає.
+		-->
+		{@const offset = groups.slice(0, levelIndex).reduce((n, g) => n + g.checks.length, 0)}
 		<section class="beta__level" data-testid="beta-level-{group.coverage}-section">
-			<h2>{LEVEL_TITLE[group.coverage][lang]}</h2>
+			<h2>
+				{LEVEL_TITLE[group.coverage][lang]}
+				<!-- Скільки пунктів у блоці — видно до того, як у нього заходити (§ 8.7). -->
+				<span class="beta__level-count">{group.checks.length}</span>
+			</h2>
 			<p class="beta__level-hint">{LEVEL_HINT[group.coverage][lang]}</p>
 
 			<ol class="beta__list">
 				{#each group.checks as check, index (check.id)}
-					<BetaCheckItem {check} number={index + 1} {lang} />
+					<BetaCheckItem {check} number={offset + index + 1} {lang} />
 				{/each}
 			</ol>
 		</section>
@@ -182,6 +202,25 @@
 		background: var(--bg-primary);
 		color: var(--text-secondary);
 		cursor: pointer;
+	}
+
+	/* Рівна ширина цифр: лічильники в ряду вкладок не мусять стрибати. */
+	.beta__tab-count {
+		margin-inline-start: 0.4rem;
+		font-size: 0.8rem;
+		opacity: 0.8;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.beta__level-count {
+		margin-inline-start: 0.4rem;
+		padding: 0.05rem 0.4rem;
+		border: 1px solid var(--border);
+		border-radius: 999px;
+		font-size: 0.75rem;
+		font-weight: 400;
+		color: var(--text-secondary);
+		font-variant-numeric: tabular-nums;
 	}
 
 	.beta__tab.is-active {
