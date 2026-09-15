@@ -67,7 +67,7 @@ describe('Slovko analytics guards (ANALYTICS-v9 § 5.1)', () => {
 	it('мовчить при navigator.webdriver: true навіть на робочому домені', async () => {
 		mockDev = false;
 		vi.stubGlobal('window', {
-			location: { hostname: 'alik5.github.io', origin: 'https://alik5.github.io', pathname: '/Slovko/' },
+			location: { hostname: 'alik532ua.github.io', origin: 'https://alik532ua.github.io', pathname: '/Slovko/' },
 			dataLayer: mockDataLayer
 		});
 		vi.stubGlobal('navigator', {
@@ -85,7 +85,7 @@ describe('Slovko analytics guards (ANALYTICS-v9 § 5.1)', () => {
 	it('працює у продакшені (не dev, не localhost, не webdriver)', async () => {
 		mockDev = false;
 		vi.stubGlobal('window', {
-			location: { hostname: 'alik5.github.io', origin: 'https://alik5.github.io', pathname: '/Slovko/' },
+			location: { hostname: 'alik532ua.github.io', origin: 'https://alik532ua.github.io', pathname: '/Slovko/' },
 			get dataLayer() {
 				return mockDataLayer;
 			},
