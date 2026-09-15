@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import { A11Y_BASELINE, A11Y_KNOWN } from './a11y-baseline';
 import { waitForAnimationsToSettle } from './settled';
 

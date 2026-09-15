@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures";
 
 /**
  * `<html lang>` іде за мовою інтерфейсу (ACCESSIBILITY-v8 § 10.4).

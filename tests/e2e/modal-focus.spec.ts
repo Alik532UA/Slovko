@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 /**
  * Клавіатура у вікні: пастка табуляції, Escape і повернення фокуса

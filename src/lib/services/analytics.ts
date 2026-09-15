@@ -1,7 +1,7 @@
 import { browser, dev } from '$app/environment';
 
 /**
- * Google Analytics 4 (ANALYTICS-v8 § 1).
+ * Google Analytics 4 (ANALYTICS-v9 § 1).
  */
 export const GA_ID_PLACEHOLDER = 'G-XXXXXXXXXX';
 
@@ -13,7 +13,20 @@ const GA_ID: string = import.meta.env.VITE_GA_ID || 'G-XXXXXXXXXX';
 
 const isConfigured = GA_ID !== GA_ID_PLACEHOLDER && /^G-[A-Z0-9]{6,}$/.test(GA_ID);
 
-const enabled = () => browser && !dev && isConfigured;
+/**
+ * Локальне середовище або автоматизований тест (Playwright, Puppeteer тощо).
+ * Запобігає засміченню аналітики під час розробки, локального прев'ю та E2E-тестів.
+ */
+const isTestOrLocal = () => {
+	if (!browser || typeof window === 'undefined') return false;
+	const hostname = window.location?.hostname ?? '';
+	const isLocal = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]';
+	const isWebDriver = typeof navigator !== 'undefined' && Boolean(navigator.webdriver);
+	return isLocal || isWebDriver;
+};
+
+// `dev`, `localhost` та автотести відключають аналітику, щоб тестовий трафік не потрапляв у продакшн.
+const enabled = () => browser && !dev && !isTestOrLocal() && isConfigured;
 
 export type AnalyticsEvent =
 	| 'game_start'

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 /**
  * Рантайм-дублікати `data-testid` (TESTID-AND-NAMING-v8 § 1.9.2).
