@@ -140,20 +140,33 @@ describe("залежності", () => {
 	 * червоне з назвою файлу й кроку.
 	 */
 	it("крок аудиту в CI звужений до рантайму (--omit=dev)", () => {
-		const WORKFLOWS = ["deploy.yml", "deploy-dev.yml"];
-		const steps = WORKFLOWS.flatMap((file) => {
-			const text = readFileSync(join(ROOT, ".github/workflows", file), "utf-8");
-			return text
-				.split("\n")
-				.map((line, i) => ({ file, line: line.trim(), at: i + 1 }))
-				.filter(({ line }) => /^run:\s*npm audit\b/.test(line));
-		});
+		// З ревізії 9.5 канону CI кличе ОБГОРТКУ, а не `npm audit` напряму
+		// (CI-CD-AND-TOOLS-v9 § 1.15, `CI-THIRD-PARTY-OUTAGE`): голий крок падає й
+		// тоді, коли ліг реєстр npm. Область звуження від цього не змінилася — вона
+		// просто переїхала в скрипт, і саме там її тепер і видно.
+		const workflows = ["deploy.yml", "deploy-dev.yml"]
+			.map((file) => readFileSync(join(ROOT, ".github/workflows", file), "utf-8"))
+			.join("\n");
+		expect(
+			/run:\s*npm run audit:ci/.test(workflows),
+			"у workflow немає кроку audit:ci — аудиту в CI не лишилося",
+		).toBe(true);
+		expect(
+			/run:\s*npm audit\b/.test(workflows),
+			"голий `npm audit` у workflow: збій реєстру заблокує викладення",
+		).toBe(false);
+
+		const wrapper = readFileSync(join(ROOT, "scripts/check-audit.mjs"), "utf-8");
+		const steps = wrapper
+			.split("\n")
+			.map((line, i) => ({ file: "scripts/check-audit.mjs", line: line.trim(), at: i + 1 }))
+			.filter(({ line }) => /'npm audit\b/.test(line));
 
 		// Порожній перелік означав би, що аудиту в CI немає зовсім, — і тоді
 		// «порушень немає» правдиве за побудовою.
 		expect(
 			steps.length,
-			"жодного кроку `npm audit` у workflow — або аудиту немає, або розбір зламався",
+			"жодної команди `npm audit` в обгортці — або аудиту немає, або розбір зламався",
 		).toBeGreaterThan(0);
 
 		const wide = steps
