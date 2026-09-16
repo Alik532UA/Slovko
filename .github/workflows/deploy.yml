@@ -120,6 +120,7 @@ jobs:
           key: pw-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
       - name: Install Playwright chromium
+        if: ${{ !cancelled() }}
         run: npx playwright install --with-deps chromium
 
       # Змінні Firebase потрібні саме тут, а не лише на `Build`, і причина

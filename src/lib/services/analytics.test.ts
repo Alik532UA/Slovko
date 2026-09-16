@@ -84,6 +84,20 @@ describe('Slovko analytics guards (ANALYTICS-v9 § 5.1)', () => {
 
 	it('працює у продакшені (не dev, не localhost, не webdriver)', async () => {
 		mockDev = false;
+		/*
+		 * Ідентифікатор задається ТУТ, а не береться з середовища.
+		 *
+		 * `GA_ID` тут — `import.meta.env.VITE_GA_ID || 'G-XXXXXXXXXX'`, тобто без
+		 * змінної модуль бачить плейсхолдер, `isConfigured` хибне, і позитивний
+		 * контроль падає на `expected 0 to be greater than 0`. Локально він
+		 * проходив лише тому, що поруч лежить `.env` — а `.env` у `.gitignore`,
+		 * тож у CI його немає. Заміряно: прогін 35075608772, перший після
+		 * переходу на цей набір тестів.
+		 *
+		 * Юніт-тест, чий вердикт залежить від змінної оточення, перевіряє не код,
+		 * а конфігурацію машини. Тому значення стабиться явно.
+		 */
+		vi.stubEnv('VITE_GA_ID', 'G-TESTONLY01');
 		vi.stubGlobal('window', {
 			location: { hostname: 'alik532ua.github.io', origin: 'https://alik532ua.github.io', pathname: '/Slovko/' },
 			get dataLayer() {
