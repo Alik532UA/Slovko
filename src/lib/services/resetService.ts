@@ -1,4 +1,5 @@
 ﻿import { base } from "$app/paths";
+import { ownCacheNames, unregisterOwnServiceWorkers } from "./ownScope";
 import { localStorageProvider, sessionStorageProvider } from "./storage/storageProvider";
 
 /**
@@ -27,35 +28,21 @@ export async function hardReset(confirmMessage?: string | null) {
 	/*
 	 * 1. Service Worker — ЛИШЕ СВІЙ, за `scope`.
 	 *
-	 * Доти тут стояв цикл по всіх реєстраціях без жодного фільтра, і це не
-	 * недбалість в оформленні, а знищення чужих даних: `getRegistrations()` віддає
-	 * реєстрації ВСЬОГО origin, тож одне натискання `r` у Slovko знімало service
-	 * worker `MindStep`, `VetCrewGames` і будь-якого іншого проєкту на
-	 * `alik532ua.github.io`. Кеші нижче фільтрувалися за префіксом від початку —
-	 * реєстрації ні.
-	 *
-	 * Порівняння як АДРЕСИ, а не рядка: `scope` завжди абсолютний
-	 * (`https://host/Slovko/`), а `base` — шлях (`/Slovko`), тож пряме
-	 * `startsWith(base)` не збіглося б ніколи й фільтр тихо відкинув би все,
-	 * включно зі своїм.
+	 * Фільтр живе в `ownScope.ts`, і не заради стислості: правильний він був
+	 * САМЕ ТУТ, поки два інші шляхи прибирання (`versionService.applyUpdate` і
+	 * кнопка на екрані падіння в `app.html`) знімали реєстрації всього origin.
+	 * Копія розходиться там, де додається наступний виклик, — тому копії більше
+	 * немає, а `src/own-scope.test.ts` не дає завести нову.
 	 */
-	if ("serviceWorker" in navigator) {
-		const registrations = await navigator.serviceWorker.getRegistrations();
-		const scopePrefix = new URL(`${base || ""}/`, window.location.origin).href;
-		for (const registration of registrations) {
-			if (registration.scope.startsWith(scopePrefix)) {
-				await registration.unregister();
-			}
-		}
-	}
+	await unregisterOwnServiceWorkers();
 
-	// 2. Clear Caches
+	// 2. Кеші — теж лише свої, і ознак тут ДВІ: власний префікс імені й наш
+	// `scope` усередині імені. Друга ознака потрібна кешам, які називає не
+	// застосунок, а бібліотека воркера, — див. `ownScope.ts`.
 	if ("caches" in window) {
 		const keys = await caches.keys();
-		for (const key of keys) {
-			if (key.startsWith("slovko-")) {
-				await caches.delete(key);
-			}
+		for (const key of ownCacheNames(keys)) {
+			await caches.delete(key);
 		}
 	}
 

@@ -165,18 +165,46 @@
 
 					document.getElementById('err-clear-btn').addEventListener('click', function() {
 						this.textContent = '⏳ Очищення...';
-						// Clear SW + Cache API (Slovko only)
+						/*
+						 * ЛИШЕ СВОЄ — і тут це `getRegistration()` без аргументів, а
+						 * не `getRegistrations()` з фільтром.
+						 *
+						 * Доти тут стояв другий варіант БЕЗ фільтра, з коментарем
+						 * «Slovko only», який стосувався лише рядка про кеші нижче.
+						 * `getRegistrations()` віддає реєстрації всього origin, тож
+						 * ця кнопка знімала service worker у `MindStep`,
+						 * `AudioRemote` і решти проєктів на `alik532ua.github.io`.
+						 *
+						 * Однина краща за фільтр саме тут: `getRegistration()` без
+						 * аргументів віддає реєстрацію, яка керує ЦІЄЮ сторінкою, —
+						 * тобто «своє» виходить за визначенням, а не з порівняння з
+						 * `base`, якого в цьому файлі немає (це чистий HTML до
+						 * гідрації). Фільтр для решти проєкту живе в
+						 * `src/lib/services/ownScope.ts`.
+						 */
+						var ownScope = null;
 						Promise.resolve()
 							.then(function() {
 								if ('serviceWorker' in navigator) {
-									return navigator.serviceWorker.getRegistrations()
-										.then(function(regs) { return Promise.all(regs.map(function(r) { return r.unregister(); })); });
+									return navigator.serviceWorker.getRegistration()
+										.then(function(reg) {
+											if (!reg) return;
+											ownScope = reg.scope;
+											return reg.unregister();
+										});
 								}
 							})
 							.then(function() {
 								if ('caches' in window) {
-									return caches.keys().then(function(keys) { 
-										return Promise.all(keys.filter(function(k) { return k.startsWith('slovko-'); }).map(function(k) { return caches.delete(k); })); 
+									return caches.keys().then(function(keys) {
+										// Дві ознаки «свого» кеша: власний префікс імені
+										// й наш `scope` усередині імені — друге для тих,
+										// які називає бібліотека воркера, а не ми.
+										var ours = keys.filter(function(k) {
+											return k.indexOf('slovko-') === 0
+												|| (ownScope && k.indexOf(ownScope) !== -1);
+										});
+										return Promise.all(ours.map(function(k) { return caches.delete(k); }));
 									});
 								}
 							})

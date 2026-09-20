@@ -1,6 +1,7 @@
 ﻿import { versionStore } from "../controllers/VersionStore.svelte";
 import { base } from "$app/paths";
 import { logService } from "./logService.svelte";
+import { ownCacheNames, unregisterOwnServiceWorkers } from "./ownScope";
 import { localStorageProvider } from "./storage/storageProvider";
 
 const VERSION_URL = `${base}/app-version.json`;
@@ -229,16 +230,30 @@ export function skipUpdate() {
 	}
 }
 
+/**
+ * Прибрати воркер і кеші ПЕРЕД перезавантаженням у нову версію.
+ *
+ * ЛИШЕ СВОЇ — за `scope` реєстрації й за ознаками імені кеша (`ownScope.ts`).
+ *
+ * Доти цикл по реєстраціях не мав фільтра ВЗАГАЛІ, і ціна цього виявилася не в
+ * Slovko: `getRegistrations()` віддає реєстрації всього origin, а на
+ * `alik532ua.github.io` це кожен проєкт акаунта. Тобто будь-яке застосування
+ * оновлення тут — включно з примусовим за `minVersion`, яке людина не
+ * натискає, — знімало service worker у `MindStep`, `AudioRemote` і решти.
+ * Симптом у сусіда: сайт раптово перестав працювати офлайн, і шукати причину
+ * довелося б у чужому репозиторії.
+ *
+ * Кеші поруч фільтрувалися від початку — і саме тому дефект був невидимий:
+ * рядок «Cache Storage cleared (Slovko only)» у журналі стосувався кешів і
+ * читався як твердження про весь крок.
+ */
 async function clearCaches(onProgress?: (step: "sw" | "cache") => void) {
 	// 1. Очищення Service Workers (важливо дочекатися завершення)
-	if ("serviceWorker" in navigator) {
-		try {
-			const registrations = await navigator.serviceWorker.getRegistrations();
-			await Promise.all(registrations.map(reg => reg.unregister()));
-			logService.log("version", "Service workers unregistered.");
-		} catch (e) {
-			logService.error("version", "SW unregistration failed:", e);
-		}
+	try {
+		const removed = await unregisterOwnServiceWorkers();
+		logService.log("version", `Own service workers unregistered: ${removed}.`);
+	} catch (e) {
+		logService.error("version", "SW unregistration failed:", e);
 	}
 
 	onProgress?.("sw");
@@ -249,9 +264,7 @@ async function clearCaches(onProgress?: (step: "sw" | "cache") => void) {
 			const keys = await caches.keys();
 			// Видаляємо лише кеші проєкту Slovko
 			await Promise.all(
-				keys
-					.filter((key) => key.startsWith("slovko-"))
-					.map((key) => caches.delete(key))
+				ownCacheNames(keys).map((key) => caches.delete(key)),
 			);
 			logService.log("version", "Cache Storage cleared (Slovko only).");
 		} catch (e) {

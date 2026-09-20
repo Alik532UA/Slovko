@@ -18,6 +18,7 @@
 	import MigrationOverlay from "$lib/components/ui/MigrationOverlay.svelte";
 	import { authStore } from "$lib/controllers/AuthStore.svelte";
 	import { logService } from "$lib/services/logService.svelte";
+	import { unregisterOwnServiceWorkers } from "$lib/services/ownScope";
 	import LogCopyButton from "$lib/components/debug/LogCopyButton.svelte";
 	import JsonLd from "$lib/components/seo/JsonLd.svelte";
 	import {
@@ -321,15 +322,17 @@
 					}
 				});
 			} else if (dev && "serviceWorker" in navigator) {
-				// В dev-режимі видаляємо старі SW, щоб вони не крашились при фоновому оновленні
-				const registrations = await navigator.serviceWorker.getRegistrations();
-				for (const registration of registrations) {
-					registration.unregister();
-					logService.log(
-						"version",
-						"Unregistered stray service worker in dev mode.",
-					);
-				}
+				/*
+				 * В dev-режимі знімаємо застряглі SW, щоб вони не падали при
+				 * фоновому оновленні, — але ЛИШЕ СВОЇ (`ownScope.ts`).
+				 *
+				 * Фільтр потрібен і тут, хоч це лише dev: на `localhost` origin
+				 * спільний так само, як на GitHub Pages, тож сусідній проєкт на
+				 * сусідньому порту втрачав би воркер від одного `npm run dev`.
+				 */
+				const removed = await unregisterOwnServiceWorkers();
+				if (removed > 0)
+					logService.log("version", `Unregistered ${removed} stray SW in dev.`);
 			}
 
 			// Analytics

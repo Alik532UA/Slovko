@@ -81,8 +81,18 @@ describe('service worker: оновлення застосовує людина, 
 		 */
 		expect(LAYOUT, 'банер оновлення слухає updatefound').toContain('updatefound');
 		expect(LAYOUT, 'подія installed більше не веде до банера').toContain('setUpdate(true)');
+		/*
+		 * Раніше тут стояв літерал `unregister()`. Сам виклик переїхав у
+		 * `ownScope.ts` — і не заради охайності: поки зняття реєстрацій писали
+		 * на місці, два з трьох викликів у проєкті робили це БЕЗ фільтра за
+		 * `scope`, тобто знімали service worker сусідніх проєктів на спільному
+		 * origin (див. `src/own-scope.test.ts`).
+		 *
+		 * Перевіряється та сама вимога, що й доти: `applyUpdate` знімає воркер.
+		 * Просто назва дії тепер одна на весь проєкт.
+		 */
 		expect(VERSION_SERVICE, 'applyUpdate більше не знімає реєстрацію SW').toContain(
-			'unregister()'
+			'unregisterOwnServiceWorkers('
 		);
 		expect(VERSION_SERVICE, 'обхід HTTP-кешу параметром upd зник').toContain("'upd'");
 	});
