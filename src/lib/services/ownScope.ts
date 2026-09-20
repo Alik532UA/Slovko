@@ -41,12 +41,12 @@ import { base } from "$app/paths";
  * абсолютний, а `base` — шлях (`/Slovko`), тож пряме `startsWith(base)` не
  * збіглося б ніколи й фільтр тихо відкинув би все, включно зі своїм.
  */
-export function ownScopePrefix(): string {
+function ownScopePrefix(): string {
 	return new URL(`${base || ""}/`, window.location.origin).href;
 }
 
 /** Реєстрації service worker, що належать саме цьому застосунку. */
-export function ownRegistrations<T extends { scope: string }>(
+function ownRegistrations<T extends { scope: string }>(
 	registrations: readonly T[],
 ): T[] {
 	const prefix = ownScopePrefix();
@@ -107,7 +107,23 @@ const OWN_CACHE_PREFIX = "slovko-";
  */
 export function ownCacheNames(names: readonly string[]): string[] {
 	const scope = ownScopePrefix();
-	return names.filter(
-		(name) => name.startsWith(OWN_CACHE_PREFIX) || name.includes(scope),
-	);
+	return names.filter((name) => isOwnCacheName(name, scope));
+}
+
+/**
+ * Саме правило, зі `scope` параметром, — щоб його можна було ПЕРЕВІРИТИ.
+ *
+ * `ownCacheNames` бере `scope` із `window.location`, тобто поза браузером не
+ * виконується взагалі. Доки правило жило всередині неї, єдиним способом
+ * перевірити його лишалося читання коду — а читанням коду помилка цього роду
+ * не ловиться: неправильний фільтр виглядає точно так само, як правильний.
+ *
+ * Це не теорія. Сусідній `MindStep` має той самий модуль, і там фільтр стояв
+ * лише за власним префіксом — при тому, що всі кеші того застосунку називає
+ * воркер, і власного префікса в їхніх іменах немає взагалі. Тобто фільтр
+ * віддавав порожній список, а крок «очистити кеші» не робив нічого. Зелено
+ * було скрізь.
+ */
+export function isOwnCacheName(name: string, scope: string): boolean {
+	return name.startsWith(OWN_CACHE_PREFIX) || name.includes(scope);
 }
