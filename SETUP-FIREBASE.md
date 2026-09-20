@@ -1,17 +1,25 @@
 # Налаштувати викладення правил доступу — один раз
 
 Правила доступу до бази (`firestore.rules`, `database.rules.json`) тепер
-викладає CI на кожен пуш у `main`. Щоб він міг це робити, потрібен **один
-секрет**. Доки його немає, прогін не падає — він пише попередження, а в базі
-лишаються старі правила.
+викладає CI на кожен пуш у `main`. Щоб він міг це робити, потрібні **ключ і
+права до нього** — два різні налаштування, і жодне з них не замінює друге.
+Доки немає ключа, прогін не падає: він пише попередження, а в базі лишаються
+старі правила. Коли ключ є, а прав бракує — прогін падає з `403`.
 
-**Перевірити, чи вже зроблено:**
+**Перевірити, чи вже зроблено — ключ:**
 
 ```bash
 gh secret list -R Alik532UA/Slovko
 ```
 
-Якщо у списку є `FIREBASE_SERVICE_ACCOUNT` — усе готово, далі читати не треба.
+**і права:** останній прогін `publish-rules` зелений.
+
+```bash
+gh run list -R Alik532UA/Slovko --workflow deploy.yml --limit 1
+```
+
+Якщо і секрет `FIREBASE_SERVICE_ACCOUNT` у списку, і прогін зелений — усе
+готово, далі читати не треба.
 
 ---
 
@@ -47,7 +55,45 @@ gh secret set FIREBASE_SERVICE_ACCOUNT -R Alik532UA/Slovko < "C:/Users/alik5/Dow
 Команда читає файл і відправляє вміст зашифрованим. Вставляти текст ключа
 руками нікуди не треба.
 
-## Крок 3. Перевірити
+## Крок 3. Видати сервісному акаунтові права
+
+**Цей крок обовʼязковий.** Ключа замало: ключ каже, *хто* стукає, ролі кажуть,
+*що* йому можна. Типовий ключ Firebase Admin SDK вміє читати правила, але
+**не вміє їх викладати** — це виміряно, а не припущено: прогін
+[35539801764](https://github.com/Alik532UA/Slovko/actions/runs/35539801764)
+впав двічі поспіль, спершу на `serviceusage`, потім на `firebaserules`.
+
+1. відкрити
+   <https://console.cloud.google.com/iam-admin/iam?project=slovko-alik532>
+2. знайти рядок, що закінчується на `@slovko-alik532.iam.gserviceaccount.com`;
+3. олівець (**Edit principal**) праворуч;
+4. **ADD ANOTHER ROLE** і додати всі чотири ролі зі стовпця «Роль» нижче
+   (поле пошуку приймає і назву, і ідентифікатор);
+5. **SAVE**.
+
+Ролей саме чотири, бо стільки дій робить один рядок `firebase deploy --only
+firestore:rules,firestore:indexes,database`. Кожна вимагає своєї:
+
+| Що викладається | Роль у консолі | Ідентифікатор |
+|---|---|---|
+| `firestore.rules` | Firebase Rules Admin | `roles/firebaserules.admin` |
+| `firestore.indexes.json` | Cloud Datastore Index Admin | `roles/datastore.indexAdmin` |
+| `database.rules.json` | Firebase Realtime Database Admin | `roles/firebasedatabase.admin` |
+| — (перевірка, що API увімкнені) | Service Usage Consumer | `roles/serviceusage.serviceUsageConsumer` |
+
+Останній рядок виглядає зайвим, але без нього `firebase-tools` падає ще до
+першого правила: перед викладенням він питає в Google, чи ввімкнено
+`firestore.googleapis.com`, і саме це питання вимагає окремого дозволу.
+
+> **Чому не одна роль на все.** `Owner` або `Editor` теж спрацюють — і саме
+> тому їх тут немає. Ключ лежить у секретах GitHub; кожен, хто має доступ до
+> воркфлоу, має доступ до того, що цей ключ уміє. Чотири вузькі ролі вміють
+> рівно те, що робить CI, і нічого більше — не читають дані користувачів, не
+> створюють ресурсів, не роздають прав далі.
+
+---
+
+## Крок 4. Перевірити
 
 ```bash
 gh secret list -R Alik532UA/Slovko
@@ -61,19 +107,6 @@ gh secret list -R Alik532UA/Slovko
 gh run list -R Alik532UA/Slovko --limit 1
 gh run view -R Alik532UA/Slovko --log | grep -A5 "Викласти правила"
 ```
-
----
-
-## Якщо крок викладення впав на правах
-
-Типовий ключ Firebase Admin SDK має досить прав. Якщо все-таки прийшла
-відмова виду `PERMISSION_DENIED`, акаунтові бракує ролі:
-
-1. <https://console.cloud.google.com/iam-admin/iam?project=slovko-alik532>
-2. знайти рядок, що закінчується на `@slovko-alik532.iam.gserviceaccount.com`;
-3. олівець → **ADD ANOTHER ROLE** → `Firebase Rules Admin`;
-4. ще раз те саме → `Firebase Realtime Database Admin`;
-5. **SAVE**.
 
 ## Що з чого береться
 
