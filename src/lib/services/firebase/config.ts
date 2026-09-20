@@ -18,29 +18,42 @@ import { getDatabase, type Database } from "firebase/database";
  * **Конфіг публічний за побудовою.** `apiKey` для веб-застосунку — не секрет:
  * він приїжджає в кожну сторінку. Захист дають правила доступу
  * (`firestore.rules`, `database.rules.json`) і список дозволених доменів, а не
- * приховування ключа (SECURITY-v8 § 4.1, § 12.2).
+ * приховування ключа (SECURITY-v9 § 4.1, § 12.2).
+ *
+ * **Значення стоять ТУТ, а не приїжджають зі змінних CI**, і це свідомий вибір
+ * (SECURITY-v9 § 4.2.1, `SEC-CONFIG-IN-SOURCE`). Змінні дають рівно одне:
+ * можливість зібрати той самий код під іншу базу. Такого сценарію тут немає —
+ * проєкт Firebase один, `deploy-dev.yml` збирає під нього ж, а емулятор
+ * чіпляється за адресою, а не іншим `projectId`.
+ *
+ * Натомість змінні коштували трьох речей, і всі три тут уже спрацювали:
+ *
+ * 1. одне значення жило в трьох місцях — локальний `.env`, Variables, Secrets;
+ *    саме на такому розходженні цей репозиторій ледь не поїхав правилами в
+ *    проєкт `slovko`, якого не існує (справжній — `slovko-alik532`);
+ * 2. `git clone && npm run dev` не працював: без `.env` виходив
+ *    `projectId: undefined` і незрозуміла помилка Firebase;
+ * 3. значення не було ні в рев'ю, ні в історії, ні в резервній копії.
+ *
+ * Межа: щойно з'явиться ДРУГА база (тестова, демо, окремий стенд) — значення
+ * повертаються у змінні, бо вшите в бандл перецілити неможливо.
  */
 
 const firebaseConfig = {
-	apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-	authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-	databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
-	projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-	storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-	messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-	appId: import.meta.env.VITE_FIREBASE_APP_ID,
-};
+	apiKey: "AIzaSyBnVP4mFgY94QLBe9_2eZ1ie4MJ9z32fC4",
+	authDomain: "slovko-alik532.firebaseapp.com",
+	databaseURL: "https://slovko-alik532-default-rtdb.europe-west1.firebasedatabase.app",
+	projectId: "slovko-alik532",
+	storageBucket: "slovko-alik532.firebasestorage.app",
+	messagingSenderId: "611915779855",
+	appId: "1:611915779855:web:5a9bc348b5c8c15cb6f87a",
+} as const;
 
 let app: FirebaseApp | null = null;
 let firestore: Firestore | null = null;
 let authInstance: Auth | null = null;
 let database: Database | null = null;
 let provider: GoogleAuthProvider | null = null;
-
-/** Чи налаштований Firebase узагалі. Без ключа немає сенсу навіть пробувати. */
-export function isFirebaseConfigured(): boolean {
-	return Boolean(firebaseConfig.apiKey && firebaseConfig.projectId);
-}
 
 export function getFirebaseApp(): FirebaseApp {
 	if (app) return app;

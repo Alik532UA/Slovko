@@ -80,6 +80,37 @@ describe("хмарна база", () => {
 	 * зараз?» знову залежала б від того, чи згадає про скрипт людина
 	 * (CLOUD-DATABASE-v9 § 2.3, `CDB-RULES-READBACK`).
 	 */
+	/*
+	 * Конфіг лежить у джерелі, а не у змінних CI (SECURITY-v9 § 4.2.1,
+	 * `SEC-CONFIG-IN-SOURCE`) — і саме тому мусить бути рівно ОДИН його
+	 * примірник. Друге джерело того самого факту тут уже ледь не коштувало
+	 * деплою правил у проєкт `slovko`, якого не існує.
+	 *
+	 * `.firebaserc` існує окремо, бо його читає `firebase-tools`, а той не вміє
+	 * в TypeScript. Тому не «одне джерело», а «два, звірені гейтом».
+	 */
+	it("ідентифікатор проєкту всюди один (§ 4.2.1)", () => {
+		const config = readFileSync("src/lib/services/firebase/config.ts", "utf8");
+		const inSource = /projectId:\s*"([^"]+)"/.exec(config)?.[1];
+		expect(inSource, "у config.ts немає літерала projectId").toBeTruthy();
+
+		const rc = JSON.parse(readFileSync(".firebaserc", "utf8"));
+		expect(
+			rc.projects?.default,
+			"`.firebaserc` і config.ts називають РІЗНІ проєкти: правила поїдуть не в ту базу, " +
+				"у яку пише застосунок, і обидва кроки будуть зелені",
+		).toBe(inSource);
+	});
+
+	it("конфіг не читається зі змінних оточення (§ 4.2.1)", () => {
+		const config = readFileSync("src/lib/services/firebase/config.ts", "utf8");
+		expect(
+			config,
+			"значення повернулися в `import.meta.env` — тоді воно знову живе у двох місцях, " +
+				"а `git clone && npm run dev` знову не працює",
+		).not.toMatch(/import\.meta\.env\.VITE_FIREBASE/);
+	});
+
 	it("звірка з бойовою базою викликається прогоном, а не руками (§ 2.3)", () => {
 		expect(existsSync("scripts/verify-deployed-rules.mjs")).toBe(true);
 		const workflow = readFileSync(".github/workflows/deploy.yml", "utf8");

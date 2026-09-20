@@ -22,24 +22,43 @@
  * Розбіжність у них означала б «розійшлося» там, де нічого не розійшлося, — і
  * такий звіт перестали б читати вже на другий раз.
  *
+ * ## Звідки береться, ДО ЯКОЇ бази йти
+ *
+ * З того самого файлу, який читає застосунок, — `src/lib/services/firebase/config.ts`.
+ * Не з оточення й не з окремої копії: питання «а куди це поїхало» має мати одну
+ * відповідь, інакше перевірка може сумлінно звіряти правила чужого проєкту й
+ * бути при цьому зеленою (SECURITY-v9 § 4.2.1, `SEC-CONFIG-IN-SOURCE`).
+ *
  * ## Запуск
  *
- *   GOOGLE_APPLICATION_CREDENTIALS=… FIREBASE_PROJECT=… \
- *   FIREBASE_DATABASE_URL=… node scripts/verify-deployed-rules.mjs
+ *   GOOGLE_APPLICATION_CREDENTIALS=… node scripts/verify-deployed-rules.mjs
  *
  * Лише читання. Нічого не міняє й нічого не викладає.
  */
 import { createSign } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 
+const CONFIG_SOURCE = 'src/lib/services/firebase/config.ts';
 const KEY_FILE = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-const PROJECT = process.env.FIREBASE_PROJECT;
-const DATABASE_URL = process.env.FIREBASE_DATABASE_URL;
 
-if (!KEY_FILE || !PROJECT) {
-	console.error('Потрібні GOOGLE_APPLICATION_CREDENTIALS і FIREBASE_PROJECT.');
+if (!KEY_FILE) {
+	console.error('Потрібен GOOGLE_APPLICATION_CREDENTIALS.');
 	process.exit(2);
 }
+
+/** @param {string} field */
+function fromConfig(field) {
+	const source = readFileSync(CONFIG_SOURCE, 'utf8');
+	const value = new RegExp(`${field}:\\s*["']([^"']+)["']`).exec(source)?.[1];
+	if (!value) {
+		console.error(`У ${CONFIG_SOURCE} немає поля ${field} — перевірка не знає, куди йти.`);
+		process.exit(2);
+	}
+	return value;
+}
+
+const PROJECT = fromConfig('projectId');
+const DATABASE_URL = fromConfig('databaseURL');
 
 const key = JSON.parse(readFileSync(KEY_FILE, 'utf8'));
 const base64url = (s) =>
@@ -114,12 +133,25 @@ if (existsSync('firestore.rules')) {
 			const rs = await fetch(`https://firebaserules.googleapis.com/v1/${release.rulesetName}`, {
 				headers: { Authorization: `Bearer ${t}` }
 			});
-			const files = (await rs.json()).source?.files ?? [];
+			const ruleset = await rs.json();
+			const files = ruleset.source?.files ?? [];
+			/*
+			 * Дата береться з RULESET, а не з release.
+			 *
+			 * `release.createTime` — це коли вперше створили сам ВКАЗІВНИК на
+			 * правила, а не коли виклали цей текст. Він не міняється ніколи, тож
+			 * у щойно виконаному деплої звіт писав би дату кількарічної давності
+			 * — і зелений прогін повідомляв би неправду. Виміряно на `MindStep`:
+			 * правила щойно поїхали, а в журналі стояло «викладено 2025-12-10».
+			 *
+			 * У ruleset `createTime` означає саме те, що треба: коли завантажили
+			 * ЦЕЙ текст.
+			 */
 			compare(
 				'Firestore',
 				files.map((f) => f.content).join('\n'),
 				'firestore.rules',
-				`, викладено ${release.createTime}`
+				`, цей текст викладено ${ruleset.createTime ?? release.updateTime ?? '(дата невідома)'}`
 			);
 		}
 	}

@@ -101,15 +101,6 @@ jobs:
     # форку, де секрету немає зовсім.
     env:
       SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-      # Ідентифікатор проєкту береться з ТІЄЇ САМОЇ змінної, яку вже читає
-      # збірка (`vars.VITE_FIREBASE_PROJECT_ID`), а не з окремого секрету.
-      #
-      # Окремий вимагав би заводити друге джерело для одного факту — і саме
-      # так тут ледь не з'явився деплой правил у проєкт «slovko», якого не
-      # існує: справжній називається `slovko-alik532`. Значення публічне за
-      # побудовою (воно в бандлі), тож змінна, а не секрет.
-      FIREBASE_PROJECT: ${{ vars.VITE_FIREBASE_PROJECT_ID }}
-      FIREBASE_DATABASE_URL: ${{ vars.VITE_FIREBASE_DATABASE_URL }}
     steps:
       - uses: actions/checkout@v7
 
@@ -124,13 +115,11 @@ jobs:
         if: ${{ github.event_name != 'push' }}
         run: echo "::notice title=Правила не викладені::Прогін із PR лише перевіряє правила."
 
-      # Обидві умови окремо: бракувати може або ключа, або ідентифікатора
-      # проєкту, і повідомлення мусить називати саме те, чого бракує.
-      - name: Ідентифікатора проєкту немає
-        if: ${{ github.event_name == 'push' && env.FIREBASE_PROJECT == '' }}
-        run: |
-          echo "::warning title=Правила не викладені::Немає змінної VITE_FIREBASE_PROJECT_ID (Settings → Secrets and variables → Actions → Variables). Без неї невідомо, у який проєкт викладати."
-
+      # Кроку «ідентифікатора проєкту немає» тут більше немає, і це не
+      # спрощення: ідентифікатор перестав бути налаштуванням. Він лежить у
+      # `.firebaserc` і в `src/lib/services/firebase/config.ts`, тобто в git, і
+      # бракувати його може хіба що разом із самим репозиторієм
+      # (SECURITY-v9 § 4.2.1, `SEC-CONFIG-IN-SOURCE`).
       - name: Секрета немає — правила лишаються як є
         if: ${{ github.event_name == 'push' && env.SERVICE_ACCOUNT == '' }}
         run: |
@@ -147,29 +136,27 @@ jobs:
       # `umask 077` перед записом: типові права на файл у раннері дають читання
       # всім, а в кроках нижче може виконуватися будь-що.
       - name: Викласти правила й індекси
-        if: ${{ github.event_name == 'push' && env.SERVICE_ACCOUNT != '' && env.FIREBASE_PROJECT != '' }}
+        if: ${{ github.event_name == 'push' && env.SERVICE_ACCOUNT != '' }}
         run: |
           trap 'rm -f "$RUNNER_TEMP/sa.json"' EXIT
           (umask 077; printf '%s' "$SERVICE_ACCOUNT" > "$RUNNER_TEMP/sa.json")
           GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json" npx --yes firebase-tools@15 deploy \
-            --only firestore:rules,firestore:indexes,database \
-            --project "$FIREBASE_PROJECT" --non-interactive
+            --only firestore:rules,firestore:indexes,database --non-interactive
 
       # ЩО ЗЕЛЕНИЙ КРОК ВИЩЕ НЕ ДОВОДИТЬ.
       #
       # Він доводить, що команда не впала. Не доводить, що в базі тепер те, що
       # в git: `--only` міг не покрити файл, проєкт міг бути не той, крок міг
-      # бути пропущений умовою. Саме в цьому репозиторії така різниця прожила
-      # СІМ МІСЯЦІВ: у Firestore лежала редакція від 2026-02-02 на 6235 байтів
-      # проти 10256 у файлі, тобто серпнева ревізія з виправленням трьох
-      # проломів не доїхала жодного разу
-      # (CLOUD-DATABASE-v9 § 2.3, `CDB-RULES-READBACK`).
+      # бути пропущений умовою. Саме в цьому репозиторії така різниця й була:
+      # у Firestore лежала ІНША, коротша редакція — 6235 байтів проти 10256 у
+      # файлі, тобто серпнева ревізія з виправленням трьох проломів не доїхала
+      # жодного разу (CLOUD-DATABASE-v9 § 2.3, `CDB-RULES-READBACK`).
       #
       # Скрипт існував і тоді — ним це й знайшли. Але викликали його руками,
       # тож відповідь на питання «а зараз?» знову залежала б від того, чи
       # згадає про нього людина. Тепер не залежить.
       - name: У базі справді те, що в git
-        if: ${{ github.event_name == 'push' && env.SERVICE_ACCOUNT != '' && env.FIREBASE_PROJECT != '' }}
+        if: ${{ github.event_name == 'push' && env.SERVICE_ACCOUNT != '' }}
         run: |
           trap 'rm -f "$RUNNER_TEMP/sa.json"' EXIT
           (umask 077; printf '%s' "$SERVICE_ACCOUNT" > "$RUNNER_TEMP/sa.json")
@@ -254,13 +241,6 @@ jobs:
         if: ${{ !cancelled() }}
         env:
           BASE_PATH: "/Slovko"
-          VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}
-          VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.VITE_FIREBASE_AUTH_DOMAIN }}
-          VITE_FIREBASE_PROJECT_ID: ${{ vars.VITE_FIREBASE_PROJECT_ID }}
-          VITE_FIREBASE_STORAGE_BUCKET: ${{ vars.VITE_FIREBASE_STORAGE_BUCKET }}
-          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ vars.VITE_FIREBASE_MESSAGING_SENDER_ID }}
-          VITE_FIREBASE_APP_ID: ${{ vars.VITE_FIREBASE_APP_ID }}
-          VITE_FIREBASE_DATABASE_URL: ${{ vars.VITE_FIREBASE_DATABASE_URL }}
         run: npx playwright test --project=chromium
 
       - name: Upload Playwright report
@@ -302,13 +282,6 @@ jobs:
         id: build
         env:
           BASE_PATH: "/Slovko"
-          VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}
-          VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.VITE_FIREBASE_AUTH_DOMAIN }}
-          VITE_FIREBASE_PROJECT_ID: ${{ vars.VITE_FIREBASE_PROJECT_ID }}
-          VITE_FIREBASE_STORAGE_BUCKET: ${{ vars.VITE_FIREBASE_STORAGE_BUCKET }}
-          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ vars.VITE_FIREBASE_MESSAGING_SENDER_ID }}
-          VITE_FIREBASE_APP_ID: ${{ vars.VITE_FIREBASE_APP_ID }}
-          VITE_FIREBASE_DATABASE_URL: ${{ vars.VITE_FIREBASE_DATABASE_URL }}
           VITE_GA_ID: ${{ vars.VITE_GA_ID }}
         run: npm run build
 
