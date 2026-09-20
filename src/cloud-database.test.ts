@@ -70,6 +70,26 @@ describe("хмарна база", () => {
 		expect(workflow, "емулятору потрібна Java, кроку setup-java немає").toMatch(/setup-java/);
 	});
 
+	/*
+	 * Скрипт, який лежить у репозиторії, але якого ніхто не викликає, — це не
+	 * перевірка, а спогад про неї.
+	 *
+	 * Саме так тут і було: `verify-deployed-rules.mjs` знайшов у Firestore
+	 * редакцію від лютого — і на цьому спинився, бо запускали його руками. Крок
+	 * у воркфлоу додати забули, тож наступного разу відповідь на питання «а
+	 * зараз?» знову залежала б від того, чи згадає про скрипт людина
+	 * (CLOUD-DATABASE-v9 § 2.3, `CDB-RULES-READBACK`).
+	 */
+	it("звірка з бойовою базою викликається прогоном, а не руками (§ 2.3)", () => {
+		expect(existsSync("scripts/verify-deployed-rules.mjs")).toBe(true);
+		const workflow = readFileSync(".github/workflows/deploy.yml", "utf8");
+		expect(
+			workflow,
+			"скрипт звірки є, але воркфлоу його не викликає — тобто «правила викладено» " +
+				"знову означає лише «команда не впала»",
+		).toMatch(/verify-deployed-rules\.mjs/);
+	});
+
 	it("перевірка правил містить обидві полярності (§ 3.1)", () => {
 		const script = readFileSync("scripts/check-rules.mjs", "utf8");
 		const positives = [...script.matchAll(/allowed:\s*true/g)].length;

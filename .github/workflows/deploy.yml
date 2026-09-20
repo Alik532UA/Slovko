@@ -155,6 +155,27 @@ jobs:
             --only firestore:rules,firestore:indexes,database \
             --project "$FIREBASE_PROJECT" --non-interactive
 
+      # ЩО ЗЕЛЕНИЙ КРОК ВИЩЕ НЕ ДОВОДИТЬ.
+      #
+      # Він доводить, що команда не впала. Не доводить, що в базі тепер те, що
+      # в git: `--only` міг не покрити файл, проєкт міг бути не той, крок міг
+      # бути пропущений умовою. Саме в цьому репозиторії така різниця прожила
+      # СІМ МІСЯЦІВ: у Firestore лежала редакція від 2026-02-02 на 6235 байтів
+      # проти 10256 у файлі, тобто серпнева ревізія з виправленням трьох
+      # проломів не доїхала жодного разу
+      # (CLOUD-DATABASE-v9 § 2.3, `CDB-RULES-READBACK`).
+      #
+      # Скрипт існував і тоді — ним це й знайшли. Але викликали його руками,
+      # тож відповідь на питання «а зараз?» знову залежала б від того, чи
+      # згадає про нього людина. Тепер не залежить.
+      - name: У базі справді те, що в git
+        if: ${{ github.event_name == 'push' && env.SERVICE_ACCOUNT != '' && env.FIREBASE_PROJECT != '' }}
+        run: |
+          trap 'rm -f "$RUNNER_TEMP/sa.json"' EXIT
+          (umask 077; printf '%s' "$SERVICE_ACCOUNT" > "$RUNNER_TEMP/sa.json")
+          GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json" \
+            node scripts/verify-deployed-rules.mjs
+
   build-and-deploy:
     # Правила йдуть ПЕРШИМИ: нові сумісні зі старим кодом, старі з новим — ні.
     # Заразом це робить `rules` блокувальним — доти деплой не чекав на нього
