@@ -282,7 +282,6 @@ jobs:
         id: build
         env:
           BASE_PATH: "/Slovko"
-          VITE_GA_ID: ${{ vars.VITE_GA_ID }}
         run: npm run build
 
       # CI-CD-AND-TOOLS-v8 § 1.5 — перевірка, що збірка не змінює відстежувані файли

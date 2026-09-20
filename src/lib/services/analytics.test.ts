@@ -85,19 +85,19 @@ describe('Slovko analytics guards (ANALYTICS-v9 § 5.1)', () => {
 	it('працює у продакшені (не dev, не localhost, не webdriver)', async () => {
 		mockDev = false;
 		/*
-		 * Ідентифікатор задається ТУТ, а не береться з середовища.
+		 * Ідентифікатора тут більше не стабимо, і це не спрощення.
 		 *
-		 * `GA_ID` тут — `import.meta.env.VITE_GA_ID || 'G-XXXXXXXXXX'`, тобто без
-		 * змінної модуль бачить плейсхолдер, `isConfigured` хибне, і позитивний
-		 * контроль падає на `expected 0 to be greater than 0`. Локально він
-		 * проходив лише тому, що поруч лежить `.env` — а `.env` у `.gitignore`,
-		 * тож у CI його немає. Заміряно: прогін 35075608772, перший після
-		 * переходу на цей набір тестів.
+		 * Доти `GA_ID` був `import.meta.env.VITE_GA_ID || 'G-XXXXXXXXXX'`: без
+		 * змінної модуль бачив плейсхолдер, `isConfigured` було хибним, і цей
+		 * позитивний контроль падав на `expected 0 to be greater than 0`.
+		 * Локально він проходив лише тому, що поруч лежав `.env` — а `.env` у
+		 * `.gitignore`, тож у CI його немає. Заміряно: прогін 35075608772.
 		 *
-		 * Юніт-тест, чий вердикт залежить від змінної оточення, перевіряє не код,
-		 * а конфігурацію машини. Тому значення стабиться явно.
+		 * Лікували це `vi.stubEnv` — тобто симптом. Причину прибрано: значення
+		 * тепер літерал у самому модулі (SECURITY-v9 § 4.2.1,
+		 * `SEC-CONFIG-IN-SOURCE`), і вердикт тесту більше не залежить від того,
+		 * що лежить у машині.
 		 */
-		vi.stubEnv('VITE_GA_ID', 'G-TESTONLY01');
 		vi.stubGlobal('window', {
 			location: { hostname: 'alik532ua.github.io', origin: 'https://alik532ua.github.io', pathname: '/Slovko/' },
 			get dataLayer() {

@@ -53,7 +53,6 @@ jobs:
         id: build
         env:
           BASE_PATH: "/Slovko/dev"
-          VITE_GA_ID: ${{ vars.VITE_GA_ID }}
         run: npm run build
 
       # CI-CD-AND-TOOLS-v9 § 1.5 — те саме, що й у deploy.yml: артефакт збірки
