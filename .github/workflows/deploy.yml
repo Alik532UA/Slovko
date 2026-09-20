@@ -101,7 +101,14 @@ jobs:
     # форку, де секрету немає зовсім.
     env:
       SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-      FIREBASE_PROJECT: ${{ secrets.FIREBASE_PROJECT_ID }}
+      # Ідентифікатор проєкту береться з ТІЄЇ САМОЇ змінної, яку вже читає
+      # збірка (`vars.VITE_FIREBASE_PROJECT_ID`), а не з окремого секрету.
+      #
+      # Окремий вимагав би заводити друге джерело для одного факту — і саме
+      # так тут ледь не з'явився деплой правил у проєкт «slovko», якого не
+      # існує: справжній називається `slovko-alik532`. Значення публічне за
+      # побудовою (воно в бандлі), тож змінна, а не секрет.
+      FIREBASE_PROJECT: ${{ vars.VITE_FIREBASE_PROJECT_ID }}
     steps:
       - uses: actions/checkout@v7
 
@@ -115,6 +122,13 @@ jobs:
       - name: Це PR — правила лишаються як є
         if: ${{ github.event_name != 'push' }}
         run: echo "::notice title=Правила не викладені::Прогін із PR лише перевіряє правила."
+
+      # Обидві умови окремо: бракувати може або ключа, або ідентифікатора
+      # проєкту, і повідомлення мусить називати саме те, чого бракує.
+      - name: Ідентифікатора проєкту немає
+        if: ${{ github.event_name == 'push' && env.FIREBASE_PROJECT == '' }}
+        run: |
+          echo "::warning title=Правила не викладені::Немає змінної VITE_FIREBASE_PROJECT_ID (Settings → Secrets and variables → Actions → Variables). Без неї невідомо, у який проєкт викладати."
 
       - name: Секрета немає — правила лишаються як є
         if: ${{ github.event_name == 'push' && env.SERVICE_ACCOUNT == '' }}
@@ -132,13 +146,13 @@ jobs:
       # `umask 077` перед записом: типові права на файл у раннері дають читання
       # всім, а в кроках нижче може виконуватися будь-що.
       - name: Викласти правила й індекси
-        if: ${{ github.event_name == 'push' && env.SERVICE_ACCOUNT != '' }}
+        if: ${{ github.event_name == 'push' && env.SERVICE_ACCOUNT != '' && env.FIREBASE_PROJECT != '' }}
         run: |
           trap 'rm -f "$RUNNER_TEMP/sa.json"' EXIT
           (umask 077; printf '%s' "$SERVICE_ACCOUNT" > "$RUNNER_TEMP/sa.json")
           GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json" npx --yes firebase-tools@15 deploy \
             --only firestore:rules,firestore:indexes,database \
-            --project "${FIREBASE_PROJECT:-slovko}" --non-interactive
+            --project "$FIREBASE_PROJECT" --non-interactive
 
   build-and-deploy:
     # Правила йдуть ПЕРШИМИ: нові сумісні зі старим кодом, старі з новим — ні.
