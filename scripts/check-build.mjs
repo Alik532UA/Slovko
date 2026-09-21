@@ -488,6 +488,70 @@ for (const file of files.filter((f) => /\.(html|js|json|css)$/.test(f))) {
 	}
 }
 
+/*
+ * 6.5. МАНІФЕСТ ЗБІГАЄТЬСЯ З БАЗОВИМ ШЛЯХОМ, З ЯКИМ ЗІБРАНО САЙТ.
+ *
+ * `scope` вирішує, які адреси належать ВСТАНОВЛЕНОМУ застосунку. Якщо він не
+ * збігається зі справжнім шляхом, установлений застосунок відкриває сторінку
+ * у звичайній вкладці браузера — тобто встановлення перестає щось означати.
+ *
+ * Помітити це можна лише встановивши застосунок на телефон: збірка зелена,
+ * сайт працює, у консолі тиша. Саме тому перевірка тут, а не «на око».
+ *
+ * Доти розійтися було з чим: `static/manifest.json` зашивав `/Slovko/`
+ * літералом, а базовий шлях живе в `svelte.config.js` і приходить із
+ * `BASE_PATH`. Тепер маніфест віддає пререндерений маршрут
+ * (`src/routes/manifest.json/+server.ts`), і ця перевірка стереже, що він
+ * справді виводиться з бази, а не знову зашитий.
+ */
+{
+	const manifestPath = join(BUILD, "manifest.json");
+	if (!existsSync(manifestPath)) {
+		fail("build/manifest.json: маніфеста немає — маршрут не пререндерився");
+	} else {
+		const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
+		const expected = `${BASE}/`;
+
+		for (const field of ["scope", "start_url", "id"]) {
+			if (manifest[field] !== expected) {
+				fail(
+					`build/manifest.json: ${field} = ${JSON.stringify(manifest[field])}, ` +
+						`а сайт зібрано з базою ${JSON.stringify(expected)}. Встановлений ` +
+						`застосунок відкриватиметься у вкладці браузера.`,
+				);
+			}
+		}
+
+		for (const icon of manifest.icons ?? []) {
+			if (!String(icon.src).startsWith(expected)) {
+				fail(
+					`build/manifest.json: значок ${icon.src} лежить поза базою ${expected}`,
+				);
+			}
+			const file = join(BUILD, String(icon.src).slice(BASE.length + 1));
+			if (!existsSync(file)) {
+				fail(`build/manifest.json: значка ${icon.src} немає у збірці`);
+			}
+		}
+
+		/*
+		 * `maskable` — обіцянка з двох половин (суцільне тло плюс вміст у
+		 * центральних 80%), і перевірити її можна лише декодуванням PNG.
+		 * Гейта на геометрію тут немає, тож заявляти її не можна: значки цього
+		 * проєкту заміряно, і другу половину вони не виконують.
+		 */
+		const maskable = (manifest.icons ?? []).filter((icon) =>
+			String(icon.purpose ?? "").includes("maskable"),
+		);
+		if (maskable.length > 0) {
+			fail(
+				"build/manifest.json: заявлено maskable, а перевірити геометрію значка " +
+					"нема чим. Заміри — у PROJECT-CONTEXT.md.",
+			);
+		}
+	}
+}
+
 // 7. Файли, на які посилаються robots і маніфест, справді лежать поруч.
 for (const asset of [
 	"sitemap.xml",
