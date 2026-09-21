@@ -11,6 +11,27 @@ const ASSETS = [
 	...prerendered, // пререндерені сторінки
 ];
 
+/**
+ * Межа «наше / чуже» для запитів, що проходять через воркер.
+ *
+ * Два різні рівні, і другий не зайвий. `origin` відсікає сторонні сайти;
+ * `scope` відсікає СУСІДІВ — на `alik532ua.github.io` поруч живуть інші
+ * проєкти акаунта, і їхні файли нам так само чужі, як і будь-чиї.
+ *
+ * `base` тут — це не літерал зі збірки: SvelteKit обчислює його в рантаймі з
+ * адреси самого воркера (`location.pathname` без останнього сегмента), тож
+ * для `/Slovko/service-worker.js` виходить `/Slovko`. Саме тому порівняння й
+ * можливе: у `ASSETS` лежать уже повні шляхи з цим префіксом.
+ *
+ * Сам scope без кінцевого слеша теж наш — це адреса кореня застосунку
+ * (`/Slovko`), за якою приходить навігація без слеша.
+ */
+function isOwnUrl(url) {
+	if (url.origin !== self.location.origin) return false;
+	const scope = `${base}/`;
+	return url.pathname === base || url.pathname.startsWith(scope);
+}
+
 /*
  * НОВИЙ SW ЧЕКАЄ, А НЕ ЗАХОПЛЮЄ ВІДКРИТУ СТОРІНКУ.
  *
@@ -87,19 +108,50 @@ self.addEventListener("fetch", (event) => {
 		return;
 
 	const url = new URL(event.request.url);
-	const isDev = url.hostname === 'localhost';
 
 	// Ігноруємо запити не по http (наприклад, розширення браузера)
 	if (!url.protocol.startsWith("http")) return;
 
-	// ПОВНЕ ІГНОРУВАННЯ на localhost для всього, крім статичних асетів:
-	// Це критично для стабільної роботи Vite (HMR) та уникнення помилок "Failed to fetch"
-	if (isDev) {
-		const isAsset = ASSETS.includes(url.pathname);
-		const isVite = url.pathname.startsWith('/@vite/') || url.pathname.includes('vite');
-		
-		if (!isAsset || isVite) return;
-	}
+	/*
+	 * ТУТ БУЛИ ГІЛКИ ДЛЯ РОЗРОБКИ, І ВОНИ БУЛИ НЕДОСЯЖНІ.
+	 *
+	 * Стояло `const isDev = url.hostname === 'localhost'`, а далі — пропуск
+	 * усього, крім активів, обхід шляхів Vite і окреме тихе `408` у гілці
+	 * помилки. Виконатися це не могло НІКОЛИ: воркер реєструється рівно в
+	 * одному місці (`+layout.svelte`) і рівно під умовою `!dev`, тобто в
+	 * розробці його немає взагалі.
+	 *
+	 * Ціна була не в зайвих рядках, а в тому, що вони описували поведінку,
+	 * якої не існує: наступний читач шукав би пояснення поломки в HMR саме
+	 * тут. Плюс сама ознака хибна — розробку ведуть і за `127.0.0.1`, і за
+	 * адресою в локальній мережі з телефона.
+	 */
+
+	/*
+	 * ЧУЖЕ ПОХОДЖЕННЯ — ПОВЗ ВОРКЕР, і це не обережність, а виправлення.
+	 *
+	 * Нижче в гілці успіху стояло `response.type === 'basic' || 'cors'`, тобто
+	 * у наш кеш клалася БУДЬ-ЯКА успішна крос-origin відповідь на GET без
+	 * параметрів — картинка з чужого сайту, шрифт, відповідь стороннього
+	 * API. Наслідків два, і обидва тихі:
+	 *
+	 *   1. кеш `slovko-cache-<version>` росте без жодної межі й без переліку
+	 *      того, що в ньому лежить. Квоту витрачає застосунок, а причина
+	 *      лежить у чужих відповідях;
+	 *   2. чужий ресурс після цього віддається З КЕША доти, доки не вийде
+	 *      наступна версія (саме тоді `activate` зносить попередній кеш).
+	 *      Тобто оновлення на чужому боці до людини не доїжджає, а виглядає
+	 *      це як «у них там щось не оновилося».
+	 *
+	 * Застосунку це не було потрібне НІ ДЛЯ ЧОГО: увесь власний вміст уже
+	 * лежить у передкеші (`ASSETS`), а єдиний рантаймний `fetch()` у коді —
+	 * це `app-version.json`, який кешувати заборонено окремо. Тобто гілка
+	 * обслуговувала виключно чуже.
+	 *
+	 * Межа — саме наш `scope`, а не лише origin: на `alik532ua.github.io`
+	 * поруч живуть сусідні проєкти, і їхні файли нам так само чужі.
+	 */
+	if (!isOwnUrl(url)) return;
 
 	event.respondWith(
 		(async () => {
@@ -121,12 +173,20 @@ self.addEventListener("fetch", (event) => {
 				if (response.status === 200) {
 					// КАТЕГОРИЧНО НЕ кешуємо динамічні запити з параметрами та файл версії
 					const hasParams = url.searchParams.toString().length > 0;
-					
-					// Кешуємо тільки чисті успішні відповіді, яких ще немає в списку ASSETS
-					if (!isAsset && !isVersionFile && !hasParams) {
-						if (response.type === 'basic' || response.type === 'cors') {
-							cache.put(event.request, response.clone());
-						}
+
+					/*
+					 * `basic` І ТІЛЬКИ ВІН. Сюди доходить лише своє походження
+					 * (див. `isOwnUrl` вище), тож `cors` тут або неможливий,
+					 * або означає, що межа протекла, — і тоді краще не класти
+					 * в кеш нічого.
+					 */
+					if (
+						!isAsset &&
+						!isVersionFile &&
+						!hasParams &&
+						response.type === "basic"
+					) {
+						cache.put(event.request, response.clone());
 					}
 				}
 
@@ -136,19 +196,18 @@ self.addEventListener("fetch", (event) => {
 				const cachedResponse = await cache.match(event.request, { ignoreSearch: true });
 				if (cachedResponse) return cachedResponse;
 
-				// Якщо це запит навігації (сторінка), повертаємо корінь додатка
+				// Якщо це запит навігації (сторінка), повертаємо оболонку застосунку.
+				//
+				// Обидві адреси — з `base`. Доти першим стояв `cache.match("/")`,
+				// тобто КОРІНЬ ORIGIN: застосунок живе під `/Slovko/`, такого
+				// запису в кеші немає ніколи, і ця гілка не спрацювала жодного
+				// разу. Тепер туди по визначенню не доходить і сам запит —
+				// `isOwnUrl` відсіює все поза нашим scope.
 				if (event.request.mode === "navigate") {
 					const fallback =
-						(await cache.match("/")) ||
 						(await cache.match(`${base}/`)) ||
-						(await cache.match("404.html"));
+						(await cache.match(`${base}/404.html`));
 					if (fallback) return fallback;
-				}
-
-				// Не викидаємо помилку в консоль на localhost, якщо запит просто перервано
-				if (isDev) {
-					console.warn(`[SW] Fetch failed for ${url.pathname}${url.search}:`, err);
-					return new Response("Network error", { status: 408 });
 				}
 
 				throw err;
