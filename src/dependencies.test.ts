@@ -1,4 +1,5 @@
 // @vitest-environment node
+import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -109,6 +110,93 @@ describe("залежності", () => {
 		expect(
 			unused,
 			`у dependencies, але застосунок їх не імпортує — місце цим пакетам у devDependencies: ${unused.join(", ")}`
+		).toEqual([]);
+	});
+
+	/**
+	 * ПАКЕТ, ЯКОГО НЕ ЗГАДУЄ НІЩО, — привид, і коштує він не лише місцем.
+	 *
+	 * Перевірка вище дивиться на `dependencies` і шукає ІМПОРТИ в `src/`. Для
+	 * інструментів це не працює: їх згадують конфіги, скрипти й workflow, а не
+	 * `import`. Тому тут ознака інша й груба — назва пакета не трапляється в
+	 * ЖОДНОМУ відстежуваному файлі, крім самого `package.json`, lockfile і
+	 * документів.
+	 *
+	 * Заміряно перед постановкою: із 22 devDependencies таких було рівно два, і
+	 * обидва виявилися мертвими.
+	 *
+	 *   * `vite-plugin-pwa` — у `vite.config.ts` його немає взагалі, воркер тут
+	 *     власний (`src/service-worker.js` через `$service-worker`). При цьому
+	 *     `PROJECT-CONTEXT.md` стверджував «`vite-plugin-pwa` + власний
+	 *     `service-worker.js`», тобто документ описував стек, якого немає;
+	 *   * `@sveltejs/adapter-auto` — залишок шаблона SvelteKit, `svelte.config.js`
+	 *     бере `adapter-static` поіменно.
+	 *
+	 * Разом із транзитивним деревом (workbox) вони займали ~4800 рядків
+	 * lockfile — тобто пакети, які качає кожен `npm ci` і які потрапляють у
+	 * поле зору `npm audit`, хоч не роблять нічого.
+	 *
+	 * ЧОМУ БЕЗ БІЛОГО СПИСКУ. Його зараз не потрібно: після прибирання цих двох
+	 * перевірка зелена без жодного винятку. Якщо колись знадобиться пакет, який
+	 * справді ніде не згадується (таке буває в плагінів, що підхоплюються за
+	 * іменем), виняток доведеться назвати тут поіменно — і це правильна ціна:
+	 * мовчазне накопичення привидів дорожче за один рядок із поясненням.
+	 */
+	it("кожна devDependency десь згадується", () => {
+		const tracked = execFileSync("git", ["ls-files"], {
+			encoding: "utf8",
+			maxBuffer: 32 * 1024 * 1024,
+		})
+			.split("\n")
+			.map((line) => line.trim())
+			.filter(Boolean)
+			// Самі себе не рахуємо: назва пакета є в них ЗАВЖДИ, тож із ними
+			// перевірка була б зеленою за побудовою.
+			.filter(
+				(file) =>
+					!/^package(-lock)?\.json$/.test(file) &&
+					!/\.md$/.test(file)
+			);
+
+		expect(
+			tracked.length,
+			"git не віддав дерево — перевіряти нема що"
+		).toBeGreaterThan(50);
+
+		/*
+		 * КОМЕНТАРІ ЗНІМАЮТЬСЯ, і без цього перевірка була зеленою за
+		 * побудовою. Докблок вище називає обидва прибрані пакети поіменно —
+		 * тобто цей самий файл і був тією «згадкою», якої гейт шукав. Прогнано:
+		 * повернутий у `package.json` `vite-plugin-pwa` не червонив нічого,
+		 * доки коментарі лишалися в тексті.
+		 *
+		 * Знімаються лише блокові й ті рядкові, що починають рядок: `//`
+		 * усередині рядка коду буває частиною адреси, і жадібне прибирання
+		 * з'їло б половину справжнього коду разом із назвами пакетів у ньому.
+		 */
+		const stripComments = (text: string): string =>
+			text.replace(/\/\*[\s\S]*?\*\//g, " ").replace(/^[ \t]*\/\/.*$/gm, " ");
+
+		const haystack = tracked
+			.map((file) => {
+				try {
+					const text = readFileSync(join(ROOT, file), "utf8");
+					return /\.(ts|js|mjs|cjs|svelte)$/.test(file) ? stripComments(text) : text;
+				} catch {
+					// Двійкові й недоступні — назви пакета в них однаково немає.
+					return "";
+				}
+			})
+			.join("\n");
+
+		const ghosts = Object.keys(pkg.devDependencies ?? {}).filter(
+			(dep) => !haystack.includes(dep)
+		);
+
+		expect(
+			ghosts,
+			"у devDependencies, але не згадані НІДЕ — ні в конфігах, ні в скриптах, " +
+				`ні в джерелах, ні в workflow: ${ghosts.join(", ")}`
 		).toEqual([]);
 	});
 
