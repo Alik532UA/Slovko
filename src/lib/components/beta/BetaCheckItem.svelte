@@ -22,12 +22,24 @@
 		weird: { uk: "Працює, але дивно", en: "Works, but odd" },
 		ok: { uk: "Працює", en: "Works" },
 	};
+
+	/**
+	 * Локатор бере `id` пункта в kebab-case (§ 5.6, `BETA-LOCATOR-PER-CHECK`).
+	 *
+	 * Доти `check.id` підставлявся ЯК Є, і `game_1` давав
+	 * `beta-check-game_1-item` — назву, яку TESTID-AND-NAMING § 1.2 забороняє
+	 * (підкреслень у локаторах немає). Обидва правила стояли в каноні, і не
+	 * падало жодне: за форму `id` і за форму локатора відповідали різні гейти.
+	 * Заміна `_` → `-` повна й однозначна в обидва боки, тож локатор лишається
+	 * ПОХІДНИМ від `id`, а не другим іменем, яке треба тримати узгодженим.
+	 */
+	const tid = $derived(check.id.replace(/_/g, "-"));
 </script>
 
-<li class="item" data-testid="beta-check-{check.id}-item">
+<li class="item" data-testid="beta-check-{tid}-item">
 	<span class="item__num">{number}</span>
 	<div class="item__body">
-		<p class="item__category" data-testid="beta-check-{check.id}-category-text">
+		<p class="item__category" data-testid="beta-check-{tid}-category-text">
 			{check.category[lang]}
 			{#if check.negative}
 				<span class="item__flag">
@@ -36,14 +48,14 @@
 			{/if}
 		</p>
 
-		<p class="item__text" data-testid="beta-check-{check.id}-text">{check.text[lang]}</p>
+		<p class="item__text" data-testid="beta-check-{tid}-text">{check.text[lang]}</p>
 
 		{#if check.test}
 			<p class="item__aside">{check.test}</p>
 		{/if}
 
 		{#if betaChecklistStore.isStale(check.id)}
-			<p class="item__aside" data-testid="beta-check-{check.id}-stale-hint">
+			<p class="item__aside" data-testid="beta-check-{tid}-stale-hint">
 				{lang === "uk"
 					? "позначено на іншій збірці — не рахується"
 					: "marked on another build — not counted"}
@@ -56,7 +68,7 @@
 					class="vote vote--{vote}"
 					class:is-picked={betaChecklistStore.voteOf(check.id) === vote}
 					aria-pressed={betaChecklistStore.voteOf(check.id) === vote}
-					data-testid="beta-vote-{check.id}-{vote}-btn"
+					data-testid="beta-vote-{tid}-{vote}-btn"
 					onclick={() => betaChecklistStore.setVote(check.id, vote)}
 				>
 					{#if vote === "fail"}<X size={15} />

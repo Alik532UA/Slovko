@@ -77,6 +77,18 @@
 		>
 			{lang === "uk" ? "English" : "Українська"}
 		</button>
+
+		<!--
+			ВИХІД ЗІ СТОРІНКИ (§ 8.4, `BETA-SCREEN-LINKS`).
+
+			Тестувальник приходить сюди за ПРЯМИМ посиланням: у нього немає ні
+			історії вкладки, ні пункта меню — сторінка навмисно поза меню (§ 4).
+			Доти єдиним виходом були посилання на екрани вкладки, тобто «вийти»
+			можна було лише в те, що зараз перевіряєш.
+		-->
+		<a class="beta__home" href={resolve("/")} data-testid="beta-home-link">
+			← {lang === "uk" ? "На головну" : "Home"}
+		</a>
 	</header>
 
 	<!--
@@ -176,7 +188,8 @@
 		font-size: 0.9rem;
 	}
 
-	.beta__lang {
+	.beta__lang,
+	.beta__home {
 		align-self: flex-start;
 		margin-top: 0.5rem;
 		min-height: 44px;
@@ -186,6 +199,12 @@
 		background: var(--bg-primary);
 		color: var(--text-primary);
 		cursor: pointer;
+	}
+
+	.beta__home {
+		display: inline-flex;
+		align-items: center;
+		text-decoration: none;
 	}
 
 	.beta__tabs {

@@ -1,5 +1,5 @@
 // @vitest-environment node
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
@@ -7,6 +7,8 @@ import { BETA_TABS, ALL_CHECKS } from "./lib/data/beta/checks";
 import { COVERAGE_ORDER } from "./lib/data/beta/types";
 import { APP_STATES, STATES_WITHOUT_CHECKLIST } from "./lib/config/appStates";
 import { HIDDEN_ROUTES } from "./lib/config/hiddenRoutes";
+import { betaChecklistStore } from "./lib/controllers/BetaChecklistStore.svelte";
+import { versionStore } from "./lib/controllers/VersionStore.svelte";
 
 /**
  * Інваріанти чеклиста бета-тестування (BETA-CHECKLIST-v8 § 5).
@@ -285,6 +287,128 @@ describe("чеклист бета-тестування (BETA-CHECKLIST-v8 § 5)"
 
 			const sitemap = readFileSync(join(ROOT, "static/sitemap.xml"), "utf8");
 			expect(sitemap.includes(route), "службова сторінка потрапила в sitemap").toBe(false);
+		}
+	});
+
+	/**
+	 * § 5.6 `BETA-LOCATOR-PER-CHECK` + TESTID-AND-NAMING § 1.2.
+	 *
+	 * Обидва правила стояли в каноні, і не падало жодне: за форму `id`
+	 * (`{вкладка}_{номер}`) і за форму локатора (без підкреслень) відповідали
+	 * різні перевірки в різних проєктах, а місце, де одне переходить у друге,
+	 * не перевіряв ніхто. Розмітка підставляла `check.id` як є й давала
+	 * `beta-check-game_1-item`.
+	 */
+	it("локатор пункта виходить із id чистим, без підкреслень (§ 5.6)", () => {
+		const raw = [...allSvelte.matchAll(/data-testid="(beta-[^"]*)"/g)].map((m) => m[1]);
+		expect(raw.length, "перевірка мертва: локаторів чеклиста не знайдено").toBeGreaterThan(0);
+
+		// Шаблон `{check.id}` у розмітці — це підкреслення, яке ще не видно:
+		// `id` пункта має форму `{вкладка}_{номер}` (§ 2.2) й сам по собі в
+		// локатор не годиться.
+		expect(
+			raw.filter((id) => /\{\s*check\.id\s*\}/.test(id)),
+			"локатор бере check.id без переведення в kebab-case"
+		).toEqual([]);
+
+		// Решта підстановок (`tab.id`, `state.id`) законні рівно доти, доки самі
+		// ці id підкреслень не мають: інакше вони дають ту саму назву іншим шляхом.
+		const templateSources = [
+			...BETA_TABS.map((tab) => tab.id),
+			...APP_STATES.map((state) => state.id),
+		];
+		expect(
+			templateSources.filter((id) => id.includes("_")),
+			"id, який підставляється в локатор, містить підкреслення"
+		).toEqual([]);
+
+		// І сам результат: жодного `_` у назві, яка потрапить у DOM.
+		expect(
+			raw.filter((id) => id.includes("_")),
+			"підкреслення в локаторі"
+		).toEqual([]);
+	});
+
+	/**
+	 * § 6.2.1 `BETA-REPORT-HINT-SPLIT`.
+	 *
+	 * Доти `beta-report-hint` висів на ВІДМОВІ буфера, а на успіху підказки не
+	 * було зовсім, — і сценарій e2e «підказка видима» доводив протилежне тому,
+	 * що мав. Тепер їх дві, і перевірка нижче не дає їм знову злитися.
+	 */
+	it("успіх копіювання й відмова буфера мають різні локатори (§ 6.2.1)", () => {
+		expect(allSvelte, "немає локатора успіху").toContain('data-testid="beta-report-hint"');
+		expect(allSvelte, "немає локатора відмови").toContain(
+			'data-testid="beta-report-failed-hint"'
+		);
+	});
+
+	/** § 8.4 `BETA-SCREEN-LINKS`: зі службової сторінки мусить бути вихід. */
+	it("зі сторінки чеклиста є вихід на головну (§ 8.4)", () => {
+		expect(allSvelte, "тестувальник приходить за прямим посиланням і лишається в пастці").toContain(
+			'data-testid="beta-home-link"'
+		);
+	});
+});
+
+/**
+ * Поведінка позначки (§ 3.3 `BETA-VOTE-UNDO`, § 6.3.1 `BETA-CLEAR-DISARM`).
+ *
+ * Сховища під `node` немає: `LocalStorageProvider` віддає `null` і мовчки не
+ * пише, коли `window` не визначений. Для цих сценаріїв це саме те, що треба —
+ * перевіряється перехід СТАНУ, а не збереження (його перевіряє e2e).
+ */
+describe("позначка чеклиста", () => {
+	beforeEach(() => {
+		betaChecklistStore.clear();
+		versionStore.setVersion("1.0.0");
+	});
+
+	it("повторне натискання того самого стану знімає позначку (§ 3.3)", () => {
+		betaChecklistStore.setVote("game_1", "ok");
+		expect(betaChecklistStore.voteOf("game_1")).toBe("ok");
+
+		betaChecklistStore.setVote("game_1", "ok");
+		expect(betaChecklistStore.voteOf("game_1"), "клік не скасувався").toBeNull();
+	});
+
+	/**
+	 * ЦЕ БУВ СПРАВЖНІЙ ДЕФЕКТ, а не профілактика.
+	 *
+	 * Умова читала лише `?.vote === vote`, тож на позначці З ІНШОЇ ЗБІРКИ
+	 * повторне натискання її СТИРАЛО. Людина, яка прийшла підтвердити торішнє
+	 * «працює» на новій версії, натомість його втрачала: поступ не ріс (позначка
+	 * зникла), а підказка «позначено на іншій збірці» зникала разом із нею, тож
+	 * і сліду від втрати не лишалося.
+	 */
+	it("повторне натискання на СТАРІЙ позначці перепоставляє її на цій збірці (§ 3.3)", () => {
+		betaChecklistStore.setVote("game_1", "ok");
+		versionStore.setVersion("2.0.0");
+		expect(betaChecklistStore.isStale("game_1"), "позначка мала стати застарілою").toBe(true);
+
+		betaChecklistStore.setVote("game_1", "ok");
+
+		expect(betaChecklistStore.voteOf("game_1"), "підтвердження стерло позначку").toBe("ok");
+		expect(betaChecklistStore.isStale("game_1"), "позначка лишилася на старій версії").toBe(false);
+	});
+
+	it("зведена кнопка стирання розводиться сама (§ 6.3.1)", () => {
+		vi.useFakeTimers();
+		try {
+			betaChecklistStore.setVote("game_1", "ok");
+
+			expect(betaChecklistStore.requestClear(), "перше натискання стерло").toBe(false);
+			expect(betaChecklistStore.clearArmed).toBe(true);
+
+			vi.advanceTimersByTime(5000);
+
+			expect(
+				betaChecklistStore.clearArmed,
+				"кнопка лишилася зведеною — наступний прихід за крок від знесення роботи"
+			).toBe(false);
+			expect(betaChecklistStore.voteOf("game_1"), "розведення стерло позначки").toBe("ok");
+		} finally {
+			vi.useRealTimers();
 		}
 	});
 });

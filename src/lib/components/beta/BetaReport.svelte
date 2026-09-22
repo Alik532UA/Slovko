@@ -19,13 +19,16 @@
 
 	let reportText = $state("");
 	let clipboardRefused = $state(false);
+	let copied = $state(false);
 
 	async function copyReport() {
 		const text = betaChecklistStore.buildReport(new Date().toISOString(), lang);
 		clipboardRefused = false;
+		copied = false;
 		try {
 			await navigator.clipboard.writeText(text);
 			reportText = "";
+			copied = true;
 		} catch (error) {
 			clipboardRefused = true;
 			reportText = text;
@@ -59,8 +62,26 @@
 		{/if}
 	</button>
 
+	<!--
+		ДВА ЛОКАТОРИ, А НЕ ОДИН (§ 6.2.1, `BETA-REPORT-HINT-SPLIT`).
+
+		Доти `beta-report-hint` висів на ВІДМОВІ буфера, а на успіху підказки не
+		було зовсім. Сценарій § 5.7 «підказка видима» через це доводив рівно
+		протилежне тому, що мав: він зеленів саме тоді, коли копіювання НЕ
+		спрацювало. Тепер успіх має свою назву, відмова — свою, і перевірка
+		запасного шляху перевіряє запасний шлях.
+
+		Підпис не знімається таймером (§ 7.5): він стоїть до наступної дії й
+		зникає разом зі станом, який його породив, тож і витікати нема чому.
+	-->
+	{#if copied}
+		<p class="report__hint" role="status" data-testid="beta-report-hint">
+			{lang === "uk" ? "Звіт у буфері обміну." : "The report is in the clipboard."}
+		</p>
+	{/if}
+
 	{#if clipboardRefused}
-		<p class="report__hint" role="alert" data-testid="beta-report-hint">
+		<p class="report__hint" role="alert" data-testid="beta-report-failed-hint">
 			{lang === "uk"
 				? "Браузер не дав доступу до буфера. Скопіюйте текст із поля нижче."
 				: "The browser refused clipboard access. Copy the text from the field below."}

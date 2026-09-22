@@ -24,6 +24,16 @@ const PAGE = 'beta-test-checklists/';
 /** Перший пункт першої вкладки: `id` стабільний назавжди (§ 2.2). */
 const CHECK = 'game_1';
 
+/**
+ * Той самий пункт у локаторі — kebab-case (§ 5.6, `BETA-LOCATOR-PER-CHECK`).
+ *
+ * `id` і локатор розходяться рівно на один символ, і це навмисно: у сховищі
+ * лежить `game_1`, у розмітці — `game-1`, бо підкреслень у локаторах немає
+ * (TESTID-AND-NAMING § 1.2). Дві константи, а не одна, саме тому, що перевірка
+ * сховища нижче звіряється з ПЕРШОЮ.
+ */
+const TID = CHECK.replace(/_/g, '-');
+
 const progress = (page: Page) => page.getByTestId('beta-progress-value').innerText();
 
 test.beforeEach(async ({ page }) => {
@@ -36,21 +46,21 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('позначка переживає перезавантаження', async ({ page }) => {
-	const vote = page.getByTestId(`beta-vote-${CHECK}-ok-btn`);
+	const vote = page.getByTestId(`beta-vote-${TID}-ok-btn`);
 	await vote.click();
 	await expect(vote).toHaveAttribute('aria-pressed', 'true');
 
 	await page.reload();
 
 	await expect(
-		page.getByTestId(`beta-vote-${CHECK}-ok-btn`),
+		page.getByTestId(`beta-vote-${TID}-ok-btn`),
 		'позначка не пережила перезавантаження — сесія тестувальника зникає мовчки'
 	).toHaveAttribute('aria-pressed', 'true');
 });
 
 test('поступ росте на один, а повторний клік його повертає', async ({ page }) => {
 	const before = await progress(page);
-	const vote = page.getByTestId(`beta-vote-${CHECK}-ok-btn`);
+	const vote = page.getByTestId(`beta-vote-${TID}-ok-btn`);
 
 	await vote.click();
 	await expect(page.getByTestId('beta-progress-value'), 'поступ не зрушив').not.toHaveText(before);
@@ -70,7 +80,7 @@ test('лічильник вкладки росте окремо від зага�
 	await expect(own).toBeVisible();
 	const before = await own.innerText();
 
-	await page.getByTestId(`beta-vote-${CHECK}-ok-btn`).click();
+	await page.getByTestId(`beta-vote-${TID}-ok-btn`).click();
 
 	await expect(own, 'лічильник вкладки не зрушив').not.toHaveText(before);
 	await expect(
@@ -80,17 +90,17 @@ test('лічильник вкладки росте окремо від зага�
 });
 
 test('перемикання вкладки міняє пункти й не губить позначене', async ({ page }) => {
-	await page.getByTestId(`beta-vote-${CHECK}-ok-btn`).click();
+	await page.getByTestId(`beta-vote-${TID}-ok-btn`).click();
 
 	await page.getByTestId('beta-tab-account-btn').click();
 	await expect(
-		page.getByTestId(`beta-check-${CHECK}-item`),
+		page.getByTestId(`beta-check-${TID}-item`),
 		'пункти чужої вкладки лишилися на екрані'
 	).toHaveCount(0);
 
 	await page.getByTestId('beta-tab-game-btn').click();
 	await expect(
-		page.getByTestId(`beta-vote-${CHECK}-ok-btn`),
+		page.getByTestId(`beta-vote-${TID}-ok-btn`),
 		'позначка загубилася при поверненні на вкладку'
 	).toHaveAttribute('aria-pressed', 'true');
 });
@@ -100,7 +110,7 @@ test('перемикання вкладки міняє пункти й не гу
  * самому рядку, що й «Скопіювати звіт», до якого тягнуться щоразу.
  */
 test('перше натискання «стерти» нічого не стирає', async ({ page }) => {
-	await page.getByTestId(`beta-vote-${CHECK}-ok-btn`).click();
+	await page.getByTestId(`beta-vote-${TID}-ok-btn`).click();
 	const marked = await progress(page);
 
 	await page.getByTestId('beta-clear-btn').click();
@@ -120,14 +130,29 @@ test('перше натискання «стерти» нічого не сти�
  */
 test('звіт доходить до людини навіть без буфера обміну', async ({ page, context }) => {
 	await context.clearPermissions();
-	await page.getByTestId(`beta-vote-${CHECK}-ok-btn`).click();
+	await page.getByTestId(`beta-vote-${TID}-ok-btn`).click();
 	await page.getByTestId('beta-report-btn').click();
 
 	const field = page.getByTestId('beta-report-input');
 	if (await field.isVisible()) {
-		await expect(page.getByTestId('beta-report-hint')).toBeVisible();
+		// Саме локатор ВІДМОВИ (§ 6.2.1, `BETA-REPORT-HINT-SPLIT`): доти тут
+		// стояв спільний `beta-report-hint`, і сценарій зеленів однаково — що
+		// буфер спрацював, що ні. Тобто перевірка запасного шляху не перевіряла
+		// запасного шляху.
+		await expect(page.getByTestId('beta-report-failed-hint')).toBeVisible();
 		await expect(field, 'у звіті немає позначеного пункта').toHaveValue(new RegExp(CHECK));
 	}
+});
+
+/**
+ * § 8.4: вихід зі сторінки. Тестувальник приходить сюди за прямим посиланням —
+ * ні історії вкладки, ні пункта меню (сторінка навмисно поза меню, § 4). Доти
+ * «вийти» можна було лише в той екран, який саме перевіряєш.
+ */
+test('зі сторінки є вихід на головну', async ({ page }) => {
+	const home = page.getByTestId('beta-home-link');
+	await expect(home, 'зі службової сторінки нема куди піти').toBeVisible();
+	await expect(home).toHaveAttribute('href', /.+/);
 });
 
 /**

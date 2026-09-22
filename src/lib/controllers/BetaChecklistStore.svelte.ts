@@ -85,10 +85,21 @@ class BetaChecklistStore {
 
 	setVote(id: string, vote: Vote) {
 		this.ensureLoaded();
+		const current = this.marks[id];
 		// Повторне натискання того самого стану знімає позначку: інакше
 		// помилковий клік неможливо скасувати, і людина лишає неправду.
-		if (this.marks[id]?.vote === vote) delete this.marks[id];
-		else this.marks[id] = { vote, version: versionStore.currentVersion };
+		//
+		// УМОВА ПРО ВЕРСІЮ НЕ ДЕКОРАТИВНА (§ 3.3, `BETA-VOTE-UNDO`). Доти тут
+		// стояло саме `?.vote === vote`, і на позначці З ІНШОЇ ЗБІРКИ повторне
+		// натискання її СТИРАЛО. Тобто людина, яка приходить підтвердити торішнє
+		// «працює» на новій версії, натомість його втрачала — і поступ не ріс, бо
+		// стирати нічого вже не було. Тепер так знімається лише позначка ЦІЄЇ
+		// збірки, а стара перепоставляється на поточній.
+		if (current?.vote === vote && current.version === versionStore.currentVersion) {
+			delete this.marks[id];
+		} else {
+			this.marks[id] = { vote, version: versionStore.currentVersion };
+		}
 		localStorageProvider.setJson(STORAGE_KEY, this.marks);
 	}
 
@@ -111,19 +122,38 @@ class BetaChecklistStore {
 	requestClear(): boolean {
 		if (!this.clearArmed) {
 			this.clearArmed = true;
+			this.rearmTimer();
 			return false;
 		}
 		this.clear();
 		return true;
 	}
 
+	/**
+	 * Зведення знімається САМО через п'ять секунд (§ 6.3.1, `BETA-CLEAR-DISARM`).
+	 *
+	 * Доти `disarmClear()` існував і його ніхто не кликав, тож кнопка лишалася
+	 * зведеною до перезавантаження — і наступний прихід на сторінку починався з
+	 * того, що між усією роботою і порожнім списком стоїть ОДНЕ натискання.
+	 * П'ять секунд — більше, ніж треба прочитати «Точно стерти?» і натиснути
+	 * вдруге, і значно менше, ніж пауза між двома відвідуваннями.
+	 */
+	private armTimer: ReturnType<typeof setTimeout> | undefined;
+
+	private rearmTimer() {
+		clearTimeout(this.armTimer);
+		this.armTimer = setTimeout(() => (this.clearArmed = false), 5000);
+	}
+
 	/** Знімає зведення, нічого не стираючи: кнопка не лишається зарядженою. */
 	disarmClear() {
+		clearTimeout(this.armTimer);
 		this.clearArmed = false;
 	}
 
 	clear() {
 		this.marks = {};
+		clearTimeout(this.armTimer);
 		this.clearArmed = false;
 		localStorageProvider.removeItem(STORAGE_KEY);
 	}
