@@ -282,8 +282,21 @@ describe("чеклист бета-тестування (BETA-CHECKLIST-v8 § 5)"
 			expect(/name="robots"[^>]*noindex/.test(layout), "немає noindex").toBe(true);
 			expect(layout.includes("isHiddenRoute"), "layout не звіряється з переліком").toBe(true);
 
+			/*
+			 * ПЕРЕВІРЯЄТЬСЯ ПРОТИЛЕЖНЕ (§ 4.0, `BETA-NOINDEX-OVER-DISALLOW`).
+			 *
+			 * Доти тут вимагався `Disallow`, і це було неправильно рівно
+			 * навпаки: заборона обходу означає, що краулер сторінку не
+			 * ЗАВАНТАЖУЄ — отже й `noindex` у ній не читає ніколи, а адреса, на
+			 * яку хтось послався ззовні, лягає в індекс голим URL. Прибрати його
+			 * потім нічим: прибирає рівно той тег, до якого краулер не дійшов.
+			 */
 			const robots = readFileSync(join(ROOT, "static/robots.txt"), "utf8");
-			expect(robots.includes(`Disallow: /Slovko/${route}/`), "немає Disallow").toBe(true);
+			const disallowed = [...robots.matchAll(/^Disallow:\s*(\S+)/gm)].map((m) => m[1]);
+			expect(
+				disallowed.filter((rule) => rule.includes(route)),
+				"Disallow забирає в краулера запит, у відповіді на який лежить noindex"
+			).toEqual([]);
 
 			const sitemap = readFileSync(join(ROOT, "static/sitemap.xml"), "utf8");
 			expect(sitemap.includes(route), "службова сторінка потрапила в sitemap").toBe(false);
