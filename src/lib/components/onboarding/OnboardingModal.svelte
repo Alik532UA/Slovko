@@ -291,15 +291,15 @@
 										class="action-btn-secondary"
 										data-testid="onboarding-install-btn"
 										onclick={async () => {
-											const result = await pwaStore.install();
-											if (result === "ios" || result === "manual") {
+											// Вікно браузера є — натиск іде йому; немає — наші кроки.
+											if ((await pwaStore.install()) === "unavailable") {
 												showInstallGuide = true;
 											}
 										}}
 									>
 										<Download size={18} />
 										<span>
-											{#if pwaStore.isIOS || pwaStore.isAndroid}
+											{#if pwaStore.isMobile}
 												{$_("pwa.install")}
 											{:else}
 												{$_("pwa.install_desktop")}

@@ -233,29 +233,46 @@
 	"pwa": {
 		"install": "Install App",
 		"install_desktop": "Install on Desktop",
-		"ios": {
-			"title": "Install on iPhone",
-			"subtitle": "iPhone blocks automatic installation. Please follow these simple steps:",
-			"subtitle_chrome": "Chrome browser on iPhone has installation specifics:",
-			"step1": "Tap the 'Share' button at the bottom",
-			"step2": "Select 'Add to Home Screen' from the menu"
+		"title": {
+			"iphone": "Install on iPhone",
+			"ipad": "Install on iPad",
+			"app": "Install the app",
+			"android": "Install on Android",
+			"desktop": "Install on Desktop",
+			"mac": "Install on Mac",
+			"inApp": "Open Slovko in a browser"
 		},
-		"android": {
-			"title": "Install on Android",
-			"step1": "Tap the three dots in the browser corner",
-			"step2": "Select 'Add to Home Screen'"
+		"note": {
+			"manual": "The browser's security does not allow installing the app in one tap, so a few steps have to be done by hand:",
+			"firefox": "Firefox can install sites only on Windows, and not in every version. The easiest way is Chrome or Edge:",
+			"inApp": "The messenger's built-in browser cannot install sites. First open Slovko in a regular browser:"
 		},
-		"ios_chrome": {
-			"step1": "Tap the 'Share' icon in the address bar, to the right of the URL",
-			"step2": "Select 'Add to Home Screen'",
-			"warning": "Note: Installation only works via the 'Share' icon in the address bar. It is not available through the 'three dots' menu."
+		"step": {
+			"shareBottom": "Tap the 'Share' button at the bottom",
+			"shareAddressBar": "Tap the 'Share' icon in the address bar, to the right of the URL",
+			"shareMenu": "Open the browser menu and tap 'Share'",
+			"shareTop": "Tap the 'Share' button at the top, to the right of the address bar",
+			"addHome": "Select 'Add to Home Screen' from the menu",
+			"addHomeChrome": "Select 'Add to Home Screen'",
+			"openHome": "Open Slovko with its icon on the Home Screen — the app will start without the browser bars",
+			"dots": "Tap the three dots in the browser corner",
+			"addHomeAndroid": "Select 'Install and create shortcut' (in older Chrome versions, 'Add to Home screen')",
+			"edgeMenu": "Tap the menu button at the bottom centre — three horizontal lines",
+			"edgeAddToPhone": "Select 'Add to phone'",
+			"openHomeAndroid": "Open Slovko with its icon on the home screen — the app will start without the browser bars",
+			"installIcon": "Click the install icon in the address bar, to the right of the URL",
+			"confirm": "Confirm 'Install'",
+			"openApp": "Open Slovko with the app icon — it will start in its own window without the browser bars",
+			"macFile": "In the 'File' menu choose 'Add to Dock'",
+			"macAdd": "Click 'Add'",
+			"openDock": "Open Slovko with its icon in the Dock — it will start in its own window",
+			"openChromeEdge": "Open Slovko in Chrome or Edge",
+			"inAppMenu": "Open the menu of the built-in browser (three dots at the top)",
+			"inAppOpen": "Choose 'Open in browser' — Safari or Chrome",
+			"inAppAgain": "There, tap “{button}” again"
 		},
-		"desktop": {
-			"title": "Install on Desktop",
-			"step1": "Click the install icon in the address bar, to the right of the URL"
-		},
-		"manual": {
-			"subtitle": "Your browser doesn't support one-click installation. You can add it manually:"
+		"warning": {
+			"iosChrome": "Note: Installation only works via the 'Share' icon in the address bar. It is not available through the 'three dots' menu."
 		}
 	},
 	"about": {

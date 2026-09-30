@@ -1,73 +1,57 @@
 /**
  * PwaStore — Керування станом встановлення (PWA)
+ *
+ * Подію `beforeinstallprompt` ловить скрипт першого кадру (`app.html`), а натиск її
+ * показує через `services/pwa/installPrompt.ts`. Яку інструкцію показати там, де вікна
+ * браузера немає, вирішує `services/pwa/installGuide.ts` — тут лише стан.
  */
 
 import { browser } from "$app/environment";
 import { logService } from "../services/logService.svelte";
-
-interface BeforeInstallPromptEvent extends Event {
-	prompt: () => Promise<void>;
-	userChoice: Promise<{ outcome: "accepted" | "dismissed"; platform: string }>;
-}
+import { guideFor, isMobileGuide, type Guide } from "../services/pwa/installGuide";
+import { promptInstall, type InstallOutcome } from "../services/pwa/installPrompt";
 
 class PwaStore {
-	private deferredPrompt = $state<BeforeInstallPromptEvent | null>(null);
 	private _isInstalled = $state(false);
-	
-	private ua = browser ? window.navigator.userAgent : "";
-	private _isIOS = $state(/iPad|iPhone|iPod/.test(this.ua) && !("MSStream" in window));
-	private _isIosChrome = $state(this._isIOS && this.ua.indexOf('CriOS') > -1);
-	private _isAndroid = $state(/Android/.test(this.ua));
-	
-	private _canInstall = $derived(!this._isInstalled);
 
+	/** Рядок браузера за сеанс не міняється — отже, й інструкція. */
+	readonly guide: Guide = browser
+		? guideFor(window.navigator.userAgent, window.navigator.maxTouchPoints)
+		: "desktop";
+
+	/**
+	 * Слухач — один і тут: доти `init()` кликали і конструктор, і кореневий макет, тож
+	 * `beforeinstallprompt` і `appinstalled` мали по два обробники, а зняти їх не було чим.
+	 */
 	constructor() {
-		if (browser) {
-			this.init();
-		}
-	}
-
-	get isInstalled() { return this._isInstalled; }
-	get isIOS() { return this._isIOS; }
-	get isIosChrome() { return this._isIosChrome; }
-	get isAndroid() { return this._isAndroid; }
-	get canInstall() { return this._canInstall; }
-	get hasNativePrompt() { return !!this.deferredPrompt; }
-
-	public init() {
+		if (!browser) return;
 		// `navigator.standalone` — нестандартний прапорець Safari, якого немає в
 		// типах DOM. Точковий тип замість `any`: помилка в імені поля лишається
 		// помилкою компіляції, а `any` вимкнув би перевірку всього виразу.
 		const iosNavigator = window.navigator as Navigator & { standalone?: boolean };
-		const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
-							 iosNavigator.standalone === true;
-		this._isInstalled = isStandalone;
-
-		window.addEventListener("beforeinstallprompt", (e) => {
-			e.preventDefault();
-			this.deferredPrompt = e as BeforeInstallPromptEvent;
-			logService.log("ui", "PWA: Install prompt captured");
-		});
+		this._isInstalled =
+			window.matchMedia("(display-mode: standalone)").matches || iosNavigator.standalone === true;
 
 		window.addEventListener("appinstalled", () => {
 			logService.log("ui", "PWA: App installed");
-			this.deferredPrompt = null;
 			this._isInstalled = true;
 		});
 	}
 
-	async install() {
-		if (!browser) return "manual";
-		if (this._isIOS) return "ios";
+	get isInstalled() {
+		return this._isInstalled;
+	}
+	get canInstall() {
+		return !this._isInstalled;
+	}
+	/** Підпис кнопки: «Застосунок для телефону» чи «…для комп'ютера». */
+	get isMobile() {
+		return isMobileGuide(this.guide);
+	}
 
-		if (this.deferredPrompt) {
-			this.deferredPrompt.prompt();
-			const { outcome } = await this.deferredPrompt.userChoice;
-			this.deferredPrompt = null;
-			return outcome === "accepted" ? "installed" : "dismissed";
-		}
-
-		return "manual";
+	/** `unavailable` — вікна браузера немає, і кнопка відкриває кроки (`InstallGuide`). */
+	install(): Promise<InstallOutcome> {
+		return browser ? promptInstall() : Promise.resolve("unavailable");
 	}
 }
 

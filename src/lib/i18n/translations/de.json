@@ -202,29 +202,46 @@
 	"pwa": {
 		"install": "App für Handy",
 		"install_desktop": "App für Desktop",
-		"ios": {
-			"title": "Auf iPhone installieren",
-			"subtitle": "iPhone blockiert die automatische Installation. Bitte folgen Sie diesen Schritten:",
-			"subtitle_chrome": "Der Chrome-browser auf dem iPhone hat Installationsbesonderheiten:",
-			"step1": "Tippen Sie auf die Schaltfläche «Teilen» unten",
-			"step2": "Wählen Sie «Zum Home-Bildschirm» im Menü"
+		"title": {
+			"iphone": "Auf iPhone installieren",
+			"ipad": "Auf iPad installieren",
+			"app": "App installieren",
+			"android": "Auf Android installieren",
+			"desktop": "Auf Computer installieren",
+			"mac": "Auf Mac installieren",
+			"inApp": "Slovko im Browser öffnen"
 		},
-		"android": {
-			"title": "Auf Android installieren",
-			"step1": "Tippen Sie auf die drei Punkte in der Browserecke",
-			"step2": "Wählen Sie «Zum Home-Bildschirm»"
+		"note": {
+			"manual": "Die Sicherheitsregeln des Browsers erlauben keine Installation mit einem Tippen, daher sind ein paar Schritte selbst zu erledigen:",
+			"firefox": "Firefox kann Websites höchstens unter Windows installieren, und nicht in jeder Version. Am einfachsten geht es mit Chrome oder Edge:",
+			"inApp": "Der eingebaute Browser des Messengers kann keine Websites installieren. Öffnen Sie Slovko zuerst in einem normalen Browser:"
 		},
-		"ios_chrome": {
-			"step1": "Tippen Sie auf das Teilen-Symbol in der Adressleiste, rechts neben der URL",
-			"step2": "Wählen Sie «Zum Home-Bildschirm»",
-			"warning": "Hinweis: Die Installation funktioniert nur über das Teilen-Symbol in der Adressleiste. Über das Drei-Punkte-Menü ist diese Funktion nicht verfügbar."
+		"step": {
+			"shareBottom": "Tippen Sie auf die Schaltfläche «Teilen» unten",
+			"shareAddressBar": "Tippen Sie auf das Teilen-Symbol in der Adressleiste, rechts neben der URL",
+			"shareMenu": "Öffnen Sie das Browsermenü und tippen Sie auf «Teilen»",
+			"shareTop": "Tippen Sie oben rechts neben der Adressleiste auf «Teilen»",
+			"addHome": "Wählen Sie «Zum Home-Bildschirm» im Menü",
+			"addHomeChrome": "Wählen Sie «Zum Home-Bildschirm»",
+			"openHome": "Öffnen Sie Slovko über sein Symbol auf dem Home-Bildschirm – die App startet ohne Browserleisten",
+			"dots": "Tippen Sie auf die drei Punkte in der Browserecke",
+			"addHomeAndroid": "Wählen Sie «Installieren und Verknüpfung erstellen» (in älteren Chrome-Versionen: «Zum Startbildschirm hinzufügen»)",
+			"edgeMenu": "Tippen Sie unten in der Mitte auf die Menütaste – drei waagerechte Striche",
+			"edgeAddToPhone": "Wählen Sie «Zum Telefon hinzufügen»",
+			"openHomeAndroid": "Öffnen Sie Slovko über sein Symbol auf dem Startbildschirm – die App startet ohne Browserleisten",
+			"installIcon": "Klicken Sie auf das Installationssymbol in der Adressleiste rechts neben der URL",
+			"confirm": "Bestätigen Sie «Installieren»",
+			"openApp": "Öffnen Sie Slovko über das App-Symbol – es startet in einem eigenen Fenster ohne Browserleisten",
+			"macFile": "Wählen Sie im Menü «Ablage» den Punkt «Zum Dock hinzufügen»",
+			"macAdd": "Klicken Sie auf «Hinzufügen»",
+			"openDock": "Öffnen Sie Slovko über sein Symbol im Dock – es startet in einem eigenen Fenster",
+			"openChromeEdge": "Öffnen Sie Slovko in Chrome oder Edge",
+			"inAppMenu": "Öffnen Sie das Menü des eingebauten Browsers (drei Punkte oben)",
+			"inAppOpen": "Wählen Sie «Im Browser öffnen» – Safari oder Chrome",
+			"inAppAgain": "Tippen Sie dort noch einmal auf «{button}»"
 		},
-		"desktop": {
-			"title": "Auf Computer installieren",
-			"step1": "Klicken Sie auf das Installationssymbol in der Adressleiste rechts neben der URL"
-		},
-		"manual": {
-			"subtitle": "Ihr Browser unterstützt keine Ein-Klick-Installation. Sie können sie manuell hinzufügen:"
+		"warning": {
+			"iosChrome": "Hinweis: Die Installation funktioniert nur über das Teilen-Symbol in der Adressleiste. Über das Drei-Punkte-Menü ist diese Funktion nicht verfügbar."
 		}
 	},
 	"about": {

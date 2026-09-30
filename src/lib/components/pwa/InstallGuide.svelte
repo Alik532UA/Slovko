@@ -1,126 +1,90 @@
-﻿<script lang="ts">
+<script lang="ts">
 	import { _ } from "svelte-i18n";
-	import { Share, PlusSquare, MoreVertical, MonitorDown, Grid2X2Plus, AlertCircle } from "lucide-svelte";
+	import {
+		AppWindow,
+		CircleAlert,
+		Dock,
+		EllipsisVertical,
+		ExternalLink,
+		Grid2x2Plus,
+		Menu,
+		MonitorDown,
+		Share,
+		Smartphone,
+		SquarePlus,
+	} from "lucide-svelte";
 	import BaseModal from "../ui/BaseModal.svelte";
 	import { pwaStore } from "../../controllers/PwaStore.svelte";
-	import { browser } from "$app/environment";
+	import { GUIDES, type StepIcon } from "../../services/pwa/installGuide";
 
 	interface Props {
 		onclose: () => void;
 	}
 	let { onclose }: Props = $props();
 
-	const mode = $derived.by(() => {
-		if (pwaStore.isIOS) return "ios";
-		if (pwaStore.isAndroid) return "android";
-		return "desktop";
-	});
+	/**
+	 * Значок кроку — той, що людина шукатиме в браузері. Edge — сітка з плюсом, повернута
+	 * на −90° (плюс угорі праворуч, як в адресному рядку Edge), Chrome — монітор зі стрілкою.
+	 */
+	const STEP_ICONS: Record<StepIcon, typeof Share> = {
+		share: Share,
+		add: SquarePlus,
+		dots: EllipsisVertical,
+		menu: Menu,
+		install: MonitorDown,
+		installEdge: Grid2x2Plus,
+		dock: Dock,
+		browser: ExternalLink,
+		phone: Smartphone,
+		app: AppWindow,
+	};
 
-	const isIosChrome = $derived(pwaStore.isIosChrome);
+	const guide = GUIDES[pwaStore.guide];
 
-	const isEdge = $derived.by(() => {
-		if (!browser) return false;
-		return window.navigator.userAgent.indexOf("Edg/") > -1;
-	});
+	/**
+	 * Підпис кнопки, до якої людина повернеться у звичайному браузері (останній крок
+	 * інструкції для месенджера), — зі словника, а не копією в тексті кроку.
+	 */
+	const button = $derived(pwaStore.isMobile ? $_("pwa.install") : $_("pwa.install_desktop"));
 </script>
 
 <BaseModal {onclose} testid="install-guide-modal">
 	<div class="content" data-testid="install-guide-panel">
 		<div class="header">
-			<h3 data-testid="install-guide-title">
-				{#if mode === 'ios'}{$_("pwa.ios.title")}
-				{:else if mode === 'android'}{$_("pwa.android.title")}
-				{:else}{$_("pwa.desktop.title")}
-				{/if}
-			</h3>
-			<p class="subtitle" data-testid="install-guide-subtitle-text">
-				{#if mode === 'ios'}
-					{#if isIosChrome}
-						{$_("pwa.ios.subtitle_chrome")}
-					{:else}
-						{$_("pwa.ios.subtitle")}
-					{/if}
-				{:else}
-					{$_("pwa.manual.subtitle")}
-				{/if}
-			</p>
+			<h3 data-testid="install-guide-title">{$_(guide.title)}</h3>
+			<p class="subtitle" data-testid="install-guide-subtitle-text">{$_(guide.note)}</p>
 		</div>
 
-		<div class="steps" data-testid="install-guide-steps-container">
-			{#if mode === 'ios'}
-				{#if isIosChrome}
-					<!-- iOS Chrome (2 steps) -->
-					<div class="step" data-testid="install-guide-item-1">
-						<span class="step-num" data-testid="install-guide-num-badge-1">1</span>
-						<div class="step-icon" data-testid="install-guide-step-icon-1"><Share size={24} /></div>
-						<div class="step-text" data-testid="install-guide-step-text-1">
-							<p>{$_("pwa.ios_chrome.step1")}</p>
-						</div>
-					</div>
-					<div class="line"></div>
-					<div class="step" data-testid="install-guide-item-2">
-						<span class="step-num" data-testid="install-guide-num-badge-2">2</span>
-						<div class="step-icon" data-testid="install-guide-step-icon-2"><PlusSquare size={24} /></div>
-						<div class="step-text" data-testid="install-guide-step-text-2">
-							<p>{$_("pwa.ios_chrome.step2")}</p>
-						</div>
-					</div>
+		<!--
+			`role="list"` не зайвий: `list-style: none` у Safari знімає зі списку семантику, і
+			VoiceOver перестає казати «список, 3 пункти». Номер видно, але читалка його не
+			повторює — номер пункту вона називає сама.
+		-->
+		<ol class="steps" role="list" data-testid="install-guide-steps-container">
+			{#each guide.steps as step, i (step.text)}
+				{@const Icon = STEP_ICONS[step.icon]}
+				<li class="step" data-testid={`install-guide-item-${i + 1}`}>
+					<span class="step-num" aria-hidden="true" data-testid={`install-guide-num-badge-${i + 1}`}
+						>{i + 1}</span
+					>
+					<span
+						class="step-icon"
+						class:edge-icon={step.icon === "installEdge"}
+						data-testid={`install-guide-step-icon-${i + 1}`}><Icon size={24} /></span
+					>
+					<p class="step-text" data-testid={`install-guide-step-text-${i + 1}`}>
+						{$_(step.text, { values: { button } })}
+					</p>
+				</li>
+			{/each}
+		</ol>
 
-					{#if $_("pwa.ios_chrome.warning")}
-						<div class="warning-note" data-testid="install-guide-warning">
-							<AlertCircle size={16} />
-							<p>{$_("pwa.ios_chrome.warning")}</p>
-						</div>
-					{/if}
-				{:else}
-					<!-- iOS Safari (2 steps) -->
-					<div class="step" data-testid="install-guide-item-1">
-						<span class="step-num" data-testid="install-guide-num-badge-1">1</span>
-						<div class="step-icon" data-testid="install-guide-step-icon-1"><Share size={24} /></div>
-						<div class="step-text" data-testid="install-guide-step-text-1">
-							<p>{$_("pwa.ios.step1")}</p>
-						</div>
-					</div>
-					<div class="line"></div>
-					<div class="step" data-testid="install-guide-item-2">
-						<span class="step-num" data-testid="install-guide-num-badge-2">2</span>
-						<div class="step-icon" data-testid="install-guide-step-icon-2"><PlusSquare size={24} /></div>
-						<div class="step-text" data-testid="install-guide-step-text-2">
-							<p>{$_("pwa.ios.step2")}</p>
-						</div>
-					</div>
-				{/if}
-			{:else if mode === 'android'}
-				<div class="step" data-testid="install-guide-item-1">
-					<span class="step-num" data-testid="install-guide-num-badge-1">1</span>
-					<div class="step-icon" data-testid="install-guide-step-icon-1"><MoreVertical size={24} /></div>
-					<div class="step-text" data-testid="install-guide-step-text-1">
-						<p>{$_("pwa.android.step1")}</p>
-					</div>
-				</div>
-				<div class="line"></div>
-				<div class="step" data-testid="install-guide-item-2">
-					<span class="step-num" data-testid="install-guide-num-badge-2">2</span>
-					<div class="step-icon" data-testid="install-guide-step-icon-2"><MonitorDown size={24} /></div>
-					<div class="step-text" data-testid="install-guide-step-text-2">
-						<p>{$_("pwa.android.step2")}</p>
-					</div>
-				</div>
-			{:else}
-				<div class="step" data-testid="install-guide-item-1">
-					<div class="step-icon" class:edge-icon={isEdge} data-testid="install-guide-step-icon-1">
-						{#if isEdge}
-							<Grid2X2Plus size={24} />
-						{:else}
-							<MonitorDown size={24} />
-						{/if}
-					</div>
-					<div class="step-text" data-testid="install-guide-step-text-1">
-						<p>{$_("pwa.desktop.step1")}</p>
-					</div>
-				</div>
-			{/if}
-		</div>
+		{#if guide.warning}
+			<div class="warning-note" data-testid="install-guide-warning">
+				<CircleAlert size={16} />
+				<p>{$_(guide.warning)}</p>
+			</div>
+		{/if}
 
 		<button class="confirm-btn primary-action-btn" onclick={onclose} data-testid="install-guide-ok-btn">
 			{$_("common.ok")}
@@ -129,11 +93,6 @@
 </BaseModal>
 
 <style>
-	.edge-icon {
-		transform: rotate(-90deg);
-		color: #0078d4;
-	}
-
 	.content {
 		display: flex;
 		flex-direction: column;
@@ -158,19 +117,33 @@
 	.steps {
 		display: flex;
 		flex-direction: column;
-		gap: 0;
-		background: rgba(255, 255, 255, 0.05);
-		border-radius: 16px;
+		gap: 20px;
+		margin: 0;
 		padding: 1rem;
+		list-style: none;
+		background: var(--bg-hover);
+		border-radius: 16px;
 		border: 1px solid var(--border);
 	}
 
 	.step {
+		position: relative;
 		display: flex;
 		align-items: center;
 		gap: 1rem;
-		padding: 0.5rem 0;
 		text-align: left;
+	}
+
+	/* Лінія між кроками — під центром значка: номер (24px) + проміжок + пів значка. */
+	.step:not(:last-child)::after {
+		content: "";
+		position: absolute;
+		top: 100%;
+		left: calc(24px + 1rem + 24px - 1px);
+		width: 2px;
+		height: 20px;
+		background: var(--border);
+		opacity: 0.3;
 	}
 
 	.step-icon {
@@ -179,19 +152,20 @@
 		justify-content: center;
 		width: 48px;
 		height: 48px;
-		background: rgba(58, 143, 214, 0.1);
+		background: rgba(var(--accent-rgb), 0.1);
 		border-radius: 12px;
-		color: #3a8fd6;
+		color: var(--accent);
 		flex-shrink: 0;
-		transition: transform 0.3s;
 	}
 
-	.step-text {
-		display: flex;
-		flex-direction: column;
-		gap: 0.2rem;
+	.edge-icon {
+		transform: rotate(-90deg);
 	}
 
+	/*
+	 * Без `opacity`: доти номер був `--text-secondary` на 50 %, тобто нижче AA в кожній
+	 * темі, а номер тут — порядок дій, а не прикраса.
+	 */
 	.step-num {
 		font-size: 1.1rem;
 		font-weight: 800;
@@ -200,35 +174,34 @@
 		display: flex;
 		justify-content: center;
 		flex-shrink: 0;
-		opacity: 0.5;
 	}
 
-	.step p {
+	.step-text {
 		margin: 0;
 		font-size: 0.95rem;
 		color: var(--text-primary);
 		line-height: 1.3;
 	}
 
-	.line {
-		width: 2px;
-		height: 20px;
-		background: var(--border);
-		margin-left: 63px; 
-		opacity: 0.3;
-	}
-
+	/*
+	 * Текст — основним кольором, бурштиновий лише значок і рамка. Доти текст був
+	 * `#f59e0b` на півпрозорому бурштиновому, і на світлій темі це нижче AA.
+	 */
 	.warning-note {
 		display: flex;
 		gap: 0.75rem;
 		padding: 1rem;
-		background: rgba(245, 158, 11, 0.1); /* warning color with opacity */
+		background: var(--status-warning-bg);
 		border-radius: 12px;
-		border: 1px solid rgba(245, 158, 11, 0.3);
-		margin-top: 1rem;
-		color: #f59e0b;
+		border: 1px solid var(--status-warning);
+		color: var(--text-primary);
 		text-align: left;
 		align-items: flex-start;
+	}
+
+	.warning-note :global(svg) {
+		flex-shrink: 0;
+		color: var(--status-warning);
 	}
 
 	.warning-note p {

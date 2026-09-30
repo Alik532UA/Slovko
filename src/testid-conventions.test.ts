@@ -83,18 +83,9 @@ const LEGACY_ALLOWED = new Set<string>([]);
  */
 const ALLOWED_DUPLICATES = new Set<string>([
 	// Одна й та сама кнопка «назад» у гілках google-акаунта і звичайної форми.
-	'change-password-back-btn',
-	// Інструкція встановлення має по гілці на iOS Safari, iOS Chrome, Android і
-	// десктоп. Кроки в них однакові за роллю, тому локатор один.
-	// Краще було б розрізняти їх за платформою — це окрема правка.
-	'install-guide-item-1',
-	'install-guide-item-2',
-	'install-guide-num-badge-1',
-	'install-guide-num-badge-2',
-	'install-guide-step-icon-1',
-	'install-guide-step-icon-2',
-	'install-guide-step-text-1',
-	'install-guide-step-text-2'
+	'change-password-back-btn'
+	// Кроків інструкції встановлення тут більше немає: доти вони стояли по гілці на
+	// платформу, а тепер їх малює один цикл із даних (`services/pwa/installGuide.ts`).
 ]);
 
 /**

@@ -66,7 +66,7 @@
 			(SECURITY-v8 § 6.3). У пререндері політика приїжджає
 			<meta http-equiv="Content-Security-Policy">, який SvelteKit вставляє
 			саме на місце %sveltekit.head%, а мета-політика діє ЛИШЕ на те, що йде
-			нижче за неї. Поки ці два скрипти стояли вище, їхні хеші зі
+			нижче за неї. Поки перші два скрипти стояли вище, їхні хеші зі
 			svelte.config.js не захищали нічого — політика їх просто не бачила.
 			Затримка нульова: вище лишились самі мета-теги й посилання.
 		-->
@@ -345,6 +345,23 @@
 
 				// Mark app as rendered when Svelte mounts
 				window.__markAppRendered = function() { appRendered = true; };
+			})();
+		</script>
+		<script>
+			// Подія «можна встановити» (канон FULLSCREEN-INSTALL § 3.2). Лише Chromium,
+			// приходить РАЗ і рано, тож ловиться тут, до бандла, однаково в dev і збірці.
+			// `preventDefault()` глушить власну смужку Chrome на Android: встановлення
+			// пропонують кнопки застосунку. Читає — services/pwa/installPrompt.
+			(function () {
+				try {
+					window.addEventListener('beforeinstallprompt', function (event) {
+						event.preventDefault();
+						window.__pwaInstallPrompt = event;
+					});
+					window.addEventListener('appinstalled', function () {
+						window.__pwaInstallPrompt = null;
+					});
+				} catch (e) {}
 			})();
 		</script>
 	</head>

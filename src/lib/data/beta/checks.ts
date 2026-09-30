@@ -311,6 +311,64 @@ export const BETA_TABS: readonly BetaTab[] = [
 				coverage: "manual",
 				testid: "context-menu-report",
 			},
+			{
+				id: "about_7",
+				category: { uk: "Встановлення", en: "Installing" },
+				text: {
+					uk: "У Chrome чи Edge, поки застосунок не встановлено, натисніть кнопку встановлення у вікні «Про проєкт». Мусить відкритися вікно САМОГО браузера «Встановити», а не кроки Slovko.",
+					en: "In Chrome or Edge, while the app is not installed, tap the install button in the About window. The browser's OWN 'Install' window must open, not the Slovko steps.",
+				},
+				coverage: "manual",
+				testid: "about-modal-install-btn",
+			},
+			{
+				id: "about_8",
+				category: { uk: "Встановлення", en: "Installing" },
+				text: {
+					uk: "На iPhone у Safari натисніть кнопку встановлення у вікні «Про проєкт» і пройдіть кроки. Значок мусить з'явитися на початковому екрані, застосунок із нього — відкритися без панелей Safari, а кнопки встановлення в ньому вже не бути.",
+					en: "On an iPhone in Safari, tap the install button in the About window and follow the steps. The icon must appear on the Home Screen, the app must open from it without Safari's bars, and the install button must be gone there.",
+				},
+				coverage: "manual",
+				testid: "about-modal-install-btn",
+			},
+			{
+				id: "about_9",
+				category: { uk: "Встановлення", en: "Installing" },
+				text: {
+					uk: "Відкрийте кроки встановлення на iPad у Safari, у Safari на Mac і у Firefox на комп'ютері. Кроки мусять бути саме для цього браузера (на iPad — «Поділитися» вгорі праворуч, на Mac — меню «Файл», у Firefox — порада відкрити Chrome чи Edge) і справді вести до встановлення.",
+					en: "Open the install steps on an iPad in Safari, in Safari on a Mac and in Firefox on a computer. The steps must be for that very browser (on the iPad, 'Share' at the top right; on the Mac, the 'File' menu; in Firefox, advice to open Chrome or Edge) and must really lead to installing.",
+				},
+				coverage: "manual",
+			},
+			{
+				id: "about_10",
+				category: { uk: "Встановлення", en: "Installing" },
+				text: {
+					uk: "На Android у Chrome і в Edge, коли відкрилися кроки Slovko, а не вікно браузера, звірте їх із меню. Назви мусять збігатися: у Chrome — три крапки й «Установити й створити ярлик», в Edge — три лінії внизу посередині й «Додати на телефон».",
+					en: "On Android in Chrome and in Edge, when the Slovko steps opened instead of the browser window, compare them with the menu. The names must match: in Chrome, three dots and 'Install and create shortcut'; in Edge, three lines at the bottom centre and 'Add to phone'.",
+				},
+				coverage: "manual",
+			},
+			{
+				id: "about_11",
+				category: { uk: "Встановлення", en: "Installing" },
+				text: {
+					uk: "Відкрийте посилання на сайт з Instagram чи Facebook у їхньому вбудованому браузері й відкрийте кроки встановлення. Вони НЕ мусять обіцяти встановлення тут — лише вести до «Відкрити в браузері».",
+					en: "Open a link to the site from Instagram or Facebook in their built-in browser and open the install steps. They must NOT promise installing right there, only lead to 'Open in browser'.",
+				},
+				coverage: "manual",
+				negative: true,
+			},
+			{
+				id: "about_12",
+				category: { uk: "Встановлення", en: "Installing" },
+				text: {
+					uk: "Кнопка встановлення в браузері з вікном «Встановити» мусить віддавати натиск йому, а без такого вікна — показувати нумеровані кроки для свого пристрою: iPhone, iPad, Android, Edge чи Chrome.",
+					en: "In a browser with an 'Install' window, the install button must hand the tap to it, and without such a window it must show numbered steps for its own device: iPhone, iPad, Android, Edge or Chrome.",
+				},
+				coverage: "covered",
+				test: "tests/e2e/install.spec.ts",
+			},
 		],
 	},
 

@@ -27,7 +27,6 @@
 		trackEvent,
 	} from "$lib/services/analytics";
 	import { webVitals } from "$lib/controllers/webVitals.svelte";
-	import { pwaStore } from "$lib/controllers/PwaStore.svelte";
 	import { page } from "$app/state";
 	import { isHiddenRoute } from "$lib/config/hiddenRoutes";
 	import { navigationState } from "$lib/controllers/NavigationState.svelte";
@@ -276,9 +275,6 @@
 			await initializeI18n();
 			logService.log("version", "i18n initialized, setting ready=true");
 			ready = true;
-
-			// Initialize PWA Store
-			pwaStore.init();
 
 			if (!dev && "serviceWorker" in navigator) {
 				let isInitialInstall = false;
