@@ -81,9 +81,11 @@ smoke-тести можна писати проти живого сайту бе
    - пункт зі словом «натисніть» називає локатор, і локатор має існувати;
    - `coverage: 'covered'` називає файл тесту, і файл має бути на диску;
    - сторінка прихована: `noindex` малює layout за переліком
-     `hiddenRoutes.ts`, `canonical` знімає `hooks.server.ts`, `Disallow` — у
-     `robots.txt`. Перевіряє `npm run check:build`, і для решти сторінок —
-     ПРОТИЛЕЖНЕ.
+     `hiddenRoutes.ts`, `canonical` знімає `hooks.server.ts`. `Disallow` для неї
+     в `robots.txt` НЕМАЄ навмисно: краулер, якому заборонено обхід, сторінки не
+     завантажує й `noindex` у ній не прочитає ніколи (`BETA-NOINDEX-OVER-DISALLOW`).
+     Перевіряє `npm run check:build` (і для решти сторінок — ПРОТИЛЕЖНЕ), а
+     відсутність `Disallow` — ще й `src/beta-checklist.test.ts`.
 
 7. **SSR:** ігровий маршрут іде з `ssr = false` і бере `<head>` статично з
    `app.html`. Будь-яка НОВА сторінка з увімкненим SSR виконує весь кореневий

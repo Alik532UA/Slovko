@@ -18,7 +18,7 @@
 import { createHash } from "node:crypto";
 import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { checkGeo } from "./check-geo.mjs";
+import { checkGeo, parseRobots } from "./check-geo.mjs";
 
 const BUILD = "build";
 const ORIGIN = "https://alik532ua.github.io";
@@ -613,10 +613,42 @@ for (const asset of [
 	}
 }
 
+/** Чи збігається правило `robots.txt` з адресою: префікс, `*` і `$` (RFC 9309). */
+function robotsRuleMatches(rule, path) {
+	// Порожній `Disallow:` не забороняє нічого.
+	if (!rule) return false;
+	const anchored = rule.endsWith("$");
+	const pattern = (anchored ? rule.slice(0, -1) : rule)
+		.split("*")
+		.map((part) => part.replace(/[.+?^${}()|[\]\\]/g, "\\$&"))
+		.join(".*");
+	return new RegExp(`^${pattern}${anchored ? "$" : ""}`).test(path);
+}
+
+/** Чи забороняє група обхід адреси: перемагає довше правило, за рівної довжини — `Allow`. */
+function robotsGroupBlocks(group, path) {
+	const longest = (rules) =>
+		Math.max(-1, ...rules.filter((rule) => robotsRuleMatches(rule, path)).map((rule) => rule.length));
+	return longest(group.disallow) > longest(group.allow);
+}
+
 /*
  * Прихована сторінка мусить ІСНУВАТИ. Зниклий маршрут виглядає точно так само,
  * як правильно прихований: у пошуку його немає ні там, ні там, — і тестувальник
  * дізнається про це, відкривши надіслане посилання й побачивши 404.
+ *
+ * І жодна група `robots.txt` не мусить забороняти її ОБХІД (BETA-CHECKLIST § 4.0,
+ * `BETA-NOINDEX-OVER-DISALLOW`). Доти тут вимагався `Disallow` — рівно навпаки:
+ * заборона обходу означає, що краулер сторінку не ЗАВАНТАЖУЄ, тож `noindex` у ній
+ * не читає ніколи, а адреса, на яку хтось послався ззовні, лягає в індекс голим
+ * URL. Коміт `8ddb3792` прибрав рядок із `robots.txt` і перевернув інваріант у
+ * `src/beta-checklist.test.ts`, а це правило лишилося старим — і `check:build`
+ * червонів саме на правильному файлі.
+ *
+ * Звіряється ЗБІГ правила з адресою, а не підрядок: `Disallow` — це префікс, тож
+ * `Disallow: /Slovko/` чи `Disallow: /Slovko/beta` відбирають сторінку так само,
+ * хоч назви маршруту й не містять. Коментарі розбір знімає сам (`parseRobots`):
+ * пояснення в `robots.txt` якраз називає адресу прихованої сторінки.
  */
 for (const route of HIDDEN_ROUTES) {
 	if (!existsSync(join(BUILD, route, "index.html"))) {
@@ -631,8 +663,14 @@ for (const route of HIDDEN_ROUTES) {
 	const robots = existsSync(join(BUILD, "robots.txt"))
 		? readFileSync(join(BUILD, "robots.txt"), "utf8")
 		: "";
-	if (!robots.includes(`Disallow: ${BASE}/${route}/`)) {
-		fail(`robots.txt: немає Disallow для ${route}`);
+	const page = `${BASE}/${route}/`;
+	for (const group of parseRobots(robots)) {
+		if (robotsGroupBlocks(group, page)) {
+			fail(
+				`robots.txt: група «${group.agents.join(", ")}» забороняє обхід ${page} — ` +
+					"краулер не прочитає noindex, і адреса ляже в індекс голою",
+			);
+		}
 	}
 }
 
