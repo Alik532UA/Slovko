@@ -1,7 +1,7 @@
 {
 	"name": "slovko",
 	"private": true,
-	"version": "0.7.717",
+	"version": "0.7.718",
 	"type": "module",
 	"engines": {
 		"node": ">=22.12.0"
@@ -69,8 +69,9 @@
 		"zod": "^4.3.6"
 	},
 	"overrides": {
+		"@grpc/grpc-js": "^1.14.0",
 		"cookie": "^0.7.2",
-		"esbuild": ">=0.25.0",
+		"esbuild": "^0.25.0",
 		"serialize-javascript": "^7.0.3"
 	}
 }
