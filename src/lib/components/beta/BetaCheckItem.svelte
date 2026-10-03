@@ -6,7 +6,7 @@
 	 * орієнтир розміру (PROJECT-STRUCTURE-v8 § 7), і саме тут проходить межа
 	 * відповідальності — сторінка розкладає вкладки й рівні, пункт малює себе.
 	 */
-	import { Check, TriangleAlert, X } from "lucide-svelte";
+	import { Check, HelpCircle, SkipForward, X } from "lucide-svelte";
 	import type { BetaCheck, Vote } from "$lib/data/beta/types";
 	import { betaChecklistStore } from "$lib/controllers/BetaChecklistStore.svelte";
 
@@ -17,10 +17,13 @@
 	}
 	let { check, number, lang }: Props = $props();
 
+	const VOTES: readonly Vote[] = ["ok", "fail", "unclear", "skip"];
+
 	const VOTE_TITLE: Record<Vote, { uk: string; en: string }> = {
-		fail: { uk: "Не працює", en: "Broken" },
-		weird: { uk: "Працює, але дивно", en: "Works, but odd" },
 		ok: { uk: "Працює", en: "Works" },
+		fail: { uk: "Не працює", en: "Broken" },
+		unclear: { uk: "Не зрозуміло", en: "Unclear" },
+		skip: { uk: "Пропустити", en: "Skip" },
 	};
 
 	/**
@@ -34,9 +37,17 @@
 	 * ПОХІДНИМ від `id`, а не другим іменем, яке треба тримати узгодженим.
 	 */
 	const tid = $derived(check.id.replace(/_/g, "-"));
+	const currentVote = $derived(betaChecklistStore.voteOf(check.id));
 </script>
 
-<li class="item" data-testid="beta-check-{tid}-item">
+<li
+	class="item"
+	class:item--ok={currentVote === "ok"}
+	class:item--fail={currentVote === "fail"}
+	class:item--unclear={currentVote === "unclear"}
+	class:item--skip={currentVote === "skip"}
+	data-testid="beta-check-{tid}-item"
+>
 	<span class="item__num">{number}</span>
 	<div class="item__body">
 		<p class="item__category" data-testid="beta-check-{tid}-category-text">
@@ -63,17 +74,18 @@
 		{/if}
 
 		<div class="item__votes">
-			{#each ["fail", "weird", "ok"] as const as vote (vote)}
+			{#each VOTES as vote (vote)}
 				<button
 					class="vote vote--{vote}"
-					class:is-picked={betaChecklistStore.voteOf(check.id) === vote}
-					aria-pressed={betaChecklistStore.voteOf(check.id) === vote}
+					class:is-picked={currentVote === vote}
+					aria-pressed={currentVote === vote}
 					data-testid="beta-vote-{tid}-{vote}-btn"
 					onclick={() => betaChecklistStore.setVote(check.id, vote)}
 				>
-					{#if vote === "fail"}<X size={15} />
-					{:else if vote === "weird"}<TriangleAlert size={15} />
-					{:else}<Check size={15} />{/if}
+					{#if vote === "ok"}<Check size={15} />
+					{:else if vote === "fail"}<X size={15} />
+					{:else if vote === "unclear"}<HelpCircle size={15} />
+					{:else if vote === "skip"}<SkipForward size={15} />{/if}
 					{VOTE_TITLE[vote][lang]}
 				</button>
 			{/each}
@@ -90,6 +102,23 @@
 		border: 1px solid var(--border);
 		border-radius: 14px;
 		background: var(--bg-primary);
+	}
+
+	.item.item--ok {
+		border-color: var(--toast-success, #22c55e);
+		border-width: 2px;
+	}
+	.item.item--fail {
+		border-color: var(--toast-error, #ef4444);
+		border-width: 2px;
+	}
+	.item.item--unclear {
+		border-color: var(--toast-warning, #eab308);
+		border-width: 2px;
+	}
+	.item.item--skip {
+		border-color: #3b82f6;
+		border-width: 2px;
 	}
 
 	.item__num {
@@ -146,32 +175,62 @@
 	 * `aria-pressed` каже те саме читалці.
 	 */
 	.vote {
+		--vote-ok: var(--toast-success, #22c55e);
+		--vote-fail: var(--toast-error, #ef4444);
+		--vote-unclear: var(--toast-warning, #eab308);
+		--vote-skip: #3b82f6;
 		display: inline-flex;
 		align-items: center;
 		gap: 0.35rem;
 		min-height: 44px;
+		min-width: 44px;
 		padding: 0 0.8rem;
 		border: 1px solid var(--border);
 		border-radius: 12px;
-		background: transparent;
-		color: var(--text-secondary);
 		font-size: 0.88rem;
 		cursor: pointer;
 	}
 
-	.vote.is-picked {
-		border-width: 3px;
-		font-weight: 700;
-		color: var(--text-primary);
+	.vote--ok {
+		background: color-mix(in srgb, var(--vote-ok) 8%, var(--bg-primary, #ffffff));
+		color: var(--text-secondary);
+	}
+	.vote--fail {
+		background: color-mix(in srgb, var(--vote-fail) 8%, var(--bg-primary, #ffffff));
+		color: var(--text-secondary);
+	}
+	.vote--unclear {
+		background: color-mix(in srgb, var(--vote-unclear) 8%, var(--bg-primary, #ffffff));
+		color: var(--text-secondary);
+	}
+	.vote--skip {
+		background: color-mix(in srgb, var(--vote-skip) 8%, var(--bg-primary, #ffffff));
+		color: var(--text-secondary);
 	}
 
-	.vote--fail.is-picked {
-		border-color: var(--toast-error, #ef4444);
+	.vote.is-picked {
+		border-width: 4px;
+		font-weight: 700;
 	}
-	.vote--weird.is-picked {
-		border-color: var(--toast-warning, #eab308);
-	}
+
 	.vote--ok.is-picked {
-		border-color: var(--toast-success, #22c55e);
+		border-color: var(--vote-ok);
+		background: color-mix(in srgb, var(--vote-ok) 18%, var(--bg-primary, #ffffff));
+		color: var(--vote-ok);
+	}
+	.vote--fail.is-picked {
+		border-color: var(--vote-fail);
+		background: color-mix(in srgb, var(--vote-fail) 18%, var(--bg-primary, #ffffff));
+		color: var(--vote-fail);
+	}
+	.vote--unclear.is-picked {
+		border-color: var(--vote-unclear);
+		background: color-mix(in srgb, var(--vote-unclear) 18%, var(--bg-primary, #ffffff));
+		color: var(--vote-unclear);
+	}
+	.vote--skip.is-picked {
+		border-color: var(--vote-skip);
+		background: color-mix(in srgb, var(--vote-skip) 18%, var(--bg-primary, #ffffff));
+		color: var(--vote-skip);
 	}
 </style>

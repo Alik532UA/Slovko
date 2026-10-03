@@ -18,6 +18,24 @@
 	import BetaReport from "$lib/components/beta/BetaReport.svelte";
 
 	let activeTabId = $state(BETA_TABS[0].id);
+
+	function selectTab(id: string) {
+		activeTabId = id;
+		if (typeof window !== "undefined") {
+			const url = new URL(window.location.href);
+			url.searchParams.set("tab", id);
+			window.history.replaceState(window.history.state, "", url.href);
+		}
+	}
+
+	$effect(() => {
+		if (typeof window === "undefined") return;
+		const param = new URL(window.location.href).searchParams.get("tab");
+		if (param && BETA_TABS.some((t) => t.id === param)) {
+			activeTabId = param;
+		}
+	});
+
 	let lang = $state<"uk" | "en">("uk");
 
 	onMount(() => betaChecklistStore.load());
@@ -103,7 +121,7 @@
 				class:is-active={tab.id === activeTabId}
 				aria-current={tab.id === activeTabId ? "true" : undefined}
 				data-testid="beta-tab-{tab.id}-btn"
-				onclick={() => (activeTabId = tab.id)}
+				onclick={() => selectTab(tab.id)}
 			>
 				{tab.title[lang]}
 				<span class="beta__tab-count" data-testid="beta-tab-{tab.id}-progress-text">
@@ -113,7 +131,7 @@
 		{/each}
 	</nav>
 
-	<p class="beta__screens">
+	<p class="beta__screens" data-sveltekit-preload-data="off">
 		<span>{lang === "uk" ? "Екрани вкладки:" : "Screens on this tab:"}</span>
 		{#each tabStates as state (state.id)}
 				<!--
@@ -261,12 +279,20 @@
 	.beta__screen-link {
 		display: inline-flex;
 		align-items: center;
+		justify-content: center;
 		min-height: 44px;
-		padding: 0 0.7rem;
-		border: 1px dashed var(--border);
+		min-width: 44px;
+		padding: 0 0.75rem;
+		border: 1px solid var(--border);
 		border-radius: 10px;
+		background: var(--bg-secondary);
 		color: var(--accent);
 		text-decoration: none;
+		cursor: pointer;
+	}
+
+	.beta__screen-link:hover {
+		border-color: currentColor;
 	}
 
 	.beta__level {

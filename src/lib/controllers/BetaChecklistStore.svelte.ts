@@ -19,25 +19,8 @@ const STORAGE_KEY = "beta_marks";
 
 type MarkMap = Record<string, Mark>;
 
-const VOTES: readonly Vote[] = ["fail", "weird", "ok"];
+const VOTES: readonly Vote[] = ["ok", "fail", "unclear", "skip"];
 
-function isMark(value: unknown): value is Mark {
-	if (typeof value !== "object" || value === null) return false;
-	const m = value as Record<string, unknown>;
-	return VOTES.includes(m.vote as Vote) && typeof m.version === "string";
-}
-
-/**
- * Прочитане зі сховища — НЕДОВІРЕНИЙ ВВІД (BETA-CHECKLIST-v9 § 8.6,
- * `BETA-MARKS-UNTRUSTED`).
- *
- * Ключ переживає і зміну чеклиста, і зміну формату позначки, і сусідні
- * застосунки на тому самому origin. Найчастіший випадок безневинний і
- * найгірший: пункт ПРИБРАЛИ зі списку, а позначка лишилася. Форму вона має
- * правильну, тож проходила — і рахувалася в поступі, даючи «47 / 45», число,
- * яке не означає нічого й не має де виправитися: у списку такого пункта вже
- * немає, отже й зняти позначку нема на чому.
- */
 function readMarks(): MarkMap {
 	const raw = localStorageProvider.getJson<unknown>(STORAGE_KEY);
 	if (typeof raw !== "object" || raw === null) return {};
@@ -45,7 +28,14 @@ function readMarks(): MarkMap {
 	const known = new Set(ALL_CHECKS.map((check) => check.id));
 	const out: MarkMap = {};
 	for (const [id, value] of Object.entries(raw as Record<string, unknown>)) {
-		if (known.has(id) && isMark(value)) out[id] = value;
+		if (!known.has(id)) continue;
+		if (typeof value === "object" && value !== null) {
+			const m = value as Record<string, unknown>;
+			const vote = m.vote === "weird" ? "unclear" : m.vote;
+			if (VOTES.includes(vote as Vote) && typeof m.version === "string") {
+				out[id] = { vote: vote as Vote, version: m.version };
+			}
+		}
 	}
 	return out;
 }
@@ -218,11 +208,12 @@ class BetaChecklistStore {
 			"",
 		];
 
-		const order: Vote[] = ["fail", "weird", "ok"];
+		const order: Vote[] = ["fail", "unclear", "ok", "skip"];
 		const label: Record<Vote, string> = {
 			fail: "[НЕ ПРАЦЮЄ]",
-			weird: "[ПРАЦЮЄ, АЛЕ ДИВНО]",
+			unclear: "[НЕ ЗРОЗУМІЛО]",
 			ok: "[ПРАЦЮЄ]",
+			skip: "[ПРОПУЩЕНО]",
 		};
 
 		const lines: string[] = [];
@@ -230,7 +221,8 @@ class BetaChecklistStore {
 			for (const tab of BETA_TABS) {
 				for (const check of tab.checks) {
 					const mark = this.marks[check.id];
-					if (!mark || mark.vote !== vote) continue;
+					const actualVote = mark?.vote === ("weird" as unknown) ? "unclear" : mark?.vote;
+					if (!mark || actualVote !== vote) continue;
 					lines.push(`${label[vote]} ${check.id} (${tab.title.uk})`);
 					lines.push(`    ${check.text[lang]}`);
 					if (mark.version !== versionStore.currentVersion) {

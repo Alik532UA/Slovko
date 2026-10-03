@@ -66,7 +66,7 @@ export interface BetaTab {
 }
 
 /** Чотири стани відповіді, а не два. */
-export type Vote = "fail" | "weird" | "ok";
+export type Vote = "ok" | "fail" | "unclear" | "skip";
 
 export interface Mark {
 	vote: Vote;
