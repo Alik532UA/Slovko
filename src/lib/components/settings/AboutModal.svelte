@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
 	/**
 	 * AboutModal — Про проєкт
 	 */
@@ -33,7 +33,8 @@
 	}
 </script>
 
-<BaseModal {onclose} testid="about-modal">
+{#if !showFeedback && !showInstallGuide}
+	<BaseModal {onclose} testid="about-modal">
 	<div class="content">
 		<p class="description" data-testid="about-description-text">
 			{$_("about.description")}
@@ -220,6 +221,7 @@
 		</button>
 	</div>
 </BaseModal>
+{/if}
 
 {#if showFeedback}
 	<FeedbackModal onclose={() => (showFeedback = false)} />
