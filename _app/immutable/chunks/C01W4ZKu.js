@@ -1,4 +1,4 @@
-const t=`{
+const e=`{
 	"app": {
 		"title": "Slovko"
 	},
@@ -202,29 +202,46 @@ const t=`{
 	"pwa": {
 		"install": "App voor telefoon",
 		"install_desktop": "App voor computer",
-		"ios": {
-			"title": "Installeren op iPhone",
-			"subtitle": "iPhone blokkeert automatische installatie. Volg deze eenvoudige stappen:",
-			"subtitle_chrome": "De Chrome-browser op de iPhone heeft installatiespecificaties:",
-			"step1": "Tik op de knop «Delen» onderaan",
-			"step2": "Selecteer «Zet op beginscherm» in het menu"
+		"title": {
+			"iphone": "Installeren op iPhone",
+			"ipad": "Installeren op iPad",
+			"app": "App installeren",
+			"android": "Installeren op Android",
+			"desktop": "Installeren op computer",
+			"mac": "Installeren op Mac",
+			"inApp": "Open Slovko in een browser"
 		},
-		"android": {
-			"title": "Installeren op Android",
-			"step1": "Tik op de drie puntjes in de hoek van de browser",
-			"step2": "Selecteer «Zet op beginscherm»"
+		"note": {
+			"manual": "De beveiliging van de browser staat geen installatie met één tik toe, dus een paar stappen moet u zelf doen:",
+			"firefox": "Firefox kan sites hooguit op Windows installeren, en niet in elke versie. Het eenvoudigst gaat het met Chrome of Edge:",
+			"inApp": "De ingebouwde browser van de messenger kan geen sites installeren. Open Slovko eerst in een gewone browser:"
 		},
-		"ios_chrome": {
-			"step1": "Tik op het delen-icoon in de adresbalk, rechts van de url",
-			"step2": "Selecteer «Zet op beginscherm»",
-			"warning": "Opmerking: installatie werkt alleen via het delen-icoon in de adresbalk. Via het 'drie puntjes'-menu is deze functie niet beschikbaar."
+		"step": {
+			"shareBottom": "Tik op de knop «Delen» onderaan",
+			"shareAddressBar": "Tik op het delen-icoon in de adresbalk, rechts van de url",
+			"shareMenu": "Open het browsermenu en tik op «Delen»",
+			"shareTop": "Tik bovenaan op «Delen», rechts van de adresbalk",
+			"addHome": "Selecteer «Zet op beginscherm» in het menu",
+			"addHomeChrome": "Selecteer «Zet op beginscherm»",
+			"openHome": "Open Slovko met het icoon op het beginscherm – de app start zonder browserbalken",
+			"dots": "Tik op de drie puntjes in de hoek van de browser",
+			"addHomeAndroid": "Selecteer «Installeren en snelkoppeling maken» (in oudere versies van Chrome: «Toevoegen aan startscherm»)",
+			"edgeMenu": "Tik onderaan in het midden op de menuknop – drie horizontale streepjes",
+			"edgeAddToPhone": "Selecteer «Toevoegen aan telefoon»",
+			"openHomeAndroid": "Open Slovko met het icoon op het startscherm – de app start zonder browserbalken",
+			"installIcon": "Klik op het installatie-icoon in de adresbalk, rechts van de url",
+			"confirm": "Bevestig «Installeren»",
+			"openApp": "Open Slovko met het app-icoon – het start in een eigen venster zonder browserbalken",
+			"macFile": "Kies in het menu «Archief» de optie «Voeg toe aan Dock»",
+			"macAdd": "Klik op «Voeg toe»",
+			"openDock": "Open Slovko met het icoon in het Dock – het start in een eigen venster",
+			"openChromeEdge": "Open Slovko in Chrome of Edge",
+			"inAppMenu": "Open het menu van de ingebouwde browser (drie puntjes bovenaan)",
+			"inAppOpen": "Kies «Openen in browser» – Safari of Chrome",
+			"inAppAgain": "Tik daar nog een keer op «{button}»"
 		},
-		"desktop": {
-			"title": "Installeren op computer",
-			"step1": "Klik op het installatie-icoon in de adresbalk, rechts van de url"
-		},
-		"manual": {
-			"subtitle": "Uw browser ondersteunt geen installatie met één klik. U kunt deze handmatig toevoegen:"
+		"warning": {
+			"iosChrome": "Opmerking: installatie werkt alleen via het delen-icoon in de adresbalk. Via het 'drie puntjes'-menu is deze functie niet beschikbaar."
 		}
 	},
 	"about": {
@@ -513,4 +530,4 @@ const t=`{
 		"gotIt": "Begrepen"
 	}
 }
-`;export{t as default};
+`;export{e as default};

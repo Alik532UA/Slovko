@@ -233,29 +233,46 @@ const t=`{
 	"pwa": {
 		"install": "Aplikacja na telefon",
 		"install_desktop": "Aplikacja na komputer",
-		"ios": {
-			"title": "Zainstaluj na iPhone",
-			"subtitle": "iPhone blokuje automatyczną instalację. Postępuj zgodnie z tymi prostymi krokami:",
-			"subtitle_chrome": "Przeglądarka Chrome na iPhone ma specyficzne wymagania instalacyjne:",
-			"step1": "Naciśnij przycisk «Udostępnij» na dole ekranu",
-			"step2": "Wybierz «Do ekranu początkowego» w menu"
+		"title": {
+			"iphone": "Zainstaluj na iPhone",
+			"ipad": "Zainstaluj na iPadzie",
+			"app": "Zainstaluj aplikację",
+			"android": "Zainstaluj na Androidzie",
+			"desktop": "Zainstaluj na komputerze",
+			"mac": "Zainstaluj na Macu",
+			"inApp": "Otwórz Slovko w przeglądarce"
 		},
-		"android": {
-			"title": "Zainstaluj na Androidzie",
-			"step1": "Naciśnij trzy kropki w rogu przeglądarki",
-			"step2": "Wybierz «Dodaj do ekranu głównego»"
+		"note": {
+			"manual": "Zabezpieczenia przeglądarki nie pozwalają zainstalować aplikacji jednym dotknięciem, więc kilka kroków trzeba wykonać samodzielnie:",
+			"firefox": "Firefox potrafi instalować strony co najwyżej w systemie Windows i nie w każdej wersji. Najprościej użyć Chrome lub Edge:",
+			"inApp": "Wbudowana przeglądarka komunikatora nie instaluje stron. Najpierw otwórz Slovko w zwykłej przeglądarce:"
 		},
-		"ios_chrome": {
-			"step1": "Naciśnij ikonę «Udostępnij» w pasku adresu, po prawej stronie adresu URL",
-			"step2": "Wybierz «Dodaj do ekranu początkowego»",
-			"warning": "Uwaga: instalacja działa tylko przez przycisk «Udostępnij» w pasku adresu. Funkcja ta nie jest dostępna przez menu «trzy kropki»."
+		"step": {
+			"shareBottom": "Naciśnij przycisk «Udostępnij» na dole ekranu",
+			"shareAddressBar": "Naciśnij ikonę «Udostępnij» w pasku adresu, po prawej stronie adresu URL",
+			"shareMenu": "Otwórz menu przeglądarki i naciśnij «Udostępnij»",
+			"shareTop": "Naciśnij przycisk «Udostępnij» u góry, po prawej stronie paska adresu",
+			"addHome": "Wybierz «Do ekranu początkowego» w menu",
+			"addHomeChrome": "Wybierz «Dodaj do ekranu początkowego»",
+			"openHome": "Otwieraj Slovko ikoną na ekranie początkowym — aplikacja uruchomi się bez pasków przeglądarki",
+			"dots": "Naciśnij trzy kropki w rogu przeglądarki",
+			"addHomeAndroid": "Wybierz «Zainstaluj i utwórz skrót» (w starszych wersjach Chrome — «Dodaj do ekranu głównego»)",
+			"edgeMenu": "Naciśnij przycisk menu na dole pośrodku — trzy poziome linie",
+			"edgeAddToPhone": "Wybierz «Dodaj do telefonu»",
+			"openHomeAndroid": "Otwieraj Slovko ikoną na ekranie głównym — aplikacja uruchomi się bez pasków przeglądarki",
+			"installIcon": "Naciśnij ikonę instalacji w pasku adresu, po prawej stronie adresu URL",
+			"confirm": "Potwierdź «Zainstaluj»",
+			"openApp": "Otwieraj Slovko ikoną aplikacji — uruchomi się w osobnym oknie bez pasków przeglądarki",
+			"macFile": "W menu «Plik» wybierz «Dodaj do Docka»",
+			"macAdd": "Kliknij «Dodaj»",
+			"openDock": "Otwieraj Slovko ikoną w Docku — uruchomi się w osobnym oknie",
+			"openChromeEdge": "Otwórz Slovko w Chrome lub Edge",
+			"inAppMenu": "Otwórz menu wbudowanej przeglądarki (trzy kropki u góry)",
+			"inAppOpen": "Wybierz «Otwórz w przeglądarce» — Safari lub Chrome",
+			"inAppAgain": "Tam ponownie naciśnij «{button}»"
 		},
-		"desktop": {
-			"title": "Zainstaluj na komputerze",
-			"step1": "Naciśnij ikonę instalacji w pasku adresu, po prawej stronie adresu URL"
-		},
-		"manual": {
-			"subtitle": "Twoja przeglądarkka nie obsługuje instalacji jednym kliknięciem. Możesz dodać aplikację ręcznie:"
+		"warning": {
+			"iosChrome": "Uwaga: instalacja działa tylko przez przycisk «Udostępnij» w pasku adresu. Funkcja ta nie jest dostępna przez menu «trzy kropki»."
 		}
 	},
 	"about": {

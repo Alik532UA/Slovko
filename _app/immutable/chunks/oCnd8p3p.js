@@ -202,29 +202,46 @@ const t=`{
 	"pwa": {
 		"install": "Telefon içün ilova",
 		"install_desktop": "Kompüter içün ilova",
-		"ios": {
-			"title": "iPhone-ğa qurmaq",
-			"subtitle": "iPhone avtomatik quruvnı blok ete. Lütfen, bu basit adımlarnı yapıñız:",
-			"subtitle_chrome": "iPhone-da Chrome brauzeriniñ quruv özellikleri bar:",
-			"step1": "Ekran tübündeki «Paylaş» dögmesine basıñız",
-			"step2": "Menüde «Ana ekranğa» saylañız"
+		"title": {
+			"iphone": "iPhone-ğa qurmaq",
+			"ipad": "iPad-ğa qurmaq",
+			"app": "İlovanı qurmaq",
+			"android": "Android-ğa qurmaq",
+			"desktop": "Kompüterge qurmaq",
+			"mac": "Mac-qa qurmaq",
+			"inApp": "Slovko-nı brauzerde açıñız"
 		},
-		"android": {
-			"title": "Android-ğa qurmaq",
-			"step1": "Brauzer köşesindegi üç noqtağa basıñız",
-			"step2": "«Ana ekranğa» saylañız"
+		"note": {
+			"manual": "Brauzer telükesizligi ilovanı bir basuvda qurmağa izin bermey, onıñ içün birqaç adımnı özüñiz yapıñız:",
+			"firefox": "Firefox saytlarnı tek Windows-ta ve er versiyada degil qura bile. Eñ qolayı — Chrome ya da Edge:",
+			"inApp": "Messencerniñ içki brauzeri saytlarnı qurıp olamay. Evelâ Slovko-nı adiy brauzerde açıñız:"
 		},
-		"ios_chrome": {
-			"step1": "Adres satırında, url adresiniñ oñundaki «Paylaş» işaretine basıñız",
-			"step2": "Menüde «Ana ekranğa» saylañız",
-			"warning": "Qeyd: quruv tek adres satırındaki «Paylaş» işareti vastasınen çalışa. «Üç noqta» menüsi vastasınen bu funktsiya yoq."
+		"step": {
+			"shareBottom": "Ekran tübündeki «Paylaş» dögmesine basıñız",
+			"shareAddressBar": "Adres satırında, url adresiniñ oñundaki «Paylaş» işaretine basıñız",
+			"shareMenu": "Brauzer menüsini açıñız ve «Paylaş» dögmesine basıñız",
+			"shareTop": "Yuqarıda, adres satırınıñ oñundaki «Paylaş» dögmesine basıñız",
+			"addHome": "Menüde «Ana ekranğa» saylañız",
+			"addHomeChrome": "Menüde «Ana ekranğa» saylañız",
+			"openHome": "Slovko-nı ana ekrandaki işaretinden açıñız — ilova brauzer panellerisiz başlar",
+			"dots": "Brauzer köşesindegi üç noqtağa basıñız",
+			"addHomeAndroid": "«Qurmaq ve yarlıq yaratmaq» saylañız (Chrome-nıñ eski versiyalarında — «Ana ekranğa qoşmaq»)",
+			"edgeMenu": "Tüpte, ortadaki menü dögmesine basıñız — üç gorizontal sızıq",
+			"edgeAddToPhone": "«Telefonğa qoşmaq» saylañız",
+			"openHomeAndroid": "Slovko-nı ana ekrandaki işaretinden açıñız — ilova brauzer panellerisiz başlar",
+			"installIcon": "Adres satırında, url adresiniñ oñundaki quruv işaretine basıñız",
+			"confirm": "«Qurmaq» dögmesinen tasdiqlañız",
+			"openApp": "Slovko-nı ilova işaretinden açıñız — o, brauzer panellerisiz ayrı pencerede başlar",
+			"macFile": "«Fayl» menüsinde «Dock-qa qoşmaq» saylañız",
+			"macAdd": "«Qoşmaq» dögmesine basıñız",
+			"openDock": "Slovko-nı Dock-taki işaretinden açıñız — o, ayrı pencerede başlar",
+			"openChromeEdge": "Slovko-nı Chrome ya da Edge-de açıñız",
+			"inAppMenu": "İçki brauzerniñ menüsini açıñız (yuqarıda üç noqta)",
+			"inAppOpen": "«Brauzerde açmaq» saylañız — Safari ya da Chrome",
+			"inAppAgain": "Anda «{button}» dögmesine kene basıñız"
 		},
-		"desktop": {
-			"title": "Kompüterge qurmaq",
-			"step1": "Adres satırında, url adresiniñ oñundaki quruv işaretine basıñız"
-		},
-		"manual": {
-			"subtitle": "Brauzeriñiz bir basuvda quruvnı desteklemey. İlovanı elnen qoşa bilirsiñiz:"
+		"warning": {
+			"iosChrome": "Qeyd: quruv tek adres satırındaki «Paylaş» işareti vastasınen çalışa. «Üç noqta» menüsi vastasınen bu funktsiya yoq."
 		}
 	},
 	"about": {
