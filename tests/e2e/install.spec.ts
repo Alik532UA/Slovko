@@ -43,7 +43,8 @@ const PHONE = { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch:
 async function seed(page: Page, settings: Record<string, unknown> = {}) {
 	await page.addInitScript((value) => {
 		localStorage.setItem('slovko_settings', JSON.stringify(value));
-	}, { hasCompletedOnboarding: true, ...settings });
+		localStorage.setItem('slovko_interfaceLanguage', 'uk');
+	}, { hasCompletedOnboarding: true, interfaceLanguage: 'uk', ...settings });
 }
 
 /**
