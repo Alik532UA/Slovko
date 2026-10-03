@@ -179,6 +179,15 @@
 </div>
 
 <style>
+	:global(html:has(.beta)),
+	:global(body:has(.beta)) {
+		height: auto !important;
+		min-height: 100dvh;
+		overflow-y: auto !important;
+		scrollbar-width: thin;
+		scrollbar-color: var(--border) var(--bg-secondary);
+	}
+
 	.beta {
 		max-width: 860px;
 		margin: 0 auto;

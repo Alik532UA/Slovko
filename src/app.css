@@ -524,6 +524,19 @@ body {
 	padding-right: env(safe-area-inset-right, 0);
 }
 
+/*
+ * Службові сторінки (BETA-CHECKLIST-v8) потребують звичайного скролу вікна
+ * колесом миші та видимого повзунка замість блокування overflow.
+ */
+html:has(.beta),
+body:has(.beta) {
+	height: auto;
+	min-height: 100dvh;
+	overflow-y: auto;
+	scrollbar-width: thin;
+	scrollbar-color: var(--border) var(--bg-secondary);
+}
+
 /* Scrollbar стилізація */
 ::-webkit-scrollbar {
 	width: 8px;
