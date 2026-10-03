@@ -285,7 +285,6 @@
 		padding: 0 0.75rem;
 		border: 1px solid var(--border);
 		border-radius: 10px;
-		background: var(--bg-secondary);
 		color: var(--accent);
 		text-decoration: none;
 		cursor: pointer;
