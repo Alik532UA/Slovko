@@ -286,7 +286,6 @@ test.describe('iPhone у Chrome', () => {
 			await expectSteps(page, ['shareAddressBar', 'addHomeChrome', 'openHome']);
 			await expect(page.getByTestId('install-guide-warning')).toHaveText(uk.pwa.warning.iosChrome);
 
-			await page.getByTestId('install-guide-warning').scrollIntoViewIfNeeded();
 			await waitForAnimationsToSettle(page);
 			const { violations, passes } = await new AxeBuilder({ page })
 				.include('[data-testid="install-guide-panel"]')

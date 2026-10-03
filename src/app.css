@@ -96,7 +96,7 @@
 	--status-info: light-dark(#2563eb, #3b82f6);
 	--status-info-bg: light-dark(#dbeafe, rgba(59, 130, 246, 0.1));
 	--status-warning: light-dark(#d97706, #f59e0b);
-	--status-warning-bg: light-dark(#fef3c7, rgba(245, 158, 11, 0.1));
+	--status-warning-bg: light-dark(#fef3c7, #292011);
 
 	/* Tooltips */
 	--tooltip-bg: light-dark(rgba(255, 255, 255, 0.95), rgba(15, 15, 25, 0.98));
