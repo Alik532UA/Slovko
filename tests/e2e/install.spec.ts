@@ -287,7 +287,11 @@ test.describe('iPhone у Chrome', () => {
 			await expect(page.getByTestId('install-guide-warning')).toHaveText(uk.pwa.warning.iosChrome);
 
 			await waitForAnimationsToSettle(page);
-			const { violations, passes } = await new AxeBuilder({ page })
+			await page.evaluate(() => {
+				const app = document.querySelector('.app-container');
+				if (app instanceof HTMLElement) app.style.visibility = 'hidden';
+			});
+			const { violations, passes, incomplete } = await new AxeBuilder({ page })
 				.include('[data-testid="install-guide-panel"]')
 				.exclude('[data-testid="install-guide-ok-btn"]')
 				.withRules(['color-contrast'])

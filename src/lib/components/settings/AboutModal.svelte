@@ -8,13 +8,7 @@
 	import { hardReset } from "$lib/services/resetService";
 	import { pwaStore } from "$lib/controllers/PwaStore.svelte";
 	import { settingsStore } from "$lib/controllers/SettingsStore.svelte";
-	import {
-		Download,
-		Instagram,
-		Facebook,
-		Linkedin,
-		Keyboard,
-	} from "lucide-svelte";
+	import { Download, Instagram, Facebook, Linkedin, Keyboard } from "lucide-svelte";
 	import ThreadsIcon from "../ui/icons/ThreadsIcon.svelte";
 	import FeedbackModal from "./FeedbackModal.svelte";
 	import InstallGuide from "../pwa/InstallGuide.svelte";
