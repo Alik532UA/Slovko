@@ -75,5 +75,3 @@ export class SubmitError extends AppError {
 		super("SUBMIT_FAILED", messageKey, cause);
 	}
 }
-
-

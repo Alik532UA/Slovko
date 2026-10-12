@@ -98,7 +98,7 @@ export const handleError: HandleClientError = ({ error, event, status }) => {
 
 	// Журнал ведеться в обох випадках: подія «вкладка пережила деплой» цінна
 	// сама по собі, і саме її бракує, коли користувач скаржиться на «Internal
-	// Error» після оновлення сайту.
+	// Error» після оновлення сайту (logs via errorHandler to logService.error).
 	errorHandler.handle(
 		error,
 		`client-unhandled:${event?.url?.pathname ?? "unknown"}`,

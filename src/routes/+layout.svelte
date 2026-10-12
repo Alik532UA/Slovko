@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
 	/**
 	 * Root Layout — Ініціалізація i18n та глобальні стилі
 	 */
@@ -21,11 +21,7 @@
 	import { unregisterOwnServiceWorkers } from "$lib/services/ownScope";
 	import LogCopyButton from "$lib/components/debug/LogCopyButton.svelte";
 	import JsonLd from "$lib/components/seo/JsonLd.svelte";
-	import {
-		initGA,
-		trackPageView,
-		trackEvent,
-	} from "$lib/services/analytics";
+	import { initGA, trackPageView, trackEvent } from "$lib/services/analytics";
 	import { webVitals } from "$lib/controllers/webVitals.svelte";
 	import { page } from "$app/state";
 	import { isHiddenRoute } from "$lib/config/hiddenRoutes";
@@ -165,6 +161,13 @@
 	};
 
 	onMount(() => {
+		const onRejection = (event: PromiseRejectionEvent) =>
+			logService.error("app", "Unhandled promise rejection", event.reason);
+		const onWindowError = (event: ErrorEvent) =>
+			logService.error("app", `${event.message} at ${event.filename}:${event.lineno}`, event.error);
+		window.addEventListener("unhandledrejection", onRejection);
+		window.addEventListener("error", onWindowError);
+
 		migrateStorageKeys();
 		logService.log("version", "Root layout onMount started");
 
@@ -393,6 +396,8 @@
 
 		return () => {
 			clearTimeout(startupWatchdog);
+			window.removeEventListener("unhandledrejection", onRejection);
+			window.removeEventListener("error", onWindowError);
 			window.removeEventListener("resize", updateVh);
 			window.removeEventListener("orientationchange", updateVh);
 			window.removeEventListener("click", handleGlobalClick);
@@ -484,10 +489,12 @@
 	const startupText = $derived.by(() => {
 		const fallback = {
 			slowTitle: "This is taking longer than usual",
-			slowHint: "The network may be slow. You can wait a little longer or reload the page.",
+			slowHint:
+				"The network may be slow. You can wait a little longer or reload the page.",
 			reload: "Reload",
 			copyDiagnostics: "Copy diagnostics",
-			copyFailed: "Clipboard unavailable — select the text below and copy it manually",
+			copyFailed:
+				"Clipboard unavailable — select the text below and copy it manually",
 		};
 		if (!dictionaryReady($locale, $isLoading)) return fallback;
 		try {
