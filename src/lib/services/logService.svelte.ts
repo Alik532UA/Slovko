@@ -195,22 +195,17 @@ class LogService {
 		return this.recentLogs.join('\n');
 	}
 
-	async copyLogsToClipboard() {
+	getFormattedReport(): string {
 		const logs = this.getRecentLogs();
 		const appVersion = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : "unknown";
 		const buildTime = typeof __BUILD_TIME__ !== 'undefined' ? __BUILD_TIME__ : "unknown";
-		
-		// ISO, а не toLocaleString(): звіт читає той, хто розбирає збій, а не
-		// користувач, який його скопіював. Голий toLocaleString() рендериться в
-		// локалі СИСТЕМИ користувача — 03.08 чи 08.03 залежно від того, де він
-		// живе, і розрізнити їх у звіті нема по чому (I18N-v8 § 4.3). Для
-		// проєкту з сімома мовами це не гіпотеза.
-		// ONLINE — половина звітів «нічого не працює» пояснюється саме цим рядком
-		// (DEBUGGING-v8 § 2.3). URL проходить ту саму редакцію, що й записи: у
-		// параметрах адреси їде код авторизації після повернення від провайдера.
 		const url = browser ? maskText(window.location.href) : 'SSR';
 		const online = browser ? String(navigator.onLine) : 'n/a';
-		const info = `--- LOG REPORT ---\nDATE: ${new Date().toISOString()}\nURL: ${url}\nONLINE: ${online}\nDEVICE: ${navigator.userAgent}\nVERSION: ${appVersion}\nBUILD: ${buildTime}\n---\n${logs}`;
+		return `--- LOG REPORT ---\nDATE: ${new Date().toISOString()}\nURL: ${url}\nONLINE: ${online}\nDEVICE: ${navigator.userAgent}\nVERSION: ${appVersion}\nBUILD: ${buildTime}\n---\n${logs}`;
+	}
+
+	async copyLogsToClipboard() {
+		const info = this.getFormattedReport();
 		try {
 			await navigator.clipboard.writeText(info);
 			return true;

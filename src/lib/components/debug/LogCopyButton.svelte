@@ -138,16 +138,31 @@
 		resetSequence.reset();
 	});
 
+	let fallbackReport = $state<string | null>(null);
+
 	async function handleCopy() {
 		const success = await logService.copyLogsToClipboard();
 		if (success) {
+			fallbackReport = null;
 			copied = true;
 			copyTimer = setTimeout(() => (copied = false), 1500);
+		} else {
+			fallbackReport = logService.getFormattedReport();
 		}
 	}
 </script>
 
 <svelte:window onkeydown={handleGlobalKeydown} />
+
+{#if fallbackReport}
+	<textarea
+		class="log-fallback"
+		readonly
+		value={fallbackReport}
+		aria-label="Debug report fallback"
+		data-testid="debug-log-fallback-input"
+	></textarea>
+{/if}
 
 {#if isVisible}
 	<button
@@ -289,5 +304,22 @@
 		.error-count {
 			font-size: 0.9rem;
 		}
+	}
+
+	.log-fallback {
+		position: fixed;
+		bottom: 76px;
+		left: 16px;
+		width: min(38rem, calc(100vw - 32px));
+		height: min(40dvh, 20rem);
+		z-index: 9999;
+		padding: 8px;
+		font-family: monospace;
+		font-size: 0.75rem;
+		background: #1e1e1e;
+		color: #ffffff;
+		border: 2px solid #ef4444;
+		border-radius: 8px;
+		resize: none;
 	}
 </style>
