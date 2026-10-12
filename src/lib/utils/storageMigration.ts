@@ -1,5 +1,5 @@
-﻿import { logService } from "../services/logService.svelte";
-const STORAGE_PREFIX = 'slovko_';
+import { logService } from "../services/logService.svelte";
+import { STORAGE_PREFIX } from "../services/storagePrefix";
 const MIGRATION_KEY = STORAGE_PREFIX + '__migrated_v1';
 
 // Міграція wordApp_ → slovko_

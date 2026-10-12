@@ -159,7 +159,7 @@
 		class="log-fallback"
 		readonly
 		value={fallbackReport}
-		aria-label="Debug report fallback"
+		aria-label={LABEL}
 		data-testid="debug-log-fallback-input"
 	></textarea>
 {/if}
