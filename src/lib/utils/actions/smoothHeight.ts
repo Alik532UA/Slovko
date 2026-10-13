@@ -1,4 +1,4 @@
-﻿import { logService } from "../../services/logService.svelte";
+import { logService } from "../../services/logService.svelte";
 
 /**
  * Systemic V24: Robust Universal Strategy
@@ -86,7 +86,13 @@ export function smoothHeight(node: HTMLElement, options: { duration?: number, ea
         };
     };
 
-    const resizeObserver = new ResizeObserver(() => updateHeight());
+    let rafId = 0;
+    const scheduleUpdate = () => {
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => updateHeight());
+    };
+
+    const resizeObserver = new ResizeObserver(scheduleUpdate);
     
     const syncMeasure = () => {
         resizeObserver.disconnect();
@@ -102,7 +108,7 @@ export function smoothHeight(node: HTMLElement, options: { duration?: number, ea
         );
         
         if (measureChanged) syncMeasure();
-        updateHeight();
+        scheduleUpdate();
     });
 
     watcher.observe(node, { childList: true, subtree: true, characterData: true });
@@ -116,6 +122,7 @@ export function smoothHeight(node: HTMLElement, options: { duration?: number, ea
             options.minHeight = newOptions.minHeight ?? 0;
         },
         destroy() {
+            cancelAnimationFrame(rafId);
             if (currentAnimation) currentAnimation.cancel();
             resizeObserver.disconnect();
             watcher.disconnect();

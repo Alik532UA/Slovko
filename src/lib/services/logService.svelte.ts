@@ -115,6 +115,7 @@ class LogService {
 	}
 
 	error(category: string, message: string, ...args: unknown[]) {
+		if (message.includes('ResizeObserver loop')) return;
 		this.errorCount++;
 		const logMsg = `[ERROR][${category.toUpperCase()}] ${message}`;
 		this.addToRecent(logMsg, args);

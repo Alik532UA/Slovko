@@ -1,4 +1,4 @@
-﻿import { logService } from "./logService.svelte";
+import { logService } from "./logService.svelte";
 import { notificationStore } from "../controllers/NotificationStore.svelte";
 
 interface ErrorOptions {
@@ -26,6 +26,7 @@ class ErrorHandler {
 
 		// 1. Extract Error Message
 		const message = this.extractMessage(error);
+		if (message.includes('ResizeObserver loop')) return;
 
 		// 2. Log to Console/Service
 		logService.error(category, `[${context}] ${message}`, error);
