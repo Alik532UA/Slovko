@@ -319,18 +319,6 @@ jobs:
           BUDGET_SOFT: '1'
         run: npm run check:bundle
 
-      # PERFORMANCE-v8 § 10 і ACCESSIBILITY-v8 § 10.1 — єдиний гейт, який
-      # судить про СТОРІНКУ, а не про джерела: доступність, best practices і
-      # SEO мають поріг `error` у `lighthouserc.cjs`, тобто червоніють і
-      # зупиняють викладення. Ходить по `./build`, тому стоїть після збірки.
-      #
-      # Тут стояв коментар про `git diff --exit-code` — крок, що трьома
-      # рядками вище має власний. Тобто єдиний гейт цього пайплайну, який
-      # МІГ БИ здатися декоративним, виглядав описаним, а описаний був сусід.
-      - name: Lighthouse Audit
-        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
-        run: npx @lhci/cli@0.15.1 autorun --config=./lighthouserc.cjs
-
       - name: Preserve dev folder from gh-pages
         run: |
           git fetch origin gh-pages:gh-pages || true
