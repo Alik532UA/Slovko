@@ -1,7 +1,7 @@
 {
 	"name": "slovko",
 	"private": true,
-	"version": "0.7.735",
+	"version": "0.7.736",
 	"type": "module",
 	"engines": {
 		"node": ">=22.12.0"
@@ -36,6 +36,8 @@
 		"analyze:cross": "node scripts/analysis/audit_cross_language.js",
 		"sync:full": "node scripts/maintenance/full_ssot_sync.js",
 		"bump": "node scripts/bump-version.js",
+		"feedback:fetch": "node scripts/fetch-word-feedback.mjs",
+		"feedback:sync": "node scripts/fetch-word-feedback.mjs --sync-remote",
 		"test:unit": "vitest run",
 		"test:e2e": "playwright test",
 		"audit:ci": "node scripts/check-audit.mjs"
