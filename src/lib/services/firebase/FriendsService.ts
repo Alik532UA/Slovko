@@ -689,8 +689,8 @@ export const FriendsService = {
 			const profilesRef = collection(db(), COLLECTIONS.PROFILES);
 			const currentUid = authStore.user?.uid || auth().currentUser?.uid;
 
-			// Беремо 100, щоб після фільтрації за порогами залишилось достатньо для TOP-20
-			const fetchLimit = 100;
+			// Межа 50 документів: відповідає правилу `request.query.limit <= 50` у firestore.rules
+			const fetchLimit = 50;
 
 			// Визначаємо поле для сортування
 			let sortField: string = metric;
