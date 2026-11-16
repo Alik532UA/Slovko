@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
 	import { _ } from "svelte-i18n";
 	import { fade, scale } from "svelte/transition";
 	import { X } from "lucide-svelte";
@@ -202,6 +202,13 @@
 		padding: 3.5rem 1.5rem 1.5rem;
 		margin: 0 auto;
 		box-sizing: border-box;
+		border-radius: 24px;
+		outline: none;
+	}
+
+	.modal:focus,
+	.modal:focus-visible {
+		outline: none;
 	}
 
 	.close-btn {

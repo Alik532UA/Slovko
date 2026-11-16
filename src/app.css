@@ -567,6 +567,12 @@ body:has(.beta) {
 	outline-offset: 2px;
 }
 
+/* Програмний фокус на контейнерах (наприклад, модальне вікно з tabindex="-1") не потребує рамки */
+[tabindex="-1"]:focus,
+[tabindex="-1"]:focus-visible {
+	outline: none;
+}
+
 /* Button reset */
 button {
 	font-family: inherit;

@@ -1,7 +1,7 @@
 {
 	"name": "slovko",
 	"private": true,
-	"version": "0.7.737",
+	"version": "0.7.738",
 	"type": "module",
 	"engines": {
 		"node": ">=22.12.0"
