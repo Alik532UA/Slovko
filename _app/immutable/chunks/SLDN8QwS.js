@@ -138,7 +138,7 @@ const n=`{
 	"emission": "εκπομπή",
 	"enhance": "βελτιώνω",
 	"enhance_improve": "βελτιώνω",
-	"enhance_quality": "βελτιώνω την ποιότητα",
+	"enhance_quality": "βελτιώνω",
 	"enhancement_augmentation": "ενίσχυση",
 	"envision": "οραματίζομαι το μέλλον",
 	"envision_future": "οραματίζομαι το μέλλον",
