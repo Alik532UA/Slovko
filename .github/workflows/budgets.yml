@@ -54,7 +54,7 @@ concurrency:
 
 jobs:
   budgets:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       # Для кроку, що заводить Issue при падінні (§ 1.18.3).

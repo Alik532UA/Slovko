@@ -33,7 +33,7 @@ jobs:
   # Окремий джоб, а не крок у деплої: емулятор вимагає Java й не потребує
   # збірки, тож деплой на нього не чекає.
   rules:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     timeout-minutes: 15
@@ -93,7 +93,7 @@ jobs:
   # лишатися розгортаним і тому, хто форкнув репозиторій без доступу до бази.
   publish-rules:
     needs: rules
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     timeout-minutes: 10
@@ -168,7 +168,7 @@ jobs:
     # Заразом це робить `rules` блокувальним — доти деплой не чекав на нього
     # зовсім, тобто збірка з дірявими правилами публікувалася без перешкод.
     needs: publish-rules
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
     timeout-minutes: 30
