@@ -103,7 +103,7 @@ jobs:
       # `github-script` замість стороннього екшена — менша поверхня залежностей.
       - name: Сигнал про перевищення
         if: ${{ failure() && steps.budget.outcome == 'failure' }}
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const title = 'Бюджет початкового JS перевищено';
