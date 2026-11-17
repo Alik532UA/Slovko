@@ -136,4 +136,28 @@ describe("масштабування від екрана (FLUID-SIZING-v8 § 2)"
 				"якого немає.\nзараз:\n  " + sizeMediaInComponents.join("\n  "),
 		).toBe(KNOWN_SIZE_MEDIA_IN_COMPONENTS);
 	});
+
+	it("grid-template-columns does not use bare 1fr (FLUID-SIZING-v10 § 1)", () => {
+		const bare1frOffenders: string[] = [];
+		const BARE_1FR = /repeat\(\s*\d+\s*,\s*1fr\s*\)/g;
+		for (const file of files) {
+			const text = readFileSync(file, "utf8");
+			for (const m of text.matchAll(BARE_1FR)) {
+				bare1frOffenders.push(`${file}: ${m[0]}`);
+			}
+		}
+		expect(bare1frOffenders, "Use repeat(N, minmax(0, 1fr)) instead of bare 1fr").toEqual([]);
+	});
+
+	it("minmax does not use rigid pixel floors directly without min() (FLUID-SIZING-v10 § 1)", () => {
+		const HARD_FLOOR = /minmax\(\s*(?!min\()[\d.]+(?:px|rem|em|ch)\s*,/g;
+		const rigidOffenders: string[] = [];
+		for (const file of files) {
+			const text = readFileSync(file, "utf8");
+			for (const m of text.matchAll(HARD_FLOOR)) {
+				rigidOffenders.push(`${file}: ${m[0]}`);
+			}
+		}
+		expect(rigidOffenders, "Wrap rigid minimum in min(Npx, 100%)").toEqual([]);
+	});
 });

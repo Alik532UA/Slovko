@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
 	import { _ } from "svelte-i18n";
 	import type { TenseForm } from "$lib/types/index";
 	import { Plus, Minus, HelpCircle, Layers, LayoutGrid } from "lucide-svelte";
@@ -110,7 +110,7 @@
 	/* Modern Form Cards */
 	.forms-grid {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 0.75rem;
 	}
 
