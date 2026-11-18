@@ -75,7 +75,8 @@ const OVERSIZE_CEILINGS: Record<string, number> = {
 	"src/lib/components/game/GameStats.svelte": 399,
 	"src/lib/components/profile/AvatarEditor.svelte": 374,
 	"src/lib/components/settings/AboutModal.svelte": 370,
-	"src/lib/controllers/ProgressStore.svelte.ts": 361,
+	// 361 → 364: перевірка гостьового та неавторизованого сеансу перед запитом лідерборду
+	"src/lib/controllers/ProgressStore.svelte.ts": 364,
 	"src/lib/components/friends/UserSearch.svelte": 355,
 	"src/lib/components/settings/FeedbackModal.svelte": 337,
 	"src/lib/components/settings/VoiceSelectionModal.svelte": 327,

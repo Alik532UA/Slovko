@@ -1,4 +1,4 @@
-﻿/**
+/**
  * FriendsService - Сервіс для управління підписками та друзями
  *
  * Структура Firestore:
@@ -448,7 +448,7 @@ export const FriendsService = {
 		searchQuery: string,
 		maxResults = 10,
 	): Promise<UserProfile[]> {
-		if (!searchQuery || searchQuery.length < 2) return [];
+		if (!searchQuery || searchQuery.length < 2 || (!authStore.user?.uid && !auth().currentUser?.uid)) return [];
 
 		try {
 			const profilesRef = collection(db(), COLLECTIONS.PROFILES);
@@ -511,7 +511,7 @@ export const FriendsService = {
 	 * Отримати кілька профілів за один запит (Batch Get)
 	 */
 	async getUserProfiles(uids: string[]): Promise<UserProfile[]> {
-		if (!uids.length) return [];
+		if (!uids.length || (!authStore.user?.uid && !auth().currentUser?.uid)) return [];
 
 		try {
 			const profilesRef = collection(db(), COLLECTIONS.PROFILES);
@@ -544,6 +544,7 @@ export const FriendsService = {
 	 * Отримати публічний профіль користувача
 	 */
 	async getUserProfile(uid: string): Promise<UserProfile | null> {
+		if (!uid || (!authStore.user?.uid && !auth().currentUser?.uid)) return null;
 		try {
 			const profileRef = doc(db(), COLLECTIONS.PROFILES, uid);
 			const snapshot = await getDoc(profileRef);
@@ -685,9 +686,11 @@ export const FriendsService = {
 			return LEADERBOARD_CACHE[cacheKey].data;
 		}
 
+		const currentUid = authStore.user?.uid || auth().currentUser?.uid;
+		if (!currentUid || authStore.isGuest) return [];
+
 		try {
 			const profilesRef = collection(db(), COLLECTIONS.PROFILES);
-			const currentUid = authStore.user?.uid || auth().currentUser?.uid;
 
 			// Межа 50 документів: відповідає правилу `request.query.limit <= 50` у firestore.rules
 			const fetchLimit = 50;
@@ -695,11 +698,7 @@ export const FriendsService = {
 			// Визначаємо поле для сортування
 			let sortField: string = metric;
 			if (cefrLevel !== "all") {
-				if (metric === "bestStreak") {
-					sortField = metric;
-				} else {
-					sortField = `level_${cefrLevel}_${metric}`;
-				}
+				sortField = metric === "bestStreak" ? metric : `level_${cefrLevel}_${metric}`;
 			}
 
 			// Створюємо базовий запит

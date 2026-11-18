@@ -130,7 +130,9 @@ class ProgressStoreClass {
 			}
 
 			const currentTotalCorrect = this._progress.totalCorrect + 1;
-			this.checkLeaderboard(currentTotalCorrect).catch((e) => logService.error("debug", "Promise rejection:", e));
+			if (authStore.uid && !authStore.isGuest) {
+				this.checkLeaderboard(currentTotalCorrect).catch((e) => logService.error("debug", "Promise rejection:", e));
+			}
 
 			const currentLevelStats = this._progress.levelStats[levelId] || {
 				totalCorrect: 0,
@@ -255,9 +257,10 @@ class ProgressStoreClass {
 	}
 
 	private async checkLeaderboard(currentTotalCorrect: number) {
+		const currentUid = authStore.uid;
+		if (!currentUid || authStore.isGuest) return;
 		try {
 			const leader = await leaderboardSyncService.getLeader();
-			const currentUid = authStore.uid;
 			if (!leader) return;
 			const gap = leader.totalCorrect - currentTotalCorrect;
 
@@ -272,11 +275,11 @@ class ProgressStoreClass {
 			} else {
 				if (this.sessionOvertakenUid === leader.uid) return;
 				const realLeaderScore = await leaderboardSyncService.verifyLeaderScore(leader.uid);
-				if (realLeaderScore !== null && currentTotalCorrect > realLeaderScore) {
-					localEventsStore.addLeaderOvertaken();
-					this.sessionOvertakenUid = leader.uid;
-					leaderboardSyncService.clearCache();
-				} else if (realLeaderScore !== null) {
+				if (realLeaderScore !== null) {
+					if (currentTotalCorrect > realLeaderScore) {
+						localEventsStore.addLeaderOvertaken();
+						this.sessionOvertakenUid = leader.uid;
+					}
 					leaderboardSyncService.clearCache();
 				}
 			}

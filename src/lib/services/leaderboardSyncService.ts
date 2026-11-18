@@ -1,6 +1,7 @@
-﻿import { FriendsService } from "../services/firebase/FriendsService";
+import { FriendsService } from "../services/firebase/FriendsService";
 import { logService } from "./logService.svelte";
 import { getDb } from "../services/firebase/config";
+import { authStore } from "../controllers/AuthStore.svelte";
 /*
  * Ліниві акцесори до Firebase.
  *
@@ -35,6 +36,10 @@ class LeaderboardSyncService {
 	 * Отримує дані про поточного лідера (з кешем)
 	 */
 	async getLeader(): Promise<LeaderInfo | null> {
+		if (authStore.isGuest || !authStore.uid) {
+			return null;
+		}
+
 		const now = Date.now();
 		if (this.leaderCache && now - this.leaderCache.timestamp < this.CACHE_TTL) {
 			return this.leaderCache;
@@ -65,6 +70,10 @@ class LeaderboardSyncService {
 	 * Використовується для фінального сповіщення про обгін
 	 */
 	async verifyLeaderScore(uid: string): Promise<number | null> {
+		if (authStore.isGuest || !authStore.uid) {
+			return null;
+		}
+
 		try {
 			const userDoc = await getDoc(doc(db(), COLLECTIONS.PROFILES, uid));
 			if (userDoc.exists()) {
