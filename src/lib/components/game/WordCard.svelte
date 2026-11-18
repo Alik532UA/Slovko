@@ -56,7 +56,7 @@
 	$effect(() => {
 		const timer = setTimeout(() => {
 			isMountedForBlur = true;
-		}, 3000 + appearanceDelay);
+		}, 1500 + appearanceDelay);
 		return () => clearTimeout(timer);
 	});
 

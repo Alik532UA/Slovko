@@ -4,7 +4,7 @@
 	 * Красиве вікно з прапорами
 	 */
 	import { _ } from "svelte-i18n";
-	import { Speech, Captions } from "lucide-svelte";
+	import { Speech, Captions, Settings } from "lucide-svelte";
 	import { settingsStore } from "$lib/controllers/SettingsStore.svelte";
 	import { logService } from "$lib/services/logService.svelte";
 	import VoiceSelectionModal from "./VoiceSelectionModal.svelte";
@@ -62,6 +62,11 @@
 
 			pressTimer = null;
 		}, 600);
+	}
+
+	function openVoiceSelection(side: "source" | "target") {
+		currentSide = side;
+		showVoiceSelection = true;
 	}
 
 	function handleContextMenu(e: MouseEvent, side: "source" | "target") {
@@ -284,6 +289,18 @@
 							>
 								<Speech size={16} />
 							</button>
+
+							<!-- Voice Settings -->
+							<button
+								type="button"
+								class="icon-btn small"
+								onclick={() => openVoiceSelection("source")}
+								aria-label={$_("settings.voiceSettings")}
+								aria-haspopup="dialog"
+								data-testid="voice-settings-left-btn"
+							>
+								<Settings size={16} />
+							</button>
 						</div>
 					</div>
 
@@ -358,6 +375,18 @@
 								data-testid="pronunciation-right-btn"
 							>
 								<Speech size={16} />
+							</button>
+
+							<!-- Voice Settings -->
+							<button
+								type="button"
+								class="icon-btn small"
+								onclick={() => openVoiceSelection("target")}
+								aria-label={$_("settings.voiceSettings")}
+								aria-haspopup="dialog"
+								data-testid="voice-settings-right-btn"
+							>
+								<Settings size={16} />
 							</button>
 						</div>
 					</div>

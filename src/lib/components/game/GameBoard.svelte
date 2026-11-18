@@ -181,8 +181,8 @@
 						{#key card.id + lastDataKey}
 							<div
 								class="card-wrapper"
-								in:glassTransition={{ duration: 3000, delay: i * 150, x: -50, entrance: true }}
-								out:glassTransition={{ duration: 1000, delay: i * 100, x: -50, entrance: false }}
+								in:glassTransition={{ duration: 1500, delay: i * 75, x: -50, entrance: true }}
+								out:glassTransition={{ duration: 800, delay: i * 50, x: -50, entrance: false }}
 								data-testid="card-slot-source-{i}"
 								data-card-id={card.id}
 							>
@@ -211,8 +211,8 @@
 						{#key card.id + lastDataKey}
 							<div
 								class="card-wrapper"
-								in:glassTransition={{ duration: 3000, delay: (i + 4) * 150, x: 50, entrance: true }}
-								out:glassTransition={{ duration: 1000, delay: i * 100, x: 50, entrance: false }}
+								in:glassTransition={{ duration: 1500, delay: (i + 4) * 75, x: 50, entrance: true }}
+								out:glassTransition={{ duration: 800, delay: i * 50, x: 50, entrance: false }}
 								data-testid="card-slot-target-{i}"
 								data-card-id={card.id}
 							>
@@ -249,7 +249,7 @@
 	.drag-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
 	.card-hover-highlight { position: absolute; inset: 0; border: 2px solid var(--selected-border); border-radius: 12px; pointer-events: none; z-index: 10; box-shadow: 0 0 10px rgba(58, 143, 214, 0.3); animation: pulse-highlight 2s infinite ease-in-out; }
 	@keyframes pulse-highlight { 0% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.004); } 100% { opacity: 0.5; transform: scale(1); } }
-	.game-board { display: flex; gap: 1rem; width: 100%; max-width: 500px; height: 100%; max-height: 1000px; margin: 0 auto; padding: 1rem; position: relative; outline: none; -webkit-tap-highlight-color: transparent; user-select: none; }
+	.game-board { display: flex; gap: 1rem; width: 100%; max-width: 500px; height: 100%; max-height: 1000px; margin: 0 auto; padding: 1rem; position: relative; outline: none; -webkit-tap-highlight-color: transparent; user-select: none; overflow-x: clip; }
 	.column { flex: 1; display: flex; flex-direction: column; gap: 0.75rem; height: 95%; }
 	.card-slot { flex: 1; min-height: 0; display: grid; place-items: stretch; }
 	.card-wrapper {

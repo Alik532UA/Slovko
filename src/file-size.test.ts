@@ -63,7 +63,8 @@ const OVERSIZE_CEILINGS: Record<string, number> = {
 	"src/lib/components/navigation/PlaylistModal.svelte": 613,
 	"src/lib/services/firebase/FriendsService.ts": 606,
 	"src/routes/+layout.svelte": 548,
-	"src/lib/components/settings/LanguageSettings.svelte": 508,
+	// 508 → 532: додано окрему кнопку налаштування голосу (Voice Settings) для лівої та правої колонок
+	"src/lib/components/settings/LanguageSettings.svelte": 532,
 	"src/lib/components/navigation/modes/PlaylistGrid.svelte": 482,
 	"src/lib/controllers/PlaylistStore.svelte.ts": 457,
 	"src/lib/components/profile/Leaderboard.svelte": 452,

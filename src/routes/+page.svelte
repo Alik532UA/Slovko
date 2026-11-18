@@ -133,6 +133,7 @@
 		padding: 32px 1rem 0px;
 		gap: 1rem;
 		overflow-y: auto; /* Allow scrolling within main if content overflows */
+		overflow-x: clip; /* Запобігає появі горизонтального скролу під час анімації карток */
 		width: 100%;
 	}
 </style>
