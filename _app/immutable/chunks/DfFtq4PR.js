@@ -189,6 +189,7 @@ const t=`{
 		"columnRight": "right column card language",
 		"transcription": "Show transcription",
 		"pronunciation": "Pronunciation",
+		"voiceSettings": "Voice settings",
 		"theme": "Theme",
 		"background": "Background",
 		"bg_solid": "Solid",

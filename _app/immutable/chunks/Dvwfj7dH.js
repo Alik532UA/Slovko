@@ -189,6 +189,7 @@ const t=`{
 		"columnRight": "język kart po prawej",
 		"transcription": "Pokaż transkrypcję",
 		"pronunciation": "Odtwarzaj wymowę",
+		"voiceSettings": "Ustawienia głosu",
 		"theme": "Motyw",
 		"background": "Tło",
 		"bg_solid": "Jednolity",

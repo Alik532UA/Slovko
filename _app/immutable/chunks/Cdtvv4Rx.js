@@ -189,6 +189,7 @@ const t=`{
 		"columnRight": "мова карток що праворуч",
 		"transcription": "Показувати транскрипцію",
 		"pronunciation": "Озвучувати слова",
+		"voiceSettings": "Налаштування голосу",
 		"theme": "Тема",
 		"background": "Фон",
 		"bg_solid": "Однотонний",

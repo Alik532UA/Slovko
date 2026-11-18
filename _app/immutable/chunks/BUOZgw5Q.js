@@ -158,6 +158,7 @@ const e=`{
 		"columnRight": "Kartensprache rechte Spalte",
 		"transcription": "Transkription anzeigen",
 		"pronunciation": "Wörter aussprechen",
+		"voiceSettings": "Stimmeinstellungen",
 		"theme": "Thema",
 		"background": "Hintergrund",
 		"bg_solid": "Einfarbig",

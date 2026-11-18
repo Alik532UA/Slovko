@@ -158,6 +158,7 @@ const e=`{
 		"columnRight": "kaarttaal rechter kolom",
 		"transcription": "Toon transcriptie",
 		"pronunciation": "Spreek woorden uit",
+		"voiceSettings": "Steminstellingen",
 		"theme": "Thema",
 		"background": "Achtergrond",
 		"bg_solid": "Effen",

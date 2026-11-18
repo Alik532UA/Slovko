@@ -158,6 +158,7 @@ const t=`{
 		"columnRight": "oñ sutun kart tili",
 		"transcription": "Transkriptsiya köster",
 		"pronunciation": "Sözlerni oqumaq",
+		"voiceSettings": "Ses sazlamaları",
 		"theme": "Tema",
 		"background": "Fon",
 		"bg_solid": "Tek renkli",
