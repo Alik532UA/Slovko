@@ -6,7 +6,7 @@
 	import { createKeySequence } from "$lib/services/keySequence";
 	import { logService } from "$lib/services/logService.svelte";
 	import { hardReset } from "$lib/services/resetService";
-	import { Check, Copy, Bug, Eye, RotateCcw, EyeOff } from "lucide-svelte";
+	import { Check, Copy, Eye, RotateCcw, EyeOff } from "lucide-svelte";
 	import { _, isLoading, locale } from "svelte-i18n";
 	import { dictionaryReady } from "$lib/i18n/dictionaryReady";
 	import ErrorLogModal from "./ErrorLogModal.svelte";

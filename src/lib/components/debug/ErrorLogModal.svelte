@@ -135,10 +135,10 @@
 				</div>
 
 				<div class="actions">
-					<button type="button" class="btn-action" class:btn-action--copied={copied} onclick={handleCopy} data-testid="error-log-modal-copy-btn" aria-label="Скопіювати звіт">
+					<button type="button" class="btn-action" class:btn-action--copied={copied} onclick={handleCopy} data-testid="error-log-modal-copy-btn">
 						{#if copied}<Check size={14} /><span>Скопійовано</span>{:else}<Copy size={14} /><span>Копіювати звіт</span>{/if}
 					</button>
-					<button type="button" class="btn-action btn-action--danger" onclick={() => logService.clear()} disabled={rawLogs.length === 0} data-testid="error-log-modal-clear-btn" aria-label="Очистити журнал">
+					<button type="button" class="btn-action btn-action--danger" onclick={() => logService.clear()} disabled={rawLogs.length === 0} data-testid="error-log-modal-clear-btn">
 						<Trash2 size={14} /><span>Очистити</span>
 					</button>
 				</div>
