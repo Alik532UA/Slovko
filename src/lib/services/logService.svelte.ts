@@ -192,6 +192,23 @@ class LogService {
 		}
 	}
 
+	get logs(): string[] {
+		return this.recentLogs;
+	}
+
+	clear() {
+		this.errorCount = 0;
+		this.recentLogs = [];
+		if (browser) {
+			window.__recentLogs = this.recentLogs;
+			sessionStorageProvider.removeItem?.("logs");
+		}
+	}
+
+	getReport(): string {
+		return this.getFormattedReport();
+	}
+
 	getRecentLogs() {
 		return this.recentLogs.join('\n');
 	}

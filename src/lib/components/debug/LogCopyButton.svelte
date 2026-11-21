@@ -6,60 +6,23 @@
 	import { createKeySequence } from "$lib/services/keySequence";
 	import { logService } from "$lib/services/logService.svelte";
 	import { hardReset } from "$lib/services/resetService";
-	import { Check, Copy } from "lucide-svelte";
+	import { Check, Copy, Bug, Eye, RotateCcw, EyeOff } from "lucide-svelte";
 	import { _, isLoading, locale } from "svelte-i18n";
 	import { dictionaryReady } from "$lib/i18n/dictionaryReady";
+	import ErrorLogModal from "./ErrorLogModal.svelte";
 
-	/**
-	 * Службове табло: номер версії, лічильник помилок і збір звіту — ОДИН елемент.
-	 *
-	 * **Форма змінюється, місце — ні.** У спокої це капсула з номером версії; коли
-	 * є помилки — червоний кружок із їхньою кількістю; після копіювання — галочка.
-	 * Доти номера версії тут не було: його показувало лише вікно «Про застосунок»,
-	 * тобто на скріншоті збою версії не було видно ніколи.
-	 *
-	 * **Видимість (DEBUGGING-v8 § 2.1, із відхиленням).** У dev табло видиме
-	 * ЗАВЖДИ, а не лише за наявності помилок, як приписує канон: воно тепер несе
-	 * номер версії, а його ховати нема сенсу. Доти в dev воно зʼявлялося лише при
-	 * помилці — тобто найчастіше потрібна річ, «яка версія на екрані?», місця на
-	 * екрані не мала.
-	 *
-	 * **Три входи, і вони навмисно різні за природою.** `?debug=1` в адресі
-	 * працює на телефоні й пересилається посиланням; серія натискань `V` — для
-	 * того, хто вже сидить за клавіатурою; збережений прапорець переживає
-	 * перезавантаження. На дотику серія недосяжна, і саме тому адресний параметр
-	 * лишається: інакше версію на телефоні не побачив би ніхто.
-	 */
 	let copied = $state(false);
 	let copyTimer: ReturnType<typeof setTimeout> | undefined;
+	let showMenu = $state(false);
+	let isModalOpen = $state(false);
+	let userDismissed = $state(false);
+	let menuX = $state(16);
+	let menuY = $state(60);
 
 	const appVersion =
 		typeof __APP_VERSION__ !== "undefined" ? __APP_VERSION__ : "unknown";
 
-	/**
-	 * Підпис НЕ через i18n.
-	 *
-	 * Причина не в лінощах перекладу, а в порядку запуску. Табло малюється вище за
-	 * гейт готовності, тобто на кожній сторінці й ДО того, як `svelte-i18n`
-	 * отримає початкову локаль. `$_(…)` у цій точці кидає «Cannot format a message
-	 * without first setting the initial locale» — і кидає з кореневого layout,
-	 * тобто валить застосунок цілком. Доти цього не було видно рівно тому, що в dev
-	 * кнопка зʼявлялася лише ПІСЛЯ першої помилки, а на той час локаль уже стояла.
-	 *
-	 * Друга причина важливіша за першу: службовий елемент існує, щоб зняти звіт
-	 * тоді, коли застосунок зламався. Підпис, який залежить від того, чи
-	 * завантажилися переклади, не дозволив би повідомити саме про зламані переклади.
-	 *
-	 * Текст підтвердження скидання раніше стояв тут поруч за тим самим
-	 * міркуванням — і платив за це дорожче: підпис бачать усі й завжди, а
-	 * підтвердження бачать РАЗ, за секунду до безповоротного стирання прогресу,
-	 * і бачили його українською навіть ті, у кого інтерфейс грецькою. Тепер він
-	 * іде через словник під охороною `dictionaryReady()`: перша причина знята
-	 * (охорона не дає кинути), друга лишається виконаною (є запасний рядок).
-	 */
 	const LABEL = "Копіювати звіт про роботу / Copy report";
-
-	/** Двомовний запас — та сама форма, що й у `LABEL`, і з тієї ж причини. */
 	const RESET_CONFIRM_FALLBACK =
 		"Це видалить УСІ локальні дані, кукі та кеш цього застосунку. Продовжити? / " +
 		"This will delete ALL local data, cookies and cache of this app. Continue?";
@@ -70,55 +33,23 @@
 			: RESET_CONFIRM_FALLBACK,
 	);
 
-	/*
-	 * `building` обов'язковий: під час пререндеру рядок запиту невідомий, і
-	 * SvelteKit кидає на `url.searchParams`, а не віддає порожнє значення.
-	 * Кнопка малюється вище за гейт готовності, тобто на КОЖНІЙ сторінці — тож
-	 * без цієї умови жодна сторінка з увімкненим SSR не збирається взагалі.
-	 * Знайшлося це рівно так: сторінка чеклиста бета-тестування — перша, якій
-	 * SSR потрібен (їй треба доставити `noindex` у зібраний HTML), — валила
-	 * збірку з «500» і стеком у чужому файлі.
-	 */
 	const urlDebug = $derived(
 		!building && browser && page.url.searchParams.get("debug") === "1",
 	);
-	/*
-	 * `?debug=1` діє ПОВЕРХ збереженого стану: посилання з ним мусить показати
-	 * табло навіть тому, хто раніше сховав його серією натискань. Інакше
-	 * найнадійніший шлях (єдиний досяжний на телефоні) можна було б заблокувати
-	 * назавжди.
-	 */
-	const isVisible = $derived(urlDebug || debugMode.enabled);
+	const isVisible = $derived((urlDebug || debugMode.enabled) && !userDismissed);
 
-	/**
-	 * Серія `V` ПЕРЕМИКАЄ табло, а поріг залежить від напрямку.
-	 *
-	 * Функція, а не число: після спрацювання потрібний поріг інший (щойно табло
-	 * стало видимим, сховати його коштує 5, а не 55). Перестворювати
-	 * послідовність на кожну зміну стану означало б губити половину набраної серії.
-	 */
 	const versionSequence = createKeySequence({
 		code: "KeyV",
 		threshold: () => debugMode.pressesToToggle,
-		onComplete: () =>
+		onComplete: () => {
+			userDismissed = false;
 			logService.log(
 				"system",
 				`Табло ${debugMode.toggle() ? "показано" : "сховано"}`,
-			),
+			);
+		},
 	});
 
-	/**
-	 * Серія `R` — аварійне скидання.
-	 *
-	 * Поріг у проді 55, а не 50: те саме число, що й у решти проєктів на цьому
-	 * origin. Різні числа для того самого жесту — це не налаштування, а те, що
-	 * доводиться згадувати на кожному сайті окремо.
-	 *
-	 * У проді питається підтвердження: разом із порогом це два незалежні
-	 * барʼєри перед знищенням місцевого прогресу, і жоден не покладається на
-	 * уважність. У dev підтвердження немає — там скидання роблять навмисно й
-	 * часто, і поріг у 5 натискань уже є бар'єром.
-	 */
 	const resetSequence = createKeySequence({
 		code: "KeyR",
 		threshold: dev ? 5 : 55,
@@ -126,10 +57,11 @@
 	});
 
 	function handleGlobalKeydown(event: KeyboardEvent) {
-		// Обидві серії отримують КОЖНУ подію, включно з тією, що завершила сусідню:
-		// інакше `V` не скидала б набране в `R`, і серія перестала б бути серією.
 		versionSequence.handle(event);
 		resetSequence.handle(event);
+		if (event.key === "Escape" && showMenu) {
+			showMenu = false;
+		}
 	}
 
 	onDestroy(() => {
@@ -150,9 +82,43 @@
 			fallbackReport = logService.getFormattedReport();
 		}
 	}
+
+	function openMenu(e: MouseEvent) {
+		e.stopPropagation();
+		const target = e.currentTarget as HTMLElement | null;
+		const rect = target?.getBoundingClientRect();
+		if (rect) {
+			menuX = rect.left;
+			menuY = Math.max(8, rect.top - 180);
+		}
+		showMenu = !showMenu;
+	}
+
+	function handleCopyReport() {
+		showMenu = false;
+		void handleCopy();
+	}
+
+	function handleViewErrors() {
+		showMenu = false;
+		isModalOpen = true;
+	}
+
+	function handleClearLogs() {
+		showMenu = false;
+		logService.clear();
+	}
+
+	function handleHideBadge() {
+		showMenu = false;
+		userDismissed = true;
+		if (debugMode.enabled) {
+			debugMode.toggle();
+		}
+	}
 </script>
 
-<svelte:window onkeydown={handleGlobalKeydown} />
+<svelte:window onkeydown={handleGlobalKeydown} onclick={() => { if (showMenu) showMenu = false; }} />
 
 {#if fallbackReport}
 	<textarea
@@ -170,12 +136,13 @@
 		class="log-fab"
 		class:has-errors={logService.errorCount > 0}
 		class:copied
-		onclick={handleCopy}
+		onclick={openMenu}
+		oncontextmenu={(e) => { e.preventDefault(); openMenu(e); }}
 		aria-label={`${LABEL} — ${appVersion}`}
+		aria-haspopup="menu"
+		aria-expanded={showMenu}
 		data-testid="app-version-value"
 	>
-		<!-- Номер версії — поза гілками: лічильник ДОДАЄТЬСЯ до нього, а не заміняє
-		     його. Інакше на dev, де помилка буває майже завжди, версії не видно. -->
 		{#if copied}
 			<Check size={14} class="hint-icon" />
 		{:else if logService.errorCount > 0}
@@ -183,143 +150,84 @@
 				>{logService.errorCount > 99 ? "99+" : logService.errorCount}</span
 			>
 		{:else}
-			<!-- У debug-режимі помилок може не бути зовсім: червоний нуль читався б
-			     як «одна помилка», а не як «звіт доступний». -->
 			<Copy size={12} class="hint-icon" />
 		{/if}
 		<span class="version">{appVersion}</span>
 	</button>
+
+	{#if showMenu}
+		<div
+			class="context-menu"
+			role="menu"
+			tabindex="-1"
+			style="left: {menuX}px; top: {menuY}px;"
+			data-testid="service-badge-context-menu"
+			onclick={(e) => e.stopPropagation()}
+			onkeydown={(e) => { if (e.key === 'Escape') showMenu = false; }}
+		>
+			<button
+				type="button"
+				role="menuitem"
+				class="menu-item"
+				onclick={handleCopyReport}
+				data-testid="service-badge-copy-report-btn"
+			>
+				<Copy size={14} />
+				<span>Скопіювати повний звіт</span>
+			</button>
+			<button
+				type="button"
+				role="menuitem"
+				class="menu-item"
+				onclick={handleViewErrors}
+				data-testid="service-badge-view-errors-btn"
+			>
+				<Eye size={14} />
+				<span>Переглянути помилки ({logService.errorCount})</span>
+			</button>
+			<button
+				type="button"
+				role="menuitem"
+				class="menu-item"
+				onclick={handleClearLogs}
+				data-testid="service-badge-clear-btn"
+			>
+				<RotateCcw size={14} />
+				<span>Скинути лічильник</span>
+			</button>
+			<button
+				type="button"
+				role="menuitem"
+				class="menu-item menu-item--hide"
+				onclick={handleHideBadge}
+				data-testid="service-badge-hide-btn"
+			>
+				<EyeOff size={14} />
+				<span>Приховати табло</span>
+			</button>
+		</div>
+	{/if}
+
+	<ErrorLogModal isOpen={isModalOpen} onclose={() => (isModalOpen = false)} />
 {/if}
 
 <style>
-	.log-fab {
-		position: fixed;
-		bottom: 16px;
-		left: 16px;
-		z-index: 9999;
-
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 4px;
-
-		/* Капсула: номер версії в коло 32px не влазить. */
-		min-height: 32px;
-		padding: 0 8px;
-		border-radius: 16px;
-
-		background: var(--card-bg);
-		color: var(--text-primary);
-		border: 2px solid var(--card-border);
-		cursor: pointer;
-
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-		transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-	}
-
-	.log-fab:hover {
-		transform: scale(1.05);
-	}
-
-	.version {
-		font-size: 10px;
-		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-			monospace;
-		line-height: 1;
-		/* Номер читає той, хто дивиться на скріншот, тож він не має «розсипатися». */
-		white-space: nowrap;
-	}
-
-	/*
-	 * Іконка копіювання — підказка, що капсула клікабельна, а не окрема дія. Тому
-	 * вона дрібніша за номер і тане: головне тут число версії.
-	 */
-	.log-fab :global(.hint-icon) {
-		opacity: 0.6;
-		flex: none;
-	}
-
-	/*
-	 * Форма НЕ змінюється між станами: капсула лишається капсулою, бо номер версії
-	 * лишається на місці. Доти помилки перетворювали табло на кружок 32px — зникала не
-	 * лише версія, а й упізнаваність елемента.
-	 */
-
-	/*
-	 * Червоний темніший за #f44336 — за WCAG AA, не за смаком: білий текст на
-	 * попередньому давав 3.7:1 при потрібних 4.5. Тепер 5.46:1. Лічильник помилок
-	 * — це та плашка, яку читають саме тоді, коли щось пішло не так, тобто
-	 * найгірший кандидат на «майже читно». Літерали, а не токени теми: сигнал «є
-	 * помилки» мусить виглядати однаково в усіх чотирьох темах.
-	 */
-	.log-fab.has-errors {
-		background: #c92a2a;
-		color: white;
-		border-color: #7f1d1d;
-		box-shadow: 0 4px 12px rgba(201, 42, 42, 0.4);
-	}
-
-	/* Зелений — за тим самим правилом: #2f9e44 давав під білим 3.45:1, #237a35 дає 5.38:1. */
-	.log-fab.copied {
-		background: #237a35;
-		color: white;
-		border-color: #1b5e20;
-		box-shadow: 0 4px 12px rgba(47, 158, 68, 0.4);
-	}
-
-	/*
-	 * Лічильник — плашка ПЕРЕД номером, а не текст замість нього. Темніший червоний за
-	 * тло капсули (#7f1d1d на #c92a2a): білий текст дає на ньому 10:1.
-	 */
-	.error-count {
-		font-size: 0.75rem;
-		font-weight: 800;
-		line-height: 1;
-		padding: 2px 5px;
-		border-radius: 8px;
-		background: #7f1d1d;
-		color: white;
-		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-			monospace;
-	}
-
-	/*
-	 * Розмір залежить від СПОСОБУ ВВЕДЕННЯ, а не від ширини вікна: на десктопі
-	 * 600px кнопка лишалася б маленькою для миші, а на планшеті 1024px —
-	 * маленькою для дотику (ACCESSIBILITY-v8 § 8, DEBUGGING-v8 § 2.2). Доти тут
-	 * стояв `max-width: 640px`, який ЗМЕНШУВАВ кнопку до 24px саме там, де
-	 * потрібні 44.
-	 */
+	.log-fab { position: fixed; bottom: 16px; left: 16px; z-index: 9999; display: flex; align-items: center; justify-content: center; gap: 4px; min-height: 32px; padding: 0 8px; border-radius: 16px; background: var(--card-bg); color: var(--text-primary); border: 2px solid var(--card-border); cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+	.log-fab:hover { transform: scale(1.05); }
+	.version { font-size: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; line-height: 1; white-space: nowrap; }
+	.log-fab :global(.hint-icon) { opacity: 0.6; flex: none; }
+	.log-fab.has-errors { background: #c92a2a; color: white; border-color: #7f1d1d; box-shadow: 0 4px 12px rgba(201, 42, 42, 0.4); }
+	.log-fab.copied { background: #237a35; color: white; border-color: #1b5e20; box-shadow: 0 4px 12px rgba(47, 158, 68, 0.4); }
+	.error-count { font-size: 0.75rem; font-weight: 800; line-height: 1; padding: 2px 5px; border-radius: 8px; background: #7f1d1d; color: white; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
 	@media (hover: none) {
-		.log-fab {
-			min-height: 44px;
-			padding: 0 12px;
-			border-radius: 22px;
-		}
-
-		.version {
-			font-size: 12px;
-		}
-
-		.error-count {
-			font-size: 0.9rem;
-		}
+		.log-fab { min-height: 44px; padding: 0 12px; border-radius: 22px; }
+		.version { font-size: 12px; }
+		.error-count { font-size: 0.9rem; }
 	}
-
-	.log-fallback {
-		position: fixed;
-		bottom: 76px;
-		left: 16px;
-		width: min(38rem, calc(100vw - 32px));
-		height: min(40dvh, 20rem);
-		z-index: 9999;
-		padding: 8px;
-		font-family: monospace;
-		font-size: 0.75rem;
-		background: #1e1e1e;
-		color: #ffffff;
-		border: 2px solid #ef4444;
-		border-radius: 8px;
-		resize: none;
-	}
+	.log-fallback { position: fixed; bottom: 76px; left: 16px; width: min(38rem, calc(100vw - 32px)); height: min(40dvh, 20rem); z-index: 9999; padding: 8px; font-family: monospace; font-size: 0.75rem; background: #1e1e1e; color: #ffffff; border: 2px solid #ef4444; border-radius: 8px; resize: none; }
+	.context-menu { position: fixed; z-index: 10000; background: #1e1e24; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 10px; padding: 6px; display: flex; flex-direction: column; gap: 2px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); min-width: 210px; }
+	.menu-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 0.8125rem; color: #f1f5f9; background: transparent; border: none; border-radius: 6px; cursor: pointer; text-align: left; transition: background 0.15s ease; }
+	.menu-item:hover { background: rgba(255, 255, 255, 0.08); }
+	.menu-item--hide { color: #94a3b8; border-top: 1px solid rgba(255, 255, 255, 0.08); margin-top: 4px; padding-top: 8px; }
+	@media (prefers-reduced-motion: reduce) { .log-fab, .menu-item { transition: none; } }
 </style>
